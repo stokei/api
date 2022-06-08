@@ -1,0 +1,71 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { Observable } from 'rxjs';
+import { map, delay } from 'rxjs/operators';
+import { CoursesStudentCreatedEvent } from '@/events/implements/courses-students/courses-student-created.event';
+import { CoursesStudentRemovedEvent } from '@/events/implements/courses-students/courses-student-removed.event';
+import { CoursesStudentUpdatedEvent } from '@/events/implements/courses-students/courses-student-updated.event';
+
+@Injectable()
+export class CoursesStudentsSagas {
+  private readonly logger: Logger;
+
+  constructor() {
+    this.logger = new Logger(CoursesStudentsSagas.name);
+    this.logger.log(`Saga ${CoursesStudentsSagas.name} init`);
+  }
+
+  @Saga()
+  coursesStudentCreated = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(CoursesStudentCreatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [CoursesStudentCreatedEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [CoursesStudentCreatedEvent] Saga event coursesStudentCreated: ' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+
+  @Saga()
+  coursesStudentRemoved = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(CoursesStudentRemovedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [CoursesStudentRemovedEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [CoursesStudentRemovedEvent] Saga event coursesStudentRemoved:' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+
+  @Saga()
+  coursesStudentUpdated = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(CoursesStudentUpdatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [CoursesStudentUpdatedEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [CoursesStudentUpdatedEvent] Saga event coursesStudentUpdated:' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+}

@@ -1,0 +1,694 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+enum AccountStatus {
+  ACTIVE
+  INACTIVE
+  CANCELED
+  BLOCKED
+}
+
+enum AccountRole {
+  USER
+  ADMIN
+}
+
+model Account {
+  id                 String        @id @default(cuid())
+  parent             String        @db.VarChar(255)
+  firstname          String        @db.VarChar(100)
+  lastname           String        @db.VarChar(100)
+  email              String        @db.VarChar(255)
+  username           String        @unique @db.VarChar(255)
+  password           String        @db.VarChar(255)
+  lastPassword       String?       @map("last_password") @db.VarChar(255)
+  salt               String        @unique @db.VarChar(255)
+  avatar             String?       @db.VarChar(255)
+  forgotPasswordCode String?       @map("forgot_password_code") @db.VarChar(255)
+  dateBirthday       DateTime?     @map("date_birthday")
+  status             AccountStatus
+  roles              AccountRole[]
+  canceledAt         DateTime?     @map("canceled_at")
+  updatedAt          DateTime?     @updatedAt @map("updated_at")
+  createdAt          DateTime?     @default(now()) @map("created_at")
+
+  @@map("accounts")
+}
+
+model Access {
+  id         String    @id @default(cuid())
+  parent     String    @db.VarChar(255)
+  active     Boolean   @default(true)
+  expiresIn  DateTime  @map("expires_in")
+  canceledAt DateTime? @map("canceled_at")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+  createdAt  DateTime? @default(now()) @map("created_at")
+
+  @@map("accesses")
+}
+
+model Project {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("projects")
+}
+
+model ProjectsMember {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("projects_members")
+}
+
+model ProjectsPlan {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("projects_plans")
+}
+
+model Site {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("sites")
+}
+
+model SitesLightColor {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("sites_light_colors")
+}
+
+model SitesDarkColor {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("sites_dark_colors")
+}
+
+model Domain {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("domains")
+}
+
+model Page {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("pages")
+}
+
+model Metatag {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("metatags")
+}
+
+model Tag {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("tags")
+}
+
+model Currency {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("currencies")
+}
+
+model Language {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("languages")
+}
+
+model Keyword {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("keywords")
+}
+
+model Version {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("versions")
+}
+
+model Color {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("colors")
+}
+
+model Activity {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("activities")
+}
+
+model ActivitiesAction {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("activities_actions")
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("categories")
+}
+
+model Checkout {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("checkouts")
+}
+
+model CheckoutsCurrency {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("checkouts_currencies")
+}
+
+model Product {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("products")
+}
+
+model ProductsCategory {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("products_categories")
+}
+
+model ProductsImage {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("products_images")
+}
+
+model Price {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("prices")
+}
+
+model ProductsTag {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("products_tags")
+}
+
+model Order {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("orders")
+}
+
+model OrdersItem {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("orders_items")
+}
+
+model OrdersAddress {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("orders_addresses")
+}
+
+model OrdersSeller {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("orders_sellers")
+}
+
+model Payment {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("payments")
+}
+
+model PaymentsMethod {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("payments_methods")
+}
+
+model Card {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("cards")
+}
+
+model Cart {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("carts")
+}
+
+model CartsItem {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("carts_items")
+}
+
+model Plan {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("plans")
+}
+
+model Image {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("images")
+}
+
+model Rating {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("ratings")
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("comments")
+}
+
+model Question {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("questions")
+}
+
+model Answer {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("answers")
+}
+
+model Video {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("videos")
+}
+
+model VideosTag {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("videos_tags")
+}
+
+model VideosAuthor {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("videos_authors")
+}
+
+model VideosSubtitle {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("videos_subtitles")
+}
+
+model File {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("files")
+}
+
+model Module {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("modules")
+}
+
+model ModulesVideo {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("modules_videos")
+}
+
+model ModulesMaterial {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("modules_materials")
+}
+
+model VideosMaterial {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("videos_materials")
+}
+
+model Course {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("courses")
+}
+
+model CoursesInstructor {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("courses_instructors")
+}
+
+model CoursesAdmin {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("courses_admins")
+}
+
+model CoursesStudent {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("courses_students")
+}
+
+model Classroom {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("classrooms")
+}
+
+model ClassroomsStudent {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("classrooms_students")
+}
+
+model ClassroomsEnrollment {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("classrooms_enrollments")
+}
+
+model ClassroomsAdmin {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("classrooms_admins")
+}
+
+model ClassroomsInstructor {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("classrooms_instructors")
+}
+
+model ClassroomsPlan {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("classrooms_plans")
+}
+
+model ClassroomsModule {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("classrooms_modules")
+}
+
+model ClassroomsTag {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("classrooms_tags")
+}
+
+model ClassroomsMaterial {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("classrooms_materials")
+}
+
+model Address {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("addresses")
+}
+
+model Phone {
+  id        String    @id @default(cuid())
+  parent    String    @db.VarChar(255)
+  name      String
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+
+  @@map("phones")
+}

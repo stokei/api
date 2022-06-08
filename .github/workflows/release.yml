@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  release:
+    types: [published]
+
+env:
+  IMAGE_NAME: stokei-api
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+jobs:
+  CI:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Make sure the actual branch is checked out when running on pull requests
+          ref: ${{ github.head_ref }}
+
+      - name: Prettify code
+        uses: creyD/prettier_action@v3.3
+        with:
+          # This part is also where you can pass other options, for example:
+          prettier_options: --write **/*.{js,ts,md}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Unit tests
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm install
+      - run: npm run test
+        env:
+          CI: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Getting version
+        id: versions-variables
+        run: |
+          echo ::set-output name=VERSION_NAME::${GITHUB_REF#refs/*/}
+          echo ::set-output name=VERSION_NUMBER::$(echo $GITHUB_REF | cut -d / -f 3 | awk '{sub(/v/,"")}1')
+
+      - name: Check output version
+        env:
+          RELEASE_VERSION: ${{ steps.versions-variables.outputs.VERSION_NAME }}
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.versions-variables.outputs.VERSION_NUMBER }}
+
+      - name: Change package.json version
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm version ${{ steps.versions-variables.outputs.VERSION_NUMBER }} --no-git-tag-version --force
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ steps.versions-variables.outputs.VERSION_NAME }}

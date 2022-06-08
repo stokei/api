@@ -1,0 +1,71 @@
+import { Injectable, Logger } from '@nestjs/common';
+import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { Observable } from 'rxjs';
+import { map, delay } from 'rxjs/operators';
+import { AccessCreatedEvent } from '@/events/implements/accesses/access-created.event';
+import { AccessRemovedEvent } from '@/events/implements/accesses/access-removed.event';
+import { AccessUpdatedEvent } from '@/events/implements/accesses/access-updated.event';
+
+@Injectable()
+export class AccessesSagas {
+  private readonly logger: Logger;
+
+  constructor() {
+    this.logger = new Logger(AccessesSagas.name);
+    this.logger.log(`Saga ${AccessesSagas.name} init`);
+  }
+
+  @Saga()
+  accessCreated = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(AccessCreatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [AccessCreatedEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [AccessCreatedEvent] Saga event accessCreated: ' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+
+  @Saga()
+  accessRemoved = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(AccessRemovedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [AccessRemovedEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [AccessRemovedEvent] Saga event accessRemoved:' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+
+  @Saga()
+  accessUpdated = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(AccessUpdatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [AccessUpdatedEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [AccessUpdatedEvent] Saga event accessUpdated:' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+}

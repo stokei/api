@@ -1,0 +1,46 @@
+version: '3.8'
+
+networks:
+  stokei-network:
+    driver: bridge
+
+volumes:
+  postgresql-data:
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        NODE_ENV: development
+        DB_URL: postgresql://dev:dev@host.docker.internal:5432/stokei-api?schema=public
+    container_name: api
+    ports:
+      - '4010:3000'
+    environment:
+      - api_URL=amqp://admin:admin@rabbitmq:5672
+      - DB_URL=postgresql://dev:dev@postgresql:5432/stokei-api?schema=public
+      - HOST=api
+      - PORT=3000
+      - URL=http://api:3000
+      - GRAPHQL_URL=http://api:3000/graphql
+    restart: on-failure
+    volumes:
+      - ./:/app/
+    depends_on:
+      - postgresql
+    networks:
+      - stokei-network
+
+  postgresql:
+    image: bitnami/postgresql:latest
+    container_name: postgresql
+    environment:
+      POSTGRESQL_USERNAME: dev
+      POSTGRESQL_PASSWORD: dev
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgresql-data:/bitnami/postgresql
+    networks:
+      - stokei-network

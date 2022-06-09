@@ -17,14 +17,15 @@ jobs:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
 
+      # ESLint and Prettier must be in `package.json`
+      - name: Install Node.js dependencies
+        run: npm ci
+
       - name: Eslint Fix
-        uses: tj-actions/eslint-changed-files@v12
+        uses: wearerequired/lint-action@v2
         with:
-          config_path: './.eslintrc'
-          ignore_path: './.eslintignore'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          file_extensions: |
-            **/*.ts
+          eslint: true
+          prettier: true
 
       - name: Prettify code
         uses: creyD/prettier_action@v3.3
@@ -38,7 +39,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install
       - run: npm run test
         env:
           CI: true

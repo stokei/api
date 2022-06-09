@@ -20,7 +20,7 @@ jobs:
       - name: Eslint Fix
         uses: bradennapier/eslint-plus-action@v3.4.2
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prettify code
         uses: creyD/prettier_action@v3.3

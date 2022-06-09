@@ -18,9 +18,13 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: Eslint Fix
-        uses: bradennapier/eslint-plus-action@v3.4.2
+        uses: tj-actions/eslint-changed-files@v12
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          config_path: './.eslintrc'
+          ignore_path: './.eslintignore'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          file_extensions: |
+            **/*.ts
 
       - name: Prettify code
         uses: creyD/prettier_action@v3.3

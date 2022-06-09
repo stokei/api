@@ -1,5 +1,6 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Paginated } from '@stokei/nestjs';
+
 import { Phone } from './phone';
 
 @ObjectType()

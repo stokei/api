@@ -1,9 +1,10 @@
 import { IQuery } from '@nestjs/cqrs';
 import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+
 import {
   FindAllCoursesDTO,
-  WhereDataFindAllCoursesDTO,
-  OrderByDataFindAllCoursesDTO
+  OrderByDataFindAllCoursesDTO,
+  WhereDataFindAllCoursesDTO
 } from '@/dtos/courses/find-all-courses.dto';
 
 export class FindAllCoursesQuery implements IQuery, FindAllCoursesDTO {

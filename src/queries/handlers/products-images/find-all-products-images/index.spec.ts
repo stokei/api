@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountProductsImagesRepository } from '@/repositories/products-images/count-products-images';
 import { FindAllProductsImagesRepository } from '@/repositories/products-images/find-all-products-images';
-import { Test } from '@nestjs/testing';
+
 import { FindAllProductsImagesQueryHandler } from '.';
 
 describe('FindAllProductsImagesQueryHandler', () => {

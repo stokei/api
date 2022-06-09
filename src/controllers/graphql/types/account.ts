@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+
 import { AccountRole } from '@/controllers/graphql/enums/accounts/account-role';
 import { AccountStatus } from '@/controllers/graphql/enums/accounts/account-status';
 

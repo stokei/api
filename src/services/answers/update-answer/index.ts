@@ -1,9 +1,10 @@
-import { UpdateAnswerCommand } from '@/commands/implements/answers/update-answer.command';
-import { UpdateAnswerDTO } from '@/dtos/answers/update-answer.dto';
-import { AnswerModel } from '@/models/answer.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateAnswerCommand } from '@/commands/implements/answers/update-answer.command';
+import { UpdateAnswerDTO } from '@/dtos/answers/update-answer.dto';
+import { AnswerModel } from '@/models/answer.model';
 
 @Injectable()
 export class UpdateAnswerService

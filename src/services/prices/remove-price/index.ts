@@ -1,9 +1,10 @@
-import { RemovePriceCommand } from '@/commands/implements/prices/remove-price.command';
-import { RemovePriceDTO } from '@/dtos/prices/remove-price.dto';
-import { PriceModel } from '@/models/price.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemovePriceCommand } from '@/commands/implements/prices/remove-price.command';
+import { RemovePriceDTO } from '@/dtos/prices/remove-price.dto';
+import { PriceModel } from '@/models/price.model';
 
 @Injectable()
 export class RemovePriceService

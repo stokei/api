@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateColorCommand } from '@/commands/implements/colors/update-color.command';
 import {
   ColorNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindColorByIdRepository } from '@/repositories/colors/find-color-by-id';
 import { UpdateColorRepository } from '@/repositories/colors/update-color';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateColorCommandKeys = keyof UpdateColorCommand;
 

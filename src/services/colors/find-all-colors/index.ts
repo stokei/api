@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { ColorModel } from '@/models/color.model';
+
 import { FindAllColorsDTO } from '@/dtos/colors/find-all-colors.dto';
+import { ColorModel } from '@/models/color.model';
 import { FindAllColorsQuery } from '@/queries/implements/colors/find-all-colors.query';
 
 @Injectable()

@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { IBaseRepository } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { ExistsActivitiesDTO } from '@/dtos/activities/exists-activities.dto';
-import { IBaseRepository } from '@stokei/nestjs';
 
 @Injectable()
 export class ExistsActivitiesRepository

@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  ModuleNotFoundException,
   DataNotFoundException,
+  ModuleNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { ModuleModel } from '@/models/module.model';
-import { FindModuleByIdRepository } from '@/repositories/modules/find-module-by-id';
 import { FindModuleByIdQuery } from '@/queries/implements/modules/find-module-by-id.query';
+import { FindModuleByIdRepository } from '@/repositories/modules/find-module-by-id';
 
 @QueryHandler(FindModuleByIdQuery)
 export class FindModuleByIdQueryHandler

@@ -1,9 +1,10 @@
-import { CreatePriceCommand } from '@/commands/implements/prices/create-price.command';
-import { CreatePriceDTO } from '@/dtos/prices/create-price.dto';
-import { PriceModel } from '@/models/price.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreatePriceCommand } from '@/commands/implements/prices/create-price.command';
+import { CreatePriceDTO } from '@/dtos/prices/create-price.dto';
+import { PriceModel } from '@/models/price.model';
 
 @Injectable()
 export class CreatePriceService

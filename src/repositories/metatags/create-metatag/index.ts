@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { MetatagMapper } from '@/mappers/metatags';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateMetatagDTO } from '@/dtos/metatags/create-metatag.dto';
+import { MetatagMapper } from '@/mappers/metatags';
 import { MetatagModel } from '@/models/metatag.model';
 
 @Injectable()

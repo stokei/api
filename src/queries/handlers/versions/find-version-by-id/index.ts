@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  VersionNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VersionNotFoundException
 } from '@/errors';
 import { VersionModel } from '@/models/version.model';
-import { FindVersionByIdRepository } from '@/repositories/versions/find-version-by-id';
 import { FindVersionByIdQuery } from '@/queries/implements/versions/find-version-by-id.query';
+import { FindVersionByIdRepository } from '@/repositories/versions/find-version-by-id';
 
 @QueryHandler(FindVersionByIdQuery)
 export class FindVersionByIdQueryHandler

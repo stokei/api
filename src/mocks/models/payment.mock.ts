@@ -1,6 +1,7 @@
-import { PaymentModel, IPaymentModelData } from '@/models/payment.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IPaymentModelData, PaymentModel } from '@/models/payment.model';
 
 export class PaymentModelMock extends PaymentModel {
   constructor(data?: Partial<IPaymentModelData>) {

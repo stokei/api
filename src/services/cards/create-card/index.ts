@@ -1,9 +1,10 @@
-import { CreateCardCommand } from '@/commands/implements/cards/create-card.command';
-import { CreateCardDTO } from '@/dtos/cards/create-card.dto';
-import { CardModel } from '@/models/card.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateCardCommand } from '@/commands/implements/cards/create-card.command';
+import { CreateCardDTO } from '@/dtos/cards/create-card.dto';
+import { CardModel } from '@/models/card.model';
 
 @Injectable()
 export class CreateCardService

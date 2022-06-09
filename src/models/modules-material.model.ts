@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { ModulesMaterialCreatedEvent } from '@/events/implements/modules-materials/modules-material-created.event';
-import { ModulesMaterialUpdatedEvent } from '@/events/implements/modules-materials/modules-material-updated.event';
-import { ModulesMaterialRemovedEvent } from '@/events/implements/modules-materials/modules-material-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { ModulesMaterialCreatedEvent } from '@/events/implements/modules-materials/modules-material-created.event';
+import { ModulesMaterialRemovedEvent } from '@/events/implements/modules-materials/modules-material-removed.event';
+import { ModulesMaterialUpdatedEvent } from '@/events/implements/modules-materials/modules-material-updated.event';
 
 export interface IModulesMaterialModelData {
   readonly id?: string;

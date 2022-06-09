@@ -1,9 +1,10 @@
-import { RemoveCommentCommand } from '@/commands/implements/comments/remove-comment.command';
-import { RemoveCommentDTO } from '@/dtos/comments/remove-comment.dto';
-import { CommentModel } from '@/models/comment.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveCommentCommand } from '@/commands/implements/comments/remove-comment.command';
+import { RemoveCommentDTO } from '@/dtos/comments/remove-comment.dto';
+import { CommentModel } from '@/models/comment.model';
 
 @Injectable()
 export class RemoveCommentService

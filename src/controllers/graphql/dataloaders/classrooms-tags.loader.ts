@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllClassroomsTagsService } from '@/services/classrooms-tags/find-all-classrooms-tags';
 import DataLoader from 'dataloader';
+
+import { FindAllClassroomsTagsService } from '@/services/classrooms-tags/find-all-classrooms-tags';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ClassroomsTagsLoader {

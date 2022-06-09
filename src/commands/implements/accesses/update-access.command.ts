@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateAccessDTO,
   UpdateAccessDataDTO,
+  UpdateAccessDTO,
   UpdateAccessWhereDTO
 } from '@/dtos/accesses/update-access.dto';
 

@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateKeywordDTO } from '@/dtos/keywords/create-keyword.dto';
 
 export class CreateKeywordCommand implements ICommand, CreateKeywordDTO {

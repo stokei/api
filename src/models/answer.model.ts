@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { AnswerCreatedEvent } from '@/events/implements/answers/answer-created.event';
-import { AnswerUpdatedEvent } from '@/events/implements/answers/answer-updated.event';
-import { AnswerRemovedEvent } from '@/events/implements/answers/answer-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { AnswerCreatedEvent } from '@/events/implements/answers/answer-created.event';
+import { AnswerRemovedEvent } from '@/events/implements/answers/answer-removed.event';
+import { AnswerUpdatedEvent } from '@/events/implements/answers/answer-updated.event';
 
 export interface IAnswerModelData {
   readonly id?: string;

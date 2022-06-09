@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateVersionInput } from '@/controllers/graphql/inputs/versions/update-version.input';
 import { Version } from '@/controllers/graphql/types/version';
 import { UpdateVersionService } from '@/services/versions/update-version';

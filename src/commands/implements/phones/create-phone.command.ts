@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreatePhoneDTO } from '@/dtos/phones/create-phone.dto';
 
 export class CreatePhoneCommand implements ICommand, CreatePhoneDTO {

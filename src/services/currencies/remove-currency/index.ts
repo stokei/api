@@ -1,9 +1,10 @@
-import { RemoveCurrencyCommand } from '@/commands/implements/currencies/remove-currency.command';
-import { RemoveCurrencyDTO } from '@/dtos/currencies/remove-currency.dto';
-import { CurrencyModel } from '@/models/currency.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveCurrencyCommand } from '@/commands/implements/currencies/remove-currency.command';
+import { RemoveCurrencyDTO } from '@/dtos/currencies/remove-currency.dto';
+import { CurrencyModel } from '@/models/currency.model';
 
 @Injectable()
 export class RemoveCurrencyService

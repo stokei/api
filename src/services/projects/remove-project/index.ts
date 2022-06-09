@@ -1,9 +1,10 @@
-import { RemoveProjectCommand } from '@/commands/implements/projects/remove-project.command';
-import { RemoveProjectDTO } from '@/dtos/projects/remove-project.dto';
-import { ProjectModel } from '@/models/project.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveProjectCommand } from '@/commands/implements/projects/remove-project.command';
+import { RemoveProjectDTO } from '@/dtos/projects/remove-project.dto';
+import { ProjectModel } from '@/models/project.model';
 
 @Injectable()
 export class RemoveProjectService

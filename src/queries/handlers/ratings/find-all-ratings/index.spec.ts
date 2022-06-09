@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountRatingsRepository } from '@/repositories/ratings/count-ratings';
 import { FindAllRatingsRepository } from '@/repositories/ratings/find-all-ratings';
-import { Test } from '@nestjs/testing';
+
 import { FindAllRatingsQueryHandler } from '.';
 
 describe('FindAllRatingsQueryHandler', () => {

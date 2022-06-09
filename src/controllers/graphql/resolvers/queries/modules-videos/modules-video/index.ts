@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { ModulesVideosLoader } from '@/controllers/graphql/dataloaders/modules-videos.loader';
 import { ModulesVideo } from '@/controllers/graphql/types/modules-video';
 import {

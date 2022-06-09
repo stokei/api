@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateMetatagDTO } from '@/dtos/metatags/create-metatag.dto';
 
 export class CreateMetatagCommand implements ICommand, CreateMetatagDTO {

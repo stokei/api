@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   AddressNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { AddressModel } from '@/models/address.model';
-import { FindAddressByIdRepository } from '@/repositories/addresses/find-address-by-id';
 import { FindAddressByIdQuery } from '@/queries/implements/addresses/find-address-by-id.query';
+import { FindAddressByIdRepository } from '@/repositories/addresses/find-address-by-id';
 
 @QueryHandler(FindAddressByIdQuery)
 export class FindAddressByIdQueryHandler

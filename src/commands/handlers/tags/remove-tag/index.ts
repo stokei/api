@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveTagCommand } from '@/commands/implements/tags/remove-tag.command';
 import {
-  TagNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  TagNotFoundException
 } from '@/errors';
 import { FindTagByIdRepository } from '@/repositories/tags/find-tag-by-id';
 import { RemoveTagRepository } from '@/repositories/tags/remove-tag';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveTagCommandKeys = keyof RemoveTagCommand;
 

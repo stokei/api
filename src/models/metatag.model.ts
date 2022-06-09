@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { MetatagCreatedEvent } from '@/events/implements/metatags/metatag-created.event';
-import { MetatagUpdatedEvent } from '@/events/implements/metatags/metatag-updated.event';
-import { MetatagRemovedEvent } from '@/events/implements/metatags/metatag-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { MetatagCreatedEvent } from '@/events/implements/metatags/metatag-created.event';
+import { MetatagRemovedEvent } from '@/events/implements/metatags/metatag-removed.event';
+import { MetatagUpdatedEvent } from '@/events/implements/metatags/metatag-updated.event';
 
 export interface IMetatagModelData {
   readonly id?: string;

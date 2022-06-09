@@ -1,9 +1,10 @@
-import { UpdateRatingCommand } from '@/commands/implements/ratings/update-rating.command';
-import { UpdateRatingDTO } from '@/dtos/ratings/update-rating.dto';
-import { RatingModel } from '@/models/rating.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateRatingCommand } from '@/commands/implements/ratings/update-rating.command';
+import { UpdateRatingDTO } from '@/dtos/ratings/update-rating.dto';
+import { RatingModel } from '@/models/rating.model';
 
 @Injectable()
 export class UpdateRatingService

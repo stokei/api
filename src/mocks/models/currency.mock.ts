@@ -1,6 +1,7 @@
-import { CurrencyModel, ICurrencyModelData } from '@/models/currency.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { CurrencyModel, ICurrencyModelData } from '@/models/currency.model';
 
 export class CurrencyModelMock extends CurrencyModel {
   constructor(data?: Partial<ICurrencyModelData>) {

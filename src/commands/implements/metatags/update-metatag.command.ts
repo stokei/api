@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateMetatagDTO,
   UpdateMetatagDataDTO,
+  UpdateMetatagDTO,
   UpdateMetatagWhereDTO
 } from '@/dtos/metatags/update-metatag.dto';
 

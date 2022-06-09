@@ -1,5 +1,6 @@
 import { QueryBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
+
 import { FindImageByIdService } from '.';
 
 describe('FindImageByIdService', () => {

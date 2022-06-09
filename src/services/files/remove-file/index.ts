@@ -1,9 +1,10 @@
-import { RemoveFileCommand } from '@/commands/implements/files/remove-file.command';
-import { RemoveFileDTO } from '@/dtos/files/remove-file.dto';
-import { FileModel } from '@/models/file.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveFileCommand } from '@/commands/implements/files/remove-file.command';
+import { RemoveFileDTO } from '@/dtos/files/remove-file.dto';
+import { FileModel } from '@/models/file.model';
 
 @Injectable()
 export class RemoveFileService

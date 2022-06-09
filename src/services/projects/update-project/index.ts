@@ -1,9 +1,10 @@
-import { UpdateProjectCommand } from '@/commands/implements/projects/update-project.command';
-import { UpdateProjectDTO } from '@/dtos/projects/update-project.dto';
-import { ProjectModel } from '@/models/project.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateProjectCommand } from '@/commands/implements/projects/update-project.command';
+import { UpdateProjectDTO } from '@/dtos/projects/update-project.dto';
+import { ProjectModel } from '@/models/project.model';
 
 @Injectable()
 export class UpdateProjectService

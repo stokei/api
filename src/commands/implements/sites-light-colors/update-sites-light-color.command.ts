@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateSitesLightColorDTO,
   UpdateSitesLightColorDataDTO,
+  UpdateSitesLightColorDTO,
   UpdateSitesLightColorWhereDTO
 } from '@/dtos/sites-light-colors/update-sites-light-color.dto';
 

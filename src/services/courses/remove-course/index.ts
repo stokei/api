@@ -1,9 +1,10 @@
-import { RemoveCourseCommand } from '@/commands/implements/courses/remove-course.command';
-import { RemoveCourseDTO } from '@/dtos/courses/remove-course.dto';
-import { CourseModel } from '@/models/course.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveCourseCommand } from '@/commands/implements/courses/remove-course.command';
+import { RemoveCourseDTO } from '@/dtos/courses/remove-course.dto';
+import { CourseModel } from '@/models/course.model';
 
 @Injectable()
 export class RemoveCourseService

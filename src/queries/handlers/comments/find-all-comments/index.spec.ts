@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountCommentsRepository } from '@/repositories/comments/count-comments';
 import { FindAllCommentsRepository } from '@/repositories/comments/find-all-comments';
-import { Test } from '@nestjs/testing';
+
 import { FindAllCommentsQueryHandler } from '.';
 
 describe('FindAllCommentsQueryHandler', () => {

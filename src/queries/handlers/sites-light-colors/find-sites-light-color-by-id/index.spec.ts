@@ -1,5 +1,7 @@
-import { FindSitesLightColorByIdRepository } from '@/repositories/sites-light-colors/find-sites-light-color-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindSitesLightColorByIdRepository } from '@/repositories/sites-light-colors/find-sites-light-color-by-id';
+
 import { FindSitesLightColorByIdQueryHandler } from '.';
 
 describe('FindSitesLightColorByIdQueryHandler', () => {

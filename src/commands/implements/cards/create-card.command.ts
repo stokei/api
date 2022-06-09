@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateCardDTO } from '@/dtos/cards/create-card.dto';
 
 export class CreateCardCommand implements ICommand, CreateCardDTO {

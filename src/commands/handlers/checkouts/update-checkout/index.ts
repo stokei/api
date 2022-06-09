@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateCheckoutCommand } from '@/commands/implements/checkouts/update-checkout.command';
 import {
   CheckoutNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindCheckoutByIdRepository } from '@/repositories/checkouts/find-checkout-by-id';
 import { UpdateCheckoutRepository } from '@/repositories/checkouts/update-checkout';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateCheckoutCommandKeys = keyof UpdateCheckoutCommand;
 

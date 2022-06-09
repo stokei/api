@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreatePaymentsMethodCommand } from '@/commands/implements/payments-methods/create-payments-method.command';
 import {
-  PaymentsMethodNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PaymentsMethodNotFoundException
 } from '@/errors';
 import { CreatePaymentsMethodRepository } from '@/repositories/payments-methods/create-payments-method';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreatePaymentsMethodCommandKeys = keyof CreatePaymentsMethodCommand;
 

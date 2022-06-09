@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateColorDTO } from '@/dtos/colors/create-color.dto';
 
 export class CreateColorCommand implements ICommand, CreateColorDTO {

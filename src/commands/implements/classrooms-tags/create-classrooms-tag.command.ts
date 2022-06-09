@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateClassroomsTagDTO } from '@/dtos/classrooms-tags/create-classrooms-tag.dto';
 
 export class CreateClassroomsTagCommand

@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllVideosSubtitlesService } from '@/services/videos-subtitles/find-all-videos-subtitles';
 import DataLoader from 'dataloader';
+
+import { FindAllVideosSubtitlesService } from '@/services/videos-subtitles/find-all-videos-subtitles';
 
 @Injectable({ scope: Scope.REQUEST })
 export class VideosSubtitlesLoader {

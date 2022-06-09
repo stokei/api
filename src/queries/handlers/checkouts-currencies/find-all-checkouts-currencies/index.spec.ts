@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountCheckoutsCurrenciesRepository } from '@/repositories/checkouts-currencies/count-checkouts-currencies';
 import { FindAllCheckoutsCurrenciesRepository } from '@/repositories/checkouts-currencies/find-all-checkouts-currencies';
-import { Test } from '@nestjs/testing';
+
 import { FindAllCheckoutsCurrenciesQueryHandler } from '.';
 
 describe('FindAllCheckoutsCurrenciesQueryHandler', () => {

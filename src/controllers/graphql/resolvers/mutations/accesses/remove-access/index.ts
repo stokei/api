@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemoveAccessInput } from '@/controllers/graphql/inputs/accesses/remove-access.input';
 import { Access } from '@/controllers/graphql/types/access';
 import { RemoveAccessService } from '@/services/accesses/remove-access';

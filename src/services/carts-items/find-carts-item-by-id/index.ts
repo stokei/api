@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { CartsItemModel } from '@/models/carts-item.model';
 import { FindCartsItemByIdQuery } from '@/queries/implements/carts-items/find-carts-item-by-id.query';
 

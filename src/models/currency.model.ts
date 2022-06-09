@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { CurrencyCreatedEvent } from '@/events/implements/currencies/currency-created.event';
-import { CurrencyUpdatedEvent } from '@/events/implements/currencies/currency-updated.event';
-import { CurrencyRemovedEvent } from '@/events/implements/currencies/currency-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { CurrencyCreatedEvent } from '@/events/implements/currencies/currency-created.event';
+import { CurrencyRemovedEvent } from '@/events/implements/currencies/currency-removed.event';
+import { CurrencyUpdatedEvent } from '@/events/implements/currencies/currency-updated.event';
 
 export interface ICurrencyModelData {
   readonly id?: string;

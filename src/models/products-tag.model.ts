@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { ProductsTagCreatedEvent } from '@/events/implements/products-tags/products-tag-created.event';
-import { ProductsTagUpdatedEvent } from '@/events/implements/products-tags/products-tag-updated.event';
-import { ProductsTagRemovedEvent } from '@/events/implements/products-tags/products-tag-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { ProductsTagCreatedEvent } from '@/events/implements/products-tags/products-tag-created.event';
+import { ProductsTagRemovedEvent } from '@/events/implements/products-tags/products-tag-removed.event';
+import { ProductsTagUpdatedEvent } from '@/events/implements/products-tags/products-tag-updated.event';
 
 export interface IProductsTagModelData {
   readonly id?: string;

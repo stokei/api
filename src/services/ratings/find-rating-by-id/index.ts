@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { RatingModel } from '@/models/rating.model';
 import { FindRatingByIdQuery } from '@/queries/implements/ratings/find-rating-by-id.query';
 

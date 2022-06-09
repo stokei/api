@@ -1,14 +1,15 @@
+import { Field, InputType } from '@nestjs/graphql';
+import {
+  OrderBy,
+  WhereDataSearchInput,
+  WhereDataStringInput,
+  WherePaginated
+} from '@stokei/nestjs';
+
 import {
   OrderByDataFindAllPaymentsDTO,
   WhereDataFindAllPaymentsDTO
 } from '@/dtos/payments/find-all-payments.dto';
-import { Field, InputType } from '@nestjs/graphql';
-import {
-  OrderBy,
-  WhereDataStringInput,
-  WhereDataSearchInput,
-  WherePaginated
-} from '@stokei/nestjs';
 
 @InputType()
 class WhereDataFindAllPaymentsDataInput implements WhereDataFindAllPaymentsDTO {

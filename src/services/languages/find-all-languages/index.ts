@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { LanguageModel } from '@/models/language.model';
+
 import { FindAllLanguagesDTO } from '@/dtos/languages/find-all-languages.dto';
+import { LanguageModel } from '@/models/language.model';
 import { FindAllLanguagesQuery } from '@/queries/implements/languages/find-all-languages.query';
 
 @Injectable()

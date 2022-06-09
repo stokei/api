@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveKeywordCommand } from '@/commands/implements/keywords/remove-keyword.command';
 import {
-  KeywordNotFoundException,
   DataNotFoundException,
+  KeywordNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindKeywordByIdRepository } from '@/repositories/keywords/find-keyword-by-id';
 import { RemoveKeywordRepository } from '@/repositories/keywords/remove-keyword';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveKeywordCommandKeys = keyof RemoveKeywordCommand;
 

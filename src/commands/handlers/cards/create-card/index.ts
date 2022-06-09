@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateCardCommand } from '@/commands/implements/cards/create-card.command';
 import {
   CardNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateCardRepository } from '@/repositories/cards/create-card';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateCardCommandKeys = keyof CreateCardCommand;
 

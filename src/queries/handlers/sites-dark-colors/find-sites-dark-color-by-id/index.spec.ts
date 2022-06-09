@@ -1,5 +1,7 @@
-import { FindSitesDarkColorByIdRepository } from '@/repositories/sites-dark-colors/find-sites-dark-color-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindSitesDarkColorByIdRepository } from '@/repositories/sites-dark-colors/find-sites-dark-color-by-id';
+
 import { FindSitesDarkColorByIdQueryHandler } from '.';
 
 describe('FindSitesDarkColorByIdQueryHandler', () => {

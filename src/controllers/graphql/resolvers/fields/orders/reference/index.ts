@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { OrdersLoader } from '@/controllers/graphql/dataloaders/orders.loader';
 import { Order } from '@/controllers/graphql/types/order';
 

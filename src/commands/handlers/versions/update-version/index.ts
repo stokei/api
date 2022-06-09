@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateVersionCommand } from '@/commands/implements/versions/update-version.command';
 import {
-  VersionNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VersionNotFoundException
 } from '@/errors';
 import { FindVersionByIdRepository } from '@/repositories/versions/find-version-by-id';
 import { UpdateVersionRepository } from '@/repositories/versions/update-version';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateVersionCommandKeys = keyof UpdateVersionCommand;
 

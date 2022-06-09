@@ -1,14 +1,15 @@
+import { Field, InputType } from '@nestjs/graphql';
+import {
+  OrderBy,
+  WhereDataSearchInput,
+  WhereDataStringInput,
+  WherePaginated
+} from '@stokei/nestjs';
+
 import {
   OrderByDataFindAllSitesDarkColorsDTO,
   WhereDataFindAllSitesDarkColorsDTO
 } from '@/dtos/sites-dark-colors/find-all-sites-dark-colors.dto';
-import { Field, InputType } from '@nestjs/graphql';
-import {
-  OrderBy,
-  WhereDataStringInput,
-  WhereDataSearchInput,
-  WherePaginated
-} from '@stokei/nestjs';
 
 @InputType()
 class WhereDataFindAllSitesDarkColorsDataInput

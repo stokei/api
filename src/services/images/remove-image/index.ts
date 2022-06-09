@@ -1,9 +1,10 @@
-import { RemoveImageCommand } from '@/commands/implements/images/remove-image.command';
-import { RemoveImageDTO } from '@/dtos/images/remove-image.dto';
-import { ImageModel } from '@/models/image.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveImageCommand } from '@/commands/implements/images/remove-image.command';
+import { RemoveImageDTO } from '@/dtos/images/remove-image.dto';
+import { ImageModel } from '@/models/image.model';
 
 @Injectable()
 export class RemoveImageService

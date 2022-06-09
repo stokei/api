@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  OrdersItemNotFoundException,
   DataNotFoundException,
+  OrdersItemNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { OrdersItemModel } from '@/models/orders-item.model';
-import { FindOrdersItemByIdRepository } from '@/repositories/orders-items/find-orders-item-by-id';
 import { FindOrdersItemByIdQuery } from '@/queries/implements/orders-items/find-orders-item-by-id.query';
+import { FindOrdersItemByIdRepository } from '@/repositories/orders-items/find-orders-item-by-id';
 
 @QueryHandler(FindOrdersItemByIdQuery)
 export class FindOrdersItemByIdQueryHandler

@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemovePaymentsMethodInput } from '@/controllers/graphql/inputs/payments-methods/remove-payments-method.input';
 import { PaymentsMethod } from '@/controllers/graphql/types/payments-method';
 import { RemovePaymentsMethodService } from '@/services/payments-methods/remove-payments-method';

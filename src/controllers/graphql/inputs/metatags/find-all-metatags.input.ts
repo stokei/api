@@ -1,14 +1,15 @@
+import { Field, InputType } from '@nestjs/graphql';
+import {
+  OrderBy,
+  WhereDataSearchInput,
+  WhereDataStringInput,
+  WherePaginated
+} from '@stokei/nestjs';
+
 import {
   OrderByDataFindAllMetatagsDTO,
   WhereDataFindAllMetatagsDTO
 } from '@/dtos/metatags/find-all-metatags.dto';
-import { Field, InputType } from '@nestjs/graphql';
-import {
-  OrderBy,
-  WhereDataStringInput,
-  WhereDataSearchInput,
-  WherePaginated
-} from '@stokei/nestjs';
 
 @InputType()
 class WhereDataFindAllMetatagsDataInput implements WhereDataFindAllMetatagsDTO {

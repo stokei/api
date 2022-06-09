@@ -1,9 +1,10 @@
-import { UpdateProjectsMemberCommand } from '@/commands/implements/projects-members/update-projects-member.command';
-import { UpdateProjectsMemberDTO } from '@/dtos/projects-members/update-projects-member.dto';
-import { ProjectsMemberModel } from '@/models/projects-member.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateProjectsMemberCommand } from '@/commands/implements/projects-members/update-projects-member.command';
+import { UpdateProjectsMemberDTO } from '@/dtos/projects-members/update-projects-member.dto';
+import { ProjectsMemberModel } from '@/models/projects-member.model';
 
 @Injectable()
 export class UpdateProjectsMemberService

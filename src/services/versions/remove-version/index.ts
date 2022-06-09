@@ -1,9 +1,10 @@
-import { RemoveVersionCommand } from '@/commands/implements/versions/remove-version.command';
-import { RemoveVersionDTO } from '@/dtos/versions/remove-version.dto';
-import { VersionModel } from '@/models/version.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveVersionCommand } from '@/commands/implements/versions/remove-version.command';
+import { RemoveVersionDTO } from '@/dtos/versions/remove-version.dto';
+import { VersionModel } from '@/models/version.model';
 
 @Injectable()
 export class RemoveVersionService

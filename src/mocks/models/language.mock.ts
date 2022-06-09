@@ -1,6 +1,7 @@
-import { LanguageModel, ILanguageModelData } from '@/models/language.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { ILanguageModelData, LanguageModel } from '@/models/language.model';
 
 export class LanguageModelMock extends LanguageModel {
   constructor(data?: Partial<ILanguageModelData>) {

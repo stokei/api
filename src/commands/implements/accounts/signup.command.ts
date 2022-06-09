@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { SignUpDTO } from '@/dtos/accounts/signup.dto';
 
 export class SignUpCommand implements ICommand, SignUpDTO {

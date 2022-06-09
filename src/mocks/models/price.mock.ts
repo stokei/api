@@ -1,6 +1,7 @@
-import { PriceModel, IPriceModelData } from '@/models/price.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IPriceModelData, PriceModel } from '@/models/price.model';
 
 export class PriceModelMock extends PriceModel {
   constructor(data?: Partial<IPriceModelData>) {

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { PaymentMapper } from '@/mappers/payments';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreatePaymentDTO } from '@/dtos/payments/create-payment.dto';
+import { PaymentMapper } from '@/mappers/payments';
 import { PaymentModel } from '@/models/payment.model';
 
 @Injectable()

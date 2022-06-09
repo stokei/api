@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { CreateCardInput } from '@/controllers/graphql/inputs/cards/create-card.input';
 import { Card } from '@/controllers/graphql/types/card';
 import { CreateCardService } from '@/services/cards/create-card';

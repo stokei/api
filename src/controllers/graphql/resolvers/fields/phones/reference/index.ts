@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { PhonesLoader } from '@/controllers/graphql/dataloaders/phones.loader';
 import { Phone } from '@/controllers/graphql/types/phone';
 

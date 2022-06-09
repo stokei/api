@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { CardMapper } from '@/mappers/cards';
 import { CardModel } from '@/models/card.model';

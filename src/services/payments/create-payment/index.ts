@@ -1,9 +1,10 @@
-import { CreatePaymentCommand } from '@/commands/implements/payments/create-payment.command';
-import { CreatePaymentDTO } from '@/dtos/payments/create-payment.dto';
-import { PaymentModel } from '@/models/payment.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreatePaymentCommand } from '@/commands/implements/payments/create-payment.command';
+import { CreatePaymentDTO } from '@/dtos/payments/create-payment.dto';
+import { PaymentModel } from '@/models/payment.model';
 
 @Injectable()
 export class CreatePaymentService

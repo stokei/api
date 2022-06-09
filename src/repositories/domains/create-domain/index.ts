@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { DomainMapper } from '@/mappers/domains';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateDomainDTO } from '@/dtos/domains/create-domain.dto';
+import { DomainMapper } from '@/mappers/domains';
 import { DomainModel } from '@/models/domain.model';
 
 @Injectable()

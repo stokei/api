@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { PlanModel } from '@/models/plan.model';
 import { FindPlanByIdQuery } from '@/queries/implements/plans/find-plan-by-id.query';
 

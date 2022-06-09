@@ -1,6 +1,7 @@
-import { CartsItemRemovedEvent } from '@/events/implements/carts-items/carts-item-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { CartsItemRemovedEvent } from '@/events/implements/carts-items/carts-item-removed.event';
 
 @EventsHandler(CartsItemRemovedEvent)
 export class CartsItemRemovedHandler

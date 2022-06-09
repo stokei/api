@@ -1,8 +1,8 @@
 import { CountPlansRepository } from './count-plans';
 import { CreatePlanRepository } from './create-plan';
 import { ExistsPlansRepository } from './exists-plans';
-import { FindPlanByIdRepository } from './find-plan-by-id';
 import { FindAllPlansRepository } from './find-all-plans';
+import { FindPlanByIdRepository } from './find-plan-by-id';
 import { RemovePlanRepository } from './remove-plan';
 import { UpdatePlanRepository } from './update-plan';
 

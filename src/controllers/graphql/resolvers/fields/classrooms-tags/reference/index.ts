@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { ClassroomsTagsLoader } from '@/controllers/graphql/dataloaders/classrooms-tags.loader';
 import { ClassroomsTag } from '@/controllers/graphql/types/classrooms-tag';
 

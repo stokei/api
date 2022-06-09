@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreatePaymentsMethodDTO } from '@/dtos/payments-methods/create-payments-method.dto';
 
 export class CreatePaymentsMethodCommand

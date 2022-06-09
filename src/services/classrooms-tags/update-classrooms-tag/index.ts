@@ -1,9 +1,10 @@
-import { UpdateClassroomsTagCommand } from '@/commands/implements/classrooms-tags/update-classrooms-tag.command';
-import { UpdateClassroomsTagDTO } from '@/dtos/classrooms-tags/update-classrooms-tag.dto';
-import { ClassroomsTagModel } from '@/models/classrooms-tag.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateClassroomsTagCommand } from '@/commands/implements/classrooms-tags/update-classrooms-tag.command';
+import { UpdateClassroomsTagDTO } from '@/dtos/classrooms-tags/update-classrooms-tag.dto';
+import { ClassroomsTagModel } from '@/models/classrooms-tag.model';
 
 @Injectable()
 export class UpdateClassroomsTagService

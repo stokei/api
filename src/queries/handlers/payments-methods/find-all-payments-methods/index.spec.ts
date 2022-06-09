@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountPaymentsMethodsRepository } from '@/repositories/payments-methods/count-payments-methods';
 import { FindAllPaymentsMethodsRepository } from '@/repositories/payments-methods/find-all-payments-methods';
-import { Test } from '@nestjs/testing';
+
 import { FindAllPaymentsMethodsQueryHandler } from '.';
 
 describe('FindAllPaymentsMethodsQueryHandler', () => {

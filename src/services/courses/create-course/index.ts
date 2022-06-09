@@ -1,9 +1,10 @@
-import { CreateCourseCommand } from '@/commands/implements/courses/create-course.command';
-import { CreateCourseDTO } from '@/dtos/courses/create-course.dto';
-import { CourseModel } from '@/models/course.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateCourseCommand } from '@/commands/implements/courses/create-course.command';
+import { CreateCourseDTO } from '@/dtos/courses/create-course.dto';
+import { CourseModel } from '@/models/course.model';
 
 @Injectable()
 export class CreateCourseService

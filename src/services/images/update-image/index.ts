@@ -1,9 +1,10 @@
-import { UpdateImageCommand } from '@/commands/implements/images/update-image.command';
-import { UpdateImageDTO } from '@/dtos/images/update-image.dto';
-import { ImageModel } from '@/models/image.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateImageCommand } from '@/commands/implements/images/update-image.command';
+import { UpdateImageDTO } from '@/dtos/images/update-image.dto';
+import { ImageModel } from '@/models/image.model';
 
 @Injectable()
 export class UpdateImageService

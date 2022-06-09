@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountCartsItemsRepository } from '@/repositories/carts-items/count-carts-items';
 import { FindAllCartsItemsRepository } from '@/repositories/carts-items/find-all-carts-items';
-import { Test } from '@nestjs/testing';
+
 import { FindAllCartsItemsQueryHandler } from '.';
 
 describe('FindAllCartsItemsQueryHandler', () => {

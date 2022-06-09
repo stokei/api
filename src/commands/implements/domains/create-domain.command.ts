@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateDomainDTO } from '@/dtos/domains/create-domain.dto';
 
 export class CreateDomainCommand implements ICommand, CreateDomainDTO {

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { RatingMapper } from '@/mappers/ratings';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateRatingDTO } from '@/dtos/ratings/create-rating.dto';
+import { RatingMapper } from '@/mappers/ratings';
 import { RatingModel } from '@/models/rating.model';
 
 @Injectable()

@@ -1,14 +1,15 @@
+import { Field, InputType } from '@nestjs/graphql';
+import {
+  OrderBy,
+  WhereDataSearchInput,
+  WhereDataStringInput,
+  WherePaginated
+} from '@stokei/nestjs';
+
 import {
   OrderByDataFindAllVideosMaterialsDTO,
   WhereDataFindAllVideosMaterialsDTO
 } from '@/dtos/videos-materials/find-all-videos-materials.dto';
-import { Field, InputType } from '@nestjs/graphql';
-import {
-  OrderBy,
-  WhereDataStringInput,
-  WhereDataSearchInput,
-  WherePaginated
-} from '@stokei/nestjs';
 
 @InputType()
 class WhereDataFindAllVideosMaterialsDataInput

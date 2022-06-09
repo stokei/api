@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { OrdersSellerModel } from '@/models/orders-seller.model';
+
 import { FindAllOrdersSellersDTO } from '@/dtos/orders-sellers/find-all-orders-sellers.dto';
+import { OrdersSellerModel } from '@/models/orders-seller.model';
 import { FindAllOrdersSellersQuery } from '@/queries/implements/orders-sellers/find-all-orders-sellers.query';
 
 @Injectable()

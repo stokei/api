@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { ImageCreatedEvent } from '@/events/implements/images/image-created.event';
 import { ImageRemovedEvent } from '@/events/implements/images/image-removed.event';
 import { ImageUpdatedEvent } from '@/events/implements/images/image-updated.event';

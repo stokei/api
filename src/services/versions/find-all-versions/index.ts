@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { VersionModel } from '@/models/version.model';
+
 import { FindAllVersionsDTO } from '@/dtos/versions/find-all-versions.dto';
+import { VersionModel } from '@/models/version.model';
 import { FindAllVersionsQuery } from '@/queries/implements/versions/find-all-versions.query';
 
 @Injectable()

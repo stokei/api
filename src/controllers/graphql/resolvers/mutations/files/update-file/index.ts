@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateFileInput } from '@/controllers/graphql/inputs/files/update-file.input';
 import { File } from '@/controllers/graphql/types/file';
 import { UpdateFileService } from '@/services/files/update-file';

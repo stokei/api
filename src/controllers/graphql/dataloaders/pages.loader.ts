@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllPagesService } from '@/services/pages/find-all-pages';
 import DataLoader from 'dataloader';
+
+import { FindAllPagesService } from '@/services/pages/find-all-pages';
 
 @Injectable({ scope: Scope.REQUEST })
 export class PagesLoader {

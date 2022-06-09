@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountVideosAuthorsRepository } from '@/repositories/videos-authors/count-videos-authors';
 import { FindAllVideosAuthorsRepository } from '@/repositories/videos-authors/find-all-videos-authors';
-import { Test } from '@nestjs/testing';
+
 import { FindAllVideosAuthorsQueryHandler } from '.';
 
 describe('FindAllVideosAuthorsQueryHandler', () => {

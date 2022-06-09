@@ -1,6 +1,7 @@
-import { ProjectRemovedEvent } from '@/events/implements/projects/project-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ProjectRemovedEvent } from '@/events/implements/projects/project-removed.event';
 
 @EventsHandler(ProjectRemovedEvent)
 export class ProjectRemovedHandler

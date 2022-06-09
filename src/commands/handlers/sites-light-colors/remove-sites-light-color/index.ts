@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveSitesLightColorCommand } from '@/commands/implements/sites-light-colors/remove-sites-light-color.command';
 import {
-  SitesLightColorNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SitesLightColorNotFoundException
 } from '@/errors';
 import { FindSitesLightColorByIdRepository } from '@/repositories/sites-light-colors/find-sites-light-color-by-id';
 import { RemoveSitesLightColorRepository } from '@/repositories/sites-light-colors/remove-sites-light-color';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveSitesLightColorCommandKeys = keyof RemoveSitesLightColorCommand;
 

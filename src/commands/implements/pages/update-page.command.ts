@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdatePageDTO,
   UpdatePageDataDTO,
+  UpdatePageDTO,
   UpdatePageWhereDTO
 } from '@/dtos/pages/update-page.dto';
 

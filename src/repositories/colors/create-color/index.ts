@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { ColorMapper } from '@/mappers/colors';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateColorDTO } from '@/dtos/colors/create-color.dto';
+import { ColorMapper } from '@/mappers/colors';
 import { ColorModel } from '@/models/color.model';
 
 @Injectable()

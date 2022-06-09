@@ -1,6 +1,7 @@
-import { CurrencyUpdatedEvent } from '@/events/implements/currencies/currency-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { CurrencyUpdatedEvent } from '@/events/implements/currencies/currency-updated.event';
 
 @EventsHandler(CurrencyUpdatedEvent)
 export class CurrencyUpdatedHandler

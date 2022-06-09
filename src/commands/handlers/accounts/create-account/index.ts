@@ -1,7 +1,17 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import {
+  cleanObject,
+  cleanUsername,
+  cleanValue,
+  encryptPassword,
+  generateSalt
+} from '@stokei/nestjs';
+import { nanoid } from 'nanoid';
+
+import { CreateAccountCommand } from '@/commands/implements/accounts/create-account.command';
 import { AccountRole } from '@/enums/account-role.enum';
 import { AccountStatus } from '@/enums/account-status.enum';
-import { CreateAccountCommand } from '@/commands/implements/accounts/create-account.command';
+import { PASSWORD_SECRET_KEY } from '@/environments';
 import {
   AccountAlreadyExistsException,
   AccountNotFoundException,
@@ -10,16 +20,7 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateAccountRepository } from '@/repositories/accounts/create-account';
-import {
-  cleanObject,
-  cleanUsername,
-  cleanValue,
-  encryptPassword,
-  generateSalt
-} from '@stokei/nestjs';
-import { PASSWORD_SECRET_KEY } from '@/environments';
 import { ExistsAccountsRepository } from '@/repositories/accounts/exists-accounts';
-import { nanoid } from 'nanoid';
 
 type CreateAccountCommandKeys = keyof CreateAccountCommand;
 

@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { ActivityCreatedEvent } from '@/events/implements/activities/activity-created.event';
-import { ActivityUpdatedEvent } from '@/events/implements/activities/activity-updated.event';
-import { ActivityRemovedEvent } from '@/events/implements/activities/activity-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { ActivityCreatedEvent } from '@/events/implements/activities/activity-created.event';
+import { ActivityRemovedEvent } from '@/events/implements/activities/activity-removed.event';
+import { ActivityUpdatedEvent } from '@/events/implements/activities/activity-updated.event';
 
 export interface IActivityModelData {
   readonly id?: string;

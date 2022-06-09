@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { CoursesInstructorsLoader } from '@/controllers/graphql/dataloaders/courses-instructors.loader';
 import { CoursesInstructor } from '@/controllers/graphql/types/courses-instructor';
 import {

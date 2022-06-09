@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { CheckoutCreatedEvent } from '@/events/implements/checkouts/checkout-created.event';
-import { CheckoutUpdatedEvent } from '@/events/implements/checkouts/checkout-updated.event';
-import { CheckoutRemovedEvent } from '@/events/implements/checkouts/checkout-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { CheckoutCreatedEvent } from '@/events/implements/checkouts/checkout-created.event';
+import { CheckoutRemovedEvent } from '@/events/implements/checkouts/checkout-removed.event';
+import { CheckoutUpdatedEvent } from '@/events/implements/checkouts/checkout-updated.event';
 
 export interface ICheckoutModelData {
   readonly id?: string;

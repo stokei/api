@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { PaymentsMethodCreatedEvent } from '@/events/implements/payments-methods/payments-method-created.event';
-import { PaymentsMethodUpdatedEvent } from '@/events/implements/payments-methods/payments-method-updated.event';
-import { PaymentsMethodRemovedEvent } from '@/events/implements/payments-methods/payments-method-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { PaymentsMethodCreatedEvent } from '@/events/implements/payments-methods/payments-method-created.event';
+import { PaymentsMethodRemovedEvent } from '@/events/implements/payments-methods/payments-method-removed.event';
+import { PaymentsMethodUpdatedEvent } from '@/events/implements/payments-methods/payments-method-updated.event';
 
 export interface IPaymentsMethodModelData {
   readonly id?: string;

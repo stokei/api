@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { QuestionModel } from '@/models/question.model';
 import { FindQuestionByIdQuery } from '@/queries/implements/questions/find-question-by-id.query';
 

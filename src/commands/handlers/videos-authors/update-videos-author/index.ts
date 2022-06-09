@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateVideosAuthorCommand } from '@/commands/implements/videos-authors/update-videos-author.command';
 import {
-  VideosAuthorNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosAuthorNotFoundException
 } from '@/errors';
 import { FindVideosAuthorByIdRepository } from '@/repositories/videos-authors/find-videos-author-by-id';
 import { UpdateVideosAuthorRepository } from '@/repositories/videos-authors/update-videos-author';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateVideosAuthorCommandKeys = keyof UpdateVideosAuthorCommand;
 

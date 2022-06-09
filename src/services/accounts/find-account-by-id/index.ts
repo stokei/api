@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { AccountModel } from '@/models/account.model';
 import { FindAccountByIdQuery } from '@/queries/implements/accounts/find-account-by-id.query';
 

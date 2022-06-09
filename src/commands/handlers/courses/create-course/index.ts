@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateCourseCommand } from '@/commands/implements/courses/create-course.command';
 import {
   CourseNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateCourseRepository } from '@/repositories/courses/create-course';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateCourseCommandKeys = keyof CreateCourseCommand;
 

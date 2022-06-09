@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  ModulesMaterialNotFoundException,
   DataNotFoundException,
+  ModulesMaterialNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { ModulesMaterialModel } from '@/models/modules-material.model';
-import { FindModulesMaterialByIdRepository } from '@/repositories/modules-materials/find-modules-material-by-id';
 import { FindModulesMaterialByIdQuery } from '@/queries/implements/modules-materials/find-modules-material-by-id.query';
+import { FindModulesMaterialByIdRepository } from '@/repositories/modules-materials/find-modules-material-by-id';
 
 @QueryHandler(FindModulesMaterialByIdQuery)
 export class FindModulesMaterialByIdQueryHandler

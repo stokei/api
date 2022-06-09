@@ -1,9 +1,10 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { VideosMaterialsLoader } from '@/controllers/graphql/dataloaders/videos-materials.loader';
 import { VideosMaterial } from '@/controllers/graphql/types/videos-material';
 import {
-  VideosMaterialNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosMaterialNotFoundException
 } from '@/errors';
 
 @Resolver(() => VideosMaterial)

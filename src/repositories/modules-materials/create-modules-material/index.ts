@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { ModulesMaterialMapper } from '@/mappers/modules-materials';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateModulesMaterialDTO } from '@/dtos/modules-materials/create-modules-material.dto';
+import { ModulesMaterialMapper } from '@/mappers/modules-materials';
 import { ModulesMaterialModel } from '@/models/modules-material.model';
 
 @Injectable()

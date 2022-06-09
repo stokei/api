@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateLanguageDTO } from '@/dtos/languages/create-language.dto';
 
 export class CreateLanguageCommand implements ICommand, CreateLanguageDTO {

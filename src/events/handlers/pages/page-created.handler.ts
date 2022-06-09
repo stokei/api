@@ -1,6 +1,7 @@
-import { PageCreatedEvent } from '@/events/implements/pages/page-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { PageCreatedEvent } from '@/events/implements/pages/page-created.event';
 
 @EventsHandler(PageCreatedEvent)
 export class PageCreatedHandler implements IEventHandler<PageCreatedEvent> {

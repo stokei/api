@@ -1,6 +1,7 @@
-import { CheckoutModel, ICheckoutModelData } from '@/models/checkout.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { CheckoutModel, ICheckoutModelData } from '@/models/checkout.model';
 
 export class CheckoutModelMock extends CheckoutModel {
   constructor(data?: Partial<ICheckoutModelData>) {

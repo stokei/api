@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   AccountNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { AccountModel } from '@/models/account.model';
-import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
 import { FindAccountByIdQuery } from '@/queries/implements/accounts/find-account-by-id.query';
+import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
 
 @QueryHandler(FindAccountByIdQuery)
 export class FindAccountByIdQueryHandler

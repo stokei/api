@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateAnswerCommand } from '@/commands/implements/answers/create-answer.command';
 import {
   AnswerNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateAnswerRepository } from '@/repositories/answers/create-answer';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateAnswerCommandKeys = keyof CreateAnswerCommand;
 

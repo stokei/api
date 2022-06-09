@@ -1,7 +1,3 @@
-import { PASSWORD_SECRET_KEY } from '@/environments';
-import { AccountRole } from '@/enums/account-role.enum';
-import { AccountStatus } from '@/enums/account-status.enum';
-import { AccountModel, IAccountModelData } from '@/models/account.model';
 import {
   cleanEmail,
   convertToISODateString,
@@ -9,6 +5,11 @@ import {
   generateSalt
 } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { AccountRole } from '@/enums/account-role.enum';
+import { AccountStatus } from '@/enums/account-status.enum';
+import { PASSWORD_SECRET_KEY } from '@/environments';
+import { AccountModel, IAccountModelData } from '@/models/account.model';
 
 export class AccountModelMock extends AccountModel {
   constructor(data?: Partial<IAccountModelData>) {

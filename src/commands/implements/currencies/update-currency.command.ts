@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateCurrencyDTO,
   UpdateCurrencyDataDTO,
+  UpdateCurrencyDTO,
   UpdateCurrencyWhereDTO
 } from '@/dtos/currencies/update-currency.dto';
 

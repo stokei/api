@@ -1,6 +1,7 @@
-import { AddressModel, IAddressModelData } from '@/models/address.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { AddressModel, IAddressModelData } from '@/models/address.model';
 
 export class AddressModelMock extends AddressModel {
   constructor(data?: Partial<IAddressModelData>) {

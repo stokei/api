@@ -1,9 +1,10 @@
-import { RemovePageCommand } from '@/commands/implements/pages/remove-page.command';
-import { RemovePageDTO } from '@/dtos/pages/remove-page.dto';
-import { PageModel } from '@/models/page.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemovePageCommand } from '@/commands/implements/pages/remove-page.command';
+import { RemovePageDTO } from '@/dtos/pages/remove-page.dto';
+import { PageModel } from '@/models/page.model';
 
 @Injectable()
 export class RemovePageService

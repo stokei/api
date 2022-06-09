@@ -1,6 +1,7 @@
-import { TagModel, ITagModelData } from '@/models/tag.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { ITagModelData, TagModel } from '@/models/tag.model';
 
 export class TagModelMock extends TagModel {
   constructor(data?: Partial<ITagModelData>) {

@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { VideosMaterialsLoader } from '@/controllers/graphql/dataloaders/videos-materials.loader';
 import { VideosMaterial } from '@/controllers/graphql/types/videos-material';
 

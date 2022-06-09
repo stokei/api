@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  VideosAuthorNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosAuthorNotFoundException
 } from '@/errors';
 import { VideosAuthorModel } from '@/models/videos-author.model';
-import { FindVideosAuthorByIdRepository } from '@/repositories/videos-authors/find-videos-author-by-id';
 import { FindVideosAuthorByIdQuery } from '@/queries/implements/videos-authors/find-videos-author-by-id.query';
+import { FindVideosAuthorByIdRepository } from '@/repositories/videos-authors/find-videos-author-by-id';
 
 @QueryHandler(FindVideosAuthorByIdQuery)
 export class FindVideosAuthorByIdQueryHandler

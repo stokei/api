@@ -1,9 +1,10 @@
-import { UpdateCommentCommand } from '@/commands/implements/comments/update-comment.command';
-import { UpdateCommentDTO } from '@/dtos/comments/update-comment.dto';
-import { CommentModel } from '@/models/comment.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateCommentCommand } from '@/commands/implements/comments/update-comment.command';
+import { UpdateCommentDTO } from '@/dtos/comments/update-comment.dto';
+import { CommentModel } from '@/models/comment.model';
 
 @Injectable()
 export class UpdateCommentService

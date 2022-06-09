@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { KeywordModel } from '@/models/keyword.model';
+
 import { FindAllKeywordsDTO } from '@/dtos/keywords/find-all-keywords.dto';
+import { KeywordModel } from '@/models/keyword.model';
 import { FindAllKeywordsQuery } from '@/queries/implements/keywords/find-all-keywords.query';
 
 @Injectable()

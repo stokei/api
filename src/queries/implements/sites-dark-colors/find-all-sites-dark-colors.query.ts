@@ -1,9 +1,10 @@
 import { IQuery } from '@nestjs/cqrs';
 import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+
 import {
   FindAllSitesDarkColorsDTO,
-  WhereDataFindAllSitesDarkColorsDTO,
-  OrderByDataFindAllSitesDarkColorsDTO
+  OrderByDataFindAllSitesDarkColorsDTO,
+  WhereDataFindAllSitesDarkColorsDTO
 } from '@/dtos/sites-dark-colors/find-all-sites-dark-colors.dto';
 
 export class FindAllSitesDarkColorsQuery

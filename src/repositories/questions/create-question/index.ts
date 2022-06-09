@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { QuestionMapper } from '@/mappers/questions';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateQuestionDTO } from '@/dtos/questions/create-question.dto';
+import { QuestionMapper } from '@/mappers/questions';
 import { QuestionModel } from '@/models/question.model';
 
 @Injectable()

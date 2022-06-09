@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  VideosTagNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosTagNotFoundException
 } from '@/errors';
 import { VideosTagModel } from '@/models/videos-tag.model';
-import { FindVideosTagByIdRepository } from '@/repositories/videos-tags/find-videos-tag-by-id';
 import { FindVideosTagByIdQuery } from '@/queries/implements/videos-tags/find-videos-tag-by-id.query';
+import { FindVideosTagByIdRepository } from '@/repositories/videos-tags/find-videos-tag-by-id';
 
 @QueryHandler(FindVideosTagByIdQuery)
 export class FindVideosTagByIdQueryHandler

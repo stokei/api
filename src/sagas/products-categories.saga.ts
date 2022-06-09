@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { ProductsCategoryCreatedEvent } from '@/events/implements/products-categories/products-category-created.event';
 import { ProductsCategoryRemovedEvent } from '@/events/implements/products-categories/products-category-removed.event';
 import { ProductsCategoryUpdatedEvent } from '@/events/implements/products-categories/products-category-updated.event';

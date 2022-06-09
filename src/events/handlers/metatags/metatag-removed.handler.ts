@@ -1,6 +1,7 @@
-import { MetatagRemovedEvent } from '@/events/implements/metatags/metatag-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { MetatagRemovedEvent } from '@/events/implements/metatags/metatag-removed.event';
 
 @EventsHandler(MetatagRemovedEvent)
 export class MetatagRemovedHandler

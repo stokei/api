@@ -1,5 +1,7 @@
-import { FindMetatagByIdRepository } from '@/repositories/metatags/find-metatag-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindMetatagByIdRepository } from '@/repositories/metatags/find-metatag-by-id';
+
 import { FindMetatagByIdQueryHandler } from '.';
 
 describe('FindMetatagByIdQueryHandler', () => {

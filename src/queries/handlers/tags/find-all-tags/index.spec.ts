@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountTagsRepository } from '@/repositories/tags/count-tags';
 import { FindAllTagsRepository } from '@/repositories/tags/find-all-tags';
-import { Test } from '@nestjs/testing';
+
 import { FindAllTagsQueryHandler } from '.';
 
 describe('FindAllTagsQueryHandler', () => {

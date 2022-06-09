@@ -4,6 +4,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AuthModule } from '@stokei/nestjs';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+
 import { CommandHandlers } from './commands/handlers';
 import { Controllers } from './controllers';
 import { Loaders } from './controllers/graphql/dataloaders';

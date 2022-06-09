@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { QuestionsLoader } from '@/controllers/graphql/dataloaders/questions.loader';
 import { Question } from '@/controllers/graphql/types/question';
-import { QuestionNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, QuestionNotFoundException } from '@/errors';
 
 @Resolver(() => Question)
 export class QuestionResolver {

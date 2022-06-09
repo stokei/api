@@ -1,6 +1,7 @@
-import { CardModel, ICardModelData } from '@/models/card.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { CardModel, ICardModelData } from '@/models/card.model';
 
 export class CardModelMock extends CardModel {
   constructor(data?: Partial<ICardModelData>) {

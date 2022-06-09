@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { CurrenciesLoader } from '@/controllers/graphql/dataloaders/currencies.loader';
 import { Currency } from '@/controllers/graphql/types/currency';
 import { CurrencyNotFoundException, ParamNotFoundException } from '@/errors';

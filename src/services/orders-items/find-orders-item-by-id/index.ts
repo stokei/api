@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { OrdersItemModel } from '@/models/orders-item.model';
 import { FindOrdersItemByIdQuery } from '@/queries/implements/orders-items/find-orders-item-by-id.query';
 

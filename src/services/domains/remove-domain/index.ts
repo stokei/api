@@ -1,9 +1,10 @@
-import { RemoveDomainCommand } from '@/commands/implements/domains/remove-domain.command';
-import { RemoveDomainDTO } from '@/dtos/domains/remove-domain.dto';
-import { DomainModel } from '@/models/domain.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveDomainCommand } from '@/commands/implements/domains/remove-domain.command';
+import { RemoveDomainDTO } from '@/dtos/domains/remove-domain.dto';
+import { DomainModel } from '@/models/domain.model';
 
 @Injectable()
 export class RemoveDomainService

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { AccountModel } from '@/models/account.model';
+
 import { FindAllAccountsDTO } from '@/dtos/accounts/find-all-accounts.dto';
+import { AccountModel } from '@/models/account.model';
 import { FindAllAccountsQuery } from '@/queries/implements/accounts/find-all-accounts.query';
 
 @Injectable()

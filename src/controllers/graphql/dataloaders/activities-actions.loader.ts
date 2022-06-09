@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllActivitiesActionsService } from '@/services/activities-actions/find-all-activities-actions';
 import DataLoader from 'dataloader';
+
+import { FindAllActivitiesActionsService } from '@/services/activities-actions/find-all-activities-actions';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ActivitiesActionsLoader {

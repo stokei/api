@@ -1,6 +1,7 @@
-import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
 
 @EventsHandler(DomainCreatedEvent)
 export class DomainCreatedHandler implements IEventHandler<DomainCreatedEvent> {

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { AnswerModel } from '@/models/answer.model';
+
 import { FindAllAnswersDTO } from '@/dtos/answers/find-all-answers.dto';
+import { AnswerModel } from '@/models/answer.model';
 import { FindAllAnswersQuery } from '@/queries/implements/answers/find-all-answers.query';
 
 @Injectable()

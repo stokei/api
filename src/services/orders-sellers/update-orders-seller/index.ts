@@ -1,9 +1,10 @@
-import { UpdateOrdersSellerCommand } from '@/commands/implements/orders-sellers/update-orders-seller.command';
-import { UpdateOrdersSellerDTO } from '@/dtos/orders-sellers/update-orders-seller.dto';
-import { OrdersSellerModel } from '@/models/orders-seller.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateOrdersSellerCommand } from '@/commands/implements/orders-sellers/update-orders-seller.command';
+import { UpdateOrdersSellerDTO } from '@/dtos/orders-sellers/update-orders-seller.dto';
+import { OrdersSellerModel } from '@/models/orders-seller.model';
 
 @Injectable()
 export class UpdateOrdersSellerService

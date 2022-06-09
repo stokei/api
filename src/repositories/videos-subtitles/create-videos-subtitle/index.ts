@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { VideosSubtitleMapper } from '@/mappers/videos-subtitles';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateVideosSubtitleDTO } from '@/dtos/videos-subtitles/create-videos-subtitle.dto';
+import { VideosSubtitleMapper } from '@/mappers/videos-subtitles';
 import { VideosSubtitleModel } from '@/models/videos-subtitle.model';
 
 @Injectable()

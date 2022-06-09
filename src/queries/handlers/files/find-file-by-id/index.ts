@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  FileNotFoundException,
   DataNotFoundException,
+  FileNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FileModel } from '@/models/file.model';
-import { FindFileByIdRepository } from '@/repositories/files/find-file-by-id';
 import { FindFileByIdQuery } from '@/queries/implements/files/find-file-by-id.query';
+import { FindFileByIdRepository } from '@/repositories/files/find-file-by-id';
 
 @QueryHandler(FindFileByIdQuery)
 export class FindFileByIdQueryHandler

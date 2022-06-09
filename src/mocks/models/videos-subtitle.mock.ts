@@ -1,9 +1,10 @@
-import {
-  VideosSubtitleModel,
-  IVideosSubtitleModelData
-} from '@/models/videos-subtitle.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import {
+  IVideosSubtitleModelData,
+  VideosSubtitleModel
+} from '@/models/videos-subtitle.model';
 
 export class VideosSubtitleModelMock extends VideosSubtitleModel {
   constructor(data?: Partial<IVideosSubtitleModelData>) {

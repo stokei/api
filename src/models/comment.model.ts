@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { CommentCreatedEvent } from '@/events/implements/comments/comment-created.event';
-import { CommentUpdatedEvent } from '@/events/implements/comments/comment-updated.event';
-import { CommentRemovedEvent } from '@/events/implements/comments/comment-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { CommentCreatedEvent } from '@/events/implements/comments/comment-created.event';
+import { CommentRemovedEvent } from '@/events/implements/comments/comment-removed.event';
+import { CommentUpdatedEvent } from '@/events/implements/comments/comment-updated.event';
 
 export interface ICommentModelData {
   readonly id?: string;

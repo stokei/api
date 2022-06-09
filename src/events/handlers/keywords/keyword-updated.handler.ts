@@ -1,6 +1,7 @@
-import { KeywordUpdatedEvent } from '@/events/implements/keywords/keyword-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { KeywordUpdatedEvent } from '@/events/implements/keywords/keyword-updated.event';
 
 @EventsHandler(KeywordUpdatedEvent)
 export class KeywordUpdatedHandler

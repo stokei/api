@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  VideoNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideoNotFoundException
 } from '@/errors';
 import { VideoModel } from '@/models/video.model';
-import { FindVideoByIdRepository } from '@/repositories/videos/find-video-by-id';
 import { FindVideoByIdQuery } from '@/queries/implements/videos/find-video-by-id.query';
+import { FindVideoByIdRepository } from '@/repositories/videos/find-video-by-id';
 
 @QueryHandler(FindVideoByIdQuery)
 export class FindVideoByIdQueryHandler

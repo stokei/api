@@ -1,6 +1,7 @@
-import { CourseModel, ICourseModelData } from '@/models/course.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { CourseModel, ICourseModelData } from '@/models/course.model';
 
 export class CourseModelMock extends CourseModel {
   constructor(data?: Partial<ICourseModelData>) {

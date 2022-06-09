@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateProjectsMemberDTO } from '@/dtos/projects-members/create-projects-member.dto';
 
 export class CreateProjectsMemberCommand

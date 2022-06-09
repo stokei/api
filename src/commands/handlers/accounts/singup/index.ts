@@ -1,3 +1,6 @@
+import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateAccessCommand } from '@/commands/implements/accesses/create-access.command';
 import { CreateAccountCommand } from '@/commands/implements/accounts/create-account.command';
 import { SignUpCommand } from '@/commands/implements/accounts/signup.command';
@@ -8,8 +11,6 @@ import {
 } from '@/errors';
 import { AccessModel } from '@/models/access.model';
 import { AccountModel } from '@/models/account.model';
-import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 @CommandHandler(SignUpCommand)
 export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {

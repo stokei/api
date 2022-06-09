@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountCoursesRepository } from '@/repositories/courses/count-courses';
 import { FindAllCoursesRepository } from '@/repositories/courses/find-all-courses';
-import { Test } from '@nestjs/testing';
+
 import { FindAllCoursesQueryHandler } from '.';
 
 describe('FindAllCoursesQueryHandler', () => {

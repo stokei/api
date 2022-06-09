@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateActivityCommand } from '@/commands/implements/activities/create-activity.command';
 import {
   ActivityNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateActivityRepository } from '@/repositories/activities/create-activity';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateActivityCommandKeys = keyof CreateActivityCommand;
 

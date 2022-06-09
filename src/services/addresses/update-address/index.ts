@@ -1,9 +1,10 @@
-import { UpdateAddressCommand } from '@/commands/implements/addresses/update-address.command';
-import { UpdateAddressDTO } from '@/dtos/addresses/update-address.dto';
-import { AddressModel } from '@/models/address.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateAddressCommand } from '@/commands/implements/addresses/update-address.command';
+import { UpdateAddressDTO } from '@/dtos/addresses/update-address.dto';
+import { AddressModel } from '@/models/address.model';
 
 @Injectable()
 export class UpdateAddressService

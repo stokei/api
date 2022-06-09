@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   AccessNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { AccessModel } from '@/models/access.model';
-import { FindAccessByIdRepository } from '@/repositories/accesses/find-access-by-id';
 import { FindAccessByIdQuery } from '@/queries/implements/accesses/find-access-by-id.query';
+import { FindAccessByIdRepository } from '@/repositories/accesses/find-access-by-id';
 
 @QueryHandler(FindAccessByIdQuery)
 export class FindAccessByIdQueryHandler

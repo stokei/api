@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateAccessDTO } from '@/dtos/accesses/create-access.dto';
 
 export class CreateAccessCommand implements ICommand, CreateAccessDTO {

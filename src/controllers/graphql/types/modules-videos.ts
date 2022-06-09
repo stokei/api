@@ -1,5 +1,6 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Paginated } from '@stokei/nestjs';
+
 import { ModulesVideo } from './modules-video';
 
 @ObjectType()

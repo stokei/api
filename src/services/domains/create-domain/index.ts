@@ -1,9 +1,10 @@
-import { CreateDomainCommand } from '@/commands/implements/domains/create-domain.command';
-import { CreateDomainDTO } from '@/dtos/domains/create-domain.dto';
-import { DomainModel } from '@/models/domain.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateDomainCommand } from '@/commands/implements/domains/create-domain.command';
+import { CreateDomainDTO } from '@/dtos/domains/create-domain.dto';
+import { DomainModel } from '@/models/domain.model';
 
 @Injectable()
 export class CreateDomainService

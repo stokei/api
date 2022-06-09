@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { AccountMapper } from '@/mappers/accounts';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateAccountRepositoryDTO } from '@/dtos/accounts/create-account-repository.dto';
+import { AccountMapper } from '@/mappers/accounts';
 import { AccountModel } from '@/models/account.model';
 
 @Injectable()

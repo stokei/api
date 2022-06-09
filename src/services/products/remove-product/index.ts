@@ -1,9 +1,10 @@
-import { RemoveProductCommand } from '@/commands/implements/products/remove-product.command';
-import { RemoveProductDTO } from '@/dtos/products/remove-product.dto';
-import { ProductModel } from '@/models/product.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveProductCommand } from '@/commands/implements/products/remove-product.command';
+import { RemoveProductDTO } from '@/dtos/products/remove-product.dto';
+import { ProductModel } from '@/models/product.model';
 
 @Injectable()
 export class RemoveProductService

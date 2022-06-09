@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateAccessCommand } from '@/commands/implements/accesses/update-access.command';
 import {
   AccessNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindAccessByIdRepository } from '@/repositories/accesses/find-access-by-id';
 import { UpdateAccessRepository } from '@/repositories/accesses/update-access';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 @CommandHandler(UpdateAccessCommand)
 export class UpdateAccessCommandHandler

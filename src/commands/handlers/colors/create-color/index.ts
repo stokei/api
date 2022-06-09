@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateColorCommand } from '@/commands/implements/colors/create-color.command';
 import {
   ColorNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateColorRepository } from '@/repositories/colors/create-color';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateColorCommandKeys = keyof CreateColorCommand;
 

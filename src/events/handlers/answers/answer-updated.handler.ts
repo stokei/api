@@ -1,6 +1,7 @@
-import { AnswerUpdatedEvent } from '@/events/implements/answers/answer-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { AnswerUpdatedEvent } from '@/events/implements/answers/answer-updated.event';
 
 @EventsHandler(AnswerUpdatedEvent)
 export class AnswerUpdatedHandler implements IEventHandler<AnswerUpdatedEvent> {

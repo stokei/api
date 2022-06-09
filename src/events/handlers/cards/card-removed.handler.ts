@@ -1,6 +1,7 @@
-import { CardRemovedEvent } from '@/events/implements/cards/card-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { CardRemovedEvent } from '@/events/implements/cards/card-removed.event';
 
 @EventsHandler(CardRemovedEvent)
 export class CardRemovedHandler implements IEventHandler<CardRemovedEvent> {

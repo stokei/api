@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import {
+  cleanObject,
   IBaseRepository,
   IOperator,
-  PrismaMapper,
-  cleanObject
+  PrismaMapper
 } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { FindAllCoursesStudentsDTO } from '@/dtos/courses-students/find-all-courses-students.dto';
 import { CoursesStudentMapper } from '@/mappers/courses-students';

@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { AccessCreatedEvent } from '@/events/implements/accesses/access-created.event';
 import { AccessRemovedEvent } from '@/events/implements/accesses/access-removed.event';
 import { AccessUpdatedEvent } from '@/events/implements/accesses/access-updated.event';

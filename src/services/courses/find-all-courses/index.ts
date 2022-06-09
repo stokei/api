@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { CourseModel } from '@/models/course.model';
+
 import { FindAllCoursesDTO } from '@/dtos/courses/find-all-courses.dto';
+import { CourseModel } from '@/models/course.model';
 import { FindAllCoursesQuery } from '@/queries/implements/courses/find-all-courses.query';
 
 @Injectable()

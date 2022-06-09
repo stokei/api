@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateProjectCommand } from '@/commands/implements/projects/create-project.command';
 import {
-  ProjectNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProjectNotFoundException
 } from '@/errors';
 import { CreateProjectRepository } from '@/repositories/projects/create-project';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateProjectCommandKeys = keyof CreateProjectCommand;
 

@@ -1,6 +1,7 @@
-import { DomainModel, IDomainModelData } from '@/models/domain.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { DomainModel, IDomainModelData } from '@/models/domain.model';
 
 export class DomainModelMock extends DomainModel {
   constructor(data?: Partial<IDomainModelData>) {

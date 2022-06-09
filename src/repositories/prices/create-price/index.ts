@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { PriceMapper } from '@/mappers/prices';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreatePriceDTO } from '@/dtos/prices/create-price.dto';
+import { PriceMapper } from '@/mappers/prices';
 import { PriceModel } from '@/models/price.model';
 
 @Injectable()

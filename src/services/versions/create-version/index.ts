@@ -1,9 +1,10 @@
-import { CreateVersionCommand } from '@/commands/implements/versions/create-version.command';
-import { CreateVersionDTO } from '@/dtos/versions/create-version.dto';
-import { VersionModel } from '@/models/version.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateVersionCommand } from '@/commands/implements/versions/create-version.command';
+import { CreateVersionDTO } from '@/dtos/versions/create-version.dto';
+import { VersionModel } from '@/models/version.model';
 
 @Injectable()
 export class CreateVersionService

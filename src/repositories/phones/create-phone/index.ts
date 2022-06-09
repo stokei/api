@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { PhoneMapper } from '@/mappers/phones';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreatePhoneDTO } from '@/dtos/phones/create-phone.dto';
+import { PhoneMapper } from '@/mappers/phones';
 import { PhoneModel } from '@/models/phone.model';
 
 @Injectable()

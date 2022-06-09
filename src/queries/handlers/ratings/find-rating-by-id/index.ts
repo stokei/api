@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  RatingNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  RatingNotFoundException
 } from '@/errors';
 import { RatingModel } from '@/models/rating.model';
-import { FindRatingByIdRepository } from '@/repositories/ratings/find-rating-by-id';
 import { FindRatingByIdQuery } from '@/queries/implements/ratings/find-rating-by-id.query';
+import { FindRatingByIdRepository } from '@/repositories/ratings/find-rating-by-id';
 
 @QueryHandler(FindRatingByIdQuery)
 export class FindRatingByIdQueryHandler

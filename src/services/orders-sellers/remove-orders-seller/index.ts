@@ -1,9 +1,10 @@
-import { RemoveOrdersSellerCommand } from '@/commands/implements/orders-sellers/remove-orders-seller.command';
-import { RemoveOrdersSellerDTO } from '@/dtos/orders-sellers/remove-orders-seller.dto';
-import { OrdersSellerModel } from '@/models/orders-seller.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveOrdersSellerCommand } from '@/commands/implements/orders-sellers/remove-orders-seller.command';
+import { RemoveOrdersSellerDTO } from '@/dtos/orders-sellers/remove-orders-seller.dto';
+import { OrdersSellerModel } from '@/models/orders-seller.model';
 
 @Injectable()
 export class RemoveOrdersSellerService

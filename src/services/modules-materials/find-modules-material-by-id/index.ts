@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { ModulesMaterialModel } from '@/models/modules-material.model';
 import { FindModulesMaterialByIdQuery } from '@/queries/implements/modules-materials/find-modules-material-by-id.query';
 

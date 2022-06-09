@@ -1,9 +1,10 @@
-import { CreateKeywordCommand } from '@/commands/implements/keywords/create-keyword.command';
-import { CreateKeywordDTO } from '@/dtos/keywords/create-keyword.dto';
-import { KeywordModel } from '@/models/keyword.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateKeywordCommand } from '@/commands/implements/keywords/create-keyword.command';
+import { CreateKeywordDTO } from '@/dtos/keywords/create-keyword.dto';
+import { KeywordModel } from '@/models/keyword.model';
 
 @Injectable()
 export class CreateKeywordService

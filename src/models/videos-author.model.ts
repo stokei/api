@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { VideosAuthorCreatedEvent } from '@/events/implements/videos-authors/videos-author-created.event';
-import { VideosAuthorUpdatedEvent } from '@/events/implements/videos-authors/videos-author-updated.event';
-import { VideosAuthorRemovedEvent } from '@/events/implements/videos-authors/videos-author-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { VideosAuthorCreatedEvent } from '@/events/implements/videos-authors/videos-author-created.event';
+import { VideosAuthorRemovedEvent } from '@/events/implements/videos-authors/videos-author-removed.event';
+import { VideosAuthorUpdatedEvent } from '@/events/implements/videos-authors/videos-author-updated.event';
 
 export interface IVideosAuthorModelData {
   readonly id?: string;

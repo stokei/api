@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import {
+  cleanObject,
   IBaseRepository,
   IOperator,
-  PrismaMapper,
-  cleanObject
+  PrismaMapper
 } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { FindAllVideosTagsDTO } from '@/dtos/videos-tags/find-all-videos-tags.dto';
 import { VideosTagMapper } from '@/mappers/videos-tags';

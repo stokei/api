@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { PaymentsLoader } from '@/controllers/graphql/dataloaders/payments.loader';
 import { Payment } from '@/controllers/graphql/types/payment';
-import { PaymentNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, PaymentNotFoundException } from '@/errors';
 
 @Resolver(() => Payment)
 export class PaymentResolver {

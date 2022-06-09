@@ -1,5 +1,7 @@
-import { FindVideosMaterialByIdRepository } from '@/repositories/videos-materials/find-videos-material-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindVideosMaterialByIdRepository } from '@/repositories/videos-materials/find-videos-material-by-id';
+
 import { FindVideosMaterialByIdQueryHandler } from '.';
 
 describe('FindVideosMaterialByIdQueryHandler', () => {

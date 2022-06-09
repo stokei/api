@@ -1,6 +1,6 @@
 import { AccessCreatedHandler } from './access-created.handler';
-import { AccessUpdatedHandler } from './access-updated.handler';
 import { AccessRemovedHandler } from './access-removed.handler';
+import { AccessUpdatedHandler } from './access-updated.handler';
 
 export const AccessEventsHandlers = [
   AccessCreatedHandler,

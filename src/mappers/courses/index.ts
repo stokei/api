@@ -1,4 +1,5 @@
 import { convertToISODateString } from '@stokei/nestjs';
+
 import { CourseEntity } from '@/entities';
 import { CourseModel } from '@/models/course.model';
 

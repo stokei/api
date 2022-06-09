@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateAddressDTO } from '@/dtos/addresses/create-address.dto';
 
 export class CreateAddressCommand implements ICommand, CreateAddressDTO {

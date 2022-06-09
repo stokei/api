@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { IBaseRepository } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { ExistsPaymentsMethodsDTO } from '@/dtos/payments-methods/exists-payments-methods.dto';
-import { IBaseRepository } from '@stokei/nestjs';
 
 @Injectable()
 export class ExistsPaymentsMethodsRepository

@@ -1,9 +1,10 @@
-import { UpdateProductCommand } from '@/commands/implements/products/update-product.command';
-import { UpdateProductDTO } from '@/dtos/products/update-product.dto';
-import { ProductModel } from '@/models/product.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateProductCommand } from '@/commands/implements/products/update-product.command';
+import { UpdateProductDTO } from '@/dtos/products/update-product.dto';
+import { ProductModel } from '@/models/product.model';
 
 @Injectable()
 export class UpdateProductService

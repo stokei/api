@@ -1,9 +1,10 @@
 import { IQuery } from '@nestjs/cqrs';
 import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+
 import {
   FindAllQuestionsDTO,
-  WhereDataFindAllQuestionsDTO,
-  OrderByDataFindAllQuestionsDTO
+  OrderByDataFindAllQuestionsDTO,
+  WhereDataFindAllQuestionsDTO
 } from '@/dtos/questions/find-all-questions.dto';
 
 export class FindAllQuestionsQuery implements IQuery, FindAllQuestionsDTO {

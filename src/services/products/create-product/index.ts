@@ -1,9 +1,10 @@
-import { CreateProductCommand } from '@/commands/implements/products/create-product.command';
-import { CreateProductDTO } from '@/dtos/products/create-product.dto';
-import { ProductModel } from '@/models/product.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateProductCommand } from '@/commands/implements/products/create-product.command';
+import { CreateProductDTO } from '@/dtos/products/create-product.dto';
+import { ProductModel } from '@/models/product.model';
 
 @Injectable()
 export class CreateProductService

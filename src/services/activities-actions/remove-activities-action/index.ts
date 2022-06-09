@@ -1,9 +1,10 @@
-import { RemoveActivitiesActionCommand } from '@/commands/implements/activities-actions/remove-activities-action.command';
-import { RemoveActivitiesActionDTO } from '@/dtos/activities-actions/remove-activities-action.dto';
-import { ActivitiesActionModel } from '@/models/activities-action.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveActivitiesActionCommand } from '@/commands/implements/activities-actions/remove-activities-action.command';
+import { RemoveActivitiesActionDTO } from '@/dtos/activities-actions/remove-activities-action.dto';
+import { ActivitiesActionModel } from '@/models/activities-action.model';
 
 @Injectable()
 export class RemoveActivitiesActionService

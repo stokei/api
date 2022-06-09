@@ -1,9 +1,10 @@
-import { UpdateFileCommand } from '@/commands/implements/files/update-file.command';
-import { UpdateFileDTO } from '@/dtos/files/update-file.dto';
-import { FileModel } from '@/models/file.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateFileCommand } from '@/commands/implements/files/update-file.command';
+import { UpdateFileDTO } from '@/dtos/files/update-file.dto';
+import { FileModel } from '@/models/file.model';
 
 @Injectable()
 export class UpdateFileService

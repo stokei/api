@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveAddressCommand } from '@/commands/implements/addresses/remove-address.command';
 import {
   AddressNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindAddressByIdRepository } from '@/repositories/addresses/find-address-by-id';
 import { RemoveAddressRepository } from '@/repositories/addresses/remove-address';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveAddressCommandKeys = keyof RemoveAddressCommand;
 

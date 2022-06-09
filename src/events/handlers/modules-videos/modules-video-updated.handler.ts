@@ -1,6 +1,7 @@
-import { ModulesVideoUpdatedEvent } from '@/events/implements/modules-videos/modules-video-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ModulesVideoUpdatedEvent } from '@/events/implements/modules-videos/modules-video-updated.event';
 
 @EventsHandler(ModulesVideoUpdatedEvent)
 export class ModulesVideoUpdatedHandler

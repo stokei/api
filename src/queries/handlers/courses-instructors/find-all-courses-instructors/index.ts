@@ -1,16 +1,17 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import {
+  cleanObject,
+  cleanSortValue,
+  cleanValue,
+  cleanValueNumber,
+  cleanWhereDataSearch,
+  cleanWhereDataString,
   IOperator,
   IPaginatedType,
   PaginationMapper,
-  cleanObject,
-  cleanSortValue,
-  cleanValueNumber,
-  cleanWhereDataString,
-  cleanWhereDataSearch,
-  cleanValue,
   splitServiceId
 } from '@stokei/nestjs';
+
 import { DataNotFoundException } from '@/errors';
 import { CoursesInstructorModel } from '@/models/courses-instructor.model';
 import { FindAllCoursesInstructorsQuery } from '@/queries/implements/courses-instructors/find-all-courses-instructors.query';

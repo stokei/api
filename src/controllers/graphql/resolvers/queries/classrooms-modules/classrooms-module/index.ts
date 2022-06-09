@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { ClassroomsModulesLoader } from '@/controllers/graphql/dataloaders/classrooms-modules.loader';
 import { ClassroomsModule } from '@/controllers/graphql/types/classrooms-module';
 import {

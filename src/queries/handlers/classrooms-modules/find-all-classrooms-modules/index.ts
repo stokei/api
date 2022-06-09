@@ -1,16 +1,17 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import {
+  cleanObject,
+  cleanSortValue,
+  cleanValue,
+  cleanValueNumber,
+  cleanWhereDataSearch,
+  cleanWhereDataString,
   IOperator,
   IPaginatedType,
   PaginationMapper,
-  cleanObject,
-  cleanSortValue,
-  cleanValueNumber,
-  cleanWhereDataString,
-  cleanWhereDataSearch,
-  cleanValue,
   splitServiceId
 } from '@stokei/nestjs';
+
 import { DataNotFoundException } from '@/errors';
 import { ClassroomsModuleModel } from '@/models/classrooms-module.model';
 import { FindAllClassroomsModulesQuery } from '@/queries/implements/classrooms-modules/find-all-classrooms-modules.query';

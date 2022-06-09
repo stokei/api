@@ -1,5 +1,7 @@
-import { FindAddressByIdRepository } from '@/repositories/addresses/find-address-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindAddressByIdRepository } from '@/repositories/addresses/find-address-by-id';
+
 import { FindAddressByIdQueryHandler } from '.';
 
 describe('FindAddressByIdQueryHandler', () => {

@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { ColorCreatedEvent } from '@/events/implements/colors/color-created.event';
 import { ColorRemovedEvent } from '@/events/implements/colors/color-removed.event';
 import { ColorUpdatedEvent } from '@/events/implements/colors/color-updated.event';

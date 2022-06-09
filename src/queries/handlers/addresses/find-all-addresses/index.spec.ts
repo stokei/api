@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountAddressesRepository } from '@/repositories/addresses/count-addresses';
 import { FindAllAddressesRepository } from '@/repositories/addresses/find-all-addresses';
-import { Test } from '@nestjs/testing';
+
 import { FindAllAddressesQueryHandler } from '.';
 
 describe('FindAllAddressesQueryHandler', () => {

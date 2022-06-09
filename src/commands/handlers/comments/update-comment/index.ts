@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateCommentCommand } from '@/commands/implements/comments/update-comment.command';
 import {
   CommentNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindCommentByIdRepository } from '@/repositories/comments/find-comment-by-id';
 import { UpdateCommentRepository } from '@/repositories/comments/update-comment';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateCommentCommandKeys = keyof UpdateCommentCommand;
 

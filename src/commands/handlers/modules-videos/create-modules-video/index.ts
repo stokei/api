@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateModulesVideoCommand } from '@/commands/implements/modules-videos/create-modules-video.command';
 import {
-  ModulesVideoNotFoundException,
   DataNotFoundException,
+  ModulesVideoNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateModulesVideoRepository } from '@/repositories/modules-videos/create-modules-video';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateModulesVideoCommandKeys = keyof CreateModulesVideoCommand;
 

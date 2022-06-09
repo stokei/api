@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateVideosSubtitleInput } from '@/controllers/graphql/inputs/videos-subtitles/update-videos-subtitle.input';
 import { VideosSubtitle } from '@/controllers/graphql/types/videos-subtitle';
 import { UpdateVideosSubtitleService } from '@/services/videos-subtitles/update-videos-subtitle';

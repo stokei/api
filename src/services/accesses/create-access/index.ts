@@ -1,9 +1,10 @@
-import { CreateAccessCommand } from '@/commands/implements/accesses/create-access.command';
-import { CreateAccessDTO } from '@/dtos/accesses/create-access.dto';
-import { AccessModel } from '@/models/access.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateAccessCommand } from '@/commands/implements/accesses/create-access.command';
+import { CreateAccessDTO } from '@/dtos/accesses/create-access.dto';
+import { AccessModel } from '@/models/access.model';
 
 @Injectable()
 export class CreateAccessService

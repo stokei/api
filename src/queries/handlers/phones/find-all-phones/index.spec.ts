@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountPhonesRepository } from '@/repositories/phones/count-phones';
 import { FindAllPhonesRepository } from '@/repositories/phones/find-all-phones';
-import { Test } from '@nestjs/testing';
+
 import { FindAllPhonesQueryHandler } from '.';
 
 describe('FindAllPhonesQueryHandler', () => {

@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { SiteCreatedEvent } from '@/events/implements/sites/site-created.event';
-import { SiteUpdatedEvent } from '@/events/implements/sites/site-updated.event';
-import { SiteRemovedEvent } from '@/events/implements/sites/site-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { SiteCreatedEvent } from '@/events/implements/sites/site-created.event';
+import { SiteRemovedEvent } from '@/events/implements/sites/site-removed.event';
+import { SiteUpdatedEvent } from '@/events/implements/sites/site-updated.event';
 
 export interface ISiteModelData {
   readonly id?: string;

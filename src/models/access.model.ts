@@ -1,9 +1,11 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { AccessCreatedEvent } from '@/events/implements/accesses/access-created.event';
-import { AccessUpdatedEvent } from '@/events/implements/accesses/access-updated.event';
-import { AccessRemovedEvent } from '@/events/implements/accesses/access-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { AccessCreatedEvent } from '@/events/implements/accesses/access-created.event';
+import { AccessRemovedEvent } from '@/events/implements/accesses/access-removed.event';
+import { AccessUpdatedEvent } from '@/events/implements/accesses/access-updated.event';
+
 import { AccountModel } from './account.model';
 
 export interface IAccessModelData {

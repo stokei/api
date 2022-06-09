@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateCategoryDTO } from '@/dtos/categories/create-category.dto';
 
 export class CreateCategoryCommand implements ICommand, CreateCategoryDTO {

@@ -1,9 +1,10 @@
-import { UpdatePageCommand } from '@/commands/implements/pages/update-page.command';
-import { UpdatePageDTO } from '@/dtos/pages/update-page.dto';
-import { PageModel } from '@/models/page.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdatePageCommand } from '@/commands/implements/pages/update-page.command';
+import { UpdatePageDTO } from '@/dtos/pages/update-page.dto';
+import { PageModel } from '@/models/page.model';
 
 @Injectable()
 export class UpdatePageService

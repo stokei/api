@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { PriceCreatedEvent } from '@/events/implements/prices/price-created.event';
-import { PriceUpdatedEvent } from '@/events/implements/prices/price-updated.event';
-import { PriceRemovedEvent } from '@/events/implements/prices/price-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { PriceCreatedEvent } from '@/events/implements/prices/price-created.event';
+import { PriceRemovedEvent } from '@/events/implements/prices/price-removed.event';
+import { PriceUpdatedEvent } from '@/events/implements/prices/price-updated.event';
 
 export interface IPriceModelData {
   readonly id?: string;

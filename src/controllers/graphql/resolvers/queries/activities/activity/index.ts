@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { ActivitiesLoader } from '@/controllers/graphql/dataloaders/activities.loader';
 import { Activity } from '@/controllers/graphql/types/activity';
 import { ActivityNotFoundException, ParamNotFoundException } from '@/errors';

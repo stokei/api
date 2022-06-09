@@ -1,5 +1,7 @@
-import { FindLanguageByIdRepository } from '@/repositories/languages/find-language-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindLanguageByIdRepository } from '@/repositories/languages/find-language-by-id';
+
 import { FindLanguageByIdQueryHandler } from '.';
 
 describe('FindLanguageByIdQueryHandler', () => {

@@ -1,6 +1,7 @@
-import { FileModel, IFileModelData } from '@/models/file.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { FileModel, IFileModelData } from '@/models/file.model';
 
 export class FileModelMock extends FileModel {
   constructor(data?: Partial<IFileModelData>) {

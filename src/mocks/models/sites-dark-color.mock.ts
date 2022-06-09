@@ -1,9 +1,10 @@
-import {
-  SitesDarkColorModel,
-  ISitesDarkColorModelData
-} from '@/models/sites-dark-color.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import {
+  ISitesDarkColorModelData,
+  SitesDarkColorModel
+} from '@/models/sites-dark-color.model';
 
 export class SitesDarkColorModelMock extends SitesDarkColorModel {
   constructor(data?: Partial<ISitesDarkColorModelData>) {

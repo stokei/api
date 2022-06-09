@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { ActivitiesActionModel } from '@/models/activities-action.model';
 import { FindActivitiesActionByIdQuery } from '@/queries/implements/activities-actions/find-activities-action-by-id.query';
 

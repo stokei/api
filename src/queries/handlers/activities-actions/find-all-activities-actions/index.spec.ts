@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountActivitiesActionsRepository } from '@/repositories/activities-actions/count-activities-actions';
 import { FindAllActivitiesActionsRepository } from '@/repositories/activities-actions/find-all-activities-actions';
-import { Test } from '@nestjs/testing';
+
 import { FindAllActivitiesActionsQueryHandler } from '.';
 
 describe('FindAllActivitiesActionsQueryHandler', () => {

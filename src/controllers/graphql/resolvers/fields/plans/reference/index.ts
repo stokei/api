@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { PlansLoader } from '@/controllers/graphql/dataloaders/plans.loader';
 import { Plan } from '@/controllers/graphql/types/plan';
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { UpdateOrdersAddressDTO } from '@/dtos/orders-addresses/update-orders-address.dto';
 
 @Injectable()

@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountModulesVideosRepository } from '@/repositories/modules-videos/count-modules-videos';
 import { FindAllModulesVideosRepository } from '@/repositories/modules-videos/find-all-modules-videos';
-import { Test } from '@nestjs/testing';
+
 import { FindAllModulesVideosQueryHandler } from '.';
 
 describe('FindAllModulesVideosQueryHandler', () => {

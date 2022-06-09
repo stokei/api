@@ -1,9 +1,10 @@
-import { CreateVideoCommand } from '@/commands/implements/videos/create-video.command';
-import { CreateVideoDTO } from '@/dtos/videos/create-video.dto';
-import { VideoModel } from '@/models/video.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateVideoCommand } from '@/commands/implements/videos/create-video.command';
+import { CreateVideoDTO } from '@/dtos/videos/create-video.dto';
+import { VideoModel } from '@/models/video.model';
 
 @Injectable()
 export class CreateVideoService

@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveVideosSubtitleCommand } from '@/commands/implements/videos-subtitles/remove-videos-subtitle.command';
 import {
-  VideosSubtitleNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosSubtitleNotFoundException
 } from '@/errors';
 import { FindVideosSubtitleByIdRepository } from '@/repositories/videos-subtitles/find-videos-subtitle-by-id';
 import { RemoveVideosSubtitleRepository } from '@/repositories/videos-subtitles/remove-videos-subtitle';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveVideosSubtitleCommandKeys = keyof RemoveVideosSubtitleCommand;
 

@@ -1,6 +1,7 @@
-import { VideoModel, IVideoModelData } from '@/models/video.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IVideoModelData, VideoModel } from '@/models/video.model';
 
 export class VideoModelMock extends VideoModel {
   constructor(data?: Partial<IVideoModelData>) {

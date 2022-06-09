@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { ClassroomCreatedEvent } from '@/events/implements/classrooms/classroom-created.event';
-import { ClassroomUpdatedEvent } from '@/events/implements/classrooms/classroom-updated.event';
-import { ClassroomRemovedEvent } from '@/events/implements/classrooms/classroom-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { ClassroomCreatedEvent } from '@/events/implements/classrooms/classroom-created.event';
+import { ClassroomRemovedEvent } from '@/events/implements/classrooms/classroom-removed.event';
+import { ClassroomUpdatedEvent } from '@/events/implements/classrooms/classroom-updated.event';
 
 export interface IClassroomModelData {
   readonly id?: string;

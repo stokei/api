@@ -1,6 +1,7 @@
-import { ProductRemovedEvent } from '@/events/implements/products/product-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ProductRemovedEvent } from '@/events/implements/products/product-removed.event';
 
 @EventsHandler(ProductRemovedEvent)
 export class ProductRemovedHandler

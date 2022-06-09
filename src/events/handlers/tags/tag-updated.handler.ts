@@ -1,6 +1,7 @@
-import { TagUpdatedEvent } from '@/events/implements/tags/tag-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { TagUpdatedEvent } from '@/events/implements/tags/tag-updated.event';
 
 @EventsHandler(TagUpdatedEvent)
 export class TagUpdatedHandler implements IEventHandler<TagUpdatedEvent> {

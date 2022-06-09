@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { ColorsLoader } from '@/controllers/graphql/dataloaders/colors.loader';
 import { Color } from '@/controllers/graphql/types/color';
 

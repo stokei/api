@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateCategoryCommand } from '@/commands/implements/categories/update-category.command';
 import {
   CategoryNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindCategoryByIdRepository } from '@/repositories/categories/find-category-by-id';
 import { UpdateCategoryRepository } from '@/repositories/categories/update-category';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateCategoryCommandKeys = keyof UpdateCategoryCommand;
 

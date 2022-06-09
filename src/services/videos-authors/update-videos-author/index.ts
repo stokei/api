@@ -1,9 +1,10 @@
-import { UpdateVideosAuthorCommand } from '@/commands/implements/videos-authors/update-videos-author.command';
-import { UpdateVideosAuthorDTO } from '@/dtos/videos-authors/update-videos-author.dto';
-import { VideosAuthorModel } from '@/models/videos-author.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateVideosAuthorCommand } from '@/commands/implements/videos-authors/update-videos-author.command';
+import { UpdateVideosAuthorDTO } from '@/dtos/videos-authors/update-videos-author.dto';
+import { VideosAuthorModel } from '@/models/videos-author.model';
 
 @Injectable()
 export class UpdateVideosAuthorService

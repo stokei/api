@@ -1,16 +1,17 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import {
+  cleanObject,
+  cleanSortValue,
+  cleanValue,
+  cleanValueNumber,
+  cleanWhereDataSearch,
+  cleanWhereDataString,
   IOperator,
   IPaginatedType,
   PaginationMapper,
-  cleanObject,
-  cleanSortValue,
-  cleanValueNumber,
-  cleanWhereDataString,
-  cleanWhereDataSearch,
-  cleanValue,
   splitServiceId
 } from '@stokei/nestjs';
+
 import { DataNotFoundException } from '@/errors';
 import { DomainModel } from '@/models/domain.model';
 import { FindAllDomainsQuery } from '@/queries/implements/domains/find-all-domains.query';

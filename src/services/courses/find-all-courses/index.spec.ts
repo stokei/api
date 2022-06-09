@@ -1,5 +1,6 @@
 import { QueryBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
+
 import { FindAllCoursesService } from '.';
 
 describe('FindAllCoursesService', () => {

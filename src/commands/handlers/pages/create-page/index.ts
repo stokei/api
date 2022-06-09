@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreatePageCommand } from '@/commands/implements/pages/create-page.command';
 import {
-  PageNotFoundException,
   DataNotFoundException,
+  PageNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreatePageRepository } from '@/repositories/pages/create-page';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreatePageCommandKeys = keyof CreatePageCommand;
 

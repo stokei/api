@@ -1,9 +1,10 @@
 import { IQuery } from '@nestjs/cqrs';
 import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+
 import {
   FindAllVideosMaterialsDTO,
-  WhereDataFindAllVideosMaterialsDTO,
-  OrderByDataFindAllVideosMaterialsDTO
+  OrderByDataFindAllVideosMaterialsDTO,
+  WhereDataFindAllVideosMaterialsDTO
 } from '@/dtos/videos-materials/find-all-videos-materials.dto';
 
 export class FindAllVideosMaterialsQuery

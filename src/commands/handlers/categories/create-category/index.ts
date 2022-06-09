@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateCategoryCommand } from '@/commands/implements/categories/create-category.command';
 import {
   CategoryNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateCategoryRepository } from '@/repositories/categories/create-category';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateCategoryCommandKeys = keyof CreateCategoryCommand;
 

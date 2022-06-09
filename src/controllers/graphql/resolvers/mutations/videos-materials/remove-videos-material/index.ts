@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemoveVideosMaterialInput } from '@/controllers/graphql/inputs/videos-materials/remove-videos-material.input';
 import { VideosMaterial } from '@/controllers/graphql/types/videos-material';
 import { RemoveVideosMaterialService } from '@/services/videos-materials/remove-videos-material';

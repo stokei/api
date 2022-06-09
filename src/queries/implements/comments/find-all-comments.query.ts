@@ -1,9 +1,10 @@
 import { IQuery } from '@nestjs/cqrs';
 import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+
 import {
   FindAllCommentsDTO,
-  WhereDataFindAllCommentsDTO,
-  OrderByDataFindAllCommentsDTO
+  OrderByDataFindAllCommentsDTO,
+  WhereDataFindAllCommentsDTO
 } from '@/dtos/comments/find-all-comments.dto';
 
 export class FindAllCommentsQuery implements IQuery, FindAllCommentsDTO {

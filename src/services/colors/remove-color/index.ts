@@ -1,9 +1,10 @@
-import { RemoveColorCommand } from '@/commands/implements/colors/remove-color.command';
-import { RemoveColorDTO } from '@/dtos/colors/remove-color.dto';
-import { ColorModel } from '@/models/color.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveColorCommand } from '@/commands/implements/colors/remove-color.command';
+import { RemoveColorDTO } from '@/dtos/colors/remove-color.dto';
+import { ColorModel } from '@/models/color.model';
 
 @Injectable()
 export class RemoveColorService

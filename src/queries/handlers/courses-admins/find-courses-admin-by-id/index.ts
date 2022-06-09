@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   CoursesAdminNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CoursesAdminModel } from '@/models/courses-admin.model';
-import { FindCoursesAdminByIdRepository } from '@/repositories/courses-admins/find-courses-admin-by-id';
 import { FindCoursesAdminByIdQuery } from '@/queries/implements/courses-admins/find-courses-admin-by-id.query';
+import { FindCoursesAdminByIdRepository } from '@/repositories/courses-admins/find-courses-admin-by-id';
 
 @QueryHandler(FindCoursesAdminByIdQuery)
 export class FindCoursesAdminByIdQueryHandler

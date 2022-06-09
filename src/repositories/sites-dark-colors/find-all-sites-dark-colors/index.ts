@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import {
+  cleanObject,
   IBaseRepository,
   IOperator,
-  PrismaMapper,
-  cleanObject
+  PrismaMapper
 } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { FindAllSitesDarkColorsDTO } from '@/dtos/sites-dark-colors/find-all-sites-dark-colors.dto';
 import { SitesDarkColorMapper } from '@/mappers/sites-dark-colors';

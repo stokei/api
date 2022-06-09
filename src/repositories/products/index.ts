@@ -1,8 +1,8 @@
 import { CountProductsRepository } from './count-products';
 import { CreateProductRepository } from './create-product';
 import { ExistsProductsRepository } from './exists-products';
-import { FindProductByIdRepository } from './find-product-by-id';
 import { FindAllProductsRepository } from './find-all-products';
+import { FindProductByIdRepository } from './find-product-by-id';
 import { RemoveProductRepository } from './remove-product';
 import { UpdateProductRepository } from './update-product';
 

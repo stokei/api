@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { CategoryCreatedEvent } from '@/events/implements/categories/category-created.event';
-import { CategoryUpdatedEvent } from '@/events/implements/categories/category-updated.event';
-import { CategoryRemovedEvent } from '@/events/implements/categories/category-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { CategoryCreatedEvent } from '@/events/implements/categories/category-created.event';
+import { CategoryRemovedEvent } from '@/events/implements/categories/category-removed.event';
+import { CategoryUpdatedEvent } from '@/events/implements/categories/category-updated.event';
 
 export interface ICategoryModelData {
   readonly id?: string;

@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemovePaymentCommand } from '@/commands/implements/payments/remove-payment.command';
 import {
-  PaymentNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PaymentNotFoundException
 } from '@/errors';
 import { FindPaymentByIdRepository } from '@/repositories/payments/find-payment-by-id';
 import { RemovePaymentRepository } from '@/repositories/payments/remove-payment';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemovePaymentCommandKeys = keyof RemovePaymentCommand;
 

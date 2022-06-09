@@ -1,5 +1,7 @@
-import { FindCheckoutsCurrencyByIdRepository } from '@/repositories/checkouts-currencies/find-checkouts-currency-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindCheckoutsCurrencyByIdRepository } from '@/repositories/checkouts-currencies/find-checkouts-currency-by-id';
+
 import { FindCheckoutsCurrencyByIdQueryHandler } from '.';
 
 describe('FindCheckoutsCurrencyByIdQueryHandler', () => {

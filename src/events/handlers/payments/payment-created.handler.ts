@@ -1,6 +1,7 @@
-import { PaymentCreatedEvent } from '@/events/implements/payments/payment-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { PaymentCreatedEvent } from '@/events/implements/payments/payment-created.event';
 
 @EventsHandler(PaymentCreatedEvent)
 export class PaymentCreatedHandler

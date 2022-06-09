@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateSitesLightColorCommand } from '@/commands/implements/sites-light-colors/create-sites-light-color.command';
 import {
-  SitesLightColorNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SitesLightColorNotFoundException
 } from '@/errors';
 import { CreateSitesLightColorRepository } from '@/repositories/sites-light-colors/create-sites-light-color';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateSitesLightColorCommandKeys = keyof CreateSitesLightColorCommand;
 

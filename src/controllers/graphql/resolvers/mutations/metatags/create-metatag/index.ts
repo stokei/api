@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { CreateMetatagInput } from '@/controllers/graphql/inputs/metatags/create-metatag.input';
 import { Metatag } from '@/controllers/graphql/types/metatag';
 import { CreateMetatagService } from '@/services/metatags/create-metatag';

@@ -1,5 +1,7 @@
-import { FindRatingByIdRepository } from '@/repositories/ratings/find-rating-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindRatingByIdRepository } from '@/repositories/ratings/find-rating-by-id';
+
 import { FindRatingByIdQueryHandler } from '.';
 
 describe('FindRatingByIdQueryHandler', () => {

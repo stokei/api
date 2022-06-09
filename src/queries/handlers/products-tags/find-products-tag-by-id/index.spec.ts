@@ -1,5 +1,7 @@
-import { FindProductsTagByIdRepository } from '@/repositories/products-tags/find-products-tag-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindProductsTagByIdRepository } from '@/repositories/products-tags/find-products-tag-by-id';
+
 import { FindProductsTagByIdQueryHandler } from '.';
 
 describe('FindProductsTagByIdQueryHandler', () => {

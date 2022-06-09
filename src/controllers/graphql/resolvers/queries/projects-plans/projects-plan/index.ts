@@ -1,9 +1,10 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { ProjectsPlansLoader } from '@/controllers/graphql/dataloaders/projects-plans.loader';
 import { ProjectsPlan } from '@/controllers/graphql/types/projects-plan';
 import {
-  ProjectsPlanNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProjectsPlanNotFoundException
 } from '@/errors';
 
 @Resolver(() => ProjectsPlan)

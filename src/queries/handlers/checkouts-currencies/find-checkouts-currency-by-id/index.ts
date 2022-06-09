@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   CheckoutsCurrencyNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CheckoutsCurrencyModel } from '@/models/checkouts-currency.model';
-import { FindCheckoutsCurrencyByIdRepository } from '@/repositories/checkouts-currencies/find-checkouts-currency-by-id';
 import { FindCheckoutsCurrencyByIdQuery } from '@/queries/implements/checkouts-currencies/find-checkouts-currency-by-id.query';
+import { FindCheckoutsCurrencyByIdRepository } from '@/repositories/checkouts-currencies/find-checkouts-currency-by-id';
 
 @QueryHandler(FindCheckoutsCurrencyByIdQuery)
 export class FindCheckoutsCurrencyByIdQueryHandler

@@ -1,6 +1,7 @@
-import { CommentUpdatedEvent } from '@/events/implements/comments/comment-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { CommentUpdatedEvent } from '@/events/implements/comments/comment-updated.event';
 
 @EventsHandler(CommentUpdatedEvent)
 export class CommentUpdatedHandler

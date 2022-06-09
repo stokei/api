@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateCurrencyInput } from '@/controllers/graphql/inputs/currencies/update-currency.input';
 import { Currency } from '@/controllers/graphql/types/currency';
 import { UpdateCurrencyService } from '@/services/currencies/update-currency';

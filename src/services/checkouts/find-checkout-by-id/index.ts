@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { CheckoutModel } from '@/models/checkout.model';
 import { FindCheckoutByIdQuery } from '@/queries/implements/checkouts/find-checkout-by-id.query';
 

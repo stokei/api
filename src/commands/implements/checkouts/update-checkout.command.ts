@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateCheckoutDTO,
   UpdateCheckoutDataDTO,
+  UpdateCheckoutDTO,
   UpdateCheckoutWhereDTO
 } from '@/dtos/checkouts/update-checkout.dto';
 

@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { ClassroomsMaterialsLoader } from '@/controllers/graphql/dataloaders/classrooms-materials.loader';
 import { ClassroomsMaterial } from '@/controllers/graphql/types/classrooms-material';
 

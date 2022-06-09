@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { LanguagesLoader } from '@/controllers/graphql/dataloaders/languages.loader';
 import { Language } from '@/controllers/graphql/types/language';
 

@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
-import { CountSitesDarkColorsDTO } from '@/dtos/sites-dark-colors/count-sites-dark-colors.dto';
 import {
   IBaseRepository,
-  PrismaMapper,
   IOperator,
-  IWhere
+  IWhere,
+  PrismaMapper
 } from '@stokei/nestjs';
+
+import { PrismaClient } from '@/database/prisma/client';
+import { CountSitesDarkColorsDTO } from '@/dtos/sites-dark-colors/count-sites-dark-colors.dto';
 
 @Injectable()
 export class CountSitesDarkColorsRepository

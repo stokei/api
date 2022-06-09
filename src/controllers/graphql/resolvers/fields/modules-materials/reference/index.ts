@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { ModulesMaterialsLoader } from '@/controllers/graphql/dataloaders/modules-materials.loader';
 import { ModulesMaterial } from '@/controllers/graphql/types/modules-material';
 

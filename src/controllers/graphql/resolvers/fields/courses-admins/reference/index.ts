@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { CoursesAdminsLoader } from '@/controllers/graphql/dataloaders/courses-admins.loader';
 import { CoursesAdmin } from '@/controllers/graphql/types/courses-admin';
 

@@ -1,6 +1,7 @@
-import { PhoneRemovedEvent } from '@/events/implements/phones/phone-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { PhoneRemovedEvent } from '@/events/implements/phones/phone-removed.event';
 
 @EventsHandler(PhoneRemovedEvent)
 export class PhoneRemovedHandler implements IEventHandler<PhoneRemovedEvent> {

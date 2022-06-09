@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateClassroomsPlanCommand } from '@/commands/implements/classrooms-plans/update-classrooms-plan.command';
 import {
   ClassroomsPlanNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindClassroomsPlanByIdRepository } from '@/repositories/classrooms-plans/find-classrooms-plan-by-id';
 import { UpdateClassroomsPlanRepository } from '@/repositories/classrooms-plans/update-classrooms-plan';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateClassroomsPlanCommandKeys = keyof UpdateClassroomsPlanCommand;
 

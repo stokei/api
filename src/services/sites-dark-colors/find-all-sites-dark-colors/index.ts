@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { SitesDarkColorModel } from '@/models/sites-dark-color.model';
+
 import { FindAllSitesDarkColorsDTO } from '@/dtos/sites-dark-colors/find-all-sites-dark-colors.dto';
+import { SitesDarkColorModel } from '@/models/sites-dark-color.model';
 import { FindAllSitesDarkColorsQuery } from '@/queries/implements/sites-dark-colors/find-all-sites-dark-colors.query';
 
 @Injectable()

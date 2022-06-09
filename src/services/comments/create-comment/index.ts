@@ -1,9 +1,10 @@
-import { CreateCommentCommand } from '@/commands/implements/comments/create-comment.command';
-import { CreateCommentDTO } from '@/dtos/comments/create-comment.dto';
-import { CommentModel } from '@/models/comment.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateCommentCommand } from '@/commands/implements/comments/create-comment.command';
+import { CreateCommentDTO } from '@/dtos/comments/create-comment.dto';
+import { CommentModel } from '@/models/comment.model';
 
 @Injectable()
 export class CreateCommentService

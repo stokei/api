@@ -1,6 +1,7 @@
-import { VideosAuthorCreatedEvent } from '@/events/implements/videos-authors/videos-author-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { VideosAuthorCreatedEvent } from '@/events/implements/videos-authors/videos-author-created.event';
 
 @EventsHandler(VideosAuthorCreatedEvent)
 export class VideosAuthorCreatedHandler

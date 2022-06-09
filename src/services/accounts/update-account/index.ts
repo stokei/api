@@ -1,9 +1,10 @@
-import { UpdateAccountCommand } from '@/commands/implements/accounts/update-account.command';
-import { UpdateAccountDTO } from '@/dtos/accounts/update-account.dto';
-import { AccountModel } from '@/models/account.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateAccountCommand } from '@/commands/implements/accounts/update-account.command';
+import { UpdateAccountDTO } from '@/dtos/accounts/update-account.dto';
+import { AccountModel } from '@/models/account.model';
 
 @Injectable()
 export class UpdateAccountService

@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateKeywordCommand } from '@/commands/implements/keywords/create-keyword.command';
 import {
-  KeywordNotFoundException,
   DataNotFoundException,
+  KeywordNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateKeywordRepository } from '@/repositories/keywords/create-keyword';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateKeywordCommandKeys = keyof CreateKeywordCommand;
 

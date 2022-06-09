@@ -1,9 +1,10 @@
-import { RemoveSitesDarkColorCommand } from '@/commands/implements/sites-dark-colors/remove-sites-dark-color.command';
-import { RemoveSitesDarkColorDTO } from '@/dtos/sites-dark-colors/remove-sites-dark-color.dto';
-import { SitesDarkColorModel } from '@/models/sites-dark-color.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveSitesDarkColorCommand } from '@/commands/implements/sites-dark-colors/remove-sites-dark-color.command';
+import { RemoveSitesDarkColorDTO } from '@/dtos/sites-dark-colors/remove-sites-dark-color.dto';
+import { SitesDarkColorModel } from '@/models/sites-dark-color.model';
 
 @Injectable()
 export class RemoveSitesDarkColorService

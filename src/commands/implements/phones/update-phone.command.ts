@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdatePhoneDTO,
   UpdatePhoneDataDTO,
+  UpdatePhoneDTO,
   UpdatePhoneWhereDTO
 } from '@/dtos/phones/update-phone.dto';
 

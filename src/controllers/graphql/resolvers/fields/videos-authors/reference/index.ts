@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { VideosAuthorsLoader } from '@/controllers/graphql/dataloaders/videos-authors.loader';
 import { VideosAuthor } from '@/controllers/graphql/types/videos-author';
 

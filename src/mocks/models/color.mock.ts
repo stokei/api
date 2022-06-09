@@ -1,6 +1,7 @@
-import { ColorModel, IColorModelData } from '@/models/color.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { ColorModel, IColorModelData } from '@/models/color.model';
 
 export class ColorModelMock extends ColorModel {
   constructor(data?: Partial<IColorModelData>) {

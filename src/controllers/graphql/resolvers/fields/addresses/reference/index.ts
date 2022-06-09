@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { AddressesLoader } from '@/controllers/graphql/dataloaders/addresses.loader';
 import { Address } from '@/controllers/graphql/types/address';
 

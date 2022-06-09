@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllSitesDarkColorsService } from '@/services/sites-dark-colors/find-all-sites-dark-colors';
 import DataLoader from 'dataloader';
+
+import { FindAllSitesDarkColorsService } from '@/services/sites-dark-colors/find-all-sites-dark-colors';
 
 @Injectable({ scope: Scope.REQUEST })
 export class SitesDarkColorsLoader {

@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   CardNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CardModel } from '@/models/card.model';
-import { FindCardByIdRepository } from '@/repositories/cards/find-card-by-id';
 import { FindCardByIdQuery } from '@/queries/implements/cards/find-card-by-id.query';
+import { FindCardByIdRepository } from '@/repositories/cards/find-card-by-id';
 
 @QueryHandler(FindCardByIdQuery)
 export class FindCardByIdQueryHandler

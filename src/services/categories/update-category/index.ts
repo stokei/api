@@ -1,9 +1,10 @@
-import { UpdateCategoryCommand } from '@/commands/implements/categories/update-category.command';
-import { UpdateCategoryDTO } from '@/dtos/categories/update-category.dto';
-import { CategoryModel } from '@/models/category.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateCategoryCommand } from '@/commands/implements/categories/update-category.command';
+import { UpdateCategoryDTO } from '@/dtos/categories/update-category.dto';
+import { CategoryModel } from '@/models/category.model';
 
 @Injectable()
 export class UpdateCategoryService

@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { CartsItemCreatedEvent } from '@/events/implements/carts-items/carts-item-created.event';
-import { CartsItemUpdatedEvent } from '@/events/implements/carts-items/carts-item-updated.event';
-import { CartsItemRemovedEvent } from '@/events/implements/carts-items/carts-item-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { CartsItemCreatedEvent } from '@/events/implements/carts-items/carts-item-created.event';
+import { CartsItemRemovedEvent } from '@/events/implements/carts-items/carts-item-removed.event';
+import { CartsItemUpdatedEvent } from '@/events/implements/carts-items/carts-item-updated.event';
 
 export interface ICartsItemModelData {
   readonly id?: string;

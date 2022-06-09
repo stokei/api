@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateAddressInput } from '@/controllers/graphql/inputs/addresses/update-address.input';
 import { Address } from '@/controllers/graphql/types/address';
 import { UpdateAddressService } from '@/services/addresses/update-address';

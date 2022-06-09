@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  QuestionNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  QuestionNotFoundException
 } from '@/errors';
 import { QuestionModel } from '@/models/question.model';
-import { FindQuestionByIdRepository } from '@/repositories/questions/find-question-by-id';
 import { FindQuestionByIdQuery } from '@/queries/implements/questions/find-question-by-id.query';
+import { FindQuestionByIdRepository } from '@/repositories/questions/find-question-by-id';
 
 @QueryHandler(FindQuestionByIdQuery)
 export class FindQuestionByIdQueryHandler

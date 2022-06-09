@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountSitesDarkColorsRepository } from '@/repositories/sites-dark-colors/count-sites-dark-colors';
 import { FindAllSitesDarkColorsRepository } from '@/repositories/sites-dark-colors/find-all-sites-dark-colors';
-import { Test } from '@nestjs/testing';
+
 import { FindAllSitesDarkColorsQueryHandler } from '.';
 
 describe('FindAllSitesDarkColorsQueryHandler', () => {

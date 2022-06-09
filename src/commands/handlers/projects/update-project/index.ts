@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateProjectCommand } from '@/commands/implements/projects/update-project.command';
 import {
-  ProjectNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProjectNotFoundException
 } from '@/errors';
 import { FindProjectByIdRepository } from '@/repositories/projects/find-project-by-id';
 import { UpdateProjectRepository } from '@/repositories/projects/update-project';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateProjectCommandKeys = keyof UpdateProjectCommand;
 

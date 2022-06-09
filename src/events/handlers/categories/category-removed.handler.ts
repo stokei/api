@@ -1,6 +1,7 @@
-import { CategoryRemovedEvent } from '@/events/implements/categories/category-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { CategoryRemovedEvent } from '@/events/implements/categories/category-removed.event';
 
 @EventsHandler(CategoryRemovedEvent)
 export class CategoryRemovedHandler

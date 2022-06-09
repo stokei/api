@@ -1,9 +1,10 @@
-import { RemoveVideosSubtitleCommand } from '@/commands/implements/videos-subtitles/remove-videos-subtitle.command';
-import { RemoveVideosSubtitleDTO } from '@/dtos/videos-subtitles/remove-videos-subtitle.dto';
-import { VideosSubtitleModel } from '@/models/videos-subtitle.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveVideosSubtitleCommand } from '@/commands/implements/videos-subtitles/remove-videos-subtitle.command';
+import { RemoveVideosSubtitleDTO } from '@/dtos/videos-subtitles/remove-videos-subtitle.dto';
+import { VideosSubtitleModel } from '@/models/videos-subtitle.model';
 
 @Injectable()
 export class RemoveVideosSubtitleService

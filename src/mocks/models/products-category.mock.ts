@@ -1,9 +1,10 @@
-import {
-  ProductsCategoryModel,
-  IProductsCategoryModelData
-} from '@/models/products-category.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import {
+  IProductsCategoryModelData,
+  ProductsCategoryModel
+} from '@/models/products-category.model';
 
 export class ProductsCategoryModelMock extends ProductsCategoryModel {
   constructor(data?: Partial<IProductsCategoryModelData>) {

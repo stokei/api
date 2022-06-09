@@ -1,5 +1,7 @@
-import { FindCheckoutByIdRepository } from '@/repositories/checkouts/find-checkout-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindCheckoutByIdRepository } from '@/repositories/checkouts/find-checkout-by-id';
+
 import { FindCheckoutByIdQueryHandler } from '.';
 
 describe('FindCheckoutByIdQueryHandler', () => {

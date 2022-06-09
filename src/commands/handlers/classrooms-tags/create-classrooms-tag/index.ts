@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateClassroomsTagCommand } from '@/commands/implements/classrooms-tags/create-classrooms-tag.command';
 import {
   ClassroomsTagNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateClassroomsTagRepository } from '@/repositories/classrooms-tags/create-classrooms-tag';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateClassroomsTagCommandKeys = keyof CreateClassroomsTagCommand;
 

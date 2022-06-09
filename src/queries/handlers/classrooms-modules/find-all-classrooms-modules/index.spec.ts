@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountClassroomsModulesRepository } from '@/repositories/classrooms-modules/count-classrooms-modules';
 import { FindAllClassroomsModulesRepository } from '@/repositories/classrooms-modules/find-all-classrooms-modules';
-import { Test } from '@nestjs/testing';
+
 import { FindAllClassroomsModulesQueryHandler } from '.';
 
 describe('FindAllClassroomsModulesQueryHandler', () => {

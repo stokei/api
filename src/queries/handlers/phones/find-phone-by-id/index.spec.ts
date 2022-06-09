@@ -1,5 +1,7 @@
-import { FindPhoneByIdRepository } from '@/repositories/phones/find-phone-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindPhoneByIdRepository } from '@/repositories/phones/find-phone-by-id';
+
 import { FindPhoneByIdQueryHandler } from '.';
 
 describe('FindPhoneByIdQueryHandler', () => {

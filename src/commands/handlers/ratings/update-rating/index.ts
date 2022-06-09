@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateRatingCommand } from '@/commands/implements/ratings/update-rating.command';
 import {
-  RatingNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  RatingNotFoundException
 } from '@/errors';
 import { FindRatingByIdRepository } from '@/repositories/ratings/find-rating-by-id';
 import { UpdateRatingRepository } from '@/repositories/ratings/update-rating';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateRatingCommandKeys = keyof UpdateRatingCommand;
 

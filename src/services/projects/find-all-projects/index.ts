@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { ProjectModel } from '@/models/project.model';
+
 import { FindAllProjectsDTO } from '@/dtos/projects/find-all-projects.dto';
+import { ProjectModel } from '@/models/project.model';
 import { FindAllProjectsQuery } from '@/queries/implements/projects/find-all-projects.query';
 
 @Injectable()

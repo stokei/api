@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { FileModel } from '@/models/file.model';
+
 import { FindAllFilesDTO } from '@/dtos/files/find-all-files.dto';
+import { FileModel } from '@/models/file.model';
 import { FindAllFilesQuery } from '@/queries/implements/files/find-all-files.query';
 
 @Injectable()

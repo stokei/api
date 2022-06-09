@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { LanguageMapper } from '@/mappers/languages';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateLanguageDTO } from '@/dtos/languages/create-language.dto';
+import { LanguageMapper } from '@/mappers/languages';
 import { LanguageModel } from '@/models/language.model';
 
 @Injectable()

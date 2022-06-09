@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateTagCommand } from '@/commands/implements/tags/create-tag.command';
 import {
-  TagNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  TagNotFoundException
 } from '@/errors';
 import { CreateTagRepository } from '@/repositories/tags/create-tag';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateTagCommandKeys = keyof CreateTagCommand;
 

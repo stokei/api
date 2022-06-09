@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemoveClassroomsModuleInput } from '@/controllers/graphql/inputs/classrooms-modules/remove-classrooms-module.input';
 import { ClassroomsModule } from '@/controllers/graphql/types/classrooms-module';
 import { RemoveClassroomsModuleService } from '@/services/classrooms-modules/remove-classrooms-module';

@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountProductsTagsRepository } from '@/repositories/products-tags/count-products-tags';
 import { FindAllProductsTagsRepository } from '@/repositories/products-tags/find-all-products-tags';
-import { Test } from '@nestjs/testing';
+
 import { FindAllProductsTagsQueryHandler } from '.';
 
 describe('FindAllProductsTagsQueryHandler', () => {

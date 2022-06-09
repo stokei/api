@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { VideosAuthorMapper } from '@/mappers/videos-authors';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateVideosAuthorDTO } from '@/dtos/videos-authors/create-videos-author.dto';
+import { VideosAuthorMapper } from '@/mappers/videos-authors';
 import { VideosAuthorModel } from '@/models/videos-author.model';
 
 @Injectable()

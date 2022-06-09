@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  PaymentsMethodNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PaymentsMethodNotFoundException
 } from '@/errors';
 import { PaymentsMethodModel } from '@/models/payments-method.model';
-import { FindPaymentsMethodByIdRepository } from '@/repositories/payments-methods/find-payments-method-by-id';
 import { FindPaymentsMethodByIdQuery } from '@/queries/implements/payments-methods/find-payments-method-by-id.query';
+import { FindPaymentsMethodByIdRepository } from '@/repositories/payments-methods/find-payments-method-by-id';
 
 @QueryHandler(FindPaymentsMethodByIdQuery)
 export class FindPaymentsMethodByIdQueryHandler

@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateClassroomsTagCommand } from '@/commands/implements/classrooms-tags/update-classrooms-tag.command';
 import {
   ClassroomsTagNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindClassroomsTagByIdRepository } from '@/repositories/classrooms-tags/find-classrooms-tag-by-id';
 import { UpdateClassroomsTagRepository } from '@/repositories/classrooms-tags/update-classrooms-tag';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateClassroomsTagCommandKeys = keyof UpdateClassroomsTagCommand;
 

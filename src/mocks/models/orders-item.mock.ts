@@ -1,9 +1,10 @@
-import {
-  OrdersItemModel,
-  IOrdersItemModelData
-} from '@/models/orders-item.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import {
+  IOrdersItemModelData,
+  OrdersItemModel
+} from '@/models/orders-item.model';
 
 export class OrdersItemModelMock extends OrdersItemModel {
   constructor(data?: Partial<IOrdersItemModelData>) {

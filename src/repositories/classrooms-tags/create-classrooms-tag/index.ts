@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { ClassroomsTagMapper } from '@/mappers/classrooms-tags';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateClassroomsTagDTO } from '@/dtos/classrooms-tags/create-classrooms-tag.dto';
+import { ClassroomsTagMapper } from '@/mappers/classrooms-tags';
 import { ClassroomsTagModel } from '@/models/classrooms-tag.model';
 
 @Injectable()

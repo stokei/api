@@ -1,9 +1,10 @@
-import { CreateVideosAuthorCommand } from '@/commands/implements/videos-authors/create-videos-author.command';
-import { CreateVideosAuthorDTO } from '@/dtos/videos-authors/create-videos-author.dto';
-import { VideosAuthorModel } from '@/models/videos-author.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateVideosAuthorCommand } from '@/commands/implements/videos-authors/create-videos-author.command';
+import { CreateVideosAuthorDTO } from '@/dtos/videos-authors/create-videos-author.dto';
+import { VideosAuthorModel } from '@/models/videos-author.model';
 
 @Injectable()
 export class CreateVideosAuthorService

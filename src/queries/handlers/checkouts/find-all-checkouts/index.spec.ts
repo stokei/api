@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountCheckoutsRepository } from '@/repositories/checkouts/count-checkouts';
 import { FindAllCheckoutsRepository } from '@/repositories/checkouts/find-all-checkouts';
-import { Test } from '@nestjs/testing';
+
 import { FindAllCheckoutsQueryHandler } from '.';
 
 describe('FindAllCheckoutsQueryHandler', () => {

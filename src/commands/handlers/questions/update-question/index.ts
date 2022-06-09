@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateQuestionCommand } from '@/commands/implements/questions/update-question.command';
 import {
-  QuestionNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  QuestionNotFoundException
 } from '@/errors';
 import { FindQuestionByIdRepository } from '@/repositories/questions/find-question-by-id';
 import { UpdateQuestionRepository } from '@/repositories/questions/update-question';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateQuestionCommandKeys = keyof UpdateQuestionCommand;
 

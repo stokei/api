@@ -1,9 +1,10 @@
-import { RemoveKeywordCommand } from '@/commands/implements/keywords/remove-keyword.command';
-import { RemoveKeywordDTO } from '@/dtos/keywords/remove-keyword.dto';
-import { KeywordModel } from '@/models/keyword.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveKeywordCommand } from '@/commands/implements/keywords/remove-keyword.command';
+import { RemoveKeywordDTO } from '@/dtos/keywords/remove-keyword.dto';
+import { KeywordModel } from '@/models/keyword.model';
 
 @Injectable()
 export class RemoveKeywordService

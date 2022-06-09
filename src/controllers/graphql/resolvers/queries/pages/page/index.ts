@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { PagesLoader } from '@/controllers/graphql/dataloaders/pages.loader';
 import { Page } from '@/controllers/graphql/types/page';
 import { PageNotFoundException, ParamNotFoundException } from '@/errors';

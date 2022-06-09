@@ -1,9 +1,10 @@
-import { RemoveProductsTagCommand } from '@/commands/implements/products-tags/remove-products-tag.command';
-import { RemoveProductsTagDTO } from '@/dtos/products-tags/remove-products-tag.dto';
-import { ProductsTagModel } from '@/models/products-tag.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveProductsTagCommand } from '@/commands/implements/products-tags/remove-products-tag.command';
+import { RemoveProductsTagDTO } from '@/dtos/products-tags/remove-products-tag.dto';
+import { ProductsTagModel } from '@/models/products-tag.model';
 
 @Injectable()
 export class RemoveProductsTagService

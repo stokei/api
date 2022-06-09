@@ -1,8 +1,8 @@
 import { CountQuestionsRepository } from './count-questions';
 import { CreateQuestionRepository } from './create-question';
 import { ExistsQuestionsRepository } from './exists-questions';
-import { FindQuestionByIdRepository } from './find-question-by-id';
 import { FindAllQuestionsRepository } from './find-all-questions';
+import { FindQuestionByIdRepository } from './find-question-by-id';
 import { RemoveQuestionRepository } from './remove-question';
 import { UpdateQuestionRepository } from './update-question';
 

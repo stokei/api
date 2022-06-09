@@ -1,5 +1,7 @@
-import { FindActivitiesActionByIdRepository } from '@/repositories/activities-actions/find-activities-action-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindActivitiesActionByIdRepository } from '@/repositories/activities-actions/find-activities-action-by-id';
+
 import { FindActivitiesActionByIdQueryHandler } from '.';
 
 describe('FindActivitiesActionByIdQueryHandler', () => {

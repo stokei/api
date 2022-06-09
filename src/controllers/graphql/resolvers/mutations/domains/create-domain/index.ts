@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { CreateDomainInput } from '@/controllers/graphql/inputs/domains/create-domain.input';
 import { Domain } from '@/controllers/graphql/types/domain';
 import { CreateDomainService } from '@/services/domains/create-domain';

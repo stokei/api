@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountDomainsRepository } from '@/repositories/domains/count-domains';
 import { FindAllDomainsRepository } from '@/repositories/domains/find-all-domains';
-import { Test } from '@nestjs/testing';
+
 import { FindAllDomainsQueryHandler } from '.';
 
 describe('FindAllDomainsQueryHandler', () => {

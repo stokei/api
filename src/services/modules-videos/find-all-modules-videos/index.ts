@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { ModulesVideoModel } from '@/models/modules-video.model';
+
 import { FindAllModulesVideosDTO } from '@/dtos/modules-videos/find-all-modules-videos.dto';
+import { ModulesVideoModel } from '@/models/modules-video.model';
 import { FindAllModulesVideosQuery } from '@/queries/implements/modules-videos/find-all-modules-videos.query';
 
 @Injectable()

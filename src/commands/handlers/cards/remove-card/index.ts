@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveCardCommand } from '@/commands/implements/cards/remove-card.command';
 import {
   CardNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindCardByIdRepository } from '@/repositories/cards/find-card-by-id';
 import { RemoveCardRepository } from '@/repositories/cards/remove-card';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveCardCommandKeys = keyof RemoveCardCommand;
 

@@ -1,11 +1,12 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { PaginationInput } from '@stokei/nestjs';
+
 import {
   OrderByDataFindAllCategoriesInput,
   WhereDataFindAllCategoriesInput
 } from '@/controllers/graphql/inputs/categories/find-all-categories.input';
-import { Category } from '@/controllers/graphql/types/category';
 import { Categories } from '@/controllers/graphql/types/categories';
+import { Category } from '@/controllers/graphql/types/category';
 import { FindAllCategoriesService } from '@/services/categories/find-all-categories';
 
 @Resolver(() => Category)

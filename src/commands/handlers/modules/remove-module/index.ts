@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveModuleCommand } from '@/commands/implements/modules/remove-module.command';
 import {
-  ModuleNotFoundException,
   DataNotFoundException,
+  ModuleNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindModuleByIdRepository } from '@/repositories/modules/find-module-by-id';
 import { RemoveModuleRepository } from '@/repositories/modules/remove-module';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveModuleCommandKeys = keyof RemoveModuleCommand;
 

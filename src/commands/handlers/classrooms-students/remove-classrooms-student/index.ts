@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveClassroomsStudentCommand } from '@/commands/implements/classrooms-students/remove-classrooms-student.command';
 import {
   ClassroomsStudentNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindClassroomsStudentByIdRepository } from '@/repositories/classrooms-students/find-classrooms-student-by-id';
 import { RemoveClassroomsStudentRepository } from '@/repositories/classrooms-students/remove-classrooms-student';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveClassroomsStudentCommandKeys = keyof RemoveClassroomsStudentCommand;
 

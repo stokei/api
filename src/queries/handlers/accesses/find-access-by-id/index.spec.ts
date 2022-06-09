@@ -1,5 +1,7 @@
-import { FindAccessByIdRepository } from '@/repositories/accesses/find-access-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindAccessByIdRepository } from '@/repositories/accesses/find-access-by-id';
+
 import { FindAccessByIdQueryHandler } from '.';
 
 describe('FindAccessByIdQueryHandler', () => {

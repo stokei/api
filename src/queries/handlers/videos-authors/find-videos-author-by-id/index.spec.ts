@@ -1,5 +1,7 @@
-import { FindVideosAuthorByIdRepository } from '@/repositories/videos-authors/find-videos-author-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindVideosAuthorByIdRepository } from '@/repositories/videos-authors/find-videos-author-by-id';
+
 import { FindVideosAuthorByIdQueryHandler } from '.';
 
 describe('FindVideosAuthorByIdQueryHandler', () => {

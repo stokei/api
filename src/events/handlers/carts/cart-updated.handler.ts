@@ -1,6 +1,7 @@
-import { CartUpdatedEvent } from '@/events/implements/carts/cart-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { CartUpdatedEvent } from '@/events/implements/carts/cart-updated.event';
 
 @EventsHandler(CartUpdatedEvent)
 export class CartUpdatedHandler implements IEventHandler<CartUpdatedEvent> {

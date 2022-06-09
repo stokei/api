@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { OrdersAddressCreatedEvent } from '@/events/implements/orders-addresses/orders-address-created.event';
-import { OrdersAddressUpdatedEvent } from '@/events/implements/orders-addresses/orders-address-updated.event';
-import { OrdersAddressRemovedEvent } from '@/events/implements/orders-addresses/orders-address-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { OrdersAddressCreatedEvent } from '@/events/implements/orders-addresses/orders-address-created.event';
+import { OrdersAddressRemovedEvent } from '@/events/implements/orders-addresses/orders-address-removed.event';
+import { OrdersAddressUpdatedEvent } from '@/events/implements/orders-addresses/orders-address-updated.event';
 
 export interface IOrdersAddressModelData {
   readonly id?: string;

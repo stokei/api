@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateCoursesStudentDTO } from '@/dtos/courses-students/create-courses-student.dto';
 
 export class CreateCoursesStudentCommand

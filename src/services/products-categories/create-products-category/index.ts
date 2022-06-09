@@ -1,9 +1,10 @@
-import { CreateProductsCategoryCommand } from '@/commands/implements/products-categories/create-products-category.command';
-import { CreateProductsCategoryDTO } from '@/dtos/products-categories/create-products-category.dto';
-import { ProductsCategoryModel } from '@/models/products-category.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateProductsCategoryCommand } from '@/commands/implements/products-categories/create-products-category.command';
+import { CreateProductsCategoryDTO } from '@/dtos/products-categories/create-products-category.dto';
+import { ProductsCategoryModel } from '@/models/products-category.model';
 
 @Injectable()
 export class CreateProductsCategoryService

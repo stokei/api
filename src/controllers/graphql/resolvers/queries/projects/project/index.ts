@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { ProjectsLoader } from '@/controllers/graphql/dataloaders/projects.loader';
 import { Project } from '@/controllers/graphql/types/project';
-import { ProjectNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, ProjectNotFoundException } from '@/errors';
 
 @Resolver(() => Project)
 export class ProjectResolver {

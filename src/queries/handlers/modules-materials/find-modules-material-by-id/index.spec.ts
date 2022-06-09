@@ -1,5 +1,7 @@
-import { FindModulesMaterialByIdRepository } from '@/repositories/modules-materials/find-modules-material-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindModulesMaterialByIdRepository } from '@/repositories/modules-materials/find-modules-material-by-id';
+
 import { FindModulesMaterialByIdQueryHandler } from '.';
 
 describe('FindModulesMaterialByIdQueryHandler', () => {

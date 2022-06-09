@@ -1,5 +1,7 @@
-import { FindClassroomsTagByIdRepository } from '@/repositories/classrooms-tags/find-classrooms-tag-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindClassroomsTagByIdRepository } from '@/repositories/classrooms-tags/find-classrooms-tag-by-id';
+
 import { FindClassroomsTagByIdQueryHandler } from '.';
 
 describe('FindClassroomsTagByIdQueryHandler', () => {

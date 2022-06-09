@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateVideosAuthorDTO } from '@/dtos/videos-authors/create-videos-author.dto';
 
 export class CreateVideosAuthorCommand

@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateProductsTagCommand } from '@/commands/implements/products-tags/create-products-tag.command';
 import {
-  ProductsTagNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProductsTagNotFoundException
 } from '@/errors';
 import { CreateProductsTagRepository } from '@/repositories/products-tags/create-products-tag';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateProductsTagCommandKeys = keyof CreateProductsTagCommand;
 

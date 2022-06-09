@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateCurrencyCommand } from '@/commands/implements/currencies/update-currency.command';
 import {
   CurrencyNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindCurrencyByIdRepository } from '@/repositories/currencies/find-currency-by-id';
 import { UpdateCurrencyRepository } from '@/repositories/currencies/update-currency';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateCurrencyCommandKeys = keyof UpdateCurrencyCommand;
 

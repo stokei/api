@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountKeywordsRepository } from '@/repositories/keywords/count-keywords';
 import { FindAllKeywordsRepository } from '@/repositories/keywords/find-all-keywords';
-import { Test } from '@nestjs/testing';
+
 import { FindAllKeywordsQueryHandler } from '.';
 
 describe('FindAllKeywordsQueryHandler', () => {

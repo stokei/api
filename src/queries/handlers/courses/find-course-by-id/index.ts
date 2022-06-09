@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   CourseNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CourseModel } from '@/models/course.model';
-import { FindCourseByIdRepository } from '@/repositories/courses/find-course-by-id';
 import { FindCourseByIdQuery } from '@/queries/implements/courses/find-course-by-id.query';
+import { FindCourseByIdRepository } from '@/repositories/courses/find-course-by-id';
 
 @QueryHandler(FindCourseByIdQuery)
 export class FindCourseByIdQueryHandler

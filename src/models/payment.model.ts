@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { PaymentCreatedEvent } from '@/events/implements/payments/payment-created.event';
-import { PaymentUpdatedEvent } from '@/events/implements/payments/payment-updated.event';
-import { PaymentRemovedEvent } from '@/events/implements/payments/payment-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { PaymentCreatedEvent } from '@/events/implements/payments/payment-created.event';
+import { PaymentRemovedEvent } from '@/events/implements/payments/payment-removed.event';
+import { PaymentUpdatedEvent } from '@/events/implements/payments/payment-updated.event';
 
 export interface IPaymentModelData {
   readonly id?: string;

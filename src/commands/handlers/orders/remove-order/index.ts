@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveOrderCommand } from '@/commands/implements/orders/remove-order.command';
 import {
-  OrderNotFoundException,
   DataNotFoundException,
+  OrderNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindOrderByIdRepository } from '@/repositories/orders/find-order-by-id';
 import { RemoveOrderRepository } from '@/repositories/orders/remove-order';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveOrderCommandKeys = keyof RemoveOrderCommand;
 

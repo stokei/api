@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { CheckoutModel } from '@/models/checkout.model';
+
 import { FindAllCheckoutsDTO } from '@/dtos/checkouts/find-all-checkouts.dto';
+import { CheckoutModel } from '@/models/checkout.model';
 import { FindAllCheckoutsQuery } from '@/queries/implements/checkouts/find-all-checkouts.query';
 
 @Injectable()

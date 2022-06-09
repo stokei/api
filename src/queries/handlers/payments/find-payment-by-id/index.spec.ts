@@ -1,5 +1,7 @@
-import { FindPaymentByIdRepository } from '@/repositories/payments/find-payment-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindPaymentByIdRepository } from '@/repositories/payments/find-payment-by-id';
+
 import { FindPaymentByIdQueryHandler } from '.';
 
 describe('FindPaymentByIdQueryHandler', () => {

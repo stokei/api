@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { convertToISODateString, IBaseRepository } from '@stokei/nestjs';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { RemoveAccessDTO } from '@/dtos/accesses/remove-access.dto';
 
 @Injectable()

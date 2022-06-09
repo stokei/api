@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountAccessesRepository } from '@/repositories/accesses/count-accesses';
 import { FindAllAccessesRepository } from '@/repositories/accesses/find-all-accesses';
-import { Test } from '@nestjs/testing';
+
 import { FindAllAccessesQueryHandler } from '.';
 
 describe('FindAllAccessesQueryHandler', () => {

@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { PhonesLoader } from '@/controllers/graphql/dataloaders/phones.loader';
 import { Phone } from '@/controllers/graphql/types/phone';
-import { PhoneNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, PhoneNotFoundException } from '@/errors';
 
 @Resolver(() => Phone)
 export class PhoneResolver {

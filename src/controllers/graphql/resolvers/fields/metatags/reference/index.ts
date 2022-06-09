@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { MetatagsLoader } from '@/controllers/graphql/dataloaders/metatags.loader';
 import { Metatag } from '@/controllers/graphql/types/metatag';
 

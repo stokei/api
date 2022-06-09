@@ -1,6 +1,7 @@
-import { QuestionModel, IQuestionModelData } from '@/models/question.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IQuestionModelData, QuestionModel } from '@/models/question.model';
 
 export class QuestionModelMock extends QuestionModel {
   constructor(data?: Partial<IQuestionModelData>) {

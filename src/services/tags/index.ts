@@ -1,6 +1,6 @@
-import { FindTagByIdService } from './find-tag-by-id';
-import { FindAllTagsService } from './find-all-tags';
 import { CreateTagService } from './create-tag';
+import { FindAllTagsService } from './find-all-tags';
+import { FindTagByIdService } from './find-tag-by-id';
 import { RemoveTagService } from './remove-tag';
 import { UpdateTagService } from './update-tag';
 

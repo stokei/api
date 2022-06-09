@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateModuleDTO } from '@/dtos/modules/create-module.dto';
 
 export class CreateModuleCommand implements ICommand, CreateModuleDTO {

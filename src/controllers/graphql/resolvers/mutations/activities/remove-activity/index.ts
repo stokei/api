@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemoveActivityInput } from '@/controllers/graphql/inputs/activities/remove-activity.input';
 import { Activity } from '@/controllers/graphql/types/activity';
 import { RemoveActivityService } from '@/services/activities/remove-activity';

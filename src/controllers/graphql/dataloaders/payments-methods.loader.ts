@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllPaymentsMethodsService } from '@/services/payments-methods/find-all-payments-methods';
 import DataLoader from 'dataloader';
+
+import { FindAllPaymentsMethodsService } from '@/services/payments-methods/find-all-payments-methods';
 
 @Injectable({ scope: Scope.REQUEST })
 export class PaymentsMethodsLoader {

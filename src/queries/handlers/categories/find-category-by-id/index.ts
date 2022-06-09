@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   CategoryNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CategoryModel } from '@/models/category.model';
-import { FindCategoryByIdRepository } from '@/repositories/categories/find-category-by-id';
 import { FindCategoryByIdQuery } from '@/queries/implements/categories/find-category-by-id.query';
+import { FindCategoryByIdRepository } from '@/repositories/categories/find-category-by-id';
 
 @QueryHandler(FindCategoryByIdQuery)
 export class FindCategoryByIdQueryHandler

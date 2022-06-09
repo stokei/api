@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateModulesMaterialDTO } from '@/dtos/modules-materials/create-modules-material.dto';
 
 export class CreateModulesMaterialCommand

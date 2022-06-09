@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  PageNotFoundException,
   DataNotFoundException,
+  PageNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { PageModel } from '@/models/page.model';
-import { FindPageByIdRepository } from '@/repositories/pages/find-page-by-id';
 import { FindPageByIdQuery } from '@/queries/implements/pages/find-page-by-id.query';
+import { FindPageByIdRepository } from '@/repositories/pages/find-page-by-id';
 
 @QueryHandler(FindPageByIdQuery)
 export class FindPageByIdQueryHandler

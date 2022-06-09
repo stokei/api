@@ -1,4 +1,5 @@
 import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
+
 import { AccountRole } from '@/enums/account-role.enum';
 
 export interface CountAccountsWhereDTO {

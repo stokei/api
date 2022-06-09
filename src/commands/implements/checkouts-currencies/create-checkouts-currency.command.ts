@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateCheckoutsCurrencyDTO } from '@/dtos/checkouts-currencies/create-checkouts-currency.dto';
 
 export class CreateCheckoutsCurrencyCommand

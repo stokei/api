@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { RemoveModulesMaterialDTO } from '@/dtos/modules-materials/remove-modules-material.dto';
 
 @Injectable()

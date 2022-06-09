@@ -1,9 +1,10 @@
-import {
-  ProductsTagModel,
-  IProductsTagModelData
-} from '@/models/products-tag.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import {
+  IProductsTagModelData,
+  ProductsTagModel
+} from '@/models/products-tag.model';
 
 export class ProductsTagModelMock extends ProductsTagModel {
   constructor(data?: Partial<IProductsTagModelData>) {

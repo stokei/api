@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveFileCommand } from '@/commands/implements/files/remove-file.command';
 import {
-  FileNotFoundException,
   DataNotFoundException,
+  FileNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindFileByIdRepository } from '@/repositories/files/find-file-by-id';
 import { RemoveFileRepository } from '@/repositories/files/remove-file';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveFileCommandKeys = keyof RemoveFileCommand;
 

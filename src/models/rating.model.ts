@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { RatingCreatedEvent } from '@/events/implements/ratings/rating-created.event';
-import { RatingUpdatedEvent } from '@/events/implements/ratings/rating-updated.event';
-import { RatingRemovedEvent } from '@/events/implements/ratings/rating-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { RatingCreatedEvent } from '@/events/implements/ratings/rating-created.event';
+import { RatingRemovedEvent } from '@/events/implements/ratings/rating-removed.event';
+import { RatingUpdatedEvent } from '@/events/implements/ratings/rating-updated.event';
 
 export interface IRatingModelData {
   readonly id?: string;

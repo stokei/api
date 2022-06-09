@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { ProductsCategoriesLoader } from '@/controllers/graphql/dataloaders/products-categories.loader';
 import { ProductsCategory } from '@/controllers/graphql/types/products-category';
 

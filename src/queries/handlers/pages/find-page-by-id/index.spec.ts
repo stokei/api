@@ -1,5 +1,7 @@
-import { FindPageByIdRepository } from '@/repositories/pages/find-page-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindPageByIdRepository } from '@/repositories/pages/find-page-by-id';
+
 import { FindPageByIdQueryHandler } from '.';
 
 describe('FindPageByIdQueryHandler', () => {

@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateCheckoutsCurrencyCommand } from '@/commands/implements/checkouts-currencies/update-checkouts-currency.command';
 import {
   CheckoutsCurrencyNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindCheckoutsCurrencyByIdRepository } from '@/repositories/checkouts-currencies/find-checkouts-currency-by-id';
 import { UpdateCheckoutsCurrencyRepository } from '@/repositories/checkouts-currencies/update-checkouts-currency';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateCheckoutsCurrencyCommandKeys = keyof UpdateCheckoutsCurrencyCommand;
 

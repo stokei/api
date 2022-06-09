@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllMetatagsService } from '@/services/metatags/find-all-metatags';
 import DataLoader from 'dataloader';
+
+import { FindAllMetatagsService } from '@/services/metatags/find-all-metatags';
 
 @Injectable({ scope: Scope.REQUEST })
 export class MetatagsLoader {

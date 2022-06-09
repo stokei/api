@@ -1,5 +1,7 @@
-import { FindProjectsPlanByIdRepository } from '@/repositories/projects-plans/find-projects-plan-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindProjectsPlanByIdRepository } from '@/repositories/projects-plans/find-projects-plan-by-id';
+
 import { FindProjectsPlanByIdQueryHandler } from '.';
 
 describe('FindProjectsPlanByIdQueryHandler', () => {

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { DomainModel } from '@/models/domain.model';
+
 import { FindAllDomainsDTO } from '@/dtos/domains/find-all-domains.dto';
+import { DomainModel } from '@/models/domain.model';
 import { FindAllDomainsQuery } from '@/queries/implements/domains/find-all-domains.query';
 
 @Injectable()

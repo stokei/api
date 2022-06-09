@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { CommentModel } from '@/models/comment.model';
 import { FindCommentByIdQuery } from '@/queries/implements/comments/find-comment-by-id.query';
 

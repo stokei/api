@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { RemoveVideosSubtitleDTO } from '@/dtos/videos-subtitles/remove-videos-subtitle.dto';
 
 @Injectable()

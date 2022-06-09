@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { AddressModel } from '@/models/address.model';
+
 import { FindAllAddressesDTO } from '@/dtos/addresses/find-all-addresses.dto';
+import { AddressModel } from '@/models/address.model';
 import { FindAllAddressesQuery } from '@/queries/implements/addresses/find-all-addresses.query';
 
 @Injectable()

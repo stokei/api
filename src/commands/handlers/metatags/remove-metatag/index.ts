@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveMetatagCommand } from '@/commands/implements/metatags/remove-metatag.command';
 import {
-  MetatagNotFoundException,
   DataNotFoundException,
+  MetatagNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindMetatagByIdRepository } from '@/repositories/metatags/find-metatag-by-id';
 import { RemoveMetatagRepository } from '@/repositories/metatags/remove-metatag';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveMetatagCommandKeys = keyof RemoveMetatagCommand;
 

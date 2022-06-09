@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { PhoneCreatedEvent } from '@/events/implements/phones/phone-created.event';
-import { PhoneUpdatedEvent } from '@/events/implements/phones/phone-updated.event';
-import { PhoneRemovedEvent } from '@/events/implements/phones/phone-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { PhoneCreatedEvent } from '@/events/implements/phones/phone-created.event';
+import { PhoneRemovedEvent } from '@/events/implements/phones/phone-removed.event';
+import { PhoneUpdatedEvent } from '@/events/implements/phones/phone-updated.event';
 
 export interface IPhoneModelData {
   readonly id?: string;

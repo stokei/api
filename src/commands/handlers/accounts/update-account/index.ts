@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateAccountCommand } from '@/commands/implements/accounts/update-account.command';
 import {
   AccountNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
 import { UpdateAccountRepository } from '@/repositories/accounts/update-account';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateAccountCommandKeys = keyof UpdateAccountCommand;
 

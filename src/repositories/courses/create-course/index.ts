@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { CourseMapper } from '@/mappers/courses';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateCourseDTO } from '@/dtos/courses/create-course.dto';
+import { CourseMapper } from '@/mappers/courses';
 import { CourseModel } from '@/models/course.model';
 
 @Injectable()

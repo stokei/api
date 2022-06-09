@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   ActivityNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { ActivityModel } from '@/models/activity.model';
-import { FindActivityByIdRepository } from '@/repositories/activities/find-activity-by-id';
 import { FindActivityByIdQuery } from '@/queries/implements/activities/find-activity-by-id.query';
+import { FindActivityByIdRepository } from '@/repositories/activities/find-activity-by-id';
 
 @QueryHandler(FindActivityByIdQuery)
 export class FindActivityByIdQueryHandler

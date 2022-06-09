@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { ProductsImageModel } from '@/models/products-image.model';
 import { FindProductsImageByIdQuery } from '@/queries/implements/products-images/find-products-image-by-id.query';
 

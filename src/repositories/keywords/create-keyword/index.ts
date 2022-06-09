@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { KeywordMapper } from '@/mappers/keywords';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateKeywordDTO } from '@/dtos/keywords/create-keyword.dto';
+import { KeywordMapper } from '@/mappers/keywords';
 import { KeywordModel } from '@/models/keyword.model';
 
 @Injectable()

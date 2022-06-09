@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountSitesLightColorsRepository } from '@/repositories/sites-light-colors/count-sites-light-colors';
 import { FindAllSitesLightColorsRepository } from '@/repositories/sites-light-colors/find-all-sites-light-colors';
-import { Test } from '@nestjs/testing';
+
 import { FindAllSitesLightColorsQueryHandler } from '.';
 
 describe('FindAllSitesLightColorsQueryHandler', () => {

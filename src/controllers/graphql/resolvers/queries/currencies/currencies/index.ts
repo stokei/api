@@ -1,11 +1,12 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { PaginationInput } from '@stokei/nestjs';
+
 import {
   OrderByDataFindAllCurrenciesInput,
   WhereDataFindAllCurrenciesInput
 } from '@/controllers/graphql/inputs/currencies/find-all-currencies.input';
-import { Currency } from '@/controllers/graphql/types/currency';
 import { Currencies } from '@/controllers/graphql/types/currencies';
+import { Currency } from '@/controllers/graphql/types/currency';
 import { FindAllCurrenciesService } from '@/services/currencies/find-all-currencies';
 
 @Resolver(() => Currency)

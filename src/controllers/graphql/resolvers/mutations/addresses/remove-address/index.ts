@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemoveAddressInput } from '@/controllers/graphql/inputs/addresses/remove-address.input';
 import { Address } from '@/controllers/graphql/types/address';
 import { RemoveAddressService } from '@/services/addresses/remove-address';

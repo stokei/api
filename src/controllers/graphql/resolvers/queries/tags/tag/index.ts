@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { TagsLoader } from '@/controllers/graphql/dataloaders/tags.loader';
 import { Tag } from '@/controllers/graphql/types/tag';
-import { TagNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, TagNotFoundException } from '@/errors';
 
 @Resolver(() => Tag)
 export class TagResolver {

@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateTagInput } from '@/controllers/graphql/inputs/tags/update-tag.input';
 import { Tag } from '@/controllers/graphql/types/tag';
 import { UpdateTagService } from '@/services/tags/update-tag';

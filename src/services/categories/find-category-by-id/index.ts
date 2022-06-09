@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { CategoryModel } from '@/models/category.model';
 import { FindCategoryByIdQuery } from '@/queries/implements/categories/find-category-by-id.query';
 

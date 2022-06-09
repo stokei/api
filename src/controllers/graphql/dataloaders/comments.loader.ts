@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllCommentsService } from '@/services/comments/find-all-comments';
 import DataLoader from 'dataloader';
+
+import { FindAllCommentsService } from '@/services/comments/find-all-comments';
 
 @Injectable({ scope: Scope.REQUEST })
 export class CommentsLoader {

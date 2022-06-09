@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { CheckoutMapper } from '@/mappers/checkouts';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateCheckoutDTO } from '@/dtos/checkouts/create-checkout.dto';
+import { CheckoutMapper } from '@/mappers/checkouts';
 import { CheckoutModel } from '@/models/checkout.model';
 
 @Injectable()

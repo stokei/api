@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateProjectDTO,
   UpdateProjectDataDTO,
+  UpdateProjectDTO,
   UpdateProjectWhereDTO
 } from '@/dtos/projects/update-project.dto';
 

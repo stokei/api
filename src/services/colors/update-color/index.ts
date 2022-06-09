@@ -1,9 +1,10 @@
-import { UpdateColorCommand } from '@/commands/implements/colors/update-color.command';
-import { UpdateColorDTO } from '@/dtos/colors/update-color.dto';
-import { ColorModel } from '@/models/color.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateColorCommand } from '@/commands/implements/colors/update-color.command';
+import { UpdateColorDTO } from '@/dtos/colors/update-color.dto';
+import { ColorModel } from '@/models/color.model';
 
 @Injectable()
 export class UpdateColorService

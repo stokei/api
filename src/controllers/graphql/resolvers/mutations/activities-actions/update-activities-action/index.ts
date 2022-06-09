@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateActivitiesActionInput } from '@/controllers/graphql/inputs/activities-actions/update-activities-action.input';
 import { ActivitiesAction } from '@/controllers/graphql/types/activities-action';
 import { UpdateActivitiesActionService } from '@/services/activities-actions/update-activities-action';

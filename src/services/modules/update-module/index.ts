@@ -1,9 +1,10 @@
-import { UpdateModuleCommand } from '@/commands/implements/modules/update-module.command';
-import { UpdateModuleDTO } from '@/dtos/modules/update-module.dto';
-import { ModuleModel } from '@/models/module.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateModuleCommand } from '@/commands/implements/modules/update-module.command';
+import { UpdateModuleDTO } from '@/dtos/modules/update-module.dto';
+import { ModuleModel } from '@/models/module.model';
 
 @Injectable()
 export class UpdateModuleService

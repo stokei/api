@@ -1,9 +1,10 @@
-import { UpdateSiteCommand } from '@/commands/implements/sites/update-site.command';
-import { UpdateSiteDTO } from '@/dtos/sites/update-site.dto';
-import { SiteModel } from '@/models/site.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateSiteCommand } from '@/commands/implements/sites/update-site.command';
+import { UpdateSiteDTO } from '@/dtos/sites/update-site.dto';
+import { SiteModel } from '@/models/site.model';
 
 @Injectable()
 export class UpdateSiteService

@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateQuestionDTO } from '@/dtos/questions/create-question.dto';
 
 export class CreateQuestionCommand implements ICommand, CreateQuestionDTO {

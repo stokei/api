@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateAddressCommand } from '@/commands/implements/addresses/create-address.command';
 import {
   AddressNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateAddressRepository } from '@/repositories/addresses/create-address';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateAddressCommandKeys = keyof CreateAddressCommand;
 

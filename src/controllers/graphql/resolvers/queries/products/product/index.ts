@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { ProductsLoader } from '@/controllers/graphql/dataloaders/products.loader';
 import { Product } from '@/controllers/graphql/types/product';
-import { ProductNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, ProductNotFoundException } from '@/errors';
 
 @Resolver(() => Product)
 export class ProductResolver {

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { ActivitiesActionModel } from '@/models/activities-action.model';
+
 import { FindAllActivitiesActionsDTO } from '@/dtos/activities-actions/find-all-activities-actions.dto';
+import { ActivitiesActionModel } from '@/models/activities-action.model';
 import { FindAllActivitiesActionsQuery } from '@/queries/implements/activities-actions/find-all-activities-actions.query';
 
 @Injectable()

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { SitesLightColorModel } from '@/models/sites-light-color.model';
 import { FindSitesLightColorByIdQuery } from '@/queries/implements/sites-light-colors/find-sites-light-color-by-id.query';
 

@@ -1,9 +1,10 @@
-import { CreateTagCommand } from '@/commands/implements/tags/create-tag.command';
-import { CreateTagDTO } from '@/dtos/tags/create-tag.dto';
-import { TagModel } from '@/models/tag.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateTagCommand } from '@/commands/implements/tags/create-tag.command';
+import { CreateTagDTO } from '@/dtos/tags/create-tag.dto';
+import { TagModel } from '@/models/tag.model';
 
 @Injectable()
 export class CreateTagService

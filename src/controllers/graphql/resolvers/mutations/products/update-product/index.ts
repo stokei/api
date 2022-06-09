@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateProductInput } from '@/controllers/graphql/inputs/products/update-product.input';
 import { Product } from '@/controllers/graphql/types/product';
 import { UpdateProductService } from '@/services/products/update-product';

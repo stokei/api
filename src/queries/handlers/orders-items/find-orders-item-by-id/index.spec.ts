@@ -1,5 +1,7 @@
-import { FindOrdersItemByIdRepository } from '@/repositories/orders-items/find-orders-item-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindOrdersItemByIdRepository } from '@/repositories/orders-items/find-orders-item-by-id';
+
 import { FindOrdersItemByIdQueryHandler } from '.';
 
 describe('FindOrdersItemByIdQueryHandler', () => {

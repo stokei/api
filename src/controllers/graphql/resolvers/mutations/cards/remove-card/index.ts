@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemoveCardInput } from '@/controllers/graphql/inputs/cards/remove-card.input';
 import { Card } from '@/controllers/graphql/types/card';
 import { RemoveCardService } from '@/services/cards/remove-card';

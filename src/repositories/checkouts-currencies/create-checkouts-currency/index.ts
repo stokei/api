@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { CheckoutsCurrencyMapper } from '@/mappers/checkouts-currencies';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateCheckoutsCurrencyDTO } from '@/dtos/checkouts-currencies/create-checkouts-currency.dto';
+import { CheckoutsCurrencyMapper } from '@/mappers/checkouts-currencies';
 import { CheckoutsCurrencyModel } from '@/models/checkouts-currency.model';
 
 @Injectable()

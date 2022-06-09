@@ -1,6 +1,7 @@
-import { MetatagCreatedEvent } from '@/events/implements/metatags/metatag-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { MetatagCreatedEvent } from '@/events/implements/metatags/metatag-created.event';
 
 @EventsHandler(MetatagCreatedEvent)
 export class MetatagCreatedHandler

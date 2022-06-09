@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { AccessesLoader } from '@/controllers/graphql/dataloaders/accesses.loader';
 import { Access } from '@/controllers/graphql/types/access';
 import { AccessNotFoundException, ParamNotFoundException } from '@/errors';

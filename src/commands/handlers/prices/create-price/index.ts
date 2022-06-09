@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreatePriceCommand } from '@/commands/implements/prices/create-price.command';
 import {
-  PriceNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PriceNotFoundException
 } from '@/errors';
 import { CreatePriceRepository } from '@/repositories/prices/create-price';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreatePriceCommandKeys = keyof CreatePriceCommand;
 

@@ -1,16 +1,17 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import {
+  cleanObject,
+  cleanSortValue,
+  cleanValue,
+  cleanValueNumber,
+  cleanWhereDataSearch,
+  cleanWhereDataString,
   IOperator,
   IPaginatedType,
   PaginationMapper,
-  cleanObject,
-  cleanSortValue,
-  cleanValueNumber,
-  cleanWhereDataString,
-  cleanWhereDataSearch,
-  cleanValue,
   splitServiceId
 } from '@stokei/nestjs';
+
 import { DataNotFoundException } from '@/errors';
 import { ModulesVideoModel } from '@/models/modules-video.model';
 import { FindAllModulesVideosQuery } from '@/queries/implements/modules-videos/find-all-modules-videos.query';

@@ -1,9 +1,10 @@
-import { CreateCheckoutsCurrencyCommand } from '@/commands/implements/checkouts-currencies/create-checkouts-currency.command';
-import { CreateCheckoutsCurrencyDTO } from '@/dtos/checkouts-currencies/create-checkouts-currency.dto';
-import { CheckoutsCurrencyModel } from '@/models/checkouts-currency.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateCheckoutsCurrencyCommand } from '@/commands/implements/checkouts-currencies/create-checkouts-currency.command';
+import { CreateCheckoutsCurrencyDTO } from '@/dtos/checkouts-currencies/create-checkouts-currency.dto';
+import { CheckoutsCurrencyModel } from '@/models/checkouts-currency.model';
 
 @Injectable()
 export class CreateCheckoutsCurrencyService

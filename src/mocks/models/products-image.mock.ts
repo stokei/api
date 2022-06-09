@@ -1,9 +1,10 @@
-import {
-  ProductsImageModel,
-  IProductsImageModelData
-} from '@/models/products-image.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import {
+  IProductsImageModelData,
+  ProductsImageModel
+} from '@/models/products-image.model';
 
 export class ProductsImageModelMock extends ProductsImageModel {
   constructor(data?: Partial<IProductsImageModelData>) {

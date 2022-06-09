@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateAddressCommand } from '@/commands/implements/addresses/update-address.command';
 import {
   AddressNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindAddressByIdRepository } from '@/repositories/addresses/find-address-by-id';
 import { UpdateAddressRepository } from '@/repositories/addresses/update-address';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateAddressCommandKeys = keyof UpdateAddressCommand;
 

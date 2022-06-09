@@ -1,6 +1,7 @@
-import { AccessCreatedEvent } from '@/events/implements/accesses/access-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { AccessCreatedEvent } from '@/events/implements/accesses/access-created.event';
 
 @EventsHandler(AccessCreatedEvent)
 export class AccessCreatedHandler implements IEventHandler<AccessCreatedEvent> {

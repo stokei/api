@@ -1,9 +1,10 @@
+import { convertToISODateString } from '@stokei/nestjs';
+import { nanoid } from 'nanoid';
+
 import {
   ClassroomsAdminModel,
   IClassroomsAdminModelData
 } from '@/models/classrooms-admin.model';
-import { convertToISODateString } from '@stokei/nestjs';
-import { nanoid } from 'nanoid';
 
 export class ClassroomsAdminModelMock extends ClassroomsAdminModel {
   constructor(data?: Partial<IClassroomsAdminModelData>) {

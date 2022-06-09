@@ -1,9 +1,10 @@
-import { UpdateCoursesInstructorCommand } from '@/commands/implements/courses-instructors/update-courses-instructor.command';
-import { UpdateCoursesInstructorDTO } from '@/dtos/courses-instructors/update-courses-instructor.dto';
-import { CoursesInstructorModel } from '@/models/courses-instructor.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateCoursesInstructorCommand } from '@/commands/implements/courses-instructors/update-courses-instructor.command';
+import { UpdateCoursesInstructorDTO } from '@/dtos/courses-instructors/update-courses-instructor.dto';
+import { CoursesInstructorModel } from '@/models/courses-instructor.model';
 
 @Injectable()
 export class UpdateCoursesInstructorService

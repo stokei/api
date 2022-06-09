@@ -1,6 +1,7 @@
-import { VersionModel, IVersionModelData } from '@/models/version.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IVersionModelData, VersionModel } from '@/models/version.model';
 
 export class VersionModelMock extends VersionModel {
   constructor(data?: Partial<IVersionModelData>) {

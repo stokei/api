@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateCurrencyDTO } from '@/dtos/currencies/create-currency.dto';
 
 export class CreateCurrencyCommand implements ICommand, CreateCurrencyDTO {

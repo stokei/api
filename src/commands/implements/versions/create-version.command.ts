@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateVersionDTO } from '@/dtos/versions/create-version.dto';
 
 export class CreateVersionCommand implements ICommand, CreateVersionDTO {

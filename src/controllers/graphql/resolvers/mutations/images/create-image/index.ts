@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { CreateImageInput } from '@/controllers/graphql/inputs/images/create-image.input';
 import { Image } from '@/controllers/graphql/types/image';
 import { CreateImageService } from '@/services/images/create-image';

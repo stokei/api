@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { CategoryMapper } from '@/mappers/categories';
 import { CategoryModel } from '@/models/category.model';

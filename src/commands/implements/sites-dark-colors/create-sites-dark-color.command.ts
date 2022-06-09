@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateSitesDarkColorDTO } from '@/dtos/sites-dark-colors/create-sites-dark-color.dto';
 
 export class CreateSitesDarkColorCommand

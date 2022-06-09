@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { ProjectsMemberModel } from '@/models/projects-member.model';
 import { FindProjectsMemberByIdQuery } from '@/queries/implements/projects-members/find-projects-member-by-id.query';
 

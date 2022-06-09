@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   ClassroomsEnrollmentNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { ClassroomsEnrollmentModel } from '@/models/classrooms-enrollment.model';
-import { FindClassroomsEnrollmentByIdRepository } from '@/repositories/classrooms-enrollments/find-classrooms-enrollment-by-id';
 import { FindClassroomsEnrollmentByIdQuery } from '@/queries/implements/classrooms-enrollments/find-classrooms-enrollment-by-id.query';
+import { FindClassroomsEnrollmentByIdRepository } from '@/repositories/classrooms-enrollments/find-classrooms-enrollment-by-id';
 
 @QueryHandler(FindClassroomsEnrollmentByIdQuery)
 export class FindClassroomsEnrollmentByIdQueryHandler

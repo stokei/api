@@ -1,5 +1,7 @@
-import { FindDomainByIdRepository } from '@/repositories/domains/find-domain-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindDomainByIdRepository } from '@/repositories/domains/find-domain-by-id';
+
 import { FindDomainByIdQueryHandler } from '.';
 
 describe('FindDomainByIdQueryHandler', () => {

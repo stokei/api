@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  KeywordNotFoundException,
   DataNotFoundException,
+  KeywordNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { KeywordModel } from '@/models/keyword.model';
-import { FindKeywordByIdRepository } from '@/repositories/keywords/find-keyword-by-id';
 import { FindKeywordByIdQuery } from '@/queries/implements/keywords/find-keyword-by-id.query';
+import { FindKeywordByIdRepository } from '@/repositories/keywords/find-keyword-by-id';
 
 @QueryHandler(FindKeywordByIdQuery)
 export class FindKeywordByIdQueryHandler

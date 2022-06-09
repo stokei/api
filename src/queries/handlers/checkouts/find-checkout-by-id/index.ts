@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   CheckoutNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CheckoutModel } from '@/models/checkout.model';
-import { FindCheckoutByIdRepository } from '@/repositories/checkouts/find-checkout-by-id';
 import { FindCheckoutByIdQuery } from '@/queries/implements/checkouts/find-checkout-by-id.query';
+import { FindCheckoutByIdRepository } from '@/repositories/checkouts/find-checkout-by-id';
 
 @QueryHandler(FindCheckoutByIdQuery)
 export class FindCheckoutByIdQueryHandler

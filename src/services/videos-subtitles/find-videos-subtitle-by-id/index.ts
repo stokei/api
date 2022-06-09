@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { VideosSubtitleModel } from '@/models/videos-subtitle.model';
 import { FindVideosSubtitleByIdQuery } from '@/queries/implements/videos-subtitles/find-videos-subtitle-by-id.query';
 

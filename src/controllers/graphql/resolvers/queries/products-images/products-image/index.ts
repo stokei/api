@@ -1,9 +1,10 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { ProductsImagesLoader } from '@/controllers/graphql/dataloaders/products-images.loader';
 import { ProductsImage } from '@/controllers/graphql/types/products-image';
 import {
-  ProductsImageNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProductsImageNotFoundException
 } from '@/errors';
 
 @Resolver(() => ProductsImage)

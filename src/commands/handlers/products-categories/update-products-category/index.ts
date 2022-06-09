@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateProductsCategoryCommand } from '@/commands/implements/products-categories/update-products-category.command';
 import {
-  ProductsCategoryNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProductsCategoryNotFoundException
 } from '@/errors';
 import { FindProductsCategoryByIdRepository } from '@/repositories/products-categories/find-products-category-by-id';
 import { UpdateProductsCategoryRepository } from '@/repositories/products-categories/update-products-category';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateProductsCategoryCommandKeys = keyof UpdateProductsCategoryCommand;
 

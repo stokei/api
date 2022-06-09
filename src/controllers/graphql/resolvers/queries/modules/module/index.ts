@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { ModulesLoader } from '@/controllers/graphql/dataloaders/modules.loader';
 import { Module } from '@/controllers/graphql/types/module';
 import { ModuleNotFoundException, ParamNotFoundException } from '@/errors';

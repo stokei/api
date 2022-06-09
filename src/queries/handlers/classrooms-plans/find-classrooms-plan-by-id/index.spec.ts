@@ -1,5 +1,7 @@
-import { FindClassroomsPlanByIdRepository } from '@/repositories/classrooms-plans/find-classrooms-plan-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindClassroomsPlanByIdRepository } from '@/repositories/classrooms-plans/find-classrooms-plan-by-id';
+
 import { FindClassroomsPlanByIdQueryHandler } from '.';
 
 describe('FindClassroomsPlanByIdQueryHandler', () => {

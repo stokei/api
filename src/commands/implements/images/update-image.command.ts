@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateImageDTO,
   UpdateImageDataDTO,
+  UpdateImageDTO,
   UpdateImageWhereDTO
 } from '@/dtos/images/update-image.dto';
 

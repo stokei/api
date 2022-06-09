@@ -1,5 +1,7 @@
-import { FindCoursesAdminByIdRepository } from '@/repositories/courses-admins/find-courses-admin-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindCoursesAdminByIdRepository } from '@/repositories/courses-admins/find-courses-admin-by-id';
+
 import { FindCoursesAdminByIdQueryHandler } from '.';
 
 describe('FindCoursesAdminByIdQueryHandler', () => {

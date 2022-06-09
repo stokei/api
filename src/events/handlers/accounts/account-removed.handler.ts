@@ -1,6 +1,7 @@
-import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
 
 @EventsHandler(AccountRemovedEvent)
 export class AccountRemovedHandler

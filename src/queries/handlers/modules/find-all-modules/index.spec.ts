@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountModulesRepository } from '@/repositories/modules/count-modules';
 import { FindAllModulesRepository } from '@/repositories/modules/find-all-modules';
-import { Test } from '@nestjs/testing';
+
 import { FindAllModulesQueryHandler } from '.';
 
 describe('FindAllModulesQueryHandler', () => {

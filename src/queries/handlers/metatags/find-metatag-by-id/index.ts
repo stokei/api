@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  MetatagNotFoundException,
   DataNotFoundException,
+  MetatagNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { MetatagModel } from '@/models/metatag.model';
-import { FindMetatagByIdRepository } from '@/repositories/metatags/find-metatag-by-id';
 import { FindMetatagByIdQuery } from '@/queries/implements/metatags/find-metatag-by-id.query';
+import { FindMetatagByIdRepository } from '@/repositories/metatags/find-metatag-by-id';
 
 @QueryHandler(FindMetatagByIdQuery)
 export class FindMetatagByIdQueryHandler

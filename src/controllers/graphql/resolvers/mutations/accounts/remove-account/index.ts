@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemoveAccountInput } from '@/controllers/graphql/inputs/accounts/remove-account.input';
 import { Account } from '@/controllers/graphql/types/account';
 import { RemoveAccountService } from '@/services/accounts/remove-account';

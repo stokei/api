@@ -1,9 +1,10 @@
-import { CreateImageCommand } from '@/commands/implements/images/create-image.command';
-import { CreateImageDTO } from '@/dtos/images/create-image.dto';
-import { ImageModel } from '@/models/image.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateImageCommand } from '@/commands/implements/images/create-image.command';
+import { CreateImageDTO } from '@/dtos/images/create-image.dto';
+import { ImageModel } from '@/models/image.model';
 
 @Injectable()
 export class CreateImageService

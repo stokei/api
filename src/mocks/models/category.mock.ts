@@ -1,6 +1,7 @@
-import { CategoryModel, ICategoryModelData } from '@/models/category.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { CategoryModel, ICategoryModelData } from '@/models/category.model';
 
 export class CategoryModelMock extends CategoryModel {
   constructor(data?: Partial<ICategoryModelData>) {

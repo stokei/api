@@ -1,9 +1,10 @@
-import { UpdateMetatagCommand } from '@/commands/implements/metatags/update-metatag.command';
-import { UpdateMetatagDTO } from '@/dtos/metatags/update-metatag.dto';
-import { MetatagModel } from '@/models/metatag.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateMetatagCommand } from '@/commands/implements/metatags/update-metatag.command';
+import { UpdateMetatagDTO } from '@/dtos/metatags/update-metatag.dto';
+import { MetatagModel } from '@/models/metatag.model';
 
 @Injectable()
 export class UpdateMetatagService

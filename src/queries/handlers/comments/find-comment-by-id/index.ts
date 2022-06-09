@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   CommentNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CommentModel } from '@/models/comment.model';
-import { FindCommentByIdRepository } from '@/repositories/comments/find-comment-by-id';
 import { FindCommentByIdQuery } from '@/queries/implements/comments/find-comment-by-id.query';
+import { FindCommentByIdRepository } from '@/repositories/comments/find-comment-by-id';
 
 @QueryHandler(FindCommentByIdQuery)
 export class FindCommentByIdQueryHandler

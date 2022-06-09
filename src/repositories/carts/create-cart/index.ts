@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { CartMapper } from '@/mappers/carts';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateCartDTO } from '@/dtos/carts/create-cart.dto';
+import { CartMapper } from '@/mappers/carts';
 import { CartModel } from '@/models/cart.model';
 
 @Injectable()

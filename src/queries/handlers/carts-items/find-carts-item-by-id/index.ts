@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   CartsItemNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CartsItemModel } from '@/models/carts-item.model';
-import { FindCartsItemByIdRepository } from '@/repositories/carts-items/find-carts-item-by-id';
 import { FindCartsItemByIdQuery } from '@/queries/implements/carts-items/find-carts-item-by-id.query';
+import { FindCartsItemByIdRepository } from '@/repositories/carts-items/find-carts-item-by-id';
 
 @QueryHandler(FindCartsItemByIdQuery)
 export class FindCartsItemByIdQueryHandler

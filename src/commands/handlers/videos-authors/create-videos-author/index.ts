@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateVideosAuthorCommand } from '@/commands/implements/videos-authors/create-videos-author.command';
 import {
-  VideosAuthorNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosAuthorNotFoundException
 } from '@/errors';
 import { CreateVideosAuthorRepository } from '@/repositories/videos-authors/create-videos-author';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateVideosAuthorCommandKeys = keyof CreateVideosAuthorCommand;
 

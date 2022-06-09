@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { VideosTagCreatedEvent } from '@/events/implements/videos-tags/videos-tag-created.event';
 import { VideosTagRemovedEvent } from '@/events/implements/videos-tags/videos-tag-removed.event';
 import { VideosTagUpdatedEvent } from '@/events/implements/videos-tags/videos-tag-updated.event';

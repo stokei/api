@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveCommentCommand } from '@/commands/implements/comments/remove-comment.command';
 import {
   CommentNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindCommentByIdRepository } from '@/repositories/comments/find-comment-by-id';
 import { RemoveCommentRepository } from '@/repositories/comments/remove-comment';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveCommentCommandKeys = keyof RemoveCommentCommand;
 

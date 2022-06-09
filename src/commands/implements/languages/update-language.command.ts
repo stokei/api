@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateLanguageDTO,
   UpdateLanguageDataDTO,
+  UpdateLanguageDTO,
   UpdateLanguageWhereDTO
 } from '@/dtos/languages/update-language.dto';
 

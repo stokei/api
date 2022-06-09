@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { PaymentModel } from '@/models/payment.model';
 import { FindPaymentByIdQuery } from '@/queries/implements/payments/find-payment-by-id.query';
 

@@ -1,9 +1,10 @@
-import { CreatePhoneCommand } from '@/commands/implements/phones/create-phone.command';
-import { CreatePhoneDTO } from '@/dtos/phones/create-phone.dto';
-import { PhoneModel } from '@/models/phone.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreatePhoneCommand } from '@/commands/implements/phones/create-phone.command';
+import { CreatePhoneDTO } from '@/dtos/phones/create-phone.dto';
+import { PhoneModel } from '@/models/phone.model';
 
 @Injectable()
 export class CreatePhoneService

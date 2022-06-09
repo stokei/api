@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { SitesLoader } from '@/controllers/graphql/dataloaders/sites.loader';
 import { Site } from '@/controllers/graphql/types/site';
 

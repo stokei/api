@@ -1,5 +1,6 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
+
 import { UpdateAccountService } from '.';
 
 describe('UpdateAccountService', () => {

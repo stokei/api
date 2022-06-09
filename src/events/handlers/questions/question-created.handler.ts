@@ -1,6 +1,7 @@
-import { QuestionCreatedEvent } from '@/events/implements/questions/question-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { QuestionCreatedEvent } from '@/events/implements/questions/question-created.event';
 
 @EventsHandler(QuestionCreatedEvent)
 export class QuestionCreatedHandler

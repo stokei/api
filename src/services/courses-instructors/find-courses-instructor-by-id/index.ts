@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { CoursesInstructorModel } from '@/models/courses-instructor.model';
 import { FindCoursesInstructorByIdQuery } from '@/queries/implements/courses-instructors/find-courses-instructor-by-id.query';
 

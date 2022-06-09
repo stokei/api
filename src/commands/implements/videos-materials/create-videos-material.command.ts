@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateVideosMaterialDTO } from '@/dtos/videos-materials/create-videos-material.dto';
 
 export class CreateVideosMaterialCommand

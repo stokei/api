@@ -1,5 +1,7 @@
-import { FindVersionByIdRepository } from '@/repositories/versions/find-version-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindVersionByIdRepository } from '@/repositories/versions/find-version-by-id';
+
 import { FindVersionByIdQueryHandler } from '.';
 
 describe('FindVersionByIdQueryHandler', () => {

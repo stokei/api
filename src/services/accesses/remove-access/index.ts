@@ -1,9 +1,10 @@
-import { RemoveAccessCommand } from '@/commands/implements/accesses/remove-access.command';
-import { RemoveAccessDTO } from '@/dtos/accesses/remove-access.dto';
-import { AccessModel } from '@/models/access.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveAccessCommand } from '@/commands/implements/accesses/remove-access.command';
+import { RemoveAccessDTO } from '@/dtos/accesses/remove-access.dto';
+import { AccessModel } from '@/models/access.model';
 
 @Injectable()
 export class RemoveAccessService

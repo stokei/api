@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { ProductsTagsLoader } from '@/controllers/graphql/dataloaders/products-tags.loader';
 import { ProductsTag } from '@/controllers/graphql/types/products-tag';
-import { ProductsTagNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, ProductsTagNotFoundException } from '@/errors';
 
 @Resolver(() => ProductsTag)
 export class ProductsTagResolver {

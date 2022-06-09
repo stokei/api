@@ -1,6 +1,7 @@
-import { ProjectModel, IProjectModelData } from '@/models/project.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IProjectModelData, ProjectModel } from '@/models/project.model';
 
 export class ProjectModelMock extends ProjectModel {
   constructor(data?: Partial<IProjectModelData>) {

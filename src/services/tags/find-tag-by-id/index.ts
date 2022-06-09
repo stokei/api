@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { TagModel } from '@/models/tag.model';
 import { FindTagByIdQuery } from '@/queries/implements/tags/find-tag-by-id.query';
 

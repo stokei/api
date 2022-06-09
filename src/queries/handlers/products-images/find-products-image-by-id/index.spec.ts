@@ -1,5 +1,7 @@
-import { FindProductsImageByIdRepository } from '@/repositories/products-images/find-products-image-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindProductsImageByIdRepository } from '@/repositories/products-images/find-products-image-by-id';
+
 import { FindProductsImageByIdQueryHandler } from '.';
 
 describe('FindProductsImageByIdQueryHandler', () => {

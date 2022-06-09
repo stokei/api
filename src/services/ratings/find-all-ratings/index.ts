@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { RatingModel } from '@/models/rating.model';
+
 import { FindAllRatingsDTO } from '@/dtos/ratings/find-all-ratings.dto';
+import { RatingModel } from '@/models/rating.model';
 import { FindAllRatingsQuery } from '@/queries/implements/ratings/find-all-ratings.query';
 
 @Injectable()

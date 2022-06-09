@@ -1,133 +1,69 @@
-import { AccountsRepositories } from './accounts';
-
 import { AccessesRepositories } from './accesses';
-import { ProjectsRepositories } from './projects';
-
-import { ProjectsMembersRepositories } from './projects-members';
-
-import { ProjectsPlansRepositories } from './projects-plans';
-
-import { SitesRepositories } from './sites';
-
-import { SitesLightColorsRepositories } from './sites-light-colors';
-
-import { SitesDarkColorsRepositories } from './sites-dark-colors';
-
-import { DomainsRepositories } from './domains';
-
-import { PagesRepositories } from './pages';
-
-import { MetatagsRepositories } from './metatags';
-
-import { TagsRepositories } from './tags';
-
-import { CurrenciesRepositories } from './currencies';
-
-import { LanguagesRepositories } from './languages';
-
-import { KeywordsRepositories } from './keywords';
-
-import { VersionsRepositories } from './versions';
-
-import { ColorsRepositories } from './colors';
-
+import { AccountsRepositories } from './accounts';
 import { ActivitiesRepositories } from './activities';
-
 import { ActivitiesActionsRepositories } from './activities-actions';
-
-import { CategoriesRepositories } from './categories';
-
-import { CheckoutsRepositories } from './checkouts';
-
-import { CheckoutsCurrenciesRepositories } from './checkouts-currencies';
-
-import { ProductsRepositories } from './products';
-
-import { ProductsCategoriesRepositories } from './products-categories';
-
-import { ProductsImagesRepositories } from './products-images';
-
-import { PricesRepositories } from './prices';
-
-import { ProductsTagsRepositories } from './products-tags';
-
-import { OrdersRepositories } from './orders';
-
-import { OrdersItemsRepositories } from './orders-items';
-
-import { OrdersAddressesRepositories } from './orders-addresses';
-
-import { OrdersSellersRepositories } from './orders-sellers';
-
-import { PaymentsRepositories } from './payments';
-
-import { PaymentsMethodsRepositories } from './payments-methods';
-
-import { CardsRepositories } from './cards';
-
-import { CartsRepositories } from './carts';
-
-import { CartsItemsRepositories } from './carts-items';
-
-import { PlansRepositories } from './plans';
-
-import { ImagesRepositories } from './images';
-
-import { RatingsRepositories } from './ratings';
-
-import { CommentsRepositories } from './comments';
-
-import { QuestionsRepositories } from './questions';
-
-import { AnswersRepositories } from './answers';
-
-import { VideosRepositories } from './videos';
-
-import { VideosTagsRepositories } from './videos-tags';
-
-import { VideosAuthorsRepositories } from './videos-authors';
-
-import { VideosSubtitlesRepositories } from './videos-subtitles';
-
-import { FilesRepositories } from './files';
-
-import { ModulesRepositories } from './modules';
-
-import { ModulesVideosRepositories } from './modules-videos';
-
-import { ModulesMaterialsRepositories } from './modules-materials';
-
-import { VideosMaterialsRepositories } from './videos-materials';
-
-import { CoursesRepositories } from './courses';
-
-import { CoursesInstructorsRepositories } from './courses-instructors';
-
-import { CoursesAdminsRepositories } from './courses-admins';
-
-import { CoursesStudentsRepositories } from './courses-students';
-
-import { ClassroomsRepositories } from './classrooms';
-
-import { ClassroomsStudentsRepositories } from './classrooms-students';
-
-import { ClassroomsEnrollmentsRepositories } from './classrooms-enrollments';
-
-import { ClassroomsAdminsRepositories } from './classrooms-admins';
-
-import { ClassroomsInstructorsRepositories } from './classrooms-instructors';
-
-import { ClassroomsPlansRepositories } from './classrooms-plans';
-
-import { ClassroomsModulesRepositories } from './classrooms-modules';
-
-import { ClassroomsTagsRepositories } from './classrooms-tags';
-
-import { ClassroomsMaterialsRepositories } from './classrooms-materials';
-
 import { AddressesRepositories } from './addresses';
-
+import { AnswersRepositories } from './answers';
+import { CardsRepositories } from './cards';
+import { CartsRepositories } from './carts';
+import { CartsItemsRepositories } from './carts-items';
+import { CategoriesRepositories } from './categories';
+import { CheckoutsRepositories } from './checkouts';
+import { CheckoutsCurrenciesRepositories } from './checkouts-currencies';
+import { ClassroomsRepositories } from './classrooms';
+import { ClassroomsAdminsRepositories } from './classrooms-admins';
+import { ClassroomsEnrollmentsRepositories } from './classrooms-enrollments';
+import { ClassroomsInstructorsRepositories } from './classrooms-instructors';
+import { ClassroomsMaterialsRepositories } from './classrooms-materials';
+import { ClassroomsModulesRepositories } from './classrooms-modules';
+import { ClassroomsPlansRepositories } from './classrooms-plans';
+import { ClassroomsStudentsRepositories } from './classrooms-students';
+import { ClassroomsTagsRepositories } from './classrooms-tags';
+import { ColorsRepositories } from './colors';
+import { CommentsRepositories } from './comments';
+import { CoursesRepositories } from './courses';
+import { CoursesAdminsRepositories } from './courses-admins';
+import { CoursesInstructorsRepositories } from './courses-instructors';
+import { CoursesStudentsRepositories } from './courses-students';
+import { CurrenciesRepositories } from './currencies';
+import { DomainsRepositories } from './domains';
+import { FilesRepositories } from './files';
+import { ImagesRepositories } from './images';
+import { KeywordsRepositories } from './keywords';
+import { LanguagesRepositories } from './languages';
+import { MetatagsRepositories } from './metatags';
+import { ModulesRepositories } from './modules';
+import { ModulesMaterialsRepositories } from './modules-materials';
+import { ModulesVideosRepositories } from './modules-videos';
+import { OrdersRepositories } from './orders';
+import { OrdersAddressesRepositories } from './orders-addresses';
+import { OrdersItemsRepositories } from './orders-items';
+import { OrdersSellersRepositories } from './orders-sellers';
+import { PagesRepositories } from './pages';
+import { PaymentsRepositories } from './payments';
+import { PaymentsMethodsRepositories } from './payments-methods';
 import { PhonesRepositories } from './phones';
+import { PlansRepositories } from './plans';
+import { PricesRepositories } from './prices';
+import { ProductsRepositories } from './products';
+import { ProductsCategoriesRepositories } from './products-categories';
+import { ProductsImagesRepositories } from './products-images';
+import { ProductsTagsRepositories } from './products-tags';
+import { ProjectsRepositories } from './projects';
+import { ProjectsMembersRepositories } from './projects-members';
+import { ProjectsPlansRepositories } from './projects-plans';
+import { QuestionsRepositories } from './questions';
+import { RatingsRepositories } from './ratings';
+import { SitesRepositories } from './sites';
+import { SitesDarkColorsRepositories } from './sites-dark-colors';
+import { SitesLightColorsRepositories } from './sites-light-colors';
+import { TagsRepositories } from './tags';
+import { VersionsRepositories } from './versions';
+import { VideosRepositories } from './videos';
+import { VideosAuthorsRepositories } from './videos-authors';
+import { VideosMaterialsRepositories } from './videos-materials';
+import { VideosSubtitlesRepositories } from './videos-subtitles';
+import { VideosTagsRepositories } from './videos-tags';
 
 export const Repositories = [
   ...AccountsRepositories,

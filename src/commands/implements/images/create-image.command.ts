@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateImageDTO } from '@/dtos/images/create-image.dto';
 
 export class CreateImageCommand implements ICommand, CreateImageDTO {

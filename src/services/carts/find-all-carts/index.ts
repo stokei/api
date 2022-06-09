@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { CartModel } from '@/models/cart.model';
+
 import { FindAllCartsDTO } from '@/dtos/carts/find-all-carts.dto';
+import { CartModel } from '@/models/cart.model';
 import { FindAllCartsQuery } from '@/queries/implements/carts/find-all-carts.query';
 
 @Injectable()

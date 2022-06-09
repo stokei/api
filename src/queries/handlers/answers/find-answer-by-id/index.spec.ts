@@ -1,5 +1,7 @@
-import { FindAnswerByIdRepository } from '@/repositories/answers/find-answer-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindAnswerByIdRepository } from '@/repositories/answers/find-answer-by-id';
+
 import { FindAnswerByIdQueryHandler } from '.';
 
 describe('FindAnswerByIdQueryHandler', () => {

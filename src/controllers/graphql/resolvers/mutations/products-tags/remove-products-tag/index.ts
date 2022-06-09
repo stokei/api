@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemoveProductsTagInput } from '@/controllers/graphql/inputs/products-tags/remove-products-tag.input';
 import { ProductsTag } from '@/controllers/graphql/types/products-tag';
 import { RemoveProductsTagService } from '@/services/products-tags/remove-products-tag';

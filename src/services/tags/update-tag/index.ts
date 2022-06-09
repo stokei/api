@@ -1,9 +1,10 @@
-import { UpdateTagCommand } from '@/commands/implements/tags/update-tag.command';
-import { UpdateTagDTO } from '@/dtos/tags/update-tag.dto';
-import { TagModel } from '@/models/tag.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateTagCommand } from '@/commands/implements/tags/update-tag.command';
+import { UpdateTagDTO } from '@/dtos/tags/update-tag.dto';
+import { TagModel } from '@/models/tag.model';
 
 @Injectable()
 export class UpdateTagService

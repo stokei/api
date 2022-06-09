@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemovePhoneCommand } from '@/commands/implements/phones/remove-phone.command';
 import {
-  PhoneNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PhoneNotFoundException
 } from '@/errors';
 import { FindPhoneByIdRepository } from '@/repositories/phones/find-phone-by-id';
 import { RemovePhoneRepository } from '@/repositories/phones/remove-phone';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemovePhoneCommandKeys = keyof RemovePhoneCommand;
 

@@ -1,5 +1,7 @@
-import { FindCardByIdRepository } from '@/repositories/cards/find-card-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindCardByIdRepository } from '@/repositories/cards/find-card-by-id';
+
 import { FindCardByIdQueryHandler } from '.';
 
 describe('FindCardByIdQueryHandler', () => {

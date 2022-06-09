@@ -1,9 +1,10 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { PaymentsMethodsLoader } from '@/controllers/graphql/dataloaders/payments-methods.loader';
 import { PaymentsMethod } from '@/controllers/graphql/types/payments-method';
 import {
-  PaymentsMethodNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PaymentsMethodNotFoundException
 } from '@/errors';
 
 @Resolver(() => PaymentsMethod)

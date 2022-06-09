@@ -1,9 +1,10 @@
 import { IQuery } from '@nestjs/cqrs';
 import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+
 import {
   FindAllCurrenciesDTO,
-  WhereDataFindAllCurrenciesDTO,
-  OrderByDataFindAllCurrenciesDTO
+  OrderByDataFindAllCurrenciesDTO,
+  WhereDataFindAllCurrenciesDTO
 } from '@/dtos/currencies/find-all-currencies.dto';
 
 export class FindAllCurrenciesQuery implements IQuery, FindAllCurrenciesDTO {

@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   ClassroomsInstructorNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { ClassroomsInstructorModel } from '@/models/classrooms-instructor.model';
-import { FindClassroomsInstructorByIdRepository } from '@/repositories/classrooms-instructors/find-classrooms-instructor-by-id';
 import { FindClassroomsInstructorByIdQuery } from '@/queries/implements/classrooms-instructors/find-classrooms-instructor-by-id.query';
+import { FindClassroomsInstructorByIdRepository } from '@/repositories/classrooms-instructors/find-classrooms-instructor-by-id';
 
 @QueryHandler(FindClassroomsInstructorByIdQuery)
 export class FindClassroomsInstructorByIdQueryHandler

@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { CardCreatedEvent } from '@/events/implements/cards/card-created.event';
-import { CardUpdatedEvent } from '@/events/implements/cards/card-updated.event';
-import { CardRemovedEvent } from '@/events/implements/cards/card-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { CardCreatedEvent } from '@/events/implements/cards/card-created.event';
+import { CardRemovedEvent } from '@/events/implements/cards/card-removed.event';
+import { CardUpdatedEvent } from '@/events/implements/cards/card-updated.event';
 
 export interface ICardModelData {
   readonly id?: string;

@@ -1,6 +1,7 @@
-import { SiteUpdatedEvent } from '@/events/implements/sites/site-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { SiteUpdatedEvent } from '@/events/implements/sites/site-updated.event';
 
 @EventsHandler(SiteUpdatedEvent)
 export class SiteUpdatedHandler implements IEventHandler<SiteUpdatedEvent> {

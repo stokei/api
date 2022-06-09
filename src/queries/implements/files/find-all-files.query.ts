@@ -1,9 +1,10 @@
 import { IQuery } from '@nestjs/cqrs';
 import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+
 import {
   FindAllFilesDTO,
-  WhereDataFindAllFilesDTO,
-  OrderByDataFindAllFilesDTO
+  OrderByDataFindAllFilesDTO,
+  WhereDataFindAllFilesDTO
 } from '@/dtos/files/find-all-files.dto';
 
 export class FindAllFilesQuery implements IQuery, FindAllFilesDTO {

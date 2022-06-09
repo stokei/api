@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountMetatagsRepository } from '@/repositories/metatags/count-metatags';
 import { FindAllMetatagsRepository } from '@/repositories/metatags/find-all-metatags';
-import { Test } from '@nestjs/testing';
+
 import { FindAllMetatagsQueryHandler } from '.';
 
 describe('FindAllMetatagsQueryHandler', () => {

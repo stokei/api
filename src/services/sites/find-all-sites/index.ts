@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { SiteModel } from '@/models/site.model';
+
 import { FindAllSitesDTO } from '@/dtos/sites/find-all-sites.dto';
+import { SiteModel } from '@/models/site.model';
 import { FindAllSitesQuery } from '@/queries/implements/sites/find-all-sites.query';
 
 @Injectable()

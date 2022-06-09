@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountClassroomsTagsRepository } from '@/repositories/classrooms-tags/count-classrooms-tags';
 import { FindAllClassroomsTagsRepository } from '@/repositories/classrooms-tags/find-all-classrooms-tags';
-import { Test } from '@nestjs/testing';
+
 import { FindAllClassroomsTagsQueryHandler } from '.';
 
 describe('FindAllClassroomsTagsQueryHandler', () => {

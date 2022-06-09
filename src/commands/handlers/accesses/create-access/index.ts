@@ -1,12 +1,4 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { CreateAccessCommand } from '@/commands/implements/accesses/create-access.command';
-import {
-  AccessNotFoundException,
-  AccountNotFoundException,
-  DataNotFoundException,
-  ParamNotFoundException
-} from '@/errors';
-import { CreateAccessRepository } from '@/repositories/accesses/create-access';
 import {
   addDays,
   cleanObject,
@@ -15,6 +7,15 @@ import {
   ManagementTokenService,
   splitServiceId
 } from '@stokei/nestjs';
+
+import { CreateAccessCommand } from '@/commands/implements/accesses/create-access.command';
+import {
+  AccessNotFoundException,
+  AccountNotFoundException,
+  DataNotFoundException,
+  ParamNotFoundException
+} from '@/errors';
+import { CreateAccessRepository } from '@/repositories/accesses/create-access';
 import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
 
 type CreateAccessCommandKeys = keyof CreateAccessCommand;

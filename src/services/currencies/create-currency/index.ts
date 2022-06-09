@@ -1,9 +1,10 @@
-import { CreateCurrencyCommand } from '@/commands/implements/currencies/create-currency.command';
-import { CreateCurrencyDTO } from '@/dtos/currencies/create-currency.dto';
-import { CurrencyModel } from '@/models/currency.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateCurrencyCommand } from '@/commands/implements/currencies/create-currency.command';
+import { CreateCurrencyDTO } from '@/dtos/currencies/create-currency.dto';
+import { CurrencyModel } from '@/models/currency.model';
 
 @Injectable()
 export class CreateCurrencyService

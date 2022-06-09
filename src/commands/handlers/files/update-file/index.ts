@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateFileCommand } from '@/commands/implements/files/update-file.command';
 import {
-  FileNotFoundException,
   DataNotFoundException,
+  FileNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindFileByIdRepository } from '@/repositories/files/find-file-by-id';
 import { UpdateFileRepository } from '@/repositories/files/update-file';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateFileCommandKeys = keyof UpdateFileCommand;
 

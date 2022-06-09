@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateCommentCommand } from '@/commands/implements/comments/create-comment.command';
 import {
   CommentNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateCommentRepository } from '@/repositories/comments/create-comment';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateCommentCommandKeys = keyof CreateCommentCommand;
 

@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountAccountsRepository } from '@/repositories/accounts/count-accounts';
 import { FindAllAccountsRepository } from '@/repositories/accounts/find-all-accounts';
-import { Test } from '@nestjs/testing';
+
 import { FindAllAccountsQueryHandler } from '.';
 
 describe('FindAllAccountsQueryHandler', () => {

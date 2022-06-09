@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountPaymentsRepository } from '@/repositories/payments/count-payments';
 import { FindAllPaymentsRepository } from '@/repositories/payments/find-all-payments';
-import { Test } from '@nestjs/testing';
+
 import { FindAllPaymentsQueryHandler } from '.';
 
 describe('FindAllPaymentsQueryHandler', () => {

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { ClassroomsStudentMapper } from '@/mappers/classrooms-students';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateClassroomsStudentDTO } from '@/dtos/classrooms-students/create-classrooms-student.dto';
+import { ClassroomsStudentMapper } from '@/mappers/classrooms-students';
 import { ClassroomsStudentModel } from '@/models/classrooms-student.model';
 
 @Injectable()

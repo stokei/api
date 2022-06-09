@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  LanguageNotFoundException,
   DataNotFoundException,
+  LanguageNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { LanguageModel } from '@/models/language.model';
-import { FindLanguageByIdRepository } from '@/repositories/languages/find-language-by-id';
 import { FindLanguageByIdQuery } from '@/queries/implements/languages/find-language-by-id.query';
+import { FindLanguageByIdRepository } from '@/repositories/languages/find-language-by-id';
 
 @QueryHandler(FindLanguageByIdQuery)
 export class FindLanguageByIdQueryHandler

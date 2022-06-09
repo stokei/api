@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountVersionsRepository } from '@/repositories/versions/count-versions';
 import { FindAllVersionsRepository } from '@/repositories/versions/find-all-versions';
-import { Test } from '@nestjs/testing';
+
 import { FindAllVersionsQueryHandler } from '.';
 
 describe('FindAllVersionsQueryHandler', () => {

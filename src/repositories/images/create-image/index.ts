@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { ImageMapper } from '@/mappers/images';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateImageDTO } from '@/dtos/images/create-image.dto';
+import { ImageMapper } from '@/mappers/images';
 import { ImageModel } from '@/models/image.model';
 
 @Injectable()

@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { PaymentCreatedEvent } from '@/events/implements/payments/payment-created.event';
 import { PaymentRemovedEvent } from '@/events/implements/payments/payment-removed.event';
 import { PaymentUpdatedEvent } from '@/events/implements/payments/payment-updated.event';

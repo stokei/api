@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
-import { CountPhonesDTO } from '@/dtos/phones/count-phones.dto';
 import {
   IBaseRepository,
-  PrismaMapper,
   IOperator,
-  IWhere
+  IWhere,
+  PrismaMapper
 } from '@stokei/nestjs';
+
+import { PrismaClient } from '@/database/prisma/client';
+import { CountPhonesDTO } from '@/dtos/phones/count-phones.dto';
 
 @Injectable()
 export class CountPhonesRepository

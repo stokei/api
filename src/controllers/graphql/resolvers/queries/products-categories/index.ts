@@ -1,5 +1,5 @@
-import { ProductsCategoryResolver } from './products-category';
 import { ProductsCategoriesResolver } from './products-categories';
+import { ProductsCategoryResolver } from './products-category';
 
 export const ProductsCategoriesQueries = [
   ProductsCategoryResolver,

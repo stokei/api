@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { CommentsLoader } from '@/controllers/graphql/dataloaders/comments.loader';
 import { Comment } from '@/controllers/graphql/types/comment';
 

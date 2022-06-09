@@ -1,9 +1,10 @@
-import { RemoveMetatagCommand } from '@/commands/implements/metatags/remove-metatag.command';
-import { RemoveMetatagDTO } from '@/dtos/metatags/remove-metatag.dto';
-import { MetatagModel } from '@/models/metatag.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveMetatagCommand } from '@/commands/implements/metatags/remove-metatag.command';
+import { RemoveMetatagDTO } from '@/dtos/metatags/remove-metatag.dto';
+import { MetatagModel } from '@/models/metatag.model';
 
 @Injectable()
 export class RemoveMetatagService

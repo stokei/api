@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateModuleCommand } from '@/commands/implements/modules/update-module.command';
 import {
-  ModuleNotFoundException,
   DataNotFoundException,
+  ModuleNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindModuleByIdRepository } from '@/repositories/modules/find-module-by-id';
 import { UpdateModuleRepository } from '@/repositories/modules/update-module';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateModuleCommandKeys = keyof UpdateModuleCommand;
 

@@ -1,6 +1,7 @@
-import { CartsItemModel, ICartsItemModelData } from '@/models/carts-item.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { CartsItemModel, ICartsItemModelData } from '@/models/carts-item.model';
 
 export class CartsItemModelMock extends CartsItemModel {
   constructor(data?: Partial<ICartsItemModelData>) {

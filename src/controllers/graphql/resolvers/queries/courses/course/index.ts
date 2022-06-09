@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { CoursesLoader } from '@/controllers/graphql/dataloaders/courses.loader';
 import { Course } from '@/controllers/graphql/types/course';
 import { CourseNotFoundException, ParamNotFoundException } from '@/errors';

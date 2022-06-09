@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { ColorModel } from '@/models/color.model';
 import { FindColorByIdQuery } from '@/queries/implements/colors/find-color-by-id.query';
 

@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { MetatagCreatedEvent } from '@/events/implements/metatags/metatag-created.event';
 import { MetatagRemovedEvent } from '@/events/implements/metatags/metatag-removed.event';
 import { MetatagUpdatedEvent } from '@/events/implements/metatags/metatag-updated.event';

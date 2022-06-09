@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { AccessesLoader } from '@/controllers/graphql/dataloaders/accesses.loader';
 import { Access } from '@/controllers/graphql/types/access';
 

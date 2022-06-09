@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { CreatePriceInput } from '@/controllers/graphql/inputs/prices/create-price.input';
 import { Price } from '@/controllers/graphql/types/price';
 import { CreatePriceService } from '@/services/prices/create-price';

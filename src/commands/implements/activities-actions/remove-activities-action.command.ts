@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
   RemoveActivitiesActionDTO,
   RemoveActivitiesActionWhereDTO

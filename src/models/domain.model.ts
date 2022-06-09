@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
-import { DomainUpdatedEvent } from '@/events/implements/domains/domain-updated.event';
-import { DomainRemovedEvent } from '@/events/implements/domains/domain-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
+import { DomainRemovedEvent } from '@/events/implements/domains/domain-removed.event';
+import { DomainUpdatedEvent } from '@/events/implements/domains/domain-updated.event';
 
 export interface IDomainModelData {
   readonly id?: string;

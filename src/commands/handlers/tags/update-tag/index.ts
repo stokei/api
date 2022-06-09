@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateTagCommand } from '@/commands/implements/tags/update-tag.command';
 import {
-  TagNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  TagNotFoundException
 } from '@/errors';
 import { FindTagByIdRepository } from '@/repositories/tags/find-tag-by-id';
 import { UpdateTagRepository } from '@/repositories/tags/update-tag';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateTagCommandKeys = keyof UpdateTagCommand;
 

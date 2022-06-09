@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemoveSiteInput } from '@/controllers/graphql/inputs/sites/remove-site.input';
 import { Site } from '@/controllers/graphql/types/site';
 import { RemoveSiteService } from '@/services/sites/remove-site';

@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateCategoryInput } from '@/controllers/graphql/inputs/categories/update-category.input';
 import { Category } from '@/controllers/graphql/types/category';
 import { UpdateCategoryService } from '@/services/categories/update-category';

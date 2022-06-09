@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemovePriceCommand } from '@/commands/implements/prices/remove-price.command';
 import {
-  PriceNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PriceNotFoundException
 } from '@/errors';
 import { FindPriceByIdRepository } from '@/repositories/prices/find-price-by-id';
 import { RemovePriceRepository } from '@/repositories/prices/remove-price';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemovePriceCommandKeys = keyof RemovePriceCommand;
 

@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountProjectsPlansRepository } from '@/repositories/projects-plans/count-projects-plans';
 import { FindAllProjectsPlansRepository } from '@/repositories/projects-plans/find-all-projects-plans';
-import { Test } from '@nestjs/testing';
+
 import { FindAllProjectsPlansQueryHandler } from '.';
 
 describe('FindAllProjectsPlansQueryHandler', () => {

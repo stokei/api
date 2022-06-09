@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateQuestionCommand } from '@/commands/implements/questions/create-question.command';
 import {
-  QuestionNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  QuestionNotFoundException
 } from '@/errors';
 import { CreateQuestionRepository } from '@/repositories/questions/create-question';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateQuestionCommandKeys = keyof CreateQuestionCommand;
 

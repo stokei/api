@@ -1,5 +1,7 @@
-import { FindCurrencyByIdRepository } from '@/repositories/currencies/find-currency-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindCurrencyByIdRepository } from '@/repositories/currencies/find-currency-by-id';
+
 import { FindCurrencyByIdQueryHandler } from '.';
 
 describe('FindCurrencyByIdQueryHandler', () => {

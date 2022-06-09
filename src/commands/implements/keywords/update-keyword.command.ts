@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateKeywordDTO,
   UpdateKeywordDataDTO,
+  UpdateKeywordDTO,
   UpdateKeywordWhereDTO
 } from '@/dtos/keywords/update-keyword.dto';
 

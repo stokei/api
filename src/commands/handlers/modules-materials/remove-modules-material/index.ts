@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveModulesMaterialCommand } from '@/commands/implements/modules-materials/remove-modules-material.command';
 import {
-  ModulesMaterialNotFoundException,
   DataNotFoundException,
+  ModulesMaterialNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindModulesMaterialByIdRepository } from '@/repositories/modules-materials/find-modules-material-by-id';
 import { RemoveModulesMaterialRepository } from '@/repositories/modules-materials/remove-modules-material';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveModulesMaterialCommandKeys = keyof RemoveModulesMaterialCommand;
 

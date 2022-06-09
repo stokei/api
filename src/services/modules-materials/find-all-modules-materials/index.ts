@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { ModulesMaterialModel } from '@/models/modules-material.model';
+
 import { FindAllModulesMaterialsDTO } from '@/dtos/modules-materials/find-all-modules-materials.dto';
+import { ModulesMaterialModel } from '@/models/modules-material.model';
 import { FindAllModulesMaterialsQuery } from '@/queries/implements/modules-materials/find-all-modules-materials.query';
 
 @Injectable()

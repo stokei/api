@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveProductCommand } from '@/commands/implements/products/remove-product.command';
 import {
-  ProductNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProductNotFoundException
 } from '@/errors';
 import { FindProductByIdRepository } from '@/repositories/products/find-product-by-id';
 import { RemoveProductRepository } from '@/repositories/products/remove-product';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveProductCommandKeys = keyof RemoveProductCommand;
 

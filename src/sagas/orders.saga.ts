@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { OrderCreatedEvent } from '@/events/implements/orders/order-created.event';
 import { OrderRemovedEvent } from '@/events/implements/orders/order-removed.event';
 import { OrderUpdatedEvent } from '@/events/implements/orders/order-updated.event';

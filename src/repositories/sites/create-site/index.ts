@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { SiteMapper } from '@/mappers/sites';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateSiteDTO } from '@/dtos/sites/create-site.dto';
+import { SiteMapper } from '@/mappers/sites';
 import { SiteModel } from '@/models/site.model';
 
 @Injectable()

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { ClassroomsStudentModel } from '@/models/classrooms-student.model';
 import { FindClassroomsStudentByIdQuery } from '@/queries/implements/classrooms-students/find-classrooms-student-by-id.query';
 

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { VideosSubtitleModel } from '@/models/videos-subtitle.model';
+
 import { FindAllVideosSubtitlesDTO } from '@/dtos/videos-subtitles/find-all-videos-subtitles.dto';
+import { VideosSubtitleModel } from '@/models/videos-subtitle.model';
 import { FindAllVideosSubtitlesQuery } from '@/queries/implements/videos-subtitles/find-all-videos-subtitles.query';
 
 @Injectable()

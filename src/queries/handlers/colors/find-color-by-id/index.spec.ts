@@ -1,5 +1,7 @@
-import { FindColorByIdRepository } from '@/repositories/colors/find-color-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindColorByIdRepository } from '@/repositories/colors/find-color-by-id';
+
 import { FindColorByIdQueryHandler } from '.';
 
 describe('FindColorByIdQueryHandler', () => {

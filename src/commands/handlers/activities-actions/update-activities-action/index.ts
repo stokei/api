@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateActivitiesActionCommand } from '@/commands/implements/activities-actions/update-activities-action.command';
 import {
   ActivitiesActionNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindActivitiesActionByIdRepository } from '@/repositories/activities-actions/find-activities-action-by-id';
 import { UpdateActivitiesActionRepository } from '@/repositories/activities-actions/update-activities-action';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateActivitiesActionCommandKeys = keyof UpdateActivitiesActionCommand;
 

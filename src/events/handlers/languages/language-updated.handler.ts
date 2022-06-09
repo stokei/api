@@ -1,6 +1,7 @@
-import { LanguageUpdatedEvent } from '@/events/implements/languages/language-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { LanguageUpdatedEvent } from '@/events/implements/languages/language-updated.event';
 
 @EventsHandler(LanguageUpdatedEvent)
 export class LanguageUpdatedHandler

@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountLanguagesRepository } from '@/repositories/languages/count-languages';
 import { FindAllLanguagesRepository } from '@/repositories/languages/find-all-languages';
-import { Test } from '@nestjs/testing';
+
 import { FindAllLanguagesQueryHandler } from '.';
 
 describe('FindAllLanguagesQueryHandler', () => {

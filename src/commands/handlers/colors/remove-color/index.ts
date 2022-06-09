@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveColorCommand } from '@/commands/implements/colors/remove-color.command';
 import {
   ColorNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindColorByIdRepository } from '@/repositories/colors/find-color-by-id';
 import { RemoveColorRepository } from '@/repositories/colors/remove-color';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveColorCommandKeys = keyof RemoveColorCommand;
 

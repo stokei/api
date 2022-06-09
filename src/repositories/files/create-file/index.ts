@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { FileMapper } from '@/mappers/files';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateFileDTO } from '@/dtos/files/create-file.dto';
+import { FileMapper } from '@/mappers/files';
 import { FileModel } from '@/models/file.model';
 
 @Injectable()

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { VideosTagModel } from '@/models/videos-tag.model';
 import { FindVideosTagByIdQuery } from '@/queries/implements/videos-tags/find-videos-tag-by-id.query';
 

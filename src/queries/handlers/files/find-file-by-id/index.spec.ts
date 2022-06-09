@@ -1,5 +1,7 @@
-import { FindFileByIdRepository } from '@/repositories/files/find-file-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindFileByIdRepository } from '@/repositories/files/find-file-by-id';
+
 import { FindFileByIdQueryHandler } from '.';
 
 describe('FindFileByIdQueryHandler', () => {

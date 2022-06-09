@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { ProductsTagsLoader } from '@/controllers/graphql/dataloaders/products-tags.loader';
 import { ProductsTag } from '@/controllers/graphql/types/products-tag';
 

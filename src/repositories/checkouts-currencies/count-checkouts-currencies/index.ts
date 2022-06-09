@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
-import { CountCheckoutsCurrenciesDTO } from '@/dtos/checkouts-currencies/count-checkouts-currencies.dto';
 import {
   IBaseRepository,
-  PrismaMapper,
   IOperator,
-  IWhere
+  IWhere,
+  PrismaMapper
 } from '@stokei/nestjs';
+
+import { PrismaClient } from '@/database/prisma/client';
+import { CountCheckoutsCurrenciesDTO } from '@/dtos/checkouts-currencies/count-checkouts-currencies.dto';
 
 @Injectable()
 export class CountCheckoutsCurrenciesRepository

@@ -1,6 +1,7 @@
-import { ActivityRemovedEvent } from '@/events/implements/activities/activity-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ActivityRemovedEvent } from '@/events/implements/activities/activity-removed.event';
 
 @EventsHandler(ActivityRemovedEvent)
 export class ActivityRemovedHandler

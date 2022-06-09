@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { PaymentsMethodsLoader } from '@/controllers/graphql/dataloaders/payments-methods.loader';
 import { PaymentsMethod } from '@/controllers/graphql/types/payments-method';
 

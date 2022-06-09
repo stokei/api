@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { CheckoutCreatedEvent } from '@/events/implements/checkouts/checkout-created.event';
 import { CheckoutRemovedEvent } from '@/events/implements/checkouts/checkout-removed.event';
 import { CheckoutUpdatedEvent } from '@/events/implements/checkouts/checkout-updated.event';

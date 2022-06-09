@@ -1,6 +1,7 @@
-import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
 
 @EventsHandler(AccountUpdatedEvent)
 export class AccountUpdatedHandler

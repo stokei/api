@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountCurrenciesRepository } from '@/repositories/currencies/count-currencies';
 import { FindAllCurrenciesRepository } from '@/repositories/currencies/find-all-currencies';
-import { Test } from '@nestjs/testing';
+
 import { FindAllCurrenciesQueryHandler } from '.';
 
 describe('FindAllCurrenciesQueryHandler', () => {

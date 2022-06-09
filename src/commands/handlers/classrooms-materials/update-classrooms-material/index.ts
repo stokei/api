@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateClassroomsMaterialCommand } from '@/commands/implements/classrooms-materials/update-classrooms-material.command';
 import {
   ClassroomsMaterialNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindClassroomsMaterialByIdRepository } from '@/repositories/classrooms-materials/find-classrooms-material-by-id';
 import { UpdateClassroomsMaterialRepository } from '@/repositories/classrooms-materials/update-classrooms-material';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateClassroomsMaterialCommandKeys =
   keyof UpdateClassroomsMaterialCommand;

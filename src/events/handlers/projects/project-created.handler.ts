@@ -1,6 +1,7 @@
-import { ProjectCreatedEvent } from '@/events/implements/projects/project-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ProjectCreatedEvent } from '@/events/implements/projects/project-created.event';
 
 @EventsHandler(ProjectCreatedEvent)
 export class ProjectCreatedHandler

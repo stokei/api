@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { TagModel } from '@/models/tag.model';
+
 import { FindAllTagsDTO } from '@/dtos/tags/find-all-tags.dto';
+import { TagModel } from '@/models/tag.model';
 import { FindAllTagsQuery } from '@/queries/implements/tags/find-all-tags.query';
 
 @Injectable()

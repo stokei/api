@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateVideosSubtitleCommand } from '@/commands/implements/videos-subtitles/create-videos-subtitle.command';
 import {
-  VideosSubtitleNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosSubtitleNotFoundException
 } from '@/errors';
 import { CreateVideosSubtitleRepository } from '@/repositories/videos-subtitles/create-videos-subtitle';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateVideosSubtitleCommandKeys = keyof CreateVideosSubtitleCommand;
 

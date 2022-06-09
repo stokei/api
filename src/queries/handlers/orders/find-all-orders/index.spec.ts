@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountOrdersRepository } from '@/repositories/orders/count-orders';
 import { FindAllOrdersRepository } from '@/repositories/orders/find-all-orders';
-import { Test } from '@nestjs/testing';
+
 import { FindAllOrdersQueryHandler } from '.';
 
 describe('FindAllOrdersQueryHandler', () => {

@@ -1,6 +1,7 @@
-import { VersionCreatedEvent } from '@/events/implements/versions/version-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { VersionCreatedEvent } from '@/events/implements/versions/version-created.event';
 
 @EventsHandler(VersionCreatedEvent)
 export class VersionCreatedHandler

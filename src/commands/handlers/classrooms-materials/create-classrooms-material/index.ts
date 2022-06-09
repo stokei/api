@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateClassroomsMaterialCommand } from '@/commands/implements/classrooms-materials/create-classrooms-material.command';
 import {
   ClassroomsMaterialNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateClassroomsMaterialRepository } from '@/repositories/classrooms-materials/create-classrooms-material';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateClassroomsMaterialCommandKeys =
   keyof CreateClassroomsMaterialCommand;

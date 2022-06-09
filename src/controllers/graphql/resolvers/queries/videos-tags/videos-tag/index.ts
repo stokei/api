@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { VideosTagsLoader } from '@/controllers/graphql/dataloaders/videos-tags.loader';
 import { VideosTag } from '@/controllers/graphql/types/videos-tag';
-import { VideosTagNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, VideosTagNotFoundException } from '@/errors';
 
 @Resolver(() => VideosTag)
 export class VideosTagResolver {

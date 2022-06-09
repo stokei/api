@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { VideosAuthorMapper } from '@/mappers/videos-authors';
 import { VideosAuthorModel } from '@/models/videos-author.model';

@@ -1,5 +1,7 @@
-import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
+
 import { FindAccountByIdQueryHandler } from '.';
 
 describe('FindAccountByIdQueryHandler', () => {

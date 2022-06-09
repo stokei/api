@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { FileCreatedEvent } from '@/events/implements/files/file-created.event';
-import { FileUpdatedEvent } from '@/events/implements/files/file-updated.event';
-import { FileRemovedEvent } from '@/events/implements/files/file-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { FileCreatedEvent } from '@/events/implements/files/file-created.event';
+import { FileRemovedEvent } from '@/events/implements/files/file-removed.event';
+import { FileUpdatedEvent } from '@/events/implements/files/file-updated.event';
 
 export interface IFileModelData {
   readonly id?: string;

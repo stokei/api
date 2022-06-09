@@ -1,6 +1,7 @@
-import { ProductsImageCreatedEvent } from '@/events/implements/products-images/products-image-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ProductsImageCreatedEvent } from '@/events/implements/products-images/products-image-created.event';
 
 @EventsHandler(ProductsImageCreatedEvent)
 export class ProductsImageCreatedHandler

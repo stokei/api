@@ -1,9 +1,10 @@
-import { RemoveClassroomsTagCommand } from '@/commands/implements/classrooms-tags/remove-classrooms-tag.command';
-import { RemoveClassroomsTagDTO } from '@/dtos/classrooms-tags/remove-classrooms-tag.dto';
-import { ClassroomsTagModel } from '@/models/classrooms-tag.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveClassroomsTagCommand } from '@/commands/implements/classrooms-tags/remove-classrooms-tag.command';
+import { RemoveClassroomsTagDTO } from '@/dtos/classrooms-tags/remove-classrooms-tag.dto';
+import { ClassroomsTagModel } from '@/models/classrooms-tag.model';
 
 @Injectable()
 export class RemoveClassroomsTagService

@@ -1,9 +1,10 @@
 import { IQuery } from '@nestjs/cqrs';
 import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+
 import {
   FindAllCheckoutsCurrenciesDTO,
-  WhereDataFindAllCheckoutsCurrenciesDTO,
-  OrderByDataFindAllCheckoutsCurrenciesDTO
+  OrderByDataFindAllCheckoutsCurrenciesDTO,
+  WhereDataFindAllCheckoutsCurrenciesDTO
 } from '@/dtos/checkouts-currencies/find-all-checkouts-currencies.dto';
 
 export class FindAllCheckoutsCurrenciesQuery

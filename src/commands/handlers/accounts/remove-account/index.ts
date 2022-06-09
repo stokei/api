@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveAccountCommand } from '@/commands/implements/accounts/remove-account.command';
 import {
   AccountNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
 import { RemoveAccountRepository } from '@/repositories/accounts/remove-account';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveAccountCommandKeys = keyof RemoveAccountCommand;
 

@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateAnswerCommand } from '@/commands/implements/answers/update-answer.command';
 import {
   AnswerNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindAnswerByIdRepository } from '@/repositories/answers/find-answer-by-id';
 import { UpdateAnswerRepository } from '@/repositories/answers/update-answer';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateAnswerCommandKeys = keyof UpdateAnswerCommand;
 

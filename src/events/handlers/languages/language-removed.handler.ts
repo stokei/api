@@ -1,6 +1,7 @@
-import { LanguageRemovedEvent } from '@/events/implements/languages/language-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { LanguageRemovedEvent } from '@/events/implements/languages/language-removed.event';
 
 @EventsHandler(LanguageRemovedEvent)
 export class LanguageRemovedHandler

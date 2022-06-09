@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateSitesLightColorDTO } from '@/dtos/sites-light-colors/create-sites-light-color.dto';
 
 export class CreateSitesLightColorCommand

@@ -1,6 +1,7 @@
-import { PlanModel, IPlanModelData } from '@/models/plan.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IPlanModelData, PlanModel } from '@/models/plan.model';
 
 export class PlanModelMock extends PlanModel {
   constructor(data?: Partial<IPlanModelData>) {

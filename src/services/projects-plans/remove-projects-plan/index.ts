@@ -1,9 +1,10 @@
-import { RemoveProjectsPlanCommand } from '@/commands/implements/projects-plans/remove-projects-plan.command';
-import { RemoveProjectsPlanDTO } from '@/dtos/projects-plans/remove-projects-plan.dto';
-import { ProjectsPlanModel } from '@/models/projects-plan.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveProjectsPlanCommand } from '@/commands/implements/projects-plans/remove-projects-plan.command';
+import { RemoveProjectsPlanDTO } from '@/dtos/projects-plans/remove-projects-plan.dto';
+import { ProjectsPlanModel } from '@/models/projects-plan.model';
 
 @Injectable()
 export class RemoveProjectsPlanService

@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateVersionDTO,
   UpdateVersionDataDTO,
+  UpdateVersionDTO,
   UpdateVersionWhereDTO
 } from '@/dtos/versions/update-version.dto';
 

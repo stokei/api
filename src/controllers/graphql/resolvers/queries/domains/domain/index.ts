@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { DomainsLoader } from '@/controllers/graphql/dataloaders/domains.loader';
 import { Domain } from '@/controllers/graphql/types/domain';
 import { DomainNotFoundException, ParamNotFoundException } from '@/errors';

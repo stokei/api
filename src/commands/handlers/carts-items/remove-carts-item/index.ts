@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveCartsItemCommand } from '@/commands/implements/carts-items/remove-carts-item.command';
 import {
   CartsItemNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindCartsItemByIdRepository } from '@/repositories/carts-items/find-carts-item-by-id';
 import { RemoveCartsItemRepository } from '@/repositories/carts-items/remove-carts-item';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveCartsItemCommandKeys = keyof RemoveCartsItemCommand;
 

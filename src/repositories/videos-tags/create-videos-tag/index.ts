@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { VideosTagMapper } from '@/mappers/videos-tags';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateVideosTagDTO } from '@/dtos/videos-tags/create-videos-tag.dto';
+import { VideosTagMapper } from '@/mappers/videos-tags';
 import { VideosTagModel } from '@/models/videos-tag.model';
 
 @Injectable()

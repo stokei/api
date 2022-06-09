@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { CurrencyModel } from '@/models/currency.model';
+
 import { FindAllCurrenciesDTO } from '@/dtos/currencies/find-all-currencies.dto';
+import { CurrencyModel } from '@/models/currency.model';
 import { FindAllCurrenciesQuery } from '@/queries/implements/currencies/find-all-currencies.query';
 
 @Injectable()

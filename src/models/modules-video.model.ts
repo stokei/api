@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { ModulesVideoCreatedEvent } from '@/events/implements/modules-videos/modules-video-created.event';
-import { ModulesVideoUpdatedEvent } from '@/events/implements/modules-videos/modules-video-updated.event';
-import { ModulesVideoRemovedEvent } from '@/events/implements/modules-videos/modules-video-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { ModulesVideoCreatedEvent } from '@/events/implements/modules-videos/modules-video-created.event';
+import { ModulesVideoRemovedEvent } from '@/events/implements/modules-videos/modules-video-removed.event';
+import { ModulesVideoUpdatedEvent } from '@/events/implements/modules-videos/modules-video-updated.event';
 
 export interface IModulesVideoModelData {
   readonly id?: string;

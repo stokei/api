@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountVideosRepository } from '@/repositories/videos/count-videos';
 import { FindAllVideosRepository } from '@/repositories/videos/find-all-videos';
-import { Test } from '@nestjs/testing';
+
 import { FindAllVideosQueryHandler } from '.';
 
 describe('FindAllVideosQueryHandler', () => {

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { SitesLightColorMapper } from '@/mappers/sites-light-colors';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateSitesLightColorDTO } from '@/dtos/sites-light-colors/create-sites-light-color.dto';
+import { SitesLightColorMapper } from '@/mappers/sites-light-colors';
 import { SitesLightColorModel } from '@/models/sites-light-color.model';
 
 @Injectable()

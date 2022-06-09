@@ -1,12 +1,13 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { AccountRole } from '@/enums/account-role.enum';
-import { AccountStatus } from '@/enums/account-status.enum';
-import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
-import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
-import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { cleanValue, createServiceId } from '@stokei/nestjs';
 import { Exclude } from 'class-transformer';
+
+import { AccountRole } from '@/enums/account-role.enum';
+import { AccountStatus } from '@/enums/account-status.enum';
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
+import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
+import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
 
 export interface IAccountModelData {
   readonly id?: string;

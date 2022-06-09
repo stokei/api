@@ -1,9 +1,10 @@
-import { CreateVideosSubtitleCommand } from '@/commands/implements/videos-subtitles/create-videos-subtitle.command';
-import { CreateVideosSubtitleDTO } from '@/dtos/videos-subtitles/create-videos-subtitle.dto';
-import { VideosSubtitleModel } from '@/models/videos-subtitle.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateVideosSubtitleCommand } from '@/commands/implements/videos-subtitles/create-videos-subtitle.command';
+import { CreateVideosSubtitleDTO } from '@/dtos/videos-subtitles/create-videos-subtitle.dto';
+import { VideosSubtitleModel } from '@/models/videos-subtitle.model';
 
 @Injectable()
 export class CreateVideosSubtitleService

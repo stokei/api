@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
 import {
   CheckoutNotFoundException,
@@ -6,7 +8,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateCheckoutRepository } from '@/repositories/checkouts/create-checkout';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateCheckoutCommandKeys = keyof CreateCheckoutCommand;
 

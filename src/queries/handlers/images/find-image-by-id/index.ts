@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  ImageNotFoundException,
   DataNotFoundException,
+  ImageNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { ImageModel } from '@/models/image.model';
-import { FindImageByIdRepository } from '@/repositories/images/find-image-by-id';
 import { FindImageByIdQuery } from '@/queries/implements/images/find-image-by-id.query';
+import { FindImageByIdRepository } from '@/repositories/images/find-image-by-id';
 
 @QueryHandler(FindImageByIdQuery)
 export class FindImageByIdQueryHandler

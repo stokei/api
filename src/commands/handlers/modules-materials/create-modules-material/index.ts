@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateModulesMaterialCommand } from '@/commands/implements/modules-materials/create-modules-material.command';
 import {
-  ModulesMaterialNotFoundException,
   DataNotFoundException,
+  ModulesMaterialNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateModulesMaterialRepository } from '@/repositories/modules-materials/create-modules-material';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateModulesMaterialCommandKeys = keyof CreateModulesMaterialCommand;
 

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { CategoryModel } from '@/models/category.model';
+
 import { FindAllCategoriesDTO } from '@/dtos/categories/find-all-categories.dto';
+import { CategoryModel } from '@/models/category.model';
 import { FindAllCategoriesQuery } from '@/queries/implements/categories/find-all-categories.query';
 
 @Injectable()

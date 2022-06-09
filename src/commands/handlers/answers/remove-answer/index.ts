@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveAnswerCommand } from '@/commands/implements/answers/remove-answer.command';
 import {
   AnswerNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindAnswerByIdRepository } from '@/repositories/answers/find-answer-by-id';
 import { RemoveAnswerRepository } from '@/repositories/answers/remove-answer';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveAnswerCommandKeys = keyof RemoveAnswerCommand;
 

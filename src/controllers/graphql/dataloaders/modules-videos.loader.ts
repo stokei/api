@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllModulesVideosService } from '@/services/modules-videos/find-all-modules-videos';
 import DataLoader from 'dataloader';
+
+import { FindAllModulesVideosService } from '@/services/modules-videos/find-all-modules-videos';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ModulesVideosLoader {

@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountSitesRepository } from '@/repositories/sites/count-sites';
 import { FindAllSitesRepository } from '@/repositories/sites/find-all-sites';
-import { Test } from '@nestjs/testing';
+
 import { FindAllSitesQueryHandler } from '.';
 
 describe('FindAllSitesQueryHandler', () => {

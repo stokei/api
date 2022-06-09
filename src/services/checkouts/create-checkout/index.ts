@@ -1,9 +1,10 @@
-import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
-import { CreateCheckoutDTO } from '@/dtos/checkouts/create-checkout.dto';
-import { CheckoutModel } from '@/models/checkout.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
+import { CreateCheckoutDTO } from '@/dtos/checkouts/create-checkout.dto';
+import { CheckoutModel } from '@/models/checkout.model';
 
 @Injectable()
 export class CreateCheckoutService

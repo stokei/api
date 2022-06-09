@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountPricesRepository } from '@/repositories/prices/count-prices';
 import { FindAllPricesRepository } from '@/repositories/prices/find-all-prices';
-import { Test } from '@nestjs/testing';
+
 import { FindAllPricesQueryHandler } from '.';
 
 describe('FindAllPricesQueryHandler', () => {

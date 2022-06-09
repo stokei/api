@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { CurrencyMapper } from '@/mappers/currencies';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateCurrencyDTO } from '@/dtos/currencies/create-currency.dto';
+import { CurrencyMapper } from '@/mappers/currencies';
 import { CurrencyModel } from '@/models/currency.model';
 
 @Injectable()

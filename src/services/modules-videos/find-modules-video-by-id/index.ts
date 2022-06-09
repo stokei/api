@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { ModulesVideoModel } from '@/models/modules-video.model';
 import { FindModulesVideoByIdQuery } from '@/queries/implements/modules-videos/find-modules-video-by-id.query';
 

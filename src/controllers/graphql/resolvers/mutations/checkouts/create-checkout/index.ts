@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { CreateCheckoutInput } from '@/controllers/graphql/inputs/checkouts/create-checkout.input';
 import { Checkout } from '@/controllers/graphql/types/checkout';
 import { CreateCheckoutService } from '@/services/checkouts/create-checkout';

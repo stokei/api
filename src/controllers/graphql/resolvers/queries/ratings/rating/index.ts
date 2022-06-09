@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { RatingsLoader } from '@/controllers/graphql/dataloaders/ratings.loader';
 import { Rating } from '@/controllers/graphql/types/rating';
-import { RatingNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, RatingNotFoundException } from '@/errors';
 
 @Resolver(() => Rating)
 export class RatingResolver {

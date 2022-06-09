@@ -1,6 +1,7 @@
-import { QuestionRemovedEvent } from '@/events/implements/questions/question-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { QuestionRemovedEvent } from '@/events/implements/questions/question-removed.event';
 
 @EventsHandler(QuestionRemovedEvent)
 export class QuestionRemovedHandler

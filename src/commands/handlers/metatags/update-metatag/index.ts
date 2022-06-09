@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateMetatagCommand } from '@/commands/implements/metatags/update-metatag.command';
 import {
-  MetatagNotFoundException,
   DataNotFoundException,
+  MetatagNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindMetatagByIdRepository } from '@/repositories/metatags/find-metatag-by-id';
 import { UpdateMetatagRepository } from '@/repositories/metatags/update-metatag';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateMetatagCommandKeys = keyof UpdateMetatagCommand;
 

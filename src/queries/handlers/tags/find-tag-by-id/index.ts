@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  TagNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  TagNotFoundException
 } from '@/errors';
 import { TagModel } from '@/models/tag.model';
-import { FindTagByIdRepository } from '@/repositories/tags/find-tag-by-id';
 import { FindTagByIdQuery } from '@/queries/implements/tags/find-tag-by-id.query';
+import { FindTagByIdRepository } from '@/repositories/tags/find-tag-by-id';
 
 @QueryHandler(FindTagByIdQuery)
 export class FindTagByIdQueryHandler

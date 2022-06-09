@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateProductsImageCommand } from '@/commands/implements/products-images/update-products-image.command';
 import {
-  ProductsImageNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProductsImageNotFoundException
 } from '@/errors';
 import { FindProductsImageByIdRepository } from '@/repositories/products-images/find-products-image-by-id';
 import { UpdateProductsImageRepository } from '@/repositories/products-images/update-products-image';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateProductsImageCommandKeys = keyof UpdateProductsImageCommand;
 

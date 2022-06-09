@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { ModulesMaterialMapper } from '@/mappers/modules-materials';
 import { ModulesMaterialModel } from '@/models/modules-material.model';

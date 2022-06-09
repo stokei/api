@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllLanguagesService } from '@/services/languages/find-all-languages';
 import DataLoader from 'dataloader';
+
+import { FindAllLanguagesService } from '@/services/languages/find-all-languages';
 
 @Injectable({ scope: Scope.REQUEST })
 export class LanguagesLoader {

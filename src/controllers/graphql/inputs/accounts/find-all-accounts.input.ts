@@ -1,15 +1,16 @@
+import { Field, InputType } from '@nestjs/graphql';
+import {
+  OrderBy,
+  WhereDataSearchInput,
+  WhereDataStringInput,
+  WherePaginated
+} from '@stokei/nestjs';
+
+import { AccountRole } from '@/controllers/graphql/enums/accounts/account-role';
 import {
   OrderByDataFindAllAccountsDTO,
   WhereDataFindAllAccountsDTO
 } from '@/dtos/accounts/find-all-accounts.dto';
-import { Field, InputType } from '@nestjs/graphql';
-import { AccountRole } from '@/controllers/graphql/enums/accounts/account-role';
-import {
-  OrderBy,
-  WhereDataStringInput,
-  WhereDataSearchInput,
-  WherePaginated
-} from '@stokei/nestjs';
 
 @InputType()
 class WhereDataFindAllAccountsDataInput implements WhereDataFindAllAccountsDTO {

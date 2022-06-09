@@ -1,6 +1,7 @@
-import { ModuleModel, IModuleModelData } from '@/models/module.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IModuleModelData, ModuleModel } from '@/models/module.model';
 
 export class ModuleModelMock extends ModuleModel {
   constructor(data?: Partial<IModuleModelData>) {

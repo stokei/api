@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { ImageCreatedEvent } from '@/events/implements/images/image-created.event';
-import { ImageUpdatedEvent } from '@/events/implements/images/image-updated.event';
-import { ImageRemovedEvent } from '@/events/implements/images/image-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { ImageCreatedEvent } from '@/events/implements/images/image-created.event';
+import { ImageRemovedEvent } from '@/events/implements/images/image-removed.event';
+import { ImageUpdatedEvent } from '@/events/implements/images/image-updated.event';
 
 export interface IImageModelData {
   readonly id?: string;

@@ -1,5 +1,7 @@
-import { FindPriceByIdRepository } from '@/repositories/prices/find-price-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindPriceByIdRepository } from '@/repositories/prices/find-price-by-id';
+
 import { FindPriceByIdQueryHandler } from '.';
 
 describe('FindPriceByIdQueryHandler', () => {

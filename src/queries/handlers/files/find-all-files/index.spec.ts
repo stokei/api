@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountFilesRepository } from '@/repositories/files/count-files';
 import { FindAllFilesRepository } from '@/repositories/files/find-all-files';
-import { Test } from '@nestjs/testing';
+
 import { FindAllFilesQueryHandler } from '.';
 
 describe('FindAllFilesQueryHandler', () => {

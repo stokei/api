@@ -1,6 +1,7 @@
-import { ColorCreatedEvent } from '@/events/implements/colors/color-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ColorCreatedEvent } from '@/events/implements/colors/color-created.event';
 
 @EventsHandler(ColorCreatedEvent)
 export class ColorCreatedHandler implements IEventHandler<ColorCreatedEvent> {

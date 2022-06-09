@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { SitesDarkColorMapper } from '@/mappers/sites-dark-colors';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateSitesDarkColorDTO } from '@/dtos/sites-dark-colors/create-sites-dark-color.dto';
+import { SitesDarkColorMapper } from '@/mappers/sites-dark-colors';
 import { SitesDarkColorModel } from '@/models/sites-dark-color.model';
 
 @Injectable()

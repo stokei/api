@@ -1,9 +1,10 @@
 import { IQuery } from '@nestjs/cqrs';
 import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+
 import {
   FindAllMetatagsDTO,
-  WhereDataFindAllMetatagsDTO,
-  OrderByDataFindAllMetatagsDTO
+  OrderByDataFindAllMetatagsDTO,
+  WhereDataFindAllMetatagsDTO
 } from '@/dtos/metatags/find-all-metatags.dto';
 
 export class FindAllMetatagsQuery implements IQuery, FindAllMetatagsDTO {

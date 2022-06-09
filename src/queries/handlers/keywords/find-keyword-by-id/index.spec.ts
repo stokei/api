@@ -1,5 +1,7 @@
-import { FindKeywordByIdRepository } from '@/repositories/keywords/find-keyword-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindKeywordByIdRepository } from '@/repositories/keywords/find-keyword-by-id';
+
 import { FindKeywordByIdQueryHandler } from '.';
 
 describe('FindKeywordByIdQueryHandler', () => {

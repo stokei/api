@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdatePageCommand } from '@/commands/implements/pages/update-page.command';
 import {
-  PageNotFoundException,
   DataNotFoundException,
+  PageNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindPageByIdRepository } from '@/repositories/pages/find-page-by-id';
 import { UpdatePageRepository } from '@/repositories/pages/update-page';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdatePageCommandKeys = keyof UpdatePageCommand;
 

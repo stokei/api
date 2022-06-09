@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateSitesDarkColorCommand } from '@/commands/implements/sites-dark-colors/update-sites-dark-color.command';
 import {
-  SitesDarkColorNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SitesDarkColorNotFoundException
 } from '@/errors';
 import { FindSitesDarkColorByIdRepository } from '@/repositories/sites-dark-colors/find-sites-dark-color-by-id';
 import { UpdateSitesDarkColorRepository } from '@/repositories/sites-dark-colors/update-sites-dark-color';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateSitesDarkColorCommandKeys = keyof UpdateSitesDarkColorCommand;
 

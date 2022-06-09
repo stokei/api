@@ -1,5 +1,5 @@
-import * as dotenv from 'dotenv';
 import { Environment } from '@stokei/nestjs';
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 

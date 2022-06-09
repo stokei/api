@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllKeywordsService } from '@/services/keywords/find-all-keywords';
 import DataLoader from 'dataloader';
+
+import { FindAllKeywordsService } from '@/services/keywords/find-all-keywords';
 
 @Injectable({ scope: Scope.REQUEST })
 export class KeywordsLoader {

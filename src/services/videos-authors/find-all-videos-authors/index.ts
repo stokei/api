@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { VideosAuthorModel } from '@/models/videos-author.model';
+
 import { FindAllVideosAuthorsDTO } from '@/dtos/videos-authors/find-all-videos-authors.dto';
+import { VideosAuthorModel } from '@/models/videos-author.model';
 import { FindAllVideosAuthorsQuery } from '@/queries/implements/videos-authors/find-all-videos-authors.query';
 
 @Injectable()

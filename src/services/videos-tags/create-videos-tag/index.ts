@@ -1,9 +1,10 @@
-import { CreateVideosTagCommand } from '@/commands/implements/videos-tags/create-videos-tag.command';
-import { CreateVideosTagDTO } from '@/dtos/videos-tags/create-videos-tag.dto';
-import { VideosTagModel } from '@/models/videos-tag.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateVideosTagCommand } from '@/commands/implements/videos-tags/create-videos-tag.command';
+import { CreateVideosTagDTO } from '@/dtos/videos-tags/create-videos-tag.dto';
+import { VideosTagModel } from '@/models/videos-tag.model';
 
 @Injectable()
 export class CreateVideosTagService

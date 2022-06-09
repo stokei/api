@@ -1,6 +1,7 @@
-import { VideosTagModel, IVideosTagModelData } from '@/models/videos-tag.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IVideosTagModelData, VideosTagModel } from '@/models/videos-tag.model';
 
 export class VideosTagModelMock extends VideosTagModel {
   constructor(data?: Partial<IVideosTagModelData>) {

@@ -1,9 +1,10 @@
-import {
-  ProjectsPlanModel,
-  IProjectsPlanModelData
-} from '@/models/projects-plan.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import {
+  IProjectsPlanModelData,
+  ProjectsPlanModel
+} from '@/models/projects-plan.model';
 
 export class ProjectsPlanModelMock extends ProjectsPlanModel {
   constructor(data?: Partial<IProjectsPlanModelData>) {

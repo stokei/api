@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  ProjectsMemberNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProjectsMemberNotFoundException
 } from '@/errors';
 import { ProjectsMemberModel } from '@/models/projects-member.model';
-import { FindProjectsMemberByIdRepository } from '@/repositories/projects-members/find-projects-member-by-id';
 import { FindProjectsMemberByIdQuery } from '@/queries/implements/projects-members/find-projects-member-by-id.query';
+import { FindProjectsMemberByIdRepository } from '@/repositories/projects-members/find-projects-member-by-id';
 
 @QueryHandler(FindProjectsMemberByIdQuery)
 export class FindProjectsMemberByIdQueryHandler

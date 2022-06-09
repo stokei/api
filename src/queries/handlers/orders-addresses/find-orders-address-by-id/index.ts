@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  OrdersAddressNotFoundException,
   DataNotFoundException,
+  OrdersAddressNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { OrdersAddressModel } from '@/models/orders-address.model';
-import { FindOrdersAddressByIdRepository } from '@/repositories/orders-addresses/find-orders-address-by-id';
 import { FindOrdersAddressByIdQuery } from '@/queries/implements/orders-addresses/find-orders-address-by-id.query';
+import { FindOrdersAddressByIdRepository } from '@/repositories/orders-addresses/find-orders-address-by-id';
 
 @QueryHandler(FindOrdersAddressByIdQuery)
 export class FindOrdersAddressByIdQueryHandler

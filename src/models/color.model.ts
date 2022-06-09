@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { ColorCreatedEvent } from '@/events/implements/colors/color-created.event';
-import { ColorUpdatedEvent } from '@/events/implements/colors/color-updated.event';
-import { ColorRemovedEvent } from '@/events/implements/colors/color-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { ColorCreatedEvent } from '@/events/implements/colors/color-created.event';
+import { ColorRemovedEvent } from '@/events/implements/colors/color-removed.event';
+import { ColorUpdatedEvent } from '@/events/implements/colors/color-updated.event';
 
 export interface IColorModelData {
   readonly id?: string;

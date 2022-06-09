@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveOrdersSellerCommand } from '@/commands/implements/orders-sellers/remove-orders-seller.command';
 import {
-  OrdersSellerNotFoundException,
   DataNotFoundException,
+  OrdersSellerNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindOrdersSellerByIdRepository } from '@/repositories/orders-sellers/find-orders-seller-by-id';
 import { RemoveOrdersSellerRepository } from '@/repositories/orders-sellers/remove-orders-seller';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveOrdersSellerCommandKeys = keyof RemoveOrdersSellerCommand;
 

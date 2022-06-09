@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { PlanCreatedEvent } from '@/events/implements/plans/plan-created.event';
-import { PlanUpdatedEvent } from '@/events/implements/plans/plan-updated.event';
-import { PlanRemovedEvent } from '@/events/implements/plans/plan-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { PlanCreatedEvent } from '@/events/implements/plans/plan-created.event';
+import { PlanRemovedEvent } from '@/events/implements/plans/plan-removed.event';
+import { PlanUpdatedEvent } from '@/events/implements/plans/plan-updated.event';
 
 export interface IPlanModelData {
   readonly id?: string;

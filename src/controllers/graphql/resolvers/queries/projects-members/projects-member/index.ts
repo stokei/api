@@ -1,9 +1,10 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { ProjectsMembersLoader } from '@/controllers/graphql/dataloaders/projects-members.loader';
 import { ProjectsMember } from '@/controllers/graphql/types/projects-member';
 import {
-  ProjectsMemberNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProjectsMemberNotFoundException
 } from '@/errors';
 
 @Resolver(() => ProjectsMember)

@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveProjectsMemberCommand } from '@/commands/implements/projects-members/remove-projects-member.command';
 import {
-  ProjectsMemberNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProjectsMemberNotFoundException
 } from '@/errors';
 import { FindProjectsMemberByIdRepository } from '@/repositories/projects-members/find-projects-member-by-id';
 import { RemoveProjectsMemberRepository } from '@/repositories/projects-members/remove-projects-member';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveProjectsMemberCommandKeys = keyof RemoveProjectsMemberCommand;
 

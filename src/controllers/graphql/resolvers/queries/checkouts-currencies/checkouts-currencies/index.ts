@@ -1,11 +1,12 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { PaginationInput } from '@stokei/nestjs';
+
 import {
   OrderByDataFindAllCheckoutsCurrenciesInput,
   WhereDataFindAllCheckoutsCurrenciesInput
 } from '@/controllers/graphql/inputs/checkouts-currencies/find-all-checkouts-currencies.input';
-import { CheckoutsCurrency } from '@/controllers/graphql/types/checkouts-currency';
 import { CheckoutsCurrencies } from '@/controllers/graphql/types/checkouts-currencies';
+import { CheckoutsCurrency } from '@/controllers/graphql/types/checkouts-currency';
 import { FindAllCheckoutsCurrenciesService } from '@/services/checkouts-currencies/find-all-checkouts-currencies';
 
 @Resolver(() => CheckoutsCurrency)

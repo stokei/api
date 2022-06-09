@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateKeywordInput } from '@/controllers/graphql/inputs/keywords/update-keyword.input';
 import { Keyword } from '@/controllers/graphql/types/keyword';
 import { UpdateKeywordService } from '@/services/keywords/update-keyword';

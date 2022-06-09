@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateDomainCommand } from '@/commands/implements/domains/create-domain.command';
 import {
-  DomainNotFoundException,
   DataNotFoundException,
+  DomainNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateDomainRepository } from '@/repositories/domains/create-domain';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateDomainCommandKeys = keyof CreateDomainCommand;
 

@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountPagesRepository } from '@/repositories/pages/count-pages';
 import { FindAllPagesRepository } from '@/repositories/pages/find-all-pages';
-import { Test } from '@nestjs/testing';
+
 import { FindAllPagesQueryHandler } from '.';
 
 describe('FindAllPagesQueryHandler', () => {

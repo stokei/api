@@ -1,6 +1,7 @@
-import { OrdersItemUpdatedEvent } from '@/events/implements/orders-items/orders-item-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { OrdersItemUpdatedEvent } from '@/events/implements/orders-items/orders-item-updated.event';
 
 @EventsHandler(OrdersItemUpdatedEvent)
 export class OrdersItemUpdatedHandler

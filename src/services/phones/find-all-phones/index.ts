@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { PhoneModel } from '@/models/phone.model';
+
 import { FindAllPhonesDTO } from '@/dtos/phones/find-all-phones.dto';
+import { PhoneModel } from '@/models/phone.model';
 import { FindAllPhonesQuery } from '@/queries/implements/phones/find-all-phones.query';
 
 @Injectable()

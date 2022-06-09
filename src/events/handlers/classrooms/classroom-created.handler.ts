@@ -1,6 +1,7 @@
-import { ClassroomCreatedEvent } from '@/events/implements/classrooms/classroom-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ClassroomCreatedEvent } from '@/events/implements/classrooms/classroom-created.event';
 
 @EventsHandler(ClassroomCreatedEvent)
 export class ClassroomCreatedHandler

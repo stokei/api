@@ -1,9 +1,10 @@
-import { RemoveQuestionCommand } from '@/commands/implements/questions/remove-question.command';
-import { RemoveQuestionDTO } from '@/dtos/questions/remove-question.dto';
-import { QuestionModel } from '@/models/question.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveQuestionCommand } from '@/commands/implements/questions/remove-question.command';
+import { RemoveQuestionDTO } from '@/dtos/questions/remove-question.dto';
+import { QuestionModel } from '@/models/question.model';
 
 @Injectable()
 export class RemoveQuestionService

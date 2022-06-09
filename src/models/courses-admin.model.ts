@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { CoursesAdminCreatedEvent } from '@/events/implements/courses-admins/courses-admin-created.event';
-import { CoursesAdminUpdatedEvent } from '@/events/implements/courses-admins/courses-admin-updated.event';
-import { CoursesAdminRemovedEvent } from '@/events/implements/courses-admins/courses-admin-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { CoursesAdminCreatedEvent } from '@/events/implements/courses-admins/courses-admin-created.event';
+import { CoursesAdminRemovedEvent } from '@/events/implements/courses-admins/courses-admin-removed.event';
+import { CoursesAdminUpdatedEvent } from '@/events/implements/courses-admins/courses-admin-updated.event';
 
 export interface ICoursesAdminModelData {
   readonly id?: string;

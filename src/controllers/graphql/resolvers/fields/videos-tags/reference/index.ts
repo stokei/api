@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { VideosTagsLoader } from '@/controllers/graphql/dataloaders/videos-tags.loader';
 import { VideosTag } from '@/controllers/graphql/types/videos-tag';
 

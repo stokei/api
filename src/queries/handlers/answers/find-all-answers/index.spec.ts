@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountAnswersRepository } from '@/repositories/answers/count-answers';
 import { FindAllAnswersRepository } from '@/repositories/answers/find-all-answers';
-import { Test } from '@nestjs/testing';
+
 import { FindAllAnswersQueryHandler } from '.';
 
 describe('FindAllAnswersQueryHandler', () => {

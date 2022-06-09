@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { ModulesVideoCreatedEvent } from '@/events/implements/modules-videos/modules-video-created.event';
 import { ModulesVideoRemovedEvent } from '@/events/implements/modules-videos/modules-video-removed.event';
 import { ModulesVideoUpdatedEvent } from '@/events/implements/modules-videos/modules-video-updated.event';

@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllImagesService } from '@/services/images/find-all-images';
 import DataLoader from 'dataloader';
+
+import { FindAllImagesService } from '@/services/images/find-all-images';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ImagesLoader {

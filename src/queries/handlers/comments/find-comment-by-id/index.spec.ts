@@ -1,5 +1,7 @@
-import { FindCommentByIdRepository } from '@/repositories/comments/find-comment-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindCommentByIdRepository } from '@/repositories/comments/find-comment-by-id';
+
 import { FindCommentByIdQueryHandler } from '.';
 
 describe('FindCommentByIdQueryHandler', () => {

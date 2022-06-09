@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { CurrencyMapper } from '@/mappers/currencies';
 import { CurrencyModel } from '@/models/currency.model';

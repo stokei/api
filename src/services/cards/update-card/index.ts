@@ -1,9 +1,10 @@
-import { UpdateCardCommand } from '@/commands/implements/cards/update-card.command';
-import { UpdateCardDTO } from '@/dtos/cards/update-card.dto';
-import { CardModel } from '@/models/card.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { UpdateCardCommand } from '@/commands/implements/cards/update-card.command';
+import { UpdateCardDTO } from '@/dtos/cards/update-card.dto';
+import { CardModel } from '@/models/card.model';
 
 @Injectable()
 export class UpdateCardService

@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { KeywordCreatedEvent } from '@/events/implements/keywords/keyword-created.event';
-import { KeywordUpdatedEvent } from '@/events/implements/keywords/keyword-updated.event';
-import { KeywordRemovedEvent } from '@/events/implements/keywords/keyword-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { KeywordCreatedEvent } from '@/events/implements/keywords/keyword-created.event';
+import { KeywordRemovedEvent } from '@/events/implements/keywords/keyword-removed.event';
+import { KeywordUpdatedEvent } from '@/events/implements/keywords/keyword-updated.event';
 
 export interface IKeywordModelData {
   readonly id?: string;

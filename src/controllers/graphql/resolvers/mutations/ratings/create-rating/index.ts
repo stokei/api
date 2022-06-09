@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { CreateRatingInput } from '@/controllers/graphql/inputs/ratings/create-rating.input';
 import { Rating } from '@/controllers/graphql/types/rating';
 import { CreateRatingService } from '@/services/ratings/create-rating';

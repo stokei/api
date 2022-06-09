@@ -1,6 +1,7 @@
-import { CommentModel, ICommentModelData } from '@/models/comment.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { CommentModel, ICommentModelData } from '@/models/comment.model';
 
 export class CommentModelMock extends CommentModel {
   constructor(data?: Partial<ICommentModelData>) {

@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveModulesVideoCommand } from '@/commands/implements/modules-videos/remove-modules-video.command';
 import {
-  ModulesVideoNotFoundException,
   DataNotFoundException,
+  ModulesVideoNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindModulesVideoByIdRepository } from '@/repositories/modules-videos/find-modules-video-by-id';
 import { RemoveModulesVideoRepository } from '@/repositories/modules-videos/remove-modules-video';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveModulesVideoCommandKeys = keyof RemoveModulesVideoCommand;
 

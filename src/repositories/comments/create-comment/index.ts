@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { CommentMapper } from '@/mappers/comments';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateCommentDTO } from '@/dtos/comments/create-comment.dto';
+import { CommentMapper } from '@/mappers/comments';
 import { CommentModel } from '@/models/comment.model';
 
 @Injectable()

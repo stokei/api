@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { LanguageCreatedEvent } from '@/events/implements/languages/language-created.event';
-import { LanguageUpdatedEvent } from '@/events/implements/languages/language-updated.event';
-import { LanguageRemovedEvent } from '@/events/implements/languages/language-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { LanguageCreatedEvent } from '@/events/implements/languages/language-created.event';
+import { LanguageRemovedEvent } from '@/events/implements/languages/language-removed.event';
+import { LanguageUpdatedEvent } from '@/events/implements/languages/language-updated.event';
 
 export interface ILanguageModelData {
   readonly id?: string;

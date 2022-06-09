@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveAccessCommand } from '@/commands/implements/accesses/remove-access.command';
 import {
   AccessNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindAccessByIdRepository } from '@/repositories/accesses/find-access-by-id';
 import { RemoveAccessRepository } from '@/repositories/accesses/remove-access';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 @CommandHandler(RemoveAccessCommand)
 export class RemoveAccessCommandHandler

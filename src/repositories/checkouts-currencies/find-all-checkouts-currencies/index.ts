@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import {
+  cleanObject,
   IBaseRepository,
   IOperator,
-  PrismaMapper,
-  cleanObject
+  PrismaMapper
 } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { FindAllCheckoutsCurrenciesDTO } from '@/dtos/checkouts-currencies/find-all-checkouts-currencies.dto';
 import { CheckoutsCurrencyMapper } from '@/mappers/checkouts-currencies';

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { MetatagModel } from '@/models/metatag.model';
 import { FindMetatagByIdQuery } from '@/queries/implements/metatags/find-metatag-by-id.query';
 

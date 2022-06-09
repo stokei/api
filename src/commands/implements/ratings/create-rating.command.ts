@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateRatingDTO } from '@/dtos/ratings/create-rating.dto';
 
 export class CreateRatingCommand implements ICommand, CreateRatingDTO {

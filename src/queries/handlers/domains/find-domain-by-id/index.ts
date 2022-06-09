@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  DomainNotFoundException,
   DataNotFoundException,
+  DomainNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { DomainModel } from '@/models/domain.model';
-import { FindDomainByIdRepository } from '@/repositories/domains/find-domain-by-id';
 import { FindDomainByIdQuery } from '@/queries/implements/domains/find-domain-by-id.query';
+import { FindDomainByIdRepository } from '@/repositories/domains/find-domain-by-id';
 
 @QueryHandler(FindDomainByIdQuery)
 export class FindDomainByIdQueryHandler

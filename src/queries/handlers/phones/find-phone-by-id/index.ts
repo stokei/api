@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  PhoneNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PhoneNotFoundException
 } from '@/errors';
 import { PhoneModel } from '@/models/phone.model';
-import { FindPhoneByIdRepository } from '@/repositories/phones/find-phone-by-id';
 import { FindPhoneByIdQuery } from '@/queries/implements/phones/find-phone-by-id.query';
+import { FindPhoneByIdRepository } from '@/repositories/phones/find-phone-by-id';
 
 @QueryHandler(FindPhoneByIdQuery)
 export class FindPhoneByIdQueryHandler

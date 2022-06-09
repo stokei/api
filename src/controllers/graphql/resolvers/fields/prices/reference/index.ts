@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { PricesLoader } from '@/controllers/graphql/dataloaders/prices.loader';
 import { Price } from '@/controllers/graphql/types/price';
 

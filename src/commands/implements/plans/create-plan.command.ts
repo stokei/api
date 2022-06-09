@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreatePlanDTO } from '@/dtos/plans/create-plan.dto';
 
 export class CreatePlanCommand implements ICommand, CreatePlanDTO {

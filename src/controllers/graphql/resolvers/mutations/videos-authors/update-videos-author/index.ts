@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateVideosAuthorInput } from '@/controllers/graphql/inputs/videos-authors/update-videos-author.input';
 import { VideosAuthor } from '@/controllers/graphql/types/videos-author';
 import { UpdateVideosAuthorService } from '@/services/videos-authors/update-videos-author';

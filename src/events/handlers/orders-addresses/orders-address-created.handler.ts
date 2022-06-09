@@ -1,6 +1,7 @@
-import { OrdersAddressCreatedEvent } from '@/events/implements/orders-addresses/orders-address-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { OrdersAddressCreatedEvent } from '@/events/implements/orders-addresses/orders-address-created.event';
 
 @EventsHandler(OrdersAddressCreatedEvent)
 export class OrdersAddressCreatedHandler

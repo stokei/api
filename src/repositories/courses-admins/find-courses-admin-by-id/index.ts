@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from '@stokei/nestjs';
+
 import { PrismaClient } from '@/database/prisma/client';
 import { CoursesAdminMapper } from '@/mappers/courses-admins';
 import { CoursesAdminModel } from '@/models/courses-admin.model';

@@ -1,5 +1,7 @@
-import { FindModulesVideoByIdRepository } from '@/repositories/modules-videos/find-modules-video-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindModulesVideoByIdRepository } from '@/repositories/modules-videos/find-modules-video-by-id';
+
 import { FindModulesVideoByIdQueryHandler } from '.';
 
 describe('FindModulesVideoByIdQueryHandler', () => {

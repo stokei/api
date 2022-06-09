@@ -1,4 +1,5 @@
 import { Resolver, ResolveReference } from '@nestjs/graphql';
+
 import { RatingsLoader } from '@/controllers/graphql/dataloaders/ratings.loader';
 import { Rating } from '@/controllers/graphql/types/rating';
 

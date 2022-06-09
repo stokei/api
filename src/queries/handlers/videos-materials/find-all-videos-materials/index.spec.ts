@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountVideosMaterialsRepository } from '@/repositories/videos-materials/count-videos-materials';
 import { FindAllVideosMaterialsRepository } from '@/repositories/videos-materials/find-all-videos-materials';
-import { Test } from '@nestjs/testing';
+
 import { FindAllVideosMaterialsQueryHandler } from '.';
 
 describe('FindAllVideosMaterialsQueryHandler', () => {

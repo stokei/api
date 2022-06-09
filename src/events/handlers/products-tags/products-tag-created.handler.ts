@@ -1,6 +1,7 @@
-import { ProductsTagCreatedEvent } from '@/events/implements/products-tags/products-tag-created.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ProductsTagCreatedEvent } from '@/events/implements/products-tags/products-tag-created.event';
 
 @EventsHandler(ProductsTagCreatedEvent)
 export class ProductsTagCreatedHandler

@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { PageCreatedEvent } from '@/events/implements/pages/page-created.event';
-import { PageUpdatedEvent } from '@/events/implements/pages/page-updated.event';
-import { PageRemovedEvent } from '@/events/implements/pages/page-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { PageCreatedEvent } from '@/events/implements/pages/page-created.event';
+import { PageRemovedEvent } from '@/events/implements/pages/page-removed.event';
+import { PageUpdatedEvent } from '@/events/implements/pages/page-updated.event';
 
 export interface IPageModelData {
   readonly id?: string;

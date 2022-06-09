@@ -1,7 +1,8 @@
-import { PrismaClient } from '@/database/prisma/client';
-import { CountAccountsDTO } from '@/dtos/accounts/count-accounts.dto';
 import { Injectable } from '@nestjs/common';
 import { IBaseRepository, IOperator, PrismaMapper } from '@stokei/nestjs';
+
+import { PrismaClient } from '@/database/prisma/client';
+import { CountAccountsDTO } from '@/dtos/accounts/count-accounts.dto';
 
 @Injectable()
 export class CountAccountsRepository

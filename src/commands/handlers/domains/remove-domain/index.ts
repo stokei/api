@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveDomainCommand } from '@/commands/implements/domains/remove-domain.command';
 import {
-  DomainNotFoundException,
   DataNotFoundException,
+  DomainNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindDomainByIdRepository } from '@/repositories/domains/find-domain-by-id';
 import { RemoveDomainRepository } from '@/repositories/domains/remove-domain';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveDomainCommandKeys = keyof RemoveDomainCommand;
 

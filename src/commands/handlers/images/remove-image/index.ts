@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveImageCommand } from '@/commands/implements/images/remove-image.command';
 import {
-  ImageNotFoundException,
   DataNotFoundException,
+  ImageNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindImageByIdRepository } from '@/repositories/images/find-image-by-id';
 import { RemoveImageRepository } from '@/repositories/images/remove-image';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveImageCommandKeys = keyof RemoveImageCommand;
 

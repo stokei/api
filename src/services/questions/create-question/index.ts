@@ -1,9 +1,10 @@
-import { CreateQuestionCommand } from '@/commands/implements/questions/create-question.command';
-import { CreateQuestionDTO } from '@/dtos/questions/create-question.dto';
-import { QuestionModel } from '@/models/question.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateQuestionCommand } from '@/commands/implements/questions/create-question.command';
+import { CreateQuestionDTO } from '@/dtos/questions/create-question.dto';
+import { QuestionModel } from '@/models/question.model';
 
 @Injectable()
 export class CreateQuestionService

@@ -1,6 +1,7 @@
-import { ActivityModel, IActivityModelData } from '@/models/activity.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { ActivityModel, IActivityModelData } from '@/models/activity.model';
 
 export class ActivityModelMock extends ActivityModel {
   constructor(data?: Partial<IActivityModelData>) {

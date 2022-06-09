@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { CategoryMapper } from '@/mappers/categories';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateCategoryDTO } from '@/dtos/categories/create-category.dto';
+import { CategoryMapper } from '@/mappers/categories';
 import { CategoryModel } from '@/models/category.model';
 
 @Injectable()

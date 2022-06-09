@@ -1,9 +1,10 @@
-import { RemoveCardCommand } from '@/commands/implements/cards/remove-card.command';
-import { RemoveCardDTO } from '@/dtos/cards/remove-card.dto';
-import { CardModel } from '@/models/card.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveCardCommand } from '@/commands/implements/cards/remove-card.command';
+import { RemoveCardDTO } from '@/dtos/cards/remove-card.dto';
+import { CardModel } from '@/models/card.model';
 
 @Injectable()
 export class RemoveCardService

@@ -1,9 +1,10 @@
-import { RemoveVideosAuthorCommand } from '@/commands/implements/videos-authors/remove-videos-author.command';
-import { RemoveVideosAuthorDTO } from '@/dtos/videos-authors/remove-videos-author.dto';
-import { VideosAuthorModel } from '@/models/videos-author.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { RemoveVideosAuthorCommand } from '@/commands/implements/videos-authors/remove-videos-author.command';
+import { RemoveVideosAuthorDTO } from '@/dtos/videos-authors/remove-videos-author.dto';
+import { VideosAuthorModel } from '@/models/videos-author.model';
 
 @Injectable()
 export class RemoveVideosAuthorService

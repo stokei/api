@@ -1,11 +1,12 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { PaginationInput } from '@stokei/nestjs';
+
 import {
   OrderByDataFindAllActivitiesInput,
   WhereDataFindAllActivitiesInput
 } from '@/controllers/graphql/inputs/activities/find-all-activities.input';
-import { Activity } from '@/controllers/graphql/types/activity';
 import { Activities } from '@/controllers/graphql/types/activities';
+import { Activity } from '@/controllers/graphql/types/activity';
 import { FindAllActivitiesService } from '@/services/activities/find-all-activities';
 
 @Resolver(() => Activity)

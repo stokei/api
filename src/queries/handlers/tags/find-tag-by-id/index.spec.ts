@@ -1,5 +1,7 @@
-import { FindTagByIdRepository } from '@/repositories/tags/find-tag-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindTagByIdRepository } from '@/repositories/tags/find-tag-by-id';
+
 import { FindTagByIdQueryHandler } from '.';
 
 describe('FindTagByIdQueryHandler', () => {

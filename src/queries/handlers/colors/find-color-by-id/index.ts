@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
   ColorNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { ColorModel } from '@/models/color.model';
-import { FindColorByIdRepository } from '@/repositories/colors/find-color-by-id';
 import { FindColorByIdQuery } from '@/queries/implements/colors/find-color-by-id.query';
+import { FindColorByIdRepository } from '@/repositories/colors/find-color-by-id';
 
 @QueryHandler(FindColorByIdQuery)
 export class FindColorByIdQueryHandler

@@ -1,6 +1,7 @@
-import { AddressUpdatedEvent } from '@/events/implements/addresses/address-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { AddressUpdatedEvent } from '@/events/implements/addresses/address-updated.event';
 
 @EventsHandler(AddressUpdatedEvent)
 export class AddressUpdatedHandler

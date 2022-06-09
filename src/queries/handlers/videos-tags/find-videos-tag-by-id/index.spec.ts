@@ -1,5 +1,7 @@
-import { FindVideosTagByIdRepository } from '@/repositories/videos-tags/find-videos-tag-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindVideosTagByIdRepository } from '@/repositories/videos-tags/find-videos-tag-by-id';
+
 import { FindVideosTagByIdQueryHandler } from '.';
 
 describe('FindVideosTagByIdQueryHandler', () => {

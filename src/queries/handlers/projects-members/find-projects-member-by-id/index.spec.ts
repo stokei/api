@@ -1,5 +1,7 @@
-import { FindProjectsMemberByIdRepository } from '@/repositories/projects-members/find-projects-member-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindProjectsMemberByIdRepository } from '@/repositories/projects-members/find-projects-member-by-id';
+
 import { FindProjectsMemberByIdQueryHandler } from '.';
 
 describe('FindProjectsMemberByIdQueryHandler', () => {

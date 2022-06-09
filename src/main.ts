@@ -1,6 +1,7 @@
 import { Logger, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+
 import { StokeiApiServerInfo } from './enums/server-info.enum';
 import { HOST, PORT } from './environments';
 import { MainModule } from './main.module';

@@ -1,5 +1,7 @@
-import { FindSiteByIdRepository } from '@/repositories/sites/find-site-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindSiteByIdRepository } from '@/repositories/sites/find-site-by-id';
+
 import { FindSiteByIdQueryHandler } from '.';
 
 describe('FindSiteByIdQueryHandler', () => {

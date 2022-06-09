@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { RemovePhoneInput } from '@/controllers/graphql/inputs/phones/remove-phone.input';
 import { Phone } from '@/controllers/graphql/types/phone';
 import { RemovePhoneService } from '@/services/phones/remove-phone';

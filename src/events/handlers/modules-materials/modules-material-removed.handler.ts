@@ -1,6 +1,7 @@
-import { ModulesMaterialRemovedEvent } from '@/events/implements/modules-materials/modules-material-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ModulesMaterialRemovedEvent } from '@/events/implements/modules-materials/modules-material-removed.event';
 
 @EventsHandler(ModulesMaterialRemovedEvent)
 export class ModulesMaterialRemovedHandler

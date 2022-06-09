@@ -1,6 +1,7 @@
-import { CheckoutRemovedEvent } from '@/events/implements/checkouts/checkout-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { CheckoutRemovedEvent } from '@/events/implements/checkouts/checkout-removed.event';
 
 @EventsHandler(CheckoutRemovedEvent)
 export class CheckoutRemovedHandler

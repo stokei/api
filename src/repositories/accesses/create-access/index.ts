@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { AccessMapper } from '@/mappers/accesses';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateAccessRepositoryDTO } from '@/dtos/accesses/create-access-repository.dto';
+import { AccessMapper } from '@/mappers/accesses';
 import { AccessModel } from '@/models/access.model';
 
 @Injectable()

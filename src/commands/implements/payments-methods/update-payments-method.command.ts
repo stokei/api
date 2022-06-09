@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdatePaymentsMethodDTO,
   UpdatePaymentsMethodDataDTO,
+  UpdatePaymentsMethodDTO,
   UpdatePaymentsMethodWhereDTO
 } from '@/dtos/payments-methods/update-payments-method.dto';
 

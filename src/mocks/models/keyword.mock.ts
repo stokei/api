@@ -1,6 +1,7 @@
-import { KeywordModel, IKeywordModelData } from '@/models/keyword.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IKeywordModelData, KeywordModel } from '@/models/keyword.model';
 
 export class KeywordModelMock extends KeywordModel {
   constructor(data?: Partial<IKeywordModelData>) {

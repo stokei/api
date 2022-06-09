@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateMetatagCommand } from '@/commands/implements/metatags/create-metatag.command';
 import {
-  MetatagNotFoundException,
   DataNotFoundException,
+  MetatagNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateMetatagRepository } from '@/repositories/metatags/create-metatag';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateMetatagCommandKeys = keyof CreateMetatagCommand;
 

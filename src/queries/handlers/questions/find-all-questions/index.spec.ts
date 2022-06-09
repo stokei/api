@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountQuestionsRepository } from '@/repositories/questions/count-questions';
 import { FindAllQuestionsRepository } from '@/repositories/questions/find-all-questions';
-import { Test } from '@nestjs/testing';
+
 import { FindAllQuestionsQueryHandler } from '.';
 
 describe('FindAllQuestionsQueryHandler', () => {

@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountCardsRepository } from '@/repositories/cards/count-cards';
 import { FindAllCardsRepository } from '@/repositories/cards/find-all-cards';
-import { Test } from '@nestjs/testing';
+
 import { FindAllCardsQueryHandler } from '.';
 
 describe('FindAllCardsQueryHandler', () => {

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { AccessModel } from '@/models/access.model';
+
 import { FindAllAccessesDTO } from '@/dtos/accesses/find-all-accesses.dto';
+import { AccessModel } from '@/models/access.model';
 import { FindAllAccessesQuery } from '@/queries/implements/accesses/find-all-accesses.query';
 
 @Injectable()

@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateVideosTagCommand } from '@/commands/implements/videos-tags/update-videos-tag.command';
 import {
-  VideosTagNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosTagNotFoundException
 } from '@/errors';
 import { FindVideosTagByIdRepository } from '@/repositories/videos-tags/find-videos-tag-by-id';
 import { UpdateVideosTagRepository } from '@/repositories/videos-tags/update-videos-tag';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateVideosTagCommandKeys = keyof UpdateVideosTagCommand;
 

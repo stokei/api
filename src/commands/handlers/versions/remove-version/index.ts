@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveVersionCommand } from '@/commands/implements/versions/remove-version.command';
 import {
-  VersionNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VersionNotFoundException
 } from '@/errors';
 import { FindVersionByIdRepository } from '@/repositories/versions/find-version-by-id';
 import { RemoveVersionRepository } from '@/repositories/versions/remove-version';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveVersionCommandKeys = keyof RemoveVersionCommand;
 

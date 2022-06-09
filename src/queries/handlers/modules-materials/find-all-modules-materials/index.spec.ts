@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountModulesMaterialsRepository } from '@/repositories/modules-materials/count-modules-materials';
 import { FindAllModulesMaterialsRepository } from '@/repositories/modules-materials/find-all-modules-materials';
-import { Test } from '@nestjs/testing';
+
 import { FindAllModulesMaterialsQueryHandler } from '.';
 
 describe('FindAllModulesMaterialsQueryHandler', () => {

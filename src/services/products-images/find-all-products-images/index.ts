@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { ProductsImageModel } from '@/models/products-image.model';
+
 import { FindAllProductsImagesDTO } from '@/dtos/products-images/find-all-products-images.dto';
+import { ProductsImageModel } from '@/models/products-image.model';
 import { FindAllProductsImagesQuery } from '@/queries/implements/products-images/find-all-products-images.query';
 
 @Injectable()

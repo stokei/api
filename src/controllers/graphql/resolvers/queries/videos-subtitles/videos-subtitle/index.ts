@@ -1,9 +1,10 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { VideosSubtitlesLoader } from '@/controllers/graphql/dataloaders/videos-subtitles.loader';
 import { VideosSubtitle } from '@/controllers/graphql/types/videos-subtitle';
 import {
-  VideosSubtitleNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosSubtitleNotFoundException
 } from '@/errors';
 
 @Resolver(() => VideosSubtitle)

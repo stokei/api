@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateVersionCommand } from '@/commands/implements/versions/create-version.command';
 import {
-  VersionNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VersionNotFoundException
 } from '@/errors';
 import { CreateVersionRepository } from '@/repositories/versions/create-version';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateVersionCommandKeys = keyof CreateVersionCommand;
 

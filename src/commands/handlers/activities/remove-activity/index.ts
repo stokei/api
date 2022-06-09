@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveActivityCommand } from '@/commands/implements/activities/remove-activity.command';
 import {
   ActivityNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindActivityByIdRepository } from '@/repositories/activities/find-activity-by-id';
 import { RemoveActivityRepository } from '@/repositories/activities/remove-activity';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveActivityCommandKeys = keyof RemoveActivityCommand;
 

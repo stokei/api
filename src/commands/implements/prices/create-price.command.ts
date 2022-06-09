@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreatePriceDTO } from '@/dtos/prices/create-price.dto';
 
 export class CreatePriceCommand implements ICommand, CreatePriceDTO {

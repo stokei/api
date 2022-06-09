@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllCartsItemsService } from '@/services/carts-items/find-all-carts-items';
 import DataLoader from 'dataloader';
+
+import { FindAllCartsItemsService } from '@/services/carts-items/find-all-carts-items';
 
 @Injectable({ scope: Scope.REQUEST })
 export class CartsItemsLoader {

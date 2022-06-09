@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { CategoriesLoader } from '@/controllers/graphql/dataloaders/categories.loader';
 import { Category } from '@/controllers/graphql/types/category';
 import { CategoryNotFoundException, ParamNotFoundException } from '@/errors';

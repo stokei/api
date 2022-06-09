@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountColorsRepository } from '@/repositories/colors/count-colors';
 import { FindAllColorsRepository } from '@/repositories/colors/find-all-colors';
-import { Test } from '@nestjs/testing';
+
 import { FindAllColorsQueryHandler } from '.';
 
 describe('FindAllColorsQueryHandler', () => {

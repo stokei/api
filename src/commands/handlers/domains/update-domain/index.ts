@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateDomainCommand } from '@/commands/implements/domains/update-domain.command';
 import {
-  DomainNotFoundException,
   DataNotFoundException,
+  DomainNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindDomainByIdRepository } from '@/repositories/domains/find-domain-by-id';
 import { UpdateDomainRepository } from '@/repositories/domains/update-domain';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateDomainCommandKeys = keyof UpdateDomainCommand;
 

@@ -1,6 +1,8 @@
+import { Test } from '@nestjs/testing';
+
 import { CountVideosSubtitlesRepository } from '@/repositories/videos-subtitles/count-videos-subtitles';
 import { FindAllVideosSubtitlesRepository } from '@/repositories/videos-subtitles/find-all-videos-subtitles';
-import { Test } from '@nestjs/testing';
+
 import { FindAllVideosSubtitlesQueryHandler } from '.';
 
 describe('FindAllVideosSubtitlesQueryHandler', () => {

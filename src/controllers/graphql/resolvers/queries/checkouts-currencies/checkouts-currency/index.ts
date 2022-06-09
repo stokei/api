@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { CheckoutsCurrenciesLoader } from '@/controllers/graphql/dataloaders/checkouts-currencies.loader';
 import { CheckoutsCurrency } from '@/controllers/graphql/types/checkouts-currency';
 import {

@@ -1,7 +1,3 @@
-import { PrismaClient } from '@/database/prisma/client';
-import { FindAllAccountsDTO } from '@/dtos/accounts/find-all-accounts.dto';
-import { AccountMapper } from '@/mappers/accounts';
-import { AccountModel } from '@/models/account.model';
 import { Injectable } from '@nestjs/common';
 import {
   cleanObject,
@@ -9,6 +5,11 @@ import {
   IOperator,
   PrismaMapper
 } from '@stokei/nestjs';
+
+import { PrismaClient } from '@/database/prisma/client';
+import { FindAllAccountsDTO } from '@/dtos/accounts/find-all-accounts.dto';
+import { AccountMapper } from '@/mappers/accounts';
+import { AccountModel } from '@/models/account.model';
 
 @Injectable()
 export class FindAllAccountsRepository

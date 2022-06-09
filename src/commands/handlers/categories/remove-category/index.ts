@@ -1,4 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveCategoryCommand } from '@/commands/implements/categories/remove-category.command';
 import {
   CategoryNotFoundException,
@@ -7,7 +9,6 @@ import {
 } from '@/errors';
 import { FindCategoryByIdRepository } from '@/repositories/categories/find-category-by-id';
 import { RemoveCategoryRepository } from '@/repositories/categories/remove-category';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveCategoryCommandKeys = keyof RemoveCategoryCommand;
 

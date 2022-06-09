@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
 import { SitesDarkColorModel } from '@/models/sites-dark-color.model';
 import { FindSitesDarkColorByIdQuery } from '@/queries/implements/sites-dark-colors/find-sites-dark-color-by-id.query';
 

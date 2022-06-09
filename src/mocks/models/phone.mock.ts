@@ -1,6 +1,7 @@
-import { PhoneModel, IPhoneModelData } from '@/models/phone.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IPhoneModelData, PhoneModel } from '@/models/phone.model';
 
 export class PhoneModelMock extends PhoneModel {
   constructor(data?: Partial<IPhoneModelData>) {

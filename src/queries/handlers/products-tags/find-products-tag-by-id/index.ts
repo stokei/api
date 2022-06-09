@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  ProductsTagNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  ProductsTagNotFoundException
 } from '@/errors';
 import { ProductsTagModel } from '@/models/products-tag.model';
-import { FindProductsTagByIdRepository } from '@/repositories/products-tags/find-products-tag-by-id';
 import { FindProductsTagByIdQuery } from '@/queries/implements/products-tags/find-products-tag-by-id.query';
+import { FindProductsTagByIdRepository } from '@/repositories/products-tags/find-products-tag-by-id';
 
 @QueryHandler(FindProductsTagByIdQuery)
 export class FindProductsTagByIdQueryHandler

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { OrderMapper } from '@/mappers/orders';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateOrderDTO } from '@/dtos/orders/create-order.dto';
+import { OrderMapper } from '@/mappers/orders';
 import { OrderModel } from '@/models/order.model';
 
 @Injectable()

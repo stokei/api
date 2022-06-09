@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateDomainDTO,
   UpdateDomainDataDTO,
+  UpdateDomainDTO,
   UpdateDomainWhereDTO
 } from '@/dtos/domains/update-domain.dto';
 

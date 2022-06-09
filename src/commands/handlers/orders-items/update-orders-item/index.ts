@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { UpdateOrdersItemCommand } from '@/commands/implements/orders-items/update-orders-item.command';
 import {
-  OrdersItemNotFoundException,
   DataNotFoundException,
+  OrdersItemNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { FindOrdersItemByIdRepository } from '@/repositories/orders-items/find-orders-item-by-id';
 import { UpdateOrdersItemRepository } from '@/repositories/orders-items/update-orders-item';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type UpdateOrdersItemCommandKeys = keyof UpdateOrdersItemCommand;
 

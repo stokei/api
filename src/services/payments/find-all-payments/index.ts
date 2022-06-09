@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
-import { PaymentModel } from '@/models/payment.model';
+
 import { FindAllPaymentsDTO } from '@/dtos/payments/find-all-payments.dto';
+import { PaymentModel } from '@/models/payment.model';
 import { FindAllPaymentsQuery } from '@/queries/implements/payments/find-all-payments.query';
 
 @Injectable()

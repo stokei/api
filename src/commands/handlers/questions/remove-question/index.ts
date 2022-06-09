@@ -1,13 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import { RemoveQuestionCommand } from '@/commands/implements/questions/remove-question.command';
 import {
-  QuestionNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  QuestionNotFoundException
 } from '@/errors';
 import { FindQuestionByIdRepository } from '@/repositories/questions/find-question-by-id';
 import { RemoveQuestionRepository } from '@/repositories/questions/remove-question';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 type RemoveQuestionCommandKeys = keyof RemoveQuestionCommand;
 

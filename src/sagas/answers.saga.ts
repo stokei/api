@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { AnswerCreatedEvent } from '@/events/implements/answers/answer-created.event';
 import { AnswerRemovedEvent } from '@/events/implements/answers/answer-removed.event';
 import { AnswerUpdatedEvent } from '@/events/implements/answers/answer-updated.event';

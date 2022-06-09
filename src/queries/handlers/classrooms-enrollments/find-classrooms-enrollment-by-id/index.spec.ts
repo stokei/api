@@ -1,5 +1,7 @@
-import { FindClassroomsEnrollmentByIdRepository } from '@/repositories/classrooms-enrollments/find-classrooms-enrollment-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindClassroomsEnrollmentByIdRepository } from '@/repositories/classrooms-enrollments/find-classrooms-enrollment-by-id';
+
 import { FindClassroomsEnrollmentByIdQueryHandler } from '.';
 
 describe('FindClassroomsEnrollmentByIdQueryHandler', () => {

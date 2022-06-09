@@ -1,9 +1,10 @@
 import { IQuery } from '@nestjs/cqrs';
 import { IPaginatinInputDTO, IWhere } from '@stokei/nestjs';
+
 import {
   FindAllImagesDTO,
-  WhereDataFindAllImagesDTO,
-  OrderByDataFindAllImagesDTO
+  OrderByDataFindAllImagesDTO,
+  WhereDataFindAllImagesDTO
 } from '@/dtos/images/find-all-images.dto';
 
 export class FindAllImagesQuery implements IQuery, FindAllImagesDTO {

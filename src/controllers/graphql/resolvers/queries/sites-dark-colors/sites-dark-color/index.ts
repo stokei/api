@@ -1,9 +1,10 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { SitesDarkColorsLoader } from '@/controllers/graphql/dataloaders/sites-dark-colors.loader';
 import { SitesDarkColor } from '@/controllers/graphql/types/sites-dark-color';
 import {
-  SitesDarkColorNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SitesDarkColorNotFoundException
 } from '@/errors';
 
 @Resolver(() => SitesDarkColor)

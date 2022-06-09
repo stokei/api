@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateVideosTagCommand } from '@/commands/implements/videos-tags/create-videos-tag.command';
 import {
-  VideosTagNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosTagNotFoundException
 } from '@/errors';
 import { CreateVideosTagRepository } from '@/repositories/videos-tags/create-videos-tag';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateVideosTagCommandKeys = keyof CreateVideosTagCommand;
 

@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { TagCreatedEvent } from '@/events/implements/tags/tag-created.event';
-import { TagUpdatedEvent } from '@/events/implements/tags/tag-updated.event';
-import { TagRemovedEvent } from '@/events/implements/tags/tag-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { TagCreatedEvent } from '@/events/implements/tags/tag-created.event';
+import { TagRemovedEvent } from '@/events/implements/tags/tag-removed.event';
+import { TagUpdatedEvent } from '@/events/implements/tags/tag-updated.event';
 
 export interface ITagModelData {
   readonly id?: string;

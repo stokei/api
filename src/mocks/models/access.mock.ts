@@ -1,6 +1,7 @@
-import { AccessModel, IAccessModelData } from '@/models/access.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { AccessModel, IAccessModelData } from '@/models/access.model';
 
 export class AccessModelMock extends AccessModel {
   constructor(data?: Partial<IAccessModelData>) {

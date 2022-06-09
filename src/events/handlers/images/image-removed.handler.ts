@@ -1,6 +1,7 @@
-import { ImageRemovedEvent } from '@/events/implements/images/image-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ImageRemovedEvent } from '@/events/implements/images/image-removed.event';
 
 @EventsHandler(ImageRemovedEvent)
 export class ImageRemovedHandler implements IEventHandler<ImageRemovedEvent> {

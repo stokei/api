@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateClassroomsTagDTO,
   UpdateClassroomsTagDataDTO,
+  UpdateClassroomsTagDTO,
   UpdateClassroomsTagWhereDTO
 } from '@/dtos/classrooms-tags/update-classrooms-tag.dto';
 

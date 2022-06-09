@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  PriceNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PriceNotFoundException
 } from '@/errors';
 import { PriceModel } from '@/models/price.model';
-import { FindPriceByIdRepository } from '@/repositories/prices/find-price-by-id';
 import { FindPriceByIdQuery } from '@/queries/implements/prices/find-price-by-id.query';
+import { FindPriceByIdRepository } from '@/repositories/prices/find-price-by-id';
 
 @QueryHandler(FindPriceByIdQuery)
 export class FindPriceByIdQueryHandler

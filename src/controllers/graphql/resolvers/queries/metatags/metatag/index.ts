@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { MetatagsLoader } from '@/controllers/graphql/dataloaders/metatags.loader';
 import { Metatag } from '@/controllers/graphql/types/metatag';
 import { MetatagNotFoundException, ParamNotFoundException } from '@/errors';

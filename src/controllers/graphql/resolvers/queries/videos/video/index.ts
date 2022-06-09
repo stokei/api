@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { VideosLoader } from '@/controllers/graphql/dataloaders/videos.loader';
 import { Video } from '@/controllers/graphql/types/video';
-import { VideoNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, VideoNotFoundException } from '@/errors';
 
 @Resolver(() => Video)
 export class VideoResolver {

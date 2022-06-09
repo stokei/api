@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@/database/prisma/client';
 import { IBaseRepository } from '@stokei/nestjs';
-import { AddressMapper } from '@/mappers/addresses';
+
+import { PrismaClient } from '@/database/prisma/client';
 import { CreateAddressDTO } from '@/dtos/addresses/create-address.dto';
+import { AddressMapper } from '@/mappers/addresses';
 import { AddressModel } from '@/models/address.model';
 
 @Injectable()

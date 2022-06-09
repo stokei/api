@@ -1,7 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { SitesLoader } from '@/controllers/graphql/dataloaders/sites.loader';
 import { Site } from '@/controllers/graphql/types/site';
-import { SiteNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, SiteNotFoundException } from '@/errors';
 
 @Resolver(() => Site)
 export class SiteResolver {

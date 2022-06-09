@@ -1,6 +1,7 @@
-import { ModulesMaterialUpdatedEvent } from '@/events/implements/modules-materials/modules-material-updated.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { ModulesMaterialUpdatedEvent } from '@/events/implements/modules-materials/modules-material-updated.event';
 
 @EventsHandler(ModulesMaterialUpdatedEvent)
 export class ModulesMaterialUpdatedHandler

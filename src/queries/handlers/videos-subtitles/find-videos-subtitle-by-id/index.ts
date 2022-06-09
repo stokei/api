@@ -1,13 +1,14 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
+
 import {
-  VideosSubtitleNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  VideosSubtitleNotFoundException
 } from '@/errors';
 import { VideosSubtitleModel } from '@/models/videos-subtitle.model';
-import { FindVideosSubtitleByIdRepository } from '@/repositories/videos-subtitles/find-videos-subtitle-by-id';
 import { FindVideosSubtitleByIdQuery } from '@/queries/implements/videos-subtitles/find-videos-subtitle-by-id.query';
+import { FindVideosSubtitleByIdRepository } from '@/repositories/videos-subtitles/find-videos-subtitle-by-id';
 
 @QueryHandler(FindVideosSubtitleByIdQuery)
 export class FindVideosSubtitleByIdQueryHandler

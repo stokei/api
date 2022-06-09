@@ -1,6 +1,7 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+
 import { UpdateLanguageInput } from '@/controllers/graphql/inputs/languages/update-language.input';
 import { Language } from '@/controllers/graphql/types/language';
 import { UpdateLanguageService } from '@/services/languages/update-language';

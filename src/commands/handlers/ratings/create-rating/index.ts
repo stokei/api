@@ -1,12 +1,13 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 import { CreateRatingCommand } from '@/commands/implements/ratings/create-rating.command';
 import {
-  RatingNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  RatingNotFoundException
 } from '@/errors';
 import { CreateRatingRepository } from '@/repositories/ratings/create-rating';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 type CreateRatingCommandKeys = keyof CreateRatingCommand;
 

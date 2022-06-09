@@ -1,5 +1,7 @@
-import { FindModuleByIdRepository } from '@/repositories/modules/find-module-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindModuleByIdRepository } from '@/repositories/modules/find-module-by-id';
+
 import { FindModuleByIdQueryHandler } from '.';
 
 describe('FindModuleByIdQueryHandler', () => {

@@ -1,4 +1,5 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import { CreateActivitiesActionDTO } from '@/dtos/activities-actions/create-activities-action.dto';
 
 export class CreateActivitiesActionCommand

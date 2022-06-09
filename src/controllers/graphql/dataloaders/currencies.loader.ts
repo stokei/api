@@ -1,6 +1,7 @@
 import { Injectable, Scope } from '@nestjs/common';
-import { FindAllCurrenciesService } from '@/services/currencies/find-all-currencies';
 import DataLoader from 'dataloader';
+
+import { FindAllCurrenciesService } from '@/services/currencies/find-all-currencies';
 
 @Injectable({ scope: Scope.REQUEST })
 export class CurrenciesLoader {

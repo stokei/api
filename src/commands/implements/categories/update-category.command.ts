@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateCategoryDTO,
   UpdateCategoryDataDTO,
+  UpdateCategoryDTO,
   UpdateCategoryWhereDTO
 } from '@/dtos/categories/update-category.dto';
 

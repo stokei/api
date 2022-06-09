@@ -1,6 +1,7 @@
-import { CourseRemovedEvent } from '@/events/implements/courses/course-removed.event';
-import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 import { Logger } from '@nestjs/common';
+import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
+
+import { CourseRemovedEvent } from '@/events/implements/courses/course-removed.event';
 
 @EventsHandler(CourseRemovedEvent)
 export class CourseRemovedHandler implements IEventHandler<CourseRemovedEvent> {

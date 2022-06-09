@@ -1,4 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+
 import { CardsLoader } from '@/controllers/graphql/dataloaders/cards.loader';
 import { Card } from '@/controllers/graphql/types/card';
 import { CardNotFoundException, ParamNotFoundException } from '@/errors';

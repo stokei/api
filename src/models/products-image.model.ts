@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { ProductsImageCreatedEvent } from '@/events/implements/products-images/products-image-created.event';
-import { ProductsImageUpdatedEvent } from '@/events/implements/products-images/products-image-updated.event';
-import { ProductsImageRemovedEvent } from '@/events/implements/products-images/products-image-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { ProductsImageCreatedEvent } from '@/events/implements/products-images/products-image-created.event';
+import { ProductsImageRemovedEvent } from '@/events/implements/products-images/products-image-removed.event';
+import { ProductsImageUpdatedEvent } from '@/events/implements/products-images/products-image-updated.event';
 
 export interface IProductsImageModelData {
   readonly id?: string;

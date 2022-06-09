@@ -1,7 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
-import { map, delay } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+
 import { CardCreatedEvent } from '@/events/implements/cards/card-created.event';
 import { CardRemovedEvent } from '@/events/implements/cards/card-removed.event';
 import { CardUpdatedEvent } from '@/events/implements/cards/card-updated.event';

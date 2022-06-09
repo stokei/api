@@ -1,6 +1,7 @@
-import { PageModel, IPageModelData } from '@/models/page.model';
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
+
+import { IPageModelData, PageModel } from '@/models/page.model';
 
 export class PageModelMock extends PageModel {
   constructor(data?: Partial<IPageModelData>) {

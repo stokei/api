@@ -1,5 +1,7 @@
-import { FindCartsItemByIdRepository } from '@/repositories/carts-items/find-carts-item-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindCartsItemByIdRepository } from '@/repositories/carts-items/find-carts-item-by-id';
+
 import { FindCartsItemByIdQueryHandler } from '.';
 
 describe('FindCartsItemByIdQueryHandler', () => {

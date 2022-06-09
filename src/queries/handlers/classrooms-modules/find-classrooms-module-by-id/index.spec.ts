@@ -1,5 +1,7 @@
-import { FindClassroomsModuleByIdRepository } from '@/repositories/classrooms-modules/find-classrooms-module-by-id';
 import { Test } from '@nestjs/testing';
+
+import { FindClassroomsModuleByIdRepository } from '@/repositories/classrooms-modules/find-classrooms-module-by-id';
+
 import { FindClassroomsModuleByIdQueryHandler } from '.';
 
 describe('FindClassroomsModuleByIdQueryHandler', () => {

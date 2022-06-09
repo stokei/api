@@ -1,9 +1,10 @@
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { VersionCreatedEvent } from '@/events/implements/versions/version-created.event';
-import { VersionUpdatedEvent } from '@/events/implements/versions/version-updated.event';
-import { VersionRemovedEvent } from '@/events/implements/versions/version-removed.event';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { createServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { VersionCreatedEvent } from '@/events/implements/versions/version-created.event';
+import { VersionRemovedEvent } from '@/events/implements/versions/version-removed.event';
+import { VersionUpdatedEvent } from '@/events/implements/versions/version-updated.event';
 
 export interface IVersionModelData {
   readonly id?: string;

@@ -1,7 +1,8 @@
 import { ICommand } from '@nestjs/cqrs';
+
 import {
-  UpdateVideoDTO,
   UpdateVideoDataDTO,
+  UpdateVideoDTO,
   UpdateVideoWhereDTO
 } from '@/dtos/videos/update-video.dto';
 

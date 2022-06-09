@@ -1,9 +1,10 @@
-import { CreateClassroomsModuleCommand } from '@/commands/implements/classrooms-modules/create-classrooms-module.command';
-import { CreateClassroomsModuleDTO } from '@/dtos/classrooms-modules/create-classrooms-module.dto';
-import { ClassroomsModuleModel } from '@/models/classrooms-module.model';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
+
+import { CreateClassroomsModuleCommand } from '@/commands/implements/classrooms-modules/create-classrooms-module.command';
+import { CreateClassroomsModuleDTO } from '@/dtos/classrooms-modules/create-classrooms-module.dto';
+import { ClassroomsModuleModel } from '@/models/classrooms-module.model';
 
 @Injectable()
 export class CreateClassroomsModuleService

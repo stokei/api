@@ -1,2 +1,22 @@
 node_modules/*
 dist/
+.github/
+
+# ignore .git and .cache folders
+.git
+.gitignore
+.cache
+
+.docker
+.dockerignore
+Dockerfile*
+docker-compose*
+*.env
+
+*.md
+!README*.md
+README-secret.md
+
+npm-debug.log
+LICENSE
+.vscode

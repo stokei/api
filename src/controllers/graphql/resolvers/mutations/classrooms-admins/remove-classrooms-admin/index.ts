@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveClassroomsAdminInput } from '@/controllers/graphql/inputs/classrooms-admins/remove-classrooms-admin.input';
 import { ClassroomsAdmin } from '@/controllers/graphql/types/classrooms-admin';
@@ -12,13 +12,9 @@ export class RemoveClassroomsAdminResolver {
     private readonly removeClassroomsAdminService: RemoveClassroomsAdminService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ClassroomsAdmin)
-  async removeClassroomsAdmin(
-    @Args('input') data: RemoveClassroomsAdminInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removeClassroomsAdmin(@Args('input') data: RemoveClassroomsAdminInput) {
     const response = await this.removeClassroomsAdminService.execute(data);
     return response;
   }

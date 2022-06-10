@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateVideosTagInput } from '@/controllers/graphql/inputs/videos-tags/create-videos-tag.input';
 import { VideosTag } from '@/controllers/graphql/types/videos-tag';
@@ -12,13 +12,9 @@ export class CreateVideosTagResolver {
     private readonly createVideosTagService: CreateVideosTagService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => VideosTag)
-  async createVideosTag(
-    @Args('input') data: CreateVideosTagInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createVideosTag(@Args('input') data: CreateVideosTagInput) {
     const response = await this.createVideosTagService.execute(data);
     return response;
   }

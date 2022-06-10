@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateOrdersAddressInput } from '@/controllers/graphql/inputs/orders-addresses/update-orders-address.input';
 import { OrdersAddress } from '@/controllers/graphql/types/orders-address';
@@ -12,13 +12,9 @@ export class UpdateOrdersAddressResolver {
     private readonly updateOrdersAddressService: UpdateOrdersAddressService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => OrdersAddress)
-  async updateOrdersAddress(
-    @Args('input') data: UpdateOrdersAddressInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateOrdersAddress(@Args('input') data: UpdateOrdersAddressInput) {
     const response = await this.updateOrdersAddressService.execute(data);
     return response;
   }

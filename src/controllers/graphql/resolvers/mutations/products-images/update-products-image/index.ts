@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateProductsImageInput } from '@/controllers/graphql/inputs/products-images/update-products-image.input';
 import { ProductsImage } from '@/controllers/graphql/types/products-image';
@@ -12,13 +12,9 @@ export class UpdateProductsImageResolver {
     private readonly updateProductsImageService: UpdateProductsImageService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ProductsImage)
-  async updateProductsImage(
-    @Args('input') data: UpdateProductsImageInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateProductsImage(@Args('input') data: UpdateProductsImageInput) {
     const response = await this.updateProductsImageService.execute(data);
     return response;
   }

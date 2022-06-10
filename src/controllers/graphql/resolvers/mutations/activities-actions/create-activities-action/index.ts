@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateActivitiesActionInput } from '@/controllers/graphql/inputs/activities-actions/create-activities-action.input';
 import { ActivitiesAction } from '@/controllers/graphql/types/activities-action';
@@ -12,12 +12,10 @@ export class CreateActivitiesActionResolver {
     private readonly createActivitiesActionService: CreateActivitiesActionService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ActivitiesAction)
   async createActivitiesAction(
-    @Args('input') data: CreateActivitiesActionInput,
-    @CurrentProject('id') projectId: string
+    @Args('input') data: CreateActivitiesActionInput
   ) {
     const response = await this.createActivitiesActionService.execute(data);
     return response;

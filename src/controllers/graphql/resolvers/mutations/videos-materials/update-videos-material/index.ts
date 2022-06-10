@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateVideosMaterialInput } from '@/controllers/graphql/inputs/videos-materials/update-videos-material.input';
 import { VideosMaterial } from '@/controllers/graphql/types/videos-material';
@@ -12,13 +12,9 @@ export class UpdateVideosMaterialResolver {
     private readonly updateVideosMaterialService: UpdateVideosMaterialService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => VideosMaterial)
-  async updateVideosMaterial(
-    @Args('input') data: UpdateVideosMaterialInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateVideosMaterial(@Args('input') data: UpdateVideosMaterialInput) {
     const response = await this.updateVideosMaterialService.execute(data);
     return response;
   }

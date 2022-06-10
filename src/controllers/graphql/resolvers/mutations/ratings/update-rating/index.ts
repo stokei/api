@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateRatingInput } from '@/controllers/graphql/inputs/ratings/update-rating.input';
 import { Rating } from '@/controllers/graphql/types/rating';
@@ -10,13 +10,9 @@ import { UpdateRatingService } from '@/services/ratings/update-rating';
 export class UpdateRatingResolver {
   constructor(private readonly updateRatingService: UpdateRatingService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Rating)
-  async updateRating(
-    @Args('input') data: UpdateRatingInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateRating(@Args('input') data: UpdateRatingInput) {
     const response = await this.updateRatingService.execute(data);
     return response;
   }

@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateProjectsPlanInput } from '@/controllers/graphql/inputs/projects-plans/create-projects-plan.input';
 import { ProjectsPlan } from '@/controllers/graphql/types/projects-plan';
@@ -12,13 +12,9 @@ export class CreateProjectsPlanResolver {
     private readonly createProjectsPlanService: CreateProjectsPlanService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ProjectsPlan)
-  async createProjectsPlan(
-    @Args('input') data: CreateProjectsPlanInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createProjectsPlan(@Args('input') data: CreateProjectsPlanInput) {
     const response = await this.createProjectsPlanService.execute(data);
     return response;
   }

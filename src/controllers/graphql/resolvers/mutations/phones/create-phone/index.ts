@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreatePhoneInput } from '@/controllers/graphql/inputs/phones/create-phone.input';
 import { Phone } from '@/controllers/graphql/types/phone';
@@ -10,13 +10,9 @@ import { CreatePhoneService } from '@/services/phones/create-phone';
 export class CreatePhoneResolver {
   constructor(private readonly createPhoneService: CreatePhoneService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Phone)
-  async createPhone(
-    @Args('input') data: CreatePhoneInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createPhone(@Args('input') data: CreatePhoneInput) {
     const response = await this.createPhoneService.execute(data);
     return response;
   }

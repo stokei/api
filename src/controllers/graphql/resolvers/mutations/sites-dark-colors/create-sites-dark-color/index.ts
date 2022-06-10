@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateSitesDarkColorInput } from '@/controllers/graphql/inputs/sites-dark-colors/create-sites-dark-color.input';
 import { SitesDarkColor } from '@/controllers/graphql/types/sites-dark-color';
@@ -12,13 +12,9 @@ export class CreateSitesDarkColorResolver {
     private readonly createSitesDarkColorService: CreateSitesDarkColorService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => SitesDarkColor)
-  async createSitesDarkColor(
-    @Args('input') data: CreateSitesDarkColorInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createSitesDarkColor(@Args('input') data: CreateSitesDarkColorInput) {
     const response = await this.createSitesDarkColorService.execute(data);
     return response;
   }

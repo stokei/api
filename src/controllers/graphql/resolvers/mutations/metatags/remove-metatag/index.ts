@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveMetatagInput } from '@/controllers/graphql/inputs/metatags/remove-metatag.input';
 import { Metatag } from '@/controllers/graphql/types/metatag';
@@ -10,13 +10,9 @@ import { RemoveMetatagService } from '@/services/metatags/remove-metatag';
 export class RemoveMetatagResolver {
   constructor(private readonly removeMetatagService: RemoveMetatagService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Metatag)
-  async removeMetatag(
-    @Args('input') data: RemoveMetatagInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removeMetatag(@Args('input') data: RemoveMetatagInput) {
     const response = await this.removeMetatagService.execute(data);
     return response;
   }

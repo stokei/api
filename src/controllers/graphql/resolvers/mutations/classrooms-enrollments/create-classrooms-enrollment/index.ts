@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateClassroomsEnrollmentInput } from '@/controllers/graphql/inputs/classrooms-enrollments/create-classrooms-enrollment.input';
 import { ClassroomsEnrollment } from '@/controllers/graphql/types/classrooms-enrollment';
@@ -12,12 +12,10 @@ export class CreateClassroomsEnrollmentResolver {
     private readonly createClassroomsEnrollmentService: CreateClassroomsEnrollmentService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ClassroomsEnrollment)
   async createClassroomsEnrollment(
-    @Args('input') data: CreateClassroomsEnrollmentInput,
-    @CurrentProject('id') projectId: string
+    @Args('input') data: CreateClassroomsEnrollmentInput
   ) {
     const response = await this.createClassroomsEnrollmentService.execute(data);
     return response;

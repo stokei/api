@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreatePaymentsMethodInput } from '@/controllers/graphql/inputs/payments-methods/create-payments-method.input';
 import { PaymentsMethod } from '@/controllers/graphql/types/payments-method';
@@ -12,13 +12,9 @@ export class CreatePaymentsMethodResolver {
     private readonly createPaymentsMethodService: CreatePaymentsMethodService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => PaymentsMethod)
-  async createPaymentsMethod(
-    @Args('input') data: CreatePaymentsMethodInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createPaymentsMethod(@Args('input') data: CreatePaymentsMethodInput) {
     const response = await this.createPaymentsMethodService.execute(data);
     return response;
   }

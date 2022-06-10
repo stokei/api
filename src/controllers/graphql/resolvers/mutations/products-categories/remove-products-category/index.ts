@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveProductsCategoryInput } from '@/controllers/graphql/inputs/products-categories/remove-products-category.input';
 import { ProductsCategory } from '@/controllers/graphql/types/products-category';
@@ -12,12 +12,10 @@ export class RemoveProductsCategoryResolver {
     private readonly removeProductsCategoryService: RemoveProductsCategoryService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ProductsCategory)
   async removeProductsCategory(
-    @Args('input') data: RemoveProductsCategoryInput,
-    @CurrentProject('id') projectId: string
+    @Args('input') data: RemoveProductsCategoryInput
   ) {
     const response = await this.removeProductsCategoryService.execute(data);
     return response;

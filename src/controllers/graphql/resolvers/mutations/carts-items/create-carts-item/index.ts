@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateCartsItemInput } from '@/controllers/graphql/inputs/carts-items/create-carts-item.input';
 import { CartsItem } from '@/controllers/graphql/types/carts-item';
@@ -12,13 +12,9 @@ export class CreateCartsItemResolver {
     private readonly createCartsItemService: CreateCartsItemService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => CartsItem)
-  async createCartsItem(
-    @Args('input') data: CreateCartsItemInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createCartsItem(@Args('input') data: CreateCartsItemInput) {
     const response = await this.createCartsItemService.execute(data);
     return response;
   }

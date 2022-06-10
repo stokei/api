@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveProductsTagInput } from '@/controllers/graphql/inputs/products-tags/remove-products-tag.input';
 import { ProductsTag } from '@/controllers/graphql/types/products-tag';
@@ -12,13 +12,9 @@ export class RemoveProductsTagResolver {
     private readonly removeProductsTagService: RemoveProductsTagService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ProductsTag)
-  async removeProductsTag(
-    @Args('input') data: RemoveProductsTagInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removeProductsTag(@Args('input') data: RemoveProductsTagInput) {
     const response = await this.removeProductsTagService.execute(data);
     return response;
   }

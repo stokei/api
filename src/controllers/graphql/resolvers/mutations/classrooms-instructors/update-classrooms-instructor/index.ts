@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateClassroomsInstructorInput } from '@/controllers/graphql/inputs/classrooms-instructors/update-classrooms-instructor.input';
 import { ClassroomsInstructor } from '@/controllers/graphql/types/classrooms-instructor';
@@ -12,12 +12,10 @@ export class UpdateClassroomsInstructorResolver {
     private readonly updateClassroomsInstructorService: UpdateClassroomsInstructorService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ClassroomsInstructor)
   async updateClassroomsInstructor(
-    @Args('input') data: UpdateClassroomsInstructorInput,
-    @CurrentProject('id') projectId: string
+    @Args('input') data: UpdateClassroomsInstructorInput
   ) {
     const response = await this.updateClassroomsInstructorService.execute(data);
     return response;

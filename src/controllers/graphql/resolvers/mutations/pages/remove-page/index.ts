@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemovePageInput } from '@/controllers/graphql/inputs/pages/remove-page.input';
 import { Page } from '@/controllers/graphql/types/page';
@@ -10,13 +10,9 @@ import { RemovePageService } from '@/services/pages/remove-page';
 export class RemovePageResolver {
   constructor(private readonly removePageService: RemovePageService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Page)
-  async removePage(
-    @Args('input') data: RemovePageInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removePage(@Args('input') data: RemovePageInput) {
     const response = await this.removePageService.execute(data);
     return response;
   }

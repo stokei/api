@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveCheckoutInput } from '@/controllers/graphql/inputs/checkouts/remove-checkout.input';
 import { Checkout } from '@/controllers/graphql/types/checkout';
@@ -10,13 +10,9 @@ import { RemoveCheckoutService } from '@/services/checkouts/remove-checkout';
 export class RemoveCheckoutResolver {
   constructor(private readonly removeCheckoutService: RemoveCheckoutService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Checkout)
-  async removeCheckout(
-    @Args('input') data: RemoveCheckoutInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removeCheckout(@Args('input') data: RemoveCheckoutInput) {
     const response = await this.removeCheckoutService.execute(data);
     return response;
   }

@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateCartInput } from '@/controllers/graphql/inputs/carts/update-cart.input';
 import { Cart } from '@/controllers/graphql/types/cart';
@@ -10,13 +10,9 @@ import { UpdateCartService } from '@/services/carts/update-cart';
 export class UpdateCartResolver {
   constructor(private readonly updateCartService: UpdateCartService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Cart)
-  async updateCart(
-    @Args('input') data: UpdateCartInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateCart(@Args('input') data: UpdateCartInput) {
     const response = await this.updateCartService.execute(data);
     return response;
   }

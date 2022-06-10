@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveVideosSubtitleInput } from '@/controllers/graphql/inputs/videos-subtitles/remove-videos-subtitle.input';
 import { VideosSubtitle } from '@/controllers/graphql/types/videos-subtitle';
@@ -12,13 +12,9 @@ export class RemoveVideosSubtitleResolver {
     private readonly removeVideosSubtitleService: RemoveVideosSubtitleService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => VideosSubtitle)
-  async removeVideosSubtitle(
-    @Args('input') data: RemoveVideosSubtitleInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removeVideosSubtitle(@Args('input') data: RemoveVideosSubtitleInput) {
     const response = await this.removeVideosSubtitleService.execute(data);
     return response;
   }

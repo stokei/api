@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveActivitiesActionInput } from '@/controllers/graphql/inputs/activities-actions/remove-activities-action.input';
 import { ActivitiesAction } from '@/controllers/graphql/types/activities-action';
@@ -12,12 +12,10 @@ export class RemoveActivitiesActionResolver {
     private readonly removeActivitiesActionService: RemoveActivitiesActionService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ActivitiesAction)
   async removeActivitiesAction(
-    @Args('input') data: RemoveActivitiesActionInput,
-    @CurrentProject('id') projectId: string
+    @Args('input') data: RemoveActivitiesActionInput
   ) {
     const response = await this.removeActivitiesActionService.execute(data);
     return response;

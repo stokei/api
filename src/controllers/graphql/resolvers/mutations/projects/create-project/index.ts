@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateProjectInput } from '@/controllers/graphql/inputs/projects/create-project.input';
 import { Project } from '@/controllers/graphql/types/project';
@@ -10,13 +10,9 @@ import { CreateProjectService } from '@/services/projects/create-project';
 export class CreateProjectResolver {
   constructor(private readonly createProjectService: CreateProjectService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Project)
-  async createProject(
-    @Args('input') data: CreateProjectInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createProject(@Args('input') data: CreateProjectInput) {
     const response = await this.createProjectService.execute(data);
     return response;
   }

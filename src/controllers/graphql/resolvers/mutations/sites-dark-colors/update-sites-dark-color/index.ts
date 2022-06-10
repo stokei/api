@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateSitesDarkColorInput } from '@/controllers/graphql/inputs/sites-dark-colors/update-sites-dark-color.input';
 import { SitesDarkColor } from '@/controllers/graphql/types/sites-dark-color';
@@ -12,13 +12,9 @@ export class UpdateSitesDarkColorResolver {
     private readonly updateSitesDarkColorService: UpdateSitesDarkColorService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => SitesDarkColor)
-  async updateSitesDarkColor(
-    @Args('input') data: UpdateSitesDarkColorInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateSitesDarkColor(@Args('input') data: UpdateSitesDarkColorInput) {
     const response = await this.updateSitesDarkColorService.execute(data);
     return response;
   }

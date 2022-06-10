@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemovePriceInput } from '@/controllers/graphql/inputs/prices/remove-price.input';
 import { Price } from '@/controllers/graphql/types/price';
@@ -10,13 +10,9 @@ import { RemovePriceService } from '@/services/prices/remove-price';
 export class RemovePriceResolver {
   constructor(private readonly removePriceService: RemovePriceService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Price)
-  async removePrice(
-    @Args('input') data: RemovePriceInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removePrice(@Args('input') data: RemovePriceInput) {
     const response = await this.removePriceService.execute(data);
     return response;
   }

@@ -1,6 +1,4 @@
-import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
 
 import { SignUpInput } from '@/controllers/graphql/inputs/accounts/singup.input';
 import { AuthResponse } from '@/controllers/graphql/types/auth-response';
@@ -11,19 +9,9 @@ import { SignUpService } from '@/services/accounts/singup';
 export class SignUpResolver {
   constructor(private readonly signUpService: SignUpService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig({
-    isRequired: true
-  })
   @Mutation(() => AuthResponse)
-  async signUp(
-    @Args('input') data: SignUpInput,
-    @CurrentProject('id') projectId: string
-  ) {
-    const response = await this.signUpService.execute({
-      ...data,
-      parent: projectId
-    });
+  async signUp(@Args('input') data: SignUpInput) {
+    const response = await this.signUpService.execute(data);
     return response;
   }
 }

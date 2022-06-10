@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateOrdersItemInput } from '@/controllers/graphql/inputs/orders-items/update-orders-item.input';
 import { OrdersItem } from '@/controllers/graphql/types/orders-item';
@@ -12,13 +12,9 @@ export class UpdateOrdersItemResolver {
     private readonly updateOrdersItemService: UpdateOrdersItemService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => OrdersItem)
-  async updateOrdersItem(
-    @Args('input') data: UpdateOrdersItemInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateOrdersItem(@Args('input') data: UpdateOrdersItemInput) {
     const response = await this.updateOrdersItemService.execute(data);
     return response;
   }

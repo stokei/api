@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateModulesVideoInput } from '@/controllers/graphql/inputs/modules-videos/create-modules-video.input';
 import { ModulesVideo } from '@/controllers/graphql/types/modules-video';
@@ -12,13 +12,9 @@ export class CreateModulesVideoResolver {
     private readonly createModulesVideoService: CreateModulesVideoService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ModulesVideo)
-  async createModulesVideo(
-    @Args('input') data: CreateModulesVideoInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createModulesVideo(@Args('input') data: CreateModulesVideoInput) {
     const response = await this.createModulesVideoService.execute(data);
     return response;
   }

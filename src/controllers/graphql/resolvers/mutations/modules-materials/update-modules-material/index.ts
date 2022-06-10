@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateModulesMaterialInput } from '@/controllers/graphql/inputs/modules-materials/update-modules-material.input';
 import { ModulesMaterial } from '@/controllers/graphql/types/modules-material';
@@ -12,13 +12,9 @@ export class UpdateModulesMaterialResolver {
     private readonly updateModulesMaterialService: UpdateModulesMaterialService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ModulesMaterial)
-  async updateModulesMaterial(
-    @Args('input') data: UpdateModulesMaterialInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateModulesMaterial(@Args('input') data: UpdateModulesMaterialInput) {
     const response = await this.updateModulesMaterialService.execute(data);
     return response;
   }

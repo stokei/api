@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateSitesLightColorInput } from '@/controllers/graphql/inputs/sites-light-colors/create-sites-light-color.input';
 import { SitesLightColor } from '@/controllers/graphql/types/sites-light-color';
@@ -12,13 +12,9 @@ export class CreateSitesLightColorResolver {
     private readonly createSitesLightColorService: CreateSitesLightColorService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => SitesLightColor)
-  async createSitesLightColor(
-    @Args('input') data: CreateSitesLightColorInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createSitesLightColor(@Args('input') data: CreateSitesLightColorInput) {
     const response = await this.createSitesLightColorService.execute(data);
     return response;
   }

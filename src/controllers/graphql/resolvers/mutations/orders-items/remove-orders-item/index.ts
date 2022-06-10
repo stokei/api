@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveOrdersItemInput } from '@/controllers/graphql/inputs/orders-items/remove-orders-item.input';
 import { OrdersItem } from '@/controllers/graphql/types/orders-item';
@@ -12,13 +12,9 @@ export class RemoveOrdersItemResolver {
     private readonly removeOrdersItemService: RemoveOrdersItemService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => OrdersItem)
-  async removeOrdersItem(
-    @Args('input') data: RemoveOrdersItemInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removeOrdersItem(@Args('input') data: RemoveOrdersItemInput) {
     const response = await this.removeOrdersItemService.execute(data);
     return response;
   }

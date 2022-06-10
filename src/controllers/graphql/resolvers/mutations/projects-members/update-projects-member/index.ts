@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateProjectsMemberInput } from '@/controllers/graphql/inputs/projects-members/update-projects-member.input';
 import { ProjectsMember } from '@/controllers/graphql/types/projects-member';
@@ -12,13 +12,9 @@ export class UpdateProjectsMemberResolver {
     private readonly updateProjectsMemberService: UpdateProjectsMemberService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ProjectsMember)
-  async updateProjectsMember(
-    @Args('input') data: UpdateProjectsMemberInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateProjectsMember(@Args('input') data: UpdateProjectsMemberInput) {
     const response = await this.updateProjectsMemberService.execute(data);
     return response;
   }

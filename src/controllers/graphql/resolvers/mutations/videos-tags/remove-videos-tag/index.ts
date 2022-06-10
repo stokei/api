@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveVideosTagInput } from '@/controllers/graphql/inputs/videos-tags/remove-videos-tag.input';
 import { VideosTag } from '@/controllers/graphql/types/videos-tag';
@@ -12,13 +12,9 @@ export class RemoveVideosTagResolver {
     private readonly removeVideosTagService: RemoveVideosTagService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => VideosTag)
-  async removeVideosTag(
-    @Args('input') data: RemoveVideosTagInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removeVideosTag(@Args('input') data: RemoveVideosTagInput) {
     const response = await this.removeVideosTagService.execute(data);
     return response;
   }

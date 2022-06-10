@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemovePaymentsMethodInput } from '@/controllers/graphql/inputs/payments-methods/remove-payments-method.input';
 import { PaymentsMethod } from '@/controllers/graphql/types/payments-method';
@@ -12,13 +12,9 @@ export class RemovePaymentsMethodResolver {
     private readonly removePaymentsMethodService: RemovePaymentsMethodService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => PaymentsMethod)
-  async removePaymentsMethod(
-    @Args('input') data: RemovePaymentsMethodInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removePaymentsMethod(@Args('input') data: RemovePaymentsMethodInput) {
     const response = await this.removePaymentsMethodService.execute(data);
     return response;
   }

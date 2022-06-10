@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreatePageInput } from '@/controllers/graphql/inputs/pages/create-page.input';
 import { Page } from '@/controllers/graphql/types/page';
@@ -10,13 +10,9 @@ import { CreatePageService } from '@/services/pages/create-page';
 export class CreatePageResolver {
   constructor(private readonly createPageService: CreatePageService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Page)
-  async createPage(
-    @Args('input') data: CreatePageInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createPage(@Args('input') data: CreatePageInput) {
     const response = await this.createPageService.execute(data);
     return response;
   }

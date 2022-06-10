@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateCommentInput } from '@/controllers/graphql/inputs/comments/update-comment.input';
 import { Comment } from '@/controllers/graphql/types/comment';
@@ -10,13 +10,9 @@ import { UpdateCommentService } from '@/services/comments/update-comment';
 export class UpdateCommentResolver {
   constructor(private readonly updateCommentService: UpdateCommentService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Comment)
-  async updateComment(
-    @Args('input') data: UpdateCommentInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateComment(@Args('input') data: UpdateCommentInput) {
     const response = await this.updateCommentService.execute(data);
     return response;
   }

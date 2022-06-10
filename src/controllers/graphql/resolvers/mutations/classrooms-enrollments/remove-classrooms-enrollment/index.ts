@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveClassroomsEnrollmentInput } from '@/controllers/graphql/inputs/classrooms-enrollments/remove-classrooms-enrollment.input';
 import { ClassroomsEnrollment } from '@/controllers/graphql/types/classrooms-enrollment';
@@ -12,12 +12,10 @@ export class RemoveClassroomsEnrollmentResolver {
     private readonly removeClassroomsEnrollmentService: RemoveClassroomsEnrollmentService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ClassroomsEnrollment)
   async removeClassroomsEnrollment(
-    @Args('input') data: RemoveClassroomsEnrollmentInput,
-    @CurrentProject('id') projectId: string
+    @Args('input') data: RemoveClassroomsEnrollmentInput
   ) {
     const response = await this.removeClassroomsEnrollmentService.execute(data);
     return response;

@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateOrderInput } from '@/controllers/graphql/inputs/orders/create-order.input';
 import { Order } from '@/controllers/graphql/types/order';
@@ -10,13 +10,9 @@ import { CreateOrderService } from '@/services/orders/create-order';
 export class CreateOrderResolver {
   constructor(private readonly createOrderService: CreateOrderService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Order)
-  async createOrder(
-    @Args('input') data: CreateOrderInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createOrder(@Args('input') data: CreateOrderInput) {
     const response = await this.createOrderService.execute(data);
     return response;
   }

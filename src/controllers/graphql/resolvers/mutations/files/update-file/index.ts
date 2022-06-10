@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateFileInput } from '@/controllers/graphql/inputs/files/update-file.input';
 import { File } from '@/controllers/graphql/types/file';
@@ -10,13 +10,9 @@ import { UpdateFileService } from '@/services/files/update-file';
 export class UpdateFileResolver {
   constructor(private readonly updateFileService: UpdateFileService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => File)
-  async updateFile(
-    @Args('input') data: UpdateFileInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateFile(@Args('input') data: UpdateFileInput) {
     const response = await this.updateFileService.execute(data);
     return response;
   }

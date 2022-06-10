@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveClassroomsMaterialInput } from '@/controllers/graphql/inputs/classrooms-materials/remove-classrooms-material.input';
 import { ClassroomsMaterial } from '@/controllers/graphql/types/classrooms-material';
@@ -12,12 +12,10 @@ export class RemoveClassroomsMaterialResolver {
     private readonly removeClassroomsMaterialService: RemoveClassroomsMaterialService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ClassroomsMaterial)
   async removeClassroomsMaterial(
-    @Args('input') data: RemoveClassroomsMaterialInput,
-    @CurrentProject('id') projectId: string
+    @Args('input') data: RemoveClassroomsMaterialInput
   ) {
     const response = await this.removeClassroomsMaterialService.execute(data);
     return response;

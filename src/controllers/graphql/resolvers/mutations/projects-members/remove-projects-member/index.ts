@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { RemoveProjectsMemberInput } from '@/controllers/graphql/inputs/projects-members/remove-projects-member.input';
 import { ProjectsMember } from '@/controllers/graphql/types/projects-member';
@@ -12,13 +12,9 @@ export class RemoveProjectsMemberResolver {
     private readonly removeProjectsMemberService: RemoveProjectsMemberService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ProjectsMember)
-  async removeProjectsMember(
-    @Args('input') data: RemoveProjectsMemberInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async removeProjectsMember(@Args('input') data: RemoveProjectsMemberInput) {
     const response = await this.removeProjectsMemberService.execute(data);
     return response;
   }

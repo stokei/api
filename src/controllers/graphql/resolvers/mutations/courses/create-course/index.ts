@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateCourseInput } from '@/controllers/graphql/inputs/courses/create-course.input';
 import { Course } from '@/controllers/graphql/types/course';
@@ -10,13 +10,9 @@ import { CreateCourseService } from '@/services/courses/create-course';
 export class CreateCourseResolver {
   constructor(private readonly createCourseService: CreateCourseService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Course)
-  async createCourse(
-    @Args('input') data: CreateCourseInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createCourse(@Args('input') data: CreateCourseInput) {
     const response = await this.createCourseService.execute(data);
     return response;
   }

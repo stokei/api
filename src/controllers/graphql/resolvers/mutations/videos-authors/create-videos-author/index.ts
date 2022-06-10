@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateVideosAuthorInput } from '@/controllers/graphql/inputs/videos-authors/create-videos-author.input';
 import { VideosAuthor } from '@/controllers/graphql/types/videos-author';
@@ -12,13 +12,9 @@ export class CreateVideosAuthorResolver {
     private readonly createVideosAuthorService: CreateVideosAuthorService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => VideosAuthor)
-  async createVideosAuthor(
-    @Args('input') data: CreateVideosAuthorInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createVideosAuthor(@Args('input') data: CreateVideosAuthorInput) {
     const response = await this.createVideosAuthorService.execute(data);
     return response;
   }

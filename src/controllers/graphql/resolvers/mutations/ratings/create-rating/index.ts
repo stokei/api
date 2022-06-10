@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { CreateRatingInput } from '@/controllers/graphql/inputs/ratings/create-rating.input';
 import { Rating } from '@/controllers/graphql/types/rating';
@@ -10,13 +10,9 @@ import { CreateRatingService } from '@/services/ratings/create-rating';
 export class CreateRatingResolver {
   constructor(private readonly createRatingService: CreateRatingService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Rating)
-  async createRating(
-    @Args('input') data: CreateRatingInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async createRating(@Args('input') data: CreateRatingInput) {
     const response = await this.createRatingService.execute(data);
     return response;
   }

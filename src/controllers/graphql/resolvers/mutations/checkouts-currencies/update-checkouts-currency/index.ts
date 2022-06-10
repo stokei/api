@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateCheckoutsCurrencyInput } from '@/controllers/graphql/inputs/checkouts-currencies/update-checkouts-currency.input';
 import { CheckoutsCurrency } from '@/controllers/graphql/types/checkouts-currency';
@@ -12,12 +12,10 @@ export class UpdateCheckoutsCurrencyResolver {
     private readonly updateCheckoutsCurrencyService: UpdateCheckoutsCurrencyService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => CheckoutsCurrency)
   async updateCheckoutsCurrency(
-    @Args('input') data: UpdateCheckoutsCurrencyInput,
-    @CurrentProject('id') projectId: string
+    @Args('input') data: UpdateCheckoutsCurrencyInput
   ) {
     const response = await this.updateCheckoutsCurrencyService.execute(data);
     return response;

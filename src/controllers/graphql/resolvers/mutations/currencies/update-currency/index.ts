@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateCurrencyInput } from '@/controllers/graphql/inputs/currencies/update-currency.input';
 import { Currency } from '@/controllers/graphql/types/currency';
@@ -10,13 +10,9 @@ import { UpdateCurrencyService } from '@/services/currencies/update-currency';
 export class UpdateCurrencyResolver {
   constructor(private readonly updateCurrencyService: UpdateCurrencyService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Currency)
-  async updateCurrency(
-    @Args('input') data: UpdateCurrencyInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateCurrency(@Args('input') data: UpdateCurrencyInput) {
     const response = await this.updateCurrencyService.execute(data);
     return response;
   }

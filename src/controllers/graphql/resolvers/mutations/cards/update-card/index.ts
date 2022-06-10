@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateCardInput } from '@/controllers/graphql/inputs/cards/update-card.input';
 import { Card } from '@/controllers/graphql/types/card';
@@ -10,13 +10,9 @@ import { UpdateCardService } from '@/services/cards/update-card';
 export class UpdateCardResolver {
   constructor(private readonly updateCardService: UpdateCardService) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => Card)
-  async updateCard(
-    @Args('input') data: UpdateCardInput,
-    @CurrentProject('id') projectId: string
-  ) {
+  async updateCard(@Args('input') data: UpdateCardInput) {
     const response = await this.updateCardService.execute(data);
     return response;
   }

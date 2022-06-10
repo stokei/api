@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard } from '@stokei/nestjs';
 
 import { UpdateProductsCategoryInput } from '@/controllers/graphql/inputs/products-categories/update-products-category.input';
 import { ProductsCategory } from '@/controllers/graphql/types/products-category';
@@ -12,12 +12,10 @@ export class UpdateProductsCategoryResolver {
     private readonly updateProductsCategoryService: UpdateProductsCategoryService
   ) {}
 
-  @UseGuards(ProjectGuard)
-  @ProjectConfig()
+  @UseGuards(AuthenticatedGuard)
   @Mutation(() => ProductsCategory)
   async updateProductsCategory(
-    @Args('input') data: UpdateProductsCategoryInput,
-    @CurrentProject('id') projectId: string
+    @Args('input') data: UpdateProductsCategoryInput
   ) {
     const response = await this.updateProductsCategoryService.execute(data);
     return response;

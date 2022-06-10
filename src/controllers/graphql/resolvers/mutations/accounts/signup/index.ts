@@ -1,9 +1,9 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 
-import { SignUpInput } from '@/controllers/graphql/inputs/accounts/singup.input';
+import { SignUpInput } from '@/controllers/graphql/inputs/accounts/signup.input';
 import { AuthResponse } from '@/controllers/graphql/types/auth-response';
 import { MeAccount } from '@/controllers/graphql/types/me-account';
-import { SignUpService } from '@/services/accounts/singup';
+import { SignUpService } from '@/services/accounts/signup';
 
 @Resolver(() => MeAccount)
 export class SignUpResolver {

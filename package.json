@@ -40,7 +40,7 @@
     "@nestjs/platform-express": "^8.4.0",
     "@nestjs/throttler": "^2.0.0",
     "@prisma/client": "^3.15.0",
-    "@stokei/nestjs": "^1.0.22",
+    "@stokei/nestjs": "^1.0.23",
     "apollo-server-core": "^3.6.3",
     "apollo-server-express": "^3.6.3",
     "class-transformer": "^0.4.0",

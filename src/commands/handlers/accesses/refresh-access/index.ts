@@ -1,3 +1,4 @@
+import { UnauthorizedException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   cleanObject,
@@ -44,35 +45,34 @@ export class RefreshAccessCommandHandler
       throw new AccountNotFoundException();
     }
     const access = await this.findAccessByIdRepository.execute(accessId);
-    if (!access || !access.active || access.parent !== account.id) {
+    if (!access || access.parent !== account.id) {
       throw new AccessNotFoundException();
+    }
+    if (!access.active) {
+      throw new UnauthorizedException();
     }
 
-    const accessUpdated = await this.findAccessByIdRepository.execute(accessId);
-    if (!accessUpdated) {
-      throw new AccessNotFoundException();
-    }
     const accessToken = this.managementTokenService.createAccessToken({
       id: account.id,
-      code: accessUpdated.id,
+      code: access.id,
       firstname: account.firstname,
       lastname: account.lastname,
       email: account.email,
       avatar: account.avatar,
-      accessExpiresIn: accessUpdated.expiresIn
+      accessExpiresIn: access.expiresIn
     });
 
     const refreshToken = this.managementTokenService.createRefreshToken({
-      code: accessUpdated.id,
+      code: access.id,
       accountId: account.id,
-      accessExpiresIn: accessUpdated.expiresIn
+      accessExpiresIn: access.expiresIn
     });
-    accessUpdated.accessToken = accessToken;
-    accessUpdated.refreshToken = refreshToken;
+    access.accessToken = accessToken;
+    access.refreshToken = refreshToken;
     return {
       account,
-      accessToken: accessUpdated.accessToken,
-      refreshToken: accessUpdated.refreshToken
+      accessToken: access.accessToken,
+      refreshToken: access.refreshToken
     };
   }
 

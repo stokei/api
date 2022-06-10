@@ -22,7 +22,10 @@ export class RefreshAccessResolver {
     @CurrentAccount() currentAccount: IAuthenticatedAccount,
     @CurrentRefreshToken() refreshToken: IRefreshTokenPayload
   ) {
-    if (currentAccount.id !== refreshToken.accountId) {
+    if (
+      currentAccount.id !== refreshToken.accountId ||
+      currentAccount.code !== refreshToken.code
+    ) {
       throw new UnauthorizedException();
     }
     const response = await this.refreshAccessService.execute({

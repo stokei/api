@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISOTimestamp, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { AccessCreatedEvent } from '@/events/implements/accesses/access-created.event';
@@ -35,6 +35,10 @@ export class AccessModel extends AggregateRoot {
   constructor(data: IAccessModelData) {
     super();
 
+    const now = Date.now();
+    const expiresIn = convertToISOTimestamp(data.expiresIn);
+    const isActive = data.active ? now < expiresIn : data.active;
+
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.ACCOUNTS,
       module: ServerStokeiApiIdPrefix.ACCESSES,
@@ -43,7 +47,7 @@ export class AccessModel extends AggregateRoot {
     this.accessToken = data.accessToken;
     this.refreshToken = data.refreshToken;
     this.parent = data.parent;
-    this.active = data.active;
+    this.active = isActive;
     this.expiresIn = data.expiresIn;
     this.canceledAt = data.canceledAt;
     this.updatedAt = data.updatedAt;

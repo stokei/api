@@ -22,10 +22,6 @@ export class RefreshAccessResolver {
     @CurrentAccount() currentAccount: IAuthenticatedAccount,
     @CurrentRefreshToken() refreshToken: IRefreshTokenPayload
   ) {
-    console.log({
-      currentAccount,
-      refreshToken
-    });
     if (currentAccount.id !== refreshToken.accountId) {
       throw new UnauthorizedException();
     }

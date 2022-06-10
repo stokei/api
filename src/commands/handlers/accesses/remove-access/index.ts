@@ -1,3 +1,4 @@
+import { UnauthorizedException } from '@nestjs/common';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
@@ -26,18 +27,26 @@ export class RemoveAccessCommandHandler
       throw new DataNotFoundException();
     }
     const accessId = splitServiceId(data.where?.accessId)?.id;
+    const accountId = data.where?.accountId;
     if (!accessId) {
       throw new ParamNotFoundException('accessId');
+    }
+    if (!accountId) {
+      throw new ParamNotFoundException('accountId');
     }
 
     const access = await this.findAccessByIdRepository.execute(accessId);
     if (!access) {
       throw new AccessNotFoundException();
     }
+    if (access.parent !== accountId) {
+      throw new UnauthorizedException();
+    }
 
     const removed = await this.removeAccessRepository.execute({
       where: {
-        accessId
+        accessId,
+        accountId
       }
     });
     if (!removed) {

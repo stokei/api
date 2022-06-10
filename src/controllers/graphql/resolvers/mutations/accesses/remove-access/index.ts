@@ -1,6 +1,11 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { CurrentProject, ProjectConfig, ProjectGuard } from '@stokei/nestjs';
+import {
+  CurrentAccount,
+  IAuthenticatedAccount,
+  ProjectConfig,
+  ProjectGuard
+} from '@stokei/nestjs';
 
 import { RemoveAccessInput } from '@/controllers/graphql/inputs/accesses/remove-access.input';
 import { Access } from '@/controllers/graphql/types/access';
@@ -15,9 +20,15 @@ export class RemoveAccessResolver {
   @Mutation(() => Access)
   async removeAccess(
     @Args('input') data: RemoveAccessInput,
-    @CurrentProject('id') projectId: string
+    @CurrentAccount() currentAccount: IAuthenticatedAccount
   ) {
-    const response = await this.removeAccessService.execute(data);
+    const response = await this.removeAccessService.execute({
+      ...data,
+      where: {
+        ...data?.where,
+        accountId: currentAccount.id
+      }
+    });
     return response;
   }
 }

@@ -4,7 +4,6 @@ import { ExistsAccessesRepository } from './exists-accesses';
 import { FindAccessByIdRepository } from './find-access-by-id';
 import { FindAllAccessesRepository } from './find-all-accesses';
 import { RemoveAccessRepository } from './remove-access';
-import { UpdateAccessRepository } from './update-access';
 
 export const AccessesRepositories = [
   CountAccessesRepository,
@@ -12,6 +11,5 @@ export const AccessesRepositories = [
   ExistsAccessesRepository,
   FindAccessByIdRepository,
   FindAllAccessesRepository,
-  RemoveAccessRepository,
-  UpdateAccessRepository
+  RemoveAccessRepository
 ];

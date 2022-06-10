@@ -1,5 +1,5 @@
 import { RemoveAccountResolver } from './remove-account';
-import { SignUpResolver } from './singup';
+import { SignUpResolver } from './signup';
 import { UpdateAccountResolver } from './update-account';
 
 export const AccountsMutations = [

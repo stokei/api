@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { IBaseRepository } from '@stokei/nestjs';
+import { convertToISODateString, IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
 import { RemoveAccountDTO } from '@/dtos/accounts/remove-account.dto';
+import { AccountStatus } from '@/enums/account-status.enum';
 
 @Injectable()
 export class RemoveAccountRepository
@@ -11,9 +12,13 @@ export class RemoveAccountRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute({ where }: RemoveAccountDTO): Promise<boolean> {
-    const removed = await this.model.account.delete({
+    const removed = await this.model.account.update({
       where: {
         id: where?.accountId
+      },
+      data: {
+        canceledAt: convertToISODateString(Date.now()),
+        status: AccountStatus.CANCELED
       }
     });
     return !!removed;

@@ -6,6 +6,8 @@ import { delay, map } from 'rxjs/operators';
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
 import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
 import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
+import { PasswordChangedEvent } from '@/events/implements/accounts/password-changed.event';
+import { PasswordForgottenEvent } from '@/events/implements/accounts/password-forgotten.event';
 
 @Injectable()
 export class AccountsSagas {
@@ -63,6 +65,42 @@ export class AccountsSagas {
         );
         this.logger.log(
           'Inside [AccountUpdatedEvent] Saga event accountUpdated:' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+
+  @Saga()
+  passwordChanged = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(PasswordChangedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [PasswordChangedEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [PasswordChangedEvent] Saga event passwordChanged:' +
+            JSON.stringify(event)
+        );
+        return null;
+      })
+    );
+  };
+
+  @Saga()
+  passwordForgotten = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(PasswordForgottenEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [PasswordForgottenEvent] Saga for example send a email'
+        );
+        this.logger.log(
+          'Inside [PasswordForgottenEvent] Saga event passwordForgotten:' +
             JSON.stringify(event)
         );
         return null;

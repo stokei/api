@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AuthModule } from '@stokei/nestjs';
-import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 import { CommandHandlers } from './commands/handlers';
 import { Controllers } from './controllers';
@@ -26,11 +25,10 @@ import { Services } from './services';
     ...Entities,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      playground: false,
+      playground: !IS_PRODUCTION,
       debug: !IS_PRODUCTION,
       introspection: !IS_PRODUCTION,
-      autoSchemaFile: true,
-      plugins: [!IS_PRODUCTION && ApolloServerPluginLandingPageLocalDefault()]
+      autoSchemaFile: true
     })
   ],
   controllers: [...Controllers],

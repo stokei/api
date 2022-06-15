@@ -62,7 +62,7 @@ export class ForgotPasswordCommandHandler
     accountModel.forgottenPassword();
     accountModel.commit();
 
-    return accountUpdated;
+    return updated;
   }
 
   private clearData(command: ForgotPasswordCommand): ForgotPasswordCommand {

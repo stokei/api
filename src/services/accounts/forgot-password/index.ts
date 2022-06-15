@@ -4,15 +4,13 @@ import { IBaseService } from '@stokei/nestjs';
 
 import { ForgotPasswordCommand } from '@/commands/implements/accounts/forgot-password.command';
 import { ForgotPasswordDTO } from '@/dtos/accounts/forgot-password.dto';
-import { AccountModel } from '@/models/account.model';
-
 @Injectable()
 export class ForgotPasswordService
-  implements IBaseService<ForgotPasswordDTO, Promise<AccountModel>>
+  implements IBaseService<ForgotPasswordDTO, Promise<boolean>>
 {
   constructor(private readonly commandBus: CommandBus) {}
 
-  async execute(data: ForgotPasswordDTO): Promise<AccountModel> {
+  async execute(data: ForgotPasswordDTO): Promise<boolean> {
     return await this.commandBus.execute(new ForgotPasswordCommand(data));
   }
 }

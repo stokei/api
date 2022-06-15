@@ -8,7 +8,7 @@ import { ForgotPasswordService } from '@/services/accounts/forgot-password';
 export class ForgotPasswordResolver {
   constructor(private readonly forgotPasswordService: ForgotPasswordService) {}
 
-  @Mutation(() => Account)
+  @Mutation(() => Boolean)
   async forgotPassword(@Args('input') data: ForgotPasswordInput) {
     const response = await this.forgotPasswordService.execute(data);
     return response;

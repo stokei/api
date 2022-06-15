@@ -8,7 +8,7 @@ import { ChangePasswordService } from '@/services/accounts/change-password';
 export class ChangePasswordResolver {
   constructor(private readonly changePasswordService: ChangePasswordService) {}
 
-  @Mutation(() => Account)
+  @Mutation(() => Boolean)
   async changePassword(@Args('input') data: ChangePasswordInput) {
     const response = await this.changePasswordService.execute(data);
     return response;

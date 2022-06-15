@@ -75,7 +75,7 @@ export class ChangePasswordCommandHandler
     accountModel.changedPassword();
     accountModel.commit();
 
-    return accountUpdated;
+    return updated;
   }
 
   private clearData(command: ChangePasswordCommand): ChangePasswordCommand {

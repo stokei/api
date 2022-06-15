@@ -1,3 +1,4 @@
+import { ChangePasswordCommandHandler } from './change-password';
 import { CreateAccountCommandHandler } from './create-account';
 import { ForgotPasswordCommandHandler } from './forgot-password';
 import { LoginCommandHandler } from './login';
@@ -7,6 +8,7 @@ import { UpdateAccountCommandHandler } from './update-account';
 
 export const AccountCommandHandlers = [
   CreateAccountCommandHandler,
+  ChangePasswordCommandHandler,
   ForgotPasswordCommandHandler,
   LoginCommandHandler,
   SignUpCommandHandler,

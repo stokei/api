@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 import { v4 as uuid } from 'uuid';
 
 import { ForgotPasswordCommand } from '@/commands/implements/accounts/forgot-password.command';
@@ -43,12 +43,13 @@ export class ForgotPasswordCommandHandler
       parent: data.parent
     });
     if (!account) {
-      throw new AccountNotFoundException();
+      throw new ErrorUpdatingForgotPasswordCodeException();
     }
 
+    const accountId = splitServiceId(account.id)?.id;
     const code = uuid();
     const updated = await this.updateCodeForgotPasswordRepository.execute({
-      accountId: account.id,
+      accountId,
       code
     });
     if (!updated) {
@@ -56,7 +57,7 @@ export class ForgotPasswordCommandHandler
     }
 
     const accountUpdated = await this.findAccountByIdRepository.execute(
-      account.id
+      accountId
     );
     if (!accountUpdated) {
       throw new AccountNotFoundException();

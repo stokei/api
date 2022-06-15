@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, encryptPassword } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  encryptPassword,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { ChangePasswordCommand } from '@/commands/implements/accounts/change-password.command';
 import { PASSWORD_SECRET_KEY } from '@/environments';
@@ -47,7 +52,7 @@ export class ChangePasswordCommandHandler
         code: data.code
       });
     if (!account) {
-      throw new AccountNotFoundException();
+      throw new ErrorUpdatingPasswordException();
     }
 
     const newPassword = await encryptPassword(
@@ -56,8 +61,9 @@ export class ChangePasswordCommandHandler
       PASSWORD_SECRET_KEY
     );
 
+    const accountId = splitServiceId(account.id)?.id;
     const updated = await this.updatePasswordRepository.execute({
-      accountId: account.id,
+      accountId,
       lastPassword: account.password,
       password: newPassword
     });
@@ -66,7 +72,7 @@ export class ChangePasswordCommandHandler
     }
 
     const accountUpdated = await this.findAccountByIdRepository.execute(
-      account.id
+      accountId
     );
     if (!accountUpdated) {
       throw new AccountNotFoundException();

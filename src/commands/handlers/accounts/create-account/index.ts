@@ -39,6 +39,9 @@ export class CreateAccountCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.parent) {
+      throw new ParamNotFoundException<CreateAccountCommandKeys>('parent');
+    }
     if (!data.firstname) {
       throw new ParamNotFoundException<CreateAccountCommandKeys>('firstname');
     }

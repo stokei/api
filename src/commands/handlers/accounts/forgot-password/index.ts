@@ -31,6 +31,9 @@ export class ForgotPasswordCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.parent) {
+      throw new ParamNotFoundException<ForgotPasswordCommandKeys>('parent');
+    }
     if (!data.email) {
       throw new ParamNotFoundException<ForgotPasswordCommandKeys>('email');
     }

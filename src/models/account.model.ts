@@ -8,6 +8,8 @@ import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
 import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
 import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
+import { PasswordChangedEvent } from '@/events/implements/accounts/password-changed.event';
+import { PasswordForgottenEvent } from '@/events/implements/accounts/password-forgotten.event';
 
 export interface IAccountModelData {
   readonly id?: string;
@@ -105,6 +107,26 @@ export class AccountModel extends AggregateRoot {
     if (this.id) {
       this.apply(
         new AccountRemovedEvent({
+          account: this
+        })
+      );
+    }
+  }
+
+  changedPassword() {
+    if (this.id && this.email) {
+      this.apply(
+        new PasswordChangedEvent({
+          account: this
+        })
+      );
+    }
+  }
+
+  forgottenPassword() {
+    if (this.id && this.email) {
+      this.apply(
+        new PasswordForgottenEvent({
           account: this
         })
       );

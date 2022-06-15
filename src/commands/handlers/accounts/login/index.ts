@@ -11,7 +11,7 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { AccessModel } from '@/models/access.model';
-import { FindAccountByEmailRepository } from '@/repositories/accounts/find-account-by-email';
+import { FindAccountByEmailAndParentRepository } from '@/repositories/accounts/find-account-by-email-and-parent';
 
 type LoginCommandKeys = keyof LoginCommand;
 
@@ -19,7 +19,7 @@ type LoginCommandKeys = keyof LoginCommand;
 export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly findAccountByEmailAndParentRepository: FindAccountByEmailRepository
+    private readonly findAccountByEmailAndParentRepository: FindAccountByEmailAndParentRepository
   ) {}
 
   async execute(command: LoginCommand) {

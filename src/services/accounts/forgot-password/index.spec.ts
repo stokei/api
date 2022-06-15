@@ -1,16 +1,16 @@
 import { CommandBus } from '@nestjs/cqrs';
 import { Test } from '@nestjs/testing';
 
-import { UpdateAccessService } from '.';
+import { ForgotPasswordService } from '.';
 
-describe('UpdateAccessService', () => {
-  let updateAccessService: UpdateAccessService;
+describe('ForgotPasswordService', () => {
+  let updateAccountService: ForgotPasswordService;
   let commandBus: CommandBus;
 
   beforeEach(async () => {
     const modRef = await Test.createTestingModule({
       providers: [
-        UpdateAccessService,
+        ForgotPasswordService,
         {
           provide: CommandBus,
           useValue: {
@@ -20,12 +20,12 @@ describe('UpdateAccessService', () => {
       ]
     }).compile();
 
-    updateAccessService = modRef.get(UpdateAccessService);
+    updateAccountService = modRef.get(ForgotPasswordService);
     commandBus = modRef.get(CommandBus);
   });
 
   it('should be defined', () => {
-    expect(updateAccessService).toBeDefined();
+    expect(updateAccountService).toBeDefined();
     expect(commandBus).toBeDefined();
   });
 });

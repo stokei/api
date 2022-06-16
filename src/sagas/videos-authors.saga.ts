@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { VideosAuthorCreatedEvent } from '@/events/implements/videos-authors/videos-author-created.event';
 import { VideosAuthorRemovedEvent } from '@/events/implements/videos-authors/videos-author-removed.event';
@@ -27,7 +30,9 @@ export class VideosAuthorsSagas {
         );
         this.logger.log(
           'Inside [VideosAuthorCreatedEvent] Saga event videosAuthorCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -45,7 +50,9 @@ export class VideosAuthorsSagas {
         );
         this.logger.log(
           'Inside [VideosAuthorRemovedEvent] Saga event videosAuthorRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -63,7 +70,9 @@ export class VideosAuthorsSagas {
         );
         this.logger.log(
           'Inside [VideosAuthorUpdatedEvent] Saga event videosAuthorUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

@@ -10,8 +10,6 @@ import {
 import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
 import { RemoveAccountRepository } from '@/repositories/accounts/remove-account';
 
-type RemoveAccountCommandKeys = keyof RemoveAccountCommand;
-
 @CommandHandler(RemoveAccountCommand)
 export class RemoveAccountCommandHandler
   implements ICommandHandler<RemoveAccountCommand>

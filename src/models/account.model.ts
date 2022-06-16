@@ -52,6 +52,7 @@ export class AccountModel extends AggregateRoot {
   readonly forgotPasswordCode?: string;
   readonly dateBirthday?: string;
   readonly status: AccountStatus;
+  readonly active: boolean;
   readonly canceledAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
@@ -76,7 +77,8 @@ export class AccountModel extends AggregateRoot {
     this.avatar = data.avatar;
     this.forgotPasswordCode = data.forgotPasswordCode;
     this.dateBirthday = data.dateBirthday;
-    this.status = data.status;
+    this.status = data.status || AccountStatus.ACTIVE;
+    this.active = this.status === AccountStatus.ACTIVE;
     this.canceledAt = data.canceledAt;
     this.updatedAt = data.updatedAt;
     this.createdAt = data.createdAt;

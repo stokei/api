@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
 import { DomainRemovedEvent } from '@/events/implements/domains/domain-removed.event';
@@ -27,7 +30,9 @@ export class DomainsSagas {
         );
         this.logger.log(
           'Inside [DomainCreatedEvent] Saga event domainCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -45,7 +50,9 @@ export class DomainsSagas {
         );
         this.logger.log(
           'Inside [DomainRemovedEvent] Saga event domainRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -63,7 +70,9 @@ export class DomainsSagas {
         );
         this.logger.log(
           'Inside [DomainUpdatedEvent] Saga event domainUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

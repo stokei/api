@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { SiteCreatedEvent } from '@/events/implements/sites/site-created.event';
 import { SiteRemovedEvent } from '@/events/implements/sites/site-removed.event';
@@ -27,7 +30,9 @@ export class SitesSagas {
         );
         this.logger.log(
           'Inside [SiteCreatedEvent] Saga event siteCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -45,7 +50,9 @@ export class SitesSagas {
         );
         this.logger.log(
           'Inside [SiteRemovedEvent] Saga event siteRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -63,7 +70,9 @@ export class SitesSagas {
         );
         this.logger.log(
           'Inside [SiteUpdatedEvent] Saga event siteUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

@@ -41,7 +41,7 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
       email: data.email,
       parent: data.parent
     });
-    if (!account) {
+    if (!account || !account?.active) {
       throw new InvalidEmailOrPasswordException();
     }
     const isValidPassword = comparePassword(

@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { CartsItemCreatedEvent } from '@/events/implements/carts-items/carts-item-created.event';
 import { CartsItemRemovedEvent } from '@/events/implements/carts-items/carts-item-removed.event';
@@ -27,7 +30,9 @@ export class CartsItemsSagas {
         );
         this.logger.log(
           'Inside [CartsItemCreatedEvent] Saga event cartsItemCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -45,7 +50,9 @@ export class CartsItemsSagas {
         );
         this.logger.log(
           'Inside [CartsItemRemovedEvent] Saga event cartsItemRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -63,7 +70,9 @@ export class CartsItemsSagas {
         );
         this.logger.log(
           'Inside [CartsItemUpdatedEvent] Saga event cartsItemUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { ClassroomsEnrollmentCreatedEvent } from '@/events/implements/classrooms-enrollments/classrooms-enrollment-created.event';
 import { ClassroomsEnrollmentRemovedEvent } from '@/events/implements/classrooms-enrollments/classrooms-enrollment-removed.event';
@@ -29,7 +32,9 @@ export class ClassroomsEnrollmentsSagas {
         );
         this.logger.log(
           'Inside [ClassroomsEnrollmentCreatedEvent] Saga event classroomsEnrollmentCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -49,7 +54,9 @@ export class ClassroomsEnrollmentsSagas {
         );
         this.logger.log(
           'Inside [ClassroomsEnrollmentRemovedEvent] Saga event classroomsEnrollmentRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -69,7 +76,9 @@ export class ClassroomsEnrollmentsSagas {
         );
         this.logger.log(
           'Inside [ClassroomsEnrollmentUpdatedEvent] Saga event classroomsEnrollmentUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

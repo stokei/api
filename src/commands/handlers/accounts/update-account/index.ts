@@ -10,8 +10,6 @@ import {
 import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
 import { UpdateAccountRepository } from '@/repositories/accounts/update-account';
 
-type UpdateAccountCommandKeys = keyof UpdateAccountCommand;
-
 @CommandHandler(UpdateAccountCommand)
 export class UpdateAccountCommandHandler
   implements ICommandHandler<UpdateAccountCommand>
@@ -33,7 +31,7 @@ export class UpdateAccountCommandHandler
     }
 
     const account = await this.findAccountByIdRepository.execute(accountId);
-    if (!account) {
+    if (!account || !account?.active) {
       throw new AccountNotFoundException();
     }
 

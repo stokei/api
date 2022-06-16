@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { SitesLightColorCreatedEvent } from '@/events/implements/sites-light-colors/sites-light-color-created.event';
 import { SitesLightColorRemovedEvent } from '@/events/implements/sites-light-colors/sites-light-color-removed.event';
@@ -27,7 +30,9 @@ export class SitesLightColorsSagas {
         );
         this.logger.log(
           'Inside [SitesLightColorCreatedEvent] Saga event sitesLightColorCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -45,7 +50,9 @@ export class SitesLightColorsSagas {
         );
         this.logger.log(
           'Inside [SitesLightColorRemovedEvent] Saga event sitesLightColorRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -63,7 +70,9 @@ export class SitesLightColorsSagas {
         );
         this.logger.log(
           'Inside [SitesLightColorUpdatedEvent] Saga event sitesLightColorUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

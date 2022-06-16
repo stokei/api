@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { CheckoutCreatedEvent } from '@/events/implements/checkouts/checkout-created.event';
 import { CheckoutRemovedEvent } from '@/events/implements/checkouts/checkout-removed.event';
@@ -27,7 +30,9 @@ export class CheckoutsSagas {
         );
         this.logger.log(
           'Inside [CheckoutCreatedEvent] Saga event checkoutCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -45,7 +50,9 @@ export class CheckoutsSagas {
         );
         this.logger.log(
           'Inside [CheckoutRemovedEvent] Saga event checkoutRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -63,7 +70,9 @@ export class CheckoutsSagas {
         );
         this.logger.log(
           'Inside [CheckoutUpdatedEvent] Saga event checkoutUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

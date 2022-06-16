@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { CurrencyCreatedEvent } from '@/events/implements/currencies/currency-created.event';
 import { CurrencyRemovedEvent } from '@/events/implements/currencies/currency-removed.event';
@@ -27,7 +30,9 @@ export class CurrenciesSagas {
         );
         this.logger.log(
           'Inside [CurrencyCreatedEvent] Saga event currencyCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -45,7 +50,9 @@ export class CurrenciesSagas {
         );
         this.logger.log(
           'Inside [CurrencyRemovedEvent] Saga event currencyRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -63,7 +70,9 @@ export class CurrenciesSagas {
         );
         this.logger.log(
           'Inside [CurrencyUpdatedEvent] Saga event currencyUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { ModulesMaterialCreatedEvent } from '@/events/implements/modules-materials/modules-material-created.event';
 import { ModulesMaterialRemovedEvent } from '@/events/implements/modules-materials/modules-material-removed.event';
@@ -27,7 +30,9 @@ export class ModulesMaterialsSagas {
         );
         this.logger.log(
           'Inside [ModulesMaterialCreatedEvent] Saga event modulesMaterialCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -45,7 +50,9 @@ export class ModulesMaterialsSagas {
         );
         this.logger.log(
           'Inside [ModulesMaterialRemovedEvent] Saga event modulesMaterialRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -63,7 +70,9 @@ export class ModulesMaterialsSagas {
         );
         this.logger.log(
           'Inside [ModulesMaterialUpdatedEvent] Saga event modulesMaterialUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

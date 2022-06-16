@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { LanguageCreatedEvent } from '@/events/implements/languages/language-created.event';
 import { LanguageRemovedEvent } from '@/events/implements/languages/language-removed.event';
@@ -27,7 +30,9 @@ export class LanguagesSagas {
         );
         this.logger.log(
           'Inside [LanguageCreatedEvent] Saga event languageCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -45,7 +50,9 @@ export class LanguagesSagas {
         );
         this.logger.log(
           'Inside [LanguageRemovedEvent] Saga event languageRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -63,7 +70,9 @@ export class LanguagesSagas {
         );
         this.logger.log(
           'Inside [LanguageUpdatedEvent] Saga event languageUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

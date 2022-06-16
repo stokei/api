@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { ProductsCategoryCreatedEvent } from '@/events/implements/products-categories/products-category-created.event';
 import { ProductsCategoryRemovedEvent } from '@/events/implements/products-categories/products-category-removed.event';
@@ -29,7 +32,9 @@ export class ProductsCategoriesSagas {
         );
         this.logger.log(
           'Inside [ProductsCategoryCreatedEvent] Saga event productsCategoryCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -49,7 +54,9 @@ export class ProductsCategoriesSagas {
         );
         this.logger.log(
           'Inside [ProductsCategoryRemovedEvent] Saga event productsCategoryRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -69,7 +76,9 @@ export class ProductsCategoriesSagas {
         );
         this.logger.log(
           'Inside [ProductsCategoryUpdatedEvent] Saga event productsCategoryUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
 import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
@@ -29,7 +32,9 @@ export class AccountsSagas {
         );
         this.logger.log(
           'Inside [AccountCreatedEvent] Saga event accountCreated: ' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -47,7 +52,9 @@ export class AccountsSagas {
         );
         this.logger.log(
           'Inside [AccountRemovedEvent] Saga event accountRemoved:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -65,7 +72,9 @@ export class AccountsSagas {
         );
         this.logger.log(
           'Inside [AccountUpdatedEvent] Saga event accountUpdated:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -83,7 +92,9 @@ export class AccountsSagas {
         );
         this.logger.log(
           'Inside [PasswordChangedEvent] Saga event passwordChanged:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })
@@ -101,7 +112,9 @@ export class AccountsSagas {
         );
         this.logger.log(
           'Inside [PasswordForgottenEvent] Saga event passwordForgotten:' +
-            JSON.stringify(event)
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
         );
         return null;
       })

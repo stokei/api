@@ -1,9 +1,9 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { Mutation, Resolver } from '@nestjs/graphql';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
-import { RemoveAccountInput } from '@/controllers/graphql/inputs/accounts/remove-account.input';
 import { Account } from '@/controllers/graphql/types/account';
+import { AccountModel } from '@/models/account.model';
 import { RemoveAccountService } from '@/services/accounts/remove-account';
 
 @Resolver(() => Account)
@@ -12,8 +12,12 @@ export class RemoveAccountResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Account)
-  async removeAccount(@Args('input') data: RemoveAccountInput) {
-    const response = await this.removeAccountService.execute(data);
+  async removeAccount(@CurrentAccount() account: AccountModel) {
+    const response = await this.removeAccountService.execute({
+      where: {
+        accountId: account.id
+      }
+    });
     return response;
   }
 }

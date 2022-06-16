@@ -17,6 +17,7 @@ export class RemoveAccountRepository
         id: where?.accountId
       },
       data: {
+        active: false,
         canceledAt: convertToISODateString(Date.now()),
         status: AccountStatus.CANCELED
       }

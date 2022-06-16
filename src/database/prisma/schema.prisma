@@ -33,6 +33,7 @@ model Account {
   forgotPasswordCode String?       @map("forgot_password_code") @db.VarChar(255)
   dateBirthday       DateTime?     @map("date_birthday")
   status             AccountStatus
+  active             Boolean       @default(true)
   roles              AccountRole[]
   canceledAt         DateTime?     @map("canceled_at")
   updatedAt          DateTime?     @updatedAt @map("updated_at")

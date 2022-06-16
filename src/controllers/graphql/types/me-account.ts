@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
-import { Access } from './access';
+import { Accesses } from './accesses';
 import { Account } from './account';
 
 @ObjectType()
@@ -9,6 +9,6 @@ export class MeAccount extends Account {
   @Field(() => String, { nullable: true })
   dateBirthday?: string;
 
-  @Field(() => [Access])
-  accesses: Access[];
+  @Field(() => Accesses)
+  accesses: Accesses;
 }

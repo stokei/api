@@ -74,16 +74,6 @@ model ProjectsMember {
   @@map("projects_members")
 }
 
-model ProjectsPlan {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("projects_plans")
-}
-
 model Site {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
@@ -94,26 +84,6 @@ model Site {
   @@map("sites")
 }
 
-model SitesLightColor {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("sites_light_colors")
-}
-
-model SitesDarkColor {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("sites_dark_colors")
-}
-
 model Domain {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
@@ -122,36 +92,6 @@ model Domain {
   createdAt DateTime? @default(now()) @map("created_at")
 
   @@map("domains")
-}
-
-model Page {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("pages")
-}
-
-model Metatag {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("metatags")
-}
-
-model Tag {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("tags")
 }
 
 model Currency {
@@ -174,26 +114,6 @@ model Language {
   @@map("languages")
 }
 
-model Keyword {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("keywords")
-}
-
-model Version {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("versions")
-}
-
 model Color {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
@@ -202,56 +122,6 @@ model Color {
   createdAt DateTime? @default(now()) @map("created_at")
 
   @@map("colors")
-}
-
-model Activity {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("activities")
-}
-
-model ActivitiesAction {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("activities_actions")
-}
-
-model Category {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("categories")
-}
-
-model Checkout {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("checkouts")
-}
-
-model CheckoutsCurrency {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("checkouts_currencies")
 }
 
 model Product {
@@ -264,26 +134,6 @@ model Product {
   @@map("products")
 }
 
-model ProductsCategory {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("products_categories")
-}
-
-model ProductsImage {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("products_images")
-}
-
 model Price {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
@@ -292,16 +142,6 @@ model Price {
   createdAt DateTime? @default(now()) @map("created_at")
 
   @@map("prices")
-}
-
-model ProductsTag {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("products_tags")
 }
 
 model Order {
@@ -322,26 +162,6 @@ model OrdersItem {
   createdAt DateTime? @default(now()) @map("created_at")
 
   @@map("orders_items")
-}
-
-model OrdersAddress {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("orders_addresses")
-}
-
-model OrdersSeller {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("orders_sellers")
 }
 
 model Payment {
@@ -414,46 +234,6 @@ model Image {
   @@map("images")
 }
 
-model Rating {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("ratings")
-}
-
-model Comment {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("comments")
-}
-
-model Question {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("questions")
-}
-
-model Answer {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("answers")
-}
-
 model Video {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
@@ -464,16 +244,6 @@ model Video {
   @@map("videos")
 }
 
-model VideosTag {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("videos_tags")
-}
-
 model VideosAuthor {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
@@ -482,26 +252,6 @@ model VideosAuthor {
   createdAt DateTime? @default(now()) @map("created_at")
 
   @@map("videos_authors")
-}
-
-model VideosSubtitle {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("videos_subtitles")
-}
-
-model File {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("files")
 }
 
 model Module {
@@ -524,26 +274,6 @@ model ModulesVideo {
   @@map("modules_videos")
 }
 
-model ModulesMaterial {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("modules_materials")
-}
-
-model VideosMaterial {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("videos_materials")
-}
-
 model Course {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
@@ -562,16 +292,6 @@ model CoursesInstructor {
   createdAt DateTime? @default(now()) @map("created_at")
 
   @@map("courses_instructors")
-}
-
-model CoursesAdmin {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("courses_admins")
 }
 
 model CoursesStudent {
@@ -614,16 +334,6 @@ model ClassroomsEnrollment {
   @@map("classrooms_enrollments")
 }
 
-model ClassroomsAdmin {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("classrooms_admins")
-}
-
 model ClassroomsInstructor {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
@@ -634,16 +344,6 @@ model ClassroomsInstructor {
   @@map("classrooms_instructors")
 }
 
-model ClassroomsPlan {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("classrooms_plans")
-}
-
 model ClassroomsModule {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
@@ -652,26 +352,6 @@ model ClassroomsModule {
   createdAt DateTime? @default(now()) @map("created_at")
 
   @@map("classrooms_modules")
-}
-
-model ClassroomsTag {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("classrooms_tags")
-}
-
-model ClassroomsMaterial {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-
-  @@map("classrooms_materials")
 }
 
 model Address {

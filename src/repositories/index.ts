@@ -28,7 +28,7 @@ import { PlansRepositories } from './plans';
 import { PricesRepositories } from './prices';
 import { ProductsRepositories } from './products';
 import { ProjectsRepositories } from './projects';
-import { ProjectsPlansRepositories } from './projects-plans';
+import { ProjectsMembersRepositories } from './projects-members';
 import { SitesRepositories } from './sites';
 import { VideosRepositories } from './videos';
 import { VideosAuthorsRepositories } from './videos-authors';
@@ -37,7 +37,7 @@ export const Repositories = [
   ...AccountsRepositories,
   ...AccessesRepositories,
   ...ProjectsRepositories,
-  ...ProjectsPlansRepositories,
+  ...ProjectsMembersRepositories,
   ...SitesRepositories,
   ...DomainsRepositories,
   ...CurrenciesRepositories,

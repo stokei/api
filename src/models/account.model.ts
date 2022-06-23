@@ -1,5 +1,9 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { cleanValue, createServiceId } from '@stokei/nestjs';
+import {
+  cleanValue,
+  convertToISODateString,
+  createServiceId
+} from '@stokei/nestjs';
 import { Exclude } from 'class-transformer';
 
 import { AccountRole } from '@/enums/account-role.enum';
@@ -23,12 +27,13 @@ export interface IAccountModelData {
   readonly lastPassword?: string;
   readonly salt: string;
   readonly avatar?: string;
+  readonly active: boolean;
   readonly forgotPasswordCode?: string;
-  readonly dateBirthday?: string;
+  readonly dateBirthday?: Date | string;
   readonly status: AccountStatus;
-  readonly canceledAt?: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly canceledAt?: Date | string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
   readonly roles: AccountRole[];
 }
 
@@ -76,12 +81,12 @@ export class AccountModel extends AggregateRoot {
     this.salt = data.salt;
     this.avatar = data.avatar;
     this.forgotPasswordCode = data.forgotPasswordCode;
-    this.dateBirthday = data.dateBirthday;
+    this.dateBirthday = convertToISODateString(data.dateBirthday);
     this.status = data.status || AccountStatus.ACTIVE;
-    this.active = this.status === AccountStatus.ACTIVE;
-    this.canceledAt = data.canceledAt;
-    this.updatedAt = data.updatedAt;
-    this.createdAt = data.createdAt;
+    this.active = this.status === AccountStatus.ACTIVE || data.active;
+    this.canceledAt = convertToISODateString(data.canceledAt);
+    this.updatedAt = convertToISODateString(data.updatedAt);
+    this.createdAt = convertToISODateString(data.createdAt);
     this.roles = data.roles;
   }
 

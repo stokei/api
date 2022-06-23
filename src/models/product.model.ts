@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { ProductCreatedEvent } from '@/events/implements/products/product-created.event';
@@ -11,14 +11,30 @@ export interface IProductModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly description?: string;
+  readonly project: string;
+  readonly externalProductId: string;
+  readonly checkoutVisible: boolean;
+  readonly avatar?: string;
+  readonly active: boolean;
+  readonly activatedAt?: Date | string;
+  readonly deactivatedAt?: Date | string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class ProductModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
   readonly name: string;
+  readonly description?: string;
+  readonly project: string;
+  readonly externalProductId: string;
+  readonly checkoutVisible: boolean;
+  readonly avatar?: string;
+  readonly active: boolean;
+  readonly activatedAt?: string;
+  readonly deactivatedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IProductModelData) {
@@ -31,8 +47,16 @@ export class ProductModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.name = data.name;
-    this.updatedAt = data.updatedAt;
-    this.createdAt = data.createdAt;
+    this.description = data.description;
+    this.project = data.project;
+    this.externalProductId = data.externalProductId;
+    this.checkoutVisible = data.checkoutVisible;
+    this.avatar = data.avatar;
+    this.active = data.active;
+    this.activatedAt = convertToISODateString(data.activatedAt);
+    this.deactivatedAt = convertToISODateString(data.deactivatedAt);
+    this.updatedAt = convertToISODateString(data.updatedAt);
+    this.createdAt = convertToISODateString(data.createdAt);
   }
 
   createdProduct() {

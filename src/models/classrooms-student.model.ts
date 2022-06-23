@@ -31,8 +31,8 @@ export class ClassroomsStudentModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.name = data.name;
-    this.updatedAt = data.updatedAt;
-    this.createdAt = data.createdAt;
+    this.updatedAt = convertToISODateString(data.updatedAt);
+    this.createdAt = convertToISODateString(data.createdAt);
   }
 
   createdClassroomsStudent() {

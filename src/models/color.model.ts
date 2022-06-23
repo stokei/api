@@ -1,7 +1,9 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { ColorType } from '@/enums/color-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { ThemeMode } from '@/enums/theme-mode.enum';
 import { ColorCreatedEvent } from '@/events/implements/colors/color-created.event';
 import { ColorRemovedEvent } from '@/events/implements/colors/color-removed.event';
 import { ColorUpdatedEvent } from '@/events/implements/colors/color-updated.event';
@@ -10,15 +12,19 @@ export interface IColorModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
-  readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly themeMode: ThemeMode;
+  readonly type: ColorType;
+  readonly color: string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class ColorModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly name: string;
+  readonly color: string;
+  readonly themeMode: ThemeMode;
+  readonly type: ColorType;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IColorModelData) {
@@ -30,9 +36,11 @@ export class ColorModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
-    this.name = data.name;
-    this.updatedAt = data.updatedAt;
-    this.createdAt = data.createdAt;
+    this.themeMode = data.themeMode;
+    this.type = data.type;
+    this.color = data.color;
+    this.updatedAt = convertToISODateString(data.updatedAt);
+    this.createdAt = convertToISODateString(data.createdAt);
   }
 
   createdColor() {

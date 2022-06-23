@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { CurrencyCreatedEvent } from '@/events/implements/currencies/currency-created.event';
@@ -9,16 +9,24 @@ import { CurrencyUpdatedEvent } from '@/events/implements/currencies/currency-up
 export interface ICurrencyModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly parent: string;
   readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly symbol: string;
+  readonly minorUnit: number;
+  readonly active: boolean;
+  readonly activatedAt?: Date | string;
+  readonly deactivatedAt?: Date | string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class CurrencyModel extends AggregateRoot {
   readonly id: string;
-  readonly parent: string;
   readonly name: string;
+  readonly symbol: string;
+  readonly minorUnit: number;
+  readonly active: boolean;
+  readonly activatedAt?: string;
+  readonly deactivatedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: ICurrencyModelData) {
@@ -29,10 +37,14 @@ export class CurrencyModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.CURRENCIES,
       id: data._id?.toString() || data.id
     });
-    this.parent = data.parent;
     this.name = data.name;
-    this.updatedAt = data.updatedAt;
-    this.createdAt = data.createdAt;
+    this.symbol = data.symbol;
+    this.minorUnit = data.minorUnit;
+    this.active = data.active;
+    this.activatedAt = convertToISODateString(data.activatedAt);
+    this.deactivatedAt = convertToISODateString(data.deactivatedAt);
+    this.updatedAt = convertToISODateString(data.updatedAt);
+    this.createdAt = convertToISODateString(data.createdAt);
   }
 
   createdCurrency() {

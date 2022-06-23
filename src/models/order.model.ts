@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { OrderStatus } from '@/enums/order-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { OrderCreatedEvent } from '@/events/implements/orders/order-created.event';
 import { OrderRemovedEvent } from '@/events/implements/orders/order-removed.event';
@@ -9,16 +10,46 @@ import { OrderUpdatedEvent } from '@/events/implements/orders/order-updated.even
 export interface IOrderModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly parent: string;
-  readonly name: string;
+  readonly project: string;
+  readonly cart: string;
+  readonly customer: string;
+  readonly salesComissionPercentage: string;
+  readonly salesComissionAmount: string;
+  readonly currency: string;
+  readonly amount: number;
+  readonly discountAmount: number;
+  readonly subtotalAmount: number;
+  readonly totalAmount: number;
+  readonly status: OrderStatus;
+  readonly active: boolean;
+  readonly paidAt?: Date | string;
+  readonly canceledAt?: Date | string;
+  readonly paymentErrorAt?: Date | string;
+  readonly totalRefundedAt?: Date | string;
+  readonly parcialRefundedAt?: Date | string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
 }
 
 export class OrderModel extends AggregateRoot {
   readonly id: string;
-  readonly parent: string;
-  readonly name: string;
+  readonly project: string;
+  readonly cart: string;
+  readonly customer: string;
+  readonly salesComissionPercentage: string;
+  readonly salesComissionAmount: string;
+  readonly currency: string;
+  readonly amount: number;
+  readonly discountAmount: number;
+  readonly subtotalAmount: number;
+  readonly totalAmount: number;
+  readonly status: OrderStatus;
+  readonly active: boolean;
+  readonly paidAt?: string;
+  readonly canceledAt?: string;
+  readonly paymentErrorAt?: string;
+  readonly totalRefundedAt?: string;
+  readonly parcialRefundedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IOrderModelData) {
@@ -29,10 +60,25 @@ export class OrderModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.ORDERS,
       id: data._id?.toString() || data.id
     });
-    this.parent = data.parent;
-    this.name = data.name;
-    this.updatedAt = data.updatedAt;
-    this.createdAt = data.createdAt;
+    this.project = data.project;
+    this.cart = data.cart;
+    this.customer = data.customer;
+    this.salesComissionPercentage = data.salesComissionPercentage;
+    this.salesComissionAmount = data.salesComissionAmount;
+    this.currency = data.currency;
+    this.amount = data.amount;
+    this.discountAmount = data.discountAmount;
+    this.subtotalAmount = data.subtotalAmount;
+    this.totalAmount = data.totalAmount;
+    this.status = data.status;
+    this.active = this.status === OrderStatus.PAID || data.active;
+    this.paidAt = convertToISODateString(data.paidAt);
+    this.canceledAt = convertToISODateString(data.canceledAt);
+    this.paymentErrorAt = convertToISODateString(data.paymentErrorAt);
+    this.totalRefundedAt = convertToISODateString(data.totalRefundedAt);
+    this.parcialRefundedAt = convertToISODateString(data.parcialRefundedAt);
+    this.updatedAt = convertToISODateString(data.updatedAt);
+    this.createdAt = convertToISODateString(data.createdAt);
   }
 
   createdOrder() {

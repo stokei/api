@@ -1,6 +1,8 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { PriceType } from '@/enums/price-type.enum';
+import { RecurringType } from '@/enums/recurring-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PriceCreatedEvent } from '@/events/implements/prices/price-created.event';
 import { PriceRemovedEvent } from '@/events/implements/prices/price-removed.event';
@@ -10,15 +12,35 @@ export interface IPriceModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
-  readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly default: boolean;
+  readonly amount: number;
+  readonly fromAmount?: number;
+  readonly toAmount: number;
+  readonly paymentMethod: string;
+  readonly installments: number;
+  readonly type: PriceType;
+  readonly recurringIntervalCount: number;
+  readonly recurringIntervalType: RecurringType;
+  readonly quantity: number;
+  readonly active: boolean;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class PriceModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly name: string;
+  readonly default: boolean;
+  readonly amount: number;
+  readonly fromAmount?: number;
+  readonly toAmount: number;
+  readonly paymentMethod: string;
+  readonly installments: number;
+  readonly type: PriceType;
+  readonly recurringIntervalCount: number;
+  readonly recurringIntervalType: RecurringType;
+  readonly quantity: number;
+  readonly active: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IPriceModelData) {
@@ -30,9 +52,19 @@ export class PriceModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
-    this.name = data.name;
-    this.updatedAt = data.updatedAt;
-    this.createdAt = data.createdAt;
+    this.default = data.default;
+    this.amount = data.amount;
+    this.fromAmount = data.fromAmount;
+    this.toAmount = data.toAmount;
+    this.paymentMethod = data.paymentMethod;
+    this.installments = data.installments;
+    this.type = data.type;
+    this.recurringIntervalCount = data.recurringIntervalCount;
+    this.recurringIntervalType = data.recurringIntervalType;
+    this.quantity = data.quantity;
+    this.active = data.active;
+    this.updatedAt = convertToISODateString(data.updatedAt);
+    this.createdAt = convertToISODateString(data.createdAt);
   }
 
   createdPrice() {

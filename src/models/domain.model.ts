@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { DomainStatus } from '@/enums/domain-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
 import { DomainRemovedEvent } from '@/events/implements/domains/domain-removed.event';
@@ -10,15 +11,29 @@ export interface IDomainModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
+  readonly default: boolean;
+  readonly active: boolean;
+  readonly fulldomain: string;
   readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly extension: string;
+  readonly language: string;
+  readonly status: DomainStatus;
+  readonly activatedAt?: Date | string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class DomainModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
+  readonly default: boolean;
+  readonly active: boolean;
+  readonly fulldomain: string;
   readonly name: string;
+  readonly extension: string;
+  readonly language: string;
+  readonly status: DomainStatus;
+  readonly activatedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IDomainModelData) {
@@ -30,9 +45,16 @@ export class DomainModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
+    this.default = data.default;
+    this.fulldomain = data.fulldomain;
     this.name = data.name;
-    this.updatedAt = data.updatedAt;
-    this.createdAt = data.createdAt;
+    this.extension = data.extension;
+    this.language = data.language;
+    this.status = data.status;
+    this.active = this.status === DomainStatus.ACTIVE || data.active;
+    this.activatedAt = convertToISODateString(data.activatedAt);
+    this.updatedAt = convertToISODateString(data.updatedAt);
+    this.createdAt = convertToISODateString(data.createdAt);
   }
 
   createdDomain() {

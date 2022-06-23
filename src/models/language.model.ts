@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { LanguageCreatedEvent } from '@/events/implements/languages/language-created.event';
@@ -9,16 +9,22 @@ import { LanguageUpdatedEvent } from '@/events/implements/languages/language-upd
 export interface ILanguageModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly parent: string;
   readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly icon?: string;
+  readonly active: boolean;
+  readonly activatedAt?: Date | string;
+  readonly deactivatedAt?: Date | string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class LanguageModel extends AggregateRoot {
   readonly id: string;
-  readonly parent: string;
   readonly name: string;
+  readonly icon?: string;
+  readonly active: boolean;
+  readonly activatedAt?: string;
+  readonly deactivatedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: ILanguageModelData) {
@@ -29,10 +35,13 @@ export class LanguageModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.LANGUAGES,
       id: data._id?.toString() || data.id
     });
-    this.parent = data.parent;
     this.name = data.name;
-    this.updatedAt = data.updatedAt;
-    this.createdAt = data.createdAt;
+    this.icon = data.icon;
+    this.active = data.active;
+    this.activatedAt = convertToISODateString(data.activatedAt);
+    this.deactivatedAt = convertToISODateString(data.deactivatedAt);
+    this.updatedAt = convertToISODateString(data.updatedAt);
+    this.createdAt = convertToISODateString(data.createdAt);
   }
 
   createdLanguage() {

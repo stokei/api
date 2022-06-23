@@ -19,6 +19,115 @@ enum AccountRole {
   ADMIN
 }
 
+enum CardBrand {
+  MASTERCARD
+  VISA
+  ELO
+}
+
+enum ThemeMode {
+  DARK
+  LIGHT
+}
+
+enum ColorType {
+  TEXT
+  HEADING
+  PRIMARY
+  SECONDARY
+  SUCCESS
+  ERROR
+  WARNING
+  INFO
+}
+
+enum DomainStatus {
+  ACTIVE
+  PENDING
+}
+
+enum PaymentsMethodProvider {
+  STRIPE
+}
+
+enum PaymentsMethodType {
+  CREDIT_CARD
+  BOLETO
+}
+
+enum PlanType {
+  FREE
+  BASIC
+  ADVANCED
+  CUSTOM
+}
+
+enum PlanStatus {
+  ACTIVE
+  PENDING
+  CANCELED
+  FINISHED
+}
+
+enum RecurringType {
+  HOUR
+  DAY
+  WEEK
+  MONTH
+  YEAR
+}
+
+enum PriceType {
+  RECURRING
+  ONE_TIME
+}
+
+enum ProjectStatus {
+  ACTIVE
+  INACTIVE
+  BLOCKED
+}
+
+enum ProjectMemberRole {
+  OWNER
+  ADMIN
+}
+
+enum OrderStatus {
+  PAID
+  PENDING
+  CANCELED
+  PAYMENT_ERROR
+  TOTAL_REFUNDED
+  PARCIAL_REFUNDED
+}
+
+enum PaymentStatus {
+  PAID
+  PENDING
+  CANCELED
+  PAYMENT_ERROR
+  TOTAL_REFUNDED
+  PARCIAL_REFUNDED
+}
+
+enum ClassroomsEnrollmentStatus {
+  ACTIVE
+  FINISHED
+  CANCELED
+}
+
+enum PhoneStatus {
+  ACTIVE
+  PENDING
+  INVALID
+}
+
+enum VideoStatus {
+  ACTIVE
+  PENDING
+}
+
 model Account {
   id                 String        @id @default(cuid())
   parent             String        @db.VarChar(255)
@@ -55,21 +164,32 @@ model Access {
 }
 
 model Project {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id            String        @id @default(cuid())
+  parent        String        @db.VarChar(255)
+  slug          String        @db.VarChar(255)
+  name          String        @db.VarChar(255)
+  description   String?
+  status        ProjectStatus
+  avatar        String?       @db.VarChar(255)
+  plan          String?       @db.VarChar(255)
+  currency      String        @db.VarChar(255)
+  active        Boolean       @default(true)
+  blockedAt     DateTime?     @map("blocked_at")
+  activatedAt   DateTime?     @default(now()) @map("activated_at")
+  deactivatedAt DateTime?     @map("deactivated_at")
+  updatedAt     DateTime?     @updatedAt @map("updated_at")
+  createdAt     DateTime?     @default(now()) @map("created_at")
 
   @@map("projects")
 }
 
 model ProjectsMember {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id        String              @id @default(cuid())
+  project   String              @db.VarChar(255)
+  member    String              @db.VarChar(255)
+  roles     ProjectMemberRole[]
+  updatedAt DateTime?           @updatedAt @map("updated_at")
+  createdAt DateTime?           @default(now()) @map("created_at")
 
   @@map("projects_members")
 }
@@ -77,7 +197,8 @@ model ProjectsMember {
 model Site {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
-  name      String
+  favicon   String?   @db.VarChar(255)
+  logo      String?   @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -85,31 +206,45 @@ model Site {
 }
 
 model Domain {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id          String       @id @default(cuid())
+  parent      String       @db.VarChar(255)
+  default     Boolean      @default(false)
+  active      Boolean      @default(false)
+  fulldomain  String       @db.VarChar(255)
+  name        String       @db.VarChar(255)
+  extension   String       @db.VarChar(50)
+  language    String       @db.VarChar(255)
+  status      DomainStatus
+  activatedAt DateTime?    @updatedAt @map("activated_at")
+  updatedAt   DateTime?    @updatedAt @map("updated_at")
+  createdAt   DateTime?    @default(now()) @map("created_at")
 
   @@map("domains")
 }
 
 model Currency {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id            String    @id
+  name          String    @db.VarChar(255)
+  symbol        String    @db.VarChar(10)
+  minorUnit     Int       @map("minor_unit")
+  active        Boolean   @default(true)
+  activatedAt   DateTime? @default(now()) @map("activated_at")
+  deactivatedAt DateTime? @map("deactivated_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+  createdAt     DateTime? @default(now()) @map("created_at")
 
   @@map("currencies")
 }
 
 model Language {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id            String    @id
+  name          String    @db.VarChar(255)
+  icon          String?   @db.VarChar(255)
+  active        Boolean   @default(true)
+  activatedAt   DateTime? @default(now()) @map("activated_at")
+  deactivatedAt DateTime? @map("deactivated_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+  createdAt     DateTime? @default(now()) @map("created_at")
 
   @@map("languages")
 }
@@ -117,7 +252,9 @@ model Language {
 model Color {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
-  name      String
+  themeMode ThemeMode @map("theme_mode")
+  type      ColorType
+  color     String    @db.VarChar(20)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -125,71 +262,132 @@ model Color {
 }
 
 model Product {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id                String    @id @default(cuid())
+  parent            String    @db.VarChar(255)
+  name              String    @db.VarChar(255)
+  description       String?
+  project           String    @db.VarChar(255)
+  externalProductId String    @map("external_product_id") @db.VarChar(255)
+  checkoutVisible   Boolean   @map("checkout_visible")
+  avatar            String?   @db.VarChar(255)
+  active            Boolean   @default(true)
+  activatedAt       DateTime? @default(now()) @map("activated_at")
+  deactivatedAt     DateTime? @map("deactivated_at")
+  updatedAt         DateTime? @updatedAt @map("updated_at")
+  createdAt         DateTime? @default(now()) @map("created_at")
 
   @@map("products")
 }
 
 model Price {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id                     String        @id @default(cuid())
+  parent                 String        @db.VarChar(255)
+  default                Boolean       @default(false)
+  amount                 Int
+  fromAmount             Int?          @map("from_amount")
+  toAmount               Int           @map("to_amount")
+  paymentMethod          String        @map("payment_method") @db.VarChar(255)
+  installments           Int
+  type                   PriceType
+  recurringIntervalCount Int           @map("recurring_interval_count")
+  recurringIntervalType  RecurringType @map("recurring_interval_type")
+  quantity               Int
+  active                 Boolean       @default(true)
+  updatedAt              DateTime?     @updatedAt @map("updated_at")
+  createdAt              DateTime?     @default(now()) @map("created_at")
 
   @@map("prices")
 }
 
 model Order {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id                       String      @id @default(cuid())
+  project                  String      @db.VarChar(255)
+  cart                     String      @db.VarChar(255)
+  customer                 String      @db.VarChar(255)
+  salesComissionPercentage String      @map("sales_comission_percentage") @db.VarChar(255)
+  salesComissionAmount     String      @map("sales_comission_amount") @db.VarChar(255)
+  currency                 String      @db.VarChar(255)
+  amount                   Int
+  discountAmount           Int         @map("discount_amount")
+  subtotalAmount           Int         @map("subtotal_amount")
+  totalAmount              Int         @map("total_amount")
+  status                   OrderStatus
+  active                   Boolean     @default(false)
+  paidAt                   DateTime?   @map("paid_at")
+  canceledAt               DateTime?   @map("canceled_at")
+  paymentErrorAt           DateTime?   @map("payment_error_at")
+  totalRefundedAt          DateTime?   @map("total_refunded_at")
+  parcialRefundedAt        DateTime?   @map("parcial_refunded_at")
+  updatedAt                DateTime?   @updatedAt @map("updated_at")
+  createdAt                DateTime?   @default(now()) @map("created_at")
 
   @@map("orders")
 }
 
 model OrdersItem {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id                     String        @id @default(cuid())
+  order                  String        @db.VarChar(255)
+  product                String        @db.VarChar(255)
+  name                   String        @db.VarChar(255)
+  description            String?
+  amount                 Int
+  fromAmount             Int?          @map("from_amount")
+  toAmount               Int           @map("to_amount")
+  avatar                 String?       @db.VarChar(255)
+  quantity               Int
+  type                   PriceType
+  recurringIntervalCount String        @map("recurring_interval_count") @db.VarChar(255)
+  recurringIntervalType  RecurringType @map("recurring_interval_type")
+  updatedAt              DateTime?     @updatedAt @map("updated_at")
+  createdAt              DateTime?     @default(now()) @map("created_at")
 
   @@map("orders_items")
 }
 
 model Payment {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id                String        @id @default(cuid())
+  parent            String        @db.VarChar(255)
+  order             String        @db.VarChar(255)
+  amount            Int
+  externalPaymentId String        @db.VarChar(255)
+  paymentMethod     String        @db.VarChar(255)
+  status            PaymentStatus
+  active            Boolean       @default(false)
+  paidAt            DateTime?     @map("paid_at")
+  canceledAt        DateTime?     @map("canceled_at")
+  paymentErrorAt    DateTime?     @map("payment_error_at")
+  totalRefundedAt   DateTime?     @map("total_refunded_at")
+  parcialRefundedAt DateTime?     @map("parcial_refunded_at")
+  updatedAt         DateTime?     @updatedAt @map("updated_at")
+  createdAt         DateTime?     @default(now()) @map("created_at")
 
   @@map("payments")
 }
 
 model PaymentsMethod {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id                      String                 @id @default(cuid())
+  parent                  String                 @db.VarChar(255)
+  type                    PaymentsMethodType
+  provider                PaymentsMethodProvider
+  externalPaymentMethodId String                 @map("external_payment_method_id") @db.VarChar(255)
+  active                  Boolean                @default(true)
+  activatedAt             DateTime?              @default(now()) @map("activated_at")
+  deactivatedAt           DateTime?              @map("deactivated_at")
+  updatedAt               DateTime?              @updatedAt @map("updated_at")
+  createdAt               DateTime?              @default(now()) @map("created_at")
 
   @@map("payments_methods")
 }
 
 model Card {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id             String    @id @default(cuid())
+  parent         String    @db.VarChar(255)
+  externalCardId String    @map("external_card_id") @db.VarChar(255)
+  lastFourNumber String    @map("last_four_number") @db.VarChar(4)
+  brand          CardBrand
+  default        Boolean   @default(false)
+  updatedAt      DateTime? @updatedAt @map("updated_at")
+  createdAt      DateTime? @default(now()) @map("created_at")
 
   @@map("cards")
 }
@@ -197,7 +395,6 @@ model Card {
 model Cart {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
-  name      String
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -207,7 +404,8 @@ model Cart {
 model CartsItem {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
-  name      String
+  price     String    @db.VarChar(255)
+  quantity  Int       @default(1)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -215,19 +413,36 @@ model CartsItem {
 }
 
 model Plan {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id                           String        @id @default(cuid())
+  parent                       String        @db.VarChar(255)
+  name                         String        @db.VarChar(255)
+  type                         PlanType
+  checkoutVisible              Boolean       @default(false) @map("checkout_visible")
+  status                       PlanStatus
+  recurringInterval            Int           @map("recurring_interval")
+  recurringType                RecurringType @map("recurring_type")
+  hasCustomDomain              Boolean       @default(false) @map("has_custom_domain")
+  hasCustomSite                Boolean       @default(false) @map("has_custom_site")
+  quantityCourses              Int           @map("quantity_courses")
+  quantityInstructorPerCourses Int           @map("quantity_instructor_per_courses")
+  quantityClassroomsPerCourses Int           @map("quantity_classrooms_per_courses")
+  quantityModulesPerClassrooms Int           @map("quantity_modules_per_classrooms")
+  quantityVideosPerModules     Int           @map("quantity_videos_per_modules")
+  salesCommissionPercentage    Int           @map("sales_commission_percentage")
+  active                       Boolean       @default(true)
+  canceledAt                   DateTime?     @map("canceled_at")
+  startAt                      DateTime?     @map("start_at")
+  endAt                        DateTime?     @map("end_at")
+  sendRenewEmailAt             DateTime?     @map("send_renew_email_at")
+  updatedAt                    DateTime?     @updatedAt @map("updated_at")
+  createdAt                    DateTime?     @default(now()) @map("created_at")
 
   @@map("plans")
 }
 
 model Image {
   id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
+  slug      String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -235,19 +450,24 @@ model Image {
 }
 
 model Video {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id          String      @id @default(cuid())
+  slug        String      @db.VarChar(255)
+  name        String      @db.VarChar(255)
+  description String?
+  poster      String?     @db.VarChar(255)
+  duration    Int?
+  status      VideoStatus
+  active      Boolean     @default(false)
+  updatedAt   DateTime?   @updatedAt @map("updated_at")
+  createdAt   DateTime?   @default(now()) @map("created_at")
 
   @@map("videos")
 }
 
 model VideosAuthor {
   id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
+  video     String    @db.VarChar(255)
+  author    String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -257,7 +477,7 @@ model VideosAuthor {
 model Module {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
-  name      String
+  name      String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -266,8 +486,8 @@ model Module {
 
 model ModulesVideo {
   id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
+  module    String    @db.VarChar(255)
+  video     String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -275,29 +495,33 @@ model ModulesVideo {
 }
 
 model Course {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id          String    @id @default(cuid())
+  parent      String    @db.VarChar(255)
+  name        String    @db.VarChar(255)
+  description String?
+  avatar      String?   @db.VarChar(255)
+  active      Boolean   @default(true)
+  canceledAt  DateTime? @map("canceled_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  createdAt   DateTime? @default(now()) @map("created_at")
 
   @@map("courses")
 }
 
 model CoursesInstructor {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id         String    @id @default(cuid())
+  course     String    @db.VarChar(255)
+  instructor String    @db.VarChar(255)
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+  createdAt  DateTime? @default(now()) @map("created_at")
 
   @@map("courses_instructors")
 }
 
 model CoursesStudent {
   id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
+  course    String    @db.VarChar(255)
+  student   String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -305,19 +529,22 @@ model CoursesStudent {
 }
 
 model Classroom {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id                    String    @id @default(cuid())
+  parent                String    @db.VarChar(255)
+  name                  String    @db.VarChar(255)
+  description           String?
+  hasAccessToAllModules Boolean   @default(true) @map("has_access_to_all_modules")
+  active                Boolean   @default(true)
+  updatedAt             DateTime? @updatedAt @map("updated_at")
+  createdAt             DateTime? @default(now()) @map("created_at")
 
   @@map("classrooms")
 }
 
 model ClassroomsStudent {
   id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
+  classroom String    @db.VarChar(255)
+  student   String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -325,29 +552,34 @@ model ClassroomsStudent {
 }
 
 model ClassroomsEnrollment {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id         String                     @id @default(cuid())
+  classroom  String                     @db.VarChar(255)
+  student    String                     @db.VarChar(255)
+  status     ClassroomsEnrollmentStatus
+  startAt    DateTime?                  @map("start_at")
+  endAt      DateTime?                  @map("end_at")
+  canceledAt DateTime?                  @map("canceled_at")
+  active     Boolean                    @default(true)
+  updatedAt  DateTime?                  @updatedAt @map("updated_at")
+  createdAt  DateTime?                  @default(now()) @map("created_at")
 
   @@map("classrooms_enrollments")
 }
 
 model ClassroomsInstructor {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id         String    @id @default(cuid())
+  classroom  String    @db.VarChar(255)
+  instructor String    @db.VarChar(255)
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+  createdAt  DateTime? @default(now()) @map("created_at")
 
   @@map("classrooms_instructors")
 }
 
 model ClassroomsModule {
   id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
+  classroom String    @db.VarChar(255)
+  module    String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
 
@@ -355,21 +587,37 @@ model ClassroomsModule {
 }
 
 model Address {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id         String    @id @default(cuid())
+  parent     String    @db.VarChar(255)
+  default    Boolean   @default(false)
+  street     String    @db.VarChar(255)
+  complement String    @db.VarChar(255)
+  number     String    @db.VarChar(255)
+  city       String    @db.VarChar(255)
+  country    String    @db.VarChar(255)
+  state      String    @db.VarChar(255)
+  postalCode String    @map("postal_code") @db.VarChar(255)
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+  createdAt  DateTime? @default(now()) @map("created_at")
 
   @@map("addresses")
 }
 
 model Phone {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
+  id             String      @id @default(cuid())
+  parent         String      @db.VarChar(255)
+  fullnumber     String      @db.VarChar(255)
+  countryCode    String      @map("country_code") @db.VarChar(255)
+  areaCode       String      @map("area_code") @db.VarChar(255)
+  number         String      @db.VarChar(255)
+  validationCode String      @map("validation_code") @db.VarChar(255)
+  status         PhoneStatus
+  default        Boolean     @default(false)
+  active         Boolean     @default(false)
+  activatedAt    DateTime?   @map("activated_at")
+  validatedAt    DateTime?   @map("validated_at")
+  updatedAt      DateTime?   @updatedAt @map("updated_at")
+  createdAt      DateTime?   @default(now()) @map("created_at")
 
   @@map("phones")
 }

@@ -1,5 +1,9 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { convertToISOTimestamp, createServiceId } from '@stokei/nestjs';
+import {
+  convertToISODateString,
+  convertToISOTimestamp,
+  createServiceId
+} from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { AccessCreatedEvent } from '@/events/implements/accesses/access-created.event';
@@ -15,10 +19,10 @@ export interface IAccessModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly active?: boolean;
-  readonly expiresIn: string;
-  readonly canceledAt?: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly expiresIn: Date | string;
+  readonly canceledAt?: Date | string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class AccessModel extends AggregateRoot {
@@ -48,10 +52,10 @@ export class AccessModel extends AggregateRoot {
     this.refreshToken = data.refreshToken;
     this.parent = data.parent;
     this.active = isActive;
-    this.expiresIn = data.expiresIn;
-    this.canceledAt = data.canceledAt;
-    this.updatedAt = data.updatedAt;
-    this.createdAt = data.createdAt;
+    this.expiresIn = convertToISODateString(data.expiresIn);
+    this.canceledAt = convertToISODateString(data.canceledAt);
+    this.updatedAt = convertToISODateString(data.updatedAt);
+    this.createdAt = convertToISODateString(data.createdAt);
   }
 
   createdAccess(account: AccountModel) {

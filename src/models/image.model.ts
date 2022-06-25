@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { ImageCreatedEvent } from '@/events/implements/images/image-created.event';
@@ -9,16 +9,14 @@ import { ImageUpdatedEvent } from '@/events/implements/images/image-updated.even
 export interface IImageModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly parent: string;
-  readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly path: string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class ImageModel extends AggregateRoot {
   readonly id: string;
-  readonly parent: string;
-  readonly name: string;
+  readonly path: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IImageModelData) {
@@ -29,8 +27,7 @@ export class ImageModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.IMAGES,
       id: data._id?.toString() || data.id
     });
-    this.parent = data.parent;
-    this.name = data.name;
+    this.path = data.path;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
   }

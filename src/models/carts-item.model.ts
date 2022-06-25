@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { CartsItemCreatedEvent } from '@/events/implements/carts-items/carts-item-created.event';
@@ -10,15 +10,17 @@ export interface ICartsItemModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
-  readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly price: string;
+  readonly quantity: number;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class CartsItemModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly name: string;
+  readonly price: string;
+  readonly quantity: number;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: ICartsItemModelData) {
@@ -30,7 +32,8 @@ export class CartsItemModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
-    this.name = data.name;
+    this.price = data.price;
+    this.quantity = data.quantity;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
   }

@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { VideosAuthorCreatedEvent } from '@/events/implements/videos-authors/videos-author-created.event';
@@ -9,16 +9,16 @@ import { VideosAuthorUpdatedEvent } from '@/events/implements/videos-authors/vid
 export interface IVideosAuthorModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly parent: string;
-  readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly video: string;
+  readonly author: string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class VideosAuthorModel extends AggregateRoot {
   readonly id: string;
-  readonly parent: string;
-  readonly name: string;
+  readonly video: string;
+  readonly author: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IVideosAuthorModelData) {
@@ -29,8 +29,8 @@ export class VideosAuthorModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.VIDEOS_AUTHORS,
       id: data._id?.toString() || data.id
     });
-    this.parent = data.parent;
-    this.name = data.name;
+    this.video = data.video;
+    this.author = data.author;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
   }

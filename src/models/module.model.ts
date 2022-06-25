@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { ModuleCreatedEvent } from '@/events/implements/modules/module-created.event';
@@ -11,8 +11,8 @@ export interface IModuleModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class ModuleModel extends AggregateRoot {

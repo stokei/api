@@ -338,7 +338,6 @@ CREATE TABLE "cards" (
 -- CreateTable
 CREATE TABLE "carts" (
     "id" TEXT NOT NULL,
-    "parent" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
 
@@ -389,7 +388,7 @@ CREATE TABLE "plans" (
 -- CreateTable
 CREATE TABLE "images" (
     "id" TEXT NOT NULL,
-    "slug" VARCHAR(255) NOT NULL,
+    "path" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
 
@@ -400,6 +399,7 @@ CREATE TABLE "images" (
 CREATE TABLE "videos" (
     "id" TEXT NOT NULL,
     "slug" VARCHAR(255) NOT NULL,
+    "path" VARCHAR(255) NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "description" TEXT,
     "poster" VARCHAR(255),

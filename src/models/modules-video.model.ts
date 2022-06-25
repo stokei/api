@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { ModulesVideoCreatedEvent } from '@/events/implements/modules-videos/modules-video-created.event';
@@ -9,16 +9,16 @@ import { ModulesVideoUpdatedEvent } from '@/events/implements/modules-videos/mod
 export interface IModulesVideoModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly parent: string;
-  readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly module: string;
+  readonly video: string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class ModulesVideoModel extends AggregateRoot {
   readonly id: string;
-  readonly parent: string;
-  readonly name: string;
+  readonly module: string;
+  readonly video: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IModulesVideoModelData) {
@@ -29,8 +29,8 @@ export class ModulesVideoModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.MODULES_VIDEOS,
       id: data._id?.toString() || data.id
     });
-    this.parent = data.parent;
-    this.name = data.name;
+    this.module = data.module;
+    this.video = data.video;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
   }

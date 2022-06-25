@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { AddressCreatedEvent } from '@/events/implements/addresses/address-created.event';
@@ -10,15 +10,29 @@ export interface IAddressModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
-  readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly default: boolean;
+  readonly street: string;
+  readonly complement: string;
+  readonly number: string;
+  readonly city: string;
+  readonly country: string;
+  readonly state: string;
+  readonly postalCode: string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class AddressModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly name: string;
+  readonly default: boolean;
+  readonly street: string;
+  readonly complement: string;
+  readonly number: string;
+  readonly city: string;
+  readonly country: string;
+  readonly state: string;
+  readonly postalCode: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IAddressModelData) {
@@ -30,7 +44,14 @@ export class AddressModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
-    this.name = data.name;
+    this.default = data.default;
+    this.street = data.street;
+    this.complement = data.complement;
+    this.number = data.number;
+    this.city = data.city;
+    this.country = data.country;
+    this.state = data.state;
+    this.postalCode = data.postalCode;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
   }

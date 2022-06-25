@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { CourseCreatedEvent } from '@/events/implements/courses/course-created.event';
@@ -11,6 +11,10 @@ export interface ICourseModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly name: string;
+  readonly description?: string;
+  readonly avatar?: string;
+  readonly active: boolean;
+  readonly canceledAt?: Date | string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
 }
@@ -19,6 +23,10 @@ export class CourseModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
   readonly name: string;
+  readonly description?: string;
+  readonly avatar?: string;
+  readonly active: boolean;
+  readonly canceledAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: ICourseModelData) {
@@ -31,6 +39,10 @@ export class CourseModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.name = data.name;
+    this.description = data.description;
+    this.avatar = data.avatar;
+    this.active = data.active;
+    this.canceledAt = convertToISODateString(data.canceledAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
   }

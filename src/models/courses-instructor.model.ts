@@ -1,5 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { CoursesInstructorCreatedEvent } from '@/events/implements/courses-instructors/courses-instructor-created.event';
@@ -9,16 +9,16 @@ import { CoursesInstructorUpdatedEvent } from '@/events/implements/courses-instr
 export interface ICoursesInstructorModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly parent: string;
-  readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly course: string;
+  readonly instructor: string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class CoursesInstructorModel extends AggregateRoot {
   readonly id: string;
-  readonly parent: string;
-  readonly name: string;
+  readonly course: string;
+  readonly instructor: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: ICoursesInstructorModelData) {
@@ -29,8 +29,8 @@ export class CoursesInstructorModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.COURSES_INSTRUCTORS,
       id: data._id?.toString() || data.id
     });
-    this.parent = data.parent;
-    this.name = data.name;
+    this.course = data.course;
+    this.instructor = data.instructor;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
   }

@@ -13,6 +13,9 @@ RUN npm i
 # Copy the rest of the code
 COPY . . 
 
+# Generate prisma files
+RUN npm run db:generate
+
 # Invoke the build script to transpile ts code to js
 RUN npm run build
 

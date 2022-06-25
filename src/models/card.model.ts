@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { CardBrand } from '@/enums/card-brand.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { CardCreatedEvent } from '@/events/implements/cards/card-created.event';
 import { CardRemovedEvent } from '@/events/implements/cards/card-removed.event';
@@ -10,15 +11,21 @@ export interface ICardModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
-  readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly externalCardId: string;
+  readonly lastFourNumber: string;
+  readonly brand: CardBrand;
+  readonly default: boolean;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class CardModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly name: string;
+  readonly externalCardId: string;
+  readonly lastFourNumber: string;
+  readonly brand: CardBrand;
+  readonly default: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: ICardModelData) {
@@ -30,7 +37,10 @@ export class CardModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
-    this.name = data.name;
+    this.externalCardId = data.externalCardId;
+    this.lastFourNumber = data.lastFourNumber;
+    this.brand = data.brand;
+    this.default = data.default;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
   }

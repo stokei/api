@@ -1,7 +1,8 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { createServiceId } from '@stokei/nestjs';
+import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { VideoStatus } from '@/enums/video-status.enum';
 import { VideoCreatedEvent } from '@/events/implements/videos/video-created.event';
 import { VideoRemovedEvent } from '@/events/implements/videos/video-removed.event';
 import { VideoUpdatedEvent } from '@/events/implements/videos/video-updated.event';
@@ -9,16 +10,28 @@ import { VideoUpdatedEvent } from '@/events/implements/videos/video-updated.even
 export interface IVideoModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly parent: string;
+  readonly slug: string;
+  readonly path: string;
   readonly name: string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly description?: string;
+  readonly poster?: string;
+  readonly duration?: number;
+  readonly status: VideoStatus;
+  readonly active: boolean;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
 }
 
 export class VideoModel extends AggregateRoot {
   readonly id: string;
-  readonly parent: string;
+  readonly slug: string;
+  readonly path: string;
   readonly name: string;
+  readonly description?: string;
+  readonly poster?: string;
+  readonly duration?: number;
+  readonly status: VideoStatus;
+  readonly active: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IVideoModelData) {
@@ -29,8 +42,14 @@ export class VideoModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.VIDEOS,
       id: data._id?.toString() || data.id
     });
-    this.parent = data.parent;
+    this.slug = data.slug;
+    this.path = data.path;
     this.name = data.name;
+    this.description = data.description;
+    this.poster = data.poster;
+    this.duration = data.duration;
+    this.status = data.status;
+    this.active = this.status === VideoStatus.ACTIVE || data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
   }

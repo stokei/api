@@ -21,7 +21,7 @@ export interface IOrdersItemModelData {
   readonly avatar?: string;
   readonly quantity: number;
   readonly type: PriceType;
-  readonly recurringIntervalCount: string;
+  readonly recurringIntervalCount: number;
   readonly recurringIntervalType: RecurringType;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
@@ -39,7 +39,7 @@ export class OrdersItemModel extends AggregateRoot {
   readonly avatar?: string;
   readonly quantity: number;
   readonly type: PriceType;
-  readonly recurringIntervalCount: string;
+  readonly recurringIntervalCount: number;
   readonly recurringIntervalType: RecurringType;
   readonly updatedAt?: string;
   readonly createdAt?: string;

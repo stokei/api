@@ -10,8 +10,8 @@ export class ClassroomsInstructorModelMock extends ClassroomsInstructorModel {
   constructor(data?: Partial<IClassroomsInstructorModelData>) {
     super({
       _id: nanoid(),
-      name: data?.name ?? 'ClassroomsInstructor Name',
-      parent: data?.parent ?? 'anyParent',
+      classroom: data?.classroom ?? 'classrooms.anyClassroom',
+      instructor: data?.instructor ?? 'accounts.anyInstructor',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null
     });

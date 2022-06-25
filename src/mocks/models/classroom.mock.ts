@@ -7,8 +7,11 @@ export class ClassroomModelMock extends ClassroomModel {
   constructor(data?: Partial<IClassroomModelData>) {
     super({
       _id: nanoid(),
-      name: data?.name ?? 'Classroom Name',
       parent: data?.parent ?? 'anyParent',
+      name: data?.name ?? 'Classroom Name',
+      description: data?.description ?? 'Classroom Name',
+      hasAccessToAllModules: data?.hasAccessToAllModules ?? true,
+      active: data?.active ?? true,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null
     });

@@ -13,8 +13,8 @@ export interface IOrderModelData {
   readonly project: string;
   readonly cart: string;
   readonly customer: string;
-  readonly salesComissionPercentage: string;
-  readonly salesComissionAmount: string;
+  readonly salesComissionPercentage: number;
+  readonly salesComissionAmount: number;
   readonly currency: string;
   readonly amount: number;
   readonly discountAmount: number;
@@ -36,8 +36,8 @@ export class OrderModel extends AggregateRoot {
   readonly project: string;
   readonly cart: string;
   readonly customer: string;
-  readonly salesComissionPercentage: string;
-  readonly salesComissionAmount: string;
+  readonly salesComissionPercentage: number;
+  readonly salesComissionAmount: number;
   readonly currency: string;
   readonly amount: number;
   readonly discountAmount: number;

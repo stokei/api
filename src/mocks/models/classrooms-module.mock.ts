@@ -10,8 +10,8 @@ export class ClassroomsModuleModelMock extends ClassroomsModuleModel {
   constructor(data?: Partial<IClassroomsModuleModelData>) {
     super({
       _id: nanoid(),
-      name: data?.name ?? 'ClassroomsModule Name',
-      parent: data?.parent ?? 'anyParent',
+      classroom: data?.classroom ?? 'classrooms.anyClassroom',
+      module: data?.module ?? 'modules.anyModule',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null
     });

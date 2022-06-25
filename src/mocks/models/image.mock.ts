@@ -7,8 +7,7 @@ export class ImageModelMock extends ImageModel {
   constructor(data?: Partial<IImageModelData>) {
     super({
       _id: nanoid(),
-      name: data?.name ?? 'Image Name',
-      parent: data?.parent ?? 'anyParent',
+      path: data?.path ?? '/image/MY_IMAGE_ID',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null
     });

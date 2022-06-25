@@ -10,8 +10,8 @@ export class ModulesVideoModelMock extends ModulesVideoModel {
   constructor(data?: Partial<IModulesVideoModelData>) {
     super({
       _id: nanoid(),
-      name: data?.name ?? 'ModulesVideo Name',
-      parent: data?.parent ?? 'anyParent',
+      module: data?.module ?? 'modules.anyModule',
+      video: data?.video ?? 'videos.anyVideo',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null
     });

@@ -5,7 +5,6 @@ export * from './card.entity';
 export * from './cart.entity';
 export * from './carts-item.entity';
 export * from './classroom.entity';
-export * from './classrooms-enrollment.entity';
 export * from './classrooms-instructor.entity';
 export * from './classrooms-module.entity';
 export * from './classrooms-student.entity';
@@ -28,8 +27,8 @@ export * from './plan.entity';
 export * from './price.entity';
 export * from './product.entity';
 export * from './project.entity';
-export * from './projects-member.entity';
 export * from './site.entity';
+export * from './subscription.entity';
 export * from './video.entity';
 export * from './videos-author.entity';
 

@@ -3,7 +3,6 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { PlanStatus } from '@/enums/plan-status.enum';
 import { PlanType } from '@/enums/plan-type.enum';
-import { RecurringType } from '@/enums/recurring-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PlanCreatedEvent } from '@/events/implements/plans/plan-created.event';
 import { PlanRemovedEvent } from '@/events/implements/plans/plan-removed.event';
@@ -17,8 +16,6 @@ export interface IPlanModelData {
   readonly type: PlanType;
   readonly checkoutVisible: boolean;
   readonly status: PlanStatus;
-  readonly recurringInterval: number;
-  readonly recurringType: RecurringType;
   readonly hasCustomDomain: boolean;
   readonly hasCustomSite: boolean;
   readonly quantityCourses: number;
@@ -29,9 +26,6 @@ export interface IPlanModelData {
   readonly salesCommissionPercentage: number;
   readonly active: boolean;
   readonly canceledAt: Date | string;
-  readonly startAt: Date | string;
-  readonly endAt: Date | string;
-  readonly sendRenewEmailAt: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
 }
@@ -43,8 +37,6 @@ export class PlanModel extends AggregateRoot {
   readonly type: PlanType;
   readonly checkoutVisible: boolean;
   readonly status: PlanStatus;
-  readonly recurringInterval: number;
-  readonly recurringType: RecurringType;
   readonly hasCustomDomain: boolean;
   readonly hasCustomSite: boolean;
   readonly quantityCourses: number;
@@ -55,9 +47,6 @@ export class PlanModel extends AggregateRoot {
   readonly salesCommissionPercentage: number;
   readonly active: boolean;
   readonly canceledAt?: string;
-  readonly startAt?: string;
-  readonly endAt?: string;
-  readonly sendRenewEmailAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   constructor(data: IPlanModelData) {
@@ -73,8 +62,6 @@ export class PlanModel extends AggregateRoot {
     this.type = data.type;
     this.checkoutVisible = data.checkoutVisible;
     this.status = data.status;
-    this.recurringInterval = data.recurringInterval;
-    this.recurringType = data.recurringType;
     this.hasCustomDomain = data.hasCustomDomain;
     this.hasCustomSite = data.hasCustomSite;
     this.quantityCourses = data.quantityCourses;
@@ -85,9 +72,6 @@ export class PlanModel extends AggregateRoot {
     this.salesCommissionPercentage = data.salesCommissionPercentage;
     this.active = data.active;
     this.canceledAt = convertToISODateString(data.canceledAt);
-    this.startAt = convertToISODateString(data.startAt);
-    this.endAt = convertToISODateString(data.endAt);
-    this.sendRenewEmailAt = convertToISODateString(data.sendRenewEmailAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
   }

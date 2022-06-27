@@ -5,7 +5,6 @@ import { CardsQueries } from './cards';
 import { CartsQueries } from './carts';
 import { CartsItemsQueries } from './carts-items';
 import { ClassroomsQueries } from './classrooms';
-import { ClassroomsEnrollmentsQueries } from './classrooms-enrollments';
 import { ClassroomsInstructorsQueries } from './classrooms-instructors';
 import { ClassroomsModulesQueries } from './classrooms-modules';
 import { ClassroomsStudentsQueries } from './classrooms-students';
@@ -27,8 +26,8 @@ import { PlansQueries } from './plans';
 import { PricesQueries } from './prices';
 import { ProductsQueries } from './products';
 import { ProjectsQueries } from './projects';
-import { ProjectsMembersQueries } from './projects-members';
 import { SitesQueries } from './sites';
+import { SubscriptionsQueries } from './subscriptions';
 import { VideosQueries } from './videos';
 import { VideosAuthorsQueries } from './videos-authors';
 
@@ -36,7 +35,6 @@ export const Queries = [
   ...AccountsQueries,
   ...AccessesQueries,
   ...ProjectsQueries,
-  ...ProjectsMembersQueries,
   ...SitesQueries,
   ...DomainsQueries,
   ...CurrenciesQueries,
@@ -61,7 +59,7 @@ export const Queries = [
   ...CoursesStudentsQueries,
   ...ClassroomsQueries,
   ...ClassroomsStudentsQueries,
-  ...ClassroomsEnrollmentsQueries,
+  ...SubscriptionsQueries,
   ...ClassroomsInstructorsQueries,
   ...ClassroomsModulesQueries,
   ...AddressesQueries,

@@ -5,7 +5,6 @@ import { CardEventsHandlers } from './cards';
 import { CartEventsHandlers } from './carts';
 import { CartsItemEventsHandlers } from './carts-items';
 import { ClassroomEventsHandlers } from './classrooms';
-import { ClassroomsEnrollmentEventsHandlers } from './classrooms-enrollments';
 import { ClassroomsInstructorEventsHandlers } from './classrooms-instructors';
 import { ClassroomsModuleEventsHandlers } from './classrooms-modules';
 import { ClassroomsStudentEventsHandlers } from './classrooms-students';
@@ -28,8 +27,8 @@ import { PlanEventsHandlers } from './plans';
 import { PriceEventsHandlers } from './prices';
 import { ProductEventsHandlers } from './products';
 import { ProjectEventsHandlers } from './projects';
-import { ProjectsMemberEventsHandlers } from './projects-members';
 import { SiteEventsHandlers } from './sites';
+import { SubscriptionEventsHandlers } from './subscriptions';
 import { VideoEventsHandlers } from './videos';
 import { VideosAuthorEventsHandlers } from './videos-authors';
 
@@ -37,7 +36,6 @@ export const EventsHandlers = [
   ...AccountEventsHandlers,
   ...AccessEventsHandlers,
   ...ProjectEventsHandlers,
-  ...ProjectsMemberEventsHandlers,
   ...SiteEventsHandlers,
   ...DomainEventsHandlers,
   ...CurrencyEventsHandlers,
@@ -63,7 +61,7 @@ export const EventsHandlers = [
   ...CoursesStudentEventsHandlers,
   ...ClassroomEventsHandlers,
   ...ClassroomsStudentEventsHandlers,
-  ...ClassroomsEnrollmentEventsHandlers,
+  ...SubscriptionEventsHandlers,
   ...ClassroomsInstructorEventsHandlers,
   ...ClassroomsModuleEventsHandlers,
   ...AddressEventsHandlers,

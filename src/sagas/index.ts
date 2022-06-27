@@ -5,7 +5,6 @@ import { CardsSagas } from './cards.saga';
 import { CartsSagas } from './carts.saga';
 import { CartsItemsSagas } from './carts-items.saga';
 import { ClassroomsSagas } from './classrooms.saga';
-import { ClassroomsEnrollmentsSagas } from './classrooms-enrollments.saga';
 import { ClassroomsInstructorsSagas } from './classrooms-instructors.saga';
 import { ClassroomsModulesSagas } from './classrooms-modules.saga';
 import { ClassroomsStudentsSagas } from './classrooms-students.saga';
@@ -28,8 +27,8 @@ import { PlansSagas } from './plans.saga';
 import { PricesSagas } from './prices.saga';
 import { ProductsSagas } from './products.saga';
 import { ProjectsSagas } from './projects.saga';
-import { ProjectsMembersSagas } from './projects-members.saga';
 import { SitesSagas } from './sites.saga';
+import { SubscriptionsSagas } from './subscriptions.saga';
 import { VideosSagas } from './videos.saga';
 import { VideosAuthorsSagas } from './videos-authors.saga';
 
@@ -37,7 +36,6 @@ export const Sagas = [
   AccountsSagas,
   AccessesSagas,
   ProjectsSagas,
-  ProjectsMembersSagas,
   SitesSagas,
   DomainsSagas,
   CurrenciesSagas,
@@ -63,7 +61,7 @@ export const Sagas = [
   CoursesStudentsSagas,
   ClassroomsSagas,
   ClassroomsStudentsSagas,
-  ClassroomsEnrollmentsSagas,
+  SubscriptionsSagas,
   ClassroomsInstructorsSagas,
   ClassroomsModulesSagas,
   AddressesSagas,

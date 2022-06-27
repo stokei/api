@@ -82,6 +82,11 @@ enum PriceType {
   ONE_TIME
 }
 
+enum InventoryType {
+  INFINITE
+  FINITE
+}
+
 enum ProjectStatus {
   ACTIVE
   INACTIVE
@@ -111,7 +116,7 @@ enum PaymentStatus {
   PARCIAL_REFUNDED
 }
 
-enum ClassroomsEnrollmentStatus {
+enum SubscriptionStatus {
   ACTIVE
   FINISHED
   CANCELED
@@ -291,6 +296,7 @@ model Price {
   type                   PriceType
   recurringIntervalCount Int           @map("recurring_interval_count")
   recurringIntervalType  RecurringType @map("recurring_interval_type")
+  inventoryType          InventoryType @map("inventory_type")
   quantity               Int
   active                 Boolean       @default(true)
   updatedAt              DateTime?     @updatedAt @map("updated_at")
@@ -412,29 +418,24 @@ model CartsItem {
 }
 
 model Plan {
-  id                           String        @id @default(cuid())
-  parent                       String        @db.VarChar(255)
-  name                         String        @db.VarChar(255)
+  id                           String     @id @default(cuid())
+  parent                       String     @db.VarChar(255)
+  name                         String     @db.VarChar(255)
   type                         PlanType
-  checkoutVisible              Boolean       @default(false) @map("checkout_visible")
+  checkoutVisible              Boolean    @default(false) @map("checkout_visible")
   status                       PlanStatus
-  recurringInterval            Int           @map("recurring_interval")
-  recurringType                RecurringType @map("recurring_type")
-  hasCustomDomain              Boolean       @default(false) @map("has_custom_domain")
-  hasCustomSite                Boolean       @default(false) @map("has_custom_site")
-  quantityCourses              Int           @map("quantity_courses")
-  quantityInstructorPerCourses Int           @map("quantity_instructor_per_courses")
-  quantityClassroomsPerCourses Int           @map("quantity_classrooms_per_courses")
-  quantityModulesPerClassrooms Int           @map("quantity_modules_per_classrooms")
-  quantityVideosPerModules     Int           @map("quantity_videos_per_modules")
-  salesCommissionPercentage    Int           @map("sales_commission_percentage")
-  active                       Boolean       @default(true)
-  canceledAt                   DateTime?     @map("canceled_at")
-  startAt                      DateTime?     @map("start_at")
-  endAt                        DateTime?     @map("end_at")
-  sendRenewEmailAt             DateTime?     @map("send_renew_email_at")
-  updatedAt                    DateTime?     @updatedAt @map("updated_at")
-  createdAt                    DateTime?     @default(now()) @map("created_at")
+  hasCustomDomain              Boolean    @default(false) @map("has_custom_domain")
+  hasCustomSite                Boolean    @default(false) @map("has_custom_site")
+  quantityCourses              Int        @map("quantity_courses")
+  quantityInstructorPerCourses Int        @map("quantity_instructor_per_courses")
+  quantityClassroomsPerCourses Int        @map("quantity_classrooms_per_courses")
+  quantityModulesPerClassrooms Int        @map("quantity_modules_per_classrooms")
+  quantityVideosPerModules     Int        @map("quantity_videos_per_modules")
+  salesCommissionPercentage    Int        @map("sales_commission_percentage")
+  active                       Boolean    @default(true)
+  canceledAt                   DateTime?  @map("canceled_at")
+  updatedAt                    DateTime?  @updatedAt @map("updated_at")
+  createdAt                    DateTime?  @default(now()) @map("created_at")
 
   @@map("plans")
 }
@@ -551,19 +552,19 @@ model ClassroomsStudent {
   @@map("classrooms_students")
 }
 
-model ClassroomsEnrollment {
-  id         String                     @id @default(cuid())
-  classroom  String                     @db.VarChar(255)
-  student    String                     @db.VarChar(255)
-  status     ClassroomsEnrollmentStatus
-  startAt    DateTime?                  @map("start_at")
-  endAt      DateTime?                  @map("end_at")
-  canceledAt DateTime?                  @map("canceled_at")
-  active     Boolean                    @default(true)
-  updatedAt  DateTime?                  @updatedAt @map("updated_at")
-  createdAt  DateTime?                  @default(now()) @map("created_at")
+model Subscription {
+  id         String             @id @default(cuid())
+  product    String             @db.VarChar(255)
+  parent     String             @db.VarChar(255)
+  status     SubscriptionStatus
+  startAt    DateTime?          @map("start_at")
+  endAt      DateTime?          @map("end_at")
+  canceledAt DateTime?          @map("canceled_at")
+  active     Boolean            @default(true)
+  updatedAt  DateTime?          @updatedAt @map("updated_at")
+  createdAt  DateTime?          @default(now()) @map("created_at")
 
-  @@map("classrooms_enrollments")
+  @@map("subscriptions")
 }
 
 model ClassroomsInstructor {

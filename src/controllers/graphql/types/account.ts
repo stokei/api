@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
-import { AccountRole } from '@/controllers/graphql/enums/accounts/account-role';
-import { AccountStatus } from '@/controllers/graphql/enums/accounts/account-status';
+import { AccountRole } from '@/controllers/graphql/enums/account-role.enum';
+import { AccountStatus } from '@/controllers/graphql/enums/account-status.enum';
 
 @ObjectType()
 //@Directive('@key(fields: "id")')

@@ -28,7 +28,7 @@ export enum ServerStokeiApiIdPrefix {
   COURSES_STUDENTS = 'courses_students',
   CLASSROOMS = 'classrooms',
   CLASSROOMS_STUDENTS = 'classrooms_students',
-  CLASSROOMS_ENROLLMENTS = 'classrooms_enrollments',
+  SUBSCRIPTIONS = 'classrooms_enrollments',
   CLASSROOMS_INSTRUCTORS = 'classrooms_instructors',
   CLASSROOMS_MODULES = 'classrooms_modules',
   ADDRESSES = 'addresses',

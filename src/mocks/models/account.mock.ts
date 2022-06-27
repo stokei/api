@@ -30,6 +30,7 @@ export class AccountModelMock extends AccountModel {
       roles: data?.roles ?? [AccountRole.USER],
       parent: data?.parent ?? 'anyParent',
       avatar: data?.avatar ?? 'anyavatar',
+      active: data?.active ?? true,
       canceledAt: data?.canceledAt ?? null,
       forgotPasswordCode: data?.forgotPasswordCode ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),

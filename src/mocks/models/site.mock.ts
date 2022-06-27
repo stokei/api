@@ -7,8 +7,9 @@ export class SiteModelMock extends SiteModel {
   constructor(data?: Partial<ISiteModelData>) {
     super({
       _id: nanoid(),
-      name: data?.name ?? 'Site Name',
       parent: data?.parent ?? 'anyParent',
+      favicon: data?.favicon ?? null,
+      logo: data?.logo ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null
     });

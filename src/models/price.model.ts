@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
 import { RecurringType } from '@/enums/recurring-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
@@ -19,6 +20,7 @@ export interface IPriceModelData {
   readonly paymentMethod: string;
   readonly installments: number;
   readonly type: PriceType;
+  readonly inventoryType: InventoryType;
   readonly recurringIntervalCount: number;
   readonly recurringIntervalType: RecurringType;
   readonly quantity: number;
@@ -37,6 +39,7 @@ export class PriceModel extends AggregateRoot {
   readonly paymentMethod: string;
   readonly installments: number;
   readonly type: PriceType;
+  readonly inventoryType: InventoryType;
   readonly recurringIntervalCount: number;
   readonly recurringIntervalType: RecurringType;
   readonly quantity: number;
@@ -59,9 +62,11 @@ export class PriceModel extends AggregateRoot {
     this.paymentMethod = data.paymentMethod;
     this.installments = data.installments;
     this.type = data.type;
+    this.inventoryType = data.inventoryType;
     this.recurringIntervalCount = data.recurringIntervalCount;
     this.recurringIntervalType = data.recurringIntervalType;
-    this.quantity = data.quantity;
+    this.quantity =
+      this.inventoryType === InventoryType.INFINITE ? null : data.quantity;
     this.active = data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);

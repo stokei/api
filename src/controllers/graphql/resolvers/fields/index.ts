@@ -5,7 +5,6 @@ import { CardsFieldsResolvers } from './cards';
 import { CartsFieldsResolvers } from './carts';
 import { CartsItemsFieldsResolvers } from './carts-items';
 import { ClassroomsFieldsResolvers } from './classrooms';
-import { ClassroomsEnrollmentsFieldsResolvers } from './classrooms-enrollments';
 import { ClassroomsInstructorsFieldsResolvers } from './classrooms-instructors';
 import { ClassroomsModulesFieldsResolvers } from './classrooms-modules';
 import { ClassroomsStudentsFieldsResolvers } from './classrooms-students';
@@ -27,8 +26,8 @@ import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
 import { ProductsFieldsResolvers } from './products';
 import { ProjectsFieldsResolvers } from './projects';
-import { ProjectsMembersFieldsResolvers } from './projects-members';
 import { SitesFieldsResolvers } from './sites';
+import { SubscriptionsFieldsResolvers } from './subscriptions';
 import { VideosFieldsResolvers } from './videos';
 import { VideosAuthorsFieldsResolvers } from './videos-authors';
 
@@ -36,7 +35,6 @@ export const FieldsResolvers = [
   ...AccountsFieldsResolvers,
   ...AccessesFieldsResolvers,
   ...ProjectsFieldsResolvers,
-  ...ProjectsMembersFieldsResolvers,
   ...SitesFieldsResolvers,
   ...DomainsFieldsResolvers,
   ...CurrenciesFieldsResolvers,
@@ -61,7 +59,7 @@ export const FieldsResolvers = [
   ...CoursesStudentsFieldsResolvers,
   ...ClassroomsFieldsResolvers,
   ...ClassroomsStudentsFieldsResolvers,
-  ...ClassroomsEnrollmentsFieldsResolvers,
+  ...SubscriptionsFieldsResolvers,
   ...ClassroomsInstructorsFieldsResolvers,
   ...ClassroomsModulesFieldsResolvers,
   ...AddressesFieldsResolvers,

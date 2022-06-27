@@ -29,8 +29,8 @@ export interface IProjectModelData {
 export class ProjectModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly slug: string;
   readonly name: string;
+  readonly slug: string;
   readonly description?: string;
   readonly status: ProjectStatus;
   readonly avatar?: string;

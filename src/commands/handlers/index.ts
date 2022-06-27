@@ -5,7 +5,6 @@ import { CardCommandHandlers } from './cards';
 import { CartCommandHandlers } from './carts';
 import { CartsItemCommandHandlers } from './carts-items';
 import { ClassroomCommandHandlers } from './classrooms';
-import { ClassroomsEnrollmentCommandHandlers } from './classrooms-enrollments';
 import { ClassroomsInstructorCommandHandlers } from './classrooms-instructors';
 import { ClassroomsModuleCommandHandlers } from './classrooms-modules';
 import { ClassroomsStudentCommandHandlers } from './classrooms-students';
@@ -28,8 +27,8 @@ import { PlanCommandHandlers } from './plans';
 import { PriceCommandHandlers } from './prices';
 import { ProductCommandHandlers } from './products';
 import { ProjectCommandHandlers } from './projects';
-import { ProjectsMemberCommandHandlers } from './projects-members';
 import { SiteCommandHandlers } from './sites';
+import { SubscriptionCommandHandlers } from './subscriptions';
 import { VideoCommandHandlers } from './videos';
 import { VideosAuthorCommandHandlers } from './videos-authors';
 
@@ -37,7 +36,6 @@ export const CommandHandlers = [
   ...AccessCommandHandlers,
   ...AccountCommandHandlers,
   ...ProjectCommandHandlers,
-  ...ProjectsMemberCommandHandlers,
   ...SiteCommandHandlers,
   ...DomainCommandHandlers,
   ...CurrencyCommandHandlers,
@@ -63,7 +61,7 @@ export const CommandHandlers = [
   ...CoursesStudentCommandHandlers,
   ...ClassroomCommandHandlers,
   ...ClassroomsStudentCommandHandlers,
-  ...ClassroomsEnrollmentCommandHandlers,
+  ...SubscriptionCommandHandlers,
   ...ClassroomsInstructorCommandHandlers,
   ...ClassroomsModuleCommandHandlers,
   ...AddressCommandHandlers,

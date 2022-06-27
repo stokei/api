@@ -5,7 +5,6 @@ import { CardQueriesHandlers } from './cards';
 import { CartQueriesHandlers } from './carts';
 import { CartsItemQueriesHandlers } from './carts-items';
 import { ClassroomQueriesHandlers } from './classrooms';
-import { ClassroomsEnrollmentQueriesHandlers } from './classrooms-enrollments';
 import { ClassroomsInstructorQueriesHandlers } from './classrooms-instructors';
 import { ClassroomsModuleQueriesHandlers } from './classrooms-modules';
 import { ClassroomsStudentQueriesHandlers } from './classrooms-students';
@@ -28,8 +27,8 @@ import { PlanQueriesHandlers } from './plans';
 import { PriceQueriesHandlers } from './prices';
 import { ProductQueriesHandlers } from './products';
 import { ProjectQueriesHandlers } from './projects';
-import { ProjectsMemberQueriesHandlers } from './projects-members';
 import { SiteQueriesHandlers } from './sites';
+import { SubscriptionQueriesHandlers } from './subscriptions';
 import { VideoQueriesHandlers } from './videos';
 import { VideosAuthorQueriesHandlers } from './videos-authors';
 
@@ -37,7 +36,6 @@ export const QueriesHandlers = [
   ...AccountQueriesHandlers,
   ...AccessQueriesHandlers,
   ...ProjectQueriesHandlers,
-  ...ProjectsMemberQueriesHandlers,
   ...SiteQueriesHandlers,
   ...DomainQueriesHandlers,
   ...CurrencyQueriesHandlers,
@@ -63,7 +61,7 @@ export const QueriesHandlers = [
   ...CoursesStudentQueriesHandlers,
   ...ClassroomQueriesHandlers,
   ...ClassroomsStudentQueriesHandlers,
-  ...ClassroomsEnrollmentQueriesHandlers,
+  ...SubscriptionQueriesHandlers,
   ...ClassroomsInstructorQueriesHandlers,
   ...ClassroomsModuleQueriesHandlers,
   ...AddressQueriesHandlers,

@@ -5,7 +5,6 @@ import { CardsLoader } from './cards.loader';
 import { CartsLoader } from './carts.loader';
 import { CartsItemsLoader } from './carts-items.loader';
 import { ClassroomsLoader } from './classrooms.loader';
-import { ClassroomsEnrollmentsLoader } from './classrooms-enrollments.loader';
 import { ClassroomsInstructorsLoader } from './classrooms-instructors.loader';
 import { ClassroomsModulesLoader } from './classrooms-modules.loader';
 import { ClassroomsStudentsLoader } from './classrooms-students.loader';
@@ -28,8 +27,8 @@ import { PlansLoader } from './plans.loader';
 import { PricesLoader } from './prices.loader';
 import { ProductsLoader } from './products.loader';
 import { ProjectsLoader } from './projects.loader';
-import { ProjectsMembersLoader } from './projects-members.loader';
 import { SitesLoader } from './sites.loader';
+import { SubscriptionsLoader } from './subscriptions.loader';
 import { VideosLoader } from './videos.loader';
 import { VideosAuthorsLoader } from './videos-authors.loader';
 
@@ -37,7 +36,6 @@ export const Loaders = [
   AccountsLoader,
   AccessesLoader,
   ProjectsLoader,
-  ProjectsMembersLoader,
   SitesLoader,
   DomainsLoader,
   CurrenciesLoader,
@@ -63,7 +61,7 @@ export const Loaders = [
   CoursesStudentsLoader,
   ClassroomsLoader,
   ClassroomsStudentsLoader,
-  ClassroomsEnrollmentsLoader,
+  SubscriptionsLoader,
   ClassroomsInstructorsLoader,
   ClassroomsModulesLoader,
   AddressesLoader,

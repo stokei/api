@@ -6,7 +6,7 @@ import {
   WherePaginated
 } from '@stokei/nestjs';
 
-import { AccountRole } from '@/controllers/graphql/enums/accounts/account-role';
+import { AccountRole } from '@/controllers/graphql/enums/account-role.enum';
 import {
   OrderByDataFindAllAccountsDTO,
   WhereDataFindAllAccountsDTO

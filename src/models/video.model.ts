@@ -10,9 +10,9 @@ import { VideoUpdatedEvent } from '@/events/implements/videos/video-updated.even
 export interface IVideoModelData {
   readonly id?: string;
   readonly _id?: string;
+  readonly name: string;
   readonly slug: string;
   readonly path: string;
-  readonly name: string;
   readonly description?: string;
   readonly poster?: string;
   readonly duration?: number;
@@ -24,9 +24,9 @@ export interface IVideoModelData {
 
 export class VideoModel extends AggregateRoot {
   readonly id: string;
+  readonly name: string;
   readonly slug: string;
   readonly path: string;
-  readonly name: string;
   readonly description?: string;
   readonly poster?: string;
   readonly duration?: number;

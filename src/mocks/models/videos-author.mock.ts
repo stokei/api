@@ -10,8 +10,8 @@ export class VideosAuthorModelMock extends VideosAuthorModel {
   constructor(data?: Partial<IVideosAuthorModelData>) {
     super({
       _id: nanoid(),
-      name: data?.name ?? 'VideosAuthor Name',
-      parent: data?.parent ?? 'anyParent',
+      video: data?.video ?? 'videos.dsadhiad546asd',
+      author: data?.author ?? 'VideosAuthor Name',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null
     });

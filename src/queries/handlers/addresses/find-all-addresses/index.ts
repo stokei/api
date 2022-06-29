@@ -4,6 +4,7 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
@@ -58,7 +59,15 @@ export class FindAllAddressesQueryHandler
       return {
         [operator]: {
           parent: cleanWhereDataString(operatorData.parent),
-          name: cleanWhereDataSearch(operatorData.name),
+          default: cleanWhereDataBoolean(operatorData.default),
+          street: cleanWhereDataSearch(operatorData.street),
+          complement: cleanWhereDataSearch(operatorData.complement),
+          city: cleanWhereDataSearch(operatorData.city),
+          country: cleanWhereDataSearch(operatorData.country),
+          state: cleanWhereDataSearch(operatorData.state),
+          postalCode: cleanWhereDataString(operatorData.postalCode),
+          updatedBy: cleanWhereDataString(operatorData.updatedBy),
+          createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:
             operatorData.ids?.length > 0
               ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
@@ -78,7 +87,14 @@ export class FindAllAddressesQueryHandler
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        name: cleanSortValue(query.orderBy?.name),
+        parent: cleanSortValue(query.orderBy?.parent),
+        default: cleanSortValue(query.orderBy?.default),
+        street: cleanSortValue(query.orderBy?.street),
+        complement: cleanSortValue(query.orderBy?.complement),
+        city: cleanSortValue(query.orderBy?.city),
+        country: cleanSortValue(query.orderBy?.country),
+        state: cleanSortValue(query.orderBy?.state),
+        postalCode: cleanSortValue(query.orderBy?.postalCode),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

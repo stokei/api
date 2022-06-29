@@ -1,3 +1,4 @@
+import { UnauthorizedException } from '@nestjs/common';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
@@ -39,7 +40,9 @@ export class RemoveAddressCommandHandler
     if (!address) {
       throw new AddressNotFoundException();
     }
-
+    if (address.parent !== data.where.removedBy) {
+      throw new UnauthorizedException();
+    }
     const removed = await this.removeAddressRepository.execute({
       where: {
         ...data.where,

@@ -26,8 +26,14 @@ export class CountAddressesRepository
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
         parent: prismaMapper.toWhereData(operatorData.parent),
+        default: prismaMapper.toWhereData(operatorData.default),
+        street: prismaMapper.toWhereDataSearch(operatorData.street),
+        complement: prismaMapper.toWhereDataSearch(operatorData.complement),
+        city: prismaMapper.toWhereDataSearch(operatorData.city),
+        country: prismaMapper.toWhereDataSearch(operatorData.country),
+        state: prismaMapper.toWhereDataSearch(operatorData.state),
+        postalCode: prismaMapper.toWhereData(operatorData.postalCode),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy)
       };

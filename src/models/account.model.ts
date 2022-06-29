@@ -34,6 +34,8 @@ export interface IAccountModelData {
   readonly canceledAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   readonly roles: AccountRole[];
 }
 
@@ -61,6 +63,8 @@ export class AccountModel extends AggregateRoot {
   readonly canceledAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   readonly roles: AccountRole[];
   constructor(data: IAccountModelData) {
     super();
@@ -87,6 +91,8 @@ export class AccountModel extends AggregateRoot {
     this.canceledAt = convertToISODateString(data.canceledAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
     this.roles = data.roles;
   }
 

@@ -17,6 +17,8 @@ export interface ICurrencyModelData {
   readonly deactivatedAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class CurrencyModel extends AggregateRoot {
@@ -29,6 +31,8 @@ export class CurrencyModel extends AggregateRoot {
   readonly deactivatedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: ICurrencyModelData) {
     super();
 
@@ -45,6 +49,8 @@ export class CurrencyModel extends AggregateRoot {
     this.deactivatedAt = convertToISODateString(data.deactivatedAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdCurrency() {

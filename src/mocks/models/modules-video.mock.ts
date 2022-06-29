@@ -13,7 +13,9 @@ export class ModulesVideoModelMock extends ModulesVideoModel {
       module: data?.module ?? 'modules.anyModule',
       video: data?.video ?? 'videos.anyVideo',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

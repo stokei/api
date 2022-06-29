@@ -27,6 +27,9 @@ export class RemoveClassroomsStudentCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const classroomsStudentId = splitServiceId(
       data.where?.classroomsStudentId
     )?.id;
@@ -44,6 +47,7 @@ export class RemoveClassroomsStudentCommandHandler
 
     const removed = await this.removeClassroomsStudentRepository.execute({
       where: {
+        ...data.where,
         classroomsStudentId
       }
     });
@@ -63,6 +67,7 @@ export class RemoveClassroomsStudentCommandHandler
   ): RemoveClassroomsStudentCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         classroomsStudentId: cleanValue(command?.where?.classroomsStudentId)
       })
     });

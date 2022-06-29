@@ -1,4 +1,5 @@
 export interface RemoveProductWhereDTO {
+  removedBy: string;
   productId: string;
 }
 

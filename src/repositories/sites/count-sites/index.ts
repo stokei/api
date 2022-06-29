@@ -27,7 +27,9 @@ export class CountSitesRepository
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent)
+        parent: prismaMapper.toWhereData(operatorData.parent),
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
+        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy)
       };
     };
     return await this.model.site.count({

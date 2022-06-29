@@ -27,6 +27,9 @@ export class RemoveImageCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const imageId = splitServiceId(data.where?.imageId)?.id;
     if (!imageId) {
       throw new ParamNotFoundException('imageId');
@@ -39,6 +42,7 @@ export class RemoveImageCommandHandler
 
     const removed = await this.removeImageRepository.execute({
       where: {
+        ...data.where,
         imageId
       }
     });
@@ -55,6 +59,7 @@ export class RemoveImageCommandHandler
   private clearData(command: RemoveImageCommand): RemoveImageCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         imageId: cleanValue(command?.where?.imageId)
       })
     });

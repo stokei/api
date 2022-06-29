@@ -1,4 +1,5 @@
 export interface RemoveVideosAuthorWhereDTO {
+  removedBy: string;
   videosAuthorId: string;
 }
 

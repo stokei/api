@@ -13,7 +13,9 @@ export class ClassroomsStudentModelMock extends ClassroomsStudentModel {
       classroom: data?.classroom ?? 'classrooms.anyClassroom',
       student: data?.student ?? 'accounts.anyStudent',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

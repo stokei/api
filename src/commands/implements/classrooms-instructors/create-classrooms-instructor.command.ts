@@ -7,9 +7,11 @@ export class CreateClassroomsInstructorCommand
 {
   name: string;
   parent: string;
+  createdBy: string;
 
   constructor(data: CreateClassroomsInstructorDTO) {
     this.name = data.name;
     this.parent = data.parent;
+    this.createdBy = data.createdBy;
   }
 }

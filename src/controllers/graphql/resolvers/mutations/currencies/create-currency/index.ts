@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CreateCurrencyInput } from '@/controllers/graphql/inputs/currencies/create-currency.input';
 import { Currency } from '@/controllers/graphql/types/currency';
@@ -12,8 +12,14 @@ export class CreateCurrencyResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Currency)
-  async createCurrency(@Args('input') data: CreateCurrencyInput) {
-    const response = await this.createCurrencyService.execute(data);
+  async createCurrency(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: CreateCurrencyInput
+  ) {
+    const response = await this.createCurrencyService.execute({
+      ...data,
+      createdBy: currentAccountId
+    });
     return response;
   }
 }

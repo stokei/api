@@ -13,7 +13,9 @@ export class CoursesInstructorModelMock extends CoursesInstructorModel {
       course: data?.course ?? 'courses.anyCourse',
       instructor: data?.instructor ?? 'instructors.anyInstructor',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

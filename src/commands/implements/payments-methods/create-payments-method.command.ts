@@ -7,9 +7,11 @@ export class CreatePaymentsMethodCommand
 {
   name: string;
   parent: string;
+  createdBy: string;
 
   constructor(data: CreatePaymentsMethodDTO) {
     this.name = data.name;
     this.parent = data.parent;
+    this.createdBy = data.createdBy;
   }
 }

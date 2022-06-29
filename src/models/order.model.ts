@@ -29,6 +29,8 @@ export interface IOrderModelData {
   readonly parcialRefundedAt?: Date | string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class OrderModel extends AggregateRoot {
@@ -52,6 +54,8 @@ export class OrderModel extends AggregateRoot {
   readonly parcialRefundedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IOrderModelData) {
     super();
 
@@ -79,6 +83,8 @@ export class OrderModel extends AggregateRoot {
     this.parcialRefundedAt = convertToISODateString(data.parcialRefundedAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdOrder() {

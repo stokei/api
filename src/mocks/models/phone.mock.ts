@@ -20,7 +20,9 @@ export class PhoneModelMock extends PhoneModel {
       activatedAt: data?.activatedAt ?? null,
       validatedAt: data?.validatedAt ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

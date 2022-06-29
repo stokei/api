@@ -14,7 +14,9 @@ export class ColorModelMock extends ColorModel {
       type: data?.type ?? ColorType.PRIMARY,
       color: data?.color ?? '#123456',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

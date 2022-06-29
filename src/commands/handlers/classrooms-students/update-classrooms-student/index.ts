@@ -77,7 +77,8 @@ export class UpdateClassroomsStudentCommandHandler
         classroomsStudentId: cleanValue(command?.where?.classroomsStudentId)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name)
+        name: cleanValue(command?.data?.name),
+        updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });
   }

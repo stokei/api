@@ -1,4 +1,5 @@
 export interface RemovePriceWhereDTO {
+  removedBy: string;
   priceId: string;
 }
 

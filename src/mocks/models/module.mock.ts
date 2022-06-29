@@ -10,7 +10,9 @@ export class ModuleModelMock extends ModuleModel {
       name: data?.name ?? 'Module Name',
       parent: data?.parent ?? 'anyParent',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

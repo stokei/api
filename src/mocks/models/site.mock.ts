@@ -11,7 +11,9 @@ export class SiteModelMock extends SiteModel {
       favicon: data?.favicon ?? null,
       logo: data?.logo ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

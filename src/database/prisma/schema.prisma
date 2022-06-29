@@ -152,6 +152,8 @@ model Account {
   canceledAt         DateTime?     @map("canceled_at")
   updatedAt          DateTime?     @updatedAt @map("updated_at")
   createdAt          DateTime?     @default(now()) @map("created_at")
+  updatedBy          String?       @map("updated_by") @db.VarChar(255)
+  createdBy          String?       @map("created_by") @db.VarChar(255)
 
   @@map("accounts")
 }
@@ -164,6 +166,8 @@ model Access {
   canceledAt DateTime? @map("canceled_at")
   updatedAt  DateTime? @updatedAt @map("updated_at")
   createdAt  DateTime? @default(now()) @map("created_at")
+  updatedBy  String?   @map("updated_by") @db.VarChar(255)
+  createdBy  String?   @map("created_by") @db.VarChar(255)
 
   @@map("accesses")
 }
@@ -184,6 +188,8 @@ model Project {
   deactivatedAt DateTime?     @map("deactivated_at")
   updatedAt     DateTime?     @updatedAt @map("updated_at")
   createdAt     DateTime?     @default(now()) @map("created_at")
+  updatedBy     String?       @map("updated_by") @db.VarChar(255)
+  createdBy     String?       @map("created_by") @db.VarChar(255)
 
   @@map("projects")
 }
@@ -195,6 +201,8 @@ model ProjectsMember {
   roles     ProjectMemberRole[]
   updatedAt DateTime?           @updatedAt @map("updated_at")
   createdAt DateTime?           @default(now()) @map("created_at")
+  updatedBy String?             @map("updated_by") @db.VarChar(255)
+  createdBy String?             @map("created_by") @db.VarChar(255)
 
   @@map("projects_members")
 }
@@ -206,6 +214,8 @@ model Site {
   logo      String?   @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("sites")
 }
@@ -223,6 +233,8 @@ model Domain {
   activatedAt DateTime?    @updatedAt @map("activated_at")
   updatedAt   DateTime?    @updatedAt @map("updated_at")
   createdAt   DateTime?    @default(now()) @map("created_at")
+  updatedBy   String?      @map("updated_by") @db.VarChar(255)
+  createdBy   String?      @map("created_by") @db.VarChar(255)
 
   @@map("domains")
 }
@@ -237,6 +249,8 @@ model Currency {
   deactivatedAt DateTime? @map("deactivated_at")
   updatedAt     DateTime? @updatedAt @map("updated_at")
   createdAt     DateTime? @default(now()) @map("created_at")
+  updatedBy     String?   @map("updated_by") @db.VarChar(255)
+  createdBy     String?   @map("created_by") @db.VarChar(255)
 
   @@map("currencies")
 }
@@ -250,6 +264,8 @@ model Language {
   deactivatedAt DateTime? @map("deactivated_at")
   updatedAt     DateTime? @updatedAt @map("updated_at")
   createdAt     DateTime? @default(now()) @map("created_at")
+  updatedBy     String?   @map("updated_by") @db.VarChar(255)
+  createdBy     String?   @map("created_by") @db.VarChar(255)
 
   @@map("languages")
 }
@@ -262,6 +278,8 @@ model Color {
   color     String    @db.VarChar(20)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("colors")
 }
@@ -280,6 +298,8 @@ model Product {
   deactivatedAt     DateTime? @map("deactivated_at")
   updatedAt         DateTime? @updatedAt @map("updated_at")
   createdAt         DateTime? @default(now()) @map("created_at")
+  updatedBy         String?   @map("updated_by") @db.VarChar(255)
+  createdBy         String?   @map("created_by") @db.VarChar(255)
 
   @@map("products")
 }
@@ -291,8 +311,6 @@ model Price {
   amount                 Int
   fromAmount             Int?          @map("from_amount")
   toAmount               Int           @map("to_amount")
-  paymentMethod          String        @map("payment_method") @db.VarChar(255)
-  installments           Int
   type                   PriceType
   recurringIntervalCount Int           @map("recurring_interval_count")
   recurringIntervalType  RecurringType @map("recurring_interval_type")
@@ -301,6 +319,8 @@ model Price {
   active                 Boolean       @default(true)
   updatedAt              DateTime?     @updatedAt @map("updated_at")
   createdAt              DateTime?     @default(now()) @map("created_at")
+  updatedBy              String?       @map("updated_by") @db.VarChar(255)
+  createdBy              String?       @map("created_by") @db.VarChar(255)
 
   @@map("prices")
 }
@@ -326,6 +346,8 @@ model Order {
   parcialRefundedAt        DateTime?   @map("parcial_refunded_at")
   updatedAt                DateTime?   @updatedAt @map("updated_at")
   createdAt                DateTime?   @default(now()) @map("created_at")
+  updatedBy                String?     @map("updated_by") @db.VarChar(255)
+  createdBy                String?     @map("created_by") @db.VarChar(255)
 
   @@map("orders")
 }
@@ -346,6 +368,8 @@ model OrdersItem {
   recurringIntervalType  RecurringType @map("recurring_interval_type")
   updatedAt              DateTime?     @updatedAt @map("updated_at")
   createdAt              DateTime?     @default(now()) @map("created_at")
+  updatedBy              String?       @map("updated_by") @db.VarChar(255)
+  createdBy              String?       @map("created_by") @db.VarChar(255)
 
   @@map("orders_items")
 }
@@ -366,6 +390,8 @@ model Payment {
   parcialRefundedAt DateTime?     @map("parcial_refunded_at")
   updatedAt         DateTime?     @updatedAt @map("updated_at")
   createdAt         DateTime?     @default(now()) @map("created_at")
+  updatedBy         String?       @map("updated_by") @db.VarChar(255)
+  createdBy         String?       @map("created_by") @db.VarChar(255)
 
   @@map("payments")
 }
@@ -381,6 +407,8 @@ model PaymentsMethod {
   deactivatedAt           DateTime?              @map("deactivated_at")
   updatedAt               DateTime?              @updatedAt @map("updated_at")
   createdAt               DateTime?              @default(now()) @map("created_at")
+  updatedBy               String?                @map("updated_by") @db.VarChar(255)
+  createdBy               String?                @map("created_by") @db.VarChar(255)
 
   @@map("payments_methods")
 }
@@ -394,6 +422,8 @@ model Card {
   default        Boolean   @default(false)
   updatedAt      DateTime? @updatedAt @map("updated_at")
   createdAt      DateTime? @default(now()) @map("created_at")
+  updatedBy      String?   @map("updated_by") @db.VarChar(255)
+  createdBy      String?   @map("created_by") @db.VarChar(255)
 
   @@map("cards")
 }
@@ -402,6 +432,8 @@ model Cart {
   id        String    @id @default(cuid())
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("carts")
 }
@@ -413,6 +445,8 @@ model CartsItem {
   quantity  Int       @default(1)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("carts_items")
 }
@@ -436,6 +470,8 @@ model Plan {
   canceledAt                   DateTime?  @map("canceled_at")
   updatedAt                    DateTime?  @updatedAt @map("updated_at")
   createdAt                    DateTime?  @default(now()) @map("created_at")
+  updatedBy                    String?    @map("updated_by") @db.VarChar(255)
+  createdBy                    String?    @map("created_by") @db.VarChar(255)
 
   @@map("plans")
 }
@@ -445,6 +481,8 @@ model Image {
   path      String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("images")
 }
@@ -461,6 +499,8 @@ model Video {
   active      Boolean     @default(false)
   updatedAt   DateTime?   @updatedAt @map("updated_at")
   createdAt   DateTime?   @default(now()) @map("created_at")
+  updatedBy   String?     @map("updated_by") @db.VarChar(255)
+  createdBy   String?     @map("created_by") @db.VarChar(255)
 
   @@map("videos")
 }
@@ -471,6 +511,8 @@ model VideosAuthor {
   author    String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("videos_authors")
 }
@@ -481,6 +523,8 @@ model Module {
   name      String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("modules")
 }
@@ -491,6 +535,8 @@ model ModulesVideo {
   video     String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("modules_videos")
 }
@@ -505,6 +551,8 @@ model Course {
   canceledAt  DateTime? @map("canceled_at")
   updatedAt   DateTime? @updatedAt @map("updated_at")
   createdAt   DateTime? @default(now()) @map("created_at")
+  updatedBy   String?   @map("updated_by") @db.VarChar(255)
+  createdBy   String?   @map("created_by") @db.VarChar(255)
 
   @@map("courses")
 }
@@ -515,6 +563,8 @@ model CoursesInstructor {
   instructor String    @db.VarChar(255)
   updatedAt  DateTime? @updatedAt @map("updated_at")
   createdAt  DateTime? @default(now()) @map("created_at")
+  updatedBy  String?   @map("updated_by") @db.VarChar(255)
+  createdBy  String?   @map("created_by") @db.VarChar(255)
 
   @@map("courses_instructors")
 }
@@ -525,6 +575,8 @@ model CoursesStudent {
   student   String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("courses_students")
 }
@@ -538,6 +590,8 @@ model Classroom {
   active                Boolean   @default(true)
   updatedAt             DateTime? @updatedAt @map("updated_at")
   createdAt             DateTime? @default(now()) @map("created_at")
+  updatedBy             String?   @map("updated_by") @db.VarChar(255)
+  createdBy             String?   @map("created_by") @db.VarChar(255)
 
   @@map("classrooms")
 }
@@ -548,6 +602,8 @@ model ClassroomsStudent {
   student   String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("classrooms_students")
 }
@@ -563,6 +619,8 @@ model Subscription {
   active     Boolean            @default(true)
   updatedAt  DateTime?          @updatedAt @map("updated_at")
   createdAt  DateTime?          @default(now()) @map("created_at")
+  updatedBy  String?            @map("updated_by") @db.VarChar(255)
+  createdBy  String?            @map("created_by") @db.VarChar(255)
 
   @@map("subscriptions")
 }
@@ -573,6 +631,8 @@ model ClassroomsInstructor {
   instructor String    @db.VarChar(255)
   updatedAt  DateTime? @updatedAt @map("updated_at")
   createdAt  DateTime? @default(now()) @map("created_at")
+  updatedBy  String?   @map("updated_by") @db.VarChar(255)
+  createdBy  String?   @map("created_by") @db.VarChar(255)
 
   @@map("classrooms_instructors")
 }
@@ -583,6 +643,8 @@ model ClassroomsModule {
   module    String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("classrooms_modules")
 }
@@ -592,7 +654,7 @@ model Address {
   parent     String    @db.VarChar(255)
   default    Boolean   @default(false)
   street     String    @db.VarChar(255)
-  complement String    @db.VarChar(255)
+  complement String?   @db.VarChar(255)
   number     String    @db.VarChar(255)
   city       String    @db.VarChar(255)
   country    String    @db.VarChar(255)
@@ -600,6 +662,8 @@ model Address {
   postalCode String    @map("postal_code") @db.VarChar(255)
   updatedAt  DateTime? @updatedAt @map("updated_at")
   createdAt  DateTime? @default(now()) @map("created_at")
+  updatedBy  String?   @map("updated_by") @db.VarChar(255)
+  createdBy  String?   @map("created_by") @db.VarChar(255)
 
   @@map("addresses")
 }
@@ -619,6 +683,8 @@ model Phone {
   validatedAt    DateTime?   @map("validated_at")
   updatedAt      DateTime?   @updatedAt @map("updated_at")
   createdAt      DateTime?   @default(now()) @map("created_at")
+  updatedBy      String?     @map("updated_by") @db.VarChar(255)
+  createdBy      String?     @map("created_by") @db.VarChar(255)
 
   @@map("phones")
 }

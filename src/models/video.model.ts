@@ -20,6 +20,8 @@ export interface IVideoModelData {
   readonly active: boolean;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class VideoModel extends AggregateRoot {
@@ -34,6 +36,8 @@ export class VideoModel extends AggregateRoot {
   readonly active: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IVideoModelData) {
     super();
 
@@ -52,6 +56,8 @@ export class VideoModel extends AggregateRoot {
     this.active = this.status === VideoStatus.ACTIVE || data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdVideo() {

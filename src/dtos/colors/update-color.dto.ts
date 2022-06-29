@@ -1,4 +1,5 @@
 export interface UpdateColorDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

@@ -17,6 +17,8 @@ export interface IColorModelData {
   readonly color: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class ColorModel extends AggregateRoot {
@@ -27,6 +29,8 @@ export class ColorModel extends AggregateRoot {
   readonly type: ColorType;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IColorModelData) {
     super();
 
@@ -41,6 +45,8 @@ export class ColorModel extends AggregateRoot {
     this.color = data.color;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdColor() {

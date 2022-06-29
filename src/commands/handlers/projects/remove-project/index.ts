@@ -27,6 +27,9 @@ export class RemoveProjectCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const projectId = splitServiceId(data.where?.projectId)?.id;
     if (!projectId) {
       throw new ParamNotFoundException('projectId');
@@ -39,6 +42,7 @@ export class RemoveProjectCommandHandler
 
     const removed = await this.removeProjectRepository.execute({
       where: {
+        ...data.where,
         projectId
       }
     });
@@ -55,6 +59,7 @@ export class RemoveProjectCommandHandler
   private clearData(command: RemoveProjectCommand): RemoveProjectCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         projectId: cleanValue(command?.where?.projectId)
       })
     });

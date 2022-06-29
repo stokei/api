@@ -65,7 +65,8 @@ export class UpdatePriceCommandHandler
         priceId: cleanValue(command?.where?.priceId)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name)
+        name: cleanValue(command?.data?.name),
+        updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });
   }

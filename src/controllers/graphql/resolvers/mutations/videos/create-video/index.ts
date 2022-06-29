@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CreateVideoInput } from '@/controllers/graphql/inputs/videos/create-video.input';
 import { Video } from '@/controllers/graphql/types/video';
@@ -12,8 +12,14 @@ export class CreateVideoResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Video)
-  async createVideo(@Args('input') data: CreateVideoInput) {
-    const response = await this.createVideoService.execute(data);
+  async createVideo(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: CreateVideoInput
+  ) {
+    const response = await this.createVideoService.execute({
+      ...data,
+      createdBy: currentAccountId
+    });
     return response;
   }
 }

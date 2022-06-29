@@ -13,6 +13,8 @@ export interface IModulesVideoModelData {
   readonly video: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class ModulesVideoModel extends AggregateRoot {
@@ -21,6 +23,8 @@ export class ModulesVideoModel extends AggregateRoot {
   readonly video: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IModulesVideoModelData) {
     super();
 
@@ -33,6 +37,8 @@ export class ModulesVideoModel extends AggregateRoot {
     this.video = data.video;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdModulesVideo() {

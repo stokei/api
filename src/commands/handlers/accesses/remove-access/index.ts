@@ -26,6 +26,9 @@ export class RemoveAccessCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const accessId = splitServiceId(data.where?.accessId)?.id;
     const accountId = data.where?.accountId;
     if (!accessId) {
@@ -45,6 +48,7 @@ export class RemoveAccessCommandHandler
 
     const removed = await this.removeAccessRepository.execute({
       where: {
+        ...data.where,
         accessId,
         accountId
       }
@@ -62,6 +66,7 @@ export class RemoveAccessCommandHandler
   private clearData(command: RemoveAccessCommand): RemoveAccessCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         accessId: cleanValue(command?.where?.accessId)
       })
     });

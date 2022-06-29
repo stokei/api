@@ -27,6 +27,9 @@ export class RemovePaymentsMethodCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const paymentsMethodId = splitServiceId(data.where?.paymentsMethodId)?.id;
     if (!paymentsMethodId) {
       throw new ParamNotFoundException('paymentsMethodId');
@@ -41,6 +44,7 @@ export class RemovePaymentsMethodCommandHandler
 
     const removed = await this.removePaymentsMethodRepository.execute({
       where: {
+        ...data.where,
         paymentsMethodId
       }
     });
@@ -60,6 +64,7 @@ export class RemovePaymentsMethodCommandHandler
   ): RemovePaymentsMethodCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         paymentsMethodId: cleanValue(command?.where?.paymentsMethodId)
       })
     });

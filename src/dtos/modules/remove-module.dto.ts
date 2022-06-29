@@ -1,4 +1,5 @@
 export interface RemoveModuleWhereDTO {
+  removedBy: string;
   moduleId: string;
 }
 

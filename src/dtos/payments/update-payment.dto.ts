@@ -1,4 +1,5 @@
 export interface UpdatePaymentDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

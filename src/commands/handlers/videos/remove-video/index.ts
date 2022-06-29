@@ -27,6 +27,9 @@ export class RemoveVideoCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const videoId = splitServiceId(data.where?.videoId)?.id;
     if (!videoId) {
       throw new ParamNotFoundException('videoId');
@@ -39,6 +42,7 @@ export class RemoveVideoCommandHandler
 
     const removed = await this.removeVideoRepository.execute({
       where: {
+        ...data.where,
         videoId
       }
     });
@@ -55,6 +59,7 @@ export class RemoveVideoCommandHandler
   private clearData(command: RemoveVideoCommand): RemoveVideoCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         videoId: cleanValue(command?.where?.videoId)
       })
     });

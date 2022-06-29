@@ -27,6 +27,9 @@ export class RemoveModulesVideoCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const modulesVideoId = splitServiceId(data.where?.modulesVideoId)?.id;
     if (!modulesVideoId) {
       throw new ParamNotFoundException('modulesVideoId');
@@ -41,6 +44,7 @@ export class RemoveModulesVideoCommandHandler
 
     const removed = await this.removeModulesVideoRepository.execute({
       where: {
+        ...data.where,
         modulesVideoId
       }
     });
@@ -59,6 +63,7 @@ export class RemoveModulesVideoCommandHandler
   ): RemoveModulesVideoCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         modulesVideoId: cleanValue(command?.where?.modulesVideoId)
       })
     });

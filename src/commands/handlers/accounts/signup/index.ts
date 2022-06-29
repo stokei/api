@@ -29,7 +29,8 @@ export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {
     }
     const accessCreated: AccessModel = await this.commandBus.execute(
       new CreateAccessCommand({
-        parent: accountCreated.id
+        parent: accountCreated.id,
+        createdBy: accountCreated.id
       })
     );
     if (!accessCreated) {

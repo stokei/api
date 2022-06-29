@@ -1,4 +1,5 @@
 export interface UpdateOrderDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

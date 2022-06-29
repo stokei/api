@@ -1,4 +1,5 @@
 export interface UpdateProjectDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

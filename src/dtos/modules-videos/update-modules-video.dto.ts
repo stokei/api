@@ -1,4 +1,5 @@
 export interface UpdateModulesVideoDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

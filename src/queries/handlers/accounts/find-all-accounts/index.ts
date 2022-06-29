@@ -92,7 +92,9 @@ export class FindAllAccountsQueryHandler
         status: cleanSortValue(query.orderBy?.status),
         canceledAt: cleanSortValue(query.orderBy?.canceledAt),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
-        updatedAt: cleanSortValue(query.orderBy?.updatedAt)
+        updatedAt: cleanSortValue(query.orderBy?.updatedAt),
+        createdBy: cleanSortValue(query.orderBy?.createdBy),
+        updatedBy: cleanSortValue(query.orderBy?.updatedBy)
       })
     };
   }

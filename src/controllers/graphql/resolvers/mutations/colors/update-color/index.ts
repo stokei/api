@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { UpdateColorInput } from '@/controllers/graphql/inputs/colors/update-color.input';
 import { Color } from '@/controllers/graphql/types/color';
@@ -12,8 +12,17 @@ export class UpdateColorResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Color)
-  async updateColor(@Args('input') data: UpdateColorInput) {
-    const response = await this.updateColorService.execute(data);
+  async updateColor(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: UpdateColorInput
+  ) {
+    const response = await this.updateColorService.execute({
+      ...data,
+      data: {
+        ...data?.data,
+        updatedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

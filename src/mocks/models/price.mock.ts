@@ -15,8 +15,6 @@ export class PriceModelMock extends PriceModel {
       amount: data?.amount ?? 1000,
       fromAmount: data?.fromAmount ?? null,
       toAmount: data?.toAmount ?? 1000,
-      paymentMethod: data?.paymentMethod ?? 'anyPaymentMethod',
-      installments: data?.installments ?? 1,
       type: data?.type ?? PriceType.ONE_TIME,
       inventoryType: data?.inventoryType ?? InventoryType.INFINITE,
       recurringIntervalCount: data?.recurringIntervalCount ?? 1,
@@ -24,7 +22,9 @@ export class PriceModelMock extends PriceModel {
       quantity: data?.quantity ?? 1,
       active: data?.active ?? true,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

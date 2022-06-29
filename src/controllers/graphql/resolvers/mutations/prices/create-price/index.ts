@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CreatePriceInput } from '@/controllers/graphql/inputs/prices/create-price.input';
 import { Price } from '@/controllers/graphql/types/price';
@@ -12,8 +12,14 @@ export class CreatePriceResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Price)
-  async createPrice(@Args('input') data: CreatePriceInput) {
-    const response = await this.createPriceService.execute(data);
+  async createPrice(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: CreatePriceInput
+  ) {
+    const response = await this.createPriceService.execute({
+      ...data,
+      createdBy: currentAccountId
+    });
     return response;
   }
 }

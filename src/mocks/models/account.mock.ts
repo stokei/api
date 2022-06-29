@@ -33,10 +33,12 @@ export class AccountModelMock extends AccountModel {
       active: data?.active ?? true,
       canceledAt: data?.canceledAt ?? null,
       forgotPasswordCode: data?.forgotPasswordCode ?? null,
-      createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       dateBirthday: data?.dateBirthday ?? null,
       lastPassword: data?.lastPassword ?? null,
-      updatedAt: data?.updatedAt ?? null
+      createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

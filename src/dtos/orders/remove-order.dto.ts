@@ -1,4 +1,5 @@
 export interface RemoveOrderWhereDTO {
+  removedBy: string;
   orderId: string;
 }
 

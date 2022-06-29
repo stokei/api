@@ -10,6 +10,8 @@ import { AccountRole } from '@/enums/account-role.enum';
 export interface WhereDataFindAllAccountsDTO {
   ids?: string[];
   parent?: IWhereData;
+  updatedBy?: IWhereData;
+  createdBy?: IWhereData;
   firstname?: IWhereDataSearch;
   lastname?: IWhereDataSearch;
   email?: IWhereData;
@@ -26,6 +28,8 @@ export interface OrderByDataFindAllAccountsDTO {
   username?: IOrderBy;
   status?: IOrderBy;
   canceledAt?: IOrderBy;
+  updatedBy?: IOrderBy;
+  createdBy?: IOrderBy;
   createdAt?: IOrderBy;
   updatedAt?: IOrderBy;
 }

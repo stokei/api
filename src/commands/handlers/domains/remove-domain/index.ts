@@ -27,6 +27,9 @@ export class RemoveDomainCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const domainId = splitServiceId(data.where?.domainId)?.id;
     if (!domainId) {
       throw new ParamNotFoundException('domainId');
@@ -39,6 +42,7 @@ export class RemoveDomainCommandHandler
 
     const removed = await this.removeDomainRepository.execute({
       where: {
+        ...data.where,
         domainId
       }
     });
@@ -55,6 +59,7 @@ export class RemoveDomainCommandHandler
   private clearData(command: RemoveDomainCommand): RemoveDomainCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         domainId: cleanValue(command?.where?.domainId)
       })
     });

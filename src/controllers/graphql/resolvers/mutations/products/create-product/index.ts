@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CreateProductInput } from '@/controllers/graphql/inputs/products/create-product.input';
 import { Product } from '@/controllers/graphql/types/product';
@@ -12,8 +12,14 @@ export class CreateProductResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Product)
-  async createProduct(@Args('input') data: CreateProductInput) {
-    const response = await this.createProductService.execute(data);
+  async createProduct(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: CreateProductInput
+  ) {
+    const response = await this.createProductService.execute({
+      ...data,
+      createdBy: currentAccountId
+    });
     return response;
   }
 }

@@ -27,6 +27,9 @@ export class RemoveOrdersItemCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const ordersItemId = splitServiceId(data.where?.ordersItemId)?.id;
     if (!ordersItemId) {
       throw new ParamNotFoundException('ordersItemId');
@@ -41,6 +44,7 @@ export class RemoveOrdersItemCommandHandler
 
     const removed = await this.removeOrdersItemRepository.execute({
       where: {
+        ...data.where,
         ordersItemId
       }
     });
@@ -57,6 +61,7 @@ export class RemoveOrdersItemCommandHandler
   private clearData(command: RemoveOrdersItemCommand): RemoveOrdersItemCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         ordersItemId: cleanValue(command?.where?.ordersItemId)
       })
     });

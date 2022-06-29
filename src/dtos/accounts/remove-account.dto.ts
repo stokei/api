@@ -1,4 +1,5 @@
 export interface RemoveAccountWhereDTO {
+  removedBy: string;
   accountId: string;
 }
 

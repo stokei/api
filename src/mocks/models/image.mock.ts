@@ -9,7 +9,9 @@ export class ImageModelMock extends ImageModel {
       _id: nanoid(),
       path: data?.path ?? '/image/MY_IMAGE_ID',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

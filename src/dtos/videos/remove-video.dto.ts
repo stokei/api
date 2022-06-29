@@ -1,4 +1,5 @@
 export interface RemoveVideoWhereDTO {
+  removedBy: string;
   videoId: string;
 }
 

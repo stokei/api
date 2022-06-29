@@ -1,4 +1,5 @@
 export interface RemoveModulesVideoWhereDTO {
+  removedBy: string;
   modulesVideoId: string;
 }
 

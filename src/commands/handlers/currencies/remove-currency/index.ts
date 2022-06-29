@@ -27,6 +27,9 @@ export class RemoveCurrencyCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const currencyId = splitServiceId(data.where?.currencyId)?.id;
     if (!currencyId) {
       throw new ParamNotFoundException('currencyId');
@@ -39,6 +42,7 @@ export class RemoveCurrencyCommandHandler
 
     const removed = await this.removeCurrencyRepository.execute({
       where: {
+        ...data.where,
         currencyId
       }
     });
@@ -55,6 +59,7 @@ export class RemoveCurrencyCommandHandler
   private clearData(command: RemoveCurrencyCommand): RemoveCurrencyCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         currencyId: cleanValue(command?.where?.currencyId)
       })
     });

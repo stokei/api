@@ -21,6 +21,8 @@ export interface IDomainModelData {
   readonly activatedAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class DomainModel extends AggregateRoot {
@@ -36,6 +38,8 @@ export class DomainModel extends AggregateRoot {
   readonly activatedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IDomainModelData) {
     super();
 
@@ -55,6 +59,8 @@ export class DomainModel extends AggregateRoot {
     this.activatedAt = convertToISODateString(data.activatedAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdDomain() {

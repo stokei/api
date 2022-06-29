@@ -1,4 +1,5 @@
 export interface UpdateCartsItemDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

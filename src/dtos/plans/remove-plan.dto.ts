@@ -1,4 +1,5 @@
 export interface RemovePlanWhereDTO {
+  removedBy: string;
   planId: string;
 }
 

@@ -27,6 +27,9 @@ export class RemoveLanguageCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const languageId = splitServiceId(data.where?.languageId)?.id;
     if (!languageId) {
       throw new ParamNotFoundException('languageId');
@@ -39,6 +42,7 @@ export class RemoveLanguageCommandHandler
 
     const removed = await this.removeLanguageRepository.execute({
       where: {
+        ...data.where,
         languageId
       }
     });
@@ -55,6 +59,7 @@ export class RemoveLanguageCommandHandler
   private clearData(command: RemoveLanguageCommand): RemoveLanguageCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         languageId: cleanValue(command?.where?.languageId)
       })
     });

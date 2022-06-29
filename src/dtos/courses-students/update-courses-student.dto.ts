@@ -1,4 +1,5 @@
 export interface UpdateCoursesStudentDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

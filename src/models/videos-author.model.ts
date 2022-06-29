@@ -13,6 +13,8 @@ export interface IVideosAuthorModelData {
   readonly author: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class VideosAuthorModel extends AggregateRoot {
@@ -21,6 +23,8 @@ export class VideosAuthorModel extends AggregateRoot {
   readonly author: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IVideosAuthorModelData) {
     super();
 
@@ -33,6 +37,8 @@ export class VideosAuthorModel extends AggregateRoot {
     this.author = data.author;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdVideosAuthor() {

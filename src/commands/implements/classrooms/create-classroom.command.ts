@@ -5,9 +5,11 @@ import { CreateClassroomDTO } from '@/dtos/classrooms/create-classroom.dto';
 export class CreateClassroomCommand implements ICommand, CreateClassroomDTO {
   name: string;
   parent: string;
+  createdBy: string;
 
   constructor(data: CreateClassroomDTO) {
     this.name = data.name;
     this.parent = data.parent;
+    this.createdBy = data.createdBy;
   }
 }

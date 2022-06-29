@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CreateOrdersItemInput } from '@/controllers/graphql/inputs/orders-items/create-orders-item.input';
 import { OrdersItem } from '@/controllers/graphql/types/orders-item';
@@ -14,8 +14,14 @@ export class CreateOrdersItemResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => OrdersItem)
-  async createOrdersItem(@Args('input') data: CreateOrdersItemInput) {
-    const response = await this.createOrdersItemService.execute(data);
+  async createOrdersItem(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: CreateOrdersItemInput
+  ) {
+    const response = await this.createOrdersItemService.execute({
+      ...data,
+      createdBy: currentAccountId
+    });
     return response;
   }
 }

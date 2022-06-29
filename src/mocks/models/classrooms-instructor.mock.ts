@@ -13,7 +13,9 @@ export class ClassroomsInstructorModelMock extends ClassroomsInstructorModel {
       classroom: data?.classroom ?? 'classrooms.anyClassroom',
       instructor: data?.instructor ?? 'accounts.anyInstructor',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

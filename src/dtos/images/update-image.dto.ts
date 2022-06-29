@@ -1,4 +1,5 @@
 export interface UpdateImageDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

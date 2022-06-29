@@ -65,7 +65,8 @@ export class UpdateVideoCommandHandler
         videoId: cleanValue(command?.where?.videoId)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name)
+        name: cleanValue(command?.data?.name),
+        updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });
   }

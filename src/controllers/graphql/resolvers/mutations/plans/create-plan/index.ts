@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CreatePlanInput } from '@/controllers/graphql/inputs/plans/create-plan.input';
 import { Plan } from '@/controllers/graphql/types/plan';
@@ -12,8 +12,14 @@ export class CreatePlanResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Plan)
-  async createPlan(@Args('input') data: CreatePlanInput) {
-    const response = await this.createPlanService.execute(data);
+  async createPlan(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: CreatePlanInput
+  ) {
+    const response = await this.createPlanService.execute({
+      ...data,
+      createdBy: currentAccountId
+    });
     return response;
   }
 }

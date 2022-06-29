@@ -1,4 +1,5 @@
 export interface UpdateVideosAuthorDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

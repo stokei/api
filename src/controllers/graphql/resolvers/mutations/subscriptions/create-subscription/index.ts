@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CreateSubscriptionInput } from '@/controllers/graphql/inputs/subscriptions/create-subscription.input';
 import { Subscription } from '@/controllers/graphql/types/subscription';
@@ -14,8 +14,14 @@ export class CreateSubscriptionResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Subscription)
-  async createSubscription(@Args('input') data: CreateSubscriptionInput) {
-    const response = await this.createSubscriptionService.execute(data);
+  async createSubscription(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: CreateSubscriptionInput
+  ) {
+    const response = await this.createSubscriptionService.execute({
+      ...data,
+      createdBy: currentAccountId
+    });
     return response;
   }
 }

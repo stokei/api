@@ -8,13 +8,30 @@ import {
 export interface WhereDataFindAllAddressesDTO {
   ids?: string[];
   parent?: IWhereData;
-  name?: IWhereDataSearch;
+  default?: IWhereData<boolean>;
+  street?: IWhereDataSearch;
+  complement?: IWhereDataSearch;
+  city?: IWhereDataSearch;
+  country?: IWhereDataSearch;
+  state?: IWhereDataSearch;
+  postalCode?: IWhereData;
+  updatedBy?: IWhereData;
+  createdBy?: IWhereData;
 }
 export type IKeysWhereDataFindAllAddressesDTO =
   keyof WhereDataFindAllAddressesDTO;
 
 export interface OrderByDataFindAllAddressesDTO {
-  name?: IOrderBy;
+  parent?: IOrderBy;
+  default?: IOrderBy;
+  street?: IOrderBy;
+  complement?: IOrderBy;
+  city?: IOrderBy;
+  country?: IOrderBy;
+  state?: IOrderBy;
+  postalCode?: IOrderBy;
+  updatedBy?: IOrderBy;
+  createdBy?: IOrderBy;
   createdAt?: IOrderBy;
   updatedAt?: IOrderBy;
 }

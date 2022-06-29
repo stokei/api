@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { UpdatePaymentInput } from '@/controllers/graphql/inputs/payments/update-payment.input';
 import { Payment } from '@/controllers/graphql/types/payment';
@@ -12,8 +12,17 @@ export class UpdatePaymentResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Payment)
-  async updatePayment(@Args('input') data: UpdatePaymentInput) {
-    const response = await this.updatePaymentService.execute(data);
+  async updatePayment(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: UpdatePaymentInput
+  ) {
+    const response = await this.updatePaymentService.execute({
+      ...data,
+      data: {
+        ...data?.data,
+        updatedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

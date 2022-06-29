@@ -1,4 +1,5 @@
 export interface RemoveSubscriptionWhereDTO {
+  removedBy: string;
   subscriptionId: string;
 }
 

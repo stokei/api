@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CreateDomainInput } from '@/controllers/graphql/inputs/domains/create-domain.input';
 import { Domain } from '@/controllers/graphql/types/domain';
@@ -12,8 +12,14 @@ export class CreateDomainResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Domain)
-  async createDomain(@Args('input') data: CreateDomainInput) {
-    const response = await this.createDomainService.execute(data);
+  async createDomain(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: CreateDomainInput
+  ) {
+    const response = await this.createDomainService.execute({
+      ...data,
+      createdBy: currentAccountId
+    });
     return response;
   }
 }

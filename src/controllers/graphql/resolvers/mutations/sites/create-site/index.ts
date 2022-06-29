@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CreateSiteInput } from '@/controllers/graphql/inputs/sites/create-site.input';
 import { Site } from '@/controllers/graphql/types/site';
@@ -12,8 +12,14 @@ export class CreateSiteResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Site)
-  async createSite(@Args('input') data: CreateSiteInput) {
-    const response = await this.createSiteService.execute(data);
+  async createSite(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: CreateSiteInput
+  ) {
+    const response = await this.createSiteService.execute({
+      ...data,
+      createdBy: currentAccountId
+    });
     return response;
   }
 }

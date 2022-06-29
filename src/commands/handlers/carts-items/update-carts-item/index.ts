@@ -69,7 +69,8 @@ export class UpdateCartsItemCommandHandler
         cartsItemId: cleanValue(command?.where?.cartsItemId)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name)
+        name: cleanValue(command?.data?.name),
+        updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });
   }

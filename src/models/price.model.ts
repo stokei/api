@@ -17,8 +17,6 @@ export interface IPriceModelData {
   readonly amount: number;
   readonly fromAmount?: number;
   readonly toAmount: number;
-  readonly paymentMethod: string;
-  readonly installments: number;
   readonly type: PriceType;
   readonly inventoryType: InventoryType;
   readonly recurringIntervalCount: number;
@@ -27,6 +25,8 @@ export interface IPriceModelData {
   readonly active: boolean;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class PriceModel extends AggregateRoot {
@@ -36,8 +36,6 @@ export class PriceModel extends AggregateRoot {
   readonly amount: number;
   readonly fromAmount?: number;
   readonly toAmount: number;
-  readonly paymentMethod: string;
-  readonly installments: number;
   readonly type: PriceType;
   readonly inventoryType: InventoryType;
   readonly recurringIntervalCount: number;
@@ -46,6 +44,8 @@ export class PriceModel extends AggregateRoot {
   readonly active: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IPriceModelData) {
     super();
 
@@ -59,8 +59,6 @@ export class PriceModel extends AggregateRoot {
     this.amount = data.amount;
     this.fromAmount = data.fromAmount;
     this.toAmount = data.toAmount;
-    this.paymentMethod = data.paymentMethod;
-    this.installments = data.installments;
     this.type = data.type;
     this.inventoryType = data.inventoryType;
     this.recurringIntervalCount = data.recurringIntervalCount;
@@ -70,6 +68,8 @@ export class PriceModel extends AggregateRoot {
     this.active = data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdPrice() {

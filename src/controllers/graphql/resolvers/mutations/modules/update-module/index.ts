@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { UpdateModuleInput } from '@/controllers/graphql/inputs/modules/update-module.input';
 import { Module } from '@/controllers/graphql/types/module';
@@ -12,8 +12,17 @@ export class UpdateModuleResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Module)
-  async updateModule(@Args('input') data: UpdateModuleInput) {
-    const response = await this.updateModuleService.execute(data);
+  async updateModule(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: UpdateModuleInput
+  ) {
+    const response = await this.updateModuleService.execute({
+      ...data,
+      data: {
+        ...data?.data,
+        updatedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

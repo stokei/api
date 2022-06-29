@@ -8,6 +8,8 @@ import {
 export interface WhereDataFindAllCurrenciesDTO {
   ids?: string[];
   parent?: IWhereData;
+  updatedBy?: IWhereData;
+  createdBy?: IWhereData;
   name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllCurrenciesDTO =
@@ -15,6 +17,8 @@ export type IKeysWhereDataFindAllCurrenciesDTO =
 
 export interface OrderByDataFindAllCurrenciesDTO {
   name?: IOrderBy;
+  updatedBy?: IOrderBy;
+  createdBy?: IOrderBy;
   createdAt?: IOrderBy;
   updatedAt?: IOrderBy;
 }

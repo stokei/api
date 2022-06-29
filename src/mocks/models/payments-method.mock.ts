@@ -21,7 +21,9 @@ export class PaymentsMethodModelMock extends PaymentsMethodModel {
       activatedAt: data?.activatedAt ?? null,
       deactivatedAt: data?.deactivatedAt ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

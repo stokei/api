@@ -71,7 +71,8 @@ export class UpdateSubscriptionCommandHandler
         subscriptionId: cleanValue(command?.where?.subscriptionId)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name)
+        name: cleanValue(command?.data?.name),
+        updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });
   }

@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { UpdateAddressInput } from '@/controllers/graphql/inputs/addresses/update-address.input';
 import { Address } from '@/controllers/graphql/types/address';
@@ -12,8 +12,17 @@ export class UpdateAddressResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Address)
-  async updateAddress(@Args('input') data: UpdateAddressInput) {
-    const response = await this.updateAddressService.execute(data);
+  async updateAddress(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: UpdateAddressInput
+  ) {
+    const response = await this.updateAddressService.execute({
+      ...data,
+      data: {
+        ...data?.data,
+        updatedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

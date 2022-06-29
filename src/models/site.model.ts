@@ -14,6 +14,8 @@ export interface ISiteModelData {
   readonly logo?: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class SiteModel extends AggregateRoot {
@@ -23,6 +25,8 @@ export class SiteModel extends AggregateRoot {
   readonly logo?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: ISiteModelData) {
     super();
 
@@ -36,6 +40,8 @@ export class SiteModel extends AggregateRoot {
     this.logo = data.logo;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdSite() {

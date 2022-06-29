@@ -1,4 +1,5 @@
 export interface UpdateModuleDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

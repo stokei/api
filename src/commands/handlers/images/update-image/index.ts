@@ -65,7 +65,8 @@ export class UpdateImageCommandHandler
         imageId: cleanValue(command?.where?.imageId)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name)
+        name: cleanValue(command?.data?.name),
+        updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });
   }

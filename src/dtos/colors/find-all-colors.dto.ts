@@ -8,12 +8,16 @@ import {
 export interface WhereDataFindAllColorsDTO {
   ids?: string[];
   parent?: IWhereData;
+  updatedBy?: IWhereData;
+  createdBy?: IWhereData;
   name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllColorsDTO = keyof WhereDataFindAllColorsDTO;
 
 export interface OrderByDataFindAllColorsDTO {
   name?: IOrderBy;
+  updatedBy?: IOrderBy;
+  createdBy?: IOrderBy;
   createdAt?: IOrderBy;
   updatedAt?: IOrderBy;
 }

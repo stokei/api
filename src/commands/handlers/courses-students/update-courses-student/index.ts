@@ -72,7 +72,8 @@ export class UpdateCoursesStudentCommandHandler
         coursesStudentId: cleanValue(command?.where?.coursesStudentId)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name)
+        name: cleanValue(command?.data?.name),
+        updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });
   }

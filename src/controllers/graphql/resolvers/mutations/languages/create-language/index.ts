@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CreateLanguageInput } from '@/controllers/graphql/inputs/languages/create-language.input';
 import { Language } from '@/controllers/graphql/types/language';
@@ -12,8 +12,14 @@ export class CreateLanguageResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Language)
-  async createLanguage(@Args('input') data: CreateLanguageInput) {
-    const response = await this.createLanguageService.execute(data);
+  async createLanguage(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: CreateLanguageInput
+  ) {
+    const response = await this.createLanguageService.execute({
+      ...data,
+      createdBy: currentAccountId
+    });
     return response;
   }
 }

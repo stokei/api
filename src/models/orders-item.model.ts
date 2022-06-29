@@ -25,6 +25,8 @@ export interface IOrdersItemModelData {
   readonly recurringIntervalType: RecurringType;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class OrdersItemModel extends AggregateRoot {
@@ -43,6 +45,8 @@ export class OrdersItemModel extends AggregateRoot {
   readonly recurringIntervalType: RecurringType;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IOrdersItemModelData) {
     super();
 
@@ -65,6 +69,8 @@ export class OrdersItemModel extends AggregateRoot {
     this.recurringIntervalType = data.recurringIntervalType;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdOrdersItem() {

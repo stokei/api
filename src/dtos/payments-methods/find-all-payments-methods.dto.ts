@@ -8,6 +8,8 @@ import {
 export interface WhereDataFindAllPaymentsMethodsDTO {
   ids?: string[];
   parent?: IWhereData;
+  updatedBy?: IWhereData;
+  createdBy?: IWhereData;
   name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllPaymentsMethodsDTO =
@@ -15,6 +17,8 @@ export type IKeysWhereDataFindAllPaymentsMethodsDTO =
 
 export interface OrderByDataFindAllPaymentsMethodsDTO {
   name?: IOrderBy;
+  updatedBy?: IOrderBy;
+  createdBy?: IOrderBy;
   createdAt?: IOrderBy;
   updatedAt?: IOrderBy;
 }

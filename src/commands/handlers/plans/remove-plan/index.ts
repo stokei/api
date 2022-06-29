@@ -27,6 +27,9 @@ export class RemovePlanCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const planId = splitServiceId(data.where?.planId)?.id;
     if (!planId) {
       throw new ParamNotFoundException('planId');
@@ -39,6 +42,7 @@ export class RemovePlanCommandHandler
 
     const removed = await this.removePlanRepository.execute({
       where: {
+        ...data.where,
         planId
       }
     });
@@ -55,6 +59,7 @@ export class RemovePlanCommandHandler
   private clearData(command: RemovePlanCommand): RemovePlanCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         planId: cleanValue(command?.where?.planId)
       })
     });

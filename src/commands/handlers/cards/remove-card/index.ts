@@ -27,6 +27,9 @@ export class RemoveCardCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const cardId = splitServiceId(data.where?.cardId)?.id;
     if (!cardId) {
       throw new ParamNotFoundException('cardId');
@@ -39,6 +42,7 @@ export class RemoveCardCommandHandler
 
     const removed = await this.removeCardRepository.execute({
       where: {
+        ...data.where,
         cardId
       }
     });
@@ -55,6 +59,7 @@ export class RemoveCardCommandHandler
   private clearData(command: RemoveCardCommand): RemoveCardCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         cardId: cleanValue(command?.where?.cardId)
       })
     });

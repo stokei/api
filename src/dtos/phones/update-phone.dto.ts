@@ -1,4 +1,5 @@
 export interface UpdatePhoneDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

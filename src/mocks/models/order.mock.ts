@@ -26,7 +26,9 @@ export class OrderModelMock extends OrderModel {
       totalRefundedAt: data?.totalRefundedAt ?? null,
       parcialRefundedAt: data?.parcialRefundedAt ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? convertToISODateString(Date.now())
+      updatedAt: data?.updatedAt ?? convertToISODateString(Date.now()),
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

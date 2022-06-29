@@ -17,7 +17,9 @@ export class AddressModelMock extends AddressModel {
       state: data?.state ?? 'RS',
       postalCode: data?.postalCode ?? '99999999',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

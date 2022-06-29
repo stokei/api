@@ -13,7 +13,9 @@ export class ClassroomModelMock extends ClassroomModel {
       hasAccessToAllModules: data?.hasAccessToAllModules ?? true,
       active: data?.active ?? true,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { UpdateVideosAuthorInput } from '@/controllers/graphql/inputs/videos-authors/update-videos-author.input';
 import { VideosAuthor } from '@/controllers/graphql/types/videos-author';
@@ -14,8 +14,17 @@ export class UpdateVideosAuthorResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => VideosAuthor)
-  async updateVideosAuthor(@Args('input') data: UpdateVideosAuthorInput) {
-    const response = await this.updateVideosAuthorService.execute(data);
+  async updateVideosAuthor(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: UpdateVideosAuthorInput
+  ) {
+    const response = await this.updateVideosAuthorService.execute({
+      ...data,
+      data: {
+        ...data?.data,
+        updatedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

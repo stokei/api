@@ -1,4 +1,5 @@
 export interface UpdateCardDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

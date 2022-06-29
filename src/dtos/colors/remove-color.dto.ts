@@ -1,4 +1,5 @@
 export interface RemoveColorWhereDTO {
+  removedBy: string;
   colorId: string;
 }
 

@@ -83,7 +83,9 @@ export class FindAllClassroomsInstructorsQueryHandler
       orderBy: cleanObject({
         name: cleanSortValue(query.orderBy?.name),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
-        updatedAt: cleanSortValue(query.orderBy?.updatedAt)
+        updatedAt: cleanSortValue(query.orderBy?.updatedAt),
+        createdBy: cleanSortValue(query.orderBy?.createdBy),
+        updatedBy: cleanSortValue(query.orderBy?.updatedBy)
       })
     };
   }

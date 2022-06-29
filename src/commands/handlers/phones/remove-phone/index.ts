@@ -27,6 +27,9 @@ export class RemovePhoneCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const phoneId = splitServiceId(data.where?.phoneId)?.id;
     if (!phoneId) {
       throw new ParamNotFoundException('phoneId');
@@ -39,6 +42,7 @@ export class RemovePhoneCommandHandler
 
     const removed = await this.removePhoneRepository.execute({
       where: {
+        ...data.where,
         phoneId
       }
     });
@@ -55,6 +59,7 @@ export class RemovePhoneCommandHandler
   private clearData(command: RemovePhoneCommand): RemovePhoneCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         phoneId: cleanValue(command?.where?.phoneId)
       })
     });

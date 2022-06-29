@@ -35,6 +35,9 @@ CREATE TYPE "RecurringType" AS ENUM ('HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR');
 CREATE TYPE "PriceType" AS ENUM ('RECURRING', 'ONE_TIME');
 
 -- CreateEnum
+CREATE TYPE "InventoryType" AS ENUM ('INFINITE', 'FINITE');
+
+-- CreateEnum
 CREATE TYPE "ProjectStatus" AS ENUM ('ACTIVE', 'INACTIVE', 'BLOCKED');
 
 -- CreateEnum
@@ -47,7 +50,7 @@ CREATE TYPE "OrderStatus" AS ENUM ('PAID', 'PENDING', 'CANCELED', 'PAYMENT_ERROR
 CREATE TYPE "PaymentStatus" AS ENUM ('PAID', 'PENDING', 'CANCELED', 'PAYMENT_ERROR', 'TOTAL_REFUNDED', 'PARCIAL_REFUNDED');
 
 -- CreateEnum
-CREATE TYPE "ClassroomsEnrollmentStatus" AS ENUM ('ACTIVE', 'FINISHED', 'CANCELED');
+CREATE TYPE "SubscriptionStatus" AS ENUM ('ACTIVE', 'FINISHED', 'CANCELED');
 
 -- CreateEnum
 CREATE TYPE "PhoneStatus" AS ENUM ('ACTIVE', 'PENDING', 'INVALID');
@@ -75,6 +78,8 @@ CREATE TABLE "accounts" (
     "canceled_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "accounts_pkey" PRIMARY KEY ("id")
 );
@@ -88,6 +93,8 @@ CREATE TABLE "accesses" (
     "canceled_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "accesses_pkey" PRIMARY KEY ("id")
 );
@@ -109,6 +116,8 @@ CREATE TABLE "projects" (
     "deactivated_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "projects_pkey" PRIMARY KEY ("id")
 );
@@ -121,6 +130,8 @@ CREATE TABLE "projects_members" (
     "roles" "ProjectMemberRole"[],
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "projects_members_pkey" PRIMARY KEY ("id")
 );
@@ -133,6 +144,8 @@ CREATE TABLE "sites" (
     "logo" VARCHAR(255),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "sites_pkey" PRIMARY KEY ("id")
 );
@@ -151,6 +164,8 @@ CREATE TABLE "domains" (
     "activated_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "domains_pkey" PRIMARY KEY ("id")
 );
@@ -166,6 +181,8 @@ CREATE TABLE "currencies" (
     "deactivated_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "currencies_pkey" PRIMARY KEY ("id")
 );
@@ -180,6 +197,8 @@ CREATE TABLE "languages" (
     "deactivated_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "languages_pkey" PRIMARY KEY ("id")
 );
@@ -193,6 +212,8 @@ CREATE TABLE "colors" (
     "color" VARCHAR(20) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "colors_pkey" PRIMARY KEY ("id")
 );
@@ -212,6 +233,8 @@ CREATE TABLE "products" (
     "deactivated_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "products_pkey" PRIMARY KEY ("id")
 );
@@ -224,15 +247,16 @@ CREATE TABLE "prices" (
     "amount" INTEGER NOT NULL,
     "from_amount" INTEGER,
     "to_amount" INTEGER NOT NULL,
-    "payment_method" VARCHAR(255) NOT NULL,
-    "installments" INTEGER NOT NULL,
     "type" "PriceType" NOT NULL,
     "recurring_interval_count" INTEGER NOT NULL,
     "recurring_interval_type" "RecurringType" NOT NULL,
+    "inventory_type" "InventoryType" NOT NULL,
     "quantity" INTEGER NOT NULL,
     "active" BOOLEAN NOT NULL DEFAULT true,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "prices_pkey" PRIMARY KEY ("id")
 );
@@ -259,6 +283,8 @@ CREATE TABLE "orders" (
     "parcial_refunded_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
 );
@@ -280,6 +306,8 @@ CREATE TABLE "orders_items" (
     "recurring_interval_type" "RecurringType" NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "orders_items_pkey" PRIMARY KEY ("id")
 );
@@ -301,6 +329,8 @@ CREATE TABLE "payments" (
     "parcial_refunded_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "payments_pkey" PRIMARY KEY ("id")
 );
@@ -317,6 +347,8 @@ CREATE TABLE "payments_methods" (
     "deactivated_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "payments_methods_pkey" PRIMARY KEY ("id")
 );
@@ -331,6 +363,8 @@ CREATE TABLE "cards" (
     "default" BOOLEAN NOT NULL DEFAULT false,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "cards_pkey" PRIMARY KEY ("id")
 );
@@ -340,6 +374,8 @@ CREATE TABLE "carts" (
     "id" TEXT NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "carts_pkey" PRIMARY KEY ("id")
 );
@@ -352,6 +388,8 @@ CREATE TABLE "carts_items" (
     "quantity" INTEGER NOT NULL DEFAULT 1,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "carts_items_pkey" PRIMARY KEY ("id")
 );
@@ -364,8 +402,6 @@ CREATE TABLE "plans" (
     "type" "PlanType" NOT NULL,
     "checkout_visible" BOOLEAN NOT NULL DEFAULT false,
     "status" "PlanStatus" NOT NULL,
-    "recurring_interval" INTEGER NOT NULL,
-    "recurring_type" "RecurringType" NOT NULL,
     "has_custom_domain" BOOLEAN NOT NULL DEFAULT false,
     "has_custom_site" BOOLEAN NOT NULL DEFAULT false,
     "quantity_courses" INTEGER NOT NULL,
@@ -376,11 +412,10 @@ CREATE TABLE "plans" (
     "sales_commission_percentage" INTEGER NOT NULL,
     "active" BOOLEAN NOT NULL DEFAULT true,
     "canceled_at" TIMESTAMP(3),
-    "start_at" TIMESTAMP(3),
-    "end_at" TIMESTAMP(3),
-    "send_renew_email_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "plans_pkey" PRIMARY KEY ("id")
 );
@@ -391,6 +426,8 @@ CREATE TABLE "images" (
     "path" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "images_pkey" PRIMARY KEY ("id")
 );
@@ -408,6 +445,8 @@ CREATE TABLE "videos" (
     "active" BOOLEAN NOT NULL DEFAULT false,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "videos_pkey" PRIMARY KEY ("id")
 );
@@ -419,6 +458,8 @@ CREATE TABLE "videos_authors" (
     "author" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "videos_authors_pkey" PRIMARY KEY ("id")
 );
@@ -430,6 +471,8 @@ CREATE TABLE "modules" (
     "name" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "modules_pkey" PRIMARY KEY ("id")
 );
@@ -441,6 +484,8 @@ CREATE TABLE "modules_videos" (
     "video" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "modules_videos_pkey" PRIMARY KEY ("id")
 );
@@ -456,6 +501,8 @@ CREATE TABLE "courses" (
     "canceled_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "courses_pkey" PRIMARY KEY ("id")
 );
@@ -467,6 +514,8 @@ CREATE TABLE "courses_instructors" (
     "instructor" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "courses_instructors_pkey" PRIMARY KEY ("id")
 );
@@ -478,6 +527,8 @@ CREATE TABLE "courses_students" (
     "student" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "courses_students_pkey" PRIMARY KEY ("id")
 );
@@ -492,6 +543,8 @@ CREATE TABLE "classrooms" (
     "active" BOOLEAN NOT NULL DEFAULT true,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "classrooms_pkey" PRIMARY KEY ("id")
 );
@@ -503,24 +556,28 @@ CREATE TABLE "classrooms_students" (
     "student" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "classrooms_students_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "classrooms_enrollments" (
+CREATE TABLE "subscriptions" (
     "id" TEXT NOT NULL,
-    "classroom" VARCHAR(255) NOT NULL,
-    "student" VARCHAR(255) NOT NULL,
-    "status" "ClassroomsEnrollmentStatus" NOT NULL,
+    "product" VARCHAR(255) NOT NULL,
+    "parent" VARCHAR(255) NOT NULL,
+    "status" "SubscriptionStatus" NOT NULL,
     "start_at" TIMESTAMP(3),
     "end_at" TIMESTAMP(3),
     "canceled_at" TIMESTAMP(3),
     "active" BOOLEAN NOT NULL DEFAULT true,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
-    CONSTRAINT "classrooms_enrollments_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "subscriptions_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -530,6 +587,8 @@ CREATE TABLE "classrooms_instructors" (
     "instructor" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "classrooms_instructors_pkey" PRIMARY KEY ("id")
 );
@@ -541,6 +600,8 @@ CREATE TABLE "classrooms_modules" (
     "module" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "classrooms_modules_pkey" PRIMARY KEY ("id")
 );
@@ -551,7 +612,7 @@ CREATE TABLE "addresses" (
     "parent" VARCHAR(255) NOT NULL,
     "default" BOOLEAN NOT NULL DEFAULT false,
     "street" VARCHAR(255) NOT NULL,
-    "complement" VARCHAR(255) NOT NULL,
+    "complement" VARCHAR(255),
     "number" VARCHAR(255) NOT NULL,
     "city" VARCHAR(255) NOT NULL,
     "country" VARCHAR(255) NOT NULL,
@@ -559,6 +620,8 @@ CREATE TABLE "addresses" (
     "postal_code" VARCHAR(255) NOT NULL,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "addresses_pkey" PRIMARY KEY ("id")
 );
@@ -579,6 +642,8 @@ CREATE TABLE "phones" (
     "validated_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
 
     CONSTRAINT "phones_pkey" PRIMARY KEY ("id")
 );

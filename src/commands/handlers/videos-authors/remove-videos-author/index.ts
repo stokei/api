@@ -27,6 +27,9 @@ export class RemoveVideosAuthorCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const videosAuthorId = splitServiceId(data.where?.videosAuthorId)?.id;
     if (!videosAuthorId) {
       throw new ParamNotFoundException('videosAuthorId');
@@ -41,6 +44,7 @@ export class RemoveVideosAuthorCommandHandler
 
     const removed = await this.removeVideosAuthorRepository.execute({
       where: {
+        ...data.where,
         videosAuthorId
       }
     });
@@ -59,6 +63,7 @@ export class RemoveVideosAuthorCommandHandler
   ): RemoveVideosAuthorCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         videosAuthorId: cleanValue(command?.where?.videosAuthorId)
       })
     });

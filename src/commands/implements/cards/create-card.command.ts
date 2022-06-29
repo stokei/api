@@ -5,9 +5,11 @@ import { CreateCardDTO } from '@/dtos/cards/create-card.dto';
 export class CreateCardCommand implements ICommand, CreateCardDTO {
   name: string;
   parent: string;
+  createdBy: string;
 
   constructor(data: CreateCardDTO) {
     this.name = data.name;
     this.parent = data.parent;
+    this.createdBy = data.createdBy;
   }
 }

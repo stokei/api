@@ -13,7 +13,9 @@ export class VideosAuthorModelMock extends VideosAuthorModel {
       video: data?.video ?? 'videos.dsadhiad546asd',
       author: data?.author ?? 'VideosAuthor Name',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

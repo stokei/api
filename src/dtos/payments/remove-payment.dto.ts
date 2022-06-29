@@ -1,4 +1,5 @@
 export interface RemovePaymentWhereDTO {
+  removedBy: string;
   paymentId: string;
 }
 

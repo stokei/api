@@ -1,5 +1,13 @@
 export interface UpdateAddressDataDTO {
-  name?: string;
+  updatedBy: string;
+  default?: boolean;
+  street?: string;
+  complement?: string;
+  number?: string;
+  city?: string;
+  country?: string;
+  state?: string;
+  postalCode?: string;
 }
 
 export interface UpdateAddressWhereDTO {

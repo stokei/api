@@ -1,4 +1,5 @@
 export interface RemoveCartWhereDTO {
+  removedBy: string;
   cartId: string;
 }
 

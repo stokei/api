@@ -23,6 +23,8 @@ export interface IAccessModelData {
   readonly canceledAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class AccessModel extends AggregateRoot {
@@ -35,6 +37,8 @@ export class AccessModel extends AggregateRoot {
   readonly canceledAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 
   constructor(data: IAccessModelData) {
     super();
@@ -56,6 +60,8 @@ export class AccessModel extends AggregateRoot {
     this.canceledAt = convertToISODateString(data.canceledAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdAccess(account: AccountModel) {

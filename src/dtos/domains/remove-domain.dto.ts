@@ -1,4 +1,5 @@
 export interface RemoveDomainWhereDTO {
+  removedBy: string;
   domainId: string;
 }
 

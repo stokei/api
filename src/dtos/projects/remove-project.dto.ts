@@ -1,4 +1,5 @@
 export interface RemoveProjectWhereDTO {
+  removedBy: string;
   projectId: string;
 }
 

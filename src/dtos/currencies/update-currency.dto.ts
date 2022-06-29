@@ -1,4 +1,5 @@
 export interface UpdateCurrencyDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

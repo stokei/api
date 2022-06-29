@@ -13,6 +13,8 @@ export interface IClassroomsInstructorModelData {
   readonly instructor: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class ClassroomsInstructorModel extends AggregateRoot {
@@ -21,6 +23,8 @@ export class ClassroomsInstructorModel extends AggregateRoot {
   readonly instructor: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IClassroomsInstructorModelData) {
     super();
 
@@ -33,6 +37,8 @@ export class ClassroomsInstructorModel extends AggregateRoot {
     this.instructor = data.instructor;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdClassroomsInstructor() {

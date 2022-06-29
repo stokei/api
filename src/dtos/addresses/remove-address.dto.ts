@@ -1,4 +1,5 @@
 export interface RemoveAddressWhereDTO {
+  removedBy: string;
   addressId: string;
 }
 

@@ -25,7 +25,9 @@ export class PlanModelMock extends PlanModel {
       active: data?.active ?? true,
       canceledAt: data?.canceledAt ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

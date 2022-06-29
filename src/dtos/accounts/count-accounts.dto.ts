@@ -5,6 +5,8 @@ import { AccountRole } from '@/enums/account-role.enum';
 export interface CountAccountsWhereDTO {
   ids?: string[];
   parent?: IWhereData;
+  updatedBy?: IWhereData;
+  createdBy?: IWhereData;
   firstname?: IWhereDataSearch;
   lastname?: IWhereDataSearch;
   email?: IWhereData;

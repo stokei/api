@@ -19,6 +19,8 @@ export interface ISubscriptionModelData {
   readonly canceledAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class SubscriptionModel extends AggregateRoot {
@@ -32,6 +34,8 @@ export class SubscriptionModel extends AggregateRoot {
   readonly canceledAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: ISubscriptionModelData) {
     super();
 
@@ -49,6 +53,8 @@ export class SubscriptionModel extends AggregateRoot {
     this.canceledAt = convertToISODateString(data.canceledAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdSubscription() {

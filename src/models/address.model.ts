@@ -12,7 +12,7 @@ export interface IAddressModelData {
   readonly parent: string;
   readonly default: boolean;
   readonly street: string;
-  readonly complement: string;
+  readonly complement?: string;
   readonly number: string;
   readonly city: string;
   readonly country: string;
@@ -20,6 +20,8 @@ export interface IAddressModelData {
   readonly postalCode: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class AddressModel extends AggregateRoot {
@@ -27,7 +29,7 @@ export class AddressModel extends AggregateRoot {
   readonly parent: string;
   readonly default: boolean;
   readonly street: string;
-  readonly complement: string;
+  readonly complement?: string;
   readonly number: string;
   readonly city: string;
   readonly country: string;
@@ -35,6 +37,8 @@ export class AddressModel extends AggregateRoot {
   readonly postalCode: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IAddressModelData) {
     super();
 
@@ -54,6 +58,8 @@ export class AddressModel extends AggregateRoot {
     this.postalCode = data.postalCode;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdAddress() {

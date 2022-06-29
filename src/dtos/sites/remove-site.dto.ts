@@ -1,4 +1,5 @@
 export interface RemoveSiteWhereDTO {
+  removedBy: string;
   siteId: string;
 }
 

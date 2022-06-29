@@ -6,6 +6,7 @@ export class CreateAccountCommand implements ICommand, CreateAccountDTO {
   firstname: string;
   lastname: string;
   parent: string;
+  createdBy: string;
   email: string;
   password: string;
 

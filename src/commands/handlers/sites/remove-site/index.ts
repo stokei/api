@@ -27,6 +27,9 @@ export class RemoveSiteCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const siteId = splitServiceId(data.where?.siteId)?.id;
     if (!siteId) {
       throw new ParamNotFoundException('siteId');
@@ -39,6 +42,7 @@ export class RemoveSiteCommandHandler
 
     const removed = await this.removeSiteRepository.execute({
       where: {
+        ...data.where,
         siteId
       }
     });
@@ -55,6 +59,7 @@ export class RemoveSiteCommandHandler
   private clearData(command: RemoveSiteCommand): RemoveSiteCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         siteId: cleanValue(command?.where?.siteId)
       })
     });

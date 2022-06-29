@@ -27,6 +27,9 @@ export class RemoveColorCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const colorId = splitServiceId(data.where?.colorId)?.id;
     if (!colorId) {
       throw new ParamNotFoundException('colorId');
@@ -39,6 +42,7 @@ export class RemoveColorCommandHandler
 
     const removed = await this.removeColorRepository.execute({
       where: {
+        ...data.where,
         colorId
       }
     });
@@ -55,6 +59,7 @@ export class RemoveColorCommandHandler
   private clearData(command: RemoveColorCommand): RemoveColorCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         colorId: cleanValue(command?.where?.colorId)
       })
     });

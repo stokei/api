@@ -1,4 +1,5 @@
 export interface UpdatePriceDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

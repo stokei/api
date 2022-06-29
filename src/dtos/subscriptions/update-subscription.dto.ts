@@ -1,4 +1,5 @@
 export interface UpdateSubscriptionDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

@@ -1,4 +1,5 @@
 export interface RemoveCardWhereDTO {
+  removedBy: string;
   cardId: string;
 }
 

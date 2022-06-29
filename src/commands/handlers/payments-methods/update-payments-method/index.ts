@@ -72,7 +72,8 @@ export class UpdatePaymentsMethodCommandHandler
         paymentsMethodId: cleanValue(command?.where?.paymentsMethodId)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name)
+        name: cleanValue(command?.data?.name),
+        updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });
   }

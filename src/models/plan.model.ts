@@ -28,6 +28,8 @@ export interface IPlanModelData {
   readonly canceledAt: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class PlanModel extends AggregateRoot {
@@ -49,6 +51,8 @@ export class PlanModel extends AggregateRoot {
   readonly canceledAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IPlanModelData) {
     super();
 
@@ -74,6 +78,8 @@ export class PlanModel extends AggregateRoot {
     this.canceledAt = convertToISODateString(data.canceledAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdPlan() {

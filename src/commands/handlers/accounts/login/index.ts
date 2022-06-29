@@ -55,7 +55,8 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
     }
     const accessCreated: AccessModel = await this.commandBus.execute(
       new CreateAccessCommand({
-        parent: account.id
+        parent: account.id,
+        createdBy: account.id
       })
     );
     if (!accessCreated) {

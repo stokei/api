@@ -21,6 +21,8 @@ export interface IProductModelData {
   readonly deactivatedAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class ProductModel extends AggregateRoot {
@@ -37,6 +39,8 @@ export class ProductModel extends AggregateRoot {
   readonly deactivatedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IProductModelData) {
     super();
 
@@ -57,6 +61,8 @@ export class ProductModel extends AggregateRoot {
     this.deactivatedAt = convertToISODateString(data.deactivatedAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdProduct() {

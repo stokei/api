@@ -1,4 +1,5 @@
 export interface UpdateProductDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

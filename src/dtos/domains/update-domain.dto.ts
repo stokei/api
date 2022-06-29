@@ -1,4 +1,5 @@
 export interface UpdateDomainDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

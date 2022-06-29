@@ -1,4 +1,5 @@
 export interface UpdateClassroomsInstructorDataDTO {
+  updatedBy: string;
   name?: string;
 }
 

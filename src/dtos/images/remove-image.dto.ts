@@ -1,4 +1,5 @@
 export interface RemoveImageWhereDTO {
+  removedBy: string;
   imageId: string;
 }
 

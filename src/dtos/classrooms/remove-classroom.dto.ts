@@ -1,4 +1,5 @@
 export interface RemoveClassroomWhereDTO {
+  removedBy: string;
   classroomId: string;
 }
 

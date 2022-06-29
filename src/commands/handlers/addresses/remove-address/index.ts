@@ -27,6 +27,9 @@ export class RemoveAddressCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data.where?.removedBy) {
+      throw new ParamNotFoundException('removedBy');
+    }
     const addressId = splitServiceId(data.where?.addressId)?.id;
     if (!addressId) {
       throw new ParamNotFoundException('addressId');
@@ -39,6 +42,7 @@ export class RemoveAddressCommandHandler
 
     const removed = await this.removeAddressRepository.execute({
       where: {
+        ...data.where,
         addressId
       }
     });
@@ -55,6 +59,7 @@ export class RemoveAddressCommandHandler
   private clearData(command: RemoveAddressCommand): RemoveAddressCommand {
     return cleanObject({
       where: cleanObject({
+        removedBy: cleanValue(command?.where?.removedBy),
         addressId: cleanValue(command?.where?.addressId)
       })
     });

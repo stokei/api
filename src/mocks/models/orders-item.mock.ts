@@ -25,7 +25,9 @@ export class OrdersItemModelMock extends OrdersItemModel {
       recurringIntervalCount: data?.recurringIntervalCount ?? 1,
       recurringIntervalType: data?.recurringIntervalType ?? RecurringType.MONTH,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

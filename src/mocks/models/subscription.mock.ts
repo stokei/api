@@ -19,7 +19,9 @@ export class SubscriptionModelMock extends SubscriptionModel {
       endAt: data?.endAt ?? convertToISODateString(Date.now() + 60000),
       canceledAt: data?.canceledAt ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
-      updatedAt: data?.updatedAt ?? null
+      updatedAt: data?.updatedAt ?? null,
+      createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }
 }

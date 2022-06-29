@@ -20,6 +20,8 @@ export interface IPaymentsMethodModelData {
   readonly deactivatedAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class PaymentsMethodModel extends AggregateRoot {
@@ -33,6 +35,8 @@ export class PaymentsMethodModel extends AggregateRoot {
   readonly deactivatedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: IPaymentsMethodModelData) {
     super();
 
@@ -49,6 +53,8 @@ export class PaymentsMethodModel extends AggregateRoot {
     this.deactivatedAt = convertToISODateString(data.deactivatedAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdPaymentsMethod() {

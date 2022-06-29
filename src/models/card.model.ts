@@ -17,6 +17,8 @@ export interface ICardModelData {
   readonly default: boolean;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
 }
 
 export class CardModel extends AggregateRoot {
@@ -28,6 +30,8 @@ export class CardModel extends AggregateRoot {
   readonly default: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly updatedBy?: string;
+  readonly createdBy?: string;
   constructor(data: ICardModelData) {
     super();
 
@@ -43,6 +47,8 @@ export class CardModel extends AggregateRoot {
     this.default = data.default;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.updatedBy = data.updatedBy;
+    this.createdBy = data.createdBy;
   }
 
   createdCard() {

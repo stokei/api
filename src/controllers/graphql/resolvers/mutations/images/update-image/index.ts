@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { UpdateImageInput } from '@/controllers/graphql/inputs/images/update-image.input';
 import { Image } from '@/controllers/graphql/types/image';
@@ -12,8 +12,17 @@ export class UpdateImageResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Image)
-  async updateImage(@Args('input') data: UpdateImageInput) {
-    const response = await this.updateImageService.execute(data);
+  async updateImage(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: UpdateImageInput
+  ) {
+    const response = await this.updateImageService.execute({
+      ...data,
+      data: {
+        ...data?.data,
+        updatedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

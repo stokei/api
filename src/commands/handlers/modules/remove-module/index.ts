@@ -50,7 +50,9 @@ export class RemoveModuleCommandHandler
       throw new DataNotFoundException();
     }
     const moduleModel = this.publisher.mergeObjectContext(module);
-    moduleModel.removedModule();
+    moduleModel.removedModule({
+      removedBy: data.where.removedBy
+    });
     moduleModel.commit();
 
     return module;

@@ -50,7 +50,9 @@ export class RemoveCourseCommandHandler
       throw new DataNotFoundException();
     }
     const courseModel = this.publisher.mergeObjectContext(course);
-    courseModel.removedCourse();
+    courseModel.removedCourse({
+      removedBy: data.where.removedBy
+    });
     courseModel.commit();
 
     return course;

@@ -65,30 +65,33 @@ export class ProductModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdProduct() {
+  createdProduct({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new ProductCreatedEvent({
+          createdBy,
           product: this
         })
       );
     }
   }
 
-  updatedProduct() {
+  updatedProduct({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new ProductUpdatedEvent({
+          updatedBy,
           product: this
         })
       );
     }
   }
 
-  removedProduct() {
+  removedProduct({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new ProductRemovedEvent({
+          removedBy,
           product: this
         })
       );

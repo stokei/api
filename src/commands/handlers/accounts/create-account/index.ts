@@ -89,7 +89,9 @@ export class CreateAccountCommandHandler
     }
 
     const accountModel = this.publisher.mergeObjectContext(accountCreated);
-    accountModel.createdAccount();
+    accountModel.createdAccount({
+      createdBy: data.createdBy
+    });
     accountModel.commit();
 
     return accountCreated;

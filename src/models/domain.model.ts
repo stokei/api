@@ -63,30 +63,33 @@ export class DomainModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdDomain() {
+  createdDomain({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new DomainCreatedEvent({
+          createdBy,
           domain: this
         })
       );
     }
   }
 
-  updatedDomain() {
+  updatedDomain({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new DomainUpdatedEvent({
+          updatedBy,
           domain: this
         })
       );
     }
   }
 
-  removedDomain() {
+  removedDomain({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new DomainRemovedEvent({
+          removedBy,
           domain: this
         })
       );

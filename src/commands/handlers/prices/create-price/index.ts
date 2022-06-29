@@ -34,7 +34,9 @@ export class CreatePriceCommandHandler
       throw new PriceNotFoundException();
     }
     const priceModel = this.publisher.mergeObjectContext(priceCreated);
-    priceModel.createdPrice();
+    priceModel.createdPrice({
+      createdBy: data.createdBy
+    });
     priceModel.commit();
 
     return priceCreated;

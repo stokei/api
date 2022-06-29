@@ -41,30 +41,33 @@ export class CoursesStudentModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdCoursesStudent() {
+  createdCoursesStudent({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new CoursesStudentCreatedEvent({
+          createdBy,
           coursesStudent: this
         })
       );
     }
   }
 
-  updatedCoursesStudent() {
+  updatedCoursesStudent({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new CoursesStudentUpdatedEvent({
+          updatedBy,
           coursesStudent: this
         })
       );
     }
   }
 
-  removedCoursesStudent() {
+  removedCoursesStudent({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new CoursesStudentRemovedEvent({
+          removedBy,
           coursesStudent: this
         })
       );

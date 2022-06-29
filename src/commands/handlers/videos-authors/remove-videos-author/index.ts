@@ -52,7 +52,9 @@ export class RemoveVideosAuthorCommandHandler
       throw new DataNotFoundException();
     }
     const videosAuthorModel = this.publisher.mergeObjectContext(videosAuthor);
-    videosAuthorModel.removedVideosAuthor();
+    videosAuthorModel.removedVideosAuthor({
+      removedBy: data.where.removedBy
+    });
     videosAuthorModel.commit();
 
     return videosAuthor;

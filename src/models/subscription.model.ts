@@ -57,30 +57,33 @@ export class SubscriptionModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdSubscription() {
+  createdSubscription({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new SubscriptionCreatedEvent({
+          createdBy,
           subscription: this
         })
       );
     }
   }
 
-  updatedSubscription() {
+  updatedSubscription({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new SubscriptionUpdatedEvent({
+          updatedBy,
           subscription: this
         })
       );
     }
   }
 
-  removedSubscription() {
+  removedSubscription({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new SubscriptionRemovedEvent({
+          removedBy,
           subscription: this
         })
       );

@@ -87,30 +87,33 @@ export class OrderModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdOrder() {
+  createdOrder({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new OrderCreatedEvent({
+          createdBy,
           order: this
         })
       );
     }
   }
 
-  updatedOrder() {
+  updatedOrder({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new OrderUpdatedEvent({
+          updatedBy,
           order: this
         })
       );
     }
   }
 
-  removedOrder() {
+  removedOrder({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new OrderRemovedEvent({
+          removedBy,
           order: this
         })
       );

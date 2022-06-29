@@ -55,7 +55,9 @@ export class UpdateProductCommandHandler
       throw new ProductNotFoundException();
     }
     const productModel = this.publisher.mergeObjectContext(productUpdated);
-    productModel.updatedProduct();
+    productModel.updatedProduct({
+      updatedBy: data.data.updatedBy
+    });
     productModel.commit();
 
     return productUpdated;

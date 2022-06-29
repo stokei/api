@@ -96,30 +96,33 @@ export class AccountModel extends AggregateRoot {
     this.roles = data.roles;
   }
 
-  createdAccount() {
+  createdAccount({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new AccountCreatedEvent({
+          createdBy,
           account: this
         })
       );
     }
   }
 
-  updatedAccount() {
+  updatedAccount({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new AccountUpdatedEvent({
+          updatedBy,
           account: this
         })
       );
     }
   }
 
-  removedAccount() {
+  removedAccount({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new AccountRemovedEvent({
+          removedBy,
           account: this
         })
       );

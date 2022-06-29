@@ -52,7 +52,9 @@ export class RemoveSubscriptionCommandHandler
       throw new DataNotFoundException();
     }
     const subscriptionModel = this.publisher.mergeObjectContext(subscription);
-    subscriptionModel.removedSubscription();
+    subscriptionModel.removedSubscription({
+      removedBy: data.where.removedBy
+    });
     subscriptionModel.commit();
 
     return subscription;

@@ -53,7 +53,9 @@ export class RemovePaymentsMethodCommandHandler
     }
     const paymentsMethodModel =
       this.publisher.mergeObjectContext(paymentsMethod);
-    paymentsMethodModel.removedPaymentsMethod();
+    paymentsMethodModel.removedPaymentsMethod({
+      removedBy: data.where.removedBy
+    });
     paymentsMethodModel.commit();
 
     return paymentsMethod;

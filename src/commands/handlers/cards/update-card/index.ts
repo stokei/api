@@ -53,7 +53,9 @@ export class UpdateCardCommandHandler
       throw new CardNotFoundException();
     }
     const cardModel = this.publisher.mergeObjectContext(cardUpdated);
-    cardModel.updatedCard();
+    cardModel.updatedCard({
+      updatedBy: data.data.updatedBy
+    });
     cardModel.commit();
 
     return cardUpdated;

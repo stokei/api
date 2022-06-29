@@ -73,30 +73,33 @@ export class ProjectModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdProject() {
+  createdProject({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new ProjectCreatedEvent({
+          createdBy,
           project: this
         })
       );
     }
   }
 
-  updatedProject() {
+  updatedProject({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new ProjectUpdatedEvent({
+          updatedBy,
           project: this
         })
       );
     }
   }
 
-  removedProject() {
+  removedProject({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new ProjectRemovedEvent({
+          removedBy,
           project: this
         })
       );

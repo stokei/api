@@ -34,7 +34,9 @@ export class CreateClassroomCommandHandler
       throw new ClassroomNotFoundException();
     }
     const classroomModel = this.publisher.mergeObjectContext(classroomCreated);
-    classroomModel.createdClassroom();
+    classroomModel.createdClassroom({
+      createdBy: data.createdBy
+    });
     classroomModel.commit();
 
     return classroomCreated;

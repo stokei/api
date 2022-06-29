@@ -53,7 +53,9 @@ export class UpdatePhoneCommandHandler
       throw new PhoneNotFoundException();
     }
     const phoneModel = this.publisher.mergeObjectContext(phoneUpdated);
-    phoneModel.updatedPhone();
+    phoneModel.updatedPhone({
+      updatedBy: data.data.updatedBy
+    });
     phoneModel.commit();
 
     return phoneUpdated;

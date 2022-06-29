@@ -22,7 +22,10 @@ export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {
       throw new DataNotFoundException();
     }
     const accountCreated: AccountModel = await this.commandBus.execute(
-      new CreateAccountCommand(data)
+      new CreateAccountCommand({
+        ...data,
+        createdBy: data.parent
+      })
     );
     if (!accountCreated) {
       throw new AccountNotFoundException();

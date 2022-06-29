@@ -55,7 +55,9 @@ export class UpdateLanguageCommandHandler
       throw new LanguageNotFoundException();
     }
     const languageModel = this.publisher.mergeObjectContext(languageUpdated);
-    languageModel.updatedLanguage();
+    languageModel.updatedLanguage({
+      updatedBy: data.data.updatedBy
+    });
     languageModel.commit();
 
     return languageUpdated;

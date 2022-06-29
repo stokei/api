@@ -37,7 +37,9 @@ export class CreateOrdersItemCommandHandler
     }
     const ordersItemModel =
       this.publisher.mergeObjectContext(ordersItemCreated);
-    ordersItemModel.createdOrdersItem();
+    ordersItemModel.createdOrdersItem({
+      createdBy: data.createdBy
+    });
     ordersItemModel.commit();
 
     return ordersItemCreated;

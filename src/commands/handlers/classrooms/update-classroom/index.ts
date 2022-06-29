@@ -57,7 +57,9 @@ export class UpdateClassroomCommandHandler
       throw new ClassroomNotFoundException();
     }
     const classroomModel = this.publisher.mergeObjectContext(classroomUpdated);
-    classroomModel.updatedClassroom();
+    classroomModel.updatedClassroom({
+      updatedBy: data.data.updatedBy
+    });
     classroomModel.commit();
 
     return classroomUpdated;

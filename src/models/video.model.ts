@@ -60,30 +60,33 @@ export class VideoModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdVideo() {
+  createdVideo({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new VideoCreatedEvent({
+          createdBy,
           video: this
         })
       );
     }
   }
 
-  updatedVideo() {
+  updatedVideo({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new VideoUpdatedEvent({
+          updatedBy,
           video: this
         })
       );
     }
   }
 
-  removedVideo() {
+  removedVideo({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new VideoRemovedEvent({
+          removedBy,
           video: this
         })
       );

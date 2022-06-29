@@ -72,30 +72,33 @@ export class PaymentModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdPayment() {
+  createdPayment({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new PaymentCreatedEvent({
+          createdBy,
           payment: this
         })
       );
     }
   }
 
-  updatedPayment() {
+  updatedPayment({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new PaymentUpdatedEvent({
+          updatedBy,
           payment: this
         })
       );
     }
   }
 
-  removedPayment() {
+  removedPayment({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new PaymentRemovedEvent({
+          removedBy,
           payment: this
         })
       );

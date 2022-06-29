@@ -51,30 +51,33 @@ export class CardModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdCard() {
+  createdCard({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new CardCreatedEvent({
+          createdBy,
           card: this
         })
       );
     }
   }
 
-  updatedCard() {
+  updatedCard({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new CardUpdatedEvent({
+          updatedBy,
           card: this
         })
       );
     }
   }
 
-  removedCard() {
+  removedCard({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new CardRemovedEvent({
+          removedBy,
           card: this
         })
       );

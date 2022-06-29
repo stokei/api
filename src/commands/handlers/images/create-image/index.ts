@@ -34,7 +34,9 @@ export class CreateImageCommandHandler
       throw new ImageNotFoundException();
     }
     const imageModel = this.publisher.mergeObjectContext(imageCreated);
-    imageModel.createdImage();
+    imageModel.createdImage({
+      createdBy: data.createdBy
+    });
     imageModel.commit();
 
     return imageCreated;

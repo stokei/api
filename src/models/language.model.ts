@@ -50,30 +50,33 @@ export class LanguageModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdLanguage() {
+  createdLanguage({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new LanguageCreatedEvent({
+          createdBy,
           language: this
         })
       );
     }
   }
 
-  updatedLanguage() {
+  updatedLanguage({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new LanguageUpdatedEvent({
+          updatedBy,
           language: this
         })
       );
     }
   }
 
-  removedLanguage() {
+  removedLanguage({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new LanguageRemovedEvent({
+          removedBy,
           language: this
         })
       );

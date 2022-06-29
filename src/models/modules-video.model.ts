@@ -41,30 +41,33 @@ export class ModulesVideoModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdModulesVideo() {
+  createdModulesVideo({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new ModulesVideoCreatedEvent({
+          createdBy,
           modulesVideo: this
         })
       );
     }
   }
 
-  updatedModulesVideo() {
+  updatedModulesVideo({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new ModulesVideoUpdatedEvent({
+          updatedBy,
           modulesVideo: this
         })
       );
     }
   }
 
-  removedModulesVideo() {
+  removedModulesVideo({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new ModulesVideoRemovedEvent({
+          removedBy,
           modulesVideo: this
         })
       );

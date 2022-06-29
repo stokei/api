@@ -52,7 +52,9 @@ export class RemoveClassroomCommandHandler
       throw new DataNotFoundException();
     }
     const classroomModel = this.publisher.mergeObjectContext(classroom);
-    classroomModel.removedClassroom();
+    classroomModel.removedClassroom({
+      removedBy: data.where.removedBy
+    });
     classroomModel.commit();
 
     return classroom;

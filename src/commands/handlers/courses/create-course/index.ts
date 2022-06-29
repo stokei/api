@@ -34,7 +34,9 @@ export class CreateCourseCommandHandler
       throw new CourseNotFoundException();
     }
     const courseModel = this.publisher.mergeObjectContext(courseCreated);
-    courseModel.createdCourse();
+    courseModel.createdCourse({
+      createdBy: data.createdBy
+    });
     courseModel.commit();
 
     return courseCreated;

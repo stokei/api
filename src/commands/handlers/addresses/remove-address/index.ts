@@ -50,7 +50,9 @@ export class RemoveAddressCommandHandler
       throw new DataNotFoundException();
     }
     const addressModel = this.publisher.mergeObjectContext(address);
-    addressModel.removedAddress();
+    addressModel.removedAddress({
+      removedBy: data.where.removedBy
+    });
     addressModel.commit();
 
     return address;

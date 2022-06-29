@@ -2,10 +2,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { ChangeFromOldDefaultAddressToNewDefaultAddressCommand } from '@/commands/implements/addresses/change-from-old-default-address-to-new-default-address.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { AddressCreatedEvent } from '@/events/implements/addresses/address-created.event';
 import { AddressRemovedEvent } from '@/events/implements/addresses/address-removed.event';
 import { AddressUpdatedEvent } from '@/events/implements/addresses/address-updated.event';
@@ -25,17 +25,26 @@ export class AddressesSagas {
       ofType(AddressCreatedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [AddressCreatedEvent] Saga for example send a email'
-        );
+        const address = event?.address;
+        const createdBy = event?.createdBy;
+        if (!address) {
+          return;
+        }
         this.logger.log(
           'Inside [AddressCreatedEvent] Saga event addressCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [
+          new ChangeFromOldDefaultAddressToNewDefaultAddressCommand({
+            newAddress: address.id,
+            updatedBy: createdBy
+          })
+        ];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 
@@ -54,8 +63,10 @@ export class AddressesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 
@@ -65,17 +76,26 @@ export class AddressesSagas {
       ofType(AddressUpdatedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [AddressUpdatedEvent] Saga for example send a email'
-        );
+        const address = event?.address;
+        const updatedBy = event?.updatedBy;
+        if (!address) {
+          return;
+        }
         this.logger.log(
           'Inside [AddressUpdatedEvent] Saga event addressUpdated:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [
+          new ChangeFromOldDefaultAddressToNewDefaultAddressCommand({
+            newAddress: address.id,
+            updatedBy
+          })
+        ];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 }

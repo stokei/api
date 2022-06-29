@@ -38,30 +38,33 @@ export class ImageModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdImage() {
+  createdImage({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new ImageCreatedEvent({
+          createdBy,
           image: this
         })
       );
     }
   }
 
-  updatedImage() {
+  updatedImage({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new ImageUpdatedEvent({
+          updatedBy,
           image: this
         })
       );
     }
   }
 
-  removedImage() {
+  removedImage({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new ImageRemovedEvent({
+          removedBy,
           image: this
         })
       );

@@ -55,7 +55,9 @@ export class UpdateCurrencyCommandHandler
       throw new CurrencyNotFoundException();
     }
     const currencyModel = this.publisher.mergeObjectContext(currencyUpdated);
-    currencyModel.updatedCurrency();
+    currencyModel.updatedCurrency({
+      updatedBy: data.data.updatedBy
+    });
     currencyModel.commit();
 
     return currencyUpdated;

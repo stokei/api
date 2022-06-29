@@ -1,4 +1,5 @@
 export interface CreateAccountDTO {
+  createdBy: string;
   firstname: string;
   lastname: string;
   parent: string;

@@ -50,7 +50,9 @@ export class RemoveCartCommandHandler
       throw new DataNotFoundException();
     }
     const cartModel = this.publisher.mergeObjectContext(cart);
-    cartModel.removedCart();
+    cartModel.removedCart({
+      removedBy: data.where.removedBy
+    });
     cartModel.commit();
 
     return cart;

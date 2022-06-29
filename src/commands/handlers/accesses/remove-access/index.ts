@@ -57,7 +57,9 @@ export class RemoveAccessCommandHandler
       throw new DataNotFoundException();
     }
     const accessModel = this.publisher.mergeObjectContext(access);
-    accessModel.removedAccess();
+    accessModel.removedAccess({
+      removedBy: data.where.removedBy
+    });
     accessModel.commit();
 
     return access;

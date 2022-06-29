@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
@@ -34,8 +34,10 @@ export class PricesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 
@@ -54,8 +56,10 @@ export class PricesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 
@@ -74,8 +78,10 @@ export class PricesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 }

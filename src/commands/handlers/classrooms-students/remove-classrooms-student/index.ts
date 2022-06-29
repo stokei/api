@@ -56,7 +56,9 @@ export class RemoveClassroomsStudentCommandHandler
     }
     const classroomsStudentModel =
       this.publisher.mergeObjectContext(classroomsStudent);
-    classroomsStudentModel.removedClassroomsStudent();
+    classroomsStudentModel.removedClassroomsStudent({
+      removedBy: data.where.removedBy
+    });
     classroomsStudentModel.commit();
 
     return classroomsStudent;

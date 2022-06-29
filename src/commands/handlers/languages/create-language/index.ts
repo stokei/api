@@ -34,7 +34,9 @@ export class CreateLanguageCommandHandler
       throw new LanguageNotFoundException();
     }
     const languageModel = this.publisher.mergeObjectContext(languageCreated);
-    languageModel.createdLanguage();
+    languageModel.createdLanguage({
+      createdBy: data.createdBy
+    });
     languageModel.commit();
 
     return languageCreated;

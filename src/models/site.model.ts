@@ -44,30 +44,33 @@ export class SiteModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdSite() {
+  createdSite({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new SiteCreatedEvent({
+          createdBy,
           site: this
         })
       );
     }
   }
 
-  updatedSite() {
+  updatedSite({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new SiteUpdatedEvent({
+          updatedBy,
           site: this
         })
       );
     }
   }
 
-  removedSite() {
+  removedSite({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new SiteRemovedEvent({
+          removedBy,
           site: this
         })
       );

@@ -69,30 +69,33 @@ export class PhoneModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdPhone() {
+  createdPhone({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new PhoneCreatedEvent({
+          createdBy,
           phone: this
         })
       );
     }
   }
 
-  updatedPhone() {
+  updatedPhone({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new PhoneUpdatedEvent({
+          updatedBy,
           phone: this
         })
       );
     }
   }
 
-  removedPhone() {
+  removedPhone({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new PhoneRemovedEvent({
+          removedBy,
           phone: this
         })
       );

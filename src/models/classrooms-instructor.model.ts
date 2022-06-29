@@ -41,30 +41,33 @@ export class ClassroomsInstructorModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdClassroomsInstructor() {
+  createdClassroomsInstructor({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new ClassroomsInstructorCreatedEvent({
+          createdBy,
           classroomsInstructor: this
         })
       );
     }
   }
 
-  updatedClassroomsInstructor() {
+  updatedClassroomsInstructor({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new ClassroomsInstructorUpdatedEvent({
+          updatedBy,
           classroomsInstructor: this
         })
       );
     }
   }
 
-  removedClassroomsInstructor() {
+  removedClassroomsInstructor({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new ClassroomsInstructorRemovedEvent({
+          removedBy,
           classroomsInstructor: this
         })
       );

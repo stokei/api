@@ -62,30 +62,33 @@ export class AddressModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdAddress() {
+  createdAddress({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new AddressCreatedEvent({
+          createdBy,
           address: this
         })
       );
     }
   }
 
-  updatedAddress() {
+  updatedAddress({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new AddressUpdatedEvent({
+          updatedBy,
           address: this
         })
       );
     }
   }
 
-  removedAddress() {
+  removedAddress({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new AddressRemovedEvent({
+          removedBy,
           address: this
         })
       );

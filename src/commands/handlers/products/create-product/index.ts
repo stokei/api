@@ -34,7 +34,9 @@ export class CreateProductCommandHandler
       throw new ProductNotFoundException();
     }
     const productModel = this.publisher.mergeObjectContext(productCreated);
-    productModel.createdProduct();
+    productModel.createdProduct({
+      createdBy: data.createdBy
+    });
     productModel.commit();
 
     return productCreated;

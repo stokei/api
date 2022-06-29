@@ -40,7 +40,9 @@ export class CreateClassroomsInstructorCommandHandler
     const classroomsInstructorModel = this.publisher.mergeObjectContext(
       classroomsInstructorCreated
     );
-    classroomsInstructorModel.createdClassroomsInstructor();
+    classroomsInstructorModel.createdClassroomsInstructor({
+      createdBy: data.createdBy
+    });
     classroomsInstructorModel.commit();
 
     return classroomsInstructorCreated;

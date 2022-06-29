@@ -55,7 +55,9 @@ export class UpdatePaymentCommandHandler
       throw new PaymentNotFoundException();
     }
     const paymentModel = this.publisher.mergeObjectContext(paymentUpdated);
-    paymentModel.updatedPayment();
+    paymentModel.updatedPayment({
+      updatedBy: data.data.updatedBy
+    });
     paymentModel.commit();
 
     return paymentUpdated;

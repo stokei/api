@@ -34,7 +34,9 @@ export class CreatePlanCommandHandler
       throw new PlanNotFoundException();
     }
     const planModel = this.publisher.mergeObjectContext(planCreated);
-    planModel.createdPlan();
+    planModel.createdPlan({
+      createdBy: data.createdBy
+    });
     planModel.commit();
 
     return planCreated;

@@ -50,7 +50,9 @@ export class RemoveCurrencyCommandHandler
       throw new DataNotFoundException();
     }
     const currencyModel = this.publisher.mergeObjectContext(currency);
-    currencyModel.removedCurrency();
+    currencyModel.removedCurrency({
+      removedBy: data.where.removedBy
+    });
     currencyModel.commit();
 
     return currency;

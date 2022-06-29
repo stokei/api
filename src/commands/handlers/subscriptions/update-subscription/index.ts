@@ -57,7 +57,9 @@ export class UpdateSubscriptionCommandHandler
     }
     const subscriptionModel =
       this.publisher.mergeObjectContext(subscriptionUpdated);
-    subscriptionModel.updatedSubscription();
+    subscriptionModel.updatedSubscription({
+      updatedBy: data.data.updatedBy
+    });
     subscriptionModel.commit();
 
     return subscriptionUpdated;

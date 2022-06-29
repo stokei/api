@@ -50,7 +50,9 @@ export class RemoveDomainCommandHandler
       throw new DataNotFoundException();
     }
     const domainModel = this.publisher.mergeObjectContext(domain);
-    domainModel.removedDomain();
+    domainModel.removedDomain({
+      removedBy: data.where.removedBy
+    });
     domainModel.commit();
 
     return domain;

@@ -64,7 +64,9 @@ export class UpdateClassroomsInstructorCommandHandler
     const classroomsInstructorModel = this.publisher.mergeObjectContext(
       classroomsInstructorUpdated
     );
-    classroomsInstructorModel.updatedClassroomsInstructor();
+    classroomsInstructorModel.updatedClassroomsInstructor({
+      updatedBy: data.data.updatedBy
+    });
     classroomsInstructorModel.commit();
 
     return classroomsInstructorUpdated;

@@ -53,7 +53,9 @@ export class UpdateModuleCommandHandler
       throw new ModuleNotFoundException();
     }
     const moduleModel = this.publisher.mergeObjectContext(moduleUpdated);
-    moduleModel.updatedModule();
+    moduleModel.updatedModule({
+      updatedBy: data.data.updatedBy
+    });
     moduleModel.commit();
 
     return moduleUpdated;

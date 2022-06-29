@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { RemoveCoursesInstructorInput } from '@/controllers/graphql/inputs/courses-instructors/remove-courses-instructor.input';
 import { CoursesInstructor } from '@/controllers/graphql/types/courses-instructor';
@@ -15,9 +15,16 @@ export class RemoveCoursesInstructorResolver {
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => CoursesInstructor)
   async removeCoursesInstructor(
+    @CurrentAccount('id') currentAccountId: string,
     @Args('input') data: RemoveCoursesInstructorInput
   ) {
-    const response = await this.removeCoursesInstructorService.execute(data);
+    const response = await this.removeCoursesInstructorService.execute({
+      ...data,
+      where: {
+        ...data?.where,
+        removedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

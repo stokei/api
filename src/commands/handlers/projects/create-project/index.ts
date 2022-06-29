@@ -34,7 +34,9 @@ export class CreateProjectCommandHandler
       throw new ProjectNotFoundException();
     }
     const projectModel = this.publisher.mergeObjectContext(projectCreated);
-    projectModel.createdProject();
+    projectModel.createdProject({
+      createdBy: data.createdBy
+    });
     projectModel.commit();
 
     return projectCreated;

@@ -49,30 +49,33 @@ export class ColorModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdColor() {
+  createdColor({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new ColorCreatedEvent({
+          createdBy,
           color: this
         })
       );
     }
   }
 
-  updatedColor() {
+  updatedColor({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new ColorUpdatedEvent({
+          updatedBy,
           color: this
         })
       );
     }
   }
 
-  removedColor() {
+  removedColor({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new ColorRemovedEvent({
+          removedBy,
           color: this
         })
       );

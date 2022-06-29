@@ -57,7 +57,9 @@ export class UpdateVideosAuthorCommandHandler
     }
     const videosAuthorModel =
       this.publisher.mergeObjectContext(videosAuthorUpdated);
-    videosAuthorModel.updatedVideosAuthor();
+    videosAuthorModel.updatedVideosAuthor({
+      updatedBy: data.data.updatedBy
+    });
     videosAuthorModel.commit();
 
     return videosAuthorUpdated;

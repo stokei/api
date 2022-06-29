@@ -25,28 +25,28 @@ export class CreateAddressCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
+    if (!data.parent) {
       throw new ParamNotFoundException<CreateAddressCommandKeys>('parent');
     }
-    if (!data?.street) {
+    if (!data.street) {
       throw new ParamNotFoundException<CreateAddressCommandKeys>('street');
     }
-    if (!data?.number) {
+    if (!data.number) {
       throw new ParamNotFoundException<CreateAddressCommandKeys>('number');
     }
-    if (!data?.city) {
+    if (!data.city) {
       throw new ParamNotFoundException<CreateAddressCommandKeys>('city');
     }
-    if (!data?.country) {
+    if (!data.country) {
       throw new ParamNotFoundException<CreateAddressCommandKeys>('country');
     }
-    if (!data?.state) {
+    if (!data.state) {
       throw new ParamNotFoundException<CreateAddressCommandKeys>('state');
     }
-    if (!data?.postalCode) {
+    if (!data.postalCode) {
       throw new ParamNotFoundException<CreateAddressCommandKeys>('postalCode');
     }
-    if (!data?.createdBy) {
+    if (!data.createdBy) {
       throw new ParamNotFoundException<CreateAddressCommandKeys>('createdBy');
     }
 
@@ -55,7 +55,9 @@ export class CreateAddressCommandHandler
       throw new AddressNotFoundException();
     }
     const addressModel = this.publisher.mergeObjectContext(addressCreated);
-    addressModel.createdAddress();
+    addressModel.createdAddress({
+      createdBy: data.createdBy
+    });
     addressModel.commit();
 
     return addressCreated;

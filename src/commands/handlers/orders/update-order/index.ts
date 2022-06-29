@@ -53,7 +53,9 @@ export class UpdateOrderCommandHandler
       throw new OrderNotFoundException();
     }
     const orderModel = this.publisher.mergeObjectContext(orderUpdated);
-    orderModel.updatedOrder();
+    orderModel.updatedOrder({
+      updatedBy: data.data.updatedBy
+    });
     orderModel.commit();
 
     return orderUpdated;

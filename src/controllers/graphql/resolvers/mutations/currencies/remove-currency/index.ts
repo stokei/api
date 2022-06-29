@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { RemoveCurrencyInput } from '@/controllers/graphql/inputs/currencies/remove-currency.input';
 import { Currency } from '@/controllers/graphql/types/currency';
@@ -12,8 +12,17 @@ export class RemoveCurrencyResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Currency)
-  async removeCurrency(@Args('input') data: RemoveCurrencyInput) {
-    const response = await this.removeCurrencyService.execute(data);
+  async removeCurrency(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: RemoveCurrencyInput
+  ) {
+    const response = await this.removeCurrencyService.execute({
+      ...data,
+      where: {
+        ...data?.where,
+        removedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

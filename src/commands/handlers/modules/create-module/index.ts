@@ -34,7 +34,9 @@ export class CreateModuleCommandHandler
       throw new ModuleNotFoundException();
     }
     const moduleModel = this.publisher.mergeObjectContext(moduleCreated);
-    moduleModel.createdModule();
+    moduleModel.createdModule({
+      createdBy: data.createdBy
+    });
     moduleModel.commit();
 
     return moduleCreated;

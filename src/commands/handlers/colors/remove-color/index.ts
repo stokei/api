@@ -50,7 +50,9 @@ export class RemoveColorCommandHandler
       throw new DataNotFoundException();
     }
     const colorModel = this.publisher.mergeObjectContext(color);
-    colorModel.removedColor();
+    colorModel.removedColor({
+      removedBy: data.where.removedBy
+    });
     colorModel.commit();
 
     return color;

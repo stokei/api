@@ -34,7 +34,9 @@ export class CreateCartsItemCommandHandler
       throw new CartsItemNotFoundException();
     }
     const cartsItemModel = this.publisher.mergeObjectContext(cartsItemCreated);
-    cartsItemModel.createdCartsItem();
+    cartsItemModel.createdCartsItem({
+      createdBy: data.createdBy
+    });
     cartsItemModel.commit();
 
     return cartsItemCreated;

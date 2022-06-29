@@ -34,7 +34,9 @@ export class CreateVideoCommandHandler
       throw new VideoNotFoundException();
     }
     const videoModel = this.publisher.mergeObjectContext(videoCreated);
-    videoModel.createdVideo();
+    videoModel.createdVideo({
+      createdBy: data.createdBy
+    });
     videoModel.commit();
 
     return videoCreated;

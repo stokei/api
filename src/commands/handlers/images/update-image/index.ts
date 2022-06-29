@@ -53,7 +53,9 @@ export class UpdateImageCommandHandler
       throw new ImageNotFoundException();
     }
     const imageModel = this.publisher.mergeObjectContext(imageUpdated);
-    imageModel.updatedImage();
+    imageModel.updatedImage({
+      updatedBy: data.data.updatedBy
+    });
     imageModel.commit();
 
     return imageUpdated;

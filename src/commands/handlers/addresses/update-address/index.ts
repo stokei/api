@@ -15,8 +15,6 @@ import {
 import { FindAddressByIdRepository } from '@/repositories/addresses/find-address-by-id';
 import { UpdateAddressRepository } from '@/repositories/addresses/update-address';
 
-type UpdateAddressCommandKeys = keyof UpdateAddressCommand;
-
 @CommandHandler(UpdateAddressCommand)
 export class UpdateAddressCommandHandler
   implements ICommandHandler<UpdateAddressCommand>
@@ -60,7 +58,9 @@ export class UpdateAddressCommandHandler
       throw new AddressNotFoundException();
     }
     const addressModel = this.publisher.mergeObjectContext(addressUpdated);
-    addressModel.updatedAddress();
+    addressModel.updatedAddress({
+      updatedBy: data.data.updatedBy
+    });
     addressModel.commit();
 
     return addressUpdated;

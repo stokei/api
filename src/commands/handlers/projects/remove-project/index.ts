@@ -50,7 +50,9 @@ export class RemoveProjectCommandHandler
       throw new DataNotFoundException();
     }
     const projectModel = this.publisher.mergeObjectContext(project);
-    projectModel.removedProject();
+    projectModel.removedProject({
+      removedBy: data.where.removedBy
+    });
     projectModel.commit();
 
     return project;

@@ -41,30 +41,33 @@ export class VideosAuthorModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdVideosAuthor() {
+  createdVideosAuthor({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new VideosAuthorCreatedEvent({
+          createdBy,
           videosAuthor: this
         })
       );
     }
   }
 
-  updatedVideosAuthor() {
+  updatedVideosAuthor({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new VideosAuthorUpdatedEvent({
+          updatedBy,
           videosAuthor: this
         })
       );
     }
   }
 
-  removedVideosAuthor() {
+  removedVideosAuthor({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new VideosAuthorRemovedEvent({
+          removedBy,
           videosAuthor: this
         })
       );

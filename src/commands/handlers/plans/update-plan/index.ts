@@ -53,7 +53,9 @@ export class UpdatePlanCommandHandler
       throw new PlanNotFoundException();
     }
     const planModel = this.publisher.mergeObjectContext(planUpdated);
-    planModel.updatedPlan();
+    planModel.updatedPlan({
+      updatedBy: data.data.updatedBy
+    });
     planModel.commit();
 
     return planUpdated;

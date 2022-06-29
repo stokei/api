@@ -50,7 +50,9 @@ export class RemoveSiteCommandHandler
       throw new DataNotFoundException();
     }
     const siteModel = this.publisher.mergeObjectContext(site);
-    siteModel.removedSite();
+    siteModel.removedSite({
+      removedBy: data.where.removedBy
+    });
     siteModel.commit();
 
     return site;

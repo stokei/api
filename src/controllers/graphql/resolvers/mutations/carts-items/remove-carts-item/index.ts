@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { RemoveCartsItemInput } from '@/controllers/graphql/inputs/carts-items/remove-carts-item.input';
 import { CartsItem } from '@/controllers/graphql/types/carts-item';
@@ -14,8 +14,17 @@ export class RemoveCartsItemResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => CartsItem)
-  async removeCartsItem(@Args('input') data: RemoveCartsItemInput) {
-    const response = await this.removeCartsItemService.execute(data);
+  async removeCartsItem(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: RemoveCartsItemInput
+  ) {
+    const response = await this.removeCartsItemService.execute({
+      ...data,
+      where: {
+        ...data?.where,
+        removedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

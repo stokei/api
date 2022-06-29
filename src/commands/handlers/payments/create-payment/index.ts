@@ -34,7 +34,9 @@ export class CreatePaymentCommandHandler
       throw new PaymentNotFoundException();
     }
     const paymentModel = this.publisher.mergeObjectContext(paymentCreated);
-    paymentModel.createdPayment();
+    paymentModel.createdPayment({
+      createdBy: data.createdBy
+    });
     paymentModel.commit();
 
     return paymentCreated;

@@ -53,7 +53,9 @@ export class UpdateCourseCommandHandler
       throw new CourseNotFoundException();
     }
     const courseModel = this.publisher.mergeObjectContext(courseUpdated);
-    courseModel.updatedCourse();
+    courseModel.updatedCourse({
+      updatedBy: data.data.updatedBy
+    });
     courseModel.commit();
 
     return courseUpdated;

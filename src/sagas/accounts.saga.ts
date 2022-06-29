@@ -2,10 +2,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
 import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
 import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
@@ -36,8 +35,10 @@ export class AccountsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 
@@ -56,8 +57,10 @@ export class AccountsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 
@@ -76,8 +79,10 @@ export class AccountsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 
@@ -96,8 +101,10 @@ export class AccountsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 
@@ -116,8 +123,10 @@ export class AccountsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        return null;
-      })
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
     );
   };
 }

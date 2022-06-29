@@ -50,7 +50,9 @@ export class RemoveLanguageCommandHandler
       throw new DataNotFoundException();
     }
     const languageModel = this.publisher.mergeObjectContext(language);
-    languageModel.removedLanguage();
+    languageModel.removedLanguage({
+      removedBy: data.where.removedBy
+    });
     languageModel.commit();
 
     return language;

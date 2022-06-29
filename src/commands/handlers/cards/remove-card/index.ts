@@ -50,7 +50,9 @@ export class RemoveCardCommandHandler
       throw new DataNotFoundException();
     }
     const cardModel = this.publisher.mergeObjectContext(card);
-    cardModel.removedCard();
+    cardModel.removedCard({
+      removedBy: data.where.removedBy
+    });
     cardModel.commit();
 
     return card;

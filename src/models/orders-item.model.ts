@@ -73,30 +73,33 @@ export class OrdersItemModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdOrdersItem() {
+  createdOrdersItem({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new OrdersItemCreatedEvent({
+          createdBy,
           ordersItem: this
         })
       );
     }
   }
 
-  updatedOrdersItem() {
+  updatedOrdersItem({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new OrdersItemUpdatedEvent({
+          updatedBy,
           ordersItem: this
         })
       );
     }
   }
 
-  removedOrdersItem() {
+  removedOrdersItem({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new OrdersItemRemovedEvent({
+          removedBy,
           ordersItem: this
         })
       );

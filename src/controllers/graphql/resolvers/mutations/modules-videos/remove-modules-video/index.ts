@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { RemoveModulesVideoInput } from '@/controllers/graphql/inputs/modules-videos/remove-modules-video.input';
 import { ModulesVideo } from '@/controllers/graphql/types/modules-video';
@@ -14,8 +14,17 @@ export class RemoveModulesVideoResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => ModulesVideo)
-  async removeModulesVideo(@Args('input') data: RemoveModulesVideoInput) {
-    const response = await this.removeModulesVideoService.execute(data);
+  async removeModulesVideo(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: RemoveModulesVideoInput
+  ) {
+    const response = await this.removeModulesVideoService.execute({
+      ...data,
+      where: {
+        ...data?.where,
+        removedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

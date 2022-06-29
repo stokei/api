@@ -37,7 +37,9 @@ export class CreateModulesVideoCommandHandler
     }
     const modulesVideoModel =
       this.publisher.mergeObjectContext(modulesVideoCreated);
-    modulesVideoModel.createdModulesVideo();
+    modulesVideoModel.createdModulesVideo({
+      createdBy: data.createdBy
+    });
     modulesVideoModel.commit();
 
     return modulesVideoCreated;

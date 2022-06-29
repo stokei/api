@@ -34,7 +34,9 @@ export class CreateCardCommandHandler
       throw new CardNotFoundException();
     }
     const cardModel = this.publisher.mergeObjectContext(cardCreated);
-    cardModel.createdCard();
+    cardModel.createdCard({
+      createdBy: data.createdBy
+    });
     cardModel.commit();
 
     return cardCreated;

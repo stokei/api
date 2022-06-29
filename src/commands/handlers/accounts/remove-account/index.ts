@@ -48,7 +48,9 @@ export class RemoveAccountCommandHandler
       throw new DataNotFoundException();
     }
     const accountModel = this.publisher.mergeObjectContext(account);
-    accountModel.removedAccount();
+    accountModel.removedAccount({
+      removedBy: data.where.removedBy
+    });
     accountModel.commit();
 
     return account;

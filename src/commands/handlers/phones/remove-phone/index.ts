@@ -50,7 +50,9 @@ export class RemovePhoneCommandHandler
       throw new DataNotFoundException();
     }
     const phoneModel = this.publisher.mergeObjectContext(phone);
-    phoneModel.removedPhone();
+    phoneModel.removedPhone({
+      removedBy: data.where.removedBy
+    });
     phoneModel.commit();
 
     return phone;

@@ -50,7 +50,9 @@ export class RemoveVideoCommandHandler
       throw new DataNotFoundException();
     }
     const videoModel = this.publisher.mergeObjectContext(video);
-    videoModel.removedVideo();
+    videoModel.removedVideo({
+      removedBy: data.where.removedBy
+    });
     videoModel.commit();
 
     return video;

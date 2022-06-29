@@ -50,7 +50,9 @@ export class RemovePaymentCommandHandler
       throw new DataNotFoundException();
     }
     const paymentModel = this.publisher.mergeObjectContext(payment);
-    paymentModel.removedPayment();
+    paymentModel.removedPayment({
+      removedBy: data.where.removedBy
+    });
     paymentModel.commit();
 
     return payment;

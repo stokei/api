@@ -44,30 +44,33 @@ export class CartsItemModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdCartsItem() {
+  createdCartsItem({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new CartsItemCreatedEvent({
+          createdBy,
           cartsItem: this
         })
       );
     }
   }
 
-  updatedCartsItem() {
+  updatedCartsItem({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new CartsItemUpdatedEvent({
+          updatedBy,
           cartsItem: this
         })
       );
     }
   }
 
-  removedCartsItem() {
+  removedCartsItem({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new CartsItemRemovedEvent({
+          removedBy,
           cartsItem: this
         })
       );

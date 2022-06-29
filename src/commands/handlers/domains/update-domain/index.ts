@@ -53,7 +53,9 @@ export class UpdateDomainCommandHandler
       throw new DomainNotFoundException();
     }
     const domainModel = this.publisher.mergeObjectContext(domainUpdated);
-    domainModel.updatedDomain();
+    domainModel.updatedDomain({
+      updatedBy: data.data.updatedBy
+    });
     domainModel.commit();
 
     return domainUpdated;

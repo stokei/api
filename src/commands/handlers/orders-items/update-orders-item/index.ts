@@ -58,7 +58,9 @@ export class UpdateOrdersItemCommandHandler
     }
     const ordersItemModel =
       this.publisher.mergeObjectContext(ordersItemUpdated);
-    ordersItemModel.updatedOrdersItem();
+    ordersItemModel.updatedOrdersItem({
+      updatedBy: data.data.updatedBy
+    });
     ordersItemModel.commit();
 
     return ordersItemUpdated;

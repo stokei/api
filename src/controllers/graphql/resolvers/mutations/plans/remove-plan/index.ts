@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { RemovePlanInput } from '@/controllers/graphql/inputs/plans/remove-plan.input';
 import { Plan } from '@/controllers/graphql/types/plan';
@@ -12,8 +12,17 @@ export class RemovePlanResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Plan)
-  async removePlan(@Args('input') data: RemovePlanInput) {
-    const response = await this.removePlanService.execute(data);
+  async removePlan(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: RemovePlanInput
+  ) {
+    const response = await this.removePlanService.execute({
+      ...data,
+      where: {
+        ...data?.where,
+        removedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

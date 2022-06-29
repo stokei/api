@@ -34,7 +34,9 @@ export class CreateColorCommandHandler
       throw new ColorNotFoundException();
     }
     const colorModel = this.publisher.mergeObjectContext(colorCreated);
-    colorModel.createdColor();
+    colorModel.createdColor({
+      createdBy: data.createdBy
+    });
     colorModel.commit();
 
     return colorCreated;

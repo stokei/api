@@ -17,6 +17,7 @@ export class RemoveAccessResolver {
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Access)
   async removeAccess(
+    @CurrentAccount('id') currentAccountId: string,
     @Args('input') data: RemoveAccessInput,
     @CurrentAccount() currentAccount: IAuthenticatedAccount
   ) {
@@ -24,7 +25,8 @@ export class RemoveAccessResolver {
       ...data,
       where: {
         ...data?.where,
-        accountId: currentAccount.id
+        accountId: currentAccount.id,
+        removedBy: currentAccount.id
       }
     });
     return response;

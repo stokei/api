@@ -34,7 +34,9 @@ export class CreateCurrencyCommandHandler
       throw new CurrencyNotFoundException();
     }
     const currencyModel = this.publisher.mergeObjectContext(currencyCreated);
-    currencyModel.createdCurrency();
+    currencyModel.createdCurrency({
+      createdBy: data.createdBy
+    });
     currencyModel.commit();
 
     return currencyCreated;

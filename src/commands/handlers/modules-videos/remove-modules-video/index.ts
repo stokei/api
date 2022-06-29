@@ -52,7 +52,9 @@ export class RemoveModulesVideoCommandHandler
       throw new DataNotFoundException();
     }
     const modulesVideoModel = this.publisher.mergeObjectContext(modulesVideo);
-    modulesVideoModel.removedModulesVideo();
+    modulesVideoModel.removedModulesVideo({
+      removedBy: data.where.removedBy
+    });
     modulesVideoModel.commit();
 
     return modulesVideo;

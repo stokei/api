@@ -50,7 +50,9 @@ export class RemoveImageCommandHandler
       throw new DataNotFoundException();
     }
     const imageModel = this.publisher.mergeObjectContext(image);
-    imageModel.removedImage();
+    imageModel.removedImage({
+      removedBy: data.where.removedBy
+    });
     imageModel.commit();
 
     return image;

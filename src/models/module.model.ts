@@ -41,30 +41,33 @@ export class ModuleModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdModule() {
+  createdModule({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new ModuleCreatedEvent({
+          createdBy,
           module: this
         })
       );
     }
   }
 
-  updatedModule() {
+  updatedModule({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new ModuleUpdatedEvent({
+          updatedBy,
           module: this
         })
       );
     }
   }
 
-  removedModule() {
+  removedModule({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new ModuleRemovedEvent({
+          removedBy,
           module: this
         })
       );

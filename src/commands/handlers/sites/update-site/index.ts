@@ -53,7 +53,9 @@ export class UpdateSiteCommandHandler
       throw new SiteNotFoundException();
     }
     const siteModel = this.publisher.mergeObjectContext(siteUpdated);
-    siteModel.updatedSite();
+    siteModel.updatedSite({
+      updatedBy: data.data.updatedBy
+    });
     siteModel.commit();
 
     return siteUpdated;

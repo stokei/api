@@ -55,7 +55,9 @@ export class UpdateProjectCommandHandler
       throw new ProjectNotFoundException();
     }
     const projectModel = this.publisher.mergeObjectContext(projectUpdated);
-    projectModel.updatedProject();
+    projectModel.updatedProject({
+      updatedBy: data.data.updatedBy
+    });
     projectModel.commit();
 
     return projectUpdated;

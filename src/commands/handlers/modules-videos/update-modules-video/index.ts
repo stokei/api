@@ -57,7 +57,9 @@ export class UpdateModulesVideoCommandHandler
     }
     const modulesVideoModel =
       this.publisher.mergeObjectContext(modulesVideoUpdated);
-    modulesVideoModel.updatedModulesVideo();
+    modulesVideoModel.updatedModulesVideo({
+      updatedBy: data.data.updatedBy
+    });
     modulesVideoModel.commit();
 
     return modulesVideoUpdated;

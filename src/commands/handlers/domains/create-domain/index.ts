@@ -34,7 +34,9 @@ export class CreateDomainCommandHandler
       throw new DomainNotFoundException();
     }
     const domainModel = this.publisher.mergeObjectContext(domainCreated);
-    domainModel.createdDomain();
+    domainModel.createdDomain({
+      createdBy: data.createdBy
+    });
     domainModel.commit();
 
     return domainCreated;

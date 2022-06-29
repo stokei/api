@@ -39,7 +39,9 @@ export class CreatePaymentsMethodCommandHandler
     const paymentsMethodModel = this.publisher.mergeObjectContext(
       paymentsMethodCreated
     );
-    paymentsMethodModel.createdPaymentsMethod();
+    paymentsMethodModel.createdPaymentsMethod({
+      createdBy: data.createdBy
+    });
     paymentsMethodModel.commit();
 
     return paymentsMethodCreated;

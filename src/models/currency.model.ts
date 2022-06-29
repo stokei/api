@@ -53,30 +53,33 @@ export class CurrencyModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdCurrency() {
+  createdCurrency({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new CurrencyCreatedEvent({
+          createdBy,
           currency: this
         })
       );
     }
   }
 
-  updatedCurrency() {
+  updatedCurrency({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new CurrencyUpdatedEvent({
+          updatedBy,
           currency: this
         })
       );
     }
   }
 
-  removedCurrency() {
+  removedCurrency({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new CurrencyRemovedEvent({
+          removedBy,
           currency: this
         })
       );

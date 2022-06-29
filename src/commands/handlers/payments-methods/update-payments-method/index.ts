@@ -58,7 +58,9 @@ export class UpdatePaymentsMethodCommandHandler
     const paymentsMethodModel = this.publisher.mergeObjectContext(
       paymentsMethodUpdated
     );
-    paymentsMethodModel.updatedPaymentsMethod();
+    paymentsMethodModel.updatedPaymentsMethod({
+      updatedBy: data.data.updatedBy
+    });
     paymentsMethodModel.commit();
 
     return paymentsMethodUpdated;

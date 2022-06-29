@@ -50,7 +50,9 @@ export class RemoveOrderCommandHandler
       throw new DataNotFoundException();
     }
     const orderModel = this.publisher.mergeObjectContext(order);
-    orderModel.removedOrder();
+    orderModel.removedOrder({
+      removedBy: data.where.removedBy
+    });
     orderModel.commit();
 
     return order;

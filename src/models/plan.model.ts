@@ -82,30 +82,33 @@ export class PlanModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdPlan() {
+  createdPlan({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
         new PlanCreatedEvent({
+          createdBy,
           plan: this
         })
       );
     }
   }
 
-  updatedPlan() {
+  updatedPlan({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new PlanUpdatedEvent({
+          updatedBy,
           plan: this
         })
       );
     }
   }
 
-  removedPlan() {
+  removedPlan({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new PlanRemovedEvent({
+          removedBy,
           plan: this
         })
       );

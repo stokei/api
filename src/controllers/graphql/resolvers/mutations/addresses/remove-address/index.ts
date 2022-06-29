@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthenticatedGuard } from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { RemoveAddressInput } from '@/controllers/graphql/inputs/addresses/remove-address.input';
 import { Address } from '@/controllers/graphql/types/address';
@@ -12,8 +12,17 @@ export class RemoveAddressResolver {
 
   @UseGuards(AuthenticatedGuard)
   @Mutation(() => Address)
-  async removeAddress(@Args('input') data: RemoveAddressInput) {
-    const response = await this.removeAddressService.execute(data);
+  async removeAddress(
+    @CurrentAccount('id') currentAccountId: string,
+    @Args('input') data: RemoveAddressInput
+  ) {
+    const response = await this.removeAddressService.execute({
+      ...data,
+      where: {
+        ...data?.where,
+        removedBy: currentAccountId
+      }
+    });
     return response;
   }
 }

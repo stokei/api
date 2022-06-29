@@ -37,7 +37,9 @@ export class CreateVideosAuthorCommandHandler
     }
     const videosAuthorModel =
       this.publisher.mergeObjectContext(videosAuthorCreated);
-    videosAuthorModel.createdVideosAuthor();
+    videosAuthorModel.createdVideosAuthor({
+      createdBy: data.createdBy
+    });
     videosAuthorModel.commit();
 
     return videosAuthorCreated;

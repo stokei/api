@@ -68,6 +68,7 @@ export class AccessModel extends AggregateRoot {
     if (this.id) {
       this.apply(
         new AccessCreatedEvent({
+          createdBy: account.id,
           access: this,
           account
         })
@@ -75,20 +76,22 @@ export class AccessModel extends AggregateRoot {
     }
   }
 
-  updatedAccess() {
+  updatedAccess({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new AccessUpdatedEvent({
+          updatedBy,
           access: this
         })
       );
     }
   }
 
-  removedAccess() {
+  removedAccess({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
         new AccessRemovedEvent({
+          removedBy,
           access: this
         })
       );

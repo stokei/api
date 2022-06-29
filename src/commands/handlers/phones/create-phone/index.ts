@@ -34,7 +34,9 @@ export class CreatePhoneCommandHandler
       throw new PhoneNotFoundException();
     }
     const phoneModel = this.publisher.mergeObjectContext(phoneCreated);
-    phoneModel.createdPhone();
+    phoneModel.createdPhone({
+      createdBy: data.createdBy
+    });
     phoneModel.commit();
 
     return phoneCreated;

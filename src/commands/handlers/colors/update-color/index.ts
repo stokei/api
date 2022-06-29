@@ -53,7 +53,9 @@ export class UpdateColorCommandHandler
       throw new ColorNotFoundException();
     }
     const colorModel = this.publisher.mergeObjectContext(colorUpdated);
-    colorModel.updatedColor();
+    colorModel.updatedColor({
+      updatedBy: data.data.updatedBy
+    });
     colorModel.commit();
 
     return colorUpdated;

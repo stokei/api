@@ -58,7 +58,9 @@ export class UpdateCoursesStudentCommandHandler
     const coursesStudentModel = this.publisher.mergeObjectContext(
       coursesStudentUpdated
     );
-    coursesStudentModel.updatedCoursesStudent();
+    coursesStudentModel.updatedCoursesStudent({
+      updatedBy: data.data.updatedBy
+    });
     coursesStudentModel.commit();
 
     return coursesStudentUpdated;

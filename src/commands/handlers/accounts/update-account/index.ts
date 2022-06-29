@@ -53,7 +53,9 @@ export class UpdateAccountCommandHandler
       throw new AccountNotFoundException();
     }
     const accountModel = this.publisher.mergeObjectContext(accountUpdated);
-    accountModel.updatedAccount();
+    accountModel.updatedAccount({
+      updatedBy: data.data.updatedBy
+    });
     accountModel.commit();
 
     return accountUpdated;

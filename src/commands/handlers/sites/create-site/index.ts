@@ -34,7 +34,9 @@ export class CreateSiteCommandHandler
       throw new SiteNotFoundException();
     }
     const siteModel = this.publisher.mergeObjectContext(siteCreated);
-    siteModel.createdSite();
+    siteModel.createdSite({
+      createdBy: data.createdBy
+    });
     siteModel.commit();
 
     return siteCreated;

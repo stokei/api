@@ -53,7 +53,9 @@ export class UpdateVideoCommandHandler
       throw new VideoNotFoundException();
     }
     const videoModel = this.publisher.mergeObjectContext(videoUpdated);
-    videoModel.updatedVideo();
+    videoModel.updatedVideo({
+      updatedBy: data.data.updatedBy
+    });
     videoModel.commit();
 
     return videoUpdated;

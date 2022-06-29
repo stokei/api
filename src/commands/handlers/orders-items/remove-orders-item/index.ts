@@ -52,7 +52,9 @@ export class RemoveOrdersItemCommandHandler
       throw new DataNotFoundException();
     }
     const ordersItemModel = this.publisher.mergeObjectContext(ordersItem);
-    ordersItemModel.removedOrdersItem();
+    ordersItemModel.removedOrdersItem({
+      removedBy: data.where.removedBy
+    });
     ordersItemModel.commit();
 
     return ordersItem;

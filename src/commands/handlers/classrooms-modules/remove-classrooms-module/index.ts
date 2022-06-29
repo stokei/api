@@ -54,7 +54,9 @@ export class RemoveClassroomsModuleCommandHandler
     }
     const classroomsModuleModel =
       this.publisher.mergeObjectContext(classroomsModule);
-    classroomsModuleModel.removedClassroomsModule();
+    classroomsModuleModel.removedClassroomsModule({
+      removedBy: data.where.removedBy
+    });
     classroomsModuleModel.commit();
 
     return classroomsModule;

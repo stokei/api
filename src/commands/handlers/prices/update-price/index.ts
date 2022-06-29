@@ -53,7 +53,9 @@ export class UpdatePriceCommandHandler
       throw new PriceNotFoundException();
     }
     const priceModel = this.publisher.mergeObjectContext(priceUpdated);
-    priceModel.updatedPrice();
+    priceModel.updatedPrice({
+      updatedBy: data.data.updatedBy
+    });
     priceModel.commit();
 
     return priceUpdated;

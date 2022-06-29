@@ -39,7 +39,9 @@ export class CreateCoursesStudentCommandHandler
     const coursesStudentModel = this.publisher.mergeObjectContext(
       coursesStudentCreated
     );
-    coursesStudentModel.createdCoursesStudent();
+    coursesStudentModel.createdCoursesStudent({
+      createdBy: data.createdBy
+    });
     coursesStudentModel.commit();
 
     return coursesStudentCreated;

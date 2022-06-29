@@ -37,7 +37,9 @@ export class CreateSubscriptionCommandHandler
     }
     const subscriptionModel =
       this.publisher.mergeObjectContext(subscriptionCreated);
-    subscriptionModel.createdSubscription();
+    subscriptionModel.createdSubscription({
+      createdBy: data.createdBy
+    });
     subscriptionModel.commit();
 
     return subscriptionCreated;

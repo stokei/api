@@ -57,7 +57,9 @@ export class UpdateCartsItemCommandHandler
       throw new CartsItemNotFoundException();
     }
     const cartsItemModel = this.publisher.mergeObjectContext(cartsItemUpdated);
-    cartsItemModel.updatedCartsItem();
+    cartsItemModel.updatedCartsItem({
+      updatedBy: data.data.updatedBy
+    });
     cartsItemModel.commit();
 
     return cartsItemUpdated;

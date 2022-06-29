@@ -50,7 +50,9 @@ export class RemovePlanCommandHandler
       throw new DataNotFoundException();
     }
     const planModel = this.publisher.mergeObjectContext(plan);
-    planModel.removedPlan();
+    planModel.removedPlan({
+      removedBy: data.where.removedBy
+    });
     planModel.commit();
 
     return plan;

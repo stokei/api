@@ -34,7 +34,9 @@ export class CreateOrderCommandHandler
       throw new OrderNotFoundException();
     }
     const orderModel = this.publisher.mergeObjectContext(orderCreated);
-    orderModel.createdOrder();
+    orderModel.createdOrder({
+      createdBy: data.createdBy
+    });
     orderModel.commit();
 
     return orderCreated;

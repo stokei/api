@@ -28,7 +28,7 @@ import { ProductsQueries } from './products';
 import { ProjectsQueries } from './projects';
 import { SubscriptionsQueries } from './subscriptions';
 import { VideosQueries } from './videos';
-import { VideosAuthorsQueries } from './videos-authors';
+import { VideoAuthorsQueries } from './video-authors';
 
 export const Queries = [
   ...AccountsQueries,
@@ -49,7 +49,7 @@ export const Queries = [
   ...PlansQueries,
   ...ImagesQueries,
   ...VideosQueries,
-  ...VideosAuthorsQueries,
+  ...VideoAuthorsQueries,
   ...ModulesQueries,
   ...ModuleVideosQueries,
   ...CoursesQueries,

@@ -29,7 +29,7 @@ import { ProductEventsHandlers } from './products';
 import { ProjectEventsHandlers } from './projects';
 import { SubscriptionEventsHandlers } from './subscriptions';
 import { VideoEventsHandlers } from './videos';
-import { VideosAuthorEventsHandlers } from './videos-authors';
+import { VideoAuthorEventsHandlers } from './video-authors';
 
 export const EventsHandlers = [
   ...AccountEventsHandlers,
@@ -51,7 +51,7 @@ export const EventsHandlers = [
   ...PlanEventsHandlers,
   ...ImageEventsHandlers,
   ...VideoEventsHandlers,
-  ...VideosAuthorEventsHandlers,
+  ...VideoAuthorEventsHandlers,
   ...ModuleEventsHandlers,
   ...ModuleVideoEventsHandlers,
   ...CourseEventsHandlers,

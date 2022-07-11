@@ -66,6 +66,6 @@ export * from './projects-not-found';
 export * from './subscription-not-found';
 export * from './subscriptions-not-found';
 export * from './video-not-found';
-export * from './videos-author-not-found';
-export * from './videos-authors-not-found';
+export * from './video-author-not-found';
+export * from './video-authors-not-found';
 export * from './videos-not-found';

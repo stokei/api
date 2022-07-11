@@ -496,7 +496,7 @@ model Video {
   @@map("videos")
 }
 
-model VideosAuthor {
+model VideoAuthor {
   id        String    @id @default(cuid())
   video     String    @db.VarChar(255)
   author    String    @db.VarChar(255)

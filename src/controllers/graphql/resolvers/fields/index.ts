@@ -28,7 +28,7 @@ import { ProductsFieldsResolvers } from './products';
 import { ProjectsFieldsResolvers } from './projects';
 import { SubscriptionsFieldsResolvers } from './subscriptions';
 import { VideosFieldsResolvers } from './videos';
-import { VideosAuthorsFieldsResolvers } from './videos-authors';
+import { VideoAuthorsFieldsResolvers } from './video-authors';
 
 export const FieldsResolvers = [
   ...AccountsFieldsResolvers,
@@ -49,7 +49,7 @@ export const FieldsResolvers = [
   ...PlansFieldsResolvers,
   ...ImagesFieldsResolvers,
   ...VideosFieldsResolvers,
-  ...VideosAuthorsFieldsResolvers,
+  ...VideoAuthorsFieldsResolvers,
   ...ModulesFieldsResolvers,
   ...ModuleVideosFieldsResolvers,
   ...CoursesFieldsResolvers,

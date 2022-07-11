@@ -29,7 +29,7 @@ import { ProductsSagas } from './products.saga';
 import { ProjectsSagas } from './projects.saga';
 import { SubscriptionsSagas } from './subscriptions.saga';
 import { VideosSagas } from './videos.saga';
-import { VideosAuthorsSagas } from './videos-authors.saga';
+import { VideoAuthorsSagas } from './video-authors.saga';
 
 export const Sagas = [
   AccountsSagas,
@@ -51,7 +51,7 @@ export const Sagas = [
   PlansSagas,
   ImagesSagas,
   VideosSagas,
-  VideosAuthorsSagas,
+  VideoAuthorsSagas,
   ModulesSagas,
   ModuleVideosSagas,
   CoursesSagas,

@@ -29,7 +29,7 @@ import { ProductQueriesHandlers } from './products';
 import { ProjectQueriesHandlers } from './projects';
 import { SubscriptionQueriesHandlers } from './subscriptions';
 import { VideoQueriesHandlers } from './videos';
-import { VideosAuthorQueriesHandlers } from './videos-authors';
+import { VideoAuthorQueriesHandlers } from './video-authors';
 
 export const QueriesHandlers = [
   ...AccountQueriesHandlers,
@@ -51,7 +51,7 @@ export const QueriesHandlers = [
   ...PlanQueriesHandlers,
   ...ImageQueriesHandlers,
   ...VideoQueriesHandlers,
-  ...VideosAuthorQueriesHandlers,
+  ...VideoAuthorQueriesHandlers,
   ...ModuleQueriesHandlers,
   ...ModuleVideoQueriesHandlers,
   ...CourseQueriesHandlers,

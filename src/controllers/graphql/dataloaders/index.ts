@@ -29,7 +29,7 @@ import { ProductsLoader } from './products.loader';
 import { ProjectsLoader } from './projects.loader';
 import { SubscriptionsLoader } from './subscriptions.loader';
 import { VideosLoader } from './videos.loader';
-import { VideosAuthorsLoader } from './videos-authors.loader';
+import { VideoAuthorsLoader } from './video-authors.loader';
 
 export const Loaders = [
   AccountsLoader,
@@ -51,7 +51,7 @@ export const Loaders = [
   PlansLoader,
   ImagesLoader,
   VideosLoader,
-  VideosAuthorsLoader,
+  VideoAuthorsLoader,
   ModulesLoader,
   ModuleVideosLoader,
   CoursesLoader,

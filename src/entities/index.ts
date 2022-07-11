@@ -29,6 +29,6 @@ export * from './product.entity';
 export * from './project.entity';
 export * from './subscription.entity';
 export * from './video.entity';
-export * from './videos-author.entity';
+export * from './video-author.entity';
 
 export const Entities = [];

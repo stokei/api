@@ -29,7 +29,7 @@ import { ProductServices } from './products';
 import { ProjectServices } from './projects';
 import { SubscriptionServices } from './subscriptions';
 import { VideoServices } from './videos';
-import { VideosAuthorServices } from './videos-authors';
+import { VideoAuthorServices } from './video-authors';
 
 export const Services = [
   ...AccountServices,
@@ -51,7 +51,7 @@ export const Services = [
   ...PlanServices,
   ...ImageServices,
   ...VideoServices,
-  ...VideosAuthorServices,
+  ...VideoAuthorServices,
   ...ModuleServices,
   ...ModuleVideoServices,
   ...CourseServices,

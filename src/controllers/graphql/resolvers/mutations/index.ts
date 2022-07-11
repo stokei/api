@@ -28,7 +28,7 @@ import { ProductsMutations } from './products';
 import { ProjectsMutations } from './projects';
 import { SubscriptionsMutations } from './subscriptions';
 import { VideosMutations } from './videos';
-import { VideosAuthorsMutations } from './videos-authors';
+import { VideoAuthorsMutations } from './video-authors';
 
 export const Mutations = [
   ...AccountsMutations,
@@ -49,7 +49,7 @@ export const Mutations = [
   ...PlansMutations,
   ...ImagesMutations,
   ...VideosMutations,
-  ...VideosAuthorsMutations,
+  ...VideoAuthorsMutations,
   ...ModulesMutations,
   ...ModuleVideosMutations,
   ...CoursesMutations,

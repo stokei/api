@@ -29,7 +29,7 @@ import { ProductCommandHandlers } from './products';
 import { ProjectCommandHandlers } from './projects';
 import { SubscriptionCommandHandlers } from './subscriptions';
 import { VideoCommandHandlers } from './videos';
-import { VideosAuthorCommandHandlers } from './videos-authors';
+import { VideoAuthorCommandHandlers } from './video-authors';
 
 export const CommandHandlers = [
   ...AccessCommandHandlers,
@@ -51,7 +51,7 @@ export const CommandHandlers = [
   ...PlanCommandHandlers,
   ...ImageCommandHandlers,
   ...VideoCommandHandlers,
-  ...VideosAuthorCommandHandlers,
+  ...VideoAuthorCommandHandlers,
   ...ModuleCommandHandlers,
   ...ModuleVideoCommandHandlers,
   ...CourseCommandHandlers,

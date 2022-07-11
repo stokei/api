@@ -29,7 +29,7 @@ import { ProductsRepositories } from './products';
 import { ProjectsRepositories } from './projects';
 import { SubscriptionsRepositories } from './subscriptions';
 import { VideosRepositories } from './videos';
-import { VideosAuthorsRepositories } from './videos-authors';
+import { VideoAuthorsRepositories } from './video-authors';
 
 export const Repositories = [
   ...AccountsRepositories,
@@ -51,7 +51,7 @@ export const Repositories = [
   ...PlansRepositories,
   ...ImagesRepositories,
   ...VideosRepositories,
-  ...VideosAuthorsRepositories,
+  ...VideoAuthorsRepositories,
   ...ModulesRepositories,
   ...ModuleVideosRepositories,
   ...CoursesRepositories,

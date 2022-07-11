@@ -10,8 +10,8 @@ import { ClassroomModulesLoader } from './classroom-module s.loader';
 import { ClassroomStudentsLoader } from './classroom-students.loader';
 import { ColorsLoader } from './colors.loader';
 import { CoursesLoader } from './courses.loader';
-import { CoursesInstructorsLoader } from './courses-instructors.loader';
-import { CoursesStudentsLoader } from './courses-students.loader';
+import { CourseInstructorsLoader } from './course-instructors.loader';
+import { CourseStudentsLoader } from './course-students.loader';
 import { CurrenciesLoader } from './currencies.loader';
 import { DomainsLoader } from './domains.loader';
 import { ImagesLoader } from './images.loader';
@@ -55,8 +55,8 @@ export const Loaders = [
   ModulesLoader,
   ModulesVideosLoader,
   CoursesLoader,
-  CoursesInstructorsLoader,
-  CoursesStudentsLoader,
+  CourseInstructorsLoader,
+  CourseStudentsLoader,
   ClassroomsLoader,
   ClassroomStudentsLoader,
   SubscriptionsLoader,

@@ -10,8 +10,8 @@ import { ClassroomModuleServices } from './classroom-module s';
 import { ClassroomStudentServices } from './classroom-students';
 import { ColorServices } from './colors';
 import { CourseServices } from './courses';
-import { CoursesInstructorServices } from './courses-instructors';
-import { CoursesStudentServices } from './courses-students';
+import { CourseInstructorServices } from './course-instructors';
+import { CourseStudentServices } from './course-students';
 import { CurrencyServices } from './currencies';
 import { DomainServices } from './domains';
 import { ImageServices } from './images';
@@ -55,8 +55,8 @@ export const Services = [
   ...ModuleServices,
   ...ModulesVideoServices,
   ...CourseServices,
-  ...CoursesInstructorServices,
-  ...CoursesStudentServices,
+  ...CourseInstructorServices,
+  ...CourseStudentServices,
   ...ClassroomServices,
   ...ClassroomStudentServices,
   ...SubscriptionServices,

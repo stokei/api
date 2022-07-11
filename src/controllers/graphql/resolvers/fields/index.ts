@@ -10,8 +10,8 @@ import { ClassroomModulesFieldsResolvers } from './classroom-module s';
 import { ClassroomStudentsFieldsResolvers } from './classroom-students';
 import { ColorsFieldsResolvers } from './colors';
 import { CoursesFieldsResolvers } from './courses';
-import { CoursesInstructorsFieldsResolvers } from './courses-instructors';
-import { CoursesStudentsFieldsResolvers } from './courses-students';
+import { CourseInstructorsFieldsResolvers } from './course-instructors';
+import { CourseStudentsFieldsResolvers } from './course-students';
 import { CurrenciesFieldsResolvers } from './currencies';
 import { DomainsFieldsResolvers } from './domains';
 import { ImagesFieldsResolvers } from './images';
@@ -53,8 +53,8 @@ export const FieldsResolvers = [
   ...ModulesFieldsResolvers,
   ...ModulesVideosFieldsResolvers,
   ...CoursesFieldsResolvers,
-  ...CoursesInstructorsFieldsResolvers,
-  ...CoursesStudentsFieldsResolvers,
+  ...CourseInstructorsFieldsResolvers,
+  ...CourseStudentsFieldsResolvers,
   ...ClassroomsFieldsResolvers,
   ...ClassroomStudentsFieldsResolvers,
   ...SubscriptionsFieldsResolvers,

@@ -10,8 +10,8 @@ import { ClassroomModuleEventsHandlers } from './classroom-module s';
 import { ClassroomStudentEventsHandlers } from './classroom-students';
 import { ColorEventsHandlers } from './colors';
 import { CourseEventsHandlers } from './courses';
-import { CoursesInstructorEventsHandlers } from './courses-instructors';
-import { CoursesStudentEventsHandlers } from './courses-students';
+import { CourseInstructorEventsHandlers } from './course-instructors';
+import { CourseStudentEventsHandlers } from './course-students';
 import { CurrencyEventsHandlers } from './currencies';
 import { DomainEventsHandlers } from './domains';
 import { ImageEventsHandlers } from './images';
@@ -55,8 +55,8 @@ export const EventsHandlers = [
   ...ModuleEventsHandlers,
   ...ModulesVideoEventsHandlers,
   ...CourseEventsHandlers,
-  ...CoursesInstructorEventsHandlers,
-  ...CoursesStudentEventsHandlers,
+  ...CourseInstructorEventsHandlers,
+  ...CourseStudentEventsHandlers,
   ...ClassroomEventsHandlers,
   ...ClassroomStudentEventsHandlers,
   ...SubscriptionEventsHandlers,

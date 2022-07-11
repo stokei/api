@@ -10,8 +10,8 @@ import { ClassroomModulesSagas } from './classroom-module s.saga';
 import { ClassroomStudentsSagas } from './classroom-students.saga';
 import { ColorsSagas } from './colors.saga';
 import { CoursesSagas } from './courses.saga';
-import { CoursesInstructorsSagas } from './courses-instructors.saga';
-import { CoursesStudentsSagas } from './courses-students.saga';
+import { CourseInstructorsSagas } from './course-instructors.saga';
+import { CourseStudentsSagas } from './course-students.saga';
 import { CurrenciesSagas } from './currencies.saga';
 import { DomainsSagas } from './domains.saga';
 import { ImagesSagas } from './images.saga';
@@ -55,8 +55,8 @@ export const Sagas = [
   ModulesSagas,
   ModulesVideosSagas,
   CoursesSagas,
-  CoursesInstructorsSagas,
-  CoursesStudentsSagas,
+  CourseInstructorsSagas,
+  CourseStudentsSagas,
   ClassroomsSagas,
   ClassroomStudentsSagas,
   SubscriptionsSagas,

@@ -10,8 +10,8 @@ import { ClassroomModulesRepositories } from './classroom-module s';
 import { ClassroomStudentsRepositories } from './classroom-students';
 import { ColorsRepositories } from './colors';
 import { CoursesRepositories } from './courses';
-import { CoursesInstructorsRepositories } from './courses-instructors';
-import { CoursesStudentsRepositories } from './courses-students';
+import { CourseInstructorsRepositories } from './course-instructors';
+import { CourseStudentsRepositories } from './course-students';
 import { CurrenciesRepositories } from './currencies';
 import { DomainsRepositories } from './domains';
 import { ImagesRepositories } from './images';
@@ -55,8 +55,8 @@ export const Repositories = [
   ...ModulesRepositories,
   ...ModulesVideosRepositories,
   ...CoursesRepositories,
-  ...CoursesInstructorsRepositories,
-  ...CoursesStudentsRepositories,
+  ...CourseInstructorsRepositories,
+  ...CourseStudentsRepositories,
   ...ClassroomsRepositories,
   ...ClassroomStudentsRepositories,
   ...SubscriptionsRepositories,

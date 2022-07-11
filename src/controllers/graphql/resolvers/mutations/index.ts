@@ -10,8 +10,8 @@ import { ClassroomModulesMutations } from './classroom-module s';
 import { ClassroomStudentsMutations } from './classroom-students';
 import { ColorsMutations } from './colors';
 import { CoursesMutations } from './courses';
-import { CoursesInstructorsMutations } from './courses-instructors';
-import { CoursesStudentsMutations } from './courses-students';
+import { CourseInstructorsMutations } from './course-instructors';
+import { CourseStudentsMutations } from './course-students';
 import { CurrenciesMutations } from './currencies';
 import { DomainsMutations } from './domains';
 import { ImagesMutations } from './images';
@@ -53,8 +53,8 @@ export const Mutations = [
   ...ModulesMutations,
   ...ModulesVideosMutations,
   ...CoursesMutations,
-  ...CoursesInstructorsMutations,
-  ...CoursesStudentsMutations,
+  ...CourseInstructorsMutations,
+  ...CourseStudentsMutations,
   ...ClassroomsMutations,
   ...ClassroomStudentsMutations,
   ...SubscriptionsMutations,

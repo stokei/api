@@ -10,8 +10,8 @@ import { ClassroomModulesQueries } from './classroom-module s';
 import { ClassroomStudentsQueries } from './classroom-students';
 import { ColorsQueries } from './colors';
 import { CoursesQueries } from './courses';
-import { CoursesInstructorsQueries } from './courses-instructors';
-import { CoursesStudentsQueries } from './courses-students';
+import { CourseInstructorsQueries } from './course-instructors';
+import { CourseStudentsQueries } from './course-students';
 import { CurrenciesQueries } from './currencies';
 import { DomainsQueries } from './domains';
 import { ImagesQueries } from './images';
@@ -53,8 +53,8 @@ export const Queries = [
   ...ModulesQueries,
   ...ModulesVideosQueries,
   ...CoursesQueries,
-  ...CoursesInstructorsQueries,
-  ...CoursesStudentsQueries,
+  ...CourseInstructorsQueries,
+  ...CourseStudentsQueries,
   ...ClassroomsQueries,
   ...ClassroomStudentsQueries,
   ...SubscriptionsQueries,

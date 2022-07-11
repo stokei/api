@@ -10,8 +10,8 @@ import { ClassroomModuleCommandHandlers } from './classroom-module s';
 import { ClassroomStudentCommandHandlers } from './classroom-students';
 import { ColorCommandHandlers } from './colors';
 import { CourseCommandHandlers } from './courses';
-import { CoursesInstructorCommandHandlers } from './courses-instructors';
-import { CoursesStudentCommandHandlers } from './courses-students';
+import { CourseInstructorCommandHandlers } from './course-instructors';
+import { CourseStudentCommandHandlers } from './course-students';
 import { CurrencyCommandHandlers } from './currencies';
 import { DomainCommandHandlers } from './domains';
 import { ImageCommandHandlers } from './images';
@@ -55,8 +55,8 @@ export const CommandHandlers = [
   ...ModuleCommandHandlers,
   ...ModulesVideoCommandHandlers,
   ...CourseCommandHandlers,
-  ...CoursesInstructorCommandHandlers,
-  ...CoursesStudentCommandHandlers,
+  ...CourseInstructorCommandHandlers,
+  ...CourseStudentCommandHandlers,
   ...ClassroomCommandHandlers,
   ...ClassroomStudentCommandHandlers,
   ...SubscriptionCommandHandlers,

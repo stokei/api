@@ -10,8 +10,8 @@ import { ClassroomModuleQueriesHandlers } from './classroom-module s';
 import { ClassroomStudentQueriesHandlers } from './classroom-students';
 import { ColorQueriesHandlers } from './colors';
 import { CourseQueriesHandlers } from './courses';
-import { CoursesInstructorQueriesHandlers } from './courses-instructors';
-import { CoursesStudentQueriesHandlers } from './courses-students';
+import { CourseInstructorQueriesHandlers } from './course-instructors';
+import { CourseStudentQueriesHandlers } from './course-students';
 import { CurrencyQueriesHandlers } from './currencies';
 import { DomainQueriesHandlers } from './domains';
 import { ImageQueriesHandlers } from './images';
@@ -55,8 +55,8 @@ export const QueriesHandlers = [
   ...ModuleQueriesHandlers,
   ...ModulesVideoQueriesHandlers,
   ...CourseQueriesHandlers,
-  ...CoursesInstructorQueriesHandlers,
-  ...CoursesStudentQueriesHandlers,
+  ...CourseInstructorQueriesHandlers,
+  ...CourseStudentQueriesHandlers,
   ...ClassroomQueriesHandlers,
   ...ClassroomStudentQueriesHandlers,
   ...SubscriptionQueriesHandlers,

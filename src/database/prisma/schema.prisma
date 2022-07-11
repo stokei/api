@@ -548,7 +548,7 @@ model Course {
   @@map("courses")
 }
 
-model CoursesInstructor {
+model CourseInstructor {
   id         String    @id @default(cuid())
   course     String    @db.VarChar(255)
   instructor String    @db.VarChar(255)
@@ -560,7 +560,7 @@ model CoursesInstructor {
   @@map("courses_instructors")
 }
 
-model CoursesStudent {
+model CourseStudent {
   id        String    @id @default(cuid())
   course    String    @db.VarChar(255)
   student   String    @db.VarChar(255)

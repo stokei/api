@@ -21,7 +21,7 @@ import { ModuleVideoCommandHandlers } from './module-videos';
 import { OrderCommandHandlers } from './orders';
 import { OrderItemCommandHandlers } from './order-items';
 import { PaymentCommandHandlers } from './payments';
-import { PaymentsMethodCommandHandlers } from './payments-methods';
+import { PaymentMethodCommandHandlers } from './payment-methods';
 import { PhoneCommandHandlers } from './phones';
 import { PlanCommandHandlers } from './plans';
 import { PriceCommandHandlers } from './prices';
@@ -44,7 +44,7 @@ export const CommandHandlers = [
   ...OrderCommandHandlers,
   ...OrderItemCommandHandlers,
   ...PaymentCommandHandlers,
-  ...PaymentsMethodCommandHandlers,
+  ...PaymentMethodCommandHandlers,
   ...CardCommandHandlers,
   ...CartCommandHandlers,
   ...CartsItemCommandHandlers,

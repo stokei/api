@@ -20,7 +20,7 @@ import { ModulesFieldsResolvers } from './modules';
 import { ModuleVideosFieldsResolvers } from './module-videos';
 import { OrdersFieldsResolvers } from './orders';
 import { PaymentsFieldsResolvers } from './payments';
-import { PaymentsMethodsFieldsResolvers } from './payments-methods';
+import { PaymentMethodsFieldsResolvers } from './payment-methods';
 import { PhonesFieldsResolvers } from './phones';
 import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
@@ -42,7 +42,7 @@ export const FieldsResolvers = [
   ...PricesFieldsResolvers,
   ...OrdersFieldsResolvers,
   ...PaymentsFieldsResolvers,
-  ...PaymentsMethodsFieldsResolvers,
+  ...PaymentMethodsFieldsResolvers,
   ...CardsFieldsResolvers,
   ...CartsFieldsResolvers,
   ...CartsItemsFieldsResolvers,

@@ -21,7 +21,7 @@ export * from './module-video.entity';
 export * from './order.entity';
 export * from './order-item.entity';
 export * from './payment.entity';
-export * from './payments-method.entity';
+export * from './payment-method.entity';
 export * from './phone.entity';
 export * from './plan.entity';
 export * from './price.entity';

@@ -21,7 +21,7 @@ import { ModuleVideoEventsHandlers } from './module-videos';
 import { OrderEventsHandlers } from './orders';
 import { OrderItemEventsHandlers } from './order-items';
 import { PaymentEventsHandlers } from './payments';
-import { PaymentsMethodEventsHandlers } from './payments-methods';
+import { PaymentMethodEventsHandlers } from './payment-methods';
 import { PhoneEventsHandlers } from './phones';
 import { PlanEventsHandlers } from './plans';
 import { PriceEventsHandlers } from './prices';
@@ -44,7 +44,7 @@ export const EventsHandlers = [
   ...OrderEventsHandlers,
   ...OrderItemEventsHandlers,
   ...PaymentEventsHandlers,
-  ...PaymentsMethodEventsHandlers,
+  ...PaymentMethodEventsHandlers,
   ...CardEventsHandlers,
   ...CartEventsHandlers,
   ...CartsItemEventsHandlers,

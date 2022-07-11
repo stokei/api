@@ -21,7 +21,7 @@ import { ModuleVideosSagas } from './module-videos.saga';
 import { OrdersSagas } from './orders.saga';
 import { OrderItemsSagas } from './order-items.saga';
 import { PaymentsSagas } from './payments.saga';
-import { PaymentsMethodsSagas } from './payments-methods.saga';
+import { PaymentMethodsSagas } from './payment-methods.saga';
 import { PhonesSagas } from './phones.saga';
 import { PlansSagas } from './plans.saga';
 import { PricesSagas } from './prices.saga';
@@ -44,7 +44,7 @@ export const Sagas = [
   OrdersSagas,
   OrderItemsSagas,
   PaymentsSagas,
-  PaymentsMethodsSagas,
+  PaymentMethodsSagas,
   CardsSagas,
   CartsSagas,
   CartsItemsSagas,

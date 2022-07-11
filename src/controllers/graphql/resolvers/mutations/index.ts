@@ -20,7 +20,7 @@ import { ModulesMutations } from './modules';
 import { ModuleVideosMutations } from './module-videos';
 import { OrdersMutations } from './orders';
 import { PaymentsMutations } from './payments';
-import { PaymentsMethodsMutations } from './payments-methods';
+import { PaymentMethodsMutations } from './payment-methods';
 import { PhonesMutations } from './phones';
 import { PlansMutations } from './plans';
 import { PricesMutations } from './prices';
@@ -42,7 +42,7 @@ export const Mutations = [
   ...PricesMutations,
   ...OrdersMutations,
   ...PaymentsMutations,
-  ...PaymentsMethodsMutations,
+  ...PaymentMethodsMutations,
   ...CardsMutations,
   ...CartsMutations,
   ...CartsItemsMutations,

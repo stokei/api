@@ -21,7 +21,7 @@ import { ModuleVideosRepositories } from './module-videos';
 import { OrdersRepositories } from './orders';
 import { OrderItemsRepositories } from './order-items';
 import { PaymentsRepositories } from './payments';
-import { PaymentsMethodsRepositories } from './payments-methods';
+import { PaymentMethodsRepositories } from './payment-methods';
 import { PhonesRepositories } from './phones';
 import { PlansRepositories } from './plans';
 import { PricesRepositories } from './prices';
@@ -44,7 +44,7 @@ export const Repositories = [
   ...OrdersRepositories,
   ...OrderItemsRepositories,
   ...PaymentsRepositories,
-  ...PaymentsMethodsRepositories,
+  ...PaymentMethodsRepositories,
   ...CardsRepositories,
   ...CartsRepositories,
   ...CartsItemsRepositories,

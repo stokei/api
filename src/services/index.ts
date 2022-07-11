@@ -21,7 +21,7 @@ import { ModuleVideoServices } from './module-videos';
 import { OrderServices } from './orders';
 import { OrderItemServices } from './order-items';
 import { PaymentServices } from './payments';
-import { PaymentsMethodServices } from './payments-methods';
+import { PaymentMethodServices } from './payment-methods';
 import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
 import { PriceServices } from './prices';
@@ -44,7 +44,7 @@ export const Services = [
   ...OrderServices,
   ...OrderItemServices,
   ...PaymentServices,
-  ...PaymentsMethodServices,
+  ...PaymentMethodServices,
   ...CardServices,
   ...CartServices,
   ...CartsItemServices,

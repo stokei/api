@@ -21,7 +21,7 @@ import { ModuleVideosLoader } from './module-videos.loader';
 import { OrdersLoader } from './orders.loader';
 import { OrderItemsLoader } from './order-items.loader';
 import { PaymentsLoader } from './payments.loader';
-import { PaymentsMethodsLoader } from './payments-methods.loader';
+import { PaymentMethodsLoader } from './payment-methods.loader';
 import { PhonesLoader } from './phones.loader';
 import { PlansLoader } from './plans.loader';
 import { PricesLoader } from './prices.loader';
@@ -44,7 +44,7 @@ export const Loaders = [
   OrdersLoader,
   OrderItemsLoader,
   PaymentsLoader,
-  PaymentsMethodsLoader,
+  PaymentMethodsLoader,
   CardsLoader,
   CartsLoader,
   CartsItemsLoader,

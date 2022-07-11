@@ -21,7 +21,7 @@ import { ModuleVideoQueriesHandlers } from './module-videos';
 import { OrderQueriesHandlers } from './orders';
 import { OrderItemQueriesHandlers } from './order-items';
 import { PaymentQueriesHandlers } from './payments';
-import { PaymentsMethodQueriesHandlers } from './payments-methods';
+import { PaymentMethodQueriesHandlers } from './payment-methods';
 import { PhoneQueriesHandlers } from './phones';
 import { PlanQueriesHandlers } from './plans';
 import { PriceQueriesHandlers } from './prices';
@@ -44,7 +44,7 @@ export const QueriesHandlers = [
   ...OrderQueriesHandlers,
   ...OrderItemQueriesHandlers,
   ...PaymentQueriesHandlers,
-  ...PaymentsMethodQueriesHandlers,
+  ...PaymentMethodQueriesHandlers,
   ...CardQueriesHandlers,
   ...CartQueriesHandlers,
   ...CartsItemQueriesHandlers,

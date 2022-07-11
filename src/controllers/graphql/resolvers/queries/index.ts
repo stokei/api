@@ -20,7 +20,7 @@ import { ModulesQueries } from './modules';
 import { ModuleVideosQueries } from './module-videos';
 import { OrdersQueries } from './orders';
 import { PaymentsQueries } from './payments';
-import { PaymentsMethodsQueries } from './payments-methods';
+import { PaymentMethodsQueries } from './payment-methods';
 import { PhonesQueries } from './phones';
 import { PlansQueries } from './plans';
 import { PricesQueries } from './prices';
@@ -42,7 +42,7 @@ export const Queries = [
   ...PricesQueries,
   ...OrdersQueries,
   ...PaymentsQueries,
-  ...PaymentsMethodsQueries,
+  ...PaymentMethodsQueries,
   ...CardsQueries,
   ...CartsQueries,
   ...CartsItemsQueries,

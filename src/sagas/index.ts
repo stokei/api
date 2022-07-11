@@ -19,7 +19,7 @@ import { LanguagesSagas } from './languages.saga';
 import { ModulesSagas } from './modules.saga';
 import { ModuleVideosSagas } from './module-videos.saga';
 import { OrdersSagas } from './orders.saga';
-import { OrdersItemsSagas } from './orders-items.saga';
+import { OrderItemsSagas } from './order-items.saga';
 import { PaymentsSagas } from './payments.saga';
 import { PaymentsMethodsSagas } from './payments-methods.saga';
 import { PhonesSagas } from './phones.saga';
@@ -42,7 +42,7 @@ export const Sagas = [
   ProductsSagas,
   PricesSagas,
   OrdersSagas,
-  OrdersItemsSagas,
+  OrderItemsSagas,
   PaymentsSagas,
   PaymentsMethodsSagas,
   CardsSagas,

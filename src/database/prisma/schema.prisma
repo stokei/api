@@ -342,7 +342,7 @@ model Order {
   @@map("orders")
 }
 
-model OrdersItem {
+model OrderItem {
   id                     String        @id @default(cuid())
   order                  String        @db.VarChar(255)
   product                String        @db.VarChar(255)

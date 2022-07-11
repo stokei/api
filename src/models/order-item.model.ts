@@ -4,11 +4,11 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 import { PriceType } from '@/enums/price-type.enum';
 import { RecurringType } from '@/enums/recurring-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { OrdersItemCreatedEvent } from '@/events/implements/orders-items/orders-item-created.event';
-import { OrdersItemRemovedEvent } from '@/events/implements/orders-items/orders-item-removed.event';
-import { OrdersItemUpdatedEvent } from '@/events/implements/orders-items/orders-item-updated.event';
+import { OrderItemCreatedEvent } from '@/events/implements/order-items/order-item-created.event';
+import { OrderItemRemovedEvent } from '@/events/implements/order-items/order-item-removed.event';
+import { OrderItemUpdatedEvent } from '@/events/implements/order-items/order-item-updated.event';
 
-export interface IOrdersItemModelData {
+export interface IOrderItemModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly order: string;
@@ -29,7 +29,7 @@ export interface IOrdersItemModelData {
   readonly createdBy?: string;
 }
 
-export class OrdersItemModel extends AggregateRoot {
+export class OrderItemModel extends AggregateRoot {
   readonly id: string;
   readonly order: string;
   readonly product: string;
@@ -47,12 +47,12 @@ export class OrdersItemModel extends AggregateRoot {
   readonly createdAt?: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
-  constructor(data: IOrdersItemModelData) {
+  constructor(data: IOrderItemModelData) {
     super();
 
     this.id = createServiceId({
-      service: ServerStokeiApiIdPrefix.ORDERS_ITEMS,
-      module: ServerStokeiApiIdPrefix.ORDERS_ITEMS,
+      service: ServerStokeiApiIdPrefix.ORDER_ITEMS,
+      module: ServerStokeiApiIdPrefix.ORDER_ITEMS,
       id: data._id?.toString() || data.id
     });
     this.order = data.order;
@@ -73,34 +73,34 @@ export class OrdersItemModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdOrdersItem({ createdBy }: { createdBy: string }) {
+  createdOrderItem({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(
-        new OrdersItemCreatedEvent({
+        new OrderItemCreatedEvent({
           createdBy,
-          ordersItem: this
+          orderItem: this
         })
       );
     }
   }
 
-  updatedOrdersItem({ updatedBy }: { updatedBy: string }) {
+  updatedOrderItem({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
-        new OrdersItemUpdatedEvent({
+        new OrderItemUpdatedEvent({
           updatedBy,
-          ordersItem: this
+          orderItem: this
         })
       );
     }
   }
 
-  removedOrdersItem({ removedBy }: { removedBy: string }) {
+  removedOrderItem({ removedBy }: { removedBy: string }) {
     if (this.id) {
       this.apply(
-        new OrdersItemRemovedEvent({
+        new OrderItemRemovedEvent({
           removedBy,
-          ordersItem: this
+          orderItem: this
         })
       );
     }

@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 
-export class OrderNotFoundException extends NotFoundException {
+export class OrdersNotFoundException extends NotFoundException {
   constructor() {
-    super('orderNotFound');
+    super('ordersNotFound');
   }
 }

@@ -19,7 +19,7 @@ import { LanguageCommandHandlers } from './languages';
 import { ModuleCommandHandlers } from './modules';
 import { ModuleVideoCommandHandlers } from './module-videos';
 import { OrderCommandHandlers } from './orders';
-import { OrdersItemCommandHandlers } from './orders-items';
+import { OrderItemCommandHandlers } from './order-items';
 import { PaymentCommandHandlers } from './payments';
 import { PaymentsMethodCommandHandlers } from './payments-methods';
 import { PhoneCommandHandlers } from './phones';
@@ -42,7 +42,7 @@ export const CommandHandlers = [
   ...ProductCommandHandlers,
   ...PriceCommandHandlers,
   ...OrderCommandHandlers,
-  ...OrdersItemCommandHandlers,
+  ...OrderItemCommandHandlers,
   ...PaymentCommandHandlers,
   ...PaymentsMethodCommandHandlers,
   ...CardCommandHandlers,

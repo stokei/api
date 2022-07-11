@@ -3,18 +3,15 @@ import { nanoid } from 'nanoid';
 
 import { PriceType } from '@/enums/price-type.enum';
 import { RecurringType } from '@/enums/recurring-type.enum';
-import {
-  IOrdersItemModelData,
-  OrdersItemModel
-} from '@/models/orders-item.model';
+import { IOrderItemModelData, OrderItemModel } from '@/models/order-item.model';
 
-export class OrdersItemModelMock extends OrdersItemModel {
-  constructor(data?: Partial<IOrdersItemModelData>) {
+export class OrderItemModelMock extends OrderItemModel {
+  constructor(data?: Partial<IOrderItemModelData>) {
     super({
       _id: nanoid(),
       order: data?.order ?? 'orders.anyOrder',
       product: data?.product ?? 'products.anyProduct',
-      name: data?.name ?? 'OrdersItem Name',
+      name: data?.name ?? 'OrderItem Name',
       description: data?.description ?? null,
       amount: data?.amount ?? 10000,
       fromAmount: data?.fromAmount ?? 10100,

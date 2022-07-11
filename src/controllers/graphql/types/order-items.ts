@@ -1,7 +1,7 @@
 import { ObjectType } from '@nestjs/graphql';
 import { Paginated } from '@stokei/nestjs';
 
-import { OrdersItem } from './orders-item';
+import { OrderItem } from './order-item';
 
 @ObjectType()
-export class OrdersItems extends Paginated(OrdersItem) {}
+export class OrderItems extends Paginated(OrderItem) {}

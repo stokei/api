@@ -6,30 +6,30 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 
-import { OrdersItemCreatedEvent } from '@/events/implements/orders-items/orders-item-created.event';
-import { OrdersItemRemovedEvent } from '@/events/implements/orders-items/orders-item-removed.event';
-import { OrdersItemUpdatedEvent } from '@/events/implements/orders-items/orders-item-updated.event';
+import { OrderItemCreatedEvent } from '@/events/implements/order-items/order-item-created.event';
+import { OrderItemRemovedEvent } from '@/events/implements/order-items/order-item-removed.event';
+import { OrderItemUpdatedEvent } from '@/events/implements/order-items/order-item-updated.event';
 
 @Injectable()
-export class OrdersItemsSagas {
+export class OrderItemsSagas {
   private readonly logger: Logger;
 
   constructor() {
-    this.logger = new Logger(OrdersItemsSagas.name);
-    this.logger.log(`Saga ${OrdersItemsSagas.name} init`);
+    this.logger = new Logger(OrderItemsSagas.name);
+    this.logger.log(`Saga ${OrderItemsSagas.name} init`);
   }
 
   @Saga()
-  ordersItemCreated = (events$: Observable<any>): Observable<ICommand> => {
+  orderItemCreated = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
-      ofType(OrdersItemCreatedEvent),
+      ofType(OrderItemCreatedEvent),
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [OrdersItemCreatedEvent] Saga for example send a email'
+          'Inside [OrderItemCreatedEvent] Saga for example send a email'
         );
         this.logger.log(
-          'Inside [OrdersItemCreatedEvent] Saga event ordersItemCreated: ' +
+          'Inside [OrderItemCreatedEvent] Saga event orderItemCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
@@ -42,16 +42,16 @@ export class OrdersItemsSagas {
   };
 
   @Saga()
-  ordersItemRemoved = (events$: Observable<any>): Observable<ICommand> => {
+  orderItemRemoved = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
-      ofType(OrdersItemRemovedEvent),
+      ofType(OrderItemRemovedEvent),
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [OrdersItemRemovedEvent] Saga for example send a email'
+          'Inside [OrderItemRemovedEvent] Saga for example send a email'
         );
         this.logger.log(
-          'Inside [OrdersItemRemovedEvent] Saga event ordersItemRemoved:' +
+          'Inside [OrderItemRemovedEvent] Saga event orderItemRemoved:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
@@ -64,16 +64,16 @@ export class OrdersItemsSagas {
   };
 
   @Saga()
-  ordersItemUpdated = (events$: Observable<any>): Observable<ICommand> => {
+  orderItemUpdated = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
-      ofType(OrdersItemUpdatedEvent),
+      ofType(OrderItemUpdatedEvent),
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [OrdersItemUpdatedEvent] Saga for example send a email'
+          'Inside [OrderItemUpdatedEvent] Saga for example send a email'
         );
         this.logger.log(
-          'Inside [OrdersItemUpdatedEvent] Saga event ordersItemUpdated:' +
+          'Inside [OrderItemUpdatedEvent] Saga event orderItemUpdated:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

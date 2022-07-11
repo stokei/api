@@ -19,7 +19,7 @@ export * from './language.entity';
 export * from './module.entity';
 export * from './module-video.entity';
 export * from './order.entity';
-export * from './orders-item.entity';
+export * from './order-item.entity';
 export * from './payment.entity';
 export * from './payments-method.entity';
 export * from './phone.entity';

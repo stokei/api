@@ -11,7 +11,7 @@ export enum ServerStokeiApiIdPrefix {
   PRODUCTS = 'products',
   PRICES = 'prices',
   ORDERS = 'orders',
-  ORDERS_ITEMS = 'orders_items',
+  ORDER_ITEMS = 'orders_items',
   PAYMENTS = 'payments',
   PAYMENTS_METHODS = 'payments_methods',
   CARDS = 'cards',

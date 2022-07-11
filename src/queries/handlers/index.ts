@@ -19,7 +19,7 @@ import { LanguageQueriesHandlers } from './languages';
 import { ModuleQueriesHandlers } from './modules';
 import { ModuleVideoQueriesHandlers } from './module-videos';
 import { OrderQueriesHandlers } from './orders';
-import { OrdersItemQueriesHandlers } from './orders-items';
+import { OrderItemQueriesHandlers } from './order-items';
 import { PaymentQueriesHandlers } from './payments';
 import { PaymentsMethodQueriesHandlers } from './payments-methods';
 import { PhoneQueriesHandlers } from './phones';
@@ -42,7 +42,7 @@ export const QueriesHandlers = [
   ...ProductQueriesHandlers,
   ...PriceQueriesHandlers,
   ...OrderQueriesHandlers,
-  ...OrdersItemQueriesHandlers,
+  ...OrderItemQueriesHandlers,
   ...PaymentQueriesHandlers,
   ...PaymentsMethodQueriesHandlers,
   ...CardQueriesHandlers,

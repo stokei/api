@@ -19,7 +19,7 @@ import { LanguagesLoader } from './languages.loader';
 import { ModulesLoader } from './modules.loader';
 import { ModuleVideosLoader } from './module-videos.loader';
 import { OrdersLoader } from './orders.loader';
-import { OrdersItemsLoader } from './orders-items.loader';
+import { OrderItemsLoader } from './order-items.loader';
 import { PaymentsLoader } from './payments.loader';
 import { PaymentsMethodsLoader } from './payments-methods.loader';
 import { PhonesLoader } from './phones.loader';
@@ -42,7 +42,7 @@ export const Loaders = [
   ProductsLoader,
   PricesLoader,
   OrdersLoader,
-  OrdersItemsLoader,
+  OrderItemsLoader,
   PaymentsLoader,
   PaymentsMethodsLoader,
   CardsLoader,

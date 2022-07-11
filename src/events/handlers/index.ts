@@ -19,7 +19,7 @@ import { LanguageEventsHandlers } from './languages';
 import { ModuleEventsHandlers } from './modules';
 import { ModuleVideoEventsHandlers } from './module-videos';
 import { OrderEventsHandlers } from './orders';
-import { OrdersItemEventsHandlers } from './orders-items';
+import { OrderItemEventsHandlers } from './order-items';
 import { PaymentEventsHandlers } from './payments';
 import { PaymentsMethodEventsHandlers } from './payments-methods';
 import { PhoneEventsHandlers } from './phones';
@@ -42,7 +42,7 @@ export const EventsHandlers = [
   ...ProductEventsHandlers,
   ...PriceEventsHandlers,
   ...OrderEventsHandlers,
-  ...OrdersItemEventsHandlers,
+  ...OrderItemEventsHandlers,
   ...PaymentEventsHandlers,
   ...PaymentsMethodEventsHandlers,
   ...CardEventsHandlers,

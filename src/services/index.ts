@@ -19,7 +19,7 @@ import { LanguageServices } from './languages';
 import { ModuleServices } from './modules';
 import { ModuleVideoServices } from './module-videos';
 import { OrderServices } from './orders';
-import { OrdersItemServices } from './orders-items';
+import { OrderItemServices } from './order-items';
 import { PaymentServices } from './payments';
 import { PaymentsMethodServices } from './payments-methods';
 import { PhoneServices } from './phones';
@@ -42,7 +42,7 @@ export const Services = [
   ...ProductServices,
   ...PriceServices,
   ...OrderServices,
-  ...OrdersItemServices,
+  ...OrderItemServices,
   ...PaymentServices,
   ...PaymentsMethodServices,
   ...CardServices,

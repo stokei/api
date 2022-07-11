@@ -19,7 +19,7 @@ import { LanguagesRepositories } from './languages';
 import { ModulesRepositories } from './modules';
 import { ModuleVideosRepositories } from './module-videos';
 import { OrdersRepositories } from './orders';
-import { OrdersItemsRepositories } from './orders-items';
+import { OrderItemsRepositories } from './order-items';
 import { PaymentsRepositories } from './payments';
 import { PaymentsMethodsRepositories } from './payments-methods';
 import { PhonesRepositories } from './phones';
@@ -42,7 +42,7 @@ export const Repositories = [
   ...ProductsRepositories,
   ...PricesRepositories,
   ...OrdersRepositories,
-  ...OrdersItemsRepositories,
+  ...OrderItemsRepositories,
   ...PaymentsRepositories,
   ...PaymentsMethodsRepositories,
   ...CardsRepositories,

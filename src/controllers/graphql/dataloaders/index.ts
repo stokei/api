@@ -5,9 +5,9 @@ import { CardsLoader } from './cards.loader';
 import { CartsLoader } from './carts.loader';
 import { CartsItemsLoader } from './carts-items.loader';
 import { ClassroomsLoader } from './classrooms.loader';
-import { ClassroomsInstructorsLoader } from './classrooms-instructors.loader';
-import { ClassroomsModulesLoader } from './classrooms-modules.loader';
-import { ClassroomsStudentsLoader } from './classrooms-students.loader';
+import { ClassroomInstructorsLoader } from './classroom-instructors.loader';
+import { ClassroomModulesLoader } from './classroom-module s.loader';
+import { ClassroomStudentsLoader } from './classroom-students.loader';
 import { ColorsLoader } from './colors.loader';
 import { CoursesLoader } from './courses.loader';
 import { CoursesInstructorsLoader } from './courses-instructors.loader';
@@ -27,7 +27,6 @@ import { PlansLoader } from './plans.loader';
 import { PricesLoader } from './prices.loader';
 import { ProductsLoader } from './products.loader';
 import { ProjectsLoader } from './projects.loader';
-import { SitesLoader } from './sites.loader';
 import { SubscriptionsLoader } from './subscriptions.loader';
 import { VideosLoader } from './videos.loader';
 import { VideosAuthorsLoader } from './videos-authors.loader';
@@ -36,7 +35,6 @@ export const Loaders = [
   AccountsLoader,
   AccessesLoader,
   ProjectsLoader,
-  SitesLoader,
   DomainsLoader,
   CurrenciesLoader,
   LanguagesLoader,
@@ -60,10 +58,10 @@ export const Loaders = [
   CoursesInstructorsLoader,
   CoursesStudentsLoader,
   ClassroomsLoader,
-  ClassroomsStudentsLoader,
+  ClassroomStudentsLoader,
   SubscriptionsLoader,
-  ClassroomsInstructorsLoader,
-  ClassroomsModulesLoader,
+  ClassroomInstructorsLoader,
+  ClassroomModulesLoader,
   AddressesLoader,
   PhonesLoader
 ];

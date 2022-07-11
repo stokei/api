@@ -5,9 +5,9 @@ import { CardQueriesHandlers } from './cards';
 import { CartQueriesHandlers } from './carts';
 import { CartsItemQueriesHandlers } from './carts-items';
 import { ClassroomQueriesHandlers } from './classrooms';
-import { ClassroomsInstructorQueriesHandlers } from './classrooms-instructors';
-import { ClassroomsModuleQueriesHandlers } from './classrooms-modules';
-import { ClassroomsStudentQueriesHandlers } from './classrooms-students';
+import { ClassroomInstructorQueriesHandlers } from './classroom-instructors';
+import { ClassroomModuleQueriesHandlers } from './classroom-module s';
+import { ClassroomStudentQueriesHandlers } from './classroom-students';
 import { ColorQueriesHandlers } from './colors';
 import { CourseQueriesHandlers } from './courses';
 import { CoursesInstructorQueriesHandlers } from './courses-instructors';
@@ -27,7 +27,6 @@ import { PlanQueriesHandlers } from './plans';
 import { PriceQueriesHandlers } from './prices';
 import { ProductQueriesHandlers } from './products';
 import { ProjectQueriesHandlers } from './projects';
-import { SiteQueriesHandlers } from './sites';
 import { SubscriptionQueriesHandlers } from './subscriptions';
 import { VideoQueriesHandlers } from './videos';
 import { VideosAuthorQueriesHandlers } from './videos-authors';
@@ -36,7 +35,6 @@ export const QueriesHandlers = [
   ...AccountQueriesHandlers,
   ...AccessQueriesHandlers,
   ...ProjectQueriesHandlers,
-  ...SiteQueriesHandlers,
   ...DomainQueriesHandlers,
   ...CurrencyQueriesHandlers,
   ...LanguageQueriesHandlers,
@@ -60,10 +58,10 @@ export const QueriesHandlers = [
   ...CoursesInstructorQueriesHandlers,
   ...CoursesStudentQueriesHandlers,
   ...ClassroomQueriesHandlers,
-  ...ClassroomsStudentQueriesHandlers,
+  ...ClassroomStudentQueriesHandlers,
   ...SubscriptionQueriesHandlers,
-  ...ClassroomsInstructorQueriesHandlers,
-  ...ClassroomsModuleQueriesHandlers,
+  ...ClassroomInstructorQueriesHandlers,
+  ...ClassroomModuleQueriesHandlers,
   ...AddressQueriesHandlers,
   ...PhoneQueriesHandlers
 ];

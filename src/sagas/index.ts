@@ -5,9 +5,9 @@ import { CardsSagas } from './cards.saga';
 import { CartsSagas } from './carts.saga';
 import { CartsItemsSagas } from './carts-items.saga';
 import { ClassroomsSagas } from './classrooms.saga';
-import { ClassroomsInstructorsSagas } from './classrooms-instructors.saga';
-import { ClassroomsModulesSagas } from './classrooms-modules.saga';
-import { ClassroomsStudentsSagas } from './classrooms-students.saga';
+import { ClassroomInstructorsSagas } from './classroom-instructors.saga';
+import { ClassroomModulesSagas } from './classroom-module s.saga';
+import { ClassroomStudentsSagas } from './classroom-students.saga';
 import { ColorsSagas } from './colors.saga';
 import { CoursesSagas } from './courses.saga';
 import { CoursesInstructorsSagas } from './courses-instructors.saga';
@@ -27,7 +27,6 @@ import { PlansSagas } from './plans.saga';
 import { PricesSagas } from './prices.saga';
 import { ProductsSagas } from './products.saga';
 import { ProjectsSagas } from './projects.saga';
-import { SitesSagas } from './sites.saga';
 import { SubscriptionsSagas } from './subscriptions.saga';
 import { VideosSagas } from './videos.saga';
 import { VideosAuthorsSagas } from './videos-authors.saga';
@@ -36,7 +35,6 @@ export const Sagas = [
   AccountsSagas,
   AccessesSagas,
   ProjectsSagas,
-  SitesSagas,
   DomainsSagas,
   CurrenciesSagas,
   LanguagesSagas,
@@ -60,10 +58,10 @@ export const Sagas = [
   CoursesInstructorsSagas,
   CoursesStudentsSagas,
   ClassroomsSagas,
-  ClassroomsStudentsSagas,
+  ClassroomStudentsSagas,
   SubscriptionsSagas,
-  ClassroomsInstructorsSagas,
-  ClassroomsModulesSagas,
+  ClassroomInstructorsSagas,
+  ClassroomModulesSagas,
   AddressesSagas,
   PhonesSagas
 ];

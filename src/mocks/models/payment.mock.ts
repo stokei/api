@@ -14,6 +14,7 @@ export class PaymentModelMock extends PaymentModel {
       externalPaymentId: data?.externalPaymentId ?? 'anyExternalPaymentId',
       paymentMethod: data?.paymentMethod ?? 'anyPaymentMethod',
       status: data?.status ?? PaymentStatus.PAID,
+      oldStatus: data?.oldStatus ?? PaymentStatus.PENDING,
       active: data?.active ?? true,
       paidAt: data?.paidAt ?? convertToISODateString(Date.now()),
       canceledAt: data?.canceledAt ?? null,

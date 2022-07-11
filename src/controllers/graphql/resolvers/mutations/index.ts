@@ -5,9 +5,9 @@ import { CardsMutations } from './cards';
 import { CartsMutations } from './carts';
 import { CartsItemsMutations } from './carts-items';
 import { ClassroomsMutations } from './classrooms';
-import { ClassroomsInstructorsMutations } from './classrooms-instructors';
-import { ClassroomsModulesMutations } from './classrooms-modules';
-import { ClassroomsStudentsMutations } from './classrooms-students';
+import { ClassroomInstructorsMutations } from './classroom-instructors';
+import { ClassroomModulesMutations } from './classroom-module s';
+import { ClassroomStudentsMutations } from './classroom-students';
 import { ColorsMutations } from './colors';
 import { CoursesMutations } from './courses';
 import { CoursesInstructorsMutations } from './courses-instructors';
@@ -26,7 +26,6 @@ import { PlansMutations } from './plans';
 import { PricesMutations } from './prices';
 import { ProductsMutations } from './products';
 import { ProjectsMutations } from './projects';
-import { SitesMutations } from './sites';
 import { SubscriptionsMutations } from './subscriptions';
 import { VideosMutations } from './videos';
 import { VideosAuthorsMutations } from './videos-authors';
@@ -35,7 +34,6 @@ export const Mutations = [
   ...AccountsMutations,
   ...AccessesMutations,
   ...ProjectsMutations,
-  ...SitesMutations,
   ...DomainsMutations,
   ...CurrenciesMutations,
   ...LanguagesMutations,
@@ -58,10 +56,10 @@ export const Mutations = [
   ...CoursesInstructorsMutations,
   ...CoursesStudentsMutations,
   ...ClassroomsMutations,
-  ...ClassroomsStudentsMutations,
+  ...ClassroomStudentsMutations,
   ...SubscriptionsMutations,
-  ...ClassroomsInstructorsMutations,
-  ...ClassroomsModulesMutations,
+  ...ClassroomInstructorsMutations,
+  ...ClassroomModulesMutations,
   ...AddressesMutations,
   ...PhonesMutations
 ];

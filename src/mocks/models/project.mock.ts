@@ -16,6 +16,8 @@ export class ProjectModelMock extends ProjectModel {
       avatar: data?.avatar ?? null,
       plan: data?.plan ?? 'plans.sad451as1da',
       currency: data?.currency ?? 'BRL',
+      logo: data?.logo ?? null,
+      favicon: data?.favicon ?? null,
       active: data?.active ?? true,
       blockedAt: data?.blockedAt ?? null,
       activatedAt: data?.activatedAt ?? null,

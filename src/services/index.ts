@@ -5,9 +5,9 @@ import { CardServices } from './cards';
 import { CartServices } from './carts';
 import { CartsItemServices } from './carts-items';
 import { ClassroomServices } from './classrooms';
-import { ClassroomsInstructorServices } from './classrooms-instructors';
-import { ClassroomsModuleServices } from './classrooms-modules';
-import { ClassroomsStudentServices } from './classrooms-students';
+import { ClassroomInstructorServices } from './classroom-instructors';
+import { ClassroomModuleServices } from './classroom-module s';
+import { ClassroomStudentServices } from './classroom-students';
 import { ColorServices } from './colors';
 import { CourseServices } from './courses';
 import { CoursesInstructorServices } from './courses-instructors';
@@ -27,7 +27,6 @@ import { PlanServices } from './plans';
 import { PriceServices } from './prices';
 import { ProductServices } from './products';
 import { ProjectServices } from './projects';
-import { SiteServices } from './sites';
 import { SubscriptionServices } from './subscriptions';
 import { VideoServices } from './videos';
 import { VideosAuthorServices } from './videos-authors';
@@ -36,7 +35,6 @@ export const Services = [
   ...AccountServices,
   ...AccessServices,
   ...ProjectServices,
-  ...SiteServices,
   ...DomainServices,
   ...CurrencyServices,
   ...LanguageServices,
@@ -60,10 +58,10 @@ export const Services = [
   ...CoursesInstructorServices,
   ...CoursesStudentServices,
   ...ClassroomServices,
-  ...ClassroomsStudentServices,
+  ...ClassroomStudentServices,
   ...SubscriptionServices,
-  ...ClassroomsInstructorServices,
-  ...ClassroomsModuleServices,
+  ...ClassroomInstructorServices,
+  ...ClassroomModuleServices,
   ...AddressServices,
   ...PhoneServices
 ];

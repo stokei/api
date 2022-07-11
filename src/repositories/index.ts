@@ -5,9 +5,9 @@ import { CardsRepositories } from './cards';
 import { CartsRepositories } from './carts';
 import { CartsItemsRepositories } from './carts-items';
 import { ClassroomsRepositories } from './classrooms';
-import { ClassroomsInstructorsRepositories } from './classrooms-instructors';
-import { ClassroomsModulesRepositories } from './classrooms-modules';
-import { ClassroomsStudentsRepositories } from './classrooms-students';
+import { ClassroomInstructorsRepositories } from './classroom-instructors';
+import { ClassroomModulesRepositories } from './classroom-module s';
+import { ClassroomStudentsRepositories } from './classroom-students';
 import { ColorsRepositories } from './colors';
 import { CoursesRepositories } from './courses';
 import { CoursesInstructorsRepositories } from './courses-instructors';
@@ -27,7 +27,6 @@ import { PlansRepositories } from './plans';
 import { PricesRepositories } from './prices';
 import { ProductsRepositories } from './products';
 import { ProjectsRepositories } from './projects';
-import { SitesRepositories } from './sites';
 import { SubscriptionsRepositories } from './subscriptions';
 import { VideosRepositories } from './videos';
 import { VideosAuthorsRepositories } from './videos-authors';
@@ -36,7 +35,6 @@ export const Repositories = [
   ...AccountsRepositories,
   ...AccessesRepositories,
   ...ProjectsRepositories,
-  ...SitesRepositories,
   ...DomainsRepositories,
   ...CurrenciesRepositories,
   ...LanguagesRepositories,
@@ -60,10 +58,10 @@ export const Repositories = [
   ...CoursesInstructorsRepositories,
   ...CoursesStudentsRepositories,
   ...ClassroomsRepositories,
-  ...ClassroomsStudentsRepositories,
+  ...ClassroomStudentsRepositories,
   ...SubscriptionsRepositories,
-  ...ClassroomsInstructorsRepositories,
-  ...ClassroomsModulesRepositories,
+  ...ClassroomInstructorsRepositories,
+  ...ClassroomModulesRepositories,
   ...AddressesRepositories,
   ...PhonesRepositories
 ];

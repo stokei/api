@@ -19,6 +19,7 @@ export class OrderModelMock extends OrderModel {
       subtotalAmount: data?.subtotalAmount ?? 12000,
       totalAmount: data?.totalAmount ?? 10000,
       status: data?.status ?? OrderStatus.PAID,
+      oldStatus: data?.oldStatus ?? OrderStatus.PENDING,
       active: data?.active ?? true,
       paidAt: data?.paidAt ?? convertToISODateString(Date.now()),
       canceledAt: data?.canceledAt ?? null,

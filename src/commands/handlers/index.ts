@@ -5,9 +5,9 @@ import { CardCommandHandlers } from './cards';
 import { CartCommandHandlers } from './carts';
 import { CartsItemCommandHandlers } from './carts-items';
 import { ClassroomCommandHandlers } from './classrooms';
-import { ClassroomsInstructorCommandHandlers } from './classrooms-instructors';
-import { ClassroomsModuleCommandHandlers } from './classrooms-modules';
-import { ClassroomsStudentCommandHandlers } from './classrooms-students';
+import { ClassroomInstructorCommandHandlers } from './classroom-instructors';
+import { ClassroomModuleCommandHandlers } from './classroom-module s';
+import { ClassroomStudentCommandHandlers } from './classroom-students';
 import { ColorCommandHandlers } from './colors';
 import { CourseCommandHandlers } from './courses';
 import { CoursesInstructorCommandHandlers } from './courses-instructors';
@@ -27,7 +27,6 @@ import { PlanCommandHandlers } from './plans';
 import { PriceCommandHandlers } from './prices';
 import { ProductCommandHandlers } from './products';
 import { ProjectCommandHandlers } from './projects';
-import { SiteCommandHandlers } from './sites';
 import { SubscriptionCommandHandlers } from './subscriptions';
 import { VideoCommandHandlers } from './videos';
 import { VideosAuthorCommandHandlers } from './videos-authors';
@@ -36,7 +35,6 @@ export const CommandHandlers = [
   ...AccessCommandHandlers,
   ...AccountCommandHandlers,
   ...ProjectCommandHandlers,
-  ...SiteCommandHandlers,
   ...DomainCommandHandlers,
   ...CurrencyCommandHandlers,
   ...LanguageCommandHandlers,
@@ -60,10 +58,10 @@ export const CommandHandlers = [
   ...CoursesInstructorCommandHandlers,
   ...CoursesStudentCommandHandlers,
   ...ClassroomCommandHandlers,
-  ...ClassroomsStudentCommandHandlers,
+  ...ClassroomStudentCommandHandlers,
   ...SubscriptionCommandHandlers,
-  ...ClassroomsInstructorCommandHandlers,
-  ...ClassroomsModuleCommandHandlers,
+  ...ClassroomInstructorCommandHandlers,
+  ...ClassroomModuleCommandHandlers,
   ...AddressCommandHandlers,
   ...PhoneCommandHandlers
 ];

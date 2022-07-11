@@ -5,9 +5,9 @@ import { CardsFieldsResolvers } from './cards';
 import { CartsFieldsResolvers } from './carts';
 import { CartsItemsFieldsResolvers } from './carts-items';
 import { ClassroomsFieldsResolvers } from './classrooms';
-import { ClassroomsInstructorsFieldsResolvers } from './classrooms-instructors';
-import { ClassroomsModulesFieldsResolvers } from './classrooms-modules';
-import { ClassroomsStudentsFieldsResolvers } from './classrooms-students';
+import { ClassroomInstructorsFieldsResolvers } from './classroom-instructors';
+import { ClassroomModulesFieldsResolvers } from './classroom-module s';
+import { ClassroomStudentsFieldsResolvers } from './classroom-students';
 import { ColorsFieldsResolvers } from './colors';
 import { CoursesFieldsResolvers } from './courses';
 import { CoursesInstructorsFieldsResolvers } from './courses-instructors';
@@ -26,7 +26,6 @@ import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
 import { ProductsFieldsResolvers } from './products';
 import { ProjectsFieldsResolvers } from './projects';
-import { SitesFieldsResolvers } from './sites';
 import { SubscriptionsFieldsResolvers } from './subscriptions';
 import { VideosFieldsResolvers } from './videos';
 import { VideosAuthorsFieldsResolvers } from './videos-authors';
@@ -35,7 +34,6 @@ export const FieldsResolvers = [
   ...AccountsFieldsResolvers,
   ...AccessesFieldsResolvers,
   ...ProjectsFieldsResolvers,
-  ...SitesFieldsResolvers,
   ...DomainsFieldsResolvers,
   ...CurrenciesFieldsResolvers,
   ...LanguagesFieldsResolvers,
@@ -58,10 +56,10 @@ export const FieldsResolvers = [
   ...CoursesInstructorsFieldsResolvers,
   ...CoursesStudentsFieldsResolvers,
   ...ClassroomsFieldsResolvers,
-  ...ClassroomsStudentsFieldsResolvers,
+  ...ClassroomStudentsFieldsResolvers,
   ...SubscriptionsFieldsResolvers,
-  ...ClassroomsInstructorsFieldsResolvers,
-  ...ClassroomsModulesFieldsResolvers,
+  ...ClassroomInstructorsFieldsResolvers,
+  ...ClassroomModulesFieldsResolvers,
   ...AddressesFieldsResolvers,
   ...PhonesFieldsResolvers
 ];

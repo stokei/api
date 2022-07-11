@@ -21,6 +21,7 @@ export interface IOrderModelData {
   readonly subtotalAmount: number;
   readonly totalAmount: number;
   readonly status: OrderStatus;
+  readonly oldStatus?: OrderStatus;
   readonly active: boolean;
   readonly paidAt?: Date | string;
   readonly canceledAt?: Date | string;
@@ -46,6 +47,7 @@ export class OrderModel extends AggregateRoot {
   readonly subtotalAmount: number;
   readonly totalAmount: number;
   readonly status: OrderStatus;
+  readonly oldStatus?: OrderStatus;
   readonly active: boolean;
   readonly paidAt?: string;
   readonly canceledAt?: string;
@@ -75,6 +77,7 @@ export class OrderModel extends AggregateRoot {
     this.subtotalAmount = data.subtotalAmount;
     this.totalAmount = data.totalAmount;
     this.status = data.status;
+    this.oldStatus = data.oldStatus;
     this.active = this.status === OrderStatus.PAID || data.active;
     this.paidAt = convertToISODateString(data.paidAt);
     this.canceledAt = convertToISODateString(data.canceledAt);

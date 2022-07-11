@@ -18,6 +18,8 @@ export interface IProjectModelData {
   readonly avatar?: string;
   readonly plan?: string;
   readonly currency: string;
+  readonly favicon?: string;
+  readonly logo?: string;
   readonly active: boolean;
   readonly blockedAt?: Date | string;
   readonly activatedAt?: Date | string;
@@ -38,6 +40,8 @@ export class ProjectModel extends AggregateRoot {
   readonly avatar?: string;
   readonly plan?: string;
   readonly currency: string;
+  readonly favicon?: string;
+  readonly logo?: string;
   readonly active: boolean;
   readonly blockedAt?: string;
   readonly activatedAt?: string;
@@ -63,6 +67,8 @@ export class ProjectModel extends AggregateRoot {
     this.avatar = data.avatar;
     this.plan = data.plan;
     this.currency = data.currency;
+    this.favicon = data.favicon;
+    this.logo = data.logo;
     this.active = data.active;
     this.blockedAt = convertToISODateString(data.blockedAt);
     this.activatedAt = convertToISODateString(data.activatedAt);

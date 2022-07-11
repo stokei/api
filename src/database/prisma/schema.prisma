@@ -182,6 +182,8 @@ model Project {
   avatar        String?       @db.VarChar(255)
   plan          String?       @db.VarChar(255)
   currency      String        @db.VarChar(255)
+  favicon       String?       @db.VarChar(255)
+  logo          String?       @db.VarChar(255)
   active        Boolean       @default(true)
   blockedAt     DateTime?     @map("blocked_at")
   activatedAt   DateTime?     @default(now()) @map("activated_at")
@@ -205,19 +207,6 @@ model ProjectsMember {
   createdBy String?             @map("created_by") @db.VarChar(255)
 
   @@map("projects_members")
-}
-
-model Site {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  favicon   String?   @db.VarChar(255)
-  logo      String?   @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-
-  @@map("sites")
 }
 
 model Domain {
@@ -326,28 +315,29 @@ model Price {
 }
 
 model Order {
-  id                       String      @id @default(cuid())
-  project                  String      @db.VarChar(255)
-  cart                     String      @db.VarChar(255)
-  customer                 String      @db.VarChar(255)
-  salesComissionPercentage Int         @map("sales_comission_percentage")
-  salesComissionAmount     Int         @map("sales_comission_amount")
-  currency                 String      @db.VarChar(255)
+  id                       String       @id @default(cuid())
+  project                  String       @db.VarChar(255)
+  cart                     String       @db.VarChar(255)
+  customer                 String       @db.VarChar(255)
+  salesComissionPercentage Int          @map("sales_comission_percentage")
+  salesComissionAmount     Int          @map("sales_comission_amount")
+  currency                 String       @db.VarChar(255)
   amount                   Int
-  discountAmount           Int         @map("discount_amount")
-  subtotalAmount           Int         @map("subtotal_amount")
-  totalAmount              Int         @map("total_amount")
+  discountAmount           Int          @map("discount_amount")
+  subtotalAmount           Int          @map("subtotal_amount")
+  totalAmount              Int          @map("total_amount")
   status                   OrderStatus
-  active                   Boolean     @default(false)
-  paidAt                   DateTime?   @map("paid_at")
-  canceledAt               DateTime?   @map("canceled_at")
-  paymentErrorAt           DateTime?   @map("payment_error_at")
-  totalRefundedAt          DateTime?   @map("total_refunded_at")
-  parcialRefundedAt        DateTime?   @map("parcial_refunded_at")
-  updatedAt                DateTime?   @updatedAt @map("updated_at")
-  createdAt                DateTime?   @default(now()) @map("created_at")
-  updatedBy                String?     @map("updated_by") @db.VarChar(255)
-  createdBy                String?     @map("created_by") @db.VarChar(255)
+  oldStatus                OrderStatus?
+  active                   Boolean      @default(false)
+  paidAt                   DateTime?    @map("paid_at")
+  canceledAt               DateTime?    @map("canceled_at")
+  paymentErrorAt           DateTime?    @map("payment_error_at")
+  totalRefundedAt          DateTime?    @map("total_refunded_at")
+  parcialRefundedAt        DateTime?    @map("parcial_refunded_at")
+  updatedAt                DateTime?    @updatedAt @map("updated_at")
+  createdAt                DateTime?    @default(now()) @map("created_at")
+  updatedBy                String?      @map("updated_by") @db.VarChar(255)
+  createdBy                String?      @map("created_by") @db.VarChar(255)
 
   @@map("orders")
 }
@@ -375,23 +365,24 @@ model OrdersItem {
 }
 
 model Payment {
-  id                String        @id @default(cuid())
-  parent            String        @db.VarChar(255)
-  order             String        @db.VarChar(255)
+  id                String         @id @default(cuid())
+  parent            String         @db.VarChar(255)
+  order             String         @db.VarChar(255)
   amount            Int
-  externalPaymentId String        @db.VarChar(255)
-  paymentMethod     String        @db.VarChar(255)
+  externalPaymentId String         @db.VarChar(255)
+  paymentMethod     String         @db.VarChar(255)
   status            PaymentStatus
-  active            Boolean       @default(false)
-  paidAt            DateTime?     @map("paid_at")
-  canceledAt        DateTime?     @map("canceled_at")
-  paymentErrorAt    DateTime?     @map("payment_error_at")
-  totalRefundedAt   DateTime?     @map("total_refunded_at")
-  parcialRefundedAt DateTime?     @map("parcial_refunded_at")
-  updatedAt         DateTime?     @updatedAt @map("updated_at")
-  createdAt         DateTime?     @default(now()) @map("created_at")
-  updatedBy         String?       @map("updated_by") @db.VarChar(255)
-  createdBy         String?       @map("created_by") @db.VarChar(255)
+  oldStatus         PaymentStatus?
+  active            Boolean        @default(false)
+  paidAt            DateTime?      @map("paid_at")
+  canceledAt        DateTime?      @map("canceled_at")
+  paymentErrorAt    DateTime?      @map("payment_error_at")
+  totalRefundedAt   DateTime?      @map("total_refunded_at")
+  parcialRefundedAt DateTime?      @map("parcial_refunded_at")
+  updatedAt         DateTime?      @updatedAt @map("updated_at")
+  createdAt         DateTime?      @default(now()) @map("created_at")
+  updatedBy         String?        @map("updated_by") @db.VarChar(255)
+  createdBy         String?        @map("created_by") @db.VarChar(255)
 
   @@map("payments")
 }
@@ -596,7 +587,7 @@ model Classroom {
   @@map("classrooms")
 }
 
-model ClassroomsStudent {
+model ClassroomStudent {
   id        String    @id @default(cuid())
   classroom String    @db.VarChar(255)
   student   String    @db.VarChar(255)
@@ -625,7 +616,7 @@ model Subscription {
   @@map("subscriptions")
 }
 
-model ClassroomsInstructor {
+model ClassroomInstructor {
   id         String    @id @default(cuid())
   classroom  String    @db.VarChar(255)
   instructor String    @db.VarChar(255)
@@ -637,7 +628,7 @@ model ClassroomsInstructor {
   @@map("classrooms_instructors")
 }
 
-model ClassroomsModule {
+model ClassroomModule {
   id        String    @id @default(cuid())
   classroom String    @db.VarChar(255)
   module    String    @db.VarChar(255)

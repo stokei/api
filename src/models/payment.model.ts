@@ -16,6 +16,7 @@ export interface IPaymentModelData {
   readonly externalPaymentId: string;
   readonly paymentMethod: string;
   readonly status: PaymentStatus;
+  readonly oldStatus?: PaymentStatus;
   readonly active: boolean;
   readonly paidAt?: Date | string;
   readonly canceledAt?: Date | string;
@@ -36,6 +37,7 @@ export class PaymentModel extends AggregateRoot {
   readonly externalPaymentId: string;
   readonly paymentMethod: string;
   readonly status: PaymentStatus;
+  readonly oldStatus?: PaymentStatus;
   readonly active: boolean;
   readonly paidAt?: string;
   readonly canceledAt?: string;
@@ -60,6 +62,7 @@ export class PaymentModel extends AggregateRoot {
     this.externalPaymentId = data.externalPaymentId;
     this.paymentMethod = data.paymentMethod;
     this.status = data.status;
+    this.oldStatus = data.oldStatus;
     this.active = this.status === PaymentStatus.PAID || data.active;
     this.paidAt = convertToISODateString(data.paidAt);
     this.canceledAt = convertToISODateString(data.canceledAt);

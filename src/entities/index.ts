@@ -17,7 +17,7 @@ export * from './domain.entity';
 export * from './image.entity';
 export * from './language.entity';
 export * from './module.entity';
-export * from './modules-video.entity';
+export * from './module-video.entity';
 export * from './order.entity';
 export * from './orders-item.entity';
 export * from './payment.entity';

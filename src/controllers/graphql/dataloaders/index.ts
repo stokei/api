@@ -17,7 +17,7 @@ import { DomainsLoader } from './domains.loader';
 import { ImagesLoader } from './images.loader';
 import { LanguagesLoader } from './languages.loader';
 import { ModulesLoader } from './modules.loader';
-import { ModulesVideosLoader } from './modules-videos.loader';
+import { ModuleVideosLoader } from './module-videos.loader';
 import { OrdersLoader } from './orders.loader';
 import { OrdersItemsLoader } from './orders-items.loader';
 import { PaymentsLoader } from './payments.loader';
@@ -53,7 +53,7 @@ export const Loaders = [
   VideosLoader,
   VideosAuthorsLoader,
   ModulesLoader,
-  ModulesVideosLoader,
+  ModuleVideosLoader,
   CoursesLoader,
   CourseInstructorsLoader,
   CourseStudentsLoader,

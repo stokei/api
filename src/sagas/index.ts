@@ -17,7 +17,7 @@ import { DomainsSagas } from './domains.saga';
 import { ImagesSagas } from './images.saga';
 import { LanguagesSagas } from './languages.saga';
 import { ModulesSagas } from './modules.saga';
-import { ModulesVideosSagas } from './modules-videos.saga';
+import { ModuleVideosSagas } from './module-videos.saga';
 import { OrdersSagas } from './orders.saga';
 import { OrdersItemsSagas } from './orders-items.saga';
 import { PaymentsSagas } from './payments.saga';
@@ -53,7 +53,7 @@ export const Sagas = [
   VideosSagas,
   VideosAuthorsSagas,
   ModulesSagas,
-  ModulesVideosSagas,
+  ModuleVideosSagas,
   CoursesSagas,
   CourseInstructorsSagas,
   CourseStudentsSagas,

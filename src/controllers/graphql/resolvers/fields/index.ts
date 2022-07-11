@@ -17,7 +17,7 @@ import { DomainsFieldsResolvers } from './domains';
 import { ImagesFieldsResolvers } from './images';
 import { LanguagesFieldsResolvers } from './languages';
 import { ModulesFieldsResolvers } from './modules';
-import { ModulesVideosFieldsResolvers } from './modules-videos';
+import { ModuleVideosFieldsResolvers } from './module-videos';
 import { OrdersFieldsResolvers } from './orders';
 import { PaymentsFieldsResolvers } from './payments';
 import { PaymentsMethodsFieldsResolvers } from './payments-methods';
@@ -51,7 +51,7 @@ export const FieldsResolvers = [
   ...VideosFieldsResolvers,
   ...VideosAuthorsFieldsResolvers,
   ...ModulesFieldsResolvers,
-  ...ModulesVideosFieldsResolvers,
+  ...ModuleVideosFieldsResolvers,
   ...CoursesFieldsResolvers,
   ...CourseInstructorsFieldsResolvers,
   ...CourseStudentsFieldsResolvers,

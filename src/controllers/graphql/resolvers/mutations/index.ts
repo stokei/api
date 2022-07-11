@@ -17,7 +17,7 @@ import { DomainsMutations } from './domains';
 import { ImagesMutations } from './images';
 import { LanguagesMutations } from './languages';
 import { ModulesMutations } from './modules';
-import { ModulesVideosMutations } from './modules-videos';
+import { ModuleVideosMutations } from './module-videos';
 import { OrdersMutations } from './orders';
 import { PaymentsMutations } from './payments';
 import { PaymentsMethodsMutations } from './payments-methods';
@@ -51,7 +51,7 @@ export const Mutations = [
   ...VideosMutations,
   ...VideosAuthorsMutations,
   ...ModulesMutations,
-  ...ModulesVideosMutations,
+  ...ModuleVideosMutations,
   ...CoursesMutations,
   ...CourseInstructorsMutations,
   ...CourseStudentsMutations,

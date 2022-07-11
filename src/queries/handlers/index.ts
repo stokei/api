@@ -17,7 +17,7 @@ import { DomainQueriesHandlers } from './domains';
 import { ImageQueriesHandlers } from './images';
 import { LanguageQueriesHandlers } from './languages';
 import { ModuleQueriesHandlers } from './modules';
-import { ModulesVideoQueriesHandlers } from './modules-videos';
+import { ModuleVideoQueriesHandlers } from './module-videos';
 import { OrderQueriesHandlers } from './orders';
 import { OrdersItemQueriesHandlers } from './orders-items';
 import { PaymentQueriesHandlers } from './payments';
@@ -53,7 +53,7 @@ export const QueriesHandlers = [
   ...VideoQueriesHandlers,
   ...VideosAuthorQueriesHandlers,
   ...ModuleQueriesHandlers,
-  ...ModulesVideoQueriesHandlers,
+  ...ModuleVideoQueriesHandlers,
   ...CourseQueriesHandlers,
   ...CourseInstructorQueriesHandlers,
   ...CourseStudentQueriesHandlers,

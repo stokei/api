@@ -17,7 +17,7 @@ import { DomainEventsHandlers } from './domains';
 import { ImageEventsHandlers } from './images';
 import { LanguageEventsHandlers } from './languages';
 import { ModuleEventsHandlers } from './modules';
-import { ModulesVideoEventsHandlers } from './modules-videos';
+import { ModuleVideoEventsHandlers } from './module-videos';
 import { OrderEventsHandlers } from './orders';
 import { OrdersItemEventsHandlers } from './orders-items';
 import { PaymentEventsHandlers } from './payments';
@@ -53,7 +53,7 @@ export const EventsHandlers = [
   ...VideoEventsHandlers,
   ...VideosAuthorEventsHandlers,
   ...ModuleEventsHandlers,
-  ...ModulesVideoEventsHandlers,
+  ...ModuleVideoEventsHandlers,
   ...CourseEventsHandlers,
   ...CourseInstructorEventsHandlers,
   ...CourseStudentEventsHandlers,

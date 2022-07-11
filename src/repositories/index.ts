@@ -17,7 +17,7 @@ import { DomainsRepositories } from './domains';
 import { ImagesRepositories } from './images';
 import { LanguagesRepositories } from './languages';
 import { ModulesRepositories } from './modules';
-import { ModulesVideosRepositories } from './modules-videos';
+import { ModuleVideosRepositories } from './module-videos';
 import { OrdersRepositories } from './orders';
 import { OrdersItemsRepositories } from './orders-items';
 import { PaymentsRepositories } from './payments';
@@ -53,7 +53,7 @@ export const Repositories = [
   ...VideosRepositories,
   ...VideosAuthorsRepositories,
   ...ModulesRepositories,
-  ...ModulesVideosRepositories,
+  ...ModuleVideosRepositories,
   ...CoursesRepositories,
   ...CourseInstructorsRepositories,
   ...CourseStudentsRepositories,

@@ -22,7 +22,7 @@ export enum ServerStokeiApiIdPrefix {
   VIDEOS = 'videos',
   VIDEOS_AUTHORS = 'videos_authors',
   MODULES = 'modules',
-  MODULES_VIDEOS = 'modules_videos',
+  MODULE_VIDEOS = 'modules_videos',
   COURSES = 'courses',
   COURSE_INSTRUCTORS = 'courses_instructors',
   COURSE_STUDENTS = 'courses_students',

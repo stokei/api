@@ -520,7 +520,7 @@ model Module {
   @@map("modules")
 }
 
-model ModulesVideo {
+model ModuleVideo {
   id        String    @id @default(cuid())
   module    String    @db.VarChar(255)
   video     String    @db.VarChar(255)

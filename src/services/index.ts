@@ -17,7 +17,7 @@ import { DomainServices } from './domains';
 import { ImageServices } from './images';
 import { LanguageServices } from './languages';
 import { ModuleServices } from './modules';
-import { ModulesVideoServices } from './modules-videos';
+import { ModuleVideoServices } from './module-videos';
 import { OrderServices } from './orders';
 import { OrdersItemServices } from './orders-items';
 import { PaymentServices } from './payments';
@@ -53,7 +53,7 @@ export const Services = [
   ...VideoServices,
   ...VideosAuthorServices,
   ...ModuleServices,
-  ...ModulesVideoServices,
+  ...ModuleVideoServices,
   ...CourseServices,
   ...CourseInstructorServices,
   ...CourseStudentServices,

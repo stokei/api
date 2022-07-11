@@ -17,7 +17,7 @@ import { DomainsQueries } from './domains';
 import { ImagesQueries } from './images';
 import { LanguagesQueries } from './languages';
 import { ModulesQueries } from './modules';
-import { ModulesVideosQueries } from './modules-videos';
+import { ModuleVideosQueries } from './module-videos';
 import { OrdersQueries } from './orders';
 import { PaymentsQueries } from './payments';
 import { PaymentsMethodsQueries } from './payments-methods';
@@ -51,7 +51,7 @@ export const Queries = [
   ...VideosQueries,
   ...VideosAuthorsQueries,
   ...ModulesQueries,
-  ...ModulesVideosQueries,
+  ...ModuleVideosQueries,
   ...CoursesQueries,
   ...CourseInstructorsQueries,
   ...CourseStudentsQueries,

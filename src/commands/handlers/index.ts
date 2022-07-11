@@ -17,7 +17,7 @@ import { DomainCommandHandlers } from './domains';
 import { ImageCommandHandlers } from './images';
 import { LanguageCommandHandlers } from './languages';
 import { ModuleCommandHandlers } from './modules';
-import { ModulesVideoCommandHandlers } from './modules-videos';
+import { ModuleVideoCommandHandlers } from './module-videos';
 import { OrderCommandHandlers } from './orders';
 import { OrdersItemCommandHandlers } from './orders-items';
 import { PaymentCommandHandlers } from './payments';
@@ -53,7 +53,7 @@ export const CommandHandlers = [
   ...VideoCommandHandlers,
   ...VideosAuthorCommandHandlers,
   ...ModuleCommandHandlers,
-  ...ModulesVideoCommandHandlers,
+  ...ModuleVideoCommandHandlers,
   ...CourseCommandHandlers,
   ...CourseInstructorCommandHandlers,
   ...CourseStudentCommandHandlers,

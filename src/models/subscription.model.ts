@@ -1,8 +1,8 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
-import { SubscriptionStatus } from '@/enums/subscription-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { SubscriptionStatus } from '@/enums/subscription-status.enum';
 import { SubscriptionCreatedEvent } from '@/events/implements/subscriptions/subscription-created.event';
 import { SubscriptionRemovedEvent } from '@/events/implements/subscriptions/subscription-removed.event';
 import { SubscriptionUpdatedEvent } from '@/events/implements/subscriptions/subscription-updated.event';
@@ -14,6 +14,7 @@ export interface ISubscriptionModelData {
   readonly product: string;
   readonly status: SubscriptionStatus;
   readonly active: boolean;
+  readonly automaticRenew: boolean;
   readonly startAt?: Date | string;
   readonly endAt?: Date | string;
   readonly canceledAt?: Date | string;
@@ -29,6 +30,7 @@ export class SubscriptionModel extends AggregateRoot {
   readonly product: string;
   readonly status: SubscriptionStatus;
   readonly active: boolean;
+  readonly automaticRenew: boolean;
   readonly startAt?: string;
   readonly endAt?: string;
   readonly canceledAt?: string;
@@ -48,6 +50,7 @@ export class SubscriptionModel extends AggregateRoot {
     this.product = data.product;
     this.status = data.status;
     this.active = data.active;
+    this.automaticRenew = data.automaticRenew;
     this.startAt = convertToISODateString(data.startAt);
     this.endAt = convertToISODateString(data.endAt);
     this.canceledAt = convertToISODateString(data.canceledAt);

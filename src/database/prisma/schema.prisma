@@ -600,18 +600,19 @@ model ClassroomStudent {
 }
 
 model Subscription {
-  id         String             @id @default(cuid())
-  product    String             @db.VarChar(255)
-  parent     String             @db.VarChar(255)
-  status     SubscriptionStatus
-  startAt    DateTime?          @map("start_at")
-  endAt      DateTime?          @map("end_at")
-  canceledAt DateTime?          @map("canceled_at")
-  active     Boolean            @default(true)
-  updatedAt  DateTime?          @updatedAt @map("updated_at")
-  createdAt  DateTime?          @default(now()) @map("created_at")
-  updatedBy  String?            @map("updated_by") @db.VarChar(255)
-  createdBy  String?            @map("created_by") @db.VarChar(255)
+  id             String             @id @default(cuid())
+  product        String             @db.VarChar(255)
+  parent         String             @db.VarChar(255)
+  status         SubscriptionStatus
+  startAt        DateTime?          @map("start_at")
+  endAt          DateTime?          @map("end_at")
+  canceledAt     DateTime?          @map("canceled_at")
+  automaticRenew Boolean            @default(false)
+  active         Boolean            @default(true)
+  updatedAt      DateTime?          @updatedAt @map("updated_at")
+  createdAt      DateTime?          @default(now()) @map("created_at")
+  updatedBy      String?            @map("updated_by") @db.VarChar(255)
+  createdBy      String?            @map("created_by") @db.VarChar(255)
 
   @@map("subscriptions")
 }

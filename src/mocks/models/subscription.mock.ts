@@ -15,6 +15,7 @@ export class SubscriptionModelMock extends SubscriptionModel {
       product: data?.product ?? 'plans.5a1sd5as1das',
       status: data?.status ?? SubscriptionStatus.ACTIVE,
       active: data?.active ?? true,
+      automaticRenew: data?.automaticRenew ?? false,
       startAt: data?.startAt ?? convertToISODateString(Date.now()),
       endAt: data?.endAt ?? convertToISODateString(Date.now() + 60000),
       canceledAt: data?.canceledAt ?? null,

@@ -1,7 +1,6 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
-import { CardBrand } from '@/enums/card-brand.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { CardCreatedEvent } from '@/events/implements/cards/card-created.event';
 import { CardRemovedEvent } from '@/events/implements/cards/card-removed.event';
@@ -13,7 +12,7 @@ export interface ICardModelData {
   readonly parent: string;
   readonly externalCardId: string;
   readonly lastFourNumber: string;
-  readonly brand: CardBrand;
+  readonly brand: string;
   readonly default: boolean;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
@@ -26,7 +25,7 @@ export class CardModel extends AggregateRoot {
   readonly parent: string;
   readonly externalCardId: string;
   readonly lastFourNumber: string;
-  readonly brand: CardBrand;
+  readonly brand: string;
   readonly default: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;

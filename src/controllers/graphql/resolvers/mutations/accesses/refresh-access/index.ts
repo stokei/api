@@ -1,7 +1,8 @@
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { Mutation, Resolver } from '@nestjs/graphql';
 import {
-  AuthenticationWithoutExpiresValidationGuard,
+  AuthenticatedGuard,
+  AuthenticationConfig,
   CurrentAccount,
   CurrentRefreshToken,
   IAuthenticatedAccount,
@@ -16,7 +17,8 @@ import { RefreshAccessService } from '@/services/accesses/refresh-access';
 export class RefreshAccessResolver {
   constructor(private readonly refreshAccessService: RefreshAccessService) {}
 
-  @UseGuards(AuthenticationWithoutExpiresValidationGuard)
+  @UseGuards(AuthenticatedGuard)
+  @AuthenticationConfig({ hasExpiresValidation: false })
   @Mutation(() => AuthResponse)
   async refreshAccess(
     @CurrentAccount() currentAccount: IAuthenticatedAccount,

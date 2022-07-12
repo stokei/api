@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { PlanCreatedEvent } from '@/events/implements/plans/plan-created.event';
 import { PlanRemovedEvent } from '@/events/implements/plans/plan-removed.event';
 import { PlanUpdatedEvent } from '@/events/implements/plans/plan-updated.event';

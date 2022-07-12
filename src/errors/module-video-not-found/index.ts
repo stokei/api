@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 
-export class ModuleVideosNotFoundException extends NotFoundException {
+export class ModuleVideoNotFoundException extends NotFoundException {
   constructor() {
-    super('moduleVideosNotFound');
+    super('moduleVideoNotFound');
   }
 }

@@ -3,8 +3,6 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { CartCreatedEvent } from '@/events/implements/carts/cart-created.event';
-import { CartRemovedEvent } from '@/events/implements/carts/cart-removed.event';
-import { CartUpdatedEvent } from '@/events/implements/carts/cart-updated.event';
 
 export interface ICartModelData {
   readonly id?: string;
@@ -40,28 +38,6 @@ export class CartModel extends AggregateRoot {
       this.apply(
         new CartCreatedEvent({
           createdBy,
-          cart: this
-        })
-      );
-    }
-  }
-
-  updatedCart({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new CartUpdatedEvent({
-          updatedBy,
-          cart: this
-        })
-      );
-    }
-  }
-
-  removedCart({ removedBy }: { removedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new CartRemovedEvent({
-          removedBy,
           cart: this
         })
       );

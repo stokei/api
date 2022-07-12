@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs';
 
-import { ClassroomModuleCreatedEvent } from '@/events/implements/classroom-module s/classroom-module -created.event';
+import { ClassroomModuleCreatedEvent } from '@/events/implements/classroom-modules/classroom-module-created.event';
 
 @EventsHandler(ClassroomModuleCreatedEvent)
 export class ClassroomModuleCreatedHandler

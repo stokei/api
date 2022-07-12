@@ -13,10 +13,10 @@ import {
 } from '@stokei/nestjs';
 
 import { DataNotFoundException } from '@/errors';
-import { ClassroomModuleModel } from '@/models/classroom-module .model';
-import { FindAllClassroomModulesQuery } from '@/queries/implements/classroom-module s/find-all-classroom-module s.query';
-import { CountClassroomModulesRepository } from '@/repositories/classroom-module s/count-classroom-module s';
-import { FindAllClassroomModulesRepository } from '@/repositories/classroom-module s/find-all-classroom-module s';
+import { ClassroomModuleModel } from '@/models/classroom-module.model';
+import { FindAllClassroomModulesQuery } from '@/queries/implements/classroom-modules/find-all-classroom-modules.query';
+import { CountClassroomModulesRepository } from '@/repositories/classroom-modules/count-classroom-modules';
+import { FindAllClassroomModulesRepository } from '@/repositories/classroom-modules/find-all-classroom-modules';
 
 @QueryHandler(FindAllClassroomModulesQuery)
 export class FindAllClassroomModulesQueryHandler

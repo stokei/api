@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
-import { ClassroomModuleMapper } from '@/mappers/classroom-module s';
-import { ClassroomModuleModel } from '@/models/classroom-module .model';
+import { ClassroomModuleMapper } from '@/mappers/classroom-modules';
+import { ClassroomModuleModel } from '@/models/classroom-module.model';
 
 @Injectable()
 export class FindClassroomModuleByIdRepository

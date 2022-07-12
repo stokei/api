@@ -1,4 +1,4 @@
-import { ClassroomModuleModel } from '@/models/classroom-module .model';
+import { ClassroomModuleModel } from '@/models/classroom-module.model';
 
 interface IDataClassroomModuleCreatedEvent {
   readonly createdBy: string;

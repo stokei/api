@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { SubscriptionCreatedEvent } from '@/events/implements/subscriptions/subscription-created.event';
 import { SubscriptionRemovedEvent } from '@/events/implements/subscriptions/subscription-removed.event';
 import { SubscriptionUpdatedEvent } from '@/events/implements/subscriptions/subscription-updated.event';

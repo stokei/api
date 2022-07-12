@@ -1,35 +1,34 @@
 import { AccessServices } from './accesses';
 import { AccountServices } from './accounts';
 import { AddressServices } from './addresses';
-import { CardServices } from './cards';
 import { CartServices } from './carts';
-import { CartsItemServices } from './carts-items';
-import { ClassroomServices } from './classrooms';
+import { CartItemServices } from './cart-items';
 import { ClassroomInstructorServices } from './classroom-instructors';
-import { ClassroomModuleServices } from './classroom-module s';
+import { ClassroomModuleServices } from './classroom-modules';
 import { ClassroomStudentServices } from './classroom-students';
+import { ClassroomServices } from './classrooms';
 import { ColorServices } from './colors';
-import { CourseServices } from './courses';
 import { CourseInstructorServices } from './course-instructors';
 import { CourseStudentServices } from './course-students';
+import { CourseServices } from './courses';
 import { CurrencyServices } from './currencies';
 import { DomainServices } from './domains';
 import { ImageServices } from './images';
 import { LanguageServices } from './languages';
-import { ModuleServices } from './modules';
 import { ModuleVideoServices } from './module-videos';
-import { OrderServices } from './orders';
+import { ModuleServices } from './modules';
 import { OrderItemServices } from './order-items';
-import { PaymentServices } from './payments';
+import { OrderServices } from './orders';
 import { PaymentMethodServices } from './payment-methods';
+import { PaymentServices } from './payments';
 import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
 import { PriceServices } from './prices';
 import { ProductServices } from './products';
 import { ProjectServices } from './projects';
 import { SubscriptionServices } from './subscriptions';
-import { VideoServices } from './videos';
 import { VideoAuthorServices } from './video-authors';
+import { VideoServices } from './videos';
 
 export const Services = [
   ...AccountServices,
@@ -45,9 +44,8 @@ export const Services = [
   ...OrderItemServices,
   ...PaymentServices,
   ...PaymentMethodServices,
-  ...CardServices,
   ...CartServices,
-  ...CartsItemServices,
+  ...CartItemServices,
   ...PlanServices,
   ...ImageServices,
   ...VideoServices,

@@ -4,8 +4,6 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
-  cleanWhereDataSearch,
-  cleanWhereDataString,
   IOperator,
   IPaginatedType,
   PaginationMapper,
@@ -55,8 +53,6 @@ export class FindAllCartsQueryHandler
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
-          name: cleanWhereDataSearch(operatorData.name),
           ids:
             operatorData.ids?.length > 0
               ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
@@ -76,7 +72,6 @@ export class FindAllCartsQueryHandler
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        name: cleanSortValue(query.orderBy?.name),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

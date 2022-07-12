@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { CourseStudentCreatedEvent } from '@/events/implements/course-students/course-student-created.event';
 import { CourseStudentRemovedEvent } from '@/events/implements/course-students/course-student-removed.event';
 import { CourseStudentUpdatedEvent } from '@/events/implements/course-students/course-student-updated.event';

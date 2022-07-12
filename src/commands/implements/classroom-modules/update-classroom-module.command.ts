@@ -4,7 +4,7 @@ import {
   UpdateClassroomModuleDataDTO,
   UpdateClassroomModuleDTO,
   UpdateClassroomModuleWhereDTO
-} from '@/dtos/classroom-module s/update-classroom-module .dto';
+} from '@/dtos/classroom-modules/update-classroom-module.dto';
 
 export class UpdateClassroomModuleCommand
   implements ICommand, UpdateClassroomModuleDTO

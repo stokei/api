@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { PhoneCreatedEvent } from '@/events/implements/phones/phone-created.event';
 import { PhoneRemovedEvent } from '@/events/implements/phones/phone-removed.event';
 import { PhoneUpdatedEvent } from '@/events/implements/phones/phone-updated.event';

@@ -5,10 +5,9 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
-import { ClassroomModuleCreatedEvent } from '@/events/implements/classroom-module s/classroom-module -created.event';
-import { ClassroomModuleRemovedEvent } from '@/events/implements/classroom-module s/classroom-module -removed.event';
-import { ClassroomModuleUpdatedEvent } from '@/events/implements/classroom-module s/classroom-module -updated.event';
+import { ClassroomModuleCreatedEvent } from '@/events/implements/classroom-modules/classroom-module-created.event';
+import { ClassroomModuleRemovedEvent } from '@/events/implements/classroom-modules/classroom-module-removed.event';
+import { ClassroomModuleUpdatedEvent } from '@/events/implements/classroom-modules/classroom-module-updated.event';
 
 @Injectable()
 export class ClassroomModulesSagas {

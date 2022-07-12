@@ -2,9 +2,9 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
-import { RemoveClassroomModuleInput } from '@/controllers/graphql/inputs/classroom-module s/remove-classroom-module .input';
-import { ClassroomModule } from '@/controllers/graphql/types/classroom-module ';
-import { RemoveClassroomModuleService } from '@/services/classroom-module s/remove-classroom-module ';
+import { RemoveClassroomModuleInput } from '@/controllers/graphql/inputs/classroom-modules/remove-classroom-module.input';
+import { ClassroomModule } from '@/controllers/graphql/types/classroom-module';
+import { RemoveClassroomModuleService } from '@/services/classroom-modules/remove-classroom-module';
 
 @Resolver(() => ClassroomModule)
 export class RemoveClassroomModuleResolver {

@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
 import { DomainRemovedEvent } from '@/events/implements/domains/domain-removed.event';
 import { DomainUpdatedEvent } from '@/events/implements/domains/domain-updated.event';

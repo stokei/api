@@ -6,9 +6,9 @@ import {
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
-import { ClassroomModuleModel } from '@/models/classroom-module .model';
-import { FindClassroomModuleByIdQuery } from '@/queries/implements/classroom-module s/find-classroom-module -by-id.query';
-import { FindClassroomModuleByIdRepository } from '@/repositories/classroom-module s/find-classroom-module -by-id';
+import { ClassroomModuleModel } from '@/models/classroom-module.model';
+import { FindClassroomModuleByIdQuery } from '@/queries/implements/classroom-modules/find-classroom-module-by-id.query';
+import { FindClassroomModuleByIdRepository } from '@/repositories/classroom-modules/find-classroom-module-by-id';
 
 @QueryHandler(FindClassroomModuleByIdQuery)
 export class FindClassroomModuleByIdQueryHandler

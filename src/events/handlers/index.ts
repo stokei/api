@@ -1,35 +1,34 @@
 import { AccessEventsHandlers } from './accesses';
 import { AccountEventsHandlers } from './accounts';
 import { AddressEventsHandlers } from './addresses';
-import { CardEventsHandlers } from './cards';
 import { CartEventsHandlers } from './carts';
-import { CartsItemEventsHandlers } from './carts-items';
-import { ClassroomEventsHandlers } from './classrooms';
+import { CartItemEventsHandlers } from './cart-items';
 import { ClassroomInstructorEventsHandlers } from './classroom-instructors';
-import { ClassroomModuleEventsHandlers } from './classroom-module s';
+import { ClassroomModuleEventsHandlers } from './classroom-modules';
 import { ClassroomStudentEventsHandlers } from './classroom-students';
+import { ClassroomEventsHandlers } from './classrooms';
 import { ColorEventsHandlers } from './colors';
-import { CourseEventsHandlers } from './courses';
 import { CourseInstructorEventsHandlers } from './course-instructors';
 import { CourseStudentEventsHandlers } from './course-students';
+import { CourseEventsHandlers } from './courses';
 import { CurrencyEventsHandlers } from './currencies';
 import { DomainEventsHandlers } from './domains';
 import { ImageEventsHandlers } from './images';
 import { LanguageEventsHandlers } from './languages';
-import { ModuleEventsHandlers } from './modules';
 import { ModuleVideoEventsHandlers } from './module-videos';
-import { OrderEventsHandlers } from './orders';
+import { ModuleEventsHandlers } from './modules';
 import { OrderItemEventsHandlers } from './order-items';
-import { PaymentEventsHandlers } from './payments';
+import { OrderEventsHandlers } from './orders';
 import { PaymentMethodEventsHandlers } from './payment-methods';
+import { PaymentEventsHandlers } from './payments';
 import { PhoneEventsHandlers } from './phones';
 import { PlanEventsHandlers } from './plans';
 import { PriceEventsHandlers } from './prices';
 import { ProductEventsHandlers } from './products';
 import { ProjectEventsHandlers } from './projects';
 import { SubscriptionEventsHandlers } from './subscriptions';
-import { VideoEventsHandlers } from './videos';
 import { VideoAuthorEventsHandlers } from './video-authors';
+import { VideoEventsHandlers } from './videos';
 
 export const EventsHandlers = [
   ...AccountEventsHandlers,
@@ -45,9 +44,8 @@ export const EventsHandlers = [
   ...OrderItemEventsHandlers,
   ...PaymentEventsHandlers,
   ...PaymentMethodEventsHandlers,
-  ...CardEventsHandlers,
   ...CartEventsHandlers,
-  ...CartsItemEventsHandlers,
+  ...CartItemEventsHandlers,
   ...PlanEventsHandlers,
   ...ImageEventsHandlers,
   ...VideoEventsHandlers,

@@ -1,7 +1,7 @@
 import { convertToISODateString } from '@stokei/nestjs';
 
 import { ClassroomModuleEntity } from '@/entities';
-import { ClassroomModuleModel } from '@/models/classroom-module .model';
+import { ClassroomModuleModel } from '@/models/classroom-module.model';
 
 export class ClassroomModuleMapper {
   toModel(classroomModule: ClassroomModuleEntity) {

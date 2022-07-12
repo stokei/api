@@ -1,6 +1,6 @@
 import { ICommand } from '@nestjs/cqrs';
 
-import { CreateClassroomModuleDTO } from '@/dtos/classroom-module s/create-classroom-module .dto';
+import { CreateClassroomModuleDTO } from '@/dtos/classroom-modules/create-classroom-module.dto';
 
 export class CreateClassroomModuleCommand
   implements ICommand, CreateClassroomModuleDTO

@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { OrderCreatedEvent } from '@/events/implements/orders/order-created.event';
 import { OrderRemovedEvent } from '@/events/implements/orders/order-removed.event';
 import { OrderUpdatedEvent } from '@/events/implements/orders/order-updated.event';

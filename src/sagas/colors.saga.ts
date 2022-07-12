@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { ColorCreatedEvent } from '@/events/implements/colors/color-created.event';
 import { ColorRemovedEvent } from '@/events/implements/colors/color-removed.event';
 import { ColorUpdatedEvent } from '@/events/implements/colors/color-updated.event';

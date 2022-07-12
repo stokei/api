@@ -5,7 +5,7 @@ import {
   FindAllClassroomModulesDTO,
   OrderByDataFindAllClassroomModulesDTO,
   WhereDataFindAllClassroomModulesDTO
-} from '@/dtos/classroom-module s/find-all-classroom-module s.dto';
+} from '@/dtos/classroom-modules/find-all-classroom-modules.dto';
 
 export class FindAllClassroomModulesQuery
   implements IQuery, FindAllClassroomModulesDTO

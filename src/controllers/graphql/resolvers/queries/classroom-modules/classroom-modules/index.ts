@@ -4,10 +4,10 @@ import { PaginationInput } from '@stokei/nestjs';
 import {
   OrderByDataFindAllClassroomModulesInput,
   WhereDataFindAllClassroomModulesInput
-} from '@/controllers/graphql/inputs/classroom-module s/find-all-classroom-module s.input';
-import { ClassroomModule } from '@/controllers/graphql/types/classroom-module ';
-import { ClassroomModules } from '@/controllers/graphql/types/classroom-module s';
-import { FindAllClassroomModulesService } from '@/services/classroom-module s/find-all-classroom-module s';
+} from '@/controllers/graphql/inputs/classroom-modules/find-all-classroom-modules.input';
+import { ClassroomModule } from '@/controllers/graphql/types/classroom-module';
+import { ClassroomModules } from '@/controllers/graphql/types/classroom-modules';
+import { FindAllClassroomModulesService } from '@/services/classroom-modules/find-all-classroom-modules';
 
 @Resolver(() => ClassroomModule)
 export class ClassroomModulesResolver {

@@ -7,7 +7,7 @@ import {
 } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
-import { CountClassroomModulesDTO } from '@/dtos/classroom-module s/count-classroom-module s.dto';
+import { CountClassroomModulesDTO } from '@/dtos/classroom-modules/count-classroom-modules.dto';
 
 @Injectable()
 export class CountClassroomModulesRepository

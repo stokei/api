@@ -7,9 +7,9 @@ import {
 } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
-import { FindAllClassroomModulesDTO } from '@/dtos/classroom-module s/find-all-classroom-module s.dto';
-import { ClassroomModuleMapper } from '@/mappers/classroom-module s';
-import { ClassroomModuleModel } from '@/models/classroom-module .model';
+import { FindAllClassroomModulesDTO } from '@/dtos/classroom-modules/find-all-classroom-modules.dto';
+import { ClassroomModuleMapper } from '@/mappers/classroom-modules';
+import { ClassroomModuleModel } from '@/models/classroom-module.model';
 
 @Injectable()
 export class FindAllClassroomModulesRepository

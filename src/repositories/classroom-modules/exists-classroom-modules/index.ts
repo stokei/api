@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
-import { ExistsClassroomModulesDTO } from '@/dtos/classroom-module s/exists-classroom-module s.dto';
+import { ExistsClassroomModulesDTO } from '@/dtos/classroom-modules/exists-classroom-modules.dto';
 
 @Injectable()
 export class ExistsClassroomModulesRepository

@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { ModuleVideoCreatedEvent } from '@/events/implements/module-videos/module-video-created.event';
 import { ModuleVideoRemovedEvent } from '@/events/implements/module-videos/module-video-removed.event';
 import { ModuleVideoUpdatedEvent } from '@/events/implements/module-videos/module-video-updated.event';

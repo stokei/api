@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService, IPaginatedType } from '@stokei/nestjs';
 
-import { FindAllClassroomModulesDTO } from '@/dtos/classroom-module s/find-all-classroom-module s.dto';
-import { ClassroomModuleModel } from '@/models/classroom-module .model';
-import { FindAllClassroomModulesQuery } from '@/queries/implements/classroom-module s/find-all-classroom-module s.query';
+import { FindAllClassroomModulesDTO } from '@/dtos/classroom-modules/find-all-classroom-modules.dto';
+import { ClassroomModuleModel } from '@/models/classroom-module.model';
+import { FindAllClassroomModulesQuery } from '@/queries/implements/classroom-modules/find-all-classroom-modules.query';
 
 @Injectable()
 export class FindAllClassroomModulesService

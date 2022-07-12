@@ -1,4 +1,4 @@
-import { ClassroomModuleModel } from '@/models/classroom-module .model';
+import { ClassroomModuleModel } from '@/models/classroom-module.model';
 
 interface IDataClassroomModuleRemovedEvent {
   readonly removedBy: string;

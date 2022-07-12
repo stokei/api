@@ -19,12 +19,6 @@ enum AccountRole {
   ADMIN
 }
 
-enum CardBrand {
-  MASTERCARD
-  VISA
-  ELO
-}
-
 enum ThemeMode {
   DARK
   LIGHT
@@ -404,21 +398,6 @@ model PaymentMethod {
   @@map("payments_methods")
 }
 
-model Card {
-  id             String    @id @default(cuid())
-  parent         String    @db.VarChar(255)
-  externalCardId String    @map("external_card_id") @db.VarChar(255)
-  lastFourNumber String    @map("last_four_number") @db.VarChar(4)
-  brand          CardBrand
-  default        Boolean   @default(false)
-  updatedAt      DateTime? @updatedAt @map("updated_at")
-  createdAt      DateTime? @default(now()) @map("created_at")
-  updatedBy      String?   @map("updated_by") @db.VarChar(255)
-  createdBy      String?   @map("created_by") @db.VarChar(255)
-
-  @@map("cards")
-}
-
 model Cart {
   id        String    @id @default(cuid())
   updatedAt DateTime? @updatedAt @map("updated_at")
@@ -429,7 +408,7 @@ model Cart {
   @@map("carts")
 }
 
-model CartsItem {
+model CartItem {
   id        String    @id @default(cuid())
   parent    String    @db.VarChar(255)
   price     String    @db.VarChar(255)

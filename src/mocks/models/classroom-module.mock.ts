@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import {
   ClassroomModuleModel,
   IClassroomModuleModelData
-} from '@/models/classroom-module .model';
+} from '@/models/classroom-module.model';
 
 export class ClassroomModuleModelMock extends ClassroomModuleModel {
   constructor(data?: Partial<IClassroomModuleModelData>) {

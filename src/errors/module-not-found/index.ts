@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 
-export class ModulesNotFoundException extends NotFoundException {
+export class ModuleNotFoundException extends NotFoundException {
   constructor() {
-    super('modulesNotFound');
+    super('moduleNotFound');
   }
 }

@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 
-import { CountClassroomModulesRepository } from '@/repositories/classroom-module s/count-classroom-module s';
-import { FindAllClassroomModulesRepository } from '@/repositories/classroom-module s/find-all-classroom-module s';
+import { CountClassroomModulesRepository } from '@/repositories/classroom-modules/count-classroom-modules';
+import { FindAllClassroomModulesRepository } from '@/repositories/classroom-modules/find-all-classroom-modules';
 
 import { FindAllClassroomModulesQueryHandler } from '.';
 

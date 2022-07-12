@@ -1,34 +1,33 @@
 import { AccessesQueries } from './accesses';
 import { AccountsQueries } from './accounts';
 import { AddressesQueries } from './addresses';
-import { CardsQueries } from './cards';
 import { CartsQueries } from './carts';
-import { CartsItemsQueries } from './carts-items';
-import { ClassroomsQueries } from './classrooms';
+import { CartItemsQueries } from './cart-items';
 import { ClassroomInstructorsQueries } from './classroom-instructors';
-import { ClassroomModulesQueries } from './classroom-module s';
+import { ClassroomModulesQueries } from './classroom-modules';
 import { ClassroomStudentsQueries } from './classroom-students';
+import { ClassroomsQueries } from './classrooms';
 import { ColorsQueries } from './colors';
-import { CoursesQueries } from './courses';
 import { CourseInstructorsQueries } from './course-instructors';
 import { CourseStudentsQueries } from './course-students';
+import { CoursesQueries } from './courses';
 import { CurrenciesQueries } from './currencies';
 import { DomainsQueries } from './domains';
 import { ImagesQueries } from './images';
 import { LanguagesQueries } from './languages';
-import { ModulesQueries } from './modules';
 import { ModuleVideosQueries } from './module-videos';
+import { ModulesQueries } from './modules';
 import { OrdersQueries } from './orders';
-import { PaymentsQueries } from './payments';
 import { PaymentMethodsQueries } from './payment-methods';
+import { PaymentsQueries } from './payments';
 import { PhonesQueries } from './phones';
 import { PlansQueries } from './plans';
 import { PricesQueries } from './prices';
 import { ProductsQueries } from './products';
 import { ProjectsQueries } from './projects';
 import { SubscriptionsQueries } from './subscriptions';
-import { VideosQueries } from './videos';
 import { VideoAuthorsQueries } from './video-authors';
+import { VideosQueries } from './videos';
 
 export const Queries = [
   ...AccountsQueries,
@@ -43,9 +42,8 @@ export const Queries = [
   ...OrdersQueries,
   ...PaymentsQueries,
   ...PaymentMethodsQueries,
-  ...CardsQueries,
   ...CartsQueries,
-  ...CartsItemsQueries,
+  ...CartItemsQueries,
   ...PlansQueries,
   ...ImagesQueries,
   ...VideosQueries,

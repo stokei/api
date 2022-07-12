@@ -2,9 +2,9 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { ClassroomModuleCreatedEvent } from '@/events/implements/classroom-module s/classroom-module -created.event';
-import { ClassroomModuleRemovedEvent } from '@/events/implements/classroom-module s/classroom-module -removed.event';
-import { ClassroomModuleUpdatedEvent } from '@/events/implements/classroom-module s/classroom-module -updated.event';
+import { ClassroomModuleCreatedEvent } from '@/events/implements/classroom-modules/classroom-module-created.event';
+import { ClassroomModuleRemovedEvent } from '@/events/implements/classroom-modules/classroom-module-removed.event';
+import { ClassroomModuleUpdatedEvent } from '@/events/implements/classroom-modules/classroom-module-updated.event';
 
 export interface IClassroomModuleModelData {
   readonly id?: string;

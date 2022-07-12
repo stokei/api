@@ -1,12 +1,11 @@
 import { AccessCommandHandlers } from './accesses';
 import { AccountCommandHandlers } from './accounts';
 import { AddressCommandHandlers } from './addresses';
-import { CardCommandHandlers } from './cards';
 import { CartCommandHandlers } from './carts';
-import { CartsItemCommandHandlers } from './carts-items';
+import { CartItemCommandHandlers } from './cart-items';
 import { ClassroomCommandHandlers } from './classrooms';
 import { ClassroomInstructorCommandHandlers } from './classroom-instructors';
-import { ClassroomModuleCommandHandlers } from './classroom-module s';
+import { ClassroomModuleCommandHandlers } from './classroom-modules';
 import { ClassroomStudentCommandHandlers } from './classroom-students';
 import { ColorCommandHandlers } from './colors';
 import { CourseCommandHandlers } from './courses';
@@ -45,9 +44,8 @@ export const CommandHandlers = [
   ...OrderItemCommandHandlers,
   ...PaymentCommandHandlers,
   ...PaymentMethodCommandHandlers,
-  ...CardCommandHandlers,
   ...CartCommandHandlers,
-  ...CartsItemCommandHandlers,
+  ...CartItemCommandHandlers,
   ...PlanCommandHandlers,
   ...ImageCommandHandlers,
   ...VideoCommandHandlers,

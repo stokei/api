@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-
 import { PaymentCreatedEvent } from '@/events/implements/payments/payment-created.event';
 import { PaymentRemovedEvent } from '@/events/implements/payments/payment-removed.event';
 import { PaymentUpdatedEvent } from '@/events/implements/payments/payment-updated.event';

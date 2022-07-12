@@ -1,34 +1,33 @@
 import { AccessesFieldsResolvers } from './accesses';
 import { AccountsFieldsResolvers } from './accounts';
 import { AddressesFieldsResolvers } from './addresses';
-import { CardsFieldsResolvers } from './cards';
 import { CartsFieldsResolvers } from './carts';
-import { CartsItemsFieldsResolvers } from './carts-items';
-import { ClassroomsFieldsResolvers } from './classrooms';
+import { CartItemsFieldsResolvers } from './cart-items';
 import { ClassroomInstructorsFieldsResolvers } from './classroom-instructors';
-import { ClassroomModulesFieldsResolvers } from './classroom-module s';
+import { ClassroomModulesFieldsResolvers } from './classroom-modules';
 import { ClassroomStudentsFieldsResolvers } from './classroom-students';
+import { ClassroomsFieldsResolvers } from './classrooms';
 import { ColorsFieldsResolvers } from './colors';
-import { CoursesFieldsResolvers } from './courses';
 import { CourseInstructorsFieldsResolvers } from './course-instructors';
 import { CourseStudentsFieldsResolvers } from './course-students';
+import { CoursesFieldsResolvers } from './courses';
 import { CurrenciesFieldsResolvers } from './currencies';
 import { DomainsFieldsResolvers } from './domains';
 import { ImagesFieldsResolvers } from './images';
 import { LanguagesFieldsResolvers } from './languages';
-import { ModulesFieldsResolvers } from './modules';
 import { ModuleVideosFieldsResolvers } from './module-videos';
+import { ModulesFieldsResolvers } from './modules';
 import { OrdersFieldsResolvers } from './orders';
-import { PaymentsFieldsResolvers } from './payments';
 import { PaymentMethodsFieldsResolvers } from './payment-methods';
+import { PaymentsFieldsResolvers } from './payments';
 import { PhonesFieldsResolvers } from './phones';
 import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
 import { ProductsFieldsResolvers } from './products';
 import { ProjectsFieldsResolvers } from './projects';
 import { SubscriptionsFieldsResolvers } from './subscriptions';
-import { VideosFieldsResolvers } from './videos';
 import { VideoAuthorsFieldsResolvers } from './video-authors';
+import { VideosFieldsResolvers } from './videos';
 
 export const FieldsResolvers = [
   ...AccountsFieldsResolvers,
@@ -43,9 +42,8 @@ export const FieldsResolvers = [
   ...OrdersFieldsResolvers,
   ...PaymentsFieldsResolvers,
   ...PaymentMethodsFieldsResolvers,
-  ...CardsFieldsResolvers,
   ...CartsFieldsResolvers,
-  ...CartsItemsFieldsResolvers,
+  ...CartItemsFieldsResolvers,
   ...PlansFieldsResolvers,
   ...ImagesFieldsResolvers,
   ...VideosFieldsResolvers,

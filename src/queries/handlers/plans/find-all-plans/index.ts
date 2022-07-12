@@ -57,6 +57,8 @@ export class FindAllPlansQueryHandler
         [operator]: {
           parent: cleanWhereDataString(operatorData.parent),
           name: cleanWhereDataSearch(operatorData.name),
+          updatedBy: cleanWhereDataString(operatorData.updatedBy),
+          createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:
             operatorData.ids?.length > 0
               ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)

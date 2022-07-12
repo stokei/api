@@ -21,6 +21,12 @@ class WhereDataFindAllProductsDataInput implements WhereDataFindAllProductsDTO {
 
   @Field({ nullable: true })
   name?: WhereDataSearchInput;
+
+  @Field({ nullable: true })
+  updatedBy?: WhereDataStringInput;
+
+  @Field({ nullable: true })
+  createdBy?: WhereDataStringInput;
 }
 
 @InputType()

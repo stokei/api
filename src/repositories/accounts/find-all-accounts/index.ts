@@ -30,8 +30,8 @@ export class FindAllAccountsRepository
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         parent: prismaMapper.toWhereData(operatorData.parent),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
         firstname: prismaMapper.toWhereDataSearch(operatorData.firstname),
         lastname: prismaMapper.toWhereDataSearch(operatorData.lastname),
         email: prismaMapper.toWhereData(operatorData.email),

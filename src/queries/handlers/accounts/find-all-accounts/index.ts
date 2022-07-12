@@ -62,6 +62,8 @@ export class FindAllAccountsQueryHandler
           lastname: cleanWhereDataSearch(operatorData.lastname),
           email: cleanWhereDataString(operatorData.email),
           username: cleanWhereDataString(operatorData.username),
+          updatedBy: cleanWhereDataString(operatorData.updatedBy),
+          createdBy: cleanWhereDataString(operatorData.createdBy),
           roles:
             operatorData.roles?.length > 0
               ? operatorData.roles.map((role) => cleanValue(role))

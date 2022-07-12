@@ -4,6 +4,7 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhereDataString,
   IOperator,
   IPaginatedType,
   PaginationMapper,
@@ -53,6 +54,8 @@ export class FindAllCartsQueryHandler
       }
       return {
         [operator]: {
+          updatedBy: cleanWhereDataString(operatorData.updatedBy),
+          createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:
             operatorData.ids?.length > 0
               ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)

@@ -1,10 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import {
-  OrderBy,
-  WhereDataSearchInput,
-  WhereDataStringInput,
-  WherePaginated
-} from '@stokei/nestjs';
+import { OrderBy, WhereDataStringInput, WherePaginated } from '@stokei/nestjs';
 
 import {
   OrderByDataFindAllCartItemsDTO,
@@ -22,7 +17,13 @@ class WhereDataFindAllCartItemsDataInput
   parent?: WhereDataStringInput;
 
   @Field({ nullable: true })
-  name?: WhereDataSearchInput;
+  price?: WhereDataStringInput;
+
+  @Field({ nullable: true })
+  updatedBy?: WhereDataStringInput;
+
+  @Field({ nullable: true })
+  createdBy?: WhereDataStringInput;
 }
 
 @InputType()

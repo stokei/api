@@ -21,6 +21,12 @@ class WhereDataFindAllVideosDataInput implements WhereDataFindAllVideosDTO {
 
   @Field({ nullable: true })
   name?: WhereDataSearchInput;
+
+  @Field({ nullable: true })
+  updatedBy?: WhereDataStringInput;
+
+  @Field({ nullable: true })
+  createdBy?: WhereDataStringInput;
 }
 
 @InputType()

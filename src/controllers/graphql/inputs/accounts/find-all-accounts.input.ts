@@ -34,6 +34,12 @@ class WhereDataFindAllAccountsDataInput implements WhereDataFindAllAccountsDTO {
 
   @Field(() => [AccountRole], { nullable: true })
   roles?: AccountRole[];
+
+  @Field({ nullable: true })
+  updatedBy?: WhereDataStringInput;
+
+  @Field({ nullable: true })
+  createdBy?: WhereDataStringInput;
 }
 
 @InputType()

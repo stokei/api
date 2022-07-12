@@ -30,6 +30,8 @@ export class FindAllAddressesRepository
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         parent: prismaMapper.toWhereData(operatorData.parent),
+        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
         default: prismaMapper.toWhereData(operatorData.default),
         street: prismaMapper.toWhereDataSearch(operatorData.street),
         complement: prismaMapper.toWhereDataSearch(operatorData.complement),

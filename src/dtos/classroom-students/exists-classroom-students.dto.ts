@@ -1,5 +1,6 @@
 export interface ExistsClassroomStudentsWhereDTO {
-  parent?: string;
+  classroom?: string;
+  student?: string;
 }
 
 export interface ExistsClassroomStudentsDTO {

@@ -1,5 +1,5 @@
 export interface CreateClassroomModuleDTO {
-  name: string;
-  parent: string;
+  classroom: string;
+  module: string;
   createdBy: string;
 }

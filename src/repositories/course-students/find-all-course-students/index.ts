@@ -31,11 +31,9 @@ export class FindAllCourseStudentsRepository
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        course: prismaMapper.toWhereData(operatorData.course),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy)
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
     };
     return new CourseStudentMapper().toModels(

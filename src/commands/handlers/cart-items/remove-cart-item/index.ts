@@ -10,8 +10,6 @@ import {
 import { FindCartItemByIdRepository } from '@/repositories/cart-items/find-cart-item-by-id';
 import { RemoveCartItemRepository } from '@/repositories/cart-items/remove-cart-item';
 
-type RemoveCartItemCommandKeys = keyof RemoveCartItemCommand;
-
 @CommandHandler(RemoveCartItemCommand)
 export class RemoveCartItemCommandHandler
   implements ICommandHandler<RemoveCartItemCommand>

@@ -1,5 +1,5 @@
 export interface CreateVideoAuthorDTO {
-  name: string;
-  parent: string;
+  video: string;
+  author: string;
   createdBy: string;
 }

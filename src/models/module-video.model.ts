@@ -4,7 +4,6 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { ModuleVideoCreatedEvent } from '@/events/implements/module-videos/module-video-created.event';
 import { ModuleVideoRemovedEvent } from '@/events/implements/module-videos/module-video-removed.event';
-import { ModuleVideoUpdatedEvent } from '@/events/implements/module-videos/module-video-updated.event';
 
 export interface IModuleVideoModelData {
   readonly id?: string;
@@ -46,17 +45,6 @@ export class ModuleVideoModel extends AggregateRoot {
       this.apply(
         new ModuleVideoCreatedEvent({
           createdBy,
-          moduleVideo: this
-        })
-      );
-    }
-  }
-
-  updatedModuleVideo({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new ModuleVideoUpdatedEvent({
-          updatedBy,
           moduleVideo: this
         })
       );

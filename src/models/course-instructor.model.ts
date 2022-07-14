@@ -4,7 +4,6 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { CourseInstructorCreatedEvent } from '@/events/implements/course-instructors/course-instructor-created.event';
 import { CourseInstructorRemovedEvent } from '@/events/implements/course-instructors/course-instructor-removed.event';
-import { CourseInstructorUpdatedEvent } from '@/events/implements/course-instructors/course-instructor-updated.event';
 
 export interface ICourseInstructorModelData {
   readonly id?: string;
@@ -46,17 +45,6 @@ export class CourseInstructorModel extends AggregateRoot {
       this.apply(
         new CourseInstructorCreatedEvent({
           createdBy,
-          courseInstructor: this
-        })
-      );
-    }
-  }
-
-  updatedCourseInstructor({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new CourseInstructorUpdatedEvent({
-          updatedBy,
           courseInstructor: this
         })
       );

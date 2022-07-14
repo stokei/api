@@ -1,11 +1,11 @@
-import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
+import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 
 export interface CountModuleVideosWhereDTO {
   ids?: string[];
-  parent?: IWhereData;
+  module?: IWhereData;
+  video?: IWhereData;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysCountModuleVideosWhereDTO = keyof CountModuleVideosWhereDTO;
 

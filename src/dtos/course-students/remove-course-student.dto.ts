@@ -1,6 +1,7 @@
 export interface RemoveCourseStudentWhereDTO {
   removedBy: string;
-  courseStudentId: string;
+  course: string;
+  student: string;
 }
 
 export interface RemoveCourseStudentDTO {

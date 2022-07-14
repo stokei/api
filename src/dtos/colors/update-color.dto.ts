@@ -1,6 +1,6 @@
 export interface UpdateColorDataDTO {
   updatedBy: string;
-  name?: string;
+  color?: string;
 }
 
 export interface UpdateColorWhereDTO {

@@ -1,22 +1,16 @@
-import {
-  IBaseFindManyDTO,
-  IOrderBy,
-  IWhereData,
-  IWhereDataSearch
-} from '@stokei/nestjs';
+import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
 
 export interface WhereDataFindAllCourseInstructorsDTO {
   ids?: string[];
-  parent?: IWhereData;
+  course?: IWhereData;
+  instructor?: IWhereData;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllCourseInstructorsDTO =
   keyof WhereDataFindAllCourseInstructorsDTO;
 
 export interface OrderByDataFindAllCourseInstructorsDTO {
-  name?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

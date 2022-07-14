@@ -6,12 +6,12 @@ export class CreateCourseStudentCommand
   implements ICommand, CreateCourseStudentDTO
 {
   name: string;
-  parent: string;
+  course: string;
   createdBy: string;
 
   constructor(data: CreateCourseStudentDTO) {
     this.name = data.name;
-    this.parent = data.parent;
+    this.course = data.course;
     this.createdBy = data.createdBy;
   }
 }

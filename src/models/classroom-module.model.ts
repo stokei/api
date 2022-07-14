@@ -4,7 +4,6 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { ClassroomModuleCreatedEvent } from '@/events/implements/classroom-modules/classroom-module-created.event';
 import { ClassroomModuleRemovedEvent } from '@/events/implements/classroom-modules/classroom-module-removed.event';
-import { ClassroomModuleUpdatedEvent } from '@/events/implements/classroom-modules/classroom-module-updated.event';
 
 export interface IClassroomModuleModelData {
   readonly id?: string;
@@ -46,17 +45,6 @@ export class ClassroomModuleModel extends AggregateRoot {
       this.apply(
         new ClassroomModuleCreatedEvent({
           createdBy,
-          classroomModule: this
-        })
-      );
-    }
-  }
-
-  updatedClassroomModule({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new ClassroomModuleUpdatedEvent({
-          updatedBy,
           classroomModule: this
         })
       );

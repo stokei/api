@@ -7,7 +7,6 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { ClassroomStudentCreatedEvent } from '@/events/implements/classroom-students/classroom-student-created.event';
 import { ClassroomStudentRemovedEvent } from '@/events/implements/classroom-students/classroom-student-removed.event';
-import { ClassroomStudentUpdatedEvent } from '@/events/implements/classroom-students/classroom-student-updated.event';
 
 @Injectable()
 export class ClassroomStudentsSagas {
@@ -55,30 +54,6 @@ export class ClassroomStudentsSagas {
         );
         this.logger.log(
           'Inside [ClassroomStudentRemovedEvent] Saga event classroomStudentRemoved:' +
-            JSON.stringify(
-              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
-            )
-        );
-        const commands = [];
-        return commands;
-      }),
-      mergeMap((c) => c)
-    );
-  };
-
-  @Saga()
-  classroomStudentUpdated = (
-    events$: Observable<any>
-  ): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(ClassroomStudentUpdatedEvent),
-      delay(500),
-      map((event) => {
-        this.logger.log(
-          'Inside [ClassroomStudentUpdatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
-          'Inside [ClassroomStudentUpdatedEvent] Saga event classroomStudentUpdated:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

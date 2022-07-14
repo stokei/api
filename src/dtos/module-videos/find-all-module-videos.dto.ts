@@ -1,22 +1,16 @@
-import {
-  IBaseFindManyDTO,
-  IOrderBy,
-  IWhereData,
-  IWhereDataSearch
-} from '@stokei/nestjs';
+import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
 
 export interface WhereDataFindAllModuleVideosDTO {
   ids?: string[];
-  parent?: IWhereData;
+  module?: IWhereData;
+  video?: IWhereData;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllModuleVideosDTO =
   keyof WhereDataFindAllModuleVideosDTO;
 
 export interface OrderByDataFindAllModuleVideosDTO {
-  name?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

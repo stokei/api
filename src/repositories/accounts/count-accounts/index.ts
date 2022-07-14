@@ -24,8 +24,6 @@ export class CountAccountsRepository
         parent: prismaMapper.toWhereData(operatorData.parent),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         firstname: prismaMapper.toWhereDataSearch(operatorData.firstname),
         lastname: prismaMapper.toWhereDataSearch(operatorData.lastname),
         email: prismaMapper.toWhereData(operatorData.email),

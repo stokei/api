@@ -7,7 +7,7 @@ export class CourseInstructor {
   id: string;
 
   @Field(() => String)
-  parent: string;
+  course: string;
 
   @Field(() => String)
   name: string;

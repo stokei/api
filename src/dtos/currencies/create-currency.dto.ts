@@ -1,5 +1,7 @@
 export interface CreateCurrencyDTO {
+  id: string;
   name: string;
-  parent: string;
+  symbol: string;
+  minorUnit: number;
   createdBy: string;
 }

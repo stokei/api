@@ -3,7 +3,7 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class CreateCourseStudentInput {
   @Field()
-  parent: string;
+  course: string;
 
   @Field()
   name: string;

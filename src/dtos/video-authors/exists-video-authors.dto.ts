@@ -1,5 +1,6 @@
 export interface ExistsVideoAuthorsWhereDTO {
-  parent?: string;
+  video?: string;
+  author?: string;
 }
 
 export interface ExistsVideoAuthorsDTO {

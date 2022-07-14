@@ -1,5 +1,5 @@
 export interface CreateModuleVideoDTO {
-  name: string;
-  parent: string;
+  module: string;
+  video: string;
   createdBy: string;
 }

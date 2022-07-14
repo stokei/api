@@ -25,9 +25,9 @@ export class CreateCourseInstructorCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
+    if (!data?.course) {
       throw new ParamNotFoundException<CreateCourseInstructorCommandKeys>(
-        'parent'
+        'course'
       );
     }
 
@@ -52,7 +52,7 @@ export class CreateCourseInstructorCommandHandler
   ): CreateCourseInstructorCommand {
     return cleanObject({
       name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      course: cleanValue(command?.course)
     });
   }
 }

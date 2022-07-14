@@ -1,5 +1,5 @@
 export interface CreateClassroomStudentDTO {
-  name: string;
-  parent: string;
+  classroom: string;
+  student: string;
   createdBy: string;
 }

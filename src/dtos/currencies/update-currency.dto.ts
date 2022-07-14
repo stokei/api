@@ -1,6 +1,8 @@
 export interface UpdateCurrencyDataDTO {
   updatedBy: string;
   name?: string;
+  symbol?: string;
+  minorUnit?: number;
 }
 
 export interface UpdateCurrencyWhereDTO {

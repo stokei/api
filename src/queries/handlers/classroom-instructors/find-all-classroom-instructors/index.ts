@@ -4,7 +4,6 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
-  cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
   IPaginatedType,
@@ -60,8 +59,8 @@ export class FindAllClassroomInstructorsQueryHandler
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
-          name: cleanWhereDataSearch(operatorData.name),
+          classroom: cleanWhereDataString(operatorData.classroom),
+          instructor: cleanWhereDataString(operatorData.instructor),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:
@@ -83,7 +82,6 @@ export class FindAllClassroomInstructorsQueryHandler
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        name: cleanSortValue(query.orderBy?.name),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

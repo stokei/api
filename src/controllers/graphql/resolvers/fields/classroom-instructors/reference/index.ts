@@ -10,7 +10,7 @@ export class ClassroomInstructorReferenceResolver {
   ) {}
 
   @ResolveReference()
-  resolveReference(reference: { __typename: string; id: string }) {
+  resolveReference(reference: { __typeinstructors: string; id: string }) {
     return this.classroomInstructorsLoader.findByIds.load(reference.id);
   }
 }

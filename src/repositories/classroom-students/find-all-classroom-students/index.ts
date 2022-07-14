@@ -35,12 +35,10 @@ export class FindAllClassroomStudentsRepository
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        student: prismaMapper.toWhereData(operatorData.student),
+        classroom: prismaMapper.toWhereData(operatorData.classroom),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy)
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
     };
     return new ClassroomStudentMapper().toModels(

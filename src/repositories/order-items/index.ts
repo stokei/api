@@ -4,7 +4,6 @@ import { ExistsOrderItemsRepository } from './exists-order-items';
 import { FindAllOrderItemsRepository } from './find-all-order-items';
 import { FindOrderItemByIdRepository } from './find-order-item-by-id';
 import { RemoveOrderItemRepository } from './remove-order-item';
-import { UpdateOrderItemRepository } from './update-order-item';
 
 export const OrderItemsRepositories = [
   CountOrderItemsRepository,
@@ -12,6 +11,5 @@ export const OrderItemsRepositories = [
   ExistsOrderItemsRepository,
   FindOrderItemByIdRepository,
   FindAllOrderItemsRepository,
-  RemoveOrderItemRepository,
-  UpdateOrderItemRepository
+  RemoveOrderItemRepository
 ];

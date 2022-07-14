@@ -33,9 +33,7 @@ export class FindAllVideoAuthorsRepository
         name: prismaMapper.toWhereDataSearch(operatorData.name),
         parent: prismaMapper.toWhereData(operatorData.parent),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy)
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
     };
     return new VideoAuthorMapper().toModels(

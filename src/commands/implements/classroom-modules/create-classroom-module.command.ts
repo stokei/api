@@ -6,12 +6,12 @@ export class CreateClassroomModuleCommand
   implements ICommand, CreateClassroomModuleDTO
 {
   name: string;
-  parent: string;
+  classroom: string;
   createdBy: string;
 
   constructor(data: CreateClassroomModuleDTO) {
     this.name = data.name;
-    this.parent = data.parent;
+    this.classroom = data.classroom;
     this.createdBy = data.createdBy;
   }
 }

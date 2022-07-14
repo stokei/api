@@ -4,7 +4,6 @@ import { ExistsModuleVideosRepository } from './exists-module-videos';
 import { FindAllModuleVideosRepository } from './find-all-module-videos';
 import { FindModuleVideoByIdRepository } from './find-module-video-by-id';
 import { RemoveModuleVideoRepository } from './remove-module-video';
-import { UpdateModuleVideoRepository } from './update-module-video';
 
 export const ModuleVideosRepositories = [
   CountModuleVideosRepository,
@@ -12,6 +11,5 @@ export const ModuleVideosRepositories = [
   ExistsModuleVideosRepository,
   FindModuleVideoByIdRepository,
   FindAllModuleVideosRepository,
-  RemoveModuleVideoRepository,
-  UpdateModuleVideoRepository
+  RemoveModuleVideoRepository
 ];

@@ -6,7 +6,6 @@ import { RecurringType } from '@/enums/recurring-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { OrderItemCreatedEvent } from '@/events/implements/order-items/order-item-created.event';
 import { OrderItemRemovedEvent } from '@/events/implements/order-items/order-item-removed.event';
-import { OrderItemUpdatedEvent } from '@/events/implements/order-items/order-item-updated.event';
 
 export interface IOrderItemModelData {
   readonly id?: string;
@@ -78,17 +77,6 @@ export class OrderItemModel extends AggregateRoot {
       this.apply(
         new OrderItemCreatedEvent({
           createdBy,
-          orderItem: this
-        })
-      );
-    }
-  }
-
-  updatedOrderItem({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new OrderItemUpdatedEvent({
-          updatedBy,
           orderItem: this
         })
       );

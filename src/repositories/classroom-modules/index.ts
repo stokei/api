@@ -4,7 +4,6 @@ import { ExistsClassroomModulesRepository } from './exists-classroom-modules';
 import { FindAllClassroomModulesRepository } from './find-all-classroom-modules';
 import { FindClassroomModuleByIdRepository } from './find-classroom-module-by-id';
 import { RemoveClassroomModuleRepository } from './remove-classroom-module';
-import { UpdateClassroomModuleRepository } from './update-classroom-module';
 
 export const ClassroomModulesRepositories = [
   CountClassroomModulesRepository,
@@ -12,6 +11,5 @@ export const ClassroomModulesRepositories = [
   ExistsClassroomModulesRepository,
   FindClassroomModuleByIdRepository,
   FindAllClassroomModulesRepository,
-  RemoveClassroomModuleRepository,
-  UpdateClassroomModuleRepository
+  RemoveClassroomModuleRepository
 ];

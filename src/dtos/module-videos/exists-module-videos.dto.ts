@@ -1,5 +1,6 @@
 export interface ExistsModuleVideosWhereDTO {
-  parent?: string;
+  module?: string;
+  video?: string;
 }
 
 export interface ExistsModuleVideosDTO {

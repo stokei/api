@@ -8,9 +8,11 @@ import {
 export interface WhereDataFindAllClassroomsDTO {
   ids?: string[];
   parent?: IWhereData;
+  name?: IWhereDataSearch;
+  description?: IWhereDataSearch;
+  hasAccessToAllModules?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllClassroomsDTO =
   keyof WhereDataFindAllClassroomsDTO;

@@ -29,9 +29,7 @@ export class CountPaymentsRepository
         name: prismaMapper.toWhereDataSearch(operatorData.name),
         parent: prismaMapper.toWhereData(operatorData.parent),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy)
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
     };
     return await this.model.payment.count({

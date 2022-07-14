@@ -7,7 +7,6 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { OrderItemCreatedEvent } from '@/events/implements/order-items/order-item-created.event';
 import { OrderItemRemovedEvent } from '@/events/implements/order-items/order-item-removed.event';
-import { OrderItemUpdatedEvent } from '@/events/implements/order-items/order-item-updated.event';
 
 @Injectable()
 export class OrderItemsSagas {
@@ -51,28 +50,6 @@ export class OrderItemsSagas {
         );
         this.logger.log(
           'Inside [OrderItemRemovedEvent] Saga event orderItemRemoved:' +
-            JSON.stringify(
-              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
-            )
-        );
-        const commands = [];
-        return commands;
-      }),
-      mergeMap((c) => c)
-    );
-  };
-
-  @Saga()
-  orderItemUpdated = (events$: Observable<any>): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(OrderItemUpdatedEvent),
-      delay(500),
-      map((event) => {
-        this.logger.log(
-          'Inside [OrderItemUpdatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
-          'Inside [OrderItemUpdatedEvent] Saga event orderItemUpdated:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

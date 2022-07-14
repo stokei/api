@@ -19,7 +19,7 @@ class WhereDataFindAllClassroomModulesDataInput
   ids?: string[];
 
   @Field({ nullable: true })
-  parent?: WhereDataStringInput;
+  classroom?: WhereDataStringInput;
 
   @Field({ nullable: true })
   name?: WhereDataSearchInput;

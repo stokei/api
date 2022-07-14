@@ -19,7 +19,7 @@ class WhereDataFindAllCourseStudentsDataInput
   ids?: string[];
 
   @Field({ nullable: true })
-  parent?: WhereDataStringInput;
+  course?: WhereDataStringInput;
 
   @Field({ nullable: true })
   name?: WhereDataSearchInput;

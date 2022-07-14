@@ -4,7 +4,6 @@ import { ExistsClassroomInstructorsRepository } from './exists-classroom-instruc
 import { FindAllClassroomInstructorsRepository } from './find-all-classroom-instructors';
 import { FindClassroomInstructorByIdRepository } from './find-classroom-instructor-by-id';
 import { RemoveClassroomInstructorRepository } from './remove-classroom-instructor';
-import { UpdateClassroomInstructorRepository } from './update-classroom-instructor';
 
 export const ClassroomInstructorsRepositories = [
   CountClassroomInstructorsRepository,
@@ -12,6 +11,5 @@ export const ClassroomInstructorsRepositories = [
   ExistsClassroomInstructorsRepository,
   FindClassroomInstructorByIdRepository,
   FindAllClassroomInstructorsRepository,
-  RemoveClassroomInstructorRepository,
-  UpdateClassroomInstructorRepository
+  RemoveClassroomInstructorRepository
 ];

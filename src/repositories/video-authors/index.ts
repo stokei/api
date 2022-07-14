@@ -4,7 +4,6 @@ import { ExistsVideoAuthorsRepository } from './exists-video-authors';
 import { FindAllVideoAuthorsRepository } from './find-all-video-authors';
 import { FindVideoAuthorByIdRepository } from './find-video-author-by-id';
 import { RemoveVideoAuthorRepository } from './remove-video-author';
-import { UpdateVideoAuthorRepository } from './update-video-author';
 
 export const VideoAuthorsRepositories = [
   CountVideoAuthorsRepository,
@@ -12,6 +11,5 @@ export const VideoAuthorsRepositories = [
   ExistsVideoAuthorsRepository,
   FindVideoAuthorByIdRepository,
   FindAllVideoAuthorsRepository,
-  RemoveVideoAuthorRepository,
-  UpdateVideoAuthorRepository
+  RemoveVideoAuthorRepository
 ];

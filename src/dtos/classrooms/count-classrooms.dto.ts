@@ -3,9 +3,11 @@ import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 export interface CountClassroomsWhereDTO {
   ids?: string[];
   parent?: IWhereData;
+  name?: IWhereDataSearch;
+  description?: IWhereDataSearch;
+  hasAccessToAllModules?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysCountClassroomsWhereDTO = keyof CountClassroomsWhereDTO;
 

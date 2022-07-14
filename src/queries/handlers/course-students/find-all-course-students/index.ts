@@ -61,7 +61,7 @@ export class FindAllCourseStudentsQueryHandler
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          course: cleanWhereDataString(operatorData.course),
           name: cleanWhereDataSearch(operatorData.name),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),

@@ -1,10 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  IBaseRepository,
-  IOperator,
-  IWhere,
-  PrismaMapper
-} from '@stokei/nestjs';
+import { IBaseRepository, IOperator, PrismaMapper } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
 import { CountClassroomInstructorsDTO } from '@/dtos/classroom-instructors/count-classroom-instructors.dto';
@@ -26,12 +21,10 @@ export class CountClassroomInstructorsRepository
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        instructor: prismaMapper.toWhereData(operatorData.instructor),
+        classroom: prismaMapper.toWhereData(operatorData.classroom),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy)
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
     };
     return await this.model.classroomInstructor.count({

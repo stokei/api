@@ -1,6 +1,7 @@
 export interface RemoveClassroomModuleWhereDTO {
   removedBy: string;
-  classroomModuleId: string;
+  classroom: string;
+  module: string;
 }
 
 export interface RemoveClassroomModuleDTO {

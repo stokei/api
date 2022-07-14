@@ -25,9 +25,9 @@ export class CreateClassroomModuleCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
+    if (!data?.classroom) {
       throw new ParamNotFoundException<CreateClassroomModuleCommandKeys>(
-        'parent'
+        'classroom'
       );
     }
 
@@ -52,7 +52,7 @@ export class CreateClassroomModuleCommandHandler
   ): CreateClassroomModuleCommand {
     return cleanObject({
       name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      classroom: cleanValue(command?.classroom)
     });
   }
 }

@@ -60,7 +60,7 @@ export class FindAllClassroomModulesQueryHandler
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          classroom: cleanWhereDataString(operatorData.classroom),
           name: cleanWhereDataSearch(operatorData.name),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),

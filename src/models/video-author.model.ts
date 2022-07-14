@@ -4,7 +4,6 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { VideoAuthorCreatedEvent } from '@/events/implements/video-authors/video-author-created.event';
 import { VideoAuthorRemovedEvent } from '@/events/implements/video-authors/video-author-removed.event';
-import { VideoAuthorUpdatedEvent } from '@/events/implements/video-authors/video-author-updated.event';
 
 export interface IVideoAuthorModelData {
   readonly id?: string;
@@ -46,17 +45,6 @@ export class VideoAuthorModel extends AggregateRoot {
       this.apply(
         new VideoAuthorCreatedEvent({
           createdBy,
-          videoAuthor: this
-        })
-      );
-    }
-  }
-
-  updatedVideoAuthor({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new VideoAuthorUpdatedEvent({
-          updatedBy,
           videoAuthor: this
         })
       );

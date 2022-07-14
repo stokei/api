@@ -19,10 +19,10 @@ class WhereDataFindAllClassroomInstructorsDataInput
   ids?: string[];
 
   @Field({ nullable: true })
-  parent?: WhereDataStringInput;
+  classroom?: WhereDataStringInput;
 
   @Field({ nullable: true })
-  name?: WhereDataSearchInput;
+  instructors?: WhereDataSearchInput;
 
   @Field({ nullable: true })
   updatedBy?: WhereDataStringInput;
@@ -36,7 +36,7 @@ export class OrderByDataFindAllClassroomInstructorsInput
   implements OrderByDataFindAllClassroomInstructorsDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
+  instructors?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

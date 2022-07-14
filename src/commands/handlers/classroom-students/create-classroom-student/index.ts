@@ -25,9 +25,9 @@ export class CreateClassroomStudentCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
+    if (!data?.classroom) {
       throw new ParamNotFoundException<CreateClassroomStudentCommandKeys>(
-        'parent'
+        'classroom'
       );
     }
 
@@ -51,8 +51,8 @@ export class CreateClassroomStudentCommandHandler
     command: CreateClassroomStudentCommand
   ): CreateClassroomStudentCommand {
     return cleanObject({
-      name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      student: cleanValue(command?.student),
+      classroom: cleanValue(command?.classroom)
     });
   }
 }

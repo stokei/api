@@ -60,8 +60,8 @@ export class FindAllClassroomStudentsQueryHandler
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
-          name: cleanWhereDataSearch(operatorData.name),
+          classroom: cleanWhereDataString(operatorData.classroom),
+          student: cleanWhereDataSearch(operatorData.student),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:
@@ -83,7 +83,7 @@ export class FindAllClassroomStudentsQueryHandler
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        name: cleanSortValue(query.orderBy?.name),
+        student: cleanSortValue(query.orderBy?.student),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

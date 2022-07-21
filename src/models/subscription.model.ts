@@ -4,7 +4,6 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { SubscriptionStatus } from '@/enums/subscription-status.enum';
 import { SubscriptionCreatedEvent } from '@/events/implements/subscriptions/subscription-created.event';
-import { SubscriptionRemovedEvent } from '@/events/implements/subscriptions/subscription-removed.event';
 import { SubscriptionUpdatedEvent } from '@/events/implements/subscriptions/subscription-updated.event';
 
 export interface ISubscriptionModelData {
@@ -76,17 +75,6 @@ export class SubscriptionModel extends AggregateRoot {
       this.apply(
         new SubscriptionUpdatedEvent({
           updatedBy,
-          subscription: this
-        })
-      );
-    }
-  }
-
-  removedSubscription({ removedBy }: { removedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new SubscriptionRemovedEvent({
-          removedBy,
           subscription: this
         })
       );

@@ -8,9 +8,10 @@ import {
 export interface WhereDataFindAllModulesDTO {
   ids?: string[];
   parent?: IWhereData;
+  name?: IWhereDataSearch;
+  description?: IWhereDataSearch;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllModulesDTO = keyof WhereDataFindAllModulesDTO;
 

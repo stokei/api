@@ -4,13 +4,11 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 import { PaymentStatus } from '@/enums/payment-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PaymentCreatedEvent } from '@/events/implements/payments/payment-created.event';
-import { PaymentRemovedEvent } from '@/events/implements/payments/payment-removed.event';
-import { PaymentUpdatedEvent } from '@/events/implements/payments/payment-updated.event';
 
 export interface IPaymentModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly parent: string;
+  readonly customer: string;
   readonly order: string;
   readonly amount: number;
   readonly externalPaymentId: string;
@@ -31,7 +29,7 @@ export interface IPaymentModelData {
 
 export class PaymentModel extends AggregateRoot {
   readonly id: string;
-  readonly parent: string;
+  readonly customer: string;
   readonly order: string;
   readonly amount: number;
   readonly externalPaymentId: string;
@@ -56,7 +54,7 @@ export class PaymentModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.PAYMENTS,
       id: data._id?.toString() || data.id
     });
-    this.parent = data.parent;
+    this.customer = data.customer;
     this.order = data.order;
     this.amount = data.amount;
     this.externalPaymentId = data.externalPaymentId;
@@ -80,28 +78,6 @@ export class PaymentModel extends AggregateRoot {
       this.apply(
         new PaymentCreatedEvent({
           createdBy,
-          payment: this
-        })
-      );
-    }
-  }
-
-  updatedPayment({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new PaymentUpdatedEvent({
-          updatedBy,
-          payment: this
-        })
-      );
-    }
-  }
-
-  removedPayment({ removedBy }: { removedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new PaymentRemovedEvent({
-          removedBy,
           payment: this
         })
       );

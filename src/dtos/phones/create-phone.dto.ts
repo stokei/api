@@ -1,5 +1,8 @@
 export interface CreatePhoneDTO {
-  name: string;
   parent: string;
+  countryCode: string;
+  areaCode: string;
+  number: string;
+  default?: boolean;
   createdBy: string;
 }

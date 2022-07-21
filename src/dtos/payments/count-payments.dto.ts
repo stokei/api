@@ -1,11 +1,18 @@
-import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
+import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
+
+import { PaymentStatus } from '@/enums/payment-status.enum';
 
 export interface CountPaymentsWhereDTO {
   ids?: string[];
-  parent?: IWhereData;
+  customer?: IWhereData<string>;
+  order?: IWhereData<string>;
+  externalPaymentId?: IWhereData<string>;
+  paymentMethod?: IWhereData<string>;
+  status?: IWhereData<PaymentStatus>;
+  oldStatus?: IWhereData<PaymentStatus>;
+  active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysCountPaymentsWhereDTO = keyof CountPaymentsWhereDTO;
 

@@ -1,6 +1,7 @@
 export interface UpdateModuleDataDTO {
   updatedBy: string;
   name?: string;
+  description?: string;
 }
 
 export interface UpdateModuleWhereDTO {

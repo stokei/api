@@ -5,18 +5,33 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
+import { ProjectStatus } from '@/enums/project-status.enum';
+
 export interface WhereDataFindAllProjectsDTO {
   ids?: string[];
   parent?: IWhereData;
+  name?: IWhereDataSearch;
+  description?: IWhereDataSearch<string>;
+  status?: IWhereData<ProjectStatus>;
+  plan?: IWhereData<string>;
+  currency?: IWhereData<string>;
+  active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllProjectsDTO =
   keyof WhereDataFindAllProjectsDTO;
 
 export interface OrderByDataFindAllProjectsDTO {
   name?: IOrderBy;
+  slug?: IOrderBy;
+  status?: IOrderBy;
+  plan?: IOrderBy;
+  currency?: IOrderBy;
+  active?: IOrderBy;
+  blockedAt?: IOrderBy;
+  activatedAt?: IOrderBy;
+  deactivatedAt?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

@@ -6,8 +6,6 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { PaymentCreatedEvent } from '@/events/implements/payments/payment-created.event';
-import { PaymentRemovedEvent } from '@/events/implements/payments/payment-removed.event';
-import { PaymentUpdatedEvent } from '@/events/implements/payments/payment-updated.event';
 
 @Injectable()
 export class PaymentsSagas {
@@ -29,50 +27,6 @@ export class PaymentsSagas {
         );
         this.logger.log(
           'Inside [PaymentCreatedEvent] Saga event paymentCreated: ' +
-            JSON.stringify(
-              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
-            )
-        );
-        const commands = [];
-        return commands;
-      }),
-      mergeMap((c) => c)
-    );
-  };
-
-  @Saga()
-  paymentRemoved = (events$: Observable<any>): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(PaymentRemovedEvent),
-      delay(500),
-      map((event) => {
-        this.logger.log(
-          'Inside [PaymentRemovedEvent] Saga for example send a email'
-        );
-        this.logger.log(
-          'Inside [PaymentRemovedEvent] Saga event paymentRemoved:' +
-            JSON.stringify(
-              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
-            )
-        );
-        const commands = [];
-        return commands;
-      }),
-      mergeMap((c) => c)
-    );
-  };
-
-  @Saga()
-  paymentUpdated = (events$: Observable<any>): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(PaymentUpdatedEvent),
-      delay(500),
-      map((event) => {
-        this.logger.log(
-          'Inside [PaymentUpdatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
-          'Inside [PaymentUpdatedEvent] Saga event paymentUpdated:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

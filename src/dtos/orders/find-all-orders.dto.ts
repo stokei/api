@@ -1,21 +1,37 @@
-import {
-  IBaseFindManyDTO,
-  IOrderBy,
-  IWhereData,
-  IWhereDataSearch
-} from '@stokei/nestjs';
+import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
+
+import { OrderStatus } from '@/enums/order-status.enum';
 
 export interface WhereDataFindAllOrdersDTO {
   ids?: string[];
-  parent?: IWhereData;
+  project?: IWhereData;
+  cart?: IWhereData;
+  customer?: IWhereData;
+  currency?: IWhereData;
+  status?: IWhereData<OrderStatus>;
+  oldStatus?: IWhereData<OrderStatus>;
+  active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllOrdersDTO = keyof WhereDataFindAllOrdersDTO;
 
 export interface OrderByDataFindAllOrdersDTO {
-  name?: IOrderBy;
+  salesComissionPercentage?: IOrderBy;
+  salesComissionAmount?: IOrderBy;
+  currency?: IOrderBy;
+  amount?: IOrderBy;
+  discountAmount?: IOrderBy;
+  subtotalAmount?: IOrderBy;
+  totalAmount?: IOrderBy;
+  status?: IOrderBy;
+  oldStatus?: IOrderBy;
+  active?: IOrderBy;
+  paidAt?: IOrderBy;
+  canceledAt?: IOrderBy;
+  paymentErrorAt?: IOrderBy;
+  totalRefundedAt?: IOrderBy;
+  parcialRefundedAt?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

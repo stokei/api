@@ -1,5 +1,6 @@
 export interface CreateLanguageDTO {
+  id: string;
   name: string;
-  parent: string;
+  icon?: string;
   createdBy: string;
 }

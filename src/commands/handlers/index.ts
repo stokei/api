@@ -1,34 +1,34 @@
 import { AccessCommandHandlers } from './accesses';
 import { AccountCommandHandlers } from './accounts';
 import { AddressCommandHandlers } from './addresses';
-import { CartCommandHandlers } from './carts';
 import { CartItemCommandHandlers } from './cart-items';
-import { ClassroomCommandHandlers } from './classrooms';
+import { CartCommandHandlers } from './carts';
 import { ClassroomInstructorCommandHandlers } from './classroom-instructors';
 import { ClassroomModuleCommandHandlers } from './classroom-modules';
 import { ClassroomStudentCommandHandlers } from './classroom-students';
+import { ClassroomCommandHandlers } from './classrooms';
 import { ColorCommandHandlers } from './colors';
-import { CourseCommandHandlers } from './courses';
 import { CourseInstructorCommandHandlers } from './course-instructors';
 import { CourseStudentCommandHandlers } from './course-students';
+import { CourseCommandHandlers } from './courses';
 import { CurrencyCommandHandlers } from './currencies';
 import { DomainCommandHandlers } from './domains';
 import { ImageCommandHandlers } from './images';
 import { LanguageCommandHandlers } from './languages';
-import { ModuleCommandHandlers } from './modules';
 import { ModuleVideoCommandHandlers } from './module-videos';
-import { OrderCommandHandlers } from './orders';
+import { ModuleCommandHandlers } from './modules';
 import { OrderItemCommandHandlers } from './order-items';
-import { PaymentCommandHandlers } from './payments';
+import { OrderCommandHandlers } from './orders';
 import { PaymentMethodCommandHandlers } from './payment-methods';
+import { PaymentCommandHandlers } from './payments';
 import { PhoneCommandHandlers } from './phones';
 import { PlanCommandHandlers } from './plans';
 import { PriceCommandHandlers } from './prices';
 import { ProductCommandHandlers } from './products';
 import { ProjectCommandHandlers } from './projects';
 import { SubscriptionCommandHandlers } from './subscriptions';
-import { VideoCommandHandlers } from './videos';
 import { VideoAuthorCommandHandlers } from './video-authors';
+import { VideoCommandHandlers } from './videos';
 
 export const CommandHandlers = [
   ...AccessCommandHandlers,

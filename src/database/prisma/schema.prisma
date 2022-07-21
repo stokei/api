@@ -340,6 +340,7 @@ model OrderItem {
   id                     String        @id @default(cuid())
   order                  String        @db.VarChar(255)
   product                String        @db.VarChar(255)
+  currency               String        @db.VarChar(255)
   name                   String        @db.VarChar(255)
   description            String?
   amount                 Int
@@ -360,7 +361,7 @@ model OrderItem {
 
 model Payment {
   id                String         @id @default(cuid())
-  parent            String         @db.VarChar(255)
+  customer          String         @db.VarChar(255)
   order             String         @db.VarChar(255)
   amount            Int
   externalPaymentId String         @db.VarChar(255)
@@ -488,13 +489,14 @@ model VideoAuthor {
 }
 
 model Module {
-  id        String    @id @default(cuid())
-  parent    String    @db.VarChar(255)
-  name      String    @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
+  id          String    @id @default(cuid())
+  parent      String    @db.VarChar(255)
+  name        String    @db.VarChar(255)
+  description String?
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  createdAt   DateTime? @default(now()) @map("created_at")
+  updatedBy   String?   @map("updated_by") @db.VarChar(255)
+  createdBy   String?   @map("created_by") @db.VarChar(255)
 
   @@map("modules")
 }

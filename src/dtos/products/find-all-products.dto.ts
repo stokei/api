@@ -8,15 +8,26 @@ import {
 export interface WhereDataFindAllProductsDTO {
   ids?: string[];
   parent?: IWhereData;
+  name?: IWhereDataSearch;
+  description?: IWhereDataSearch;
+  project: IWhereData;
+  checkoutVisible: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllProductsDTO =
   keyof WhereDataFindAllProductsDTO;
 
 export interface OrderByDataFindAllProductsDTO {
   name?: IOrderBy;
+  description?: IOrderBy;
+  project?: IOrderBy;
+  externalProductId?: IOrderBy;
+  checkoutVisible?: IOrderBy;
+  avatar?: IOrderBy;
+  active?: IOrderBy;
+  activatedAt?: IOrderBy;
+  deactivatedAt?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

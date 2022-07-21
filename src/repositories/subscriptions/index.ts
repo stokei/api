@@ -3,7 +3,6 @@ import { CreateSubscriptionRepository } from './create-subscription';
 import { ExistsSubscriptionsRepository } from './exists-subscriptions';
 import { FindAllSubscriptionsRepository } from './find-all-subscriptions';
 import { FindSubscriptionByIdRepository } from './find-subscription-by-id';
-import { RemoveSubscriptionRepository } from './remove-subscription';
 import { UpdateSubscriptionRepository } from './update-subscription';
 
 export const SubscriptionsRepositories = [
@@ -12,6 +11,5 @@ export const SubscriptionsRepositories = [
   ExistsSubscriptionsRepository,
   FindSubscriptionByIdRepository,
   FindAllSubscriptionsRepository,
-  RemoveSubscriptionRepository,
   UpdateSubscriptionRepository
 ];

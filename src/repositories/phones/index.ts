@@ -4,7 +4,6 @@ import { ExistsPhonesRepository } from './exists-phones';
 import { FindAllPhonesRepository } from './find-all-phones';
 import { FindPhoneByIdRepository } from './find-phone-by-id';
 import { RemovePhoneRepository } from './remove-phone';
-import { UpdatePhoneRepository } from './update-phone';
 
 export const PhonesRepositories = [
   CountPhonesRepository,
@@ -12,6 +11,5 @@ export const PhonesRepositories = [
   ExistsPhonesRepository,
   FindPhoneByIdRepository,
   FindAllPhonesRepository,
-  RemovePhoneRepository,
-  UpdatePhoneRepository
+  RemovePhoneRepository
 ];

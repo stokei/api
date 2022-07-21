@@ -1,6 +1,6 @@
 export interface UpdateDomainDataDTO {
   updatedBy: string;
-  name?: string;
+  default?: boolean;
 }
 
 export interface UpdateDomainWhereDTO {

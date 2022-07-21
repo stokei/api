@@ -11,6 +11,7 @@ export interface IModuleModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly name: string;
+  readonly description?: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly updatedBy?: string;
@@ -21,6 +22,7 @@ export class ModuleModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
   readonly name: string;
+  readonly description?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly updatedBy?: string;
@@ -35,6 +37,7 @@ export class ModuleModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.name = data.name;
+    this.description = data.description;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;

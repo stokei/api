@@ -6,7 +6,6 @@ import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PaymentMethodCreatedEvent } from '@/events/implements/payment-methods/payment-method-created.event';
 import { PaymentMethodRemovedEvent } from '@/events/implements/payment-methods/payment-method-removed.event';
-import { PaymentMethodUpdatedEvent } from '@/events/implements/payment-methods/payment-method-updated.event';
 
 export interface IPaymentMethodModelData {
   readonly id?: string;
@@ -62,17 +61,6 @@ export class PaymentMethodModel extends AggregateRoot {
       this.apply(
         new PaymentMethodCreatedEvent({
           createdBy,
-          paymentMethod: this
-        })
-      );
-    }
-  }
-
-  updatedPaymentMethod({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new PaymentMethodUpdatedEvent({
-          updatedBy,
           paymentMethod: this
         })
       );

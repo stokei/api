@@ -1,5 +1,6 @@
 export interface CreateProjectDTO {
-  name: string;
   parent: string;
+  name: string;
+  currency: string;
   createdBy: string;
 }

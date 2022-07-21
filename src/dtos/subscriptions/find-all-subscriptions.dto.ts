@@ -8,9 +8,9 @@ import {
 export interface WhereDataFindAllSubscriptionsDTO {
   ids?: string[];
   parent?: IWhereData;
+  name?: IWhereDataSearch;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllSubscriptionsDTO =
   keyof WhereDataFindAllSubscriptionsDTO;

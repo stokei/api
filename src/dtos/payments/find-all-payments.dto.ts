@@ -1,22 +1,34 @@
-import {
-  IBaseFindManyDTO,
-  IOrderBy,
-  IWhereData,
-  IWhereDataSearch
-} from '@stokei/nestjs';
+import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
+
+import { PaymentStatus } from '@/enums/payment-status.enum';
 
 export interface WhereDataFindAllPaymentsDTO {
   ids?: string[];
-  parent?: IWhereData;
+  customer?: IWhereData<string>;
+  order?: IWhereData<string>;
+  externalPaymentId?: IWhereData<string>;
+  paymentMethod?: IWhereData<string>;
+  status?: IWhereData<PaymentStatus>;
+  oldStatus?: IWhereData<PaymentStatus>;
+  active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllPaymentsDTO =
   keyof WhereDataFindAllPaymentsDTO;
 
 export interface OrderByDataFindAllPaymentsDTO {
-  name?: IOrderBy;
+  amount?: IOrderBy;
+  externalPaymentId?: IOrderBy;
+  paymentMethod?: IOrderBy;
+  status?: IOrderBy;
+  oldStatus?: IOrderBy;
+  active?: IOrderBy;
+  paidAt?: IOrderBy;
+  canceledAt?: IOrderBy;
+  paymentErrorAt?: IOrderBy;
+  totalRefundedAt?: IOrderBy;
+  parcialRefundedAt?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

@@ -4,7 +4,6 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 import { ProjectStatus } from '@/enums/project-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { ProjectCreatedEvent } from '@/events/implements/projects/project-created.event';
-import { ProjectRemovedEvent } from '@/events/implements/projects/project-removed.event';
 import { ProjectUpdatedEvent } from '@/events/implements/projects/project-updated.event';
 
 export interface IProjectModelData {
@@ -95,17 +94,6 @@ export class ProjectModel extends AggregateRoot {
       this.apply(
         new ProjectUpdatedEvent({
           updatedBy,
-          project: this
-        })
-      );
-    }
-  }
-
-  removedProject({ removedBy }: { removedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new ProjectRemovedEvent({
-          removedBy,
           project: this
         })
       );

@@ -4,8 +4,6 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 import { OrderStatus } from '@/enums/order-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { OrderCreatedEvent } from '@/events/implements/orders/order-created.event';
-import { OrderRemovedEvent } from '@/events/implements/orders/order-removed.event';
-import { OrderUpdatedEvent } from '@/events/implements/orders/order-updated.event';
 
 export interface IOrderModelData {
   readonly id?: string;
@@ -95,28 +93,6 @@ export class OrderModel extends AggregateRoot {
       this.apply(
         new OrderCreatedEvent({
           createdBy,
-          order: this
-        })
-      );
-    }
-  }
-
-  updatedOrder({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new OrderUpdatedEvent({
-          updatedBy,
-          order: this
-        })
-      );
-    }
-  }
-
-  removedOrder({ removedBy }: { removedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new OrderRemovedEvent({
-          removedBy,
           order: this
         })
       );

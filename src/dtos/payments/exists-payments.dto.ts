@@ -1,5 +1,11 @@
+import { PaymentStatus } from '@/enums/payment-status.enum';
+
 export interface ExistsPaymentsWhereDTO {
-  parent?: string;
+  customer?: string;
+  order?: string;
+  paymentMethod?: string;
+  status?: PaymentStatus;
+  oldStatus?: PaymentStatus;
 }
 
 export interface ExistsPaymentsDTO {

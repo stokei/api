@@ -5,7 +5,6 @@ import { PhoneStatus } from '@/enums/phone-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PhoneCreatedEvent } from '@/events/implements/phones/phone-created.event';
 import { PhoneRemovedEvent } from '@/events/implements/phones/phone-removed.event';
-import { PhoneUpdatedEvent } from '@/events/implements/phones/phone-updated.event';
 
 export interface IPhoneModelData {
   readonly id?: string;
@@ -74,17 +73,6 @@ export class PhoneModel extends AggregateRoot {
       this.apply(
         new PhoneCreatedEvent({
           createdBy,
-          phone: this
-        })
-      );
-    }
-  }
-
-  updatedPhone({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new PhoneUpdatedEvent({
-          updatedBy,
           phone: this
         })
       );

@@ -1,11 +1,18 @@
-import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
+import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
+
+import { OrderStatus } from '@/enums/order-status.enum';
 
 export interface CountOrdersWhereDTO {
   ids?: string[];
-  parent?: IWhereData;
+  project?: IWhereData;
+  cart?: IWhereData;
+  customer?: IWhereData;
+  currency?: IWhereData;
+  status?: IWhereData<OrderStatus>;
+  oldStatus?: IWhereData<OrderStatus>;
+  active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysCountOrdersWhereDTO = keyof CountOrdersWhereDTO;
 

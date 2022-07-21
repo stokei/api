@@ -1,5 +1,6 @@
 export interface ExistsOrderItemsWhereDTO {
-  parent?: string;
+  order?: string;
+  product?: string;
 }
 
 export interface ExistsOrderItemsDTO {

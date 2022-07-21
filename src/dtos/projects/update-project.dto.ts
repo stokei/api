@@ -1,6 +1,12 @@
 export interface UpdateProjectDataDTO {
-  updatedBy: string;
   name?: string;
+  slug?: string;
+  description?: string;
+  avatar?: string;
+  plan?: string;
+  favicon?: string;
+  logo?: string;
+  updatedBy: string;
 }
 
 export interface UpdateProjectWhereDTO {

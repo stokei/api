@@ -6,7 +6,6 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { SubscriptionCreatedEvent } from '@/events/implements/subscriptions/subscription-created.event';
-import { SubscriptionRemovedEvent } from '@/events/implements/subscriptions/subscription-removed.event';
 import { SubscriptionUpdatedEvent } from '@/events/implements/subscriptions/subscription-updated.event';
 
 @Injectable()
@@ -29,28 +28,6 @@ export class SubscriptionsSagas {
         );
         this.logger.log(
           'Inside [SubscriptionCreatedEvent] Saga event subscriptionCreated: ' +
-            JSON.stringify(
-              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
-            )
-        );
-        const commands = [];
-        return commands;
-      }),
-      mergeMap((c) => c)
-    );
-  };
-
-  @Saga()
-  subscriptionRemoved = (events$: Observable<any>): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(SubscriptionRemovedEvent),
-      delay(500),
-      map((event) => {
-        this.logger.log(
-          'Inside [SubscriptionRemovedEvent] Saga for example send a email'
-        );
-        this.logger.log(
-          'Inside [SubscriptionRemovedEvent] Saga event subscriptionRemoved:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

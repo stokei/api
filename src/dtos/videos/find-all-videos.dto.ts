@@ -8,9 +8,9 @@ import {
 export interface WhereDataFindAllVideosDTO {
   ids?: string[];
   parent?: IWhereData;
+  name?: IWhereDataSearch;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
-  name?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllVideosDTO = keyof WhereDataFindAllVideosDTO;
 

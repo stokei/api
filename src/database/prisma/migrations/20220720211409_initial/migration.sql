@@ -280,6 +280,7 @@ CREATE TABLE "orders_items" (
     "id" TEXT NOT NULL,
     "order" VARCHAR(255) NOT NULL,
     "product" VARCHAR(255) NOT NULL,
+    "currency" VARCHAR(255) NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "description" TEXT,
     "amount" INTEGER NOT NULL,
@@ -301,7 +302,7 @@ CREATE TABLE "orders_items" (
 -- CreateTable
 CREATE TABLE "payments" (
     "id" TEXT NOT NULL,
-    "parent" VARCHAR(255) NOT NULL,
+    "customer" VARCHAR(255) NOT NULL,
     "order" VARCHAR(255) NOT NULL,
     "amount" INTEGER NOT NULL,
     "externalPaymentId" VARCHAR(255) NOT NULL,
@@ -440,6 +441,7 @@ CREATE TABLE "modules" (
     "id" TEXT NOT NULL,
     "parent" VARCHAR(255) NOT NULL,
     "name" VARCHAR(255) NOT NULL,
+    "description" TEXT,
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
     "updated_by" VARCHAR(255),

@@ -7,7 +7,6 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { ImageCreatedEvent } from '@/events/implements/images/image-created.event';
 import { ImageRemovedEvent } from '@/events/implements/images/image-removed.event';
-import { ImageUpdatedEvent } from '@/events/implements/images/image-updated.event';
 
 @Injectable()
 export class ImagesSagas {
@@ -51,28 +50,6 @@ export class ImagesSagas {
         );
         this.logger.log(
           'Inside [ImageRemovedEvent] Saga event imageRemoved:' +
-            JSON.stringify(
-              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
-            )
-        );
-        const commands = [];
-        return commands;
-      }),
-      mergeMap((c) => c)
-    );
-  };
-
-  @Saga()
-  imageUpdated = (events$: Observable<any>): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(ImageUpdatedEvent),
-      delay(500),
-      map((event) => {
-        this.logger.log(
-          'Inside [ImageUpdatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
-          'Inside [ImageUpdatedEvent] Saga event imageUpdated:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

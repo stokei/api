@@ -5,8 +5,6 @@ import { PlanStatus } from '@/enums/plan-status.enum';
 import { PlanType } from '@/enums/plan-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PlanCreatedEvent } from '@/events/implements/plans/plan-created.event';
-import { PlanRemovedEvent } from '@/events/implements/plans/plan-removed.event';
-import { PlanUpdatedEvent } from '@/events/implements/plans/plan-updated.event';
 
 export interface IPlanModelData {
   readonly id?: string;
@@ -87,28 +85,6 @@ export class PlanModel extends AggregateRoot {
       this.apply(
         new PlanCreatedEvent({
           createdBy,
-          plan: this
-        })
-      );
-    }
-  }
-
-  updatedPlan({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new PlanUpdatedEvent({
-          updatedBy,
-          plan: this
-        })
-      );
-    }
-  }
-
-  removedPlan({ removedBy }: { removedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new PlanRemovedEvent({
-          removedBy,
           plan: this
         })
       );

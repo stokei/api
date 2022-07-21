@@ -3,7 +3,6 @@ import { CreateProjectRepository } from './create-project';
 import { ExistsProjectsRepository } from './exists-projects';
 import { FindAllProjectsRepository } from './find-all-projects';
 import { FindProjectByIdRepository } from './find-project-by-id';
-import { RemoveProjectRepository } from './remove-project';
 import { UpdateProjectRepository } from './update-project';
 
 export const ProjectsRepositories = [
@@ -12,6 +11,5 @@ export const ProjectsRepositories = [
   ExistsProjectsRepository,
   FindProjectByIdRepository,
   FindAllProjectsRepository,
-  RemoveProjectRepository,
   UpdateProjectRepository
 ];

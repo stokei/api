@@ -6,7 +6,6 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { ProjectCreatedEvent } from '@/events/implements/projects/project-created.event';
-import { ProjectRemovedEvent } from '@/events/implements/projects/project-removed.event';
 import { ProjectUpdatedEvent } from '@/events/implements/projects/project-updated.event';
 
 @Injectable()
@@ -29,28 +28,6 @@ export class ProjectsSagas {
         );
         this.logger.log(
           'Inside [ProjectCreatedEvent] Saga event projectCreated: ' +
-            JSON.stringify(
-              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
-            )
-        );
-        const commands = [];
-        return commands;
-      }),
-      mergeMap((c) => c)
-    );
-  };
-
-  @Saga()
-  projectRemoved = (events$: Observable<any>): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(ProjectRemovedEvent),
-      delay(500),
-      map((event) => {
-        this.logger.log(
-          'Inside [ProjectRemovedEvent] Saga for example send a email'
-        );
-        this.logger.log(
-          'Inside [ProjectRemovedEvent] Saga event projectRemoved:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

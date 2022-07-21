@@ -1,5 +1,6 @@
 export interface CreatePaymentDTO {
-  name: string;
-  parent: string;
+  customer: string;
+  order: string;
+  paymentMethod: string;
   createdBy: string;
 }

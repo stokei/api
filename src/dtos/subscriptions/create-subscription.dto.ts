@@ -1,5 +1,8 @@
 export interface CreateSubscriptionDTO {
-  name: string;
   parent: string;
+  product: string;
+  automaticRenew?: boolean;
+  startAt?: string;
+  endAt?: string;
   createdBy: string;
 }

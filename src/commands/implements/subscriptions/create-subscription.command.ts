@@ -5,13 +5,19 @@ import { CreateSubscriptionDTO } from '@/dtos/subscriptions/create-subscription.
 export class CreateSubscriptionCommand
   implements ICommand, CreateSubscriptionDTO
 {
-  name: string;
   parent: string;
+  product: string;
+  automaticRenew?: boolean;
+  startAt?: string;
+  endAt?: string;
   createdBy: string;
 
   constructor(data: CreateSubscriptionDTO) {
-    this.name = data.name;
     this.parent = data.parent;
+    this.product = data.product;
+    this.automaticRenew = data.automaticRenew;
+    this.startAt = data.startAt;
+    this.endAt = data.endAt;
     this.createdBy = data.createdBy;
   }
 }

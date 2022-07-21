@@ -1,14 +1,20 @@
 import { ICommand } from '@nestjs/cqrs';
 
 import { CreateColorDTO } from '@/dtos/colors/create-color.dto';
+import { ColorType } from '@/enums/color-type.enum';
+import { ThemeMode } from '@/enums/theme-mode.enum';
 
 export class CreateColorCommand implements ICommand, CreateColorDTO {
-  name: string;
   parent: string;
+  themeMode: ThemeMode;
+  type: ColorType;
+  color: string;
   createdBy: string;
 
   constructor(data: CreateColorDTO) {
-    this.name = data.name;
+    this.themeMode = data.themeMode;
+    this.type = data.type;
+    this.color = data.color;
     this.parent = data.parent;
     this.createdBy = data.createdBy;
   }

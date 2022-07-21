@@ -1,6 +1,8 @@
 export interface UpdateVideoDataDTO {
+  name: string;
+  description?: string;
+  poster?: string;
   updatedBy: string;
-  name?: string;
 }
 
 export interface UpdateVideoWhereDTO {

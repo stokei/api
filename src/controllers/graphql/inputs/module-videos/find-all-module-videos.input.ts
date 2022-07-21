@@ -43,6 +43,12 @@ export class OrderByDataFindAllModuleVideosInput
 
   @Field(() => OrderBy, { nullable: true })
   updatedAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  createdBy?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  updatedBy?: OrderBy;
 }
 
 @InputType()

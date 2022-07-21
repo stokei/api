@@ -5,12 +5,12 @@ import { CreateClassroomModuleDTO } from '@/dtos/classroom-modules/create-classr
 export class CreateClassroomModuleCommand
   implements ICommand, CreateClassroomModuleDTO
 {
-  name: string;
   classroom: string;
+  module: string;
   createdBy: string;
 
   constructor(data: CreateClassroomModuleDTO) {
-    this.name = data.name;
+    this.module = data.module;
     this.classroom = data.classroom;
     this.createdBy = data.createdBy;
   }

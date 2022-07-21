@@ -1,5 +1,5 @@
 export interface ExistsVideosWhereDTO {
-  parent?: string;
+  slug?: string;
 }
 
 export interface ExistsVideosDTO {

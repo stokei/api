@@ -5,13 +5,13 @@ import { CreateModuleVideoDTO } from '@/dtos/module-videos/create-module-video.d
 export class CreateModuleVideoCommand
   implements ICommand, CreateModuleVideoDTO
 {
-  name: string;
-  parent: string;
+  module: string;
+  video: string;
   createdBy: string;
 
   constructor(data: CreateModuleVideoDTO) {
-    this.name = data.name;
-    this.parent = data.parent;
+    this.module = data.module;
+    this.video = data.video;
     this.createdBy = data.createdBy;
   }
 }

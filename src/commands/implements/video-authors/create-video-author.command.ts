@@ -5,13 +5,13 @@ import { CreateVideoAuthorDTO } from '@/dtos/video-authors/create-video-author.d
 export class CreateVideoAuthorCommand
   implements ICommand, CreateVideoAuthorDTO
 {
-  name: string;
-  parent: string;
+  video: string;
+  author: string;
   createdBy: string;
 
   constructor(data: CreateVideoAuthorDTO) {
-    this.name = data.name;
-    this.parent = data.parent;
+    this.video = data.video;
+    this.author = data.author;
     this.createdBy = data.createdBy;
   }
 }

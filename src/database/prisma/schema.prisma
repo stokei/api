@@ -76,6 +76,11 @@ enum PriceType {
   ONE_TIME
 }
 
+enum SubscriptionType {
+  RECURRING
+  ONE_TIME
+}
+
 enum InventoryType {
   INFINITE
   FINITE
@@ -585,6 +590,7 @@ model Subscription {
   product        String             @db.VarChar(255)
   parent         String             @db.VarChar(255)
   status         SubscriptionStatus
+  type           SubscriptionType
   startAt        DateTime?          @map("start_at")
   endAt          DateTime?          @map("end_at")
   canceledAt     DateTime?          @map("canceled_at")

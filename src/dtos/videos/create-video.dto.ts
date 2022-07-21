@@ -1,5 +1,7 @@
 export interface CreateVideoDTO {
   name: string;
-  parent: string;
+  description?: string;
+  path: string;
+  poster?: string;
   createdBy: string;
 }

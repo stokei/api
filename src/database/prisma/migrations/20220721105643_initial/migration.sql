@@ -32,6 +32,9 @@ CREATE TYPE "RecurringType" AS ENUM ('HOUR', 'DAY', 'WEEK', 'MONTH', 'YEAR');
 CREATE TYPE "PriceType" AS ENUM ('RECURRING', 'ONE_TIME');
 
 -- CreateEnum
+CREATE TYPE "SubscriptionType" AS ENUM ('RECURRING', 'ONE_TIME');
+
+-- CreateEnum
 CREATE TYPE "InventoryType" AS ENUM ('INFINITE', 'FINITE');
 
 -- CreateEnum
@@ -541,6 +544,7 @@ CREATE TABLE "subscriptions" (
     "product" VARCHAR(255) NOT NULL,
     "parent" VARCHAR(255) NOT NULL,
     "status" "SubscriptionStatus" NOT NULL,
+    "type" "SubscriptionType" NOT NULL,
     "start_at" TIMESTAMP(3),
     "end_at" TIMESTAMP(3),
     "canceled_at" TIMESTAMP(3),

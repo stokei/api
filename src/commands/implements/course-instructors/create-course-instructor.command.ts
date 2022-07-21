@@ -5,12 +5,12 @@ import { CreateCourseInstructorDTO } from '@/dtos/course-instructors/create-cour
 export class CreateCourseInstructorCommand
   implements ICommand, CreateCourseInstructorDTO
 {
-  name: string;
+  instructor: string;
   course: string;
   createdBy: string;
 
   constructor(data: CreateCourseInstructorDTO) {
-    this.name = data.name;
+    this.instructor = data.instructor;
     this.course = data.course;
     this.createdBy = data.createdBy;
   }

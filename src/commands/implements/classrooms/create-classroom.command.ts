@@ -5,11 +5,15 @@ import { CreateClassroomDTO } from '@/dtos/classrooms/create-classroom.dto';
 export class CreateClassroomCommand implements ICommand, CreateClassroomDTO {
   name: string;
   parent: string;
+  description?: string;
+  hasAccessToAllModules?: boolean;
   createdBy: string;
 
   constructor(data: CreateClassroomDTO) {
     this.name = data.name;
     this.parent = data.parent;
+    this.description = data.description;
+    this.hasAccessToAllModules = data.hasAccessToAllModules;
     this.createdBy = data.createdBy;
   }
 }

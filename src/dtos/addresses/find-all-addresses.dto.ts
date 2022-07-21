@@ -22,7 +22,6 @@ export type IKeysWhereDataFindAllAddressesDTO =
   keyof WhereDataFindAllAddressesDTO;
 
 export interface OrderByDataFindAllAddressesDTO {
-  parent?: IOrderBy;
   default?: IOrderBy;
   street?: IOrderBy;
   complement?: IOrderBy;

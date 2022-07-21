@@ -3,6 +3,7 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { SubscriptionStatus } from '@/enums/subscription-status.enum';
+import { SubscriptionType } from '@/enums/subscription-type.enum';
 import { SubscriptionCreatedEvent } from '@/events/implements/subscriptions/subscription-created.event';
 import { SubscriptionUpdatedEvent } from '@/events/implements/subscriptions/subscription-updated.event';
 
@@ -12,6 +13,7 @@ export interface ISubscriptionModelData {
   readonly parent: string;
   readonly product: string;
   readonly status: SubscriptionStatus;
+  readonly type: SubscriptionType;
   readonly active: boolean;
   readonly automaticRenew: boolean;
   readonly startAt?: Date | string;
@@ -28,6 +30,7 @@ export class SubscriptionModel extends AggregateRoot {
   readonly parent: string;
   readonly product: string;
   readonly status: SubscriptionStatus;
+  readonly type: SubscriptionType;
   readonly active: boolean;
   readonly automaticRenew: boolean;
   readonly startAt?: string;
@@ -48,6 +51,7 @@ export class SubscriptionModel extends AggregateRoot {
     this.parent = data.parent;
     this.product = data.product;
     this.status = data.status;
+    this.type = data.type;
     this.active = data.active;
     this.automaticRenew = data.automaticRenew;
     this.startAt = convertToISODateString(data.startAt);

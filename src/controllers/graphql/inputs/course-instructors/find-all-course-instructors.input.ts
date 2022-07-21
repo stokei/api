@@ -43,6 +43,12 @@ export class OrderByDataFindAllCourseInstructorsInput
 
   @Field(() => OrderBy, { nullable: true })
   updatedAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  createdBy?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  updatedBy?: OrderBy;
 }
 
 @InputType()

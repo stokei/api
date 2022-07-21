@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
+  WhereDataBooleanInput,
   WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
@@ -18,16 +19,34 @@ class WhereDataFindAllAddressesDataInput
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
 
-  @Field({ nullable: true })
-  name?: WhereDataSearchInput;
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  default?: WhereDataBooleanInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  street?: WhereDataSearchInput;
+
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  complement?: WhereDataSearchInput;
+
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  city?: WhereDataSearchInput;
+
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  country?: WhereDataSearchInput;
+
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  state?: WhereDataSearchInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  postalCode?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   createdBy?: WhereDataStringInput;
 }
 
@@ -36,13 +55,37 @@ export class OrderByDataFindAllAddressesInput
   implements OrderByDataFindAllAddressesDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
+  default?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  street?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  complement?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  city?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  country?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  state?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  postalCode?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   updatedAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  createdBy?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  updatedBy?: OrderBy;
 }
 
 @InputType()

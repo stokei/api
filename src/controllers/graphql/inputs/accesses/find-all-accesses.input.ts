@@ -1,7 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
-  WhereDataSearchInput,
+  WhereDataBooleanInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
@@ -16,16 +16,16 @@ class WhereDataFindAllAccessesDataInput implements WhereDataFindAllAccessesDTO {
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
 
-  @Field({ nullable: true })
-  name?: WhereDataSearchInput;
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  active?: WhereDataBooleanInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   createdBy?: WhereDataStringInput;
 }
 
@@ -34,7 +34,13 @@ export class OrderByDataFindAllAccessesInput
   implements OrderByDataFindAllAccessesDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
+  active?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  expiresIn?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  canceledAt?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

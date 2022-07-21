@@ -3,7 +3,10 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class RemoveWhereVideoAuthorInput {
   @Field()
-  videoAuthorId: string;
+  video: string;
+
+  @Field()
+  author: string;
 }
 
 @InputType()

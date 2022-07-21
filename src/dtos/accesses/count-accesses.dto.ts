@@ -1,9 +1,9 @@
-import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
+import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 
 export interface CountAccessesWhereDTO {
   ids?: string[];
   parent?: IWhereData;
-  name?: IWhereDataSearch;
+  active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

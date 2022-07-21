@@ -18,16 +18,16 @@ class WhereDataFindAllVideoAuthorsDataInput
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field({ nullable: true })
-  parent?: WhereDataStringInput;
+  @Field(() => WhereDataStringInput, { nullable: true })
+  video?: WhereDataStringInput;
 
-  @Field({ nullable: true })
-  name?: WhereDataSearchInput;
+  @Field(() => WhereDataStringInput, { nullable: true })
+  author?: WhereDataSearchInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   createdBy?: WhereDataStringInput;
 }
 
@@ -35,9 +35,6 @@ class WhereDataFindAllVideoAuthorsDataInput
 export class OrderByDataFindAllVideoAuthorsInput
   implements OrderByDataFindAllVideoAuthorsDTO
 {
-  @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
-
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;
 

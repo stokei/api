@@ -6,5 +6,5 @@ export class CreateClassroomModuleInput {
   classroom: string;
 
   @Field()
-  name: string;
+  module: string;
 }

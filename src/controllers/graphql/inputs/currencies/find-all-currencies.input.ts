@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
+  WhereDataIntInput,
   WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
@@ -18,16 +19,16 @@ class WhereDataFindAllCurrenciesDataInput
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field({ nullable: true })
-  parent?: WhereDataStringInput;
-
-  @Field({ nullable: true })
+  @Field(() => WhereDataSearchInput, { nullable: true })
   name?: WhereDataSearchInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataIntInput, { nullable: true })
+  minorUnit?: WhereDataIntInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   createdBy?: WhereDataStringInput;
 }
 
@@ -37,6 +38,9 @@ export class OrderByDataFindAllCurrenciesInput
 {
   @Field(() => OrderBy, { nullable: true })
   name?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  minorUnit?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

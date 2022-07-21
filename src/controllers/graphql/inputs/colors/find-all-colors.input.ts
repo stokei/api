@@ -1,11 +1,8 @@
 import { Field, InputType } from '@nestjs/graphql';
-import {
-  OrderBy,
-  WhereDataSearchInput,
-  WhereDataStringInput,
-  WherePaginated
-} from '@stokei/nestjs';
+import { OrderBy, WhereDataStringInput, WherePaginated } from '@stokei/nestjs';
 
+import { ColorType } from '@/controllers/graphql/enums/color-type.enum';
+import { ThemeMode } from '@/controllers/graphql/enums/theme-mode.enum';
 import {
   OrderByDataFindAllColorsDTO,
   WhereDataFindAllColorsDTO
@@ -16,16 +13,19 @@ class WhereDataFindAllColorsDataInput implements WhereDataFindAllColorsDTO {
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
 
-  @Field({ nullable: true })
-  name?: WhereDataSearchInput;
+  @Field(() => ThemeMode, { nullable: true })
+  themeMode?: ThemeMode;
 
-  @Field({ nullable: true })
+  @Field(() => ColorType, { nullable: true })
+  type?: ColorType;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   createdBy?: WhereDataStringInput;
 }
 
@@ -34,7 +34,10 @@ export class OrderByDataFindAllColorsInput
   implements OrderByDataFindAllColorsDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
+  themeMode?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  type?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

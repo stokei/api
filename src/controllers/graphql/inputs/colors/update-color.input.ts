@@ -3,7 +3,7 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class UpdateDataColorInput {
   @Field()
-  name: string;
+  color?: string;
 }
 
 @InputType()

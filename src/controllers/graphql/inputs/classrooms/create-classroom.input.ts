@@ -7,4 +7,10 @@ export class CreateClassroomInput {
 
   @Field()
   name: string;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field(() => Boolean, { nullable: true })
+  hasAccessToAllModules?: boolean;
 }

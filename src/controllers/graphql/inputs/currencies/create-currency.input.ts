@@ -1,10 +1,16 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class CreateCurrencyInput {
   @Field()
-  parent: string;
+  id: string;
 
   @Field()
   name: string;
+
+  @Field()
+  symbol: string;
+
+  @Field(() => Int)
+  minorUnit: number;
 }

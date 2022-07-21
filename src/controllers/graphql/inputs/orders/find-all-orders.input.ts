@@ -16,16 +16,16 @@ class WhereDataFindAllOrdersDataInput implements WhereDataFindAllOrdersDTO {
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataSearchInput, { nullable: true })
   name?: WhereDataSearchInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   createdBy?: WhereDataStringInput;
 }
 

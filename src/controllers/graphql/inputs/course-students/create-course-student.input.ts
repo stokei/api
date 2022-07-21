@@ -6,5 +6,5 @@ export class CreateCourseStudentInput {
   course: string;
 
   @Field()
-  name: string;
+  student: string;
 }

@@ -1,9 +1,15 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateDataCurrencyInput {
-  @Field()
-  name: string;
+  @Field({ nullable: true })
+  name?: string;
+
+  @Field({ nullable: true })
+  symbol?: string;
+
+  @Field(() => Int, { nullable: true })
+  minorUnit?: number;
 }
 
 @InputType()

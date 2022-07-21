@@ -17,7 +17,7 @@ class WhereDataFindAllAccountsDataInput implements WhereDataFindAllAccountsDTO {
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
 
   @Field({ nullable: true })
@@ -35,10 +35,10 @@ class WhereDataFindAllAccountsDataInput implements WhereDataFindAllAccountsDTO {
   @Field(() => [AccountRole], { nullable: true })
   roles?: AccountRole[];
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   createdBy?: WhereDataStringInput;
 }
 

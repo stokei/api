@@ -1,10 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import {
-  OrderBy,
-  WhereDataSearchInput,
-  WhereDataStringInput,
-  WherePaginated
-} from '@stokei/nestjs';
+import { OrderBy, WhereDataStringInput, WherePaginated } from '@stokei/nestjs';
 
 import {
   OrderByDataFindAllClassroomInstructorsDTO,
@@ -18,16 +13,16 @@ class WhereDataFindAllClassroomInstructorsDataInput
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   classroom?: WhereDataStringInput;
 
-  @Field({ nullable: true })
-  instructors?: WhereDataSearchInput;
+  @Field(() => WhereDataStringInput, { nullable: true })
+  instructors?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   createdBy?: WhereDataStringInput;
 }
 

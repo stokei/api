@@ -2,8 +2,32 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateDataAddressInput {
-  @Field()
-  name: string;
+  @Field({ nullable: true })
+  parent?: string;
+
+  @Field(() => Boolean, { nullable: true })
+  default?: boolean;
+
+  @Field({ nullable: true })
+  street?: string;
+
+  @Field({ nullable: true })
+  complement?: string;
+
+  @Field({ nullable: true })
+  number?: string;
+
+  @Field({ nullable: true })
+  city?: string;
+
+  @Field({ nullable: true })
+  country?: string;
+
+  @Field({ nullable: true })
+  state?: string;
+
+  @Field({ nullable: true })
+  postalCode?: string;
 }
 
 @InputType()

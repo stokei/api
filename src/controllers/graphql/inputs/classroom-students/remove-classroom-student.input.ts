@@ -3,7 +3,10 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class RemoveWhereClassroomStudentInput {
   @Field()
-  classroomStudentId: string;
+  classroom: string;
+
+  @Field()
+  student: string;
 }
 
 @InputType()

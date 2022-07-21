@@ -3,8 +3,8 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class CreateModuleVideoInput {
   @Field()
-  parent: string;
+  module: string;
 
   @Field()
-  name: string;
+  video: string;
 }

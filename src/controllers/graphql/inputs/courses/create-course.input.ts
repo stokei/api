@@ -7,4 +7,10 @@ export class CreateCourseInput {
 
   @Field()
   name: string;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  avatar?: string;
 }

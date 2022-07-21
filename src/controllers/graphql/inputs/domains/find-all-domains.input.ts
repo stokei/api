@@ -1,11 +1,13 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
+  WhereDataBooleanInput,
   WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
 
+import { DomainStatus } from '@/controllers/graphql/enums/domain-status.enum';
 import {
   OrderByDataFindAllDomainsDTO,
   WhereDataFindAllDomainsDTO
@@ -22,6 +24,24 @@ class WhereDataFindAllDomainsDataInput implements WhereDataFindAllDomainsDTO {
   @Field(() => WhereDataSearchInput, { nullable: true })
   name?: WhereDataSearchInput;
 
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  default?: WhereDataBooleanInput;
+
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  active?: WhereDataBooleanInput;
+
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  fulldomain?: WhereDataSearchInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  extension?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  language?: WhereDataStringInput;
+
+  @Field(() => DomainStatus, { nullable: true })
+  status?: DomainStatus;
+
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
@@ -35,6 +55,24 @@ export class OrderByDataFindAllDomainsInput
 {
   @Field(() => OrderBy, { nullable: true })
   name?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  default?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  active?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  fulldomain?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  extension?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  language?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  status?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

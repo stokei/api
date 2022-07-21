@@ -2,8 +2,8 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateDataDomainInput {
-  @Field()
-  name: string;
+  @Field(() => Boolean)
+  default?: boolean;
 }
 
 @InputType()

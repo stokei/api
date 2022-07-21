@@ -16,7 +16,7 @@ export interface WhereDataFindAllDomainsDTO {
   fulldomain?: IWhereDataSearch;
   extension?: IWhereData;
   language?: IWhereData;
-  status?: IWhereData<DomainStatus>;
+  status?: DomainStatus;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

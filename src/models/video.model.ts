@@ -1,4 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
+import { ApiProperty } from '@nestjs/swagger';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
@@ -25,18 +26,31 @@ export interface IVideoModelData {
 }
 
 export class VideoModel extends AggregateRoot {
+  @ApiProperty()
   readonly id: string;
+  @ApiProperty({ nullable: true })
   readonly name: string;
+  @ApiProperty({ nullable: true })
   readonly slug: string;
+  @ApiProperty()
   readonly path: string;
+  @ApiProperty({ nullable: true })
   readonly description?: string;
+  @ApiProperty({ nullable: true })
   readonly poster?: string;
+  @ApiProperty({ nullable: true })
   readonly duration?: number;
+  @ApiProperty({ enum: VideoStatus })
   readonly status: VideoStatus;
+  @ApiProperty()
   readonly active: boolean;
+  @ApiProperty({ nullable: true })
   readonly updatedAt?: string;
+  @ApiProperty({ nullable: true })
   readonly createdAt?: string;
+  @ApiProperty({ nullable: true })
   readonly updatedBy?: string;
+  @ApiProperty({ nullable: true })
   readonly createdBy?: string;
   constructor(data: IVideoModelData) {
     super();

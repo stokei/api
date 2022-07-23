@@ -21,7 +21,7 @@ export class PlanModelMock extends PlanModel {
       quantityClassroomsPerCourses: data?.quantityClassroomsPerCourses ?? 2,
       quantityModulesPerClassrooms: data?.quantityModulesPerClassrooms ?? 10,
       quantityVideosPerModules: data?.quantityVideosPerModules ?? 3,
-      salesCommissionPercentage: data?.salesCommissionPercentage ?? 1000,
+      applicationFeePercentage: data?.applicationFeePercentage ?? 1000,
       active: data?.active ?? true,
       canceledAt: data?.canceledAt ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),

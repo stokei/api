@@ -1,6 +1,7 @@
 import { Logger, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { StokeiApiServerInfo } from './enums/server-info.enum';
 import { HOST, PORT } from './environments';
@@ -12,6 +13,15 @@ async function bootstrap() {
   app.enableVersioning({
     type: VersioningType.URI
   });
+
+  const config = new DocumentBuilder()
+    .setTitle('Stokei API')
+    .setDescription('Stokei RESTfull API')
+    .setVersion('1.0')
+    .addTag('Stokei')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, document);
 
   app.listen(PORT, HOST, () => {
     Logger.log(`Microservise(${StokeiApiServerInfo.NAME}) started!`);

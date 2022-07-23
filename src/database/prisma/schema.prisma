@@ -441,7 +441,7 @@ model Plan {
   quantityClassroomsPerCourses Int        @map("quantity_classrooms_per_courses")
   quantityModulesPerClassrooms Int        @map("quantity_modules_per_classrooms")
   quantityVideosPerModules     Int        @map("quantity_videos_per_modules")
-  salesCommissionPercentage    Int        @map("sales_commission_percentage")
+  applicationFeePercentage     Int        @map("application_fee_percentage")
   active                       Boolean    @default(true)
   canceledAt                   DateTime?  @map("canceled_at")
   updatedAt                    DateTime?  @updatedAt @map("updated_at")
@@ -465,9 +465,9 @@ model Image {
 
 model Video {
   id          String      @id @default(cuid())
-  slug        String      @db.VarChar(255)
+  slug        String?     @db.VarChar(255)
   path        String      @db.VarChar(255)
-  name        String      @db.VarChar(255)
+  name        String?     @db.VarChar(255)
   description String?
   poster      String?     @db.VarChar(255)
   duration    Int?

@@ -1,1 +1,3 @@
-export const Controllers = [];
+import { RestControllers } from './rest';
+
+export const Controllers = [...RestControllers];

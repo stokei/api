@@ -22,7 +22,7 @@ export interface WhereDataFindAllPlansDTO {
   quantityClassroomsPerCourses?: IWhereData<number>;
   quantityModulesPerClassrooms?: IWhereData<number>;
   quantityVideosPerModules?: IWhereData<number>;
-  salesCommissionPercentage?: IWhereData<number>;
+  applicationFeePercentage?: IWhereData<number>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -40,7 +40,7 @@ export interface OrderByDataFindAllPlansDTO {
   quantityClassroomsPerCourses?: IOrderBy;
   quantityModulesPerClassrooms?: IOrderBy;
   quantityVideosPerModules?: IOrderBy;
-  salesCommissionPercentage?: IOrderBy;
+  applicationFeePercentage?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

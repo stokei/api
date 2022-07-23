@@ -17,7 +17,7 @@ export class CreatePlanCommand implements ICommand, CreatePlanDTO {
   quantityClassroomsPerCourses: number;
   quantityModulesPerClassrooms: number;
   quantityVideosPerModules: number;
-  salesCommissionPercentage: number;
+  applicationFeePercentage: number;
   createdBy: string;
 
   constructor(data: CreatePlanDTO) {
@@ -33,7 +33,7 @@ export class CreatePlanCommand implements ICommand, CreatePlanDTO {
     this.quantityClassroomsPerCourses = data.quantityClassroomsPerCourses;
     this.quantityModulesPerClassrooms = data.quantityModulesPerClassrooms;
     this.quantityVideosPerModules = data.quantityVideosPerModules;
-    this.salesCommissionPercentage = data.salesCommissionPercentage;
+    this.applicationFeePercentage = data.applicationFeePercentage;
     this.createdBy = data.createdBy;
   }
 }

@@ -1,4 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
+import { ApiProperty } from '@nestjs/swagger';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
@@ -16,12 +17,19 @@ export interface IImageModelData {
 }
 
 export class ImageModel extends AggregateRoot {
+  @ApiProperty()
   readonly id: string;
+  @ApiProperty()
   readonly path: string;
+  @ApiProperty({ nullable: true })
   readonly updatedAt?: string;
+  @ApiProperty({ nullable: true })
   readonly createdAt?: string;
+  @ApiProperty({ nullable: true })
   readonly updatedBy?: string;
+  @ApiProperty({ nullable: true })
   readonly createdBy?: string;
+
   constructor(data: IImageModelData) {
     super();
 

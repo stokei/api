@@ -14,7 +14,7 @@ export interface ExistsPlansWhereDTO {
   quantityClassroomsPerCourses?: number;
   quantityModulesPerClassrooms?: number;
   quantityVideosPerModules?: number;
-  salesCommissionPercentage?: number;
+  applicationFeePercentage?: number;
 }
 
 export interface ExistsPlansDTO {

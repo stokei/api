@@ -17,7 +17,7 @@ export interface CountPlansWhereDTO {
   quantityClassroomsPerCourses?: IWhereData<number>;
   quantityModulesPerClassrooms?: IWhereData<number>;
   quantityVideosPerModules?: IWhereData<number>;
-  salesCommissionPercentage?: IWhereData<number>;
+  applicationFeePercentage?: IWhereData<number>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

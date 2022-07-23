@@ -1,7 +1,17 @@
-export interface CreateVideoDTO {
-  name: string;
+import { ApiProperty } from '@nestjs/swagger';
+
+export class CreateVideoDTO {
+  @ApiProperty()
+  name?: string;
+
+  @ApiProperty({ nullable: true })
   description?: string;
-  path: string;
+
+  @ApiProperty()
+  path?: string;
+
+  @ApiProperty({ nullable: true })
   poster?: string;
+
   createdBy: string;
 }

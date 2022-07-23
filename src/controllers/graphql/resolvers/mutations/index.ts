@@ -1,8 +1,8 @@
 import { AccessesMutations } from './accesses';
 import { AccountsMutations } from './accounts';
 import { AddressesMutations } from './addresses';
-import { CartsMutations } from './carts';
 import { CartItemsMutations } from './cart-items';
+import { CartsMutations } from './carts';
 import { ClassroomInstructorsMutations } from './classroom-instructors';
 import { ClassroomModulesMutations } from './classroom-modules';
 import { ClassroomStudentsMutations } from './classroom-students';
@@ -35,6 +35,7 @@ export const Mutations = [
   ...ProjectsMutations,
   ...DomainsMutations,
   ...CurrenciesMutations,
+  ...ImagesMutations,
   ...LanguagesMutations,
   ...ColorsMutations,
   ...ProductsMutations,
@@ -45,7 +46,6 @@ export const Mutations = [
   ...CartsMutations,
   ...CartItemsMutations,
   ...PlansMutations,
-  ...ImagesMutations,
   ...VideosMutations,
   ...VideoAuthorsMutations,
   ...ModulesMutations,

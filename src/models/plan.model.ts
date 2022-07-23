@@ -21,7 +21,7 @@ export interface IPlanModelData {
   readonly quantityClassroomsPerCourses: number;
   readonly quantityModulesPerClassrooms: number;
   readonly quantityVideosPerModules: number;
-  readonly salesCommissionPercentage: number;
+  readonly applicationFeePercentage: number;
   readonly active: boolean;
   readonly canceledAt: Date | string;
   readonly updatedAt?: Date | string;
@@ -44,7 +44,7 @@ export class PlanModel extends AggregateRoot {
   readonly quantityClassroomsPerCourses: number;
   readonly quantityModulesPerClassrooms: number;
   readonly quantityVideosPerModules: number;
-  readonly salesCommissionPercentage: number;
+  readonly applicationFeePercentage: number;
   readonly active: boolean;
   readonly canceledAt?: string;
   readonly updatedAt?: string;
@@ -71,7 +71,7 @@ export class PlanModel extends AggregateRoot {
     this.quantityClassroomsPerCourses = data.quantityClassroomsPerCourses;
     this.quantityModulesPerClassrooms = data.quantityModulesPerClassrooms;
     this.quantityVideosPerModules = data.quantityVideosPerModules;
-    this.salesCommissionPercentage = data.salesCommissionPercentage;
+    this.applicationFeePercentage = data.applicationFeePercentage;
     this.active = data.active;
     this.canceledAt = convertToISODateString(data.canceledAt);
     this.updatedAt = convertToISODateString(data.updatedAt);

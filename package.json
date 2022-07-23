@@ -39,6 +39,7 @@
     "@nestjs/graphql": "^10.0.6",
     "@nestjs/jwt": "^8.0.0",
     "@nestjs/platform-express": "^8.4.0",
+    "@nestjs/swagger": "^6.0.4",
     "@nestjs/throttler": "^2.0.0",
     "@prisma/client": "^4.0.0",
     "@stokei/nestjs": "^1.1.0",

@@ -24,9 +24,6 @@ export class CartItemsSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [CartItemCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [CartItemCreatedEvent] Saga event cartItemCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -45,9 +42,6 @@ export class CartItemsSagas {
       ofType(CartItemRemovedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [CartItemRemovedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [CartItemRemovedEvent] Saga event cartItemRemoved:' +
             JSON.stringify(

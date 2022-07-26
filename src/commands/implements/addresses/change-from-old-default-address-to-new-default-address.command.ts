@@ -7,8 +7,10 @@ export class ChangeFromOldDefaultAddressToNewDefaultAddressCommand
 {
   newAddress: string;
   updatedBy: string;
+  app: string;
   constructor(data: ChangeFromOldDefaultAddressToNewDefaultAddressDTO) {
     this.newAddress = data.newAddress;
+    this.app = data.app;
     this.updatedBy = data.updatedBy;
   }
 }

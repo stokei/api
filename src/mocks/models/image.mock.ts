@@ -10,6 +10,7 @@ export class ImageModelMock extends ImageModel {
       path: data?.path ?? '/image/MY_IMAGE_ID',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
+      app: data?.app ?? 'apps.anyApp',
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
       updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });

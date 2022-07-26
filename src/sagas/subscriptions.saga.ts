@@ -24,9 +24,6 @@ export class SubscriptionsSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [SubscriptionCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [SubscriptionCreatedEvent] Saga event subscriptionCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -45,9 +42,6 @@ export class SubscriptionsSagas {
       ofType(SubscriptionUpdatedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [SubscriptionUpdatedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [SubscriptionUpdatedEvent] Saga event subscriptionUpdated:' +
             JSON.stringify(

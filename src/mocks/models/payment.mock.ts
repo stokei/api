@@ -8,10 +8,10 @@ export class PaymentModelMock extends PaymentModel {
   constructor(data?: Partial<IPaymentModelData>) {
     super({
       _id: nanoid(),
-      parent: data?.parent ?? 'anyParent',
+      customer: data?.customer ?? 'accounts.anyAccounts',
       order: data?.order ?? 'anyParent',
       amount: data?.amount ?? 10000,
-      externalPaymentId: data?.externalPaymentId ?? 'anyExternalPaymentId',
+      externalPayment: data?.externalPayment ?? 'anyExternalPaymentId',
       paymentMethod: data?.paymentMethod ?? 'anyPaymentMethod',
       status: data?.status ?? PaymentStatus.PAID,
       oldStatus: data?.oldStatus ?? PaymentStatus.PENDING,
@@ -23,6 +23,7 @@ export class PaymentModelMock extends PaymentModel {
       parcialRefundedAt: data?.parcialRefundedAt ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
+      app: data?.app ?? 'apps.anyApp',
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
       updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });

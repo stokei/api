@@ -2,8 +2,7 @@ export interface CreateProductDTO {
   parent: string;
   name: string;
   description?: string;
-  project: string;
-  externalProductId: string;
+  app: string;
   checkoutVisible: boolean;
   avatar?: string;
   createdBy: string;

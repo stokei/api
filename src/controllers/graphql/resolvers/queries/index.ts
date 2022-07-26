@@ -1,8 +1,9 @@
 import { AccessesQueries } from './accesses';
 import { AccountsQueries } from './accounts';
 import { AddressesQueries } from './addresses';
-import { CartsQueries } from './carts';
+import { AppsQueries } from './apps';
 import { CartItemsQueries } from './cart-items';
+import { CartsQueries } from './carts';
 import { ClassroomInstructorsQueries } from './classroom-instructors';
 import { ClassroomModulesQueries } from './classroom-modules';
 import { ClassroomStudentsQueries } from './classroom-students';
@@ -15,7 +16,6 @@ import { CurrenciesQueries } from './currencies';
 import { DomainsQueries } from './domains';
 import { ImagesQueries } from './images';
 import { LanguagesQueries } from './languages';
-import { ModuleVideosQueries } from './module-videos';
 import { ModulesQueries } from './modules';
 import { OrdersQueries } from './orders';
 import { PaymentMethodsQueries } from './payment-methods';
@@ -24,7 +24,6 @@ import { PhonesQueries } from './phones';
 import { PlansQueries } from './plans';
 import { PricesQueries } from './prices';
 import { ProductsQueries } from './products';
-import { ProjectsQueries } from './projects';
 import { SubscriptionsQueries } from './subscriptions';
 import { VideoAuthorsQueries } from './video-authors';
 import { VideosQueries } from './videos';
@@ -32,7 +31,7 @@ import { VideosQueries } from './videos';
 export const Queries = [
   ...AccountsQueries,
   ...AccessesQueries,
-  ...ProjectsQueries,
+  ...AppsQueries,
   ...DomainsQueries,
   ...CurrenciesQueries,
   ...LanguagesQueries,
@@ -49,7 +48,6 @@ export const Queries = [
   ...VideosQueries,
   ...VideoAuthorsQueries,
   ...ModulesQueries,
-  ...ModuleVideosQueries,
   ...CoursesQueries,
   ...CourseInstructorsQueries,
   ...CourseStudentsQueries,

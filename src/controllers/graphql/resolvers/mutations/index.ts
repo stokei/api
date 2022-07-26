@@ -1,6 +1,7 @@
 import { AccessesMutations } from './accesses';
 import { AccountsMutations } from './accounts';
 import { AddressesMutations } from './addresses';
+import { AppsMutations } from './apps';
 import { CartItemsMutations } from './cart-items';
 import { CartsMutations } from './carts';
 import { ClassroomInstructorsMutations } from './classroom-instructors';
@@ -15,7 +16,6 @@ import { CurrenciesMutations } from './currencies';
 import { DomainsMutations } from './domains';
 import { ImagesMutations } from './images';
 import { LanguagesMutations } from './languages';
-import { ModuleVideosMutations } from './module-videos';
 import { ModulesMutations } from './modules';
 import { OrdersMutations } from './orders';
 import { PaymentMethodsMutations } from './payment-methods';
@@ -24,7 +24,6 @@ import { PhonesMutations } from './phones';
 import { PlansMutations } from './plans';
 import { PricesMutations } from './prices';
 import { ProductsMutations } from './products';
-import { ProjectsMutations } from './projects';
 import { SubscriptionsMutations } from './subscriptions';
 import { VideoAuthorsMutations } from './video-authors';
 import { VideosMutations } from './videos';
@@ -32,7 +31,7 @@ import { VideosMutations } from './videos';
 export const Mutations = [
   ...AccountsMutations,
   ...AccessesMutations,
-  ...ProjectsMutations,
+  ...AppsMutations,
   ...DomainsMutations,
   ...CurrenciesMutations,
   ...ImagesMutations,
@@ -49,7 +48,6 @@ export const Mutations = [
   ...VideosMutations,
   ...VideoAuthorsMutations,
   ...ModulesMutations,
-  ...ModuleVideosMutations,
   ...CoursesMutations,
   ...CourseInstructorsMutations,
   ...CourseStudentsMutations,

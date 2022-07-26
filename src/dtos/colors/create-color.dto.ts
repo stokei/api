@@ -6,5 +6,6 @@ export interface CreateColorDTO {
   themeMode: ThemeMode;
   type: ColorType;
   color: string;
+  app: string;
   createdBy: string;
 }

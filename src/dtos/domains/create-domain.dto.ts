@@ -1,7 +1,6 @@
 export interface CreateDomainDTO {
   parent: string;
-  fulldomain: string;
-  default?: boolean;
-  language: string;
+  name: string;
+  app: string;
   createdBy: string;
 }

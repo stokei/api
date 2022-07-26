@@ -20,7 +20,6 @@ export interface IAccountModelData {
   readonly _id?: string;
   readonly firstname: string;
   readonly lastname: string;
-  readonly parent: string;
   readonly email: string;
   readonly username: string;
   readonly password: string;
@@ -34,6 +33,7 @@ export interface IAccountModelData {
   readonly canceledAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
   readonly roles: AccountRole[];
@@ -44,7 +44,6 @@ export class AccountModel extends AggregateRoot {
   readonly firstname: string;
   readonly lastname: string;
   readonly fullname: string;
-  readonly parent: string;
   readonly email: string;
   readonly username: string;
   @Exclude()
@@ -63,6 +62,7 @@ export class AccountModel extends AggregateRoot {
   readonly canceledAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
   readonly roles: AccountRole[];
@@ -77,7 +77,6 @@ export class AccountModel extends AggregateRoot {
     this.firstname = data.firstname;
     this.lastname = data.lastname;
     this.fullname = cleanValue(`${data.firstname} ${data.lastname}`);
-    this.parent = data.parent;
     this.email = data.email;
     this.username = data.username;
     this.password = data.password;
@@ -91,6 +90,7 @@ export class AccountModel extends AggregateRoot {
     this.canceledAt = convertToISODateString(data.canceledAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
     this.roles = data.roles;

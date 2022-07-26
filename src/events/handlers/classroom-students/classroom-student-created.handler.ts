@@ -11,7 +11,7 @@ export class ClassroomStudentCreatedHandler
     const { classroomStudent } = event;
     Logger.log(
       `#${classroomStudent.id} - created!`,
-      ClassroomStudentCreatedHandler.student
+      ClassroomStudentCreatedHandler.name
     );
     return event;
   }

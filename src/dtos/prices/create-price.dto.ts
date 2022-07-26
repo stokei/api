@@ -12,5 +12,6 @@ export interface CreatePriceDTO {
   recurringIntervalCount: number;
   recurringIntervalType: RecurringType;
   quantity: number;
+  app: string;
   createdBy: string;
 }

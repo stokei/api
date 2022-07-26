@@ -2,8 +2,11 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateDataLanguageInput {
-  @Field()
-  name: string;
+  @Field({ nullable: true })
+  name?: string;
+
+  @Field({ nullable: true })
+  icon?: string;
 }
 
 @InputType()

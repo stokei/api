@@ -38,6 +38,7 @@ export class AddressesSagas {
         );
         const commands = [
           new ChangeFromOldDefaultAddressToNewDefaultAddressCommand({
+            app: address.app,
             newAddress: address.id,
             updatedBy: createdBy
           })
@@ -54,9 +55,6 @@ export class AddressesSagas {
       ofType(AddressRemovedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [AddressRemovedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [AddressRemovedEvent] Saga event addressRemoved:' +
             JSON.stringify(
@@ -89,6 +87,7 @@ export class AddressesSagas {
         );
         const commands = [
           new ChangeFromOldDefaultAddressToNewDefaultAddressCommand({
+            app: address.app,
             newAddress: address.id,
             updatedBy
           })

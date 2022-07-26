@@ -10,8 +10,8 @@ export interface IProductModelData {
   readonly parent: string;
   readonly name: string;
   readonly description?: string;
-  readonly project: string;
-  readonly externalProductId: string;
+  readonly app: string;
+  readonly externalProduct: string;
   readonly checkoutVisible: boolean;
   readonly avatar?: string;
   readonly active: boolean;
@@ -28,8 +28,8 @@ export class ProductModel extends AggregateRoot {
   readonly parent: string;
   readonly name: string;
   readonly description?: string;
-  readonly project: string;
-  readonly externalProductId: string;
+  readonly app: string;
+  readonly externalProduct: string;
   readonly checkoutVisible: boolean;
   readonly avatar?: string;
   readonly active: boolean;
@@ -50,8 +50,8 @@ export class ProductModel extends AggregateRoot {
     this.parent = data.parent;
     this.name = data.name;
     this.description = data.description;
-    this.project = data.project;
-    this.externalProductId = data.externalProductId;
+    this.app = data.app;
+    this.externalProduct = data.externalProduct;
     this.checkoutVisible = data.checkoutVisible;
     this.avatar = data.avatar;
     this.active = data.active;
@@ -59,6 +59,7 @@ export class ProductModel extends AggregateRoot {
     this.deactivatedAt = convertToISODateString(data.deactivatedAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
   }

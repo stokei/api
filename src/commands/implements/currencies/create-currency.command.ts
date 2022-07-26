@@ -7,6 +7,7 @@ export class CreateCurrencyCommand implements ICommand, CreateCurrencyDTO {
   name: string;
   symbol: string;
   minorUnit: number;
+  app: string;
   createdBy: string;
 
   constructor(data: CreateCurrencyDTO) {
@@ -14,6 +15,7 @@ export class CreateCurrencyCommand implements ICommand, CreateCurrencyDTO {
     this.name = data.name;
     this.symbol = data.symbol;
     this.minorUnit = data.minorUnit;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

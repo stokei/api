@@ -1,5 +1,6 @@
 export interface UpdateClassroomDataDTO {
   updatedBy: string;
+  app: string;
   name?: string;
   description?: string;
 }

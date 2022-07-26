@@ -9,7 +9,6 @@ import { PlanCreatedEvent } from '@/events/implements/plans/plan-created.event';
 export interface IPlanModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly parent: string;
   readonly name: string;
   readonly type: PlanType;
   readonly checkoutVisible: boolean;
@@ -32,7 +31,6 @@ export interface IPlanModelData {
 
 export class PlanModel extends AggregateRoot {
   readonly id: string;
-  readonly parent: string;
   readonly name: string;
   readonly type: PlanType;
   readonly checkoutVisible: boolean;
@@ -59,7 +57,6 @@ export class PlanModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.PLANS,
       id: data._id?.toString() || data.id
     });
-    this.parent = data.parent;
     this.name = data.name;
     this.type = data.type;
     this.checkoutVisible = data.checkoutVisible;

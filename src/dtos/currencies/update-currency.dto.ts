@@ -1,5 +1,6 @@
 export interface UpdateCurrencyDataDTO {
   updatedBy: string;
+  app: string;
   name?: string;
   symbol?: string;
   minorUnit?: number;

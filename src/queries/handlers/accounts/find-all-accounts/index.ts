@@ -57,7 +57,7 @@ export class FindAllAccountsQueryHandler
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          app: cleanWhereDataString(operatorData.app),
           firstname: cleanWhereDataSearch(operatorData.firstname),
           lastname: cleanWhereDataSearch(operatorData.lastname),
           email: cleanWhereDataString(operatorData.email),

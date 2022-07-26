@@ -7,8 +7,8 @@ export interface WhereDataFindAllSubscriptionsDTO {
   ids?: string[];
   parent?: IWhereData;
   product?: IWhereData<string>;
-  status?: IWhereData<SubscriptionStatus>;
-  type?: IWhereData<SubscriptionType>;
+  status?: SubscriptionStatus;
+  type?: SubscriptionType;
   active?: IWhereData<boolean>;
   automaticRenew?: IWhereData<boolean>;
   updatedBy?: IWhereData;
@@ -24,7 +24,7 @@ export interface OrderByDataFindAllSubscriptionsDTO {
   automaticRenew?: IOrderBy;
   startAt?: IOrderBy;
   endAt?: IOrderBy;
-  canceledAt?: string;
+  canceledAt?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

@@ -8,5 +8,6 @@ export interface CreateAddressDTO {
   country: string;
   state: string;
   postalCode: string;
+  app: string;
   createdBy: string;
 }

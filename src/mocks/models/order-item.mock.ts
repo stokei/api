@@ -23,6 +23,7 @@ export class OrderItemModelMock extends OrderItemModel {
       recurringIntervalType: data?.recurringIntervalType ?? RecurringType.MONTH,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
+      app: data?.app ?? 'apps.anyApp',
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
       updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });

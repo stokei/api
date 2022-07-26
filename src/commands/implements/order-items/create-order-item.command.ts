@@ -16,6 +16,7 @@ export class CreateOrderItemCommand implements ICommand, CreateOrderItemDTO {
   type: PriceType;
   recurringIntervalCount: number;
   recurringIntervalType: RecurringType;
+  app: string;
   createdBy: string;
 
   constructor(data: CreateOrderItemDTO) {
@@ -30,6 +31,7 @@ export class CreateOrderItemCommand implements ICommand, CreateOrderItemDTO {
     this.type = data.type;
     this.recurringIntervalCount = data.recurringIntervalCount;
     this.recurringIntervalType = data.recurringIntervalType;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

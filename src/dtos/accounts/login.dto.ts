@@ -1,5 +1,5 @@
 export interface LoginDTO {
-  parent: string;
+  app: string;
   email: string;
   password: string;
 }

@@ -24,9 +24,6 @@ export class VideoAuthorsSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [VideoAuthorCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [VideoAuthorCreatedEvent] Saga event videoAuthorCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -45,9 +42,6 @@ export class VideoAuthorsSagas {
       ofType(VideoAuthorRemovedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [VideoAuthorRemovedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [VideoAuthorRemovedEvent] Saga event videoAuthorRemoved:' +
             JSON.stringify(

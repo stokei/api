@@ -9,6 +9,7 @@ export class CreateColorCommand implements ICommand, CreateColorDTO {
   themeMode: ThemeMode;
   type: ColorType;
   color: string;
+  app: string;
   createdBy: string;
 
   constructor(data: CreateColorDTO) {
@@ -16,6 +17,7 @@ export class CreateColorCommand implements ICommand, CreateColorDTO {
     this.type = data.type;
     this.color = data.color;
     this.parent = data.parent;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

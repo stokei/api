@@ -1,11 +1,13 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
-  WhereDataSearchInput,
+  WhereDataBooleanInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
 
+import { SubscriptionStatus } from '@/controllers/graphql/enums/subscription-status.enum';
+import { SubscriptionType } from '@/controllers/graphql/enums/subscription-type.enum';
 import {
   OrderByDataFindAllSubscriptionsDTO,
   WhereDataFindAllSubscriptionsDTO
@@ -21,8 +23,20 @@ class WhereDataFindAllSubscriptionsDataInput
   @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
 
-  @Field(() => WhereDataSearchInput, { nullable: true })
-  name?: WhereDataSearchInput;
+  @Field(() => WhereDataStringInput, { nullable: true })
+  product?: WhereDataStringInput;
+
+  @Field(() => SubscriptionStatus, { nullable: true })
+  status?: SubscriptionStatus;
+
+  @Field(() => SubscriptionType, { nullable: true })
+  type?: SubscriptionType;
+
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  active?: WhereDataBooleanInput;
+
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  automaticRenew?: WhereDataBooleanInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
@@ -36,7 +50,25 @@ export class OrderByDataFindAllSubscriptionsInput
   implements OrderByDataFindAllSubscriptionsDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
+  status?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  type?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  active?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  automaticRenew?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  startAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  endAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  canceledAt?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

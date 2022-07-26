@@ -6,5 +6,14 @@ export class CreatePhoneInput {
   parent: string;
 
   @Field()
-  name: string;
+  countryCode: string;
+
+  @Field()
+  areaCode: string;
+
+  @Field()
+  number: string;
+
+  @Field({ nullable: true })
+  default?: boolean;
 }

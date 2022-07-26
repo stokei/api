@@ -3,10 +3,11 @@ import { ICommand } from '@nestjs/cqrs';
 import { CreateAccountDTO } from '@/dtos/accounts/create-account.dto';
 
 export class CreateAccountCommand implements ICommand, CreateAccountDTO {
+  app: string;
   createdBy: string;
   firstname: string;
   lastname: string;
-  parent: string;
+  app: string;
   email: string;
   password: string;
 
@@ -14,7 +15,7 @@ export class CreateAccountCommand implements ICommand, CreateAccountDTO {
     this.createdBy = data?.createdBy;
     this.firstname = data?.firstname;
     this.lastname = data?.lastname;
-    this.parent = data?.parent;
+    this.app = data?.app;
     this.email = data?.email;
     this.password = data?.password;
   }

@@ -7,6 +7,7 @@ export class CreateVideoCommand implements ICommand, CreateVideoDTO {
   description?: string;
   path: string;
   poster?: string;
+  app: string;
   createdBy: string;
 
   constructor(data: CreateVideoDTO) {
@@ -14,6 +15,7 @@ export class CreateVideoCommand implements ICommand, CreateVideoDTO {
     this.description = data.description;
     this.path = data.path;
     this.poster = data.poster;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

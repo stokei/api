@@ -12,6 +12,7 @@ export class CartItemModelMock extends CartItemModel {
       quantity: data?.quantity ?? 1,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
+      app: data?.app ?? 'apps.anyApp',
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
       updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });

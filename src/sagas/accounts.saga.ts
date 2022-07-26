@@ -27,9 +27,6 @@ export class AccountsSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [AccountCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [AccountCreatedEvent] Saga event accountCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -48,9 +45,6 @@ export class AccountsSagas {
       ofType(AccountRemovedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [AccountRemovedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [AccountRemovedEvent] Saga event accountRemoved:' +
             JSON.stringify(
@@ -71,9 +65,6 @@ export class AccountsSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [AccountUpdatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [AccountUpdatedEvent] Saga event accountUpdated:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -93,9 +84,6 @@ export class AccountsSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [PasswordChangedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [PasswordChangedEvent] Saga event passwordChanged:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -114,9 +102,6 @@ export class AccountsSagas {
       ofType(PasswordForgottenEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [PasswordForgottenEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [PasswordForgottenEvent] Saga event passwordForgotten:' +
             JSON.stringify(

@@ -11,7 +11,7 @@ export interface IPaymentModelData {
   readonly customer: string;
   readonly order: string;
   readonly amount: number;
-  readonly externalPaymentId: string;
+  readonly externalPayment: string;
   readonly paymentMethod: string;
   readonly status: PaymentStatus;
   readonly oldStatus?: PaymentStatus;
@@ -23,6 +23,7 @@ export interface IPaymentModelData {
   readonly parcialRefundedAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
 }
@@ -32,7 +33,7 @@ export class PaymentModel extends AggregateRoot {
   readonly customer: string;
   readonly order: string;
   readonly amount: number;
-  readonly externalPaymentId: string;
+  readonly externalPayment: string;
   readonly paymentMethod: string;
   readonly status: PaymentStatus;
   readonly oldStatus?: PaymentStatus;
@@ -44,6 +45,7 @@ export class PaymentModel extends AggregateRoot {
   readonly parcialRefundedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
   constructor(data: IPaymentModelData) {
@@ -57,7 +59,7 @@ export class PaymentModel extends AggregateRoot {
     this.customer = data.customer;
     this.order = data.order;
     this.amount = data.amount;
-    this.externalPaymentId = data.externalPaymentId;
+    this.externalPayment = data.externalPayment;
     this.paymentMethod = data.paymentMethod;
     this.status = data.status;
     this.oldStatus = data.oldStatus;
@@ -69,6 +71,7 @@ export class PaymentModel extends AggregateRoot {
     this.parcialRefundedAt = convertToISODateString(data.parcialRefundedAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
   }

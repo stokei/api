@@ -14,6 +14,7 @@ export class CourseInstructorModelMock extends CourseInstructorModel {
       instructor: data?.instructor ?? 'instructors.anyInstructor',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
+      app: data?.app ?? 'apps.anyApp',
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
       updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });

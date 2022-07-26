@@ -6,5 +6,5 @@ export class ForgotPasswordInput {
   email: string;
 
   @Field()
-  parent: string;
+  app: string;
 }

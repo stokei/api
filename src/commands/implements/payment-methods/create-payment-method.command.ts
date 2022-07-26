@@ -10,14 +10,16 @@ export class CreatePaymentMethodCommand
   parent: string;
   type: PaymentMethodType;
   provider: PaymentMethodProvider;
-  externalPaymentMethodId: string;
+  externalPaymentMethod: string;
+  app: string;
   createdBy: string;
 
   constructor(data: CreatePaymentMethodDTO) {
     this.parent = data.parent;
     this.type = data.type;
     this.provider = data.provider;
-    this.externalPaymentMethodId = data.externalPaymentMethodId;
+    this.externalPaymentMethod = data.externalPaymentMethod;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

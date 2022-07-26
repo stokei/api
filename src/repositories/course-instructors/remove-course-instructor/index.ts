@@ -11,11 +11,13 @@ export class RemoveCourseInstructorRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute({ where }: RemoveCourseInstructorDTO): Promise<boolean> {
-    const removed = await this.model.courseInstructor.delete({
+    const removed = await this.model.courseInstructor.deleteMany({
       where: {
-        id: where?.courseInstructorId
+        app: where?.app,
+        course: where?.course,
+        instructor: where?.instructor
       }
     });
-    return !!removed;
+    return removed?.count > 0;
   }
 }

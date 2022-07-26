@@ -9,16 +9,13 @@ export class DomainModelMock extends DomainModel {
     super({
       _id: nanoid(),
       parent: data?.parent ?? 'anyParent',
-      default: data?.default ?? false,
       active: data?.active ?? true,
-      fulldomain: data?.fulldomain ?? 'stokei.com',
-      name: data?.name ?? 'stokei',
-      extension: data?.extension ?? '.com',
-      language: data?.language ?? 'PT-BR',
+      name: data?.name ?? 'stokei.com',
       status: data?.status ?? DomainStatus.ACTIVE,
       activatedAt: data?.activatedAt ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
+      app: data?.app ?? 'apps.anyApp',
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
       updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });

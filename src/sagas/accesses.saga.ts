@@ -25,9 +25,6 @@ export class AccessesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [AccessCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [AccessCreatedEvent] Saga event accessCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -47,9 +44,6 @@ export class AccessesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [AccessRemovedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [AccessRemovedEvent] Saga event accessRemoved:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -68,9 +62,6 @@ export class AccessesSagas {
       ofType(AccessUpdatedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [AccessUpdatedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [AccessUpdatedEvent] Saga event accessUpdated:' +
             JSON.stringify(

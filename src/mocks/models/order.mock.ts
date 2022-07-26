@@ -8,11 +8,11 @@ export class OrderModelMock extends OrderModel {
   constructor(data?: Partial<IOrderModelData>) {
     super({
       _id: nanoid(),
-      project: data?.project ?? 'stokei',
+      app: data?.app ?? 'stokei',
       cart: data?.cart ?? 'carts.anyCart',
       customer: data?.customer ?? 'accounts.anyAccount',
-      salesComissionPercentage: data?.salesComissionPercentage ?? 1000,
-      salesComissionAmount: data?.salesComissionAmount ?? 1000,
+      applicationFeePercentage: data?.applicationFeePercentage ?? 1000,
+      applicationFeeAmount: data?.applicationFeeAmount ?? 1000,
       currency: data?.currency ?? 'BRL',
       amount: data?.amount ?? 10000,
       discountAmount: data?.discountAmount ?? 2000,

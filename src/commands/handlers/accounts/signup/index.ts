@@ -24,7 +24,7 @@ export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {
     const accountCreated: AccountModel = await this.commandBus.execute(
       new CreateAccountCommand({
         ...data,
-        createdBy: data.parent
+        createdBy: data.app
       })
     );
     if (!accountCreated) {
@@ -33,6 +33,7 @@ export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {
     const accessCreated: AccessModel = await this.commandBus.execute(
       new CreateAccessCommand({
         parent: accountCreated.id,
+        app: accountCreated.id,
         createdBy: accountCreated.id
       })
     );
@@ -51,7 +52,7 @@ export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {
     return cleanObject({
       firstname: cleanValue(command?.firstname),
       lastname: cleanValue(command?.lastname),
-      parent: cleanValue(command?.parent),
+      app: cleanValue(command?.app),
       email: cleanValue(command?.email),
       password: cleanValue(command?.password)
     });

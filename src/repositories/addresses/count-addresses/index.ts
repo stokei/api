@@ -35,9 +35,7 @@ export class CountAddressesRepository
         city: prismaMapper.toWhereDataSearch(operatorData.city),
         country: prismaMapper.toWhereDataSearch(operatorData.country),
         state: prismaMapper.toWhereDataSearch(operatorData.state),
-        postalCode: prismaMapper.toWhereData(operatorData.postalCode),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy)
+        postalCode: prismaMapper.toWhereData(operatorData.postalCode)
       };
     };
     return await this.model.address.count({

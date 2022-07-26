@@ -25,9 +25,6 @@ export class LanguagesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [LanguageCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [LanguageCreatedEvent] Saga event languageCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -47,9 +44,6 @@ export class LanguagesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [LanguageRemovedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [LanguageRemovedEvent] Saga event languageRemoved:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -68,9 +62,6 @@ export class LanguagesSagas {
       ofType(LanguageUpdatedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [LanguageUpdatedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [LanguageUpdatedEvent] Saga event languageUpdated:' +
             JSON.stringify(

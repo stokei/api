@@ -8,6 +8,7 @@ export class CreatePhoneCommand implements ICommand, CreatePhoneDTO {
   areaCode: string;
   number: string;
   default?: boolean;
+  app: string;
   createdBy: string;
 
   constructor(data: CreatePhoneDTO) {
@@ -16,6 +17,7 @@ export class CreatePhoneCommand implements ICommand, CreatePhoneDTO {
     this.areaCode = data.areaCode;
     this.number = data.number;
     this.default = data.default;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

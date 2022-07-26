@@ -10,6 +10,7 @@ export class CreateSubscriptionCommand
   automaticRenew?: boolean;
   startAt?: string;
   endAt?: string;
+  app: string;
   createdBy: string;
 
   constructor(data: CreateSubscriptionDTO) {
@@ -18,6 +19,7 @@ export class CreateSubscriptionCommand
     this.automaticRenew = data.automaticRenew;
     this.startAt = data.startAt;
     this.endAt = data.endAt;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

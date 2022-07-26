@@ -12,6 +12,7 @@ export class CreateAddressCommand implements ICommand, CreateAddressDTO {
   country: string;
   state: string;
   postalCode: string;
+  app: string;
   createdBy: string;
 
   constructor(data: CreateAddressDTO) {
@@ -24,6 +25,7 @@ export class CreateAddressCommand implements ICommand, CreateAddressDTO {
     this.country = data.country;
     this.state = data.state;
     this.postalCode = data.postalCode;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

@@ -5,22 +5,18 @@ import { DomainStatus } from '@/enums/domain-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
 import { DomainRemovedEvent } from '@/events/implements/domains/domain-removed.event';
-import { DomainUpdatedEvent } from '@/events/implements/domains/domain-updated.event';
 
 export interface IDomainModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
-  readonly default: boolean;
   readonly active: boolean;
-  readonly fulldomain: string;
   readonly name: string;
-  readonly extension: string;
-  readonly language: string;
   readonly status: DomainStatus;
   readonly activatedAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
 }
@@ -28,16 +24,13 @@ export interface IDomainModelData {
 export class DomainModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly default: boolean;
   readonly active: boolean;
-  readonly fulldomain: string;
   readonly name: string;
-  readonly extension: string;
-  readonly language: string;
   readonly status: DomainStatus;
   readonly activatedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
   constructor(data: IDomainModelData) {
@@ -49,16 +42,13 @@ export class DomainModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
-    this.default = data.default;
-    this.fulldomain = data.fulldomain;
     this.name = data.name;
-    this.extension = data.extension;
-    this.language = data.language;
     this.status = data.status;
     this.active = this.status === DomainStatus.ACTIVE || data.active;
     this.activatedAt = convertToISODateString(data.activatedAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
   }
@@ -68,17 +58,6 @@ export class DomainModel extends AggregateRoot {
       this.apply(
         new DomainCreatedEvent({
           createdBy,
-          domain: this
-        })
-      );
-    }
-  }
-
-  updatedDomain({ updatedBy }: { updatedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new DomainUpdatedEvent({
-          updatedBy,
           domain: this
         })
       );

@@ -1,7 +1,6 @@
 export interface CreateOrderDTO {
-  project: string;
+  app: string;
   cart: string;
   customer: string;
-  currency: string;
   createdBy: string;
 }

@@ -6,10 +6,10 @@ export interface CountPaymentsWhereDTO {
   ids?: string[];
   customer?: IWhereData<string>;
   order?: IWhereData<string>;
-  externalPaymentId?: IWhereData<string>;
+  externalPayment?: IWhereData<string>;
   paymentMethod?: IWhereData<string>;
-  status?: IWhereData<PaymentStatus>;
-  oldStatus?: IWhereData<PaymentStatus>;
+  status?: PaymentStatus;
+  oldStatus?: PaymentStatus;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

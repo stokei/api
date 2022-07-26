@@ -28,7 +28,7 @@ export class AccountModelMock extends AccountModel {
       salt,
       status: data?.status ?? AccountStatus.ACTIVE,
       roles: data?.roles ?? [AccountRole.USER],
-      parent: data?.parent ?? 'anyParent',
+      app: data?.app ?? 'anyParent',
       avatar: data?.avatar ?? 'anyavatar',
       active: data?.active ?? true,
       canceledAt: data?.canceledAt ?? null,

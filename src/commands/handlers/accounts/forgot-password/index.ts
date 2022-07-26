@@ -9,7 +9,7 @@ import {
   ErrorUpdatingForgotPasswordCodeException,
   ParamNotFoundException
 } from '@/errors';
-import { FindAccountByEmailAndParentRepository } from '@/repositories/accounts/find-account-by-email-and-parent';
+import { FindAccountByEmailAndParentRepository } from '@/repositories/accounts/find-account-by-email-and-app';
 import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
 import { UpdateCodeForgotPasswordRepository } from '@/repositories/accounts/update-code-forgot-password';
 
@@ -31,8 +31,8 @@ export class ForgotPasswordCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data.parent) {
-      throw new ParamNotFoundException<ForgotPasswordCommandKeys>('parent');
+    if (!data.app) {
+      throw new ParamNotFoundException<ForgotPasswordCommandKeys>('app');
     }
     if (!data.email) {
       throw new ParamNotFoundException<ForgotPasswordCommandKeys>('email');
@@ -40,7 +40,7 @@ export class ForgotPasswordCommandHandler
 
     const account = await this.findAccountByEmailAndParentRepository.execute({
       email: data.email,
-      parent: data.parent
+      app: data.app
     });
     if (!account) {
       throw new ErrorUpdatingForgotPasswordCodeException();
@@ -71,7 +71,7 @@ export class ForgotPasswordCommandHandler
 
   private clearData(command: ForgotPasswordCommand): ForgotPasswordCommand {
     return cleanObject({
-      parent: cleanValue(command?.parent),
+      app: cleanValue(command?.app),
       email: cleanValue(command?.email)
     });
   }

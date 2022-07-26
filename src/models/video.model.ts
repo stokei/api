@@ -11,6 +11,7 @@ import { VideoUpdatedEvent } from '@/events/implements/videos/video-updated.even
 export interface IVideoModelData {
   readonly id?: string;
   readonly _id?: string;
+  readonly parent: string;
   readonly name: string;
   readonly slug: string;
   readonly path: string;
@@ -21,6 +22,7 @@ export interface IVideoModelData {
   readonly active: boolean;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
 }
@@ -28,6 +30,8 @@ export interface IVideoModelData {
 export class VideoModel extends AggregateRoot {
   @ApiProperty()
   readonly id: string;
+  @ApiProperty()
+  readonly parent: string;
   @ApiProperty({ nullable: true })
   readonly name: string;
   @ApiProperty({ nullable: true })
@@ -49,6 +53,7 @@ export class VideoModel extends AggregateRoot {
   @ApiProperty({ nullable: true })
   readonly createdAt?: string;
   @ApiProperty({ nullable: true })
+  readonly app: string;
   readonly updatedBy?: string;
   @ApiProperty({ nullable: true })
   readonly createdBy?: string;
@@ -60,6 +65,7 @@ export class VideoModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.VIDEOS,
       id: data._id?.toString() || data.id
     });
+    this.parent = data.parent;
     this.slug = data.slug;
     this.path = data.path;
     this.name = data.name;
@@ -70,6 +76,7 @@ export class VideoModel extends AggregateRoot {
     this.active = this.status === VideoStatus.ACTIVE || data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
   }

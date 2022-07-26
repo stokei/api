@@ -7,6 +7,7 @@ export class CreateClassroomCommand implements ICommand, CreateClassroomDTO {
   parent: string;
   description?: string;
   hasAccessToAllModules?: boolean;
+  app: string;
   createdBy: string;
 
   constructor(data: CreateClassroomDTO) {
@@ -14,6 +15,7 @@ export class CreateClassroomCommand implements ICommand, CreateClassroomDTO {
     this.parent = data.parent;
     this.description = data.description;
     this.hasAccessToAllModules = data.hasAccessToAllModules;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

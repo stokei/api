@@ -23,9 +23,6 @@ export class PaymentsSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [PaymentCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [PaymentCreatedEvent] Saga event paymentCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)

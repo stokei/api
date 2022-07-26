@@ -11,7 +11,7 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { AccessModel } from '@/models/access.model';
-import { FindAccountByEmailAndParentRepository } from '@/repositories/accounts/find-account-by-email-and-parent';
+import { FindAccountByEmailAndAppRepository } from '@/repositories/accounts/find-account-by-email-and-app';
 
 type LoginCommandKeys = keyof LoginCommand;
 
@@ -19,7 +19,7 @@ type LoginCommandKeys = keyof LoginCommand;
 export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly findAccountByEmailAndParentRepository: FindAccountByEmailAndParentRepository
+    private readonly findAccountByEmailAndAppRepository: FindAccountByEmailAndAppRepository
   ) {}
 
   async execute(command: LoginCommand) {
@@ -27,8 +27,8 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data.parent) {
-      throw new ParamNotFoundException<LoginCommandKeys>('parent');
+    if (!data.app) {
+      throw new ParamNotFoundException<LoginCommandKeys>('app');
     }
     if (!data.email) {
       throw new ParamNotFoundException<LoginCommandKeys>('email');
@@ -37,9 +37,9 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
       throw new ParamNotFoundException<LoginCommandKeys>('password');
     }
 
-    const account = await this.findAccountByEmailAndParentRepository.execute({
+    const account = await this.findAccountByEmailAndAppRepository.execute({
       email: data.email,
-      parent: data.parent
+      app: data.app
     });
     if (!account || !account?.active) {
       throw new InvalidEmailOrPasswordException();
@@ -56,6 +56,7 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
     const accessCreated: AccessModel = await this.commandBus.execute(
       new CreateAccessCommand({
         parent: account.id,
+        app: account.id,
         createdBy: account.id
       })
     );
@@ -71,7 +72,7 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
 
   private clearData(command: LoginCommand): LoginCommand {
     return cleanObject({
-      parent: cleanValue(command?.parent),
+      app: cleanValue(command?.app),
       email: cleanValue(command?.email),
       password: cleanValue(command?.password)
     });

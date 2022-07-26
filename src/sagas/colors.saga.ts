@@ -25,9 +25,6 @@ export class ColorsSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [ColorCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [ColorCreatedEvent] Saga event colorCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -47,9 +44,6 @@ export class ColorsSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [ColorRemovedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [ColorRemovedEvent] Saga event colorRemoved:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -68,9 +62,6 @@ export class ColorsSagas {
       ofType(ColorUpdatedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [ColorUpdatedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [ColorUpdatedEvent] Saga event colorUpdated:' +
             JSON.stringify(

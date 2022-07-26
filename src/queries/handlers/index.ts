@@ -1,8 +1,9 @@
 import { AccessQueriesHandlers } from './accesses';
 import { AccountQueriesHandlers } from './accounts';
 import { AddressQueriesHandlers } from './addresses';
-import { CartQueriesHandlers } from './carts';
+import { AppQueriesHandlers } from './apps';
 import { CartItemQueriesHandlers } from './cart-items';
+import { CartQueriesHandlers } from './carts';
 import { ClassroomInstructorQueriesHandlers } from './classroom-instructors';
 import { ClassroomModuleQueriesHandlers } from './classroom-modules';
 import { ClassroomStudentQueriesHandlers } from './classroom-students';
@@ -15,7 +16,6 @@ import { CurrencyQueriesHandlers } from './currencies';
 import { DomainQueriesHandlers } from './domains';
 import { ImageQueriesHandlers } from './images';
 import { LanguageQueriesHandlers } from './languages';
-import { ModuleVideoQueriesHandlers } from './module-videos';
 import { ModuleQueriesHandlers } from './modules';
 import { OrderItemQueriesHandlers } from './order-items';
 import { OrderQueriesHandlers } from './orders';
@@ -25,7 +25,6 @@ import { PhoneQueriesHandlers } from './phones';
 import { PlanQueriesHandlers } from './plans';
 import { PriceQueriesHandlers } from './prices';
 import { ProductQueriesHandlers } from './products';
-import { ProjectQueriesHandlers } from './projects';
 import { SubscriptionQueriesHandlers } from './subscriptions';
 import { VideoAuthorQueriesHandlers } from './video-authors';
 import { VideoQueriesHandlers } from './videos';
@@ -33,7 +32,7 @@ import { VideoQueriesHandlers } from './videos';
 export const QueriesHandlers = [
   ...AccountQueriesHandlers,
   ...AccessQueriesHandlers,
-  ...ProjectQueriesHandlers,
+  ...AppQueriesHandlers,
   ...DomainQueriesHandlers,
   ...CurrencyQueriesHandlers,
   ...LanguageQueriesHandlers,
@@ -51,7 +50,6 @@ export const QueriesHandlers = [
   ...VideoQueriesHandlers,
   ...VideoAuthorQueriesHandlers,
   ...ModuleQueriesHandlers,
-  ...ModuleVideoQueriesHandlers,
   ...CourseQueriesHandlers,
   ...CourseInstructorQueriesHandlers,
   ...CourseStudentQueriesHandlers,

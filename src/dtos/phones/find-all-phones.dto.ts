@@ -9,7 +9,7 @@ export interface WhereDataFindAllPhonesDTO {
   areaCode?: IWhereData<string>;
   number?: IWhereData<string>;
   validationCode?: IWhereData<string>;
-  status?: IWhereData<PhoneStatus>;
+  status?: PhoneStatus;
   default?: IWhereData<boolean>;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;

@@ -3,8 +3,11 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class CreateOrderInput {
   @Field()
-  parent: string;
+  app: string;
 
   @Field()
-  name: string;
+  cart: string;
+
+  @Field()
+  customer: string;
 }

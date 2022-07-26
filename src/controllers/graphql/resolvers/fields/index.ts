@@ -1,8 +1,9 @@
 import { AccessesFieldsResolvers } from './accesses';
 import { AccountsFieldsResolvers } from './accounts';
 import { AddressesFieldsResolvers } from './addresses';
-import { CartsFieldsResolvers } from './carts';
+import { AppsFieldsResolvers } from './apps';
 import { CartItemsFieldsResolvers } from './cart-items';
+import { CartsFieldsResolvers } from './carts';
 import { ClassroomInstructorsFieldsResolvers } from './classroom-instructors';
 import { ClassroomModulesFieldsResolvers } from './classroom-modules';
 import { ClassroomStudentsFieldsResolvers } from './classroom-students';
@@ -15,7 +16,6 @@ import { CurrenciesFieldsResolvers } from './currencies';
 import { DomainsFieldsResolvers } from './domains';
 import { ImagesFieldsResolvers } from './images';
 import { LanguagesFieldsResolvers } from './languages';
-import { ModuleVideosFieldsResolvers } from './module-videos';
 import { ModulesFieldsResolvers } from './modules';
 import { OrdersFieldsResolvers } from './orders';
 import { PaymentMethodsFieldsResolvers } from './payment-methods';
@@ -24,7 +24,6 @@ import { PhonesFieldsResolvers } from './phones';
 import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
 import { ProductsFieldsResolvers } from './products';
-import { ProjectsFieldsResolvers } from './projects';
 import { SubscriptionsFieldsResolvers } from './subscriptions';
 import { VideoAuthorsFieldsResolvers } from './video-authors';
 import { VideosFieldsResolvers } from './videos';
@@ -32,7 +31,7 @@ import { VideosFieldsResolvers } from './videos';
 export const FieldsResolvers = [
   ...AccountsFieldsResolvers,
   ...AccessesFieldsResolvers,
-  ...ProjectsFieldsResolvers,
+  ...AppsFieldsResolvers,
   ...DomainsFieldsResolvers,
   ...CurrenciesFieldsResolvers,
   ...LanguagesFieldsResolvers,
@@ -49,7 +48,6 @@ export const FieldsResolvers = [
   ...VideosFieldsResolvers,
   ...VideoAuthorsFieldsResolvers,
   ...ModulesFieldsResolvers,
-  ...ModuleVideosFieldsResolvers,
   ...CoursesFieldsResolvers,
   ...CourseInstructorsFieldsResolvers,
   ...CourseStudentsFieldsResolvers,

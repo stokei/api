@@ -25,9 +25,6 @@ export class PricesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [PriceCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [PriceCreatedEvent] Saga event priceCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -47,9 +44,6 @@ export class PricesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [PriceRemovedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [PriceRemovedEvent] Saga event priceRemoved:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -68,9 +62,6 @@ export class PricesSagas {
       ofType(PriceUpdatedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [PriceUpdatedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [PriceUpdatedEvent] Saga event priceUpdated:' +
             JSON.stringify(

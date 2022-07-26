@@ -3,5 +3,6 @@ export interface CreateCourseDTO {
   parent: string;
   description?: string;
   avatar?: string;
+  app: string;
   createdBy: string;
 }

@@ -1,11 +1,15 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
-  WhereDataSearchInput,
+  WhereDataBooleanInput,
+  WhereDataIntInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
 
+import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
+import { PriceType } from '@/controllers/graphql/enums/price-type.enum';
+import { RecurringType } from '@/controllers/graphql/enums/recurring-type.enum';
 import {
   OrderByDataFindAllPricesDTO,
   WhereDataFindAllPricesDTO
@@ -19,8 +23,20 @@ class WhereDataFindAllPricesDataInput implements WhereDataFindAllPricesDTO {
   @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
 
-  @Field(() => WhereDataSearchInput, { nullable: true })
-  name?: WhereDataSearchInput;
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  default?: WhereDataBooleanInput;
+
+  @Field(() => PriceType, { nullable: true })
+  type?: PriceType;
+
+  @Field(() => InventoryType, { nullable: true })
+  inventoryType?: InventoryType;
+
+  @Field(() => WhereDataIntInput, { nullable: true })
+  recurringIntervalCount?: WhereDataIntInput;
+
+  @Field(() => RecurringType, { nullable: true })
+  recurringIntervalType?: RecurringType;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
@@ -34,7 +50,31 @@ export class OrderByDataFindAllPricesInput
   implements OrderByDataFindAllPricesDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
+  default?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  amount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  fromAmount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  toAmount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  type?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  inventoryType?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  recurringIntervalCount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  recurringIntervalType?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  quantity?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

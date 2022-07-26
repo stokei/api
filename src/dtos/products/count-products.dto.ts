@@ -5,8 +5,8 @@ export interface CountProductsWhereDTO {
   parent?: IWhereData;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
-  project: IWhereData;
-  checkoutVisible: IWhereData<boolean>;
+  app?: IWhereData;
+  checkoutVisible?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

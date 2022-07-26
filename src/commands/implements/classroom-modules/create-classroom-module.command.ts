@@ -7,11 +7,13 @@ export class CreateClassroomModuleCommand
 {
   classroom: string;
   module: string;
+  app: string;
   createdBy: string;
 
   constructor(data: CreateClassroomModuleDTO) {
     this.module = data.module;
     this.classroom = data.classroom;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

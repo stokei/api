@@ -2,7 +2,6 @@ import { PlanStatus } from '@/enums/plan-status.enum';
 import { PlanType } from '@/enums/plan-type.enum';
 
 export interface ExistsPlansWhereDTO {
-  parent?: string;
   name?: string;
   type?: PlanType;
   checkoutVisible?: boolean;

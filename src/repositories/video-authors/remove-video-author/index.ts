@@ -11,11 +11,13 @@ export class RemoveVideoAuthorRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute({ where }: RemoveVideoAuthorDTO): Promise<boolean> {
-    const removed = await this.model.videoAuthor.delete({
+    const removed = await this.model.videoAuthor.deleteMany({
       where: {
-        id: where?.videoAuthorId
+        app: where?.app,
+        video: where?.video,
+        author: where?.author
       }
     });
-    return !!removed;
+    return removed?.count > 0;
   }
 }

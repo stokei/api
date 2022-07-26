@@ -1,5 +1,6 @@
 export interface RemovePhoneWhereDTO {
   removedBy: string;
+  app: string;
   phoneId: string;
 }
 

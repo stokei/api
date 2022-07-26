@@ -12,6 +12,7 @@ export interface IImageModelData {
   readonly path: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
 }
@@ -26,6 +27,7 @@ export class ImageModel extends AggregateRoot {
   @ApiProperty({ nullable: true })
   readonly createdAt?: string;
   @ApiProperty({ nullable: true })
+  readonly app: string;
   readonly updatedBy?: string;
   @ApiProperty({ nullable: true })
   readonly createdBy?: string;
@@ -41,6 +43,7 @@ export class ImageModel extends AggregateRoot {
     this.path = data.path;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
   }

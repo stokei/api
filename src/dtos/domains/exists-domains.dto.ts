@@ -1,6 +1,6 @@
 export interface ExistsDomainsWhereDTO {
   parent?: string;
-  fulldomain?: string;
+  name?: string;
 }
 
 export interface ExistsDomainsDTO {

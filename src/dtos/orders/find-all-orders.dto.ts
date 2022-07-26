@@ -4,12 +4,12 @@ import { OrderStatus } from '@/enums/order-status.enum';
 
 export interface WhereDataFindAllOrdersDTO {
   ids?: string[];
-  project?: IWhereData;
+  app?: IWhereData;
   cart?: IWhereData;
   customer?: IWhereData;
   currency?: IWhereData;
-  status?: IWhereData<OrderStatus>;
-  oldStatus?: IWhereData<OrderStatus>;
+  status?: OrderStatus;
+  oldStatus?: OrderStatus;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
@@ -17,8 +17,8 @@ export interface WhereDataFindAllOrdersDTO {
 export type IKeysWhereDataFindAllOrdersDTO = keyof WhereDataFindAllOrdersDTO;
 
 export interface OrderByDataFindAllOrdersDTO {
-  salesComissionPercentage?: IOrderBy;
-  salesComissionAmount?: IOrderBy;
+  applicationFeePercentage?: IOrderBy;
+  applicationFeeAmount?: IOrderBy;
   currency?: IOrderBy;
   amount?: IOrderBy;
   discountAmount?: IOrderBy;

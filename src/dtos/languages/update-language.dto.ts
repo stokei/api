@@ -1,5 +1,6 @@
 export interface UpdateLanguageDataDTO {
   updatedBy: string;
+  app: string;
   name?: string;
   icon?: string;
 }

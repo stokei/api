@@ -29,7 +29,7 @@ export class MeAccountAccessesResolver {
       orderBy,
       where: {
         AND: {
-          parent: {
+          app: {
             equals: account.id
           }
         }

@@ -1,5 +1,6 @@
 export interface UpdateSubscriptionDataDTO {
   updatedBy: string;
+  app: string;
   automaticRenew?: boolean;
 }
 

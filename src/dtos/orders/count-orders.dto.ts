@@ -4,12 +4,12 @@ import { OrderStatus } from '@/enums/order-status.enum';
 
 export interface CountOrdersWhereDTO {
   ids?: string[];
-  project?: IWhereData;
+  app?: IWhereData;
   cart?: IWhereData;
   customer?: IWhereData;
   currency?: IWhereData;
-  status?: IWhereData<OrderStatus>;
-  oldStatus?: IWhereData<OrderStatus>;
+  status?: OrderStatus;
+  oldStatus?: OrderStatus;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

@@ -1,5 +1,6 @@
 export interface UpdateModuleDataDTO {
   updatedBy: string;
+  app: string;
   name?: string;
   description?: string;
 }

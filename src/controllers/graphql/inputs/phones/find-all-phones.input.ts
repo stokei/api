@@ -1,11 +1,12 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
-  WhereDataSearchInput,
+  WhereDataBooleanInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
 
+import { PhoneStatus } from '@/controllers/graphql/enums/phone-status.enum';
 import {
   OrderByDataFindAllPhonesDTO,
   WhereDataFindAllPhonesDTO
@@ -19,8 +20,26 @@ class WhereDataFindAllPhonesDataInput implements WhereDataFindAllPhonesDTO {
   @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
 
-  @Field(() => WhereDataSearchInput, { nullable: true })
-  name?: WhereDataSearchInput;
+  @Field(() => WhereDataStringInput, { nullable: true })
+  countryCode?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  areaCode?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  number?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  validationCode?: WhereDataStringInput;
+
+  @Field(() => PhoneStatus, { nullable: true })
+  status?: PhoneStatus;
+
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  default?: WhereDataBooleanInput;
+
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  active?: WhereDataBooleanInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
@@ -34,7 +53,25 @@ export class OrderByDataFindAllPhonesInput
   implements OrderByDataFindAllPhonesDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
+  fullnumber?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  countryCode?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  areaCode?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  number?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  status?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  default?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  active?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

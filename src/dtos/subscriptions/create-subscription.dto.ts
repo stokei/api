@@ -4,5 +4,6 @@ export interface CreateSubscriptionDTO {
   automaticRenew?: boolean;
   startAt?: string;
   endAt?: string;
+  app: string;
   createdBy: string;
 }

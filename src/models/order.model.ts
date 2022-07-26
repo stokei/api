@@ -8,11 +8,11 @@ import { OrderCreatedEvent } from '@/events/implements/orders/order-created.even
 export interface IOrderModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly project: string;
+  readonly app: string;
   readonly cart: string;
   readonly customer: string;
-  readonly salesComissionPercentage: number;
-  readonly salesComissionAmount: number;
+  readonly applicationFeePercentage: number;
+  readonly applicationFeeAmount: number;
   readonly currency: string;
   readonly amount: number;
   readonly discountAmount: number;
@@ -34,11 +34,11 @@ export interface IOrderModelData {
 
 export class OrderModel extends AggregateRoot {
   readonly id: string;
-  readonly project: string;
+  readonly app: string;
   readonly cart: string;
   readonly customer: string;
-  readonly salesComissionPercentage: number;
-  readonly salesComissionAmount: number;
+  readonly applicationFeePercentage: number;
+  readonly applicationFeeAmount: number;
   readonly currency: string;
   readonly amount: number;
   readonly discountAmount: number;
@@ -64,11 +64,11 @@ export class OrderModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.ORDERS,
       id: data._id?.toString() || data.id
     });
-    this.project = data.project;
+    this.app = data.app;
     this.cart = data.cart;
     this.customer = data.customer;
-    this.salesComissionPercentage = data.salesComissionPercentage;
-    this.salesComissionAmount = data.salesComissionAmount;
+    this.applicationFeePercentage = data.applicationFeePercentage;
+    this.applicationFeeAmount = data.applicationFeeAmount;
     this.currency = data.currency;
     this.amount = data.amount;
     this.discountAmount = data.discountAmount;
@@ -84,6 +84,7 @@ export class OrderModel extends AggregateRoot {
     this.parcialRefundedAt = convertToISODateString(data.parcialRefundedAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
   }

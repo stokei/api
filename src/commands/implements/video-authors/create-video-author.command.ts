@@ -7,11 +7,13 @@ export class CreateVideoAuthorCommand
 {
   video: string;
   author: string;
+  app: string;
   createdBy: string;
 
   constructor(data: CreateVideoAuthorDTO) {
     this.video = data.video;
     this.author = data.author;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

@@ -1,6 +1,7 @@
 import { AccessesLoader } from './accesses.loader';
 import { AccountsLoader } from './accounts.loader';
 import { AddressesLoader } from './addresses.loader';
+import { AppsLoader } from './apps.loader';
 import { CartItemsLoader } from './cart-items.loader';
 import { ClassroomInstructorsLoader } from './classroom-instructors.loader';
 import { ClassroomModulesLoader } from './classroom-modules.loader';
@@ -14,7 +15,6 @@ import { CurrenciesLoader } from './currencies.loader';
 import { DomainsLoader } from './domains.loader';
 import { ImagesLoader } from './images.loader';
 import { LanguagesLoader } from './languages.loader';
-import { ModuleVideosLoader } from './module-videos.loader';
 import { ModulesLoader } from './modules.loader';
 import { OrderItemsLoader } from './order-items.loader';
 import { OrdersLoader } from './orders.loader';
@@ -24,7 +24,6 @@ import { PhonesLoader } from './phones.loader';
 import { PlansLoader } from './plans.loader';
 import { PricesLoader } from './prices.loader';
 import { ProductsLoader } from './products.loader';
-import { ProjectsLoader } from './projects.loader';
 import { SubscriptionsLoader } from './subscriptions.loader';
 import { VideoAuthorsLoader } from './video-authors.loader';
 import { VideosLoader } from './videos.loader';
@@ -32,7 +31,7 @@ import { VideosLoader } from './videos.loader';
 export const Loaders = [
   AccountsLoader,
   AccessesLoader,
-  ProjectsLoader,
+  AppsLoader,
   DomainsLoader,
   CurrenciesLoader,
   LanguagesLoader,
@@ -49,7 +48,6 @@ export const Loaders = [
   VideosLoader,
   VideoAuthorsLoader,
   ModulesLoader,
-  ModuleVideosLoader,
   CoursesLoader,
   CourseInstructorsLoader,
   CourseStudentsLoader,

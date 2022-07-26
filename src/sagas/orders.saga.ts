@@ -23,9 +23,6 @@ export class OrdersSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [OrderCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [OrderCreatedEvent] Saga event orderCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)

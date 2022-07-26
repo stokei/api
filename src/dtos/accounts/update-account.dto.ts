@@ -1,5 +1,6 @@
 export interface UpdateAccountDataDTO {
   updatedBy: string;
+  app: string;
   name?: string;
 }
 

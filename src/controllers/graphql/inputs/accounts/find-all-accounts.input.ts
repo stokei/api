@@ -18,7 +18,7 @@ class WhereDataFindAllAccountsDataInput implements WhereDataFindAllAccountsDTO {
   ids?: string[];
 
   @Field(() => WhereDataStringInput, { nullable: true })
-  parent?: WhereDataStringInput;
+  app?: WhereDataStringInput;
 
   @Field({ nullable: true })
   firstname?: WhereDataSearchInput;

@@ -26,9 +26,6 @@ export class ClassroomStudentsSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [ClassroomStudentCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [ClassroomStudentCreatedEvent] Saga event classroomStudentCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -49,9 +46,6 @@ export class ClassroomStudentsSagas {
       ofType(ClassroomStudentRemovedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [ClassroomStudentRemovedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [ClassroomStudentRemovedEvent] Saga event classroomStudentRemoved:' +
             JSON.stringify(

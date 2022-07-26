@@ -24,9 +24,6 @@ export class ImagesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [ImageCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [ImageCreatedEvent] Saga event imageCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -45,9 +42,6 @@ export class ImagesSagas {
       ofType(ImageRemovedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [ImageRemovedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [ImageRemovedEvent] Saga event imageRemoved:' +
             JSON.stringify(

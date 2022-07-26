@@ -1,5 +1,6 @@
 export interface UpdateAddressDataDTO {
   updatedBy: string;
+  app: string;
   default?: boolean;
   street?: string;
   complement?: string;

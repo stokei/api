@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
+  WhereDataBooleanInput,
   WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
@@ -22,6 +23,15 @@ class WhereDataFindAllProductsDataInput implements WhereDataFindAllProductsDTO {
   @Field(() => WhereDataSearchInput, { nullable: true })
   name?: WhereDataSearchInput;
 
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  description?: WhereDataSearchInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  app?: WhereDataStringInput;
+
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  checkoutVisible?: WhereDataBooleanInput;
+
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
@@ -35,6 +45,30 @@ export class OrderByDataFindAllProductsInput
 {
   @Field(() => OrderBy, { nullable: true })
   name?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  description?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  app?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  externalProduct?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  checkoutVisible?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  avatar?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  active?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  activatedAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  deactivatedAt?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

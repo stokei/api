@@ -3,8 +3,8 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class CreatePaymentInput {
   @Field()
-  parent: string;
+  order: string;
 
   @Field()
-  name: string;
+  paymentMethod: string;
 }

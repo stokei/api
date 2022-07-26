@@ -1,11 +1,12 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
-  WhereDataSearchInput,
+  WhereDataBooleanInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
 
+import { PaymentStatus } from '@/controllers/graphql/enums/payment-status.enum';
 import {
   OrderByDataFindAllPaymentsDTO,
   WhereDataFindAllPaymentsDTO
@@ -17,10 +18,25 @@ class WhereDataFindAllPaymentsDataInput implements WhereDataFindAllPaymentsDTO {
   ids?: string[];
 
   @Field(() => WhereDataStringInput, { nullable: true })
-  parent?: WhereDataStringInput;
+  customer?: WhereDataStringInput;
 
-  @Field(() => WhereDataSearchInput, { nullable: true })
-  name?: WhereDataSearchInput;
+  @Field(() => WhereDataStringInput, { nullable: true })
+  order?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  externalPayment?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  paymentMethod?: WhereDataStringInput;
+
+  @Field(() => PaymentStatus, { nullable: true })
+  status?: PaymentStatus;
+
+  @Field(() => PaymentStatus, { nullable: true })
+  oldStatus?: PaymentStatus;
+
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  active?: WhereDataBooleanInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
@@ -34,7 +50,31 @@ export class OrderByDataFindAllPaymentsInput
   implements OrderByDataFindAllPaymentsDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
+  amount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  status?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  oldStatus?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  active?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  paidAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  canceledAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  paymentErrorAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  totalRefundedAt?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  parcialRefundedAt?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

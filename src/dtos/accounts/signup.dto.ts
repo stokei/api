@@ -1,5 +1,5 @@
 export interface SignUpDTO {
-  parent: string;
+  app: string;
   firstname: string;
   lastname: string;
   email: string;

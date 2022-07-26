@@ -5,7 +5,6 @@ import { PriceType } from '@/enums/price-type.enum';
 import { RecurringType } from '@/enums/recurring-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { OrderItemCreatedEvent } from '@/events/implements/order-items/order-item-created.event';
-import { OrderItemRemovedEvent } from '@/events/implements/order-items/order-item-removed.event';
 
 export interface IOrderItemModelData {
   readonly id?: string;
@@ -24,6 +23,7 @@ export interface IOrderItemModelData {
   readonly recurringIntervalType: RecurringType;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
 }
@@ -44,6 +44,7 @@ export class OrderItemModel extends AggregateRoot {
   readonly recurringIntervalType: RecurringType;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
   constructor(data: IOrderItemModelData) {
@@ -68,6 +69,7 @@ export class OrderItemModel extends AggregateRoot {
     this.recurringIntervalType = data.recurringIntervalType;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
   }
@@ -77,17 +79,6 @@ export class OrderItemModel extends AggregateRoot {
       this.apply(
         new OrderItemCreatedEvent({
           createdBy,
-          orderItem: this
-        })
-      );
-    }
-  }
-
-  removedOrderItem({ removedBy }: { removedBy: string }) {
-    if (this.id) {
-      this.apply(
-        new OrderItemRemovedEvent({
-          removedBy,
           orderItem: this
         })
       );

@@ -1,8 +1,9 @@
 import { AccessEventsHandlers } from './accesses';
 import { AccountEventsHandlers } from './accounts';
 import { AddressEventsHandlers } from './addresses';
-import { CartEventsHandlers } from './carts';
+import { AppEventsHandlers } from './apps';
 import { CartItemEventsHandlers } from './cart-items';
+import { CartEventsHandlers } from './carts';
 import { ClassroomInstructorEventsHandlers } from './classroom-instructors';
 import { ClassroomModuleEventsHandlers } from './classroom-modules';
 import { ClassroomStudentEventsHandlers } from './classroom-students';
@@ -15,7 +16,6 @@ import { CurrencyEventsHandlers } from './currencies';
 import { DomainEventsHandlers } from './domains';
 import { ImageEventsHandlers } from './images';
 import { LanguageEventsHandlers } from './languages';
-import { ModuleVideoEventsHandlers } from './module-videos';
 import { ModuleEventsHandlers } from './modules';
 import { OrderItemEventsHandlers } from './order-items';
 import { OrderEventsHandlers } from './orders';
@@ -25,7 +25,6 @@ import { PhoneEventsHandlers } from './phones';
 import { PlanEventsHandlers } from './plans';
 import { PriceEventsHandlers } from './prices';
 import { ProductEventsHandlers } from './products';
-import { ProjectEventsHandlers } from './projects';
 import { SubscriptionEventsHandlers } from './subscriptions';
 import { VideoAuthorEventsHandlers } from './video-authors';
 import { VideoEventsHandlers } from './videos';
@@ -33,7 +32,7 @@ import { VideoEventsHandlers } from './videos';
 export const EventsHandlers = [
   ...AccountEventsHandlers,
   ...AccessEventsHandlers,
-  ...ProjectEventsHandlers,
+  ...AppEventsHandlers,
   ...DomainEventsHandlers,
   ...CurrencyEventsHandlers,
   ...LanguageEventsHandlers,
@@ -51,7 +50,6 @@ export const EventsHandlers = [
   ...VideoEventsHandlers,
   ...VideoAuthorEventsHandlers,
   ...ModuleEventsHandlers,
-  ...ModuleVideoEventsHandlers,
   ...CourseEventsHandlers,
   ...CourseInstructorEventsHandlers,
   ...CourseStudentEventsHandlers,

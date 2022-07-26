@@ -7,7 +7,7 @@ import {
 
 export interface WhereDataFindAllLanguagesDTO {
   ids?: string[];
-  parent?: IWhereData;
+  active?: IWhereData<boolean>;
   name?: IWhereDataSearch;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
@@ -17,6 +17,7 @@ export type IKeysWhereDataFindAllLanguagesDTO =
 
 export interface OrderByDataFindAllLanguagesDTO {
   name?: IOrderBy;
+  active?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

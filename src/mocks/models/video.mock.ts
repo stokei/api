@@ -10,6 +10,7 @@ export class VideoModelMock extends VideoModel {
       _id: nanoid(),
       name: data?.name ?? 'Video Name',
       slug: data?.slug ?? 'video-name',
+      parent: data?.parent ?? 'anyParent',
       path: data?.path ?? '/videos/any_video',
       description: data?.description ?? null,
       poster: data?.poster ?? null,
@@ -18,6 +19,7 @@ export class VideoModelMock extends VideoModel {
       active: data?.active ?? true,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
+      app: data?.app ?? 'apps.anyApp',
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
       updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });

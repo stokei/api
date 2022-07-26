@@ -6,5 +6,5 @@ export class CreatePaymentMethodInput {
   parent: string;
 
   @Field()
-  name: string;
+  creditCardHash: string;
 }

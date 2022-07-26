@@ -3,5 +3,6 @@ export interface CreateClassroomDTO {
   parent: string;
   description?: string;
   hasAccessToAllModules?: boolean;
+  app: string;
   createdBy: string;
 }

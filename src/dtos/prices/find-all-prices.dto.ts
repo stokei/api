@@ -8,10 +8,10 @@ export interface WhereDataFindAllPricesDTO {
   ids?: string[];
   parent?: IWhereData;
   default?: IWhereData<boolean>;
-  type?: IWhereData<PriceType>;
-  inventoryType?: IWhereData<InventoryType>;
+  type?: PriceType;
+  inventoryType?: InventoryType;
   recurringIntervalCount?: IWhereData<number>;
-  recurringIntervalType?: IWhereData<RecurringType>;
+  recurringIntervalType?: RecurringType;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

@@ -7,11 +7,13 @@ export class CreateClassroomStudentCommand
 {
   student: string;
   classroom: string;
+  app: string;
   createdBy: string;
 
   constructor(data: CreateClassroomStudentDTO) {
     this.student = data.student;
     this.classroom = data.classroom;
+    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

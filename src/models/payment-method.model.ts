@@ -13,12 +13,13 @@ export interface IPaymentMethodModelData {
   readonly parent: string;
   readonly type: PaymentMethodType;
   readonly provider: PaymentMethodProvider;
-  readonly externalPaymentMethodId: string;
+  readonly externalPaymentMethod: string;
   readonly active: boolean;
   readonly activatedAt?: Date | string;
   readonly deactivatedAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
 }
@@ -28,12 +29,13 @@ export class PaymentMethodModel extends AggregateRoot {
   readonly parent: string;
   readonly type: PaymentMethodType;
   readonly provider: PaymentMethodProvider;
-  readonly externalPaymentMethodId: string;
+  readonly externalPaymentMethod: string;
   readonly active: boolean;
   readonly activatedAt?: string;
   readonly deactivatedAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
+  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
   constructor(data: IPaymentMethodModelData) {
@@ -46,12 +48,13 @@ export class PaymentMethodModel extends AggregateRoot {
     });
     this.type = data.type;
     this.provider = data.provider;
-    this.externalPaymentMethodId = data.externalPaymentMethodId;
+    this.externalPaymentMethod = data.externalPaymentMethod;
     this.active = data.active;
     this.activatedAt = convertToISODateString(data.activatedAt);
     this.deactivatedAt = convertToISODateString(data.deactivatedAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
+    this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
   }

@@ -24,9 +24,6 @@ export class PhonesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [PhoneCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [PhoneCreatedEvent] Saga event phoneCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -45,9 +42,6 @@ export class PhonesSagas {
       ofType(PhoneRemovedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [PhoneRemovedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [PhoneRemovedEvent] Saga event phoneRemoved:' +
             JSON.stringify(

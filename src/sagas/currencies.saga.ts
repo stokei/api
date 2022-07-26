@@ -25,9 +25,6 @@ export class CurrenciesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [CurrencyCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [CurrencyCreatedEvent] Saga event currencyCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -47,9 +44,6 @@ export class CurrenciesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [CurrencyRemovedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [CurrencyRemovedEvent] Saga event currencyRemoved:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -68,9 +62,6 @@ export class CurrenciesSagas {
       ofType(CurrencyUpdatedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [CurrencyUpdatedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [CurrencyUpdatedEvent] Saga event currencyUpdated:' +
             JSON.stringify(

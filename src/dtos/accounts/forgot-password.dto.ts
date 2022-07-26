@@ -1,4 +1,4 @@
 export interface ForgotPasswordDTO {
   email: string;
-  parent: string;
+  app: string;
 }

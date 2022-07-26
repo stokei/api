@@ -4,5 +4,6 @@ export interface CreatePhoneDTO {
   areaCode: string;
   number: string;
   default?: boolean;
+  app: string;
   createdBy: string;
 }

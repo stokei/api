@@ -2,8 +2,11 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateDataSubscriptionInput {
-  @Field()
-  name: string;
+  @Field(() => Boolean, { nullable: true })
+  automaticRenew?: boolean;
+
+  @Field({ nullable: true })
+  defaultPaymentMethod?: string;
 }
 
 @InputType()

@@ -3,8 +3,11 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class CreateLanguageInput {
   @Field()
-  parent: string;
+  id: string;
 
   @Field()
   name: string;
+
+  @Field({ nullable: true })
+  icon?: string;
 }

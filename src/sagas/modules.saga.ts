@@ -25,9 +25,6 @@ export class ModulesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [ModuleCreatedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [ModuleCreatedEvent] Saga event moduleCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -47,9 +44,6 @@ export class ModulesSagas {
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [ModuleRemovedEvent] Saga for example send a email'
-        );
-        this.logger.log(
           'Inside [ModuleRemovedEvent] Saga event moduleRemoved:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
@@ -68,9 +62,6 @@ export class ModulesSagas {
       ofType(ModuleUpdatedEvent),
       delay(500),
       map((event) => {
-        this.logger.log(
-          'Inside [ModuleUpdatedEvent] Saga for example send a email'
-        );
         this.logger.log(
           'Inside [ModuleUpdatedEvent] Saga event moduleUpdated:' +
             JSON.stringify(

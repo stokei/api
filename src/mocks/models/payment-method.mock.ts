@@ -15,13 +15,14 @@ export class PaymentMethodModelMock extends PaymentMethodModel {
       parent: data?.parent ?? 'anyParent',
       type: data?.type ?? PaymentMethodType.CREDIT_CARD,
       provider: data?.provider ?? PaymentMethodProvider.STRIPE,
-      externalPaymentMethodId:
-        data?.externalPaymentMethodId ?? 'anyExternalPaymentMethodId',
+      externalPaymentMethod:
+        data?.externalPaymentMethod ?? 'anyExternalPaymentMethodId',
       active: data?.active ?? true,
       activatedAt: data?.activatedAt ?? null,
       deactivatedAt: data?.deactivatedAt ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
+      app: data?.app ?? 'apps.anyApp',
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
       updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });

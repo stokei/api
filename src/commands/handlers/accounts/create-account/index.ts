@@ -39,8 +39,8 @@ export class CreateAccountCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data.parent) {
-      throw new ParamNotFoundException<CreateAccountCommandKeys>('parent');
+    if (!data.app) {
+      throw new ParamNotFoundException<CreateAccountCommandKeys>('app');
     }
     if (!data.firstname) {
       throw new ParamNotFoundException<CreateAccountCommandKeys>('firstname');
@@ -61,7 +61,7 @@ export class CreateAccountCommandHandler
     let accountExists = await this.existsAccountsRepository.execute({
       where: {
         email: data.email,
-        parent: data.parent
+        app: data.app
       }
     });
     if (accountExists) {
@@ -101,7 +101,7 @@ export class CreateAccountCommandHandler
     return cleanObject({
       firstname: cleanValue(command?.firstname),
       lastname: cleanValue(command?.lastname),
-      parent: cleanValue(command?.parent),
+      app: cleanValue(command?.app),
       email: cleanValue(command?.email),
       password: cleanValue(command?.password)
     });

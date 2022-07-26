@@ -9,7 +9,6 @@ export class PlanModelMock extends PlanModel {
   constructor(data?: Partial<IPlanModelData>) {
     super({
       _id: nanoid(),
-      parent: data?.parent ?? 'anyParent',
       name: data?.name ?? 'Plan Name',
       type: data?.type ?? PlanType.BASIC,
       checkoutVisible: data?.checkoutVisible ?? true,

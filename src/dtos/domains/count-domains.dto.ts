@@ -6,11 +6,7 @@ export interface CountDomainsWhereDTO {
   ids?: string[];
   parent?: IWhereData;
   name?: IWhereDataSearch;
-  default?: IWhereData<boolean>;
   active?: IWhereData<boolean>;
-  fulldomain?: IWhereDataSearch;
-  extension?: IWhereData;
-  language?: IWhereData;
   status?: IWhereData<DomainStatus>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

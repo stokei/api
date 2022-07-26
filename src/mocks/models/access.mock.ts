@@ -15,6 +15,7 @@ export class AccessModelMock extends AccessModel {
       canceledAt: data?.canceledAt ?? convertToISODateString(Date.now()),
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
+      app: data?.app ?? 'apps.anyApp',
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
       updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });

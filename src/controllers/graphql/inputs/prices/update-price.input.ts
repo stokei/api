@@ -1,9 +1,12 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateDataPriceInput {
-  @Field()
-  name: string;
+  @Field(() => Boolean, { nullable: true })
+  default?: boolean;
+
+  @Field(() => Int, { nullable: true })
+  quantity?: number;
 }
 
 @InputType()

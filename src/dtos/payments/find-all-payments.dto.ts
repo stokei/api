@@ -6,10 +6,10 @@ export interface WhereDataFindAllPaymentsDTO {
   ids?: string[];
   customer?: IWhereData<string>;
   order?: IWhereData<string>;
-  externalPaymentId?: IWhereData<string>;
+  externalPayment?: IWhereData<string>;
   paymentMethod?: IWhereData<string>;
-  status?: IWhereData<PaymentStatus>;
-  oldStatus?: IWhereData<PaymentStatus>;
+  status?: PaymentStatus;
+  oldStatus?: PaymentStatus;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
@@ -19,8 +19,6 @@ export type IKeysWhereDataFindAllPaymentsDTO =
 
 export interface OrderByDataFindAllPaymentsDTO {
   amount?: IOrderBy;
-  externalPaymentId?: IOrderBy;
-  paymentMethod?: IOrderBy;
   status?: IOrderBy;
   oldStatus?: IOrderBy;
   active?: IOrderBy;

@@ -10,8 +10,8 @@ export interface WhereDataFindAllProductsDTO {
   parent?: IWhereData;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
-  project: IWhereData;
-  checkoutVisible: IWhereData<boolean>;
+  app?: IWhereData;
+  checkoutVisible?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -21,8 +21,8 @@ export type IKeysWhereDataFindAllProductsDTO =
 export interface OrderByDataFindAllProductsDTO {
   name?: IOrderBy;
   description?: IOrderBy;
-  project?: IOrderBy;
-  externalProductId?: IOrderBy;
+  app?: IOrderBy;
+  externalProduct?: IOrderBy;
   checkoutVisible?: IOrderBy;
   avatar?: IOrderBy;
   active?: IOrderBy;

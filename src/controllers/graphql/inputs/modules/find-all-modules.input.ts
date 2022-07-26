@@ -22,6 +22,9 @@ class WhereDataFindAllModulesDataInput implements WhereDataFindAllModulesDTO {
   @Field(() => WhereDataSearchInput, { nullable: true })
   name?: WhereDataSearchInput;
 
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  description?: WhereDataSearchInput;
+
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 

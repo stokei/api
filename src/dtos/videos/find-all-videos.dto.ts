@@ -10,10 +10,11 @@ import { VideoStatus } from '@/enums/video-status.enum';
 export interface WhereDataFindAllVideosDTO {
   ids?: string[];
   app?: IWhereData;
+  parent?: IWhereData;
   name?: IWhereDataSearch;
   slug?: IWhereData<string>;
-  description?: IWhereData<string>;
-  status?: IWhereData<VideoStatus>;
+  description?: IWhereDataSearch;
+  status?: VideoStatus;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
@@ -23,7 +24,6 @@ export type IKeysWhereDataFindAllVideosDTO = keyof WhereDataFindAllVideosDTO;
 export interface OrderByDataFindAllVideosDTO {
   name?: IOrderBy;
   slug?: IOrderBy;
-  description?: IOrderBy;
   duration?: IOrderBy;
   status?: IOrderBy;
   active?: IOrderBy;

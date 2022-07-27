@@ -5,6 +5,7 @@ export interface CountCartItemsWhereDTO {
   app?: IWhereData;
   parent?: IWhereData;
   price?: IWhereData;
+  quantity?: IWhereData<number>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

@@ -5,6 +5,7 @@ export interface WhereDataFindAllCartItemsDTO {
   app?: IWhereData;
   parent?: IWhereData;
   price?: IWhereData;
+  quantity?: IWhereData<number>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -12,6 +13,7 @@ export type IKeysWhereDataFindAllCartItemsDTO =
   keyof WhereDataFindAllCartItemsDTO;
 
 export interface OrderByDataFindAllCartItemsDTO {
+  quantity?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

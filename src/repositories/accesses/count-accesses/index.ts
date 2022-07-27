@@ -1,16 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import {
-  IBaseRepository,
-  IOperator,
-  IWhere,
-  PrismaMapper
-} from '@stokei/nestjs';
+import { IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
-import {
-  CountAccessesDTO,
-  CountAccessesWhereDTO
-} from '@/dtos/accesses/count-accesses.dto';
+import { CountAccessesDTO } from '@/dtos/accesses/count-accesses.dto';
+import { AccessMapper } from '@/mappers/accesses';
 
 @Injectable()
 export class CountAccessesRepository
@@ -19,28 +12,8 @@ export class CountAccessesRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute({ where }: CountAccessesDTO): Promise<number> {
-    const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return await this.model.access.count({
-      where: prismaMapper.toWhere<IWhere<CountAccessesWhereDTO>>({
-        AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-        OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-        NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
-      })
+      where: new AccessMapper().toWhereFindAllPrisma(where)
     });
   }
 }

@@ -5,10 +5,11 @@ import { VideoStatus } from '@/enums/video-status.enum';
 export interface CountVideosWhereDTO {
   ids?: string[];
   app?: IWhereData;
+  parent?: IWhereData;
   name?: IWhereDataSearch;
   slug?: IWhereData<string>;
   description?: IWhereData<string>;
-  status?: IWhereData<VideoStatus>;
+  status?: VideoStatus;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

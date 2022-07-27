@@ -13,7 +13,7 @@ export class UpdateDomainRepository
   async execute({ data, where }: UpdateDomainDTO): Promise<boolean> {
     const updated = await this.model.domain.update({
       where: {
-        id: where?.domainId
+        id: where?.domain
       },
       data
     });

@@ -44,8 +44,11 @@ export class CreateAppCommandHandler
 
   private clearData(command: CreateAppCommand): CreateAppCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      parent: cleanValue(command?.parent),
+      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      currency: cleanValue(command?.currency)
     });
   }
 }

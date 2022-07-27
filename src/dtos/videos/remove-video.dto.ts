@@ -1,7 +1,7 @@
 export interface RemoveVideoWhereDTO {
   removedBy: string;
   app: string;
-  videoId: string;
+  video: string;
 }
 
 export interface RemoveVideoDTO {

@@ -7,10 +7,8 @@ export class CreateProductCommand implements ICommand, CreateProductDTO {
   name: string;
   description?: string;
   app: string;
-  externalProduct: string;
   checkoutVisible: boolean;
   avatar?: string;
-  app: string;
   createdBy: string;
 
   constructor(data: CreateProductDTO) {
@@ -18,7 +16,6 @@ export class CreateProductCommand implements ICommand, CreateProductDTO {
     this.name = data.name;
     this.description = data.description;
     this.app = data.app;
-    this.externalProduct = data.externalProduct;
     this.checkoutVisible = data.checkoutVisible;
     this.avatar = data.avatar;
     this.app = data.app;

@@ -10,8 +10,6 @@ import {
 import { FindLanguageByIdRepository } from '@/repositories/languages/find-language-by-id';
 import { RemoveLanguageRepository } from '@/repositories/languages/remove-language';
 
-type RemoveLanguageCommandKeys = keyof RemoveLanguageCommand;
-
 @CommandHandler(RemoveLanguageCommand)
 export class RemoveLanguageCommandHandler
   implements ICommandHandler<RemoveLanguageCommand>
@@ -30,7 +28,7 @@ export class RemoveLanguageCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const languageId = splitServiceId(data.where?.languageId)?.id;
+    const languageId = splitServiceId(data.where?.language)?.id;
     if (!languageId) {
       throw new ParamNotFoundException('languageId');
     }
@@ -43,7 +41,7 @@ export class RemoveLanguageCommandHandler
     const removed = await this.removeLanguageRepository.execute({
       where: {
         ...data.where,
-        languageId
+        language: languageId
       }
     });
     if (!removed) {
@@ -62,7 +60,8 @@ export class RemoveLanguageCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        languageId: cleanValue(command?.where?.languageId)
+        app: cleanValue(command?.where?.app),
+        language: cleanValue(command?.where?.language)
       })
     });
   }

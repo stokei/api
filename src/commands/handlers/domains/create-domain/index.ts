@@ -44,6 +44,8 @@ export class CreateDomainCommandHandler
 
   private clearData(command: CreateDomainCommand): CreateDomainCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
       parent: cleanValue(command?.parent)
     });

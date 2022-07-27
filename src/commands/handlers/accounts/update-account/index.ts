@@ -25,7 +25,7 @@ export class UpdateAccountCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const accountId = splitServiceId(data.where?.accountId)?.id;
+    const accountId = splitServiceId(data.where?.account)?.id;
     if (!accountId) {
       throw new ParamNotFoundException('accountId');
     }
@@ -39,7 +39,7 @@ export class UpdateAccountCommandHandler
       ...data,
       where: {
         ...data.where,
-        accountId
+        account: accountId
       }
     });
     if (!updated) {
@@ -64,7 +64,8 @@ export class UpdateAccountCommandHandler
   private clearData(command: UpdateAccountCommand): UpdateAccountCommand {
     return cleanObject({
       where: cleanObject({
-        accountId: cleanValue(command?.where?.accountId)
+        app: cleanValue(command?.where?.app),
+        account: cleanValue(command?.where?.account)
       }),
       data: cleanObject({
         name: cleanValue(command?.data?.name),

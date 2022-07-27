@@ -1,7 +1,7 @@
 export interface RemoveCourseWhereDTO {
   removedBy: string;
   app: string;
-  courseId: string;
+  course: string;
   parent: string;
 }
 

@@ -1,7 +1,7 @@
 export interface RemoveCartItemWhereDTO {
   removedBy: string;
   app: string;
-  cartItemId: string;
+  cartItem: string;
 }
 
 export interface RemoveCartItemDTO {

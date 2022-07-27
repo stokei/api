@@ -2,6 +2,7 @@ import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
 
 export interface WhereDataFindAllCartItemsDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   price?: IWhereData;
   updatedBy?: IWhereData;

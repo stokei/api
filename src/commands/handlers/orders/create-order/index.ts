@@ -25,8 +25,14 @@ export class CreateOrderCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreateOrderCommandKeys>('parent');
+    if (!data?.app) {
+      throw new ParamNotFoundException<CreateOrderCommandKeys>('app');
+    }
+    if (!data?.cart) {
+      throw new ParamNotFoundException<CreateOrderCommandKeys>('cart');
+    }
+    if (!data?.customer) {
+      throw new ParamNotFoundException<CreateOrderCommandKeys>('customer');
     }
 
     const orderCreated = await this.createOrderRepository.execute(data);
@@ -44,8 +50,10 @@ export class CreateOrderCommandHandler
 
   private clearData(command: CreateOrderCommand): CreateOrderCommand {
     return cleanObject({
-      name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      app: cleanValue(command?.app),
+      cart: cleanValue(command?.cart),
+      customer: cleanValue(command?.customer),
+      createdBy: cleanValue(command?.createdBy)
     });
   }
 }

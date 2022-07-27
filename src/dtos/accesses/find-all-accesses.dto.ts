@@ -2,6 +2,7 @@ import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
 
 export interface WhereDataFindAllAccessesDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;

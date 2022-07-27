@@ -1,7 +1,7 @@
 export interface RemovePaymentMethodWhereDTO {
   removedBy: string;
   app: string;
-  paymentMethodId: string;
+  paymentMethod: string;
 }
 
 export interface RemovePaymentMethodDTO {

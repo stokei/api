@@ -10,8 +10,6 @@ import {
 import { FindVideoByIdRepository } from '@/repositories/videos/find-video-by-id';
 import { UpdateVideoRepository } from '@/repositories/videos/update-video';
 
-type UpdateVideoCommandKeys = keyof UpdateVideoCommand;
-
 @CommandHandler(UpdateVideoCommand)
 export class UpdateVideoCommandHandler
   implements ICommandHandler<UpdateVideoCommand>
@@ -27,7 +25,7 @@ export class UpdateVideoCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const videoId = splitServiceId(data.where?.videoId)?.id;
+    const videoId = splitServiceId(data.where?.video)?.id;
     if (!videoId) {
       throw new ParamNotFoundException('videoId');
     }
@@ -41,7 +39,7 @@ export class UpdateVideoCommandHandler
       ...data,
       where: {
         ...data.where,
-        videoId
+        video: videoId
       }
     });
     if (!updated) {
@@ -64,10 +62,13 @@ export class UpdateVideoCommandHandler
   private clearData(command: UpdateVideoCommand): UpdateVideoCommand {
     return cleanObject({
       where: cleanObject({
-        videoId: cleanValue(command?.where?.videoId)
+        app: cleanValue(command?.where?.app),
+        video: cleanValue(command?.where?.video)
       }),
       data: cleanObject({
         name: cleanValue(command?.data?.name),
+        description: cleanValue(command?.data?.description),
+        poster: cleanValue(command?.data?.poster),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

@@ -50,7 +50,9 @@ export class CreatePaymentMethodCommandHandler
     command: CreatePaymentMethodCommand
   ): CreatePaymentMethodCommand {
     return cleanObject({
-      name: cleanValue(command?.name),
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
+      creditCardHash: cleanValue(command?.creditCardHash),
       parent: cleanValue(command?.parent)
     });
   }

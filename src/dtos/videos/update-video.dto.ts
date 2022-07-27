@@ -3,11 +3,11 @@ export interface UpdateVideoDataDTO {
   description?: string;
   poster?: string;
   updatedBy: string;
-  app: string;
 }
 
 export interface UpdateVideoWhereDTO {
-  videoId: string;
+  app: string;
+  video: string;
 }
 
 export interface UpdateVideoDTO {

@@ -2,6 +2,7 @@ import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 
 export interface CountCourseStudentsWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   course?: IWhereData;
   student?: IWhereData;
   updatedBy?: IWhereData;

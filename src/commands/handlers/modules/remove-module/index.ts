@@ -10,8 +10,6 @@ import {
 import { FindModuleByIdRepository } from '@/repositories/modules/find-module-by-id';
 import { RemoveModuleRepository } from '@/repositories/modules/remove-module';
 
-type RemoveModuleCommandKeys = keyof RemoveModuleCommand;
-
 @CommandHandler(RemoveModuleCommand)
 export class RemoveModuleCommandHandler
   implements ICommandHandler<RemoveModuleCommand>
@@ -30,7 +28,7 @@ export class RemoveModuleCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const moduleId = splitServiceId(data.where?.moduleId)?.id;
+    const moduleId = splitServiceId(data.where?.module)?.id;
     if (!moduleId) {
       throw new ParamNotFoundException('moduleId');
     }
@@ -43,7 +41,7 @@ export class RemoveModuleCommandHandler
     const removed = await this.removeModuleRepository.execute({
       where: {
         ...data.where,
-        moduleId
+        module: moduleId
       }
     });
     if (!removed) {
@@ -62,7 +60,8 @@ export class RemoveModuleCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        moduleId: cleanValue(command?.where?.moduleId)
+        app: cleanValue(command?.where?.app),
+        module: cleanValue(command?.where?.module)
       })
     });
   }

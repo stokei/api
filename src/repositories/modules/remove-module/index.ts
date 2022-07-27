@@ -13,7 +13,7 @@ export class RemoveModuleRepository
   async execute({ where }: RemoveModuleDTO): Promise<boolean> {
     const removed = await this.model.module.delete({
       where: {
-        id: where?.moduleId
+        id: where?.module
       }
     });
     return !!removed;

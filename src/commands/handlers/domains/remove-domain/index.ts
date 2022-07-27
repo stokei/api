@@ -10,8 +10,6 @@ import {
 import { FindDomainByIdRepository } from '@/repositories/domains/find-domain-by-id';
 import { RemoveDomainRepository } from '@/repositories/domains/remove-domain';
 
-type RemoveDomainCommandKeys = keyof RemoveDomainCommand;
-
 @CommandHandler(RemoveDomainCommand)
 export class RemoveDomainCommandHandler
   implements ICommandHandler<RemoveDomainCommand>
@@ -30,7 +28,7 @@ export class RemoveDomainCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const domainId = splitServiceId(data.where?.domainId)?.id;
+    const domainId = splitServiceId(data.where?.domain)?.id;
     if (!domainId) {
       throw new ParamNotFoundException('domainId');
     }
@@ -43,7 +41,7 @@ export class RemoveDomainCommandHandler
     const removed = await this.removeDomainRepository.execute({
       where: {
         ...data.where,
-        domainId
+        domain: domainId
       }
     });
     if (!removed) {
@@ -62,7 +60,8 @@ export class RemoveDomainCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        domainId: cleanValue(command?.where?.domainId)
+        app: cleanValue(command?.where?.app),
+        domain: cleanValue(command?.where?.domain)
       })
     });
   }

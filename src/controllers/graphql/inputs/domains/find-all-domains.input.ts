@@ -25,19 +25,7 @@ class WhereDataFindAllDomainsDataInput implements WhereDataFindAllDomainsDTO {
   name?: WhereDataSearchInput;
 
   @Field(() => WhereDataBooleanInput, { nullable: true })
-  default?: WhereDataBooleanInput;
-
-  @Field(() => WhereDataBooleanInput, { nullable: true })
   active?: WhereDataBooleanInput;
-
-  @Field(() => WhereDataSearchInput, { nullable: true })
-  fulldomain?: WhereDataSearchInput;
-
-  @Field(() => WhereDataStringInput, { nullable: true })
-  extension?: WhereDataStringInput;
-
-  @Field(() => WhereDataStringInput, { nullable: true })
-  language?: WhereDataStringInput;
 
   @Field(() => DomainStatus, { nullable: true })
   status?: DomainStatus;
@@ -57,19 +45,7 @@ export class OrderByDataFindAllDomainsInput
   name?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
-  default?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
   active?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
-  fulldomain?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
-  extension?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
-  language?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   status?: OrderBy;

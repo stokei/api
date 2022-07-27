@@ -1,12 +1,12 @@
 export interface UpdateClassroomDataDTO {
   updatedBy: string;
-  app: string;
   name?: string;
   description?: string;
 }
 
 export interface UpdateClassroomWhereDTO {
-  classroomId: string;
+  app: string;
+  classroom: string;
 }
 
 export interface UpdateClassroomDTO {

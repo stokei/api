@@ -3,14 +3,12 @@ import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import { UpdateAppCommand } from '@/commands/implements/apps/update-app.command';
 import {
+  AppNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException,
-  AppNotFoundException
+  ParamNotFoundException
 } from '@/errors';
 import { FindAppByIdRepository } from '@/repositories/apps/find-app-by-id';
 import { UpdateAppRepository } from '@/repositories/apps/update-app';
-
-type UpdateAppCommandKeys = keyof UpdateAppCommand;
 
 @CommandHandler(UpdateAppCommand)
 export class UpdateAppCommandHandler
@@ -27,7 +25,7 @@ export class UpdateAppCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const appId = splitServiceId(data.where?.appId)?.id;
+    const appId = splitServiceId(data.where?.app)?.id;
     if (!appId) {
       throw new ParamNotFoundException('appId');
     }
@@ -41,7 +39,7 @@ export class UpdateAppCommandHandler
       ...data,
       where: {
         ...data.where,
-        appId
+        app: appId
       }
     });
     if (!updated) {
@@ -64,11 +62,16 @@ export class UpdateAppCommandHandler
   private clearData(command: UpdateAppCommand): UpdateAppCommand {
     return cleanObject({
       where: cleanObject({
-        appId: cleanValue(command?.where?.appId)
+        app: cleanValue(command?.where?.app)
       }),
       data: cleanObject({
         name: cleanValue(command?.data?.name),
-        updatedBy: cleanValue(command?.data?.updatedBy)
+        description: cleanValue(command?.data?.description),
+        avatar: cleanValue(command?.data?.avatar),
+        plan: cleanValue(command?.data?.plan),
+        favicon: cleanValue(command?.data?.favicon),
+        logo: cleanValue(command?.data?.logo),
+        updatedBy: cleanValue(command?.data?.name)
       })
     });
   }

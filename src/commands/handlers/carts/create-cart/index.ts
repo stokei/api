@@ -35,7 +35,8 @@ export class CreateCartCommandHandler
 
   private clearData(command: CreateCartCommand): CreateCartCommand {
     return cleanObject({
-      createdBy: cleanValue(command?.createdBy)
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app)
     });
   }
 }

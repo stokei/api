@@ -13,7 +13,7 @@ export class RemoveClassroomRepository
   async execute({ where }: RemoveClassroomDTO): Promise<boolean> {
     const removed = await this.model.classroom.delete({
       where: {
-        id: where?.classroomId
+        id: where?.classroom
       }
     });
     return !!removed;

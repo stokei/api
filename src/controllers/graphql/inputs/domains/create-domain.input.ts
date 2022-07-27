@@ -6,7 +6,7 @@ export class CreateDomainInput {
   parent: string;
 
   @Field()
-  fulldomain: string;
+  name: string;
 
   @Field(() => Boolean, { nullable: true })
   default?: boolean;

@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { RemoveClassroomInstructorCommand } from '@/commands/implements/classroom-instructors/remove-classroom-instructor.command';
 import {
@@ -7,18 +7,15 @@ import {
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
-import { FindClassroomInstructorByIdRepository } from '@/repositories/classroom-instructors/find-classroom-instructor-by-id';
+import { FindAllClassroomInstructorsRepository } from '@/repositories/classroom-instructors/find-all-classroom-instructors';
 import { RemoveClassroomInstructorRepository } from '@/repositories/classroom-instructors/remove-classroom-instructor';
-
-type RemoveClassroomInstructorCommandKeys =
-  keyof RemoveClassroomInstructorCommand;
 
 @CommandHandler(RemoveClassroomInstructorCommand)
 export class RemoveClassroomInstructorCommandHandler
   implements ICommandHandler<RemoveClassroomInstructorCommand>
 {
   constructor(
-    private readonly findClassroomInstructorByIdRepository: FindClassroomInstructorByIdRepository,
+    private readonly findAllClassroomInstructorsRepository: FindAllClassroomInstructorsRepository,
     private readonly removeClassroomInstructorRepository: RemoveClassroomInstructorRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -31,25 +28,39 @@ export class RemoveClassroomInstructorCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const classroomInstructorId = splitServiceId(
-      data.where?.classroomInstructorId
-    )?.id;
-    if (!classroomInstructorId) {
-      throw new ParamNotFoundException('classroomInstructorId');
+    const { classroom, instructor, app } = data.where || {};
+    if (!classroom) {
+      throw new ParamNotFoundException('classroomId');
+    }
+    if (!instructor) {
+      throw new ParamNotFoundException('instructorId');
     }
 
-    const classroomInstructor =
-      await this.findClassroomInstructorByIdRepository.execute(
-        classroomInstructorId
-      );
-    if (!classroomInstructor) {
+    const classroomInstructors =
+      await this.findAllClassroomInstructorsRepository.execute({
+        where: {
+          AND: {
+            app: {
+              equals: app
+            },
+            classroom: {
+              equals: classroom
+            },
+            instructor: {
+              equals: instructor
+            }
+          }
+        }
+      });
+    if (!classroomInstructors?.length) {
       throw new ClassroomInstructorNotFoundException();
     }
-
+    const classroomInstructor = classroomInstructors[0];
     const removed = await this.removeClassroomInstructorRepository.execute({
       where: {
         ...data.where,
-        classroomInstructorId
+        classroom,
+        instructor
       }
     });
     if (!removed) {
@@ -71,7 +82,9 @@ export class RemoveClassroomInstructorCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        classroomInstructorId: cleanValue(command?.where?.classroomInstructorId)
+        app: cleanValue(command?.where?.app),
+        classroom: cleanValue(command?.where?.classroom),
+        instructor: cleanValue(command?.where?.instructor)
       })
     });
   }

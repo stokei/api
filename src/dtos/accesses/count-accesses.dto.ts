@@ -2,6 +2,7 @@ import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 
 export interface CountAccessesWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;

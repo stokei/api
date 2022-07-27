@@ -1,6 +1,6 @@
 export interface RefreshAccessWhereDTO {
-  accessId: string;
-  accountId: string;
+  access: string;
+  account: string;
 }
 
 export interface RefreshAccessDTO {

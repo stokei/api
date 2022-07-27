@@ -10,8 +10,6 @@ import {
 import { FindCourseByIdRepository } from '@/repositories/courses/find-course-by-id';
 import { RemoveCourseRepository } from '@/repositories/courses/remove-course';
 
-type RemoveCourseCommandKeys = keyof RemoveCourseCommand;
-
 @CommandHandler(RemoveCourseCommand)
 export class RemoveCourseCommandHandler
   implements ICommandHandler<RemoveCourseCommand>
@@ -30,7 +28,7 @@ export class RemoveCourseCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const courseId = splitServiceId(data.where?.courseId)?.id;
+    const courseId = splitServiceId(data.where?.course)?.id;
     if (!courseId) {
       throw new ParamNotFoundException('courseId');
     }
@@ -43,7 +41,7 @@ export class RemoveCourseCommandHandler
     const removed = await this.removeCourseRepository.execute({
       where: {
         ...data.where,
-        courseId
+        course: courseId
       }
     });
     if (!removed) {
@@ -62,7 +60,9 @@ export class RemoveCourseCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        courseId: cleanValue(command?.where?.courseId)
+        app: cleanValue(command?.where?.app),
+        parent: cleanValue(command?.where?.parent),
+        course: cleanValue(command?.where?.course)
       })
     });
   }

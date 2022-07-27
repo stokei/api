@@ -2,6 +2,7 @@ import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 
 export interface CountVideoAuthorsWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   video?: IWhereData;
   author?: IWhereData;
   updatedBy?: IWhereData;

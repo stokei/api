@@ -13,7 +13,7 @@ export class RemoveImageRepository
   async execute({ where }: RemoveImageDTO): Promise<boolean> {
     const removed = await this.model.image.delete({
       where: {
-        id: where?.imageId
+        id: where?.image
       }
     });
     return !!removed;

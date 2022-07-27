@@ -32,7 +32,7 @@ export class RemoveImageController {
   ) {
     return this.removeImageService.execute({
       where: {
-        imageId,
+        image: imageId,
         removedBy: currentAccountId
       }
     });

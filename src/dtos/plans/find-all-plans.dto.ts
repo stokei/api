@@ -10,6 +10,7 @@ import { PlanType } from '@/enums/plan-type.enum';
 
 export interface WhereDataFindAllPlansDTO {
   ids?: string[];
+  app?: IWhereData;
   name?: IWhereDataSearch;
   type?: PlanType;
   checkoutVisible?: IWhereData<boolean>;

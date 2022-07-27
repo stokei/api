@@ -1,7 +1,7 @@
 export interface RemoveDomainWhereDTO {
   removedBy: string;
   app: string;
-  domainId: string;
+  domain: string;
 }
 
 export interface RemoveDomainDTO {

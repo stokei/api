@@ -13,7 +13,7 @@ export class RemoveAccessRepository
   async execute({ where }: RemoveAccessDTO): Promise<boolean> {
     const removed = await this.model.access.update({
       where: {
-        id: where?.accessId
+        id: where?.access
       },
       data: {
         active: false,

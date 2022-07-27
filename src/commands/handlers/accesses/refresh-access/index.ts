@@ -32,8 +32,8 @@ export class RefreshAccessCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const accessId = splitServiceId(data.where?.accessId)?.id;
-    const accountId = splitServiceId(data.where?.accountId)?.id;
+    const accessId = splitServiceId(data.where?.access)?.id;
+    const accountId = splitServiceId(data.where?.account)?.id;
     if (!accessId) {
       throw new ParamNotFoundException('accessId');
     }
@@ -79,8 +79,8 @@ export class RefreshAccessCommandHandler
   private clearData(command: RefreshAccessCommand): RefreshAccessCommand {
     return cleanObject({
       where: cleanObject({
-        accessId: cleanValue(command?.where?.accessId),
-        accountId: cleanValue(command?.where?.accountId)
+        access: cleanValue(command?.where?.access),
+        account: cleanValue(command?.where?.account)
       })
     });
   }

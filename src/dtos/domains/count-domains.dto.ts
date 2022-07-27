@@ -4,10 +4,11 @@ import { DomainStatus } from '@/enums/domain-status.enum';
 
 export interface CountDomainsWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   name?: IWhereDataSearch;
   active?: IWhereData<boolean>;
-  status?: IWhereData<DomainStatus>;
+  status?: DomainStatus;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

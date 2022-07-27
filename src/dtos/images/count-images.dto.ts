@@ -2,6 +2,7 @@ import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 
 export interface CountImagesWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueNumber,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { UpdateCurrencyCommand } from '@/commands/implements/currencies/update-currency.command';
 import {
@@ -9,8 +14,6 @@ import {
 } from '@/errors';
 import { FindCurrencyByIdRepository } from '@/repositories/currencies/find-currency-by-id';
 import { UpdateCurrencyRepository } from '@/repositories/currencies/update-currency';
-
-type UpdateCurrencyCommandKeys = keyof UpdateCurrencyCommand;
 
 @CommandHandler(UpdateCurrencyCommand)
 export class UpdateCurrencyCommandHandler
@@ -27,7 +30,7 @@ export class UpdateCurrencyCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const currencyId = splitServiceId(data.where?.currencyId)?.id;
+    const currencyId = splitServiceId(data.where?.currency)?.id;
     if (!currencyId) {
       throw new ParamNotFoundException('currencyId');
     }
@@ -41,7 +44,7 @@ export class UpdateCurrencyCommandHandler
       ...data,
       where: {
         ...data.where,
-        currencyId
+        currency: currencyId
       }
     });
     if (!updated) {
@@ -66,10 +69,13 @@ export class UpdateCurrencyCommandHandler
   private clearData(command: UpdateCurrencyCommand): UpdateCurrencyCommand {
     return cleanObject({
       where: cleanObject({
-        currencyId: cleanValue(command?.where?.currencyId)
+        app: cleanValue(command?.where?.app),
+        currency: cleanValue(command?.where?.currency)
       }),
       data: cleanObject({
         name: cleanValue(command?.data?.name),
+        symbol: cleanValue(command?.data?.symbol),
+        minorUnit: cleanValueNumber(command?.data?.minorUnit),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

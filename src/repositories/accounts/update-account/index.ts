@@ -13,7 +13,7 @@ export class UpdateAccountRepository
   async execute({ data, where }: UpdateAccountDTO): Promise<boolean> {
     const updated = await this.model.account.update({
       where: {
-        id: where?.accountId
+        id: where?.account
       },
       data
     });

@@ -13,7 +13,7 @@ export class RemoveColorRepository
   async execute({ where }: RemoveColorDTO): Promise<boolean> {
     const removed = await this.model.color.delete({
       where: {
-        id: where?.colorId
+        id: where?.color
       }
     });
     return !!removed;

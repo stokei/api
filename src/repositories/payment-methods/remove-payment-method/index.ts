@@ -13,7 +13,7 @@ export class RemovePaymentMethodRepository
   async execute({ where }: RemovePaymentMethodDTO): Promise<boolean> {
     const removed = await this.model.paymentMethod.delete({
       where: {
-        id: where?.paymentMethodId
+        id: where?.paymentMethod
       }
     });
     return !!removed;

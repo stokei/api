@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueBoolean } from '@stokei/nestjs';
 
 import { CreateClassroomCommand } from '@/commands/implements/classrooms/create-classroom.command';
 import {
@@ -28,6 +28,9 @@ export class CreateClassroomCommandHandler
     if (!data?.parent) {
       throw new ParamNotFoundException<CreateClassroomCommandKeys>('parent');
     }
+    if (!data?.name) {
+      throw new ParamNotFoundException<CreateClassroomCommandKeys>('name');
+    }
 
     const classroomCreated = await this.createClassroomRepository.execute(data);
     if (!classroomCreated) {
@@ -44,8 +47,12 @@ export class CreateClassroomCommandHandler
 
   private clearData(command: CreateClassroomCommand): CreateClassroomCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      parent: cleanValue(command?.parent),
+      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      description: cleanValue(command?.description),
+      hasAccessToAllModules: cleanValueBoolean(command?.hasAccessToAllModules)
     });
   }
 }

@@ -2,6 +2,7 @@ import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
 export interface CountCurrenciesWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   name?: IWhereDataSearch;
   symbol?: IWhereData;
   minorUnit?: IWhereData<number>;

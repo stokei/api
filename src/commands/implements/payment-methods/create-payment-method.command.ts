@@ -1,24 +1,18 @@
 import { ICommand } from '@nestjs/cqrs';
 
 import { CreatePaymentMethodDTO } from '@/dtos/payment-methods/create-payment-method.dto';
-import { PaymentMethodProvider } from '@/enums/payment-method-provider.enum';
-import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 
 export class CreatePaymentMethodCommand
   implements ICommand, CreatePaymentMethodDTO
 {
   parent: string;
-  type: PaymentMethodType;
-  provider: PaymentMethodProvider;
-  externalPaymentMethod: string;
+  creditCardHash: string;
   app: string;
   createdBy: string;
 
   constructor(data: CreatePaymentMethodDTO) {
     this.parent = data.parent;
-    this.type = data.type;
-    this.provider = data.provider;
-    this.externalPaymentMethod = data.externalPaymentMethod;
+    this.creditCardHash = data.creditCardHash;
     this.app = data.app;
     this.createdBy = data.createdBy;
   }

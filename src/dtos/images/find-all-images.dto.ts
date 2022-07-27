@@ -2,6 +2,7 @@ import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
 
 export interface WhereDataFindAllImagesDTO {
   ids?: string[];
+  app?: IWhereData;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

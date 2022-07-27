@@ -1,13 +1,13 @@
 export interface UpdateCourseDataDTO {
   updatedBy: string;
-  app: string;
   name?: string;
   description?: string;
   avatar?: string;
 }
 
 export interface UpdateCourseWhereDTO {
-  courseId: string;
+  app: string;
+  course: string;
   parent: string;
 }
 

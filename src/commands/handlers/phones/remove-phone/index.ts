@@ -10,8 +10,6 @@ import {
 import { FindPhoneByIdRepository } from '@/repositories/phones/find-phone-by-id';
 import { RemovePhoneRepository } from '@/repositories/phones/remove-phone';
 
-type RemovePhoneCommandKeys = keyof RemovePhoneCommand;
-
 @CommandHandler(RemovePhoneCommand)
 export class RemovePhoneCommandHandler
   implements ICommandHandler<RemovePhoneCommand>
@@ -30,7 +28,7 @@ export class RemovePhoneCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const phoneId = splitServiceId(data.where?.phoneId)?.id;
+    const phoneId = splitServiceId(data.where?.phone)?.id;
     if (!phoneId) {
       throw new ParamNotFoundException('phoneId');
     }
@@ -43,7 +41,7 @@ export class RemovePhoneCommandHandler
     const removed = await this.removePhoneRepository.execute({
       where: {
         ...data.where,
-        phoneId
+        phone: phoneId
       }
     });
     if (!removed) {
@@ -62,7 +60,8 @@ export class RemovePhoneCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        phoneId: cleanValue(command?.where?.phoneId)
+        app: cleanValue(command?.where?.app),
+        phone: cleanValue(command?.where?.phone)
       })
     });
   }

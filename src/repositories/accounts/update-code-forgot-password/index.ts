@@ -13,7 +13,7 @@ export class UpdateCodeForgotPasswordRepository
 
   async execute(data: UpdateCodeForgotPasswordRepositoryDTO): Promise<boolean> {
     const updated = await this.model.account.update({
-      where: { id: data?.accountId },
+      where: { id: data?.account },
       data: {
         forgotPasswordCode: data?.code
       }

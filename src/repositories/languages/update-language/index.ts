@@ -13,7 +13,7 @@ export class UpdateLanguageRepository
   async execute({ data, where }: UpdateLanguageDTO): Promise<boolean> {
     const updated = await this.model.language.update({
       where: {
-        id: where?.languageId
+        id: where?.language
       },
       data
     });

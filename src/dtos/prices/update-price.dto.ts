@@ -1,12 +1,13 @@
 export interface UpdatePriceDataDTO {
   default?: boolean;
+  fromPrice?: number;
   quantity?: number;
   updatedBy: string;
-  app: string;
 }
 
 export interface UpdatePriceWhereDTO {
-  priceId: string;
+  app: string;
+  price: string;
 }
 
 export interface UpdatePriceDTO {

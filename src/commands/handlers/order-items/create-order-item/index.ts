@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateOrderItemCommand } from '@/commands/implements/order-items/create-order-item.command';
 import {
@@ -25,8 +25,11 @@ export class CreateOrderItemCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreateOrderItemCommandKeys>('parent');
+    if (!data?.order) {
+      throw new ParamNotFoundException<CreateOrderItemCommandKeys>('order');
+    }
+    if (!data?.product) {
+      throw new ParamNotFoundException<CreateOrderItemCommandKeys>('product');
     }
 
     const orderItemCreated = await this.createOrderItemRepository.execute(data);
@@ -44,8 +47,12 @@ export class CreateOrderItemCommandHandler
 
   private clearData(command: CreateOrderItemCommand): CreateOrderItemCommand {
     return cleanObject({
-      name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      order: cleanValue(command?.order),
+      product: cleanValue(command?.product),
+      price: cleanValue(command?.price),
+      quantity: cleanValueNumber(command?.quantity),
+      app: cleanValue(command?.app),
+      createdBy: cleanValue(command?.createdBy)
     });
   }
 }

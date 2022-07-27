@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueBoolean } from '@stokei/nestjs';
 
 import { CreatePhoneCommand } from '@/commands/implements/phones/create-phone.command';
 import {
@@ -44,7 +44,12 @@ export class CreatePhoneCommandHandler
 
   private clearData(command: CreatePhoneCommand): CreatePhoneCommand {
     return cleanObject({
-      name: cleanValue(command?.name),
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
+      countryCode: cleanValue(command?.countryCode),
+      areaCode: cleanValue(command?.areaCode),
+      number: cleanValue(command?.number),
+      default: cleanValueBoolean(command?.default),
       parent: cleanValue(command?.parent)
     });
   }

@@ -1,11 +1,11 @@
 export interface UpdateAccountDataDTO {
   updatedBy: string;
-  app: string;
   name?: string;
 }
 
 export interface UpdateAccountWhereDTO {
-  accountId: string;
+  app: string;
+  account: string;
 }
 
 export interface UpdateAccountDTO {

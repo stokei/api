@@ -12,6 +12,5 @@ export interface CreatePlanDTO {
   quantityModulesPerClassrooms: number;
   quantityVideosPerModules: number;
   applicationFeePercentage: number;
-  app: string;
   createdBy: string;
 }

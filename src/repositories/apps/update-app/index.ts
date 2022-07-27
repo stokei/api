@@ -13,7 +13,7 @@ export class UpdateAppRepository
   async execute({ data, where }: UpdateAppDTO): Promise<boolean> {
     const updated = await this.model.app.update({
       where: {
-        id: where?.appId
+        id: where?.app
       },
       data
     });

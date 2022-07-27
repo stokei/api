@@ -13,7 +13,7 @@ export class UpdateAddressRepository
   async execute({ data, where }: UpdateAddressDTO): Promise<boolean> {
     const updated = await this.model.address.update({
       where: {
-        id: where?.addressId
+        id: where?.address
       },
       data
     });

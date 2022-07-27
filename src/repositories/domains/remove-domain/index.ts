@@ -13,7 +13,7 @@ export class RemoveDomainRepository
   async execute({ where }: RemoveDomainDTO): Promise<boolean> {
     const removed = await this.model.domain.delete({
       where: {
-        id: where?.domainId
+        id: where?.domain
       }
     });
     return !!removed;

@@ -28,7 +28,7 @@ export class RemoveAccountCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const accountId = splitServiceId(data.where?.accountId)?.id;
+    const accountId = splitServiceId(data.where?.account)?.id;
     if (!accountId) {
       throw new ParamNotFoundException('accountId');
     }
@@ -41,7 +41,7 @@ export class RemoveAccountCommandHandler
     const removed = await this.removeAccountRepository.execute({
       where: {
         ...data.where,
-        accountId
+        account: accountId
       }
     });
     if (!removed) {
@@ -60,7 +60,8 @@ export class RemoveAccountCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        accountId: cleanValue(command?.where?.accountId)
+        app: cleanValue(command?.where?.app),
+        account: cleanValue(command?.where?.account)
       })
     });
   }

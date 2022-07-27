@@ -13,7 +13,7 @@ export class RemoveCartItemRepository
   async execute({ where }: RemoveCartItemDTO): Promise<boolean> {
     const removed = await this.model.cartItem.delete({
       where: {
-        id: where?.cartItemId
+        id: where?.cartItem
       }
     });
     return !!removed;

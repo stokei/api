@@ -10,8 +10,6 @@ import {
 import { FindClassroomByIdRepository } from '@/repositories/classrooms/find-classroom-by-id';
 import { UpdateClassroomRepository } from '@/repositories/classrooms/update-classroom';
 
-type UpdateClassroomCommandKeys = keyof UpdateClassroomCommand;
-
 @CommandHandler(UpdateClassroomCommand)
 export class UpdateClassroomCommandHandler
   implements ICommandHandler<UpdateClassroomCommand>
@@ -27,7 +25,7 @@ export class UpdateClassroomCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const classroomId = splitServiceId(data.where?.classroomId)?.id;
+    const classroomId = splitServiceId(data.where?.classroom)?.id;
     if (!classroomId) {
       throw new ParamNotFoundException('classroomId');
     }
@@ -43,7 +41,7 @@ export class UpdateClassroomCommandHandler
       ...data,
       where: {
         ...data.where,
-        classroomId
+        classroom: classroomId
       }
     });
     if (!updated) {
@@ -68,10 +66,12 @@ export class UpdateClassroomCommandHandler
   private clearData(command: UpdateClassroomCommand): UpdateClassroomCommand {
     return cleanObject({
       where: cleanObject({
-        classroomId: cleanValue(command?.where?.classroomId)
+        app: cleanValue(command?.where?.app),
+        classroom: cleanValue(command?.where?.classroom)
       }),
       data: cleanObject({
         name: cleanValue(command?.data?.name),
+        description: cleanValue(command?.data?.description),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

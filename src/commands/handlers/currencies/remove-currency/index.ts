@@ -10,8 +10,6 @@ import {
 import { FindCurrencyByIdRepository } from '@/repositories/currencies/find-currency-by-id';
 import { RemoveCurrencyRepository } from '@/repositories/currencies/remove-currency';
 
-type RemoveCurrencyCommandKeys = keyof RemoveCurrencyCommand;
-
 @CommandHandler(RemoveCurrencyCommand)
 export class RemoveCurrencyCommandHandler
   implements ICommandHandler<RemoveCurrencyCommand>
@@ -30,7 +28,7 @@ export class RemoveCurrencyCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const currencyId = splitServiceId(data.where?.currencyId)?.id;
+    const currencyId = splitServiceId(data.where?.currency)?.id;
     if (!currencyId) {
       throw new ParamNotFoundException('currencyId');
     }
@@ -43,7 +41,7 @@ export class RemoveCurrencyCommandHandler
     const removed = await this.removeCurrencyRepository.execute({
       where: {
         ...data.where,
-        currencyId
+        currency: currencyId
       }
     });
     if (!removed) {
@@ -62,7 +60,8 @@ export class RemoveCurrencyCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        currencyId: cleanValue(command?.where?.currencyId)
+        app: cleanValue(command?.where?.app),
+        currency: cleanValue(command?.where?.currency)
       })
     });
   }

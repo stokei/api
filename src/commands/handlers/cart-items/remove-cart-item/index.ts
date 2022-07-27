@@ -28,7 +28,7 @@ export class RemoveCartItemCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const cartItemId = splitServiceId(data.where?.cartItemId)?.id;
+    const cartItemId = splitServiceId(data.where?.cartItem)?.id;
     if (!cartItemId) {
       throw new ParamNotFoundException('cartItemId');
     }
@@ -41,7 +41,7 @@ export class RemoveCartItemCommandHandler
     const removed = await this.removeCartItemRepository.execute({
       where: {
         ...data.where,
-        cartItemId
+        cartItem: cartItemId
       }
     });
     if (!removed) {
@@ -60,7 +60,8 @@ export class RemoveCartItemCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        cartItemId: cleanValue(command?.where?.cartItemId)
+        app: cleanValue(command?.where?.app),
+        cartItem: cleanValue(command?.where?.cartItem)
       })
     });
   }

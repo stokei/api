@@ -5,6 +5,7 @@ import { PlanType } from '@/enums/plan-type.enum';
 
 export interface CountPlansWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   name?: IWhereDataSearch;
   type?: PlanType;
   checkoutVisible?: IWhereData<boolean>;

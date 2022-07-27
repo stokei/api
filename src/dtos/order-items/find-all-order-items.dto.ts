@@ -10,6 +10,7 @@ import { RecurringType } from '@/enums/recurring-type.enum';
 
 export interface WhereDataFindAllOrderItemsDTO {
   ids?: string[];
+  app?: IWhereData;
   name?: IWhereDataSearch;
   order?: IWhereData;
   product?: IWhereData;

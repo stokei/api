@@ -1,12 +1,12 @@
 export interface UpdateLanguageDataDTO {
   updatedBy: string;
-  app: string;
   name?: string;
   icon?: string;
 }
 
 export interface UpdateLanguageWhereDTO {
-  languageId: string;
+  app: string;
+  language: string;
 }
 
 export interface UpdateLanguageDTO {

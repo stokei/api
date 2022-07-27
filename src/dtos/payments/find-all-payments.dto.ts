@@ -4,6 +4,7 @@ import { PaymentStatus } from '@/enums/payment-status.enum';
 
 export interface WhereDataFindAllPaymentsDTO {
   ids?: string[];
+  app?: IWhereData;
   customer?: IWhereData<string>;
   order?: IWhereData<string>;
   externalPayment?: IWhereData<string>;

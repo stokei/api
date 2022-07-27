@@ -13,7 +13,7 @@ export class RemoveAddressRepository
   async execute({ where }: RemoveAddressDTO): Promise<boolean> {
     const removed = await this.model.address.delete({
       where: {
-        id: where?.addressId
+        id: where?.address
       }
     });
     return !!removed;

@@ -5,9 +5,9 @@ import { ChangeFromOldDefaultAddressToNewDefaultAddressDTO } from '@/dtos/addres
 export class ChangeFromOldDefaultAddressToNewDefaultAddressCommand
   implements ICommand
 {
+  app: string;
   newAddress: string;
   updatedBy: string;
-  app: string;
   constructor(data: ChangeFromOldDefaultAddressToNewDefaultAddressDTO) {
     this.newAddress = data.newAddress;
     this.app = data.app;

@@ -1,13 +1,13 @@
 export interface UpdateCurrencyDataDTO {
   updatedBy: string;
-  app: string;
   name?: string;
   symbol?: string;
   minorUnit?: number;
 }
 
 export interface UpdateCurrencyWhereDTO {
-  currencyId: string;
+  app: string;
+  currency: string;
 }
 
 export interface UpdateCurrencyDTO {

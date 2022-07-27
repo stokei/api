@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { RemoveClassroomModuleCommand } from '@/commands/implements/classroom-modules/remove-classroom-module.command';
 import {
@@ -7,17 +7,15 @@ import {
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
-import { FindClassroomModuleByIdRepository } from '@/repositories/classroom-modules/find-classroom-module-by-id';
+import { FindAllClassroomModulesRepository } from '@/repositories/classroom-modules/find-all-classroom-modules';
 import { RemoveClassroomModuleRepository } from '@/repositories/classroom-modules/remove-classroom-module';
-
-type RemoveClassroomModuleCommandKeys = keyof RemoveClassroomModuleCommand;
 
 @CommandHandler(RemoveClassroomModuleCommand)
 export class RemoveClassroomModuleCommandHandler
   implements ICommandHandler<RemoveClassroomModuleCommand>
 {
   constructor(
-    private readonly findClassroomModuleByIdRepository: FindClassroomModuleByIdRepository,
+    private readonly findAllClassroomModulesRepository: FindAllClassroomModulesRepository,
     private readonly removeClassroomModuleRepository: RemoveClassroomModuleRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -30,21 +28,39 @@ export class RemoveClassroomModuleCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const classroomModuleId = splitServiceId(data.where?.classroomModuleId)?.id;
-    if (!classroomModuleId) {
-      throw new ParamNotFoundException('classroomModuleId');
+    const { classroom, module, app } = data.where || {};
+    if (!classroom) {
+      throw new ParamNotFoundException('classroomId');
+    }
+    if (!module) {
+      throw new ParamNotFoundException('moduleId');
     }
 
-    const classroomModule =
-      await this.findClassroomModuleByIdRepository.execute(classroomModuleId);
-    if (!classroomModule) {
+    const classroomModules =
+      await this.findAllClassroomModulesRepository.execute({
+        where: {
+          AND: {
+            app: {
+              equals: app
+            },
+            classroom: {
+              equals: classroom
+            },
+            module: {
+              equals: module
+            }
+          }
+        }
+      });
+    if (!classroomModules?.length) {
       throw new ClassroomModuleNotFoundException();
     }
-
+    const classroomModule = classroomModules[0];
     const removed = await this.removeClassroomModuleRepository.execute({
       where: {
         ...data.where,
-        classroomModuleId
+        classroom,
+        module
       }
     });
     if (!removed) {
@@ -66,7 +82,9 @@ export class RemoveClassroomModuleCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        classroomModuleId: cleanValue(command?.where?.classroomModuleId)
+        app: cleanValue(command?.where?.app),
+        classroom: cleanValue(command?.where?.classroom),
+        module: cleanValue(command?.where?.module)
       })
     });
   }

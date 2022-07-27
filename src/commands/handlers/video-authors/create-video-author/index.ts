@@ -25,8 +25,11 @@ export class CreateVideoAuthorCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreateVideoAuthorCommandKeys>('parent');
+    if (!data?.author) {
+      throw new ParamNotFoundException<CreateVideoAuthorCommandKeys>('author');
+    }
+    if (!data?.video) {
+      throw new ParamNotFoundException<CreateVideoAuthorCommandKeys>('video');
     }
 
     const videoAuthorCreated = await this.createVideoAuthorRepository.execute(
@@ -49,8 +52,10 @@ export class CreateVideoAuthorCommandHandler
     command: CreateVideoAuthorCommand
   ): CreateVideoAuthorCommand {
     return cleanObject({
-      name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
+      video: cleanValue(command?.video),
+      author: cleanValue(command?.author)
     });
   }
 }

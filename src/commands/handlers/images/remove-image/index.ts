@@ -10,8 +10,6 @@ import {
 import { FindImageByIdRepository } from '@/repositories/images/find-image-by-id';
 import { RemoveImageRepository } from '@/repositories/images/remove-image';
 
-type RemoveImageCommandKeys = keyof RemoveImageCommand;
-
 @CommandHandler(RemoveImageCommand)
 export class RemoveImageCommandHandler
   implements ICommandHandler<RemoveImageCommand>
@@ -30,7 +28,7 @@ export class RemoveImageCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const imageId = splitServiceId(data.where?.imageId)?.id;
+    const imageId = splitServiceId(data.where?.image)?.id;
     if (!imageId) {
       throw new ParamNotFoundException('imageId');
     }
@@ -43,7 +41,7 @@ export class RemoveImageCommandHandler
     const removed = await this.removeImageRepository.execute({
       where: {
         ...data.where,
-        imageId
+        image: imageId
       }
     });
     if (!removed) {
@@ -62,7 +60,8 @@ export class RemoveImageCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        imageId: cleanValue(command?.where?.imageId)
+        app: cleanValue(command?.where?.app),
+        image: cleanValue(command?.where?.image)
       })
     });
   }

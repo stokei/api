@@ -13,7 +13,7 @@ export class RemovePriceRepository
   async execute({ where }: RemovePriceDTO): Promise<boolean> {
     const removed = await this.model.price.delete({
       where: {
-        id: where?.priceId
+        id: where?.price
       }
     });
     return !!removed;

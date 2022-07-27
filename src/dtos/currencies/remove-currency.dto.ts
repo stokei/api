@@ -1,7 +1,7 @@
 export interface RemoveCurrencyWhereDTO {
   removedBy: string;
   app: string;
-  currencyId: string;
+  currency: string;
 }
 
 export interface RemoveCurrencyDTO {

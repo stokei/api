@@ -13,7 +13,7 @@ export class UpdateCurrencyRepository
   async execute({ data, where }: UpdateCurrencyDTO): Promise<boolean> {
     const updated = await this.model.currency.update({
       where: {
-        id: where?.currencyId
+        id: where?.currency
       },
       data
     });

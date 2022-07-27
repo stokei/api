@@ -1,7 +1,7 @@
 export interface RemoveImageWhereDTO {
   removedBy: string;
   app: string;
-  imageId: string;
+  image: string;
 }
 
 export interface RemoveImageDTO {

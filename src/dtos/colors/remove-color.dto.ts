@@ -2,7 +2,7 @@ export interface RemoveColorWhereDTO {
   removedBy: string;
   app: string;
   parent: string;
-  colorId: string;
+  color: string;
 }
 
 export interface RemoveColorDTO {

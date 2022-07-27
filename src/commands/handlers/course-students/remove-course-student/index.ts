@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { RemoveCourseStudentCommand } from '@/commands/implements/course-students/remove-course-student.command';
 import {
@@ -7,17 +7,15 @@ import {
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
-import { FindCourseStudentByIdRepository } from '@/repositories/course-students/find-course-student-by-id';
+import { FindAllCourseStudentsRepository } from '@/repositories/course-students/find-all-course-students';
 import { RemoveCourseStudentRepository } from '@/repositories/course-students/remove-course-student';
-
-type RemoveCourseStudentCommandKeys = keyof RemoveCourseStudentCommand;
 
 @CommandHandler(RemoveCourseStudentCommand)
 export class RemoveCourseStudentCommandHandler
   implements ICommandHandler<RemoveCourseStudentCommand>
 {
   constructor(
-    private readonly findCourseStudentByIdRepository: FindCourseStudentByIdRepository,
+    private readonly findAllCourseStudentsRepository: FindAllCourseStudentsRepository,
     private readonly removeCourseStudentRepository: RemoveCourseStudentRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -30,22 +28,38 @@ export class RemoveCourseStudentCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const courseStudentId = splitServiceId(data.where?.courseStudentId)?.id;
-    if (!courseStudentId) {
-      throw new ParamNotFoundException('courseStudentId');
+    const { course, student, app } = data.where || {};
+    if (!course) {
+      throw new ParamNotFoundException('courseId');
+    }
+    if (!student) {
+      throw new ParamNotFoundException('studentId');
     }
 
-    const courseStudent = await this.findCourseStudentByIdRepository.execute(
-      courseStudentId
-    );
-    if (!courseStudent) {
+    const courseStudents = await this.findAllCourseStudentsRepository.execute({
+      where: {
+        AND: {
+          app: {
+            equals: app
+          },
+          course: {
+            equals: course
+          },
+          student: {
+            equals: student
+          }
+        }
+      }
+    });
+    if (!courseStudents?.length) {
       throw new CourseStudentNotFoundException();
     }
-
+    const courseStudent = courseStudents[0];
     const removed = await this.removeCourseStudentRepository.execute({
       where: {
         ...data.where,
-        courseStudentId
+        course,
+        student
       }
     });
     if (!removed) {
@@ -66,7 +80,9 @@ export class RemoveCourseStudentCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        courseStudentId: cleanValue(command?.where?.courseStudentId)
+        app: cleanValue(command?.where?.app),
+        course: cleanValue(command?.where?.course),
+        student: cleanValue(command?.where?.student)
       })
     });
   }

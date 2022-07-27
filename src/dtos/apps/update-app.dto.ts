@@ -6,11 +6,10 @@ export interface UpdateAppDataDTO {
   favicon?: string;
   logo?: string;
   updatedBy: string;
-  app: string;
 }
 
 export interface UpdateAppWhereDTO {
-  appId: string;
+  app: string;
 }
 
 export interface UpdateAppDTO {

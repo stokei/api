@@ -13,7 +13,7 @@ export class UpdateCourseRepository
   async execute({ data, where }: UpdateCourseDTO): Promise<boolean> {
     const updated = await this.model.course.update({
       where: {
-        id: where?.courseId
+        id: where?.course
       },
       data
     });

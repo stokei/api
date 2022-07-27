@@ -7,6 +7,7 @@ import {
 
 export interface WhereDataFindAllCoursesDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;

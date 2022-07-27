@@ -44,7 +44,10 @@ export class CreateModuleCommandHandler
 
   private clearData(command: CreateModuleCommand): CreateModuleCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
+      description: cleanValue(command?.description),
       parent: cleanValue(command?.parent)
     });
   }

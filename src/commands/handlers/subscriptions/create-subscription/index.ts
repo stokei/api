@@ -1,11 +1,11 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueBoolean } from '@stokei/nestjs';
 
 import { CreateSubscriptionCommand } from '@/commands/implements/subscriptions/create-subscription.command';
 import {
-  SubscriptionNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SubscriptionNotFoundException
 } from '@/errors';
 import { CreateSubscriptionRepository } from '@/repositories/subscriptions/create-subscription';
 
@@ -49,7 +49,12 @@ export class CreateSubscriptionCommandHandler
     command: CreateSubscriptionCommand
   ): CreateSubscriptionCommand {
     return cleanObject({
-      name: cleanValue(command?.name),
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
+      product: cleanValue(command?.product),
+      automaticRenew: cleanValueBoolean(command?.automaticRenew),
+      startAt: cleanValue(command?.startAt),
+      endAt: cleanValue(command?.endAt),
       parent: cleanValue(command?.parent)
     });
   }

@@ -4,6 +4,7 @@ import { AppStatus } from '@/enums/app-status.enum';
 
 export interface CountAppsWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch<string>;

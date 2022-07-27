@@ -10,8 +10,6 @@ import {
 import { FindPaymentMethodByIdRepository } from '@/repositories/payment-methods/find-payment-method-by-id';
 import { RemovePaymentMethodRepository } from '@/repositories/payment-methods/remove-payment-method';
 
-type RemovePaymentMethodCommandKeys = keyof RemovePaymentMethodCommand;
-
 @CommandHandler(RemovePaymentMethodCommand)
 export class RemovePaymentMethodCommandHandler
   implements ICommandHandler<RemovePaymentMethodCommand>
@@ -30,7 +28,7 @@ export class RemovePaymentMethodCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const paymentMethodId = splitServiceId(data.where?.paymentMethodId)?.id;
+    const paymentMethodId = splitServiceId(data.where?.paymentMethod)?.id;
     if (!paymentMethodId) {
       throw new ParamNotFoundException('paymentMethodId');
     }
@@ -45,7 +43,7 @@ export class RemovePaymentMethodCommandHandler
     const removed = await this.removePaymentMethodRepository.execute({
       where: {
         ...data.where,
-        paymentMethodId
+        paymentMethod: paymentMethodId
       }
     });
     if (!removed) {
@@ -66,7 +64,8 @@ export class RemovePaymentMethodCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        paymentMethodId: cleanValue(command?.where?.paymentMethodId)
+        app: cleanValue(command?.where?.app),
+        paymentMethod: cleanValue(command?.where?.paymentMethod)
       })
     });
   }

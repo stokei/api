@@ -13,7 +13,7 @@ export class UpdateColorRepository
   async execute({ data, where }: UpdateColorDTO): Promise<boolean> {
     const updated = await this.model.color.update({
       where: {
-        id: where?.colorId
+        id: where?.color
       },
       data
     });

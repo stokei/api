@@ -10,8 +10,6 @@ import {
 import { FindColorByIdRepository } from '@/repositories/colors/find-color-by-id';
 import { UpdateColorRepository } from '@/repositories/colors/update-color';
 
-type UpdateColorCommandKeys = keyof UpdateColorCommand;
-
 @CommandHandler(UpdateColorCommand)
 export class UpdateColorCommandHandler
   implements ICommandHandler<UpdateColorCommand>
@@ -27,7 +25,7 @@ export class UpdateColorCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const colorId = splitServiceId(data.where?.colorId)?.id;
+    const colorId = splitServiceId(data.where?.color)?.id;
     if (!colorId) {
       throw new ParamNotFoundException('colorId');
     }
@@ -41,7 +39,7 @@ export class UpdateColorCommandHandler
       ...data,
       where: {
         ...data.where,
-        colorId
+        color: colorId
       }
     });
     if (!updated) {
@@ -64,10 +62,11 @@ export class UpdateColorCommandHandler
   private clearData(command: UpdateColorCommand): UpdateColorCommand {
     return cleanObject({
       where: cleanObject({
-        colorId: cleanValue(command?.where?.colorId)
+        app: cleanValue(command?.where?.app),
+        color: cleanValue(command?.where?.color)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name),
+        color: cleanValue(command?.data?.color),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

@@ -2,6 +2,7 @@ import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
 export interface CountModulesWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;

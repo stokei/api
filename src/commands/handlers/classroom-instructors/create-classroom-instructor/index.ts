@@ -57,6 +57,8 @@ export class CreateClassroomInstructorCommandHandler
     command: CreateClassroomInstructorCommand
   ): CreateClassroomInstructorCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       instructor: cleanValue(command?.instructor),
       classroom: cleanValue(command?.classroom)
     });

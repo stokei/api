@@ -62,6 +62,8 @@ export class CreateCartItemCommandHandler
 
   private clearData(command: CreateCartItemCommand): CreateCartItemCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       parent: cleanValue(command?.parent),
       price: cleanValue(command?.price),
       quantity: cleanValueNumber(command?.quantity)

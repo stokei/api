@@ -13,7 +13,7 @@ export class RemoveLanguageRepository
   async execute({ where }: RemoveLanguageDTO): Promise<boolean> {
     const removed = await this.model.language.delete({
       where: {
-        id: where?.languageId
+        id: where?.language
       }
     });
     return !!removed;

@@ -25,8 +25,8 @@ export class CreateVideoCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreateVideoCommandKeys>('parent');
+    if (!data?.path) {
+      throw new ParamNotFoundException<CreateVideoCommandKeys>('path');
     }
 
     const videoCreated = await this.createVideoRepository.execute(data);
@@ -44,7 +44,12 @@ export class CreateVideoCommandHandler
 
   private clearData(command: CreateVideoCommand): CreateVideoCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
+      description: cleanValue(command?.description),
+      path: cleanValue(command?.path),
+      poster: cleanValue(command?.poster),
       parent: cleanValue(command?.parent)
     });
   }

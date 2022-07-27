@@ -25,8 +25,8 @@ export class CreateLanguageCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreateLanguageCommandKeys>('parent');
+    if (!data?.id) {
+      throw new ParamNotFoundException<CreateLanguageCommandKeys>('id');
     }
 
     const languageCreated = await this.createLanguageRepository.execute(data);
@@ -44,8 +44,11 @@ export class CreateLanguageCommandHandler
 
   private clearData(command: CreateLanguageCommand): CreateLanguageCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      icon: cleanValue(command?.icon),
+      id: cleanValue(command?.id)
     });
   }
 }

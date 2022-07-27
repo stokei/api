@@ -1,5 +1,11 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueBoolean,
+  cleanValueNumber,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { UpdatePriceCommand } from '@/commands/implements/prices/update-price.command';
 import {
@@ -9,8 +15,6 @@ import {
 } from '@/errors';
 import { FindPriceByIdRepository } from '@/repositories/prices/find-price-by-id';
 import { UpdatePriceRepository } from '@/repositories/prices/update-price';
-
-type UpdatePriceCommandKeys = keyof UpdatePriceCommand;
 
 @CommandHandler(UpdatePriceCommand)
 export class UpdatePriceCommandHandler
@@ -27,7 +31,7 @@ export class UpdatePriceCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const priceId = splitServiceId(data.where?.priceId)?.id;
+    const priceId = splitServiceId(data.where?.price)?.id;
     if (!priceId) {
       throw new ParamNotFoundException('priceId');
     }
@@ -41,7 +45,7 @@ export class UpdatePriceCommandHandler
       ...data,
       where: {
         ...data.where,
-        priceId
+        price: priceId
       }
     });
     if (!updated) {
@@ -64,10 +68,13 @@ export class UpdatePriceCommandHandler
   private clearData(command: UpdatePriceCommand): UpdatePriceCommand {
     return cleanObject({
       where: cleanObject({
-        priceId: cleanValue(command?.where?.priceId)
+        app: cleanValue(command?.where?.app),
+        price: cleanValue(command?.where?.price)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name),
+        default: cleanValueBoolean(command?.data?.default),
+        fromPrice: cleanValueNumber(command?.data?.fromPrice),
+        quantity: cleanValueNumber(command?.data?.quantity),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

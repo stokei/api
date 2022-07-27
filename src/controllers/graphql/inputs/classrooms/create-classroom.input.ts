@@ -11,6 +11,6 @@ export class CreateClassroomInput {
   @Field({ nullable: true })
   description?: string;
 
-  @Field(() => Boolean, { nullable: true })
+  @Field(() => Boolean, { nullable: true, defaultValue: true })
   hasAccessToAllModules?: boolean;
 }

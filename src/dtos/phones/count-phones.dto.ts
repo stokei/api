@@ -4,6 +4,7 @@ import { PhoneStatus } from '@/enums/phone-status.enum';
 
 export interface CountPhonesWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   countryCode?: IWhereData<string>;
   areaCode?: IWhereData<string>;

@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateCurrencyCommand } from '@/commands/implements/currencies/create-currency.command';
 import {
@@ -25,8 +25,8 @@ export class CreateCurrencyCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreateCurrencyCommandKeys>('parent');
+    if (!data?.id) {
+      throw new ParamNotFoundException<CreateCurrencyCommandKeys>('id');
     }
 
     const currencyCreated = await this.createCurrencyRepository.execute(data);
@@ -44,8 +44,12 @@ export class CreateCurrencyCommandHandler
 
   private clearData(command: CreateCurrencyCommand): CreateCurrencyCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      symbol: cleanValue(command?.symbol),
+      minorUnit: cleanValueNumber(command?.minorUnit),
+      id: cleanValue(command?.id)
     });
   }
 }

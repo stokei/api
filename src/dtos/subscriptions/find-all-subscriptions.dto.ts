@@ -5,6 +5,7 @@ import { SubscriptionType } from '@/enums/subscription-type.enum';
 
 export interface WhereDataFindAllSubscriptionsDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   product?: IWhereData<string>;
   status?: SubscriptionStatus;

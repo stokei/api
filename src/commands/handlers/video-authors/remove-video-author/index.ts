@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { RemoveVideoAuthorCommand } from '@/commands/implements/video-authors/remove-video-author.command';
 import {
@@ -7,17 +7,15 @@ import {
   ParamNotFoundException,
   VideoAuthorNotFoundException
 } from '@/errors';
-import { FindVideoAuthorByIdRepository } from '@/repositories/video-authors/find-video-author-by-id';
+import { FindAllVideoAuthorsRepository } from '@/repositories/video-authors/find-all-video-authors';
 import { RemoveVideoAuthorRepository } from '@/repositories/video-authors/remove-video-author';
-
-type RemoveVideoAuthorCommandKeys = keyof RemoveVideoAuthorCommand;
 
 @CommandHandler(RemoveVideoAuthorCommand)
 export class RemoveVideoAuthorCommandHandler
   implements ICommandHandler<RemoveVideoAuthorCommand>
 {
   constructor(
-    private readonly findVideoAuthorByIdRepository: FindVideoAuthorByIdRepository,
+    private readonly findAllVideoAuthorsRepository: FindAllVideoAuthorsRepository,
     private readonly removeVideoAuthorRepository: RemoveVideoAuthorRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -30,22 +28,38 @@ export class RemoveVideoAuthorCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const videoAuthorId = splitServiceId(data.where?.videoAuthorId)?.id;
-    if (!videoAuthorId) {
-      throw new ParamNotFoundException('videoAuthorId');
+    const { video, author, app } = data.where || {};
+    if (!video) {
+      throw new ParamNotFoundException('videoId');
+    }
+    if (!author) {
+      throw new ParamNotFoundException('authorId');
     }
 
-    const videoAuthor = await this.findVideoAuthorByIdRepository.execute(
-      videoAuthorId
-    );
-    if (!videoAuthor) {
+    const videoAuthors = await this.findAllVideoAuthorsRepository.execute({
+      where: {
+        AND: {
+          app: {
+            equals: app
+          },
+          video: {
+            equals: video
+          },
+          author: {
+            equals: author
+          }
+        }
+      }
+    });
+    if (!videoAuthors?.length) {
       throw new VideoAuthorNotFoundException();
     }
-
+    const videoAuthor = videoAuthors[0];
     const removed = await this.removeVideoAuthorRepository.execute({
       where: {
         ...data.where,
-        videoAuthorId
+        video,
+        author
       }
     });
     if (!removed) {
@@ -66,7 +80,9 @@ export class RemoveVideoAuthorCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        videoAuthorId: cleanValue(command?.where?.videoAuthorId)
+        app: cleanValue(command?.where?.app),
+        video: cleanValue(command?.where?.video),
+        author: cleanValue(command?.where?.author)
       })
     });
   }

@@ -44,7 +44,11 @@ export class CreateColorCommandHandler
 
   private clearData(command: CreateColorCommand): CreateColorCommand {
     return cleanObject({
-      name: cleanValue(command?.name),
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
+      themeMode: command?.themeMode,
+      type: command?.type,
+      color: cleanValue(command?.color),
       parent: cleanValue(command?.parent)
     });
   }

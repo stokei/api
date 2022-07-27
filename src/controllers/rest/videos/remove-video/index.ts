@@ -32,7 +32,7 @@ export class RemoveVideoController {
   ) {
     return this.removeVideoService.execute({
       where: {
-        videoId,
+        video: videoId,
         removedBy: currentAccountId
       }
     });

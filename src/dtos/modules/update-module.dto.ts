@@ -1,12 +1,12 @@
 export interface UpdateModuleDataDTO {
   updatedBy: string;
-  app: string;
   name?: string;
   description?: string;
 }
 
 export interface UpdateModuleWhereDTO {
-  moduleId: string;
+  app: string;
+  module: string;
 }
 
 export interface UpdateModuleDTO {

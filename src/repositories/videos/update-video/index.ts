@@ -13,7 +13,7 @@ export class UpdateVideoRepository
   async execute({ data, where }: UpdateVideoDTO): Promise<boolean> {
     const updated = await this.model.video.update({
       where: {
-        id: where?.videoId
+        id: where?.video
       },
       data
     });

@@ -6,6 +6,7 @@ import { RecurringType } from '@/enums/recurring-type.enum';
 
 export interface WhereDataFindAllPricesDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   default?: IWhereData<boolean>;
   type?: PriceType;

@@ -2,6 +2,7 @@ import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
 export interface CountAddressesWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   default?: IWhereData<boolean>;
   street?: IWhereDataSearch;

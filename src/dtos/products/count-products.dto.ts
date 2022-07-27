@@ -2,10 +2,10 @@ import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
 export interface CountProductsWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
-  app?: IWhereData;
   checkoutVisible?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

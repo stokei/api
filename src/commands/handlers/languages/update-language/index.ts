@@ -10,8 +10,6 @@ import {
 import { FindLanguageByIdRepository } from '@/repositories/languages/find-language-by-id';
 import { UpdateLanguageRepository } from '@/repositories/languages/update-language';
 
-type UpdateLanguageCommandKeys = keyof UpdateLanguageCommand;
-
 @CommandHandler(UpdateLanguageCommand)
 export class UpdateLanguageCommandHandler
   implements ICommandHandler<UpdateLanguageCommand>
@@ -27,7 +25,7 @@ export class UpdateLanguageCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const languageId = splitServiceId(data.where?.languageId)?.id;
+    const languageId = splitServiceId(data.where?.language)?.id;
     if (!languageId) {
       throw new ParamNotFoundException('languageId');
     }
@@ -41,7 +39,7 @@ export class UpdateLanguageCommandHandler
       ...data,
       where: {
         ...data.where,
-        languageId
+        language: languageId
       }
     });
     if (!updated) {
@@ -66,10 +64,12 @@ export class UpdateLanguageCommandHandler
   private clearData(command: UpdateLanguageCommand): UpdateLanguageCommand {
     return cleanObject({
       where: cleanObject({
-        languageId: cleanValue(command?.where?.languageId)
+        app: cleanValue(command?.where?.app),
+        language: cleanValue(command?.where?.language)
       }),
       data: cleanObject({
         name: cleanValue(command?.data?.name),
+        icon: cleanValue(command?.data?.icon),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

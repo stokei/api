@@ -25,8 +25,16 @@ export class CreatePaymentCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreatePaymentCommandKeys>('parent');
+    if (!data?.order) {
+      throw new ParamNotFoundException<CreatePaymentCommandKeys>('order');
+    }
+    if (!data?.customer) {
+      throw new ParamNotFoundException<CreatePaymentCommandKeys>('customer');
+    }
+    if (!data?.paymentMethod) {
+      throw new ParamNotFoundException<CreatePaymentCommandKeys>(
+        'paymentMethod'
+      );
     }
 
     const paymentCreated = await this.createPaymentRepository.execute(data);
@@ -44,8 +52,11 @@ export class CreatePaymentCommandHandler
 
   private clearData(command: CreatePaymentCommand): CreatePaymentCommand {
     return cleanObject({
-      name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
+      customer: cleanValue(command?.customer),
+      order: cleanValue(command?.order),
+      paymentMethod: cleanValue(command?.paymentMethod)
     });
   }
 }

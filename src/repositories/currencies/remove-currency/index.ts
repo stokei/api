@@ -13,7 +13,7 @@ export class RemoveCurrencyRepository
   async execute({ where }: RemoveCurrencyDTO): Promise<boolean> {
     const removed = await this.model.currency.delete({
       where: {
-        id: where?.currencyId
+        id: where?.currency
       }
     });
     return !!removed;

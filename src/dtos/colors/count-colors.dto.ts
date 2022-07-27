@@ -5,9 +5,10 @@ import { ThemeMode } from '@/enums/theme-mode.enum';
 
 export interface CountColorsWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
-  themeMode?: IWhereData<ThemeMode>;
-  type?: IWhereData<ColorType>;
+  themeMode?: ThemeMode;
+  type?: ColorType;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

@@ -10,8 +10,6 @@ import {
 import { FindColorByIdRepository } from '@/repositories/colors/find-color-by-id';
 import { RemoveColorRepository } from '@/repositories/colors/remove-color';
 
-type RemoveColorCommandKeys = keyof RemoveColorCommand;
-
 @CommandHandler(RemoveColorCommand)
 export class RemoveColorCommandHandler
   implements ICommandHandler<RemoveColorCommand>
@@ -30,7 +28,7 @@ export class RemoveColorCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const colorId = splitServiceId(data.where?.colorId)?.id;
+    const colorId = splitServiceId(data.where?.color)?.id;
     if (!colorId) {
       throw new ParamNotFoundException('colorId');
     }
@@ -43,7 +41,7 @@ export class RemoveColorCommandHandler
     const removed = await this.removeColorRepository.execute({
       where: {
         ...data.where,
-        colorId
+        color: colorId
       }
     });
     if (!removed) {
@@ -62,7 +60,9 @@ export class RemoveColorCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        colorId: cleanValue(command?.where?.colorId)
+        app: cleanValue(command?.where?.app),
+        parent: cleanValue(command?.where?.parent),
+        color: cleanValue(command?.where?.color)
       })
     });
   }

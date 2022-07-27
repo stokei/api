@@ -30,6 +30,11 @@ export class CreateCourseStudentCommandHandler
         'course'
       );
     }
+    if (!data?.student) {
+      throw new ParamNotFoundException<CreateCourseStudentCommandKeys>(
+        'student'
+      );
+    }
 
     const courseStudentCreated =
       await this.createCourseStudentRepository.execute(data);
@@ -50,7 +55,9 @@ export class CreateCourseStudentCommandHandler
     command: CreateCourseStudentCommand
   ): CreateCourseStudentCommand {
     return cleanObject({
-      name: cleanValue(command?.name),
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
+      student: cleanValue(command?.student),
       course: cleanValue(command?.course)
     });
   }

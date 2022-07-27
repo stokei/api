@@ -9,10 +9,11 @@ import { DomainStatus } from '@/enums/domain-status.enum';
 
 export interface WhereDataFindAllDomainsDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   name?: IWhereDataSearch;
   active?: IWhereData<boolean>;
-  status?: IWhereData<DomainStatus>;
+  status?: DomainStatus;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -20,11 +21,7 @@ export type IKeysWhereDataFindAllDomainsDTO = keyof WhereDataFindAllDomainsDTO;
 
 export interface OrderByDataFindAllDomainsDTO {
   name?: IOrderBy;
-  default?: IOrderBy;
   active?: IOrderBy;
-  fulldomain?: IOrderBy;
-  extension?: IOrderBy;
-  language?: IOrderBy;
   status?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;

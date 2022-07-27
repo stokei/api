@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueBoolean } from '@stokei/nestjs';
 
 import { CreateProductCommand } from '@/commands/implements/products/create-product.command';
 import {
@@ -44,7 +44,12 @@ export class CreateProductCommandHandler
 
   private clearData(command: CreateProductCommand): CreateProductCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
+      description: cleanValue(command?.description),
+      checkoutVisible: cleanValueBoolean(command?.checkoutVisible),
+      avatar: cleanValue(command?.avatar),
       parent: cleanValue(command?.parent)
     });
   }

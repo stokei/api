@@ -2,6 +2,7 @@ import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 
 export interface CountCartItemsWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   price?: IWhereData;
   updatedBy?: IWhereData;

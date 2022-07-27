@@ -30,7 +30,7 @@ export class UpdateAddressCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const addressId = splitServiceId(data.where?.addressId)?.id;
+    const addressId = splitServiceId(data.where?.address)?.id;
     if (!addressId) {
       throw new ParamNotFoundException('addressId');
     }
@@ -44,7 +44,7 @@ export class UpdateAddressCommandHandler
       ...data,
       where: {
         ...data.where,
-        addressId
+        address: addressId
       }
     });
     if (!updated) {
@@ -69,7 +69,8 @@ export class UpdateAddressCommandHandler
   private clearData(command: UpdateAddressCommand): UpdateAddressCommand {
     return cleanObject({
       where: cleanObject({
-        addressId: cleanValue(command?.where?.addressId)
+        app: cleanValue(command?.where?.app),
+        address: cleanValue(command?.where?.address)
       }),
       data: cleanObject({
         updatedBy: cleanValue(command?.data?.updatedBy),

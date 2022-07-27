@@ -10,8 +10,6 @@ import {
 import { FindVideoByIdRepository } from '@/repositories/videos/find-video-by-id';
 import { RemoveVideoRepository } from '@/repositories/videos/remove-video';
 
-type RemoveVideoCommandKeys = keyof RemoveVideoCommand;
-
 @CommandHandler(RemoveVideoCommand)
 export class RemoveVideoCommandHandler
   implements ICommandHandler<RemoveVideoCommand>
@@ -30,7 +28,7 @@ export class RemoveVideoCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const videoId = splitServiceId(data.where?.videoId)?.id;
+    const videoId = splitServiceId(data.where?.video)?.id;
     if (!videoId) {
       throw new ParamNotFoundException('videoId');
     }
@@ -43,7 +41,7 @@ export class RemoveVideoCommandHandler
     const removed = await this.removeVideoRepository.execute({
       where: {
         ...data.where,
-        videoId
+        video: videoId
       }
     });
     if (!removed) {
@@ -62,7 +60,8 @@ export class RemoveVideoCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        videoId: cleanValue(command?.where?.videoId)
+        app: cleanValue(command?.where?.app),
+        video: cleanValue(command?.where?.video)
       })
     });
   }

@@ -1,11 +1,11 @@
 export interface UpdateSubscriptionDataDTO {
   updatedBy: string;
-  app: string;
   automaticRenew?: boolean;
 }
 
 export interface UpdateSubscriptionWhereDTO {
-  subscriptionId: string;
+  app: string;
+  subscription: string;
 }
 
 export interface UpdateSubscriptionDTO {

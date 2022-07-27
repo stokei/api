@@ -44,7 +44,11 @@ export class CreateCourseCommandHandler
 
   private clearData(command: CreateCourseCommand): CreateCourseCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
+      description: cleanValue(command?.description),
+      avatar: cleanValue(command?.avatar),
       parent: cleanValue(command?.parent)
     });
   }

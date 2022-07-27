@@ -1,6 +1,5 @@
 export interface UpdateAddressDataDTO {
   updatedBy: string;
-  app: string;
   default?: boolean;
   street?: string;
   complement?: string;
@@ -12,7 +11,8 @@ export interface UpdateAddressDataDTO {
 }
 
 export interface UpdateAddressWhereDTO {
-  addressId: string;
+  app: string;
+  address: string;
 }
 
 export interface UpdateAddressDTO {

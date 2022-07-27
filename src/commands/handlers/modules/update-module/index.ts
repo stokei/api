@@ -10,8 +10,6 @@ import {
 import { FindModuleByIdRepository } from '@/repositories/modules/find-module-by-id';
 import { UpdateModuleRepository } from '@/repositories/modules/update-module';
 
-type UpdateModuleCommandKeys = keyof UpdateModuleCommand;
-
 @CommandHandler(UpdateModuleCommand)
 export class UpdateModuleCommandHandler
   implements ICommandHandler<UpdateModuleCommand>
@@ -27,7 +25,7 @@ export class UpdateModuleCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const moduleId = splitServiceId(data.where?.moduleId)?.id;
+    const moduleId = splitServiceId(data.where?.module)?.id;
     if (!moduleId) {
       throw new ParamNotFoundException('moduleId');
     }
@@ -41,7 +39,7 @@ export class UpdateModuleCommandHandler
       ...data,
       where: {
         ...data.where,
-        moduleId
+        module: moduleId
       }
     });
     if (!updated) {
@@ -64,10 +62,12 @@ export class UpdateModuleCommandHandler
   private clearData(command: UpdateModuleCommand): UpdateModuleCommand {
     return cleanObject({
       where: cleanObject({
-        moduleId: cleanValue(command?.where?.moduleId)
+        app: cleanValue(command?.where?.app),
+        module: cleanValue(command?.where?.module)
       }),
       data: cleanObject({
         name: cleanValue(command?.data?.name),
+        description: cleanValue(command?.data?.description),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

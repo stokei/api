@@ -5,6 +5,7 @@ import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 
 export interface WhereDataFindAllPaymentMethodsDTO {
   ids?: string[];
+  app?: IWhereData;
   parent?: IWhereData;
   type?: PaymentMethodType;
   provider?: PaymentMethodProvider;

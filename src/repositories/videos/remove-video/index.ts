@@ -13,7 +13,7 @@ export class RemoveVideoRepository
   async execute({ where }: RemoveVideoDTO): Promise<boolean> {
     const removed = await this.model.video.delete({
       where: {
-        id: where?.videoId
+        id: where?.video
       }
     });
     return !!removed;

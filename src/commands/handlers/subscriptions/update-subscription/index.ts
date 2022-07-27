@@ -1,16 +1,19 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueBoolean,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { UpdateSubscriptionCommand } from '@/commands/implements/subscriptions/update-subscription.command';
 import {
-  SubscriptionNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SubscriptionNotFoundException
 } from '@/errors';
 import { FindSubscriptionByIdRepository } from '@/repositories/subscriptions/find-subscription-by-id';
 import { UpdateSubscriptionRepository } from '@/repositories/subscriptions/update-subscription';
-
-type UpdateSubscriptionCommandKeys = keyof UpdateSubscriptionCommand;
 
 @CommandHandler(UpdateSubscriptionCommand)
 export class UpdateSubscriptionCommandHandler
@@ -27,7 +30,7 @@ export class UpdateSubscriptionCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const subscriptionId = splitServiceId(data.where?.subscriptionId)?.id;
+    const subscriptionId = splitServiceId(data.where?.subscription)?.id;
     if (!subscriptionId) {
       throw new ParamNotFoundException('subscriptionId');
     }
@@ -43,7 +46,7 @@ export class UpdateSubscriptionCommandHandler
       ...data,
       where: {
         ...data.where,
-        subscriptionId
+        subscription: subscriptionId
       }
     });
     if (!updated) {
@@ -70,10 +73,11 @@ export class UpdateSubscriptionCommandHandler
   ): UpdateSubscriptionCommand {
     return cleanObject({
       where: cleanObject({
-        subscriptionId: cleanValue(command?.where?.subscriptionId)
+        app: cleanValue(command?.where?.app),
+        subscription: cleanValue(command?.where?.subscription)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name),
+        automaticRenew: cleanValueBoolean(command?.data?.automaticRenew),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

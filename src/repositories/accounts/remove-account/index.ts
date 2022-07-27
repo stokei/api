@@ -14,7 +14,7 @@ export class RemoveAccountRepository
   async execute({ where }: RemoveAccountDTO): Promise<boolean> {
     const removed = await this.model.account.update({
       where: {
-        id: where?.accountId
+        id: where?.account
       },
       data: {
         active: false,

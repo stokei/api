@@ -99,9 +99,10 @@ export class CreateAccountCommandHandler
 
   private clearData(command: CreateAccountCommand): CreateAccountCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       firstname: cleanValue(command?.firstname),
       lastname: cleanValue(command?.lastname),
-      app: cleanValue(command?.app),
       email: cleanValue(command?.email),
       password: cleanValue(command?.password)
     });

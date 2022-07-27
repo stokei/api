@@ -10,8 +10,6 @@ import {
 import { FindPriceByIdRepository } from '@/repositories/prices/find-price-by-id';
 import { RemovePriceRepository } from '@/repositories/prices/remove-price';
 
-type RemovePriceCommandKeys = keyof RemovePriceCommand;
-
 @CommandHandler(RemovePriceCommand)
 export class RemovePriceCommandHandler
   implements ICommandHandler<RemovePriceCommand>
@@ -30,7 +28,7 @@ export class RemovePriceCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const priceId = splitServiceId(data.where?.priceId)?.id;
+    const priceId = splitServiceId(data.where?.price)?.id;
     if (!priceId) {
       throw new ParamNotFoundException('priceId');
     }
@@ -43,7 +41,7 @@ export class RemovePriceCommandHandler
     const removed = await this.removePriceRepository.execute({
       where: {
         ...data.where,
-        priceId
+        price: priceId
       }
     });
     if (!removed) {
@@ -62,7 +60,8 @@ export class RemovePriceCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        priceId: cleanValue(command?.where?.priceId)
+        app: cleanValue(command?.where?.app),
+        price: cleanValue(command?.where?.price)
       })
     });
   }

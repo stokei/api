@@ -84,6 +84,8 @@ export class CreateAccessCommandHandler
 
   private clearData(command: CreateAccessCommand): CreateAccessCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       parent: cleanValue(command?.parent)
     });
   }

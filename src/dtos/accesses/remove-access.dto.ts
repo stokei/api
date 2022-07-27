@@ -1,8 +1,8 @@
 export interface RemoveAccessWhereDTO {
   removedBy: string;
   app: string;
-  accessId: string;
-  accountId: string;
+  access: string;
+  account: string;
 }
 
 export interface RemoveAccessDTO {

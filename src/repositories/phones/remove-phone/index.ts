@@ -13,7 +13,7 @@ export class RemovePhoneRepository
   async execute({ where }: RemovePhoneDTO): Promise<boolean> {
     const removed = await this.model.phone.delete({
       where: {
-        id: where?.phoneId
+        id: where?.phone
       }
     });
     return !!removed;

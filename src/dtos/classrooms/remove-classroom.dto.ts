@@ -1,7 +1,7 @@
 export interface RemoveClassroomWhereDTO {
   removedBy: string;
   app: string;
-  classroomId: string;
+  classroom: string;
 }
 
 export interface RemoveClassroomDTO {

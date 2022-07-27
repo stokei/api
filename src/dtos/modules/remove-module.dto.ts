@@ -1,7 +1,7 @@
 export interface RemoveModuleWhereDTO {
   removedBy: string;
   app: string;
-  moduleId: string;
+  module: string;
 }
 
 export interface RemoveModuleDTO {

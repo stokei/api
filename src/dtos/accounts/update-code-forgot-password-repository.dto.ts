@@ -1,4 +1,4 @@
 export interface UpdateCodeForgotPasswordRepositoryDTO {
   code: string;
-  accountId: string;
+  account: string;
 }

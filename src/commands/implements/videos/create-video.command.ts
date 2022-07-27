@@ -4,6 +4,7 @@ import { CreateVideoDTO } from '@/dtos/videos/create-video.dto';
 
 export class CreateVideoCommand implements ICommand, CreateVideoDTO {
   name: string;
+  parent?: string;
   description?: string;
   path: string;
   poster?: string;

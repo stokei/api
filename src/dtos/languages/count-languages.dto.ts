@@ -2,6 +2,7 @@ import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
 export interface CountLanguagesWhereDTO {
   ids?: string[];
+  app?: IWhereData;
   name?: IWhereDataSearch;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;

@@ -65,6 +65,8 @@ export class CreateAddressCommandHandler
 
   private clearData(command: CreateAddressCommand): CreateAddressCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       parent: cleanValue(command?.parent),
       default: cleanValueBoolean(command?.default),
       street: cleanValue(command?.street),
@@ -73,8 +75,7 @@ export class CreateAddressCommandHandler
       city: cleanValue(command?.city),
       country: cleanValue(command?.country),
       state: cleanValue(command?.state),
-      postalCode: cleanValue(command?.postalCode),
-      createdBy: cleanValue(command?.createdBy)
+      postalCode: cleanValue(command?.postalCode)
     });
   }
 }

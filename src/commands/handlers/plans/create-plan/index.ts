@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueBoolean,
+  cleanValueNumber
+} from '@stokei/nestjs';
 
 import { CreatePlanCommand } from '@/commands/implements/plans/create-plan.command';
 import {
@@ -25,8 +30,8 @@ export class CreatePlanCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreatePlanCommandKeys>('parent');
+    if (!data?.type) {
+      throw new ParamNotFoundException<CreatePlanCommandKeys>('type');
     }
 
     const planCreated = await this.createPlanRepository.execute(data);
@@ -44,8 +49,28 @@ export class CreatePlanCommandHandler
 
   private clearData(command: CreatePlanCommand): CreatePlanCommand {
     return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
       name: cleanValue(command?.name),
-      parent: cleanValue(command?.parent)
+      type: cleanValue(command?.type),
+      checkoutVisible: cleanValueBoolean(command?.checkoutVisible),
+      hasCustomDomain: cleanValueBoolean(command?.hasCustomDomain),
+      hasCustomSite: cleanValueBoolean(command?.hasCustomSite),
+      quantityCourses: cleanValueNumber(command?.quantityCourses),
+      quantityInstructorPerCourses: cleanValueNumber(
+        command?.quantityInstructorPerCourses
+      ),
+      quantityClassroomsPerCourses: cleanValueNumber(
+        command?.quantityClassroomsPerCourses
+      ),
+      quantityModulesPerClassrooms: cleanValueNumber(
+        command?.quantityModulesPerClassrooms
+      ),
+      quantityVideosPerModules: cleanValueNumber(
+        command?.quantityVideosPerModules
+      ),
+      applicationFeePercentage: cleanValueNumber(
+        command?.applicationFeePercentage
+      )
     });
   }
 }

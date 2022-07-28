@@ -10,10 +10,11 @@ import { UpdateColorService } from '@/services/colors/update-color';
 export class UpdateColorResolver {
   constructor(private readonly updateColorService: UpdateColorService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Color)
   async updateColor(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdateColorInput
   ) {
     const response = await this.updateColorService.execute({

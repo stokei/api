@@ -10,16 +10,18 @@ import { RemoveLanguageService } from '@/services/languages/remove-language';
 export class RemoveLanguageResolver {
   constructor(private readonly removeLanguageService: RemoveLanguageService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Language)
   async removeLanguage(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveLanguageInput
   ) {
     const response = await this.removeLanguageService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

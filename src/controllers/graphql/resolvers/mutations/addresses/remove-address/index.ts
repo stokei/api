@@ -10,16 +10,18 @@ import { RemoveAddressService } from '@/services/addresses/remove-address';
 export class RemoveAddressResolver {
   constructor(private readonly removeAddressService: RemoveAddressService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Address)
   async removeAddress(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveAddressInput
   ) {
     const response = await this.removeAddressService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

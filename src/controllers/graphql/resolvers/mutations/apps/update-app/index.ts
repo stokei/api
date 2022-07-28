@@ -10,10 +10,11 @@ import { UpdateAppService } from '@/services/apps/update-app';
 export class UpdateAppResolver {
   constructor(private readonly updateAppService: UpdateAppService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => App)
   async updateApp(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdateAppInput
   ) {
     const response = await this.updateAppService.execute({

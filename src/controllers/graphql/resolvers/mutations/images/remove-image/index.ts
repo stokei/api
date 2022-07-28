@@ -10,16 +10,18 @@ import { RemoveImageService } from '@/services/images/remove-image';
 export class RemoveImageResolver {
   constructor(private readonly removeImageService: RemoveImageService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Image)
   async removeImage(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveImageInput
   ) {
     const response = await this.removeImageService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

@@ -12,10 +12,11 @@ export class CreateVideoAuthorResolver {
     private readonly createVideoAuthorService: CreateVideoAuthorService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => VideoAuthor)
   async createVideoAuthor(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateVideoAuthorInput
   ) {
     const response = await this.createVideoAuthorService.execute({

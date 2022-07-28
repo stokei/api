@@ -10,16 +10,18 @@ import { RemoveDomainService } from '@/services/domains/remove-domain';
 export class RemoveDomainResolver {
   constructor(private readonly removeDomainService: RemoveDomainService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Domain)
   async removeDomain(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveDomainInput
   ) {
     const response = await this.removeDomainService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

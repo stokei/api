@@ -10,10 +10,11 @@ import { UpdatePriceService } from '@/services/prices/update-price';
 export class UpdatePriceResolver {
   constructor(private readonly updatePriceService: UpdatePriceService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Price)
   async updatePrice(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdatePriceInput
   ) {
     const response = await this.updatePriceService.execute({

@@ -10,10 +10,11 @@ import { CreateAddressService } from '@/services/addresses/create-address';
 export class CreateAddressResolver {
   constructor(private readonly createAddressService: CreateAddressService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Address)
   async createAddress(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateAddressInput
   ) {
     const response = await this.createAddressService.execute({

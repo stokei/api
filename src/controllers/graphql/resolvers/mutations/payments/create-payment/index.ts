@@ -10,10 +10,11 @@ import { CreatePaymentService } from '@/services/payments/create-payment';
 export class CreatePaymentResolver {
   constructor(private readonly createPaymentService: CreatePaymentService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Payment)
   async createPayment(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreatePaymentInput
   ) {
     const response = await this.createPaymentService.execute({

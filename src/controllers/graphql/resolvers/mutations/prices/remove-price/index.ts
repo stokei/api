@@ -10,16 +10,18 @@ import { RemovePriceService } from '@/services/prices/remove-price';
 export class RemovePriceResolver {
   constructor(private readonly removePriceService: RemovePriceService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Price)
   async removePrice(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemovePriceInput
   ) {
     const response = await this.removePriceService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

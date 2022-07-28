@@ -10,16 +10,18 @@ import { RemoveColorService } from '@/services/colors/remove-color';
 export class RemoveColorResolver {
   constructor(private readonly removeColorService: RemoveColorService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Color)
   async removeColor(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveColorInput
   ) {
     const response = await this.removeColorService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

@@ -12,10 +12,11 @@ export class UpdateClassroomResolver {
     private readonly updateClassroomService: UpdateClassroomService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Classroom)
   async updateClassroom(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdateClassroomInput
   ) {
     const response = await this.updateClassroomService.execute({

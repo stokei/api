@@ -9,9 +9,12 @@ import { CreateCartService } from '@/services/carts/create-cart';
 export class CreateCartResolver {
   constructor(private readonly createCartService: CreateCartService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Cart)
-  async createCart(@CurrentAccount('id') currentAccountId: string) {
+  async createCart(
+    @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string
+  ) {
     const response = await this.createCartService.execute({
       createdBy: currentAccountId
     });

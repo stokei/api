@@ -10,10 +10,11 @@ import { UpdateVideoService } from '@/services/videos/update-video';
 export class UpdateVideoResolver {
   constructor(private readonly updateVideoService: UpdateVideoService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Video)
   async updateVideo(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdateVideoInput
   ) {
     const response = await this.updateVideoService.execute({

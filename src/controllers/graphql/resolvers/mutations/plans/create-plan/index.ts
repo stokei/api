@@ -10,10 +10,11 @@ import { CreatePlanService } from '@/services/plans/create-plan';
 export class CreatePlanResolver {
   constructor(private readonly createPlanService: CreatePlanService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Plan)
   async createPlan(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreatePlanInput
   ) {
     const response = await this.createPlanService.execute({

@@ -10,16 +10,18 @@ import { RemoveVideoService } from '@/services/videos/remove-video';
 export class RemoveVideoResolver {
   constructor(private readonly removeVideoService: RemoveVideoService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Video)
   async removeVideo(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveVideoInput
   ) {
     const response = await this.removeVideoService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

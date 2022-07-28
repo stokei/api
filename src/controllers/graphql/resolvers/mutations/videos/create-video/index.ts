@@ -10,10 +10,11 @@ import { CreateVideoService } from '@/services/videos/create-video';
 export class CreateVideoResolver {
   constructor(private readonly createVideoService: CreateVideoService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Video)
   async createVideo(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateVideoInput
   ) {
     const response = await this.createVideoService.execute({

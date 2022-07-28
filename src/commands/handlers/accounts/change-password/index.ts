@@ -63,7 +63,7 @@ export class ChangePasswordCommandHandler
 
     const accountId = splitServiceId(account.id)?.id;
     const updated = await this.updatePasswordRepository.execute({
-      accountId,
+      account: accountId,
       lastPassword: account.password,
       password: newPassword
     });
@@ -86,6 +86,7 @@ export class ChangePasswordCommandHandler
 
   private clearData(command: ChangePasswordCommand): ChangePasswordCommand {
     return cleanObject({
+      app: cleanValue(command?.app),
       code: cleanValue(command?.code),
       password: cleanValue(command?.password),
       email: cleanValue(command?.email)

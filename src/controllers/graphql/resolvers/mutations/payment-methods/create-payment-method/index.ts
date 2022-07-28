@@ -12,10 +12,11 @@ export class CreatePaymentMethodResolver {
     private readonly createPaymentMethodService: CreatePaymentMethodService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => PaymentMethod)
   async createPaymentMethod(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreatePaymentMethodInput
   ) {
     const response = await this.createPaymentMethodService.execute({

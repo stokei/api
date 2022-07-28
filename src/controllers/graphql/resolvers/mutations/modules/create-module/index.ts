@@ -10,10 +10,11 @@ import { CreateModuleService } from '@/services/modules/create-module';
 export class CreateModuleResolver {
   constructor(private readonly createModuleService: CreateModuleService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Module)
   async createModule(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateModuleInput
   ) {
     const response = await this.createModuleService.execute({

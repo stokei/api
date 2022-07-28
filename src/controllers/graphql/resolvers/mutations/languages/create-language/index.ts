@@ -10,10 +10,11 @@ import { CreateLanguageService } from '@/services/languages/create-language';
 export class CreateLanguageResolver {
   constructor(private readonly createLanguageService: CreateLanguageService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Language)
   async createLanguage(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateLanguageInput
   ) {
     const response = await this.createLanguageService.execute({

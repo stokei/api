@@ -12,16 +12,18 @@ export class RemoveClassroomModuleResolver {
     private readonly removeClassroomModuleService: RemoveClassroomModuleService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => ClassroomModule)
   async removeClassroomModule(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveClassroomModuleInput
   ) {
     const response = await this.removeClassroomModuleService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

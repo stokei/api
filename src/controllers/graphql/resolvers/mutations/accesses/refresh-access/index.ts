@@ -9,6 +9,7 @@ import {
   IRefreshTokenPayload
 } from '@stokei/nestjs';
 
+import { AppGuard } from '@/common/guards/app';
 import { Access } from '@/controllers/graphql/types/access';
 import { AuthResponse } from '@/controllers/graphql/types/auth-response';
 import { RefreshAccessService } from '@/services/accesses/refresh-access';
@@ -17,7 +18,7 @@ import { RefreshAccessService } from '@/services/accesses/refresh-access';
 export class RefreshAccessResolver {
   constructor(private readonly refreshAccessService: RefreshAccessService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @AuthenticationConfig({ hasExpiresValidation: false })
   @Mutation(() => AuthResponse)
   async refreshAccess(
@@ -32,8 +33,8 @@ export class RefreshAccessResolver {
     }
     const response = await this.refreshAccessService.execute({
       where: {
-        accessId: refreshToken.code,
-        accountId: currentAccount.id
+        access: refreshToken.code,
+        account: currentAccount.id
       }
     });
     return response;

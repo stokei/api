@@ -10,10 +10,11 @@ import { CreateDomainService } from '@/services/domains/create-domain';
 export class CreateDomainResolver {
   constructor(private readonly createDomainService: CreateDomainService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Domain)
   async createDomain(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateDomainInput
   ) {
     const response = await this.createDomainService.execute({

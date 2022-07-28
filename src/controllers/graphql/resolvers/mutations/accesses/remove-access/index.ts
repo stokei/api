@@ -1,11 +1,9 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import {
-  AuthenticatedGuard,
-  CurrentAccount,
-  IAuthenticatedAccount
-} from '@stokei/nestjs';
+import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
+import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
+import { AppGuard } from '@/common/guards/app';
 import { RemoveAccessInput } from '@/controllers/graphql/inputs/accesses/remove-access.input';
 import { Access } from '@/controllers/graphql/types/access';
 import { RemoveAccessService } from '@/services/accesses/remove-access';
@@ -14,19 +12,20 @@ import { RemoveAccessService } from '@/services/accesses/remove-access';
 export class RemoveAccessResolver {
   constructor(private readonly removeAccessService: RemoveAccessService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Access)
   async removeAccess(
     @CurrentAccount('id') currentAccountId: string,
-    @Args('input') data: RemoveAccessInput,
-    @CurrentAccount() currentAccount: IAuthenticatedAccount
+    @CurrentApp('id') appId: string,
+    @Args('input') data: RemoveAccessInput
   ) {
     const response = await this.removeAccessService.execute({
       ...data,
       where: {
         ...data?.where,
-        accountId: currentAccount.id,
-        removedBy: currentAccount.id
+        app: appId,
+        account: currentAccountId,
+        removedBy: currentAccountId
       }
     });
     return response;

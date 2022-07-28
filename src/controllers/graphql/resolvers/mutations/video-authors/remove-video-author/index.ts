@@ -12,16 +12,18 @@ export class RemoveVideoAuthorResolver {
     private readonly removeVideoAuthorService: RemoveVideoAuthorService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => VideoAuthor)
   async removeVideoAuthor(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveVideoAuthorInput
   ) {
     const response = await this.removeVideoAuthorService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

@@ -10,10 +10,11 @@ import { UpdateCourseService } from '@/services/courses/update-course';
 export class UpdateCourseResolver {
   constructor(private readonly updateCourseService: UpdateCourseService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Course)
   async updateCourse(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdateCourseInput
   ) {
     const response = await this.updateCourseService.execute({

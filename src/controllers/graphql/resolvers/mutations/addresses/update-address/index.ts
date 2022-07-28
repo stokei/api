@@ -10,10 +10,11 @@ import { UpdateAddressService } from '@/services/addresses/update-address';
 export class UpdateAddressResolver {
   constructor(private readonly updateAddressService: UpdateAddressService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Address)
   async updateAddress(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdateAddressInput
   ) {
     const response = await this.updateAddressService.execute({

@@ -4,7 +4,4 @@ import { Field, InputType } from '@nestjs/graphql';
 export class ForgotPasswordInput {
   @Field()
   email: string;
-
-  @Field()
-  app: string;
 }

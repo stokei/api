@@ -3,9 +3,6 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class SignUpInput {
   @Field()
-  app: string;
-
-  @Field()
   firstname: string;
 
   @Field()

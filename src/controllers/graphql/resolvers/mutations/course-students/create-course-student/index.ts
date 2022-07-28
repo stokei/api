@@ -12,10 +12,11 @@ export class CreateCourseStudentResolver {
     private readonly createCourseStudentService: CreateCourseStudentService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => CourseStudent)
   async createCourseStudent(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateCourseStudentInput
   ) {
     const response = await this.createCourseStudentService.execute({

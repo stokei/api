@@ -10,10 +10,11 @@ import { UpdateLanguageService } from '@/services/languages/update-language';
 export class UpdateLanguageResolver {
   constructor(private readonly updateLanguageService: UpdateLanguageService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Language)
   async updateLanguage(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdateLanguageInput
   ) {
     const response = await this.updateLanguageService.execute({

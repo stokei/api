@@ -12,16 +12,18 @@ export class RemoveClassroomResolver {
     private readonly removeClassroomService: RemoveClassroomService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Classroom)
   async removeClassroom(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveClassroomInput
   ) {
     const response = await this.removeClassroomService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

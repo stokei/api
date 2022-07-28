@@ -10,16 +10,18 @@ import { RemoveCartItemService } from '@/services/cart-items/remove-cart-item';
 export class RemoveCartItemResolver {
   constructor(private readonly removeCartItemService: RemoveCartItemService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => CartItem)
   async removeCartItem(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveCartItemInput
   ) {
     const response = await this.removeCartItemService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

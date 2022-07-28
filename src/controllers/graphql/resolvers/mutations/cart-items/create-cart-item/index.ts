@@ -10,10 +10,11 @@ import { CreateCartItemService } from '@/services/cart-items/create-cart-item';
 export class CreateCartItemResolver {
   constructor(private readonly createCartItemService: CreateCartItemService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => CartItem)
   async createCartItem(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateCartItemInput
   ) {
     const response = await this.createCartItemService.execute({

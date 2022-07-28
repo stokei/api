@@ -12,10 +12,11 @@ export class CreateClassroomModuleResolver {
     private readonly createClassroomModuleService: CreateClassroomModuleService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => ClassroomModule)
   async createClassroomModule(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateClassroomModuleInput
   ) {
     const response = await this.createClassroomModuleService.execute({

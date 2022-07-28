@@ -10,16 +10,18 @@ import { RemoveModuleService } from '@/services/modules/remove-module';
 export class RemoveModuleResolver {
   constructor(private readonly removeModuleService: RemoveModuleService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Module)
   async removeModule(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveModuleInput
   ) {
     const response = await this.removeModuleService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

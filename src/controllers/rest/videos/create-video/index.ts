@@ -21,7 +21,7 @@ export class CreateVideoController {
   constructor(private readonly createVideoService: CreateVideoService) {}
 
   @Post()
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @AuthenticationConfig({ isRequired: false })
   @ApiCreatedResponse({
     description: 'The video has been successfully created.',
@@ -29,7 +29,8 @@ export class CreateVideoController {
   })
   async createVideo(
     @Body() data: CreateVideoDTO,
-    @CurrentAccount('id') currentAccountId: string
+    @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string
   ) {
     return this.createVideoService.execute({
       ...data,

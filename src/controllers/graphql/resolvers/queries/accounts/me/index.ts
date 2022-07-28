@@ -11,7 +11,7 @@ import { AccountModel } from '@/models/account.model';
 export class MeAccountResolver {
   constructor(private readonly accountsLoader: AccountsLoader) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Query(() => MeAccount)
   async me(@CurrentAccount() currentAccount: AccountModel) {
     if (!currentAccount?.id) {

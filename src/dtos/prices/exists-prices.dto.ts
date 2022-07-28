@@ -1,6 +1,6 @@
 export interface ExistsPricesWhereDTO {
   parent?: string;
-  default?: string;
+  default?: boolean;
 }
 
 export interface ExistsPricesDTO {

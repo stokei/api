@@ -10,10 +10,11 @@ import { CreateOrderService } from '@/services/orders/create-order';
 export class CreateOrderResolver {
   constructor(private readonly createOrderService: CreateOrderService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Order)
   async createOrder(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateOrderInput
   ) {
     const response = await this.createOrderService.execute({

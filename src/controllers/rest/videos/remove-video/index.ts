@@ -20,7 +20,7 @@ export class RemoveVideoController {
   constructor(private readonly removeVideoService: RemoveVideoService) {}
 
   @Delete()
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @AuthenticationConfig({ isRequired: false })
   @ApiOkResponse({
     description: 'The video has been successfully deleted.',
@@ -28,7 +28,8 @@ export class RemoveVideoController {
   })
   async removeVideo(
     @Param('id') videoId: string,
-    @CurrentAccount('id') currentAccountId: string
+    @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string
   ) {
     return this.removeVideoService.execute({
       where: {

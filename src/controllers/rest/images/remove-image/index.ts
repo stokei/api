@@ -20,7 +20,7 @@ export class RemoveImageController {
   constructor(private readonly removeImageService: RemoveImageService) {}
 
   @Delete()
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @AuthenticationConfig({ isRequired: false })
   @ApiOkResponse({
     description: 'The image has been successfully deleted.',
@@ -28,7 +28,8 @@ export class RemoveImageController {
   })
   async removeImage(
     @Param('id') imageId: string,
-    @CurrentAccount('id') currentAccountId: string
+    @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string
   ) {
     return this.removeImageService.execute({
       where: {

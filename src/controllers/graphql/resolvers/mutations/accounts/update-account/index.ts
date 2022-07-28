@@ -10,10 +10,11 @@ import { UpdateAccountService } from '@/services/accounts/update-account';
 export class UpdateAccountResolver {
   constructor(private readonly updateAccountService: UpdateAccountService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Account)
   async updateAccount(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdateAccountInput
   ) {
     const response = await this.updateAccountService.execute({

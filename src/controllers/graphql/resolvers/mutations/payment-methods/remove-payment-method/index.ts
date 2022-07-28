@@ -12,16 +12,18 @@ export class RemovePaymentMethodResolver {
     private readonly removePaymentMethodService: RemovePaymentMethodService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => PaymentMethod)
   async removePaymentMethod(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemovePaymentMethodInput
   ) {
     const response = await this.removePaymentMethodService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

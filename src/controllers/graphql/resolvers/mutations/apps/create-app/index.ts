@@ -10,10 +10,11 @@ import { CreateAppService } from '@/services/apps/create-app';
 export class CreateAppResolver {
   constructor(private readonly createAppService: CreateAppService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => App)
   async createApp(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateAppInput
   ) {
     const response = await this.createAppService.execute({

@@ -12,10 +12,11 @@ export class CreateClassroomResolver {
     private readonly createClassroomService: CreateClassroomService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Classroom)
   async createClassroom(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateClassroomInput
   ) {
     const response = await this.createClassroomService.execute({

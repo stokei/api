@@ -10,10 +10,11 @@ import { CreatePhoneService } from '@/services/phones/create-phone';
 export class CreatePhoneResolver {
   constructor(private readonly createPhoneService: CreatePhoneService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Phone)
   async createPhone(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreatePhoneInput
   ) {
     const response = await this.createPhoneService.execute({

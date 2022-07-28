@@ -10,10 +10,11 @@ import { CreatePriceService } from '@/services/prices/create-price';
 export class CreatePriceResolver {
   constructor(private readonly createPriceService: CreatePriceService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Price)
   async createPrice(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreatePriceInput
   ) {
     const response = await this.createPriceService.execute({

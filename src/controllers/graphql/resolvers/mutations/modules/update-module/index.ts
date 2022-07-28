@@ -10,10 +10,11 @@ import { UpdateModuleService } from '@/services/modules/update-module';
 export class UpdateModuleResolver {
   constructor(private readonly updateModuleService: UpdateModuleService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Module)
   async updateModule(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdateModuleInput
   ) {
     const response = await this.updateModuleService.execute({

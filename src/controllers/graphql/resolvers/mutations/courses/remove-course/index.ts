@@ -10,16 +10,18 @@ import { RemoveCourseService } from '@/services/courses/remove-course';
 export class RemoveCourseResolver {
   constructor(private readonly removeCourseService: RemoveCourseService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Course)
   async removeCourse(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemoveCourseInput
   ) {
     const response = await this.removeCourseService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

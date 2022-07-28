@@ -13,7 +13,7 @@ import { RemoveAccountService } from '@/services/accounts/remove-account';
 export class RemoveAccountResolver {
   constructor(private readonly removeAccountService: RemoveAccountService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Account)
   async removeAccount(@CurrentAccount() account: IAuthenticatedAccount) {
     const response = await this.removeAccountService.execute({

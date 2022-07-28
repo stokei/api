@@ -10,16 +10,18 @@ import { RemovePhoneService } from '@/services/phones/remove-phone';
 export class RemovePhoneResolver {
   constructor(private readonly removePhoneService: RemovePhoneService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Phone)
   async removePhone(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: RemovePhoneInput
   ) {
     const response = await this.removePhoneService.execute({
       ...data,
       where: {
         ...data?.where,
+        app: appId,
         removedBy: currentAccountId
       }
     });

@@ -10,10 +10,11 @@ import { CreateColorService } from '@/services/colors/create-color';
 export class CreateColorResolver {
   constructor(private readonly createColorService: CreateColorService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Color)
   async createColor(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateColorInput
   ) {
     const response = await this.createColorService.execute({

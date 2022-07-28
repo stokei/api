@@ -20,13 +20,16 @@ export class CreateImageController {
   constructor(private readonly createImageService: CreateImageService) {}
 
   @Post()
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @AuthenticationConfig({ isRequired: false })
   @ApiCreatedResponse({
     description: 'The image has been successfully created.',
     type: ImageModel
   })
-  async createImage(@CurrentAccount('id') currentAccountId: string) {
+  async createImage(
+    @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string
+  ) {
     return this.createImageService.execute({
       path: '',
       createdBy: currentAccountId

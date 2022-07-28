@@ -10,10 +10,11 @@ import { CreateCurrencyService } from '@/services/currencies/create-currency';
 export class CreateCurrencyResolver {
   constructor(private readonly createCurrencyService: CreateCurrencyService) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Currency)
   async createCurrency(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: CreateCurrencyInput
   ) {
     const response = await this.createCurrencyService.execute({

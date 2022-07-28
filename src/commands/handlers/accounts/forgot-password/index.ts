@@ -9,7 +9,7 @@ import {
   ErrorUpdatingForgotPasswordCodeException,
   ParamNotFoundException
 } from '@/errors';
-import { FindAccountByEmailAndParentRepository } from '@/repositories/accounts/find-account-by-email-and-app';
+import { FindAccountByEmailAndAppRepository } from '@/repositories/accounts/find-account-by-email-and-app';
 import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
 import { UpdateCodeForgotPasswordRepository } from '@/repositories/accounts/update-code-forgot-password';
 
@@ -20,7 +20,7 @@ export class ForgotPasswordCommandHandler
   implements ICommandHandler<ForgotPasswordCommand>
 {
   constructor(
-    private readonly findAccountByEmailAndParentRepository: FindAccountByEmailAndParentRepository,
+    private readonly findAccountByEmailAndAppRepository: FindAccountByEmailAndAppRepository,
     private readonly findAccountByIdRepository: FindAccountByIdRepository,
     private readonly updateCodeForgotPasswordRepository: UpdateCodeForgotPasswordRepository,
     private readonly publisher: EventPublisher
@@ -38,7 +38,7 @@ export class ForgotPasswordCommandHandler
       throw new ParamNotFoundException<ForgotPasswordCommandKeys>('email');
     }
 
-    const account = await this.findAccountByEmailAndParentRepository.execute({
+    const account = await this.findAccountByEmailAndAppRepository.execute({
       email: data.email,
       app: data.app
     });
@@ -49,7 +49,7 @@ export class ForgotPasswordCommandHandler
     const accountId = splitServiceId(account.id)?.id;
     const code = uuid();
     const updated = await this.updateCodeForgotPasswordRepository.execute({
-      accountId,
+      account: accountId,
       code
     });
     if (!updated) {

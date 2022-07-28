@@ -6,10 +6,12 @@ export class ChangePasswordCommand implements ICommand, ChangePasswordDTO {
   code: string;
   password: string;
   email: string;
+  app: string;
 
   constructor(data: ChangePasswordDTO) {
     this.code = data?.code;
     this.password = data?.password;
     this.email = data?.email;
+    this.app = data?.app;
   }
 }

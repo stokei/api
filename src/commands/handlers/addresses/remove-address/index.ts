@@ -11,8 +11,6 @@ import {
 import { FindAddressByIdRepository } from '@/repositories/addresses/find-address-by-id';
 import { RemoveAddressRepository } from '@/repositories/addresses/remove-address';
 
-type RemoveAddressCommandKeys = keyof RemoveAddressCommand;
-
 @CommandHandler(RemoveAddressCommand)
 export class RemoveAddressCommandHandler
   implements ICommandHandler<RemoveAddressCommand>

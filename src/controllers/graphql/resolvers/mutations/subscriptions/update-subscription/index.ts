@@ -12,10 +12,11 @@ export class UpdateSubscriptionResolver {
     private readonly updateSubscriptionService: UpdateSubscriptionService
   ) {}
 
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Subscription)
   async updateSubscription(
     @CurrentAccount('id') currentAccountId: string,
+    @CurrentApp('id') appId: string,,
     @Args('input') data: UpdateSubscriptionInput
   ) {
     const response = await this.updateSubscriptionService.execute({

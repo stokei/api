@@ -8,9 +8,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllClassroomsDTO,
+  WhereDataFindAllClassroomsDTO
+} from '@/dtos/classrooms/find-all-classrooms.dto';
 import { ClassroomEntity } from '@/entities';
 import { ClassroomModel } from '@/models/classroom.model';
 import { FindAllClassroomsQuery } from '@/queries/implements/classrooms/find-all-classrooms.query';
@@ -27,8 +33,13 @@ export class ClassroomMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
+        app: prismaMapper.toWhereData(operatorData.app),
         parent: prismaMapper.toWhereData(operatorData.parent),
+        name: prismaMapper.toWhereDataSearch(operatorData.name),
+        description: prismaMapper.toWhereDataSearch(operatorData.description),
+        hasAccessToAllModules: prismaMapper.toWhereData(
+          operatorData.hasAccessToAllModules
+        ),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

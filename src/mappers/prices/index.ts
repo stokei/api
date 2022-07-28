@@ -8,9 +8,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllPricesDTO,
+  WhereDataFindAllPricesDTO
+} from '@/dtos/prices/find-all-prices.dto';
 import { PriceEntity } from '@/entities';
 import { PriceModel } from '@/models/price.model';
 import { FindAllPricesQuery } from '@/queries/implements/prices/find-all-prices.query';
@@ -27,8 +33,15 @@ export class PriceMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
         parent: prismaMapper.toWhereData(operatorData.parent),
+        default: prismaMapper.toWhereData(operatorData.default),
+        type: operatorData.type,
+        inventoryType: operatorData.inventoryType,
+        recurringIntervalCount: prismaMapper.toWhereData(
+          operatorData.recurringIntervalCount
+        ),
+        recurringIntervalType: operatorData.recurringIntervalType,
+        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

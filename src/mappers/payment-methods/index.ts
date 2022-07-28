@@ -6,14 +6,58 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllPaymentMethodsDTO,
+  WhereDataFindAllPaymentMethodsDTO
+} from '@/dtos/payment-methods/find-all-payment-methods.dto';
 import { PaymentMethodEntity } from '@/entities';
 import { PaymentMethodModel } from '@/models/payment-method.model';
 import { FindAllPaymentMethodsQuery } from '@/queries/implements/payment-methods/find-all-payment-methods.query';
 
 export class PaymentMethodMapper {
+  toWhereFindAllPrisma(where: IWhere<WhereDataFindAllPaymentMethodsDTO>) {
+    const prismaMapper = new PrismaMapper();
+    const mapFromDTOOperatorDataToPrismaOperatorData = (
+      operator: IOperator
+    ) => {
+      const operatorData = where?.[operator];
+      if (!operatorData) {
+        return null;
+      }
+      return {
+        id: prismaMapper.toWhereIds(operatorData.ids),
+        parent: prismaMapper.toWhereData(operatorData.parent),
+        type: operatorData.type,
+        provider: operatorData.provider,
+        externalPaymentMethod: prismaMapper.toWhereData(
+          operatorData.externalPaymentMethod
+        ),
+        active: prismaMapper.toWhereData(operatorData.active),
+        app: prismaMapper.toWhereData(operatorData.app),
+        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+      };
+    };
+    return prismaMapper.toWhere({
+      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
+      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
+      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+    });
+  }
+  toFindAllPrisma(data: FindAllPaymentMethodsDTO) {
+    const prismaMapper = new PrismaMapper();
+    const orderBy = prismaMapper.toOrderBy(cleanObject(data?.orderBy));
+    return {
+      where: this.toWhereFindAllPrisma(data?.where),
+      orderBy,
+      ...prismaMapper.toPagination({ page: data?.page })
+    };
+  }
   toFindAllQueryClean(
     query: FindAllPaymentMethodsQuery
   ): FindAllPaymentMethodsQuery {

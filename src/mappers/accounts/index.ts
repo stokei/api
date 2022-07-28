@@ -6,9 +6,15 @@ import {
   cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllAccountsDTO,
+  WhereDataFindAllAccountsDTO
+} from '@/dtos/accounts/find-all-accounts.dto';
 import { AccountEntity } from '@/entities';
 import { AccountModel } from '@/models/account.model';
 import { FindAllAccountsQuery } from '@/queries/implements/accounts/find-all-accounts.query';
@@ -25,10 +31,18 @@ export class AccountMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
+        firstname: prismaMapper.toWhereDataSearch(operatorData.firstname),
+        lastname: prismaMapper.toWhereDataSearch(operatorData.lastname),
+        email: prismaMapper.toWhereData(operatorData.email),
+        username: prismaMapper.toWhereData(operatorData.username),
+        ...(operatorData?.roles?.length > 0 && {
+          roles: {
+            hasEvery: operatorData?.roles
+          }
+        })
       };
     };
     return prismaMapper.toWhere({

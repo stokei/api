@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import {
-  IBaseRepository,
-  IOperator,
-  IWhere,
-  PrismaMapper
-} from '@stokei/nestjs';
+import { IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
 import { CountCartItemsDTO } from '@/dtos/cart-items/count-cart-items.dto';
+import { CartItemMapper } from '@/mappers/cart-items';
 
 @Injectable()
 export class CountCartItemsRepository
@@ -16,28 +12,9 @@ export class CountCartItemsRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute({ where }: CountCartItemsDTO): Promise<number> {
-    const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
+    const cartItemMapper = new CartItemMapper();
     return await this.model.cartItem.count({
-      where: prismaMapper.toWhere({
-        AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-        OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-        NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
-      })
+      where: cartItemMapper.toWhereFindAllPrisma(where)
     });
   }
 }

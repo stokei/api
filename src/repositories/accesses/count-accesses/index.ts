@@ -12,8 +12,9 @@ export class CountAccessesRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute({ where }: CountAccessesDTO): Promise<number> {
+    const accessMapper = new AccessMapper();
     return await this.model.access.count({
-      where: new AccessMapper().toWhereFindAllPrisma(where)
+      where: accessMapper.toWhereFindAllPrisma(where)
     });
   }
 }

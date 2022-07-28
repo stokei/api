@@ -7,14 +7,57 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllSubscriptionsDTO,
+  WhereDataFindAllSubscriptionsDTO
+} from '@/dtos/subscriptions/find-all-subscriptions.dto';
 import { SubscriptionEntity } from '@/entities';
 import { SubscriptionModel } from '@/models/subscription.model';
 import { FindAllSubscriptionsQuery } from '@/queries/implements/subscriptions/find-all-subscriptions.query';
 
 export class SubscriptionMapper {
+  toWhereFindAllPrisma(where: IWhere<WhereDataFindAllSubscriptionsDTO>) {
+    const prismaMapper = new PrismaMapper();
+    const mapFromDTOOperatorDataToPrismaOperatorData = (
+      operator: IOperator
+    ) => {
+      const operatorData = where?.[operator];
+      if (!operatorData) {
+        return null;
+      }
+      return {
+        id: prismaMapper.toWhereIds(operatorData.ids),
+        parent: prismaMapper.toWhereData(operatorData.parent),
+        app: prismaMapper.toWhereData(operatorData.app),
+        product: prismaMapper.toWhereData(operatorData.product),
+        status: operatorData.status,
+        type: operatorData.type,
+        active: prismaMapper.toWhereData(operatorData.active),
+        automaticRenew: prismaMapper.toWhereData(operatorData.automaticRenew),
+        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+      };
+    };
+    return prismaMapper.toWhere({
+      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
+      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
+      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+    });
+  }
+  toFindAllPrisma(data: FindAllSubscriptionsDTO) {
+    const prismaMapper = new PrismaMapper();
+    const orderBy = prismaMapper.toOrderBy(cleanObject(data?.orderBy));
+    return {
+      where: this.toWhereFindAllPrisma(data?.where),
+      orderBy,
+      ...prismaMapper.toPagination({ page: data?.page })
+    };
+  }
   toFindAllQueryClean(
     query: FindAllSubscriptionsQuery
   ): FindAllSubscriptionsQuery {

@@ -7,14 +7,53 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllCourseStudentsDTO,
+  WhereDataFindAllCourseStudentsDTO
+} from '@/dtos/course-students/find-all-course-students.dto';
 import { CourseStudentEntity } from '@/entities';
 import { CourseStudentModel } from '@/models/course-student.model';
 import { FindAllCourseStudentsQuery } from '@/queries/implements/course-students/find-all-course-students.query';
 
 export class CourseStudentMapper {
+  toWhereFindAllPrisma(where: IWhere<WhereDataFindAllCourseStudentsDTO>) {
+    const prismaMapper = new PrismaMapper();
+    const mapFromDTOOperatorDataToPrismaOperatorData = (
+      operator: IOperator
+    ) => {
+      const operatorData = where?.[operator];
+      if (!operatorData) {
+        return null;
+      }
+      return {
+        id: prismaMapper.toWhereIds(operatorData.ids),
+        course: prismaMapper.toWhereData(operatorData.course),
+        student: prismaMapper.toWhereData(operatorData.student),
+        app: prismaMapper.toWhereData(operatorData.app),
+        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+      };
+    };
+    return prismaMapper.toWhere({
+      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
+      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
+      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+    });
+  }
+  toFindAllPrisma(data: FindAllCourseStudentsDTO) {
+    const prismaMapper = new PrismaMapper();
+    const orderBy = prismaMapper.toOrderBy(cleanObject(data?.orderBy));
+    return {
+      where: this.toWhereFindAllPrisma(data?.where),
+      orderBy,
+      ...prismaMapper.toPagination({ page: data?.page })
+    };
+  }
   toFindAllQueryClean(
     query: FindAllCourseStudentsQuery
   ): FindAllCourseStudentsQuery {

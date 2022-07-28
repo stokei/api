@@ -9,9 +9,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllPlansDTO,
+  WhereDataFindAllPlansDTO
+} from '@/dtos/plans/find-all-plans.dto';
 import { PlanEntity } from '@/entities';
 import { PlanModel } from '@/models/plan.model';
 import { FindAllPlansQuery } from '@/queries/implements/plans/find-all-plans.query';
@@ -29,7 +35,28 @@ export class PlanMapper {
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        type: operatorData.type,
+        checkoutVisible: prismaMapper.toWhereData(operatorData.checkoutVisible),
+        status: operatorData.status,
+        hasCustomDomain: prismaMapper.toWhereData(operatorData.hasCustomDomain),
+        hasCustomSite: prismaMapper.toWhereData(operatorData.hasCustomSite),
+        quantityCourses: prismaMapper.toWhereData(operatorData.quantityCourses),
+        quantityInstructorPerCourses: prismaMapper.toWhereData(
+          operatorData.quantityInstructorPerCourses
+        ),
+        quantityClassroomsPerCourses: prismaMapper.toWhereData(
+          operatorData.quantityClassroomsPerCourses
+        ),
+        quantityModulesPerClassrooms: prismaMapper.toWhereData(
+          operatorData.quantityModulesPerClassrooms
+        ),
+        quantityVideosPerModules: prismaMapper.toWhereData(
+          operatorData.quantityVideosPerModules
+        ),
+        applicationFeePercentage: prismaMapper.toWhereData(
+          operatorData.applicationFeePercentage
+        ),
+        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

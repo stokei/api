@@ -6,9 +6,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllPaymentsDTO,
+  WhereDataFindAllPaymentsDTO
+} from '@/dtos/payments/find-all-payments.dto';
 import { PaymentEntity } from '@/entities';
 import { PaymentModel } from '@/models/payment.model';
 import { FindAllPaymentsQuery } from '@/queries/implements/payments/find-all-payments.query';
@@ -25,8 +31,14 @@ export class PaymentMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        customer: prismaMapper.toWhereData(operatorData.customer),
+        order: prismaMapper.toWhereData(operatorData.order),
+        externalPayment: prismaMapper.toWhereData(operatorData.externalPayment),
+        paymentMethod: prismaMapper.toWhereData(operatorData.paymentMethod),
+        status: operatorData.status,
+        oldStatus: operatorData.oldStatus,
+        active: prismaMapper.toWhereData(operatorData.active),
+        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

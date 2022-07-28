@@ -7,9 +7,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllModulesDTO,
+  WhereDataFindAllModulesDTO
+} from '@/dtos/modules/find-all-modules.dto';
 import { ModuleEntity } from '@/entities';
 import { ModuleModel } from '@/models/module.model';
 import { FindAllModulesQuery } from '@/queries/implements/modules/find-all-modules.query';
@@ -27,7 +33,9 @@ export class ModuleMapper {
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
+        description: prismaMapper.toWhereDataSearch(operatorData.description),
         parent: prismaMapper.toWhereData(operatorData.parent),
+        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

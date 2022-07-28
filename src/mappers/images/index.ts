@@ -6,9 +6,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllImagesDTO,
+  WhereDataFindAllImagesDTO
+} from '@/dtos/images/find-all-images.dto';
 import { ImageEntity } from '@/entities';
 import { ImageModel } from '@/models/image.model';
 import { FindAllImagesQuery } from '@/queries/implements/images/find-all-images.query';
@@ -25,8 +31,7 @@ export class ImageMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

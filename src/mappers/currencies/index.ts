@@ -8,9 +8,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllCurrenciesDTO,
+  WhereDataFindAllCurrenciesDTO
+} from '@/dtos/currencies/find-all-currencies.dto';
 import { CurrencyEntity } from '@/entities';
 import { CurrencyModel } from '@/models/currency.model';
 import { FindAllCurrenciesQuery } from '@/queries/implements/currencies/find-all-currencies.query';
@@ -28,7 +34,8 @@ export class CurrencyMapper {
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        minorUnit: prismaMapper.toWhereData(operatorData.minorUnit),
+        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

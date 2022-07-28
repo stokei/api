@@ -1,10 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  cleanObject,
-  IBaseRepository,
-  IOperator,
-  PrismaMapper
-} from '@stokei/nestjs';
+import { IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
 import { FindAllClassroomInstructorsDTO } from '@/dtos/classroom-instructors/find-all-classroom-instructors.dto';
@@ -24,33 +19,11 @@ export class FindAllClassroomInstructorsRepository
   async execute(
     data: FindAllClassroomInstructorsDTO
   ): Promise<ClassroomInstructorModel[]> {
-    const prismaMapper = new PrismaMapper();
-    const orderBy = prismaMapper.toOrderBy(cleanObject(data?.orderBy));
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = data?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        instructor: prismaMapper.toWhereData(operatorData.instructor),
-        classroom: prismaMapper.toWhereData(operatorData.classroom),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
-    return new ClassroomInstructorMapper().toModels(
-      await this.model.classroomInstructor.findMany({
-        where: prismaMapper.toWhere({
-          AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-          OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-          NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
-        }),
-        orderBy,
-        ...prismaMapper.toPagination({ page: data?.page })
-      })
+    const classroomInstructorMapper = new ClassroomInstructorMapper();
+    return classroomInstructorMapper.toModels(
+      await this.model.classroomInstructor.findMany(
+        classroomInstructorMapper.toFindAllPrisma(data)
+      )
     );
   }
 }

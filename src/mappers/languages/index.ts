@@ -8,9 +8,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllLanguagesDTO,
+  WhereDataFindAllLanguagesDTO
+} from '@/dtos/languages/find-all-languages.dto';
 import { LanguageEntity } from '@/entities';
 import { LanguageModel } from '@/models/language.model';
 import { FindAllLanguagesQuery } from '@/queries/implements/languages/find-all-languages.query';
@@ -28,7 +34,8 @@ export class LanguageMapper {
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        active: prismaMapper.toWhereData(operatorData.active),
+        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

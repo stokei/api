@@ -1,10 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  cleanObject,
-  IBaseRepository,
-  IOperator,
-  PrismaMapper
-} from '@stokei/nestjs';
+import { IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
 import { FindAllCartsDTO } from '@/dtos/carts/find-all-carts.dto';
@@ -18,31 +13,9 @@ export class FindAllCartsRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute(data: FindAllCartsDTO): Promise<CartModel[]> {
-    const prismaMapper = new PrismaMapper();
-    const orderBy = prismaMapper.toOrderBy(cleanObject(data?.orderBy));
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = data?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy)
-      };
-    };
-    return new CartMapper().toModels(
-      await this.model.cart.findMany({
-        where: prismaMapper.toWhere({
-          AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-          OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-          NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
-        }),
-        orderBy,
-        ...prismaMapper.toPagination({ page: data?.page })
-      })
+    const cartMapper = new CartMapper();
+    return cartMapper.toModels(
+      await this.model.cart.findMany(cartMapper.toFindAllPrisma(data))
     );
   }
 }

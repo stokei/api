@@ -6,9 +6,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllCartsDTO,
+  WhereDataFindAllCartsDTO
+} from '@/dtos/carts/find-all-carts.dto';
 import { CartEntity } from '@/entities';
 import { CartModel } from '@/models/cart.model';
 import { FindAllCartsQuery } from '@/queries/implements/carts/find-all-carts.query';
@@ -25,8 +31,7 @@ export class CartMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

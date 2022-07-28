@@ -6,14 +6,53 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllVideoAuthorsDTO,
+  WhereDataFindAllVideoAuthorsDTO
+} from '@/dtos/video-authors/find-all-video-authors.dto';
 import { VideoAuthorEntity } from '@/entities';
 import { VideoAuthorModel } from '@/models/video-author.model';
 import { FindAllVideoAuthorsQuery } from '@/queries/implements/video-authors/find-all-video-authors.query';
 
 export class VideoAuthorMapper {
+  toWhereFindAllPrisma(where: IWhere<WhereDataFindAllVideoAuthorsDTO>) {
+    const prismaMapper = new PrismaMapper();
+    const mapFromDTOOperatorDataToPrismaOperatorData = (
+      operator: IOperator
+    ) => {
+      const operatorData = where?.[operator];
+      if (!operatorData) {
+        return null;
+      }
+      return {
+        id: prismaMapper.toWhereIds(operatorData.ids),
+        video: prismaMapper.toWhereData(operatorData.video),
+        author: prismaMapper.toWhereData(operatorData.author),
+        app: prismaMapper.toWhereData(operatorData.app),
+        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+      };
+    };
+    return prismaMapper.toWhere({
+      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
+      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
+      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+    });
+  }
+  toFindAllPrisma(data: FindAllVideoAuthorsDTO) {
+    const prismaMapper = new PrismaMapper();
+    const orderBy = prismaMapper.toOrderBy(cleanObject(data?.orderBy));
+    return {
+      where: this.toWhereFindAllPrisma(data?.where),
+      orderBy,
+      ...prismaMapper.toPagination({ page: data?.page })
+    };
+  }
   toFindAllQueryClean(
     query: FindAllVideoAuthorsQuery
   ): FindAllVideoAuthorsQuery {

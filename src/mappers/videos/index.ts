@@ -8,9 +8,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllVideosDTO,
+  WhereDataFindAllVideosDTO
+} from '@/dtos/videos/find-all-videos.dto';
 import { VideoEntity } from '@/entities';
 import { VideoModel } from '@/models/video.model';
 import { FindAllVideosQuery } from '@/queries/implements/videos/find-all-videos.query';
@@ -29,6 +35,11 @@ export class VideoMapper {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
         parent: prismaMapper.toWhereData(operatorData.parent),
+        app: prismaMapper.toWhereData(operatorData.app),
+        slug: prismaMapper.toWhereData(operatorData.slug),
+        description: prismaMapper.toWhereDataSearch(operatorData.description),
+        status: operatorData.status,
+        active: prismaMapper.toWhereData(operatorData.active),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

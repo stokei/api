@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import {
-  IBaseRepository,
-  IOperator,
-  IWhere,
-  PrismaMapper
-} from '@stokei/nestjs';
+import { IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
 import { CountCourseInstructorsDTO } from '@/dtos/course-instructors/count-course-instructors.dto';
+import { CourseInstructorMapper } from '@/mappers/course-instructors';
 
 @Injectable()
 export class CountCourseInstructorsRepository
@@ -16,28 +12,9 @@ export class CountCourseInstructorsRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute({ where }: CountCourseInstructorsDTO): Promise<number> {
-    const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        course: prismaMapper.toWhereData(operatorData.course),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
+    const courseInstructorMapper = new CourseInstructorMapper();
     return await this.model.courseInstructor.count({
-      where: prismaMapper.toWhere({
-        AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-        OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-        NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
-      })
+      where: courseInstructorMapper.toWhereFindAllPrisma(where)
     });
   }
 }

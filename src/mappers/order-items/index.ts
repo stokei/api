@@ -8,9 +8,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllOrderItemsDTO,
+  WhereDataFindAllOrderItemsDTO
+} from '@/dtos/order-items/find-all-order-items.dto';
 import { OrderItemEntity } from '@/entities';
 import { OrderItemModel } from '@/models/order-item.model';
 import { FindAllOrderItemsQuery } from '@/queries/implements/order-items/find-all-order-items.query';
@@ -28,7 +34,15 @@ export class OrderItemMapper {
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        description: prismaMapper.toWhereDataSearch(operatorData.description),
+        app: prismaMapper.toWhereData(operatorData.app),
+        order: prismaMapper.toWhereData(operatorData.order),
+        product: prismaMapper.toWhereData(operatorData.product),
+        type: operatorData.type,
+        recurringIntervalCount: prismaMapper.toWhereData(
+          operatorData.recurringIntervalCount
+        ),
+        recurringIntervalType: operatorData.recurringIntervalType,
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

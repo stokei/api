@@ -8,9 +8,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllDomainsDTO,
+  WhereDataFindAllDomainsDTO
+} from '@/dtos/domains/find-all-domains.dto';
 import { DomainEntity } from '@/entities';
 import { DomainModel } from '@/models/domain.model';
 import { FindAllDomainsQuery } from '@/queries/implements/domains/find-all-domains.query';
@@ -29,6 +35,9 @@ export class DomainMapper {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
         parent: prismaMapper.toWhereData(operatorData.parent),
+        app: prismaMapper.toWhereData(operatorData.app),
+        active: prismaMapper.toWhereData(operatorData.active),
+        status: operatorData.status,
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

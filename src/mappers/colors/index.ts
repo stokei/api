@@ -6,9 +6,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllColorsDTO,
+  WhereDataFindAllColorsDTO
+} from '@/dtos/colors/find-all-colors.dto';
 import { ColorEntity } from '@/entities';
 import { ColorModel } from '@/models/color.model';
 import { FindAllColorsQuery } from '@/queries/implements/colors/find-all-colors.query';
@@ -25,8 +31,10 @@ export class ColorMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
         parent: prismaMapper.toWhereData(operatorData.parent),
+        app: prismaMapper.toWhereData(operatorData.app),
+        themeMode: operatorData.themeMode,
+        type: operatorData.type,
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };

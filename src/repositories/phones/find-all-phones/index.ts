@@ -1,10 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  cleanObject,
-  IBaseRepository,
-  IOperator,
-  PrismaMapper
-} from '@stokei/nestjs';
+import { IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
 import { FindAllPhonesDTO } from '@/dtos/phones/find-all-phones.dto';
@@ -18,33 +13,9 @@ export class FindAllPhonesRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute(data: FindAllPhonesDTO): Promise<PhoneModel[]> {
-    const prismaMapper = new PrismaMapper();
-    const orderBy = prismaMapper.toOrderBy(cleanObject(data?.orderBy));
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = data?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
-    return new PhoneMapper().toModels(
-      await this.model.phone.findMany({
-        where: prismaMapper.toWhere({
-          AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-          OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-          NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
-        }),
-        orderBy,
-        ...prismaMapper.toPagination({ page: data?.page })
-      })
+    const phoneMapper = new PhoneMapper();
+    return phoneMapper.toModels(
+      await this.model.phone.findMany(phoneMapper.toFindAllPrisma(data))
     );
   }
 }

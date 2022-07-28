@@ -8,9 +8,15 @@ import {
   cleanWhereDataString,
   convertToISODateString,
   IOperator,
+  IWhere,
+  PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
 
+import {
+  FindAllAddressesDTO,
+  WhereDataFindAllAddressesDTO
+} from '@/dtos/addresses/find-all-addresses.dto';
 import { AddressEntity } from '@/entities';
 import { AddressModel } from '@/models/address.model';
 import { FindAllAddressesQuery } from '@/queries/implements/addresses/find-all-addresses.query';
@@ -27,10 +33,17 @@ export class AddressMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
         parent: prismaMapper.toWhereData(operatorData.parent),
+        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
+        default: prismaMapper.toWhereData(operatorData.default),
+        street: prismaMapper.toWhereDataSearch(operatorData.street),
+        complement: prismaMapper.toWhereDataSearch(operatorData.complement),
+        city: prismaMapper.toWhereDataSearch(operatorData.city),
+        country: prismaMapper.toWhereDataSearch(operatorData.country),
+        state: prismaMapper.toWhereDataSearch(operatorData.state),
+        postalCode: prismaMapper.toWhereData(operatorData.postalCode)
       };
     };
     return prismaMapper.toWhere({

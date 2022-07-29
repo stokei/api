@@ -9,7 +9,7 @@ export class UpdateDataVideoInput {
 @InputType()
 export class UpdateWhereVideoInput {
   @Field()
-  videoId: string;
+  video: string;
 }
 
 @InputType()

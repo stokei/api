@@ -6,7 +6,7 @@ export class RemoveWhereColorInput {
   parent: string;
 
   @Field()
-  colorId: string;
+  color: string;
 }
 
 @InputType()

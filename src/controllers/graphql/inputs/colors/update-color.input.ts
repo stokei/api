@@ -9,7 +9,7 @@ export class UpdateDataColorInput {
 @InputType()
 export class UpdateWhereColorInput {
   @Field()
-  colorId: string;
+  color: string;
 }
 
 @InputType()

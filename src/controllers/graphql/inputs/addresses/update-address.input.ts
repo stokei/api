@@ -33,7 +33,7 @@ export class UpdateDataAddressInput {
 @InputType()
 export class UpdateWhereAddressInput {
   @Field()
-  addressId: string;
+  address: string;
 }
 
 @InputType()

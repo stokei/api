@@ -3,7 +3,7 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class RemoveWherePaymentMethodInput {
   @Field()
-  paymentMethodId: string;
+  paymentMethod: string;
 }
 
 @InputType()

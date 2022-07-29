@@ -25,7 +25,7 @@ import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
 import { PriceServices } from './prices';
 import { ProductServices } from './products';
-import { SubscriptionServices } from './subscriptions';
+import { SubscriptionContractServices } from './subscription-contracts';
 import { VideoAuthorServices } from './video-authors';
 import { VideoServices } from './videos';
 
@@ -55,7 +55,7 @@ export const Services = [
   ...CourseStudentServices,
   ...ClassroomServices,
   ...ClassroomStudentServices,
-  ...SubscriptionServices,
+  ...SubscriptionContractServices,
   ...ClassroomInstructorServices,
   ...ClassroomModuleServices,
   ...AddressServices,

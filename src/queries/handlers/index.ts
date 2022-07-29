@@ -25,7 +25,7 @@ import { PhoneQueriesHandlers } from './phones';
 import { PlanQueriesHandlers } from './plans';
 import { PriceQueriesHandlers } from './prices';
 import { ProductQueriesHandlers } from './products';
-import { SubscriptionQueriesHandlers } from './subscriptions';
+import { SubscriptionContractQueriesHandlers } from './subscription-contracts';
 import { VideoAuthorQueriesHandlers } from './video-authors';
 import { VideoQueriesHandlers } from './videos';
 
@@ -55,7 +55,7 @@ export const QueriesHandlers = [
   ...CourseStudentQueriesHandlers,
   ...ClassroomQueriesHandlers,
   ...ClassroomStudentQueriesHandlers,
-  ...SubscriptionQueriesHandlers,
+  ...SubscriptionContractQueriesHandlers,
   ...ClassroomInstructorQueriesHandlers,
   ...ClassroomModuleQueriesHandlers,
   ...AddressQueriesHandlers,

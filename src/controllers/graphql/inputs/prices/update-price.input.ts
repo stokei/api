@@ -12,7 +12,7 @@ export class UpdateDataPriceInput {
 @InputType()
 export class UpdateWherePriceInput {
   @Field()
-  priceId: string;
+  price: string;
 }
 
 @InputType()

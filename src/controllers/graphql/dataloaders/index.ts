@@ -3,6 +3,7 @@ import { AccountsLoader } from './accounts.loader';
 import { AddressesLoader } from './addresses.loader';
 import { AppsLoader } from './apps.loader';
 import { CartItemsLoader } from './cart-items.loader';
+import { CartsLoader } from './carts.loader';
 import { ClassroomInstructorsLoader } from './classroom-instructors.loader';
 import { ClassroomModulesLoader } from './classroom-modules.loader';
 import { ClassroomStudentsLoader } from './classroom-students.loader';
@@ -24,7 +25,7 @@ import { PhonesLoader } from './phones.loader';
 import { PlansLoader } from './plans.loader';
 import { PricesLoader } from './prices.loader';
 import { ProductsLoader } from './products.loader';
-import { SubscriptionsLoader } from './subscriptions.loader';
+import { SubscriptionContractsLoader } from './subscription-contracts.loader';
 import { VideoAuthorsLoader } from './video-authors.loader';
 import { VideosLoader } from './videos.loader';
 
@@ -33,6 +34,7 @@ export const Loaders = [
   AccessesLoader,
   AppsLoader,
   DomainsLoader,
+  CartsLoader,
   CurrenciesLoader,
   LanguagesLoader,
   ColorsLoader,
@@ -53,7 +55,7 @@ export const Loaders = [
   CourseStudentsLoader,
   ClassroomsLoader,
   ClassroomStudentsLoader,
-  SubscriptionsLoader,
+  SubscriptionContractsLoader,
   ClassroomInstructorsLoader,
   ClassroomModulesLoader,
   AddressesLoader,

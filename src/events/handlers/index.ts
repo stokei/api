@@ -25,7 +25,7 @@ import { PhoneEventsHandlers } from './phones';
 import { PlanEventsHandlers } from './plans';
 import { PriceEventsHandlers } from './prices';
 import { ProductEventsHandlers } from './products';
-import { SubscriptionEventsHandlers } from './subscriptions';
+import { SubscriptionContractEventsHandlers } from './subscription-contracts';
 import { VideoAuthorEventsHandlers } from './video-authors';
 import { VideoEventsHandlers } from './videos';
 
@@ -55,7 +55,7 @@ export const EventsHandlers = [
   ...CourseStudentEventsHandlers,
   ...ClassroomEventsHandlers,
   ...ClassroomStudentEventsHandlers,
-  ...SubscriptionEventsHandlers,
+  ...SubscriptionContractEventsHandlers,
   ...ClassroomInstructorEventsHandlers,
   ...ClassroomModuleEventsHandlers,
   ...AddressEventsHandlers,

@@ -4,7 +4,6 @@ import { ExistsDomainsRepository } from './exists-domains';
 import { FindAllDomainsRepository } from './find-all-domains';
 import { FindDomainByIdRepository } from './find-domain-by-id';
 import { RemoveDomainRepository } from './remove-domain';
-import { UpdateDomainRepository } from './update-domain';
 
 export const DomainsRepositories = [
   CountDomainsRepository,
@@ -12,6 +11,5 @@ export const DomainsRepositories = [
   ExistsDomainsRepository,
   FindDomainByIdRepository,
   FindAllDomainsRepository,
-  RemoveDomainRepository,
-  UpdateDomainRepository
+  RemoveDomainRepository
 ];

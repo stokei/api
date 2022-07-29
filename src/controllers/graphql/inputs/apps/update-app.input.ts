@@ -22,16 +22,7 @@ export class UpdateDataAppInput {
 }
 
 @InputType()
-export class UpdateWhereAppInput {
-  @Field()
-  appId: string;
-}
-
-@InputType()
 export class UpdateAppInput {
   @Field(() => UpdateDataAppInput)
   data: UpdateDataAppInput;
-
-  @Field(() => UpdateWhereAppInput)
-  where: UpdateWhereAppInput;
 }

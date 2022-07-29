@@ -4,7 +4,7 @@ import { RecurringType } from '@/enums/recurring-type.enum';
 
 export interface CreatePriceDTO {
   parent: string;
-  default: boolean;
+  default?: boolean;
   fromAmount?: number;
   toAmount: number;
   type: PriceType;

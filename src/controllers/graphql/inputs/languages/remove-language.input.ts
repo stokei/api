@@ -3,7 +3,7 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class RemoveWhereLanguageInput {
   @Field()
-  languageId: string;
+  language: string;
 }
 
 @InputType()

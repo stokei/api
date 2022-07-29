@@ -1,13 +1,17 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
+import { v4 as uuid } from 'uuid';
 
 import { CreateAppCommand } from '@/commands/implements/apps/create-app.command';
+import { AppStatus } from '@/enums/app-status.enum';
 import {
   AppNotFoundException,
+  CurrencyNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateAppRepository } from '@/repositories/apps/create-app';
+import { FindCurrencyByIdService } from '@/services/currencies/find-currency-by-id';
 
 type CreateAppCommandKeys = keyof CreateAppCommand;
 
@@ -17,6 +21,7 @@ export class CreateAppCommandHandler
 {
   constructor(
     private readonly createAppRepository: CreateAppRepository,
+    private readonly findCurrencyByIdService: FindCurrencyByIdService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -28,8 +33,26 @@ export class CreateAppCommandHandler
     if (!data?.parent) {
       throw new ParamNotFoundException<CreateAppCommandKeys>('parent');
     }
+    if (!data?.name) {
+      throw new ParamNotFoundException<CreateAppCommandKeys>('name');
+    }
+    if (!data?.currency) {
+      throw new ParamNotFoundException<CreateAppCommandKeys>('currency');
+    }
 
-    const appCreated = await this.createAppRepository.execute(data);
+    const slug = cleanSlug(data.name + uuid());
+
+    const currency = await this.findCurrencyByIdService.execute(data?.currency);
+    if (!currency) {
+      throw new CurrencyNotFoundException();
+    }
+
+    const appCreated = await this.createAppRepository.execute({
+      ...data,
+      slug,
+      currency: currency.id,
+      status: AppStatus.ACTIVE
+    });
     if (!appCreated) {
       throw new AppNotFoundException();
     }

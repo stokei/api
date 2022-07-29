@@ -2,6 +2,8 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
+import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
+import { AppGuard } from '@/common/guards/app';
 import { RemoveLanguageInput } from '@/controllers/graphql/inputs/languages/remove-language.input';
 import { Language } from '@/controllers/graphql/types/language';
 import { RemoveLanguageService } from '@/services/languages/remove-language';
@@ -14,7 +16,7 @@ export class RemoveLanguageResolver {
   @Mutation(() => Language)
   async removeLanguage(
     @CurrentAccount('id') currentAccountId: string,
-    @CurrentApp('id') appId: string,,
+    @CurrentApp('id') appId: string,
     @Args('input') data: RemoveLanguageInput
   ) {
     const response = await this.removeLanguageService.execute({

@@ -6,6 +6,8 @@ import {
   CurrentAccount
 } from '@stokei/nestjs';
 
+import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
+import { AppGuard } from '@/common/guards/app';
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
 import { CreateVideoDTO } from '@/dtos/videos/create-video.dto';
@@ -34,6 +36,7 @@ export class CreateVideoController {
   ) {
     return this.createVideoService.execute({
       ...data,
+      app: appId,
       createdBy: currentAccountId
     });
   }

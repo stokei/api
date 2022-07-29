@@ -7,16 +7,7 @@ export class UpdateDataAccountInput {
 }
 
 @InputType()
-export class UpdateWhereAccountInput {
-  @Field()
-  accountId: string;
-}
-
-@InputType()
 export class UpdateAccountInput {
   @Field(() => UpdateDataAccountInput)
   data: UpdateDataAccountInput;
-
-  @Field(() => UpdateWhereAccountInput)
-  where: UpdateWhereAccountInput;
 }

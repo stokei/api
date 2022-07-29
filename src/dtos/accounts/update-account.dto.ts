@@ -1,6 +1,9 @@
 export interface UpdateAccountDataDTO {
   updatedBy: string;
-  name?: string;
+  firstname?: string;
+  lastname?: string;
+  avatar?: string;
+  dateBirthday?: string;
 }
 
 export interface UpdateAccountWhereDTO {

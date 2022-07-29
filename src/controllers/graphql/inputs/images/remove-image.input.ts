@@ -3,7 +3,7 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class RemoveWhereImageInput {
   @Field()
-  imageId: string;
+  image: string;
 }
 
 @InputType()

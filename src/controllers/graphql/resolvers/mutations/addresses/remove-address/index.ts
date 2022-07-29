@@ -2,6 +2,8 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
+import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
+import { AppGuard } from '@/common/guards/app';
 import { RemoveAddressInput } from '@/controllers/graphql/inputs/addresses/remove-address.input';
 import { Address } from '@/controllers/graphql/types/address';
 import { RemoveAddressService } from '@/services/addresses/remove-address';
@@ -14,7 +16,7 @@ export class RemoveAddressResolver {
   @Mutation(() => Address)
   async removeAddress(
     @CurrentAccount('id') currentAccountId: string,
-    @CurrentApp('id') appId: string,,
+    @CurrentApp('id') appId: string,
     @Args('input') data: RemoveAddressInput
   ) {
     const response = await this.removeAddressService.execute({

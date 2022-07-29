@@ -24,7 +24,7 @@ import { PhonesFieldsResolvers } from './phones';
 import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
 import { ProductsFieldsResolvers } from './products';
-import { SubscriptionsFieldsResolvers } from './subscriptions';
+import { SubscriptionContractsFieldsResolvers } from './subscription-contracts';
 import { VideoAuthorsFieldsResolvers } from './video-authors';
 import { VideosFieldsResolvers } from './videos';
 
@@ -53,7 +53,7 @@ export const FieldsResolvers = [
   ...CourseStudentsFieldsResolvers,
   ...ClassroomsFieldsResolvers,
   ...ClassroomStudentsFieldsResolvers,
-  ...SubscriptionsFieldsResolvers,
+  ...SubscriptionContractsFieldsResolvers,
   ...ClassroomInstructorsFieldsResolvers,
   ...ClassroomModulesFieldsResolvers,
   ...AddressesFieldsResolvers,

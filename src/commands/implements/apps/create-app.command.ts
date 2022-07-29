@@ -13,7 +13,6 @@ export class CreateAppCommand implements ICommand, CreateAppDTO {
     this.name = data.name;
     this.parent = data.parent;
     this.currency = data.currency;
-    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

@@ -12,7 +12,7 @@ export class UpdateDataClassroomInput {
 @InputType()
 export class UpdateWhereClassroomInput {
   @Field()
-  classroomId: string;
+  classroom: string;
 }
 
 @InputType()

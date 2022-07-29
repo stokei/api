@@ -6,7 +6,7 @@ export class RemoveWhereClassroomInstructorInput {
   classroom: string;
 
   @Field()
-  instructors: string;
+  instructor: string;
 }
 
 @InputType()

@@ -15,7 +15,7 @@ export class UpdateDataCurrencyInput {
 @InputType()
 export class UpdateWhereCurrencyInput {
   @Field()
-  currencyId: string;
+  currency: string;
 }
 
 @InputType()

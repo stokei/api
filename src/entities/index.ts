@@ -25,7 +25,7 @@ export * from './phone.entity';
 export * from './plan.entity';
 export * from './price.entity';
 export * from './product.entity';
-export * from './subscription.entity';
+export * from './subscription-contract.entity';
 export * from './video.entity';
 export * from './video-author.entity';
 

@@ -2,6 +2,8 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
+import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
+import { AppGuard } from '@/common/guards/app';
 import { RemoveCourseStudentInput } from '@/controllers/graphql/inputs/course-students/remove-course-student.input';
 import { CourseStudent } from '@/controllers/graphql/types/course-student';
 import { RemoveCourseStudentService } from '@/services/course-students/remove-course-student';
@@ -16,7 +18,7 @@ export class RemoveCourseStudentResolver {
   @Mutation(() => CourseStudent)
   async removeCourseStudent(
     @CurrentAccount('id') currentAccountId: string,
-    @CurrentApp('id') appId: string,,
+    @CurrentApp('id') appId: string,
     @Args('input') data: RemoveCourseStudentInput
   ) {
     const response = await this.removeCourseStudentService.execute({

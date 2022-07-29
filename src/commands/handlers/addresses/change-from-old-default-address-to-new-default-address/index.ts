@@ -73,7 +73,8 @@ export class ChangeFromOldDefaultAddressToNewDefaultAddressCommandHandler
               default: false
             },
             where: {
-              addressId: splitServiceId(address.id)?.id
+              app: data.app,
+              address: splitServiceId(address.id)?.id
             }
           })
         )
@@ -86,6 +87,7 @@ export class ChangeFromOldDefaultAddressToNewDefaultAddressCommandHandler
   ): ChangeFromOldDefaultAddressToNewDefaultAddressCommand {
     return cleanObject({
       updatedBy: cleanValue(command?.updatedBy),
+      app: cleanValue(command?.app),
       newAddress: cleanValueBoolean(command?.newAddress)
     });
   }

@@ -15,7 +15,7 @@ export class UpdateDataCourseInput {
 @InputType()
 export class UpdateWhereCourseInput {
   @Field()
-  courseId: string;
+  course: string;
 }
 
 @InputType()

@@ -2,6 +2,8 @@ import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { Query, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
+import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
+import { AppGuard } from '@/common/guards/app';
 import { AccountsLoader } from '@/controllers/graphql/dataloaders/accounts.loader';
 import { MeAccount } from '@/controllers/graphql/types/me-account';
 import { AccountNotFoundException } from '@/errors';

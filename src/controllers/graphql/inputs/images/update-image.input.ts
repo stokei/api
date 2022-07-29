@@ -9,7 +9,7 @@ export class UpdateDataImageInput {
 @InputType()
 export class UpdateWhereImageInput {
   @Field()
-  imageId: string;
+  image: string;
 }
 
 @InputType()

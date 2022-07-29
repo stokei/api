@@ -12,7 +12,7 @@ export class UpdateDataModuleInput {
 @InputType()
 export class UpdateWhereModuleInput {
   @Field()
-  moduleId: string;
+  module: string;
 }
 
 @InputType()

@@ -25,7 +25,7 @@ import { PhonesRepositories } from './phones';
 import { PlansRepositories } from './plans';
 import { PricesRepositories } from './prices';
 import { ProductsRepositories } from './products';
-import { SubscriptionsRepositories } from './subscriptions';
+import { SubscriptionContractsRepositories } from './subscription-contracts';
 import { VideoAuthorsRepositories } from './video-authors';
 import { VideosRepositories } from './videos';
 
@@ -55,7 +55,7 @@ export const Repositories = [
   ...CourseStudentsRepositories,
   ...ClassroomsRepositories,
   ...ClassroomStudentsRepositories,
-  ...SubscriptionsRepositories,
+  ...SubscriptionContractsRepositories,
   ...ClassroomInstructorsRepositories,
   ...ClassroomModulesRepositories,
   ...AddressesRepositories,

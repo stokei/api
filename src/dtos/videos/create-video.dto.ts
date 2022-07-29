@@ -2,10 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateVideoDTO {
   @ApiProperty()
-  parent?: string;
+  parent: string;
 
   @ApiProperty()
-  app?: string;
+  app: string;
 
   @ApiProperty()
   name?: string;
@@ -13,11 +13,9 @@ export class CreateVideoDTO {
   @ApiProperty({ nullable: true })
   description?: string;
 
-  @ApiProperty()
-  path?: string;
-
   @ApiProperty({ nullable: true })
   poster?: string;
 
+  path: string;
   createdBy: string;
 }

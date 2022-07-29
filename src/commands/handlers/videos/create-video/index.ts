@@ -2,6 +2,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateVideoCommand } from '@/commands/implements/videos/create-video.command';
+import { VideoStatus } from '@/enums/video-status.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
@@ -29,7 +30,10 @@ export class CreateVideoCommandHandler
       throw new ParamNotFoundException<CreateVideoCommandKeys>('path');
     }
 
-    const videoCreated = await this.createVideoRepository.execute(data);
+    const videoCreated = await this.createVideoRepository.execute({
+      ...data,
+      status: VideoStatus.ACTIVE
+    });
     if (!videoCreated) {
       throw new VideoNotFoundException();
     }

@@ -25,7 +25,7 @@ import { PhoneCommandHandlers } from './phones';
 import { PlanCommandHandlers } from './plans';
 import { PriceCommandHandlers } from './prices';
 import { ProductCommandHandlers } from './products';
-import { SubscriptionCommandHandlers } from './subscriptions';
+import { SubscriptionContractCommandHandlers } from './subscription-contracts';
 import { VideoAuthorCommandHandlers } from './video-authors';
 import { VideoCommandHandlers } from './videos';
 
@@ -55,7 +55,7 @@ export const CommandHandlers = [
   ...CourseStudentCommandHandlers,
   ...ClassroomCommandHandlers,
   ...ClassroomStudentCommandHandlers,
-  ...SubscriptionCommandHandlers,
+  ...SubscriptionContractCommandHandlers,
   ...ClassroomInstructorCommandHandlers,
   ...ClassroomModuleCommandHandlers,
   ...AddressCommandHandlers,

@@ -2,6 +2,8 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
+import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
+import { AppGuard } from '@/common/guards/app';
 import { RemovePaymentMethodInput } from '@/controllers/graphql/inputs/payment-methods/remove-payment-method.input';
 import { PaymentMethod } from '@/controllers/graphql/types/payment-method';
 import { RemovePaymentMethodService } from '@/services/payment-methods/remove-payment-method';
@@ -16,7 +18,7 @@ export class RemovePaymentMethodResolver {
   @Mutation(() => PaymentMethod)
   async removePaymentMethod(
     @CurrentAccount('id') currentAccountId: string,
-    @CurrentApp('id') appId: string,,
+    @CurrentApp('id') appId: string,
     @Args('input') data: RemovePaymentMethodInput
   ) {
     const response = await this.removePaymentMethodService.execute({

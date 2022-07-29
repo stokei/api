@@ -24,7 +24,7 @@ import { PhonesQueries } from './phones';
 import { PlansQueries } from './plans';
 import { PricesQueries } from './prices';
 import { ProductsQueries } from './products';
-import { SubscriptionsQueries } from './subscriptions';
+import { SubscriptionContractsQueries } from './subscription-contracts';
 import { VideoAuthorsQueries } from './video-authors';
 import { VideosQueries } from './videos';
 
@@ -53,7 +53,7 @@ export const Queries = [
   ...CourseStudentsQueries,
   ...ClassroomsQueries,
   ...ClassroomStudentsQueries,
-  ...SubscriptionsQueries,
+  ...SubscriptionContractsQueries,
   ...ClassroomInstructorsQueries,
   ...ClassroomModulesQueries,
   ...AddressesQueries,

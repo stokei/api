@@ -2,6 +2,8 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
+import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
+import { AppGuard } from '@/common/guards/app';
 import { RemoveColorInput } from '@/controllers/graphql/inputs/colors/remove-color.input';
 import { Color } from '@/controllers/graphql/types/color';
 import { RemoveColorService } from '@/services/colors/remove-color';
@@ -14,7 +16,7 @@ export class RemoveColorResolver {
   @Mutation(() => Color)
   async removeColor(
     @CurrentAccount('id') currentAccountId: string,
-    @CurrentApp('id') appId: string,,
+    @CurrentApp('id') appId: string,
     @Args('input') data: RemoveColorInput
   ) {
     const response = await this.removeColorService.execute({

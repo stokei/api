@@ -68,7 +68,10 @@ export class UpdateAccountCommandHandler
         account: cleanValue(command?.where?.account)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name),
+        avatar: cleanValue(command?.data?.avatar),
+        dateBirthday: cleanValue(command?.data?.dateBirthday),
+        firstname: cleanValue(command?.data?.firstname),
+        lastname: cleanValue(command?.data?.lastname),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

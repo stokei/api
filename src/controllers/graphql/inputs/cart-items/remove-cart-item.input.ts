@@ -3,7 +3,7 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class RemoveWhereCartItemInput {
   @Field()
-  cartItemId: string;
+  cartItem: string;
 }
 
 @InputType()

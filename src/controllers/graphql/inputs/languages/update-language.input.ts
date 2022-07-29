@@ -12,7 +12,7 @@ export class UpdateDataLanguageInput {
 @InputType()
 export class UpdateWhereLanguageInput {
   @Field()
-  languageId: string;
+  language: string;
 }
 
 @InputType()

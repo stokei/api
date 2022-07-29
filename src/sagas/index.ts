@@ -25,7 +25,7 @@ import { PhonesSagas } from './phones.saga';
 import { PlansSagas } from './plans.saga';
 import { PricesSagas } from './prices.saga';
 import { ProductsSagas } from './products.saga';
-import { SubscriptionsSagas } from './subscriptions.saga';
+import { SubscriptionContractsSagas } from './subscription-contracts.saga';
 import { VideoAuthorsSagas } from './video-authors.saga';
 import { VideosSagas } from './videos.saga';
 
@@ -55,7 +55,7 @@ export const Sagas = [
   CourseStudentsSagas,
   ClassroomsSagas,
   ClassroomStudentsSagas,
-  SubscriptionsSagas,
+  SubscriptionContractsSagas,
   ClassroomInstructorsSagas,
   ClassroomModulesSagas,
   AddressesSagas,

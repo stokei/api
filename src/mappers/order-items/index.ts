@@ -115,7 +115,6 @@ export class OrderItemMapper {
         ),
         amount: cleanSortValue(query.orderBy?.amount),
         fromAmount: cleanSortValue(query.orderBy?.fromAmount),
-        toAmount: cleanSortValue(query.orderBy?.toAmount),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

@@ -295,9 +295,8 @@ model Price {
   app                    String        @db.VarChar(255)
   parent                 String        @db.VarChar(255)
   default                Boolean       @default(false)
-  amount                 Int
   fromAmount             Int?          @map("from_amount")
-  toAmount               Int           @map("to_amount")
+  amount                 Int           @map("amount")
   type                   PriceType
   recurringIntervalCount Int           @map("recurring_interval_count")
   recurringIntervalType  RecurringType @map("recurring_interval_type")
@@ -350,7 +349,6 @@ model OrderItem {
   description            String?
   amount                 Int
   fromAmount             Int?          @map("from_amount")
-  toAmount               Int           @map("to_amount")
   avatar                 String?       @db.VarChar(255)
   quantity               Int
   type                   PriceType
@@ -604,7 +602,7 @@ model SubscriptionContract {
   updatedBy            String?                    @map("updated_by") @db.VarChar(255)
   createdBy            String?                    @map("created_by") @db.VarChar(255)
 
-  @@map("subscriptionContracts")
+  @@map("subscription_contracts")
 }
 
 model ClassroomInstructor {

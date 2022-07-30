@@ -14,7 +14,6 @@ export class PriceModelMock extends PriceModel {
       default: data?.default ?? false,
       amount: data?.amount ?? 1000,
       fromAmount: data?.fromAmount ?? null,
-      toAmount: data?.toAmount ?? 1000,
       type: data?.type ?? PriceType.ONE_TIME,
       inventoryType: data?.inventoryType ?? InventoryType.INFINITE,
       recurringIntervalCount: data?.recurringIntervalCount ?? 1,

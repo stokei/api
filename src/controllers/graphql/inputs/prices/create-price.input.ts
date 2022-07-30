@@ -16,7 +16,7 @@ export class CreatePriceInput {
   fromAmount?: number;
 
   @Field(() => Int)
-  toAmount: number;
+  amount: number;
 
   @Field(() => PriceType)
   type: PriceType;

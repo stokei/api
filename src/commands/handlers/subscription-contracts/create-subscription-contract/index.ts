@@ -2,6 +2,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, cleanValueBoolean } from '@stokei/nestjs';
 
 import { CreateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/create-subscription-contract.command';
+import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
@@ -33,7 +34,10 @@ export class CreateSubscriptionContractCommandHandler
     }
 
     const subscriptionContractCreated =
-      await this.createSubscriptionContractRepository.execute(data);
+      await this.createSubscriptionContractRepository.execute({
+        ...data,
+        status: SubscriptionContractStatus.ACTIVE
+      });
     if (!subscriptionContractCreated) {
       throw new SubscriptionContractNotFoundException();
     }

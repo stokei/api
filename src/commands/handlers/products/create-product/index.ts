@@ -29,7 +29,10 @@ export class CreateProductCommandHandler
       throw new ParamNotFoundException<CreateProductCommandKeys>('parent');
     }
 
-    const productCreated = await this.createProductRepository.execute(data);
+    const productCreated = await this.createProductRepository.execute({
+      ...data,
+      externalProduct: null
+    });
     if (!productCreated) {
       throw new ProductNotFoundException();
     }

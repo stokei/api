@@ -2,6 +2,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateDomainCommand } from '@/commands/implements/domains/create-domain.command';
+import { DomainStatus } from '@/enums/domain-status.enum';
 import {
   DataNotFoundException,
   DomainNotFoundException,
@@ -29,7 +30,10 @@ export class CreateDomainCommandHandler
       throw new ParamNotFoundException<CreateDomainCommandKeys>('parent');
     }
 
-    const domainCreated = await this.createDomainRepository.execute(data);
+    const domainCreated = await this.createDomainRepository.execute({
+      ...data,
+      status: DomainStatus.PENDING
+    });
     if (!domainCreated) {
       throw new DomainNotFoundException();
     }

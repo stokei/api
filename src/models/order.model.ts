@@ -70,10 +70,10 @@ export class OrderModel extends AggregateRoot {
     this.applicationFeePercentage = data.applicationFeePercentage;
     this.applicationFeeAmount = data.applicationFeeAmount;
     this.currency = data.currency;
-    this.amount = data.amount;
-    this.discountAmount = data.discountAmount;
-    this.subtotalAmount = data.subtotalAmount;
-    this.totalAmount = data.totalAmount;
+    this.amount = data.amount || 0;
+    this.discountAmount = data.discountAmount || 0;
+    this.subtotalAmount = data.subtotalAmount || 0;
+    this.totalAmount = data.totalAmount || 0;
     this.status = data.status;
     this.oldStatus = data.oldStatus;
     this.active = this.status === OrderStatus.PAID || data.active;

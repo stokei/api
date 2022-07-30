@@ -9,7 +9,7 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
   parent: string;
   default: boolean;
   fromAmount?: number;
-  toAmount: number;
+  amount: number;
   type: PriceType;
   inventoryType: InventoryType;
   recurringIntervalCount: number;
@@ -22,7 +22,7 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
     this.parent = data.parent;
     this.default = data.default;
     this.fromAmount = data.fromAmount;
-    this.toAmount = data.toAmount;
+    this.amount = data.amount;
     this.type = data.type;
     this.inventoryType = data.inventoryType;
     this.recurringIntervalCount = data.recurringIntervalCount;

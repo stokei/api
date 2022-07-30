@@ -15,7 +15,6 @@ export interface IOrderItemModelData {
   readonly description?: string;
   readonly amount: number;
   readonly fromAmount?: number;
-  readonly toAmount: number;
   readonly avatar?: string;
   readonly quantity: number;
   readonly type: PriceType;
@@ -36,7 +35,6 @@ export class OrderItemModel extends AggregateRoot {
   readonly description?: string;
   readonly amount: number;
   readonly fromAmount?: number;
-  readonly toAmount: number;
   readonly avatar?: string;
   readonly quantity: number;
   readonly type: PriceType;
@@ -61,7 +59,6 @@ export class OrderItemModel extends AggregateRoot {
     this.description = data.description;
     this.amount = data.amount;
     this.fromAmount = data.fromAmount;
-    this.toAmount = data.toAmount;
     this.avatar = data.avatar;
     this.quantity = data.quantity;
     this.type = data.type;

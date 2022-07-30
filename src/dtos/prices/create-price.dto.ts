@@ -6,7 +6,7 @@ export interface CreatePriceDTO {
   parent: string;
   default?: boolean;
   fromAmount?: number;
-  toAmount: number;
+  amount: number;
   type: PriceType;
   inventoryType: InventoryType;
   recurringIntervalCount: number;

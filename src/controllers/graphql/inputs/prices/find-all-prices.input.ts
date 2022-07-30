@@ -53,13 +53,10 @@ export class OrderByDataFindAllPricesInput
   default?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
-  amount?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
   fromAmount?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
-  toAmount?: OrderBy;
+  amount?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   type?: OrderBy;

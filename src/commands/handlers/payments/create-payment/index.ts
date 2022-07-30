@@ -2,12 +2,14 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreatePaymentCommand } from '@/commands/implements/payments/create-payment.command';
+import { PaymentStatus } from '@/enums/payment-status.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
   PaymentNotFoundException
 } from '@/errors';
 import { CreatePaymentRepository } from '@/repositories/payments/create-payment';
+import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
 
 type CreatePaymentCommandKeys = keyof CreatePaymentCommand;
 
@@ -17,6 +19,7 @@ export class CreatePaymentCommandHandler
 {
   constructor(
     private readonly createPaymentRepository: CreatePaymentRepository,
+    private readonly findOrderByIdService: FindOrderByIdService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -36,8 +39,14 @@ export class CreatePaymentCommandHandler
         'paymentMethod'
       );
     }
+    const order = await this.findOrderByIdService.execute(data.order);
 
-    const paymentCreated = await this.createPaymentRepository.execute(data);
+    const paymentCreated = await this.createPaymentRepository.execute({
+      ...data,
+      amount: order.amount,
+      externalPayment: null,
+      status: PaymentStatus.PENDING
+    });
     if (!paymentCreated) {
       throw new PaymentNotFoundException();
     }

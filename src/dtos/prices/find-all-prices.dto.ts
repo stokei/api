@@ -20,9 +20,8 @@ export type IKeysWhereDataFindAllPricesDTO = keyof WhereDataFindAllPricesDTO;
 
 export interface OrderByDataFindAllPricesDTO {
   default?: IOrderBy;
-  amount?: IOrderBy;
   fromAmount?: IOrderBy;
-  toAmount?: IOrderBy;
+  amount?: IOrderBy;
   type?: IOrderBy;
   inventoryType?: IOrderBy;
   recurringIntervalCount?: IOrderBy;

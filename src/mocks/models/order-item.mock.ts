@@ -15,7 +15,6 @@ export class OrderItemModelMock extends OrderItemModel {
       description: data?.description ?? null,
       amount: data?.amount ?? 10000,
       fromAmount: data?.fromAmount ?? 10100,
-      toAmount: data?.toAmount ?? 10000,
       avatar: data?.avatar ?? null,
       quantity: data?.quantity ?? 1,
       type: data?.type ?? PriceType.RECURRING,

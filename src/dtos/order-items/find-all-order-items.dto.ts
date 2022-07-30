@@ -30,9 +30,8 @@ export interface OrderByDataFindAllOrderItemsDTO {
   quantity?: IOrderBy;
   recurringIntervalCount?: IOrderBy;
   recurringIntervalType?: IOrderBy;
-  amount?: IOrderBy;
   fromAmount?: IOrderBy;
-  toAmount?: IOrderBy;
+  amount?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

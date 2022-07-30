@@ -6,8 +6,8 @@ import { CreateOrderItemDTO } from './create-order-item.dto';
 export interface CreateOrderItemRepositoryDTO extends CreateOrderItemDTO {
   name: string;
   currency: string;
+  fromAmount?: number;
   amount: number;
-  toAmount: number;
   type: PriceType;
   recurringIntervalCount: number;
   recurringIntervalType: RecurringType;

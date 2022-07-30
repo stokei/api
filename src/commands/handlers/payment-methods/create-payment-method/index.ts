@@ -2,6 +2,8 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreatePaymentMethodCommand } from '@/commands/implements/payment-methods/create-payment-method.command';
+import { PaymentMethodProvider } from '@/enums/payment-method-provider.enum';
+import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
@@ -32,7 +34,12 @@ export class CreatePaymentMethodCommandHandler
     }
 
     const paymentMethodCreated =
-      await this.createPaymentMethodRepository.execute(data);
+      await this.createPaymentMethodRepository.execute({
+        ...data,
+        type: PaymentMethodType.CREDIT_CARD,
+        provider: PaymentMethodProvider.STRIPE,
+        externalPaymentMethod: null
+      });
     if (!paymentMethodCreated) {
       throw new PaymentMethodNotFoundException();
     }

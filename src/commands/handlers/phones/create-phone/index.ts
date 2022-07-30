@@ -2,12 +2,14 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, cleanValueBoolean } from '@stokei/nestjs';
 
 import { CreatePhoneCommand } from '@/commands/implements/phones/create-phone.command';
+import { PhoneStatus } from '@/enums/phone-status.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
   PhoneNotFoundException
 } from '@/errors';
 import { CreatePhoneRepository } from '@/repositories/phones/create-phone';
+import { generateRandomCode } from '@/utils/generate-random-code';
 
 type CreatePhoneCommandKeys = keyof CreatePhoneCommand;
 
@@ -28,8 +30,24 @@ export class CreatePhoneCommandHandler
     if (!data?.parent) {
       throw new ParamNotFoundException<CreatePhoneCommandKeys>('parent');
     }
+    if (!data?.areaCode) {
+      throw new ParamNotFoundException<CreatePhoneCommandKeys>('areaCode');
+    }
+    if (!data?.countryCode) {
+      throw new ParamNotFoundException<CreatePhoneCommandKeys>('countryCode');
+    }
+    if (!data?.number) {
+      throw new ParamNotFoundException<CreatePhoneCommandKeys>('number');
+    }
 
-    const phoneCreated = await this.createPhoneRepository.execute(data);
+    const fullnumberMounted = data.countryCode + data.areaCode + data.number;
+    const fullnumberWithOnlyNumbers = fullnumberMounted.replace(/\D/g, '');
+    const phoneCreated = await this.createPhoneRepository.execute({
+      ...data,
+      fullnumber: fullnumberWithOnlyNumbers,
+      status: PhoneStatus.PENDING,
+      validationCode: generateRandomCode(7)
+    });
     if (!phoneCreated) {
       throw new PhoneNotFoundException();
     }

@@ -105,7 +105,6 @@ export class PriceMapper {
         default: cleanSortValue(query.orderBy?.default),
         amount: cleanSortValue(query.orderBy?.amount),
         fromAmount: cleanSortValue(query.orderBy?.fromAmount),
-        toAmount: cleanSortValue(query.orderBy?.toAmount),
         type: cleanSortValue(query.orderBy?.type),
         inventoryType: cleanSortValue(query.orderBy?.inventoryType),
         recurringIntervalCount: cleanSortValue(

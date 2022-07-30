@@ -14,9 +14,8 @@ export interface IPriceModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly default: boolean;
-  readonly amount: number;
   readonly fromAmount?: number;
-  readonly toAmount: number;
+  readonly amount: number;
   readonly type: PriceType;
   readonly inventoryType: InventoryType;
   readonly recurringIntervalCount: number;
@@ -34,9 +33,8 @@ export class PriceModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
   readonly default: boolean;
-  readonly amount: number;
   readonly fromAmount?: number;
-  readonly toAmount: number;
+  readonly amount: number;
   readonly type: PriceType;
   readonly inventoryType: InventoryType;
   readonly recurringIntervalCount: number;
@@ -58,9 +56,8 @@ export class PriceModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.default = data.default;
+    this.fromAmount = data.fromAmount || 0;
     this.amount = data.amount;
-    this.fromAmount = data.fromAmount;
-    this.toAmount = data.toAmount;
     this.type = data.type;
     this.inventoryType = data.inventoryType;
     this.recurringIntervalCount = data.recurringIntervalCount;

@@ -53,7 +53,7 @@ export class CreatePriceCommandHandler
       app: cleanValue(command?.app),
       default: cleanValueBoolean(command?.default),
       fromAmount: cleanValueNumber(command?.fromAmount),
-      toAmount: cleanValueNumber(command?.toAmount),
+      amount: cleanValueNumber(command?.amount),
       type: command?.type,
       inventoryType: command?.inventoryType,
       recurringIntervalCount: cleanValueNumber(command?.recurringIntervalCount),

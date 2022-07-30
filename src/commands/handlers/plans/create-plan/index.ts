@@ -7,6 +7,7 @@ import {
 } from '@stokei/nestjs';
 
 import { CreatePlanCommand } from '@/commands/implements/plans/create-plan.command';
+import { PlanStatus } from '@/enums/plan-status.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
@@ -34,7 +35,10 @@ export class CreatePlanCommandHandler
       throw new ParamNotFoundException<CreatePlanCommandKeys>('type');
     }
 
-    const planCreated = await this.createPlanRepository.execute(data);
+    const planCreated = await this.createPlanRepository.execute({
+      ...data,
+      status: PlanStatus.ACTIVE
+    });
     if (!planCreated) {
       throw new PlanNotFoundException();
     }

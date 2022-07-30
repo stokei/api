@@ -75,9 +75,6 @@ export class OrderByDataFindAllOrderItemsInput
   fromAmount?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
-  toAmount?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })

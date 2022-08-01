@@ -2,6 +2,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import { RemoveAccountCommand } from '@/commands/implements/accounts/remove-account.command';
+import { AccountStatus } from '@/enums/account-status.enum';
 import {
   AccountNotFoundException,
   DataNotFoundException,
@@ -33,8 +34,13 @@ export class RemoveAccountCommandHandler
       throw new ParamNotFoundException('accountId');
     }
 
+    const statusAllowedToCancelAccount: any = [
+      AccountStatus.ACTIVE,
+      AccountStatus.INACTIVE,
+      AccountStatus.BLOCKED
+    ];
     const account = await this.findAccountByIdRepository.execute(accountId);
-    if (!account) {
+    if (!account || !statusAllowedToCancelAccount.includes(account.status)) {
       throw new AccountNotFoundException();
     }
 
@@ -47,13 +53,16 @@ export class RemoveAccountCommandHandler
     if (!removed) {
       throw new DataNotFoundException();
     }
-    const accountModel = this.publisher.mergeObjectContext(account);
+    const accountRemoved = await this.findAccountByIdRepository.execute(
+      accountId
+    );
+    const accountModel = this.publisher.mergeObjectContext(accountRemoved);
     accountModel.removedAccount({
       removedBy: data.where.removedBy
     });
     accountModel.commit();
 
-    return account;
+    return accountRemoved;
   }
 
   private clearData(command: RemoveAccountCommand): RemoveAccountCommand {

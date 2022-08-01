@@ -3,6 +3,7 @@ import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
 import { v4 as uuid } from 'uuid';
 
 import { CreateAppCommand } from '@/commands/implements/apps/create-app.command';
+import { defaultLanguageId } from '@/constants/default-language-id';
 import { AppStatus } from '@/enums/app-status.enum';
 import {
   AppNotFoundException,
@@ -12,6 +13,7 @@ import {
 } from '@/errors';
 import { CreateAppRepository } from '@/repositories/apps/create-app';
 import { FindCurrencyByIdService } from '@/services/currencies/find-currency-by-id';
+import { FindLanguageByIdService } from '@/services/languages/find-language-by-id';
 
 type CreateAppCommandKeys = keyof CreateAppCommand;
 
@@ -22,6 +24,7 @@ export class CreateAppCommandHandler
   constructor(
     private readonly createAppRepository: CreateAppRepository,
     private readonly findCurrencyByIdService: FindCurrencyByIdService,
+    private readonly findLanguageByIdService: FindLanguageByIdService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -46,11 +49,18 @@ export class CreateAppCommandHandler
     if (!currency) {
       throw new CurrencyNotFoundException();
     }
+    const language = await this.findLanguageByIdService.execute(
+      defaultLanguageId
+    );
+    if (!language) {
+      throw new CurrencyNotFoundException();
+    }
 
     const appCreated = await this.createAppRepository.execute({
       ...data,
       slug,
       currency: currency.id,
+      language: language.id,
       status: AppStatus.ACTIVE
     });
     if (!appCreated) {

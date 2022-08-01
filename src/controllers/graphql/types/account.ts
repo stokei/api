@@ -19,7 +19,7 @@ export class Account {
   fullname: string;
 
   @Field(() => String)
-  parent: string;
+  app: string;
 
   @Field(() => String)
   email: string;

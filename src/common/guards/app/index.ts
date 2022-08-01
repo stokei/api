@@ -33,7 +33,7 @@ export class AppGuard implements CanActivate {
       [context.getHandler(), context.getClass()]
     );
 
-    if (!config?.isRequired) {
+    if (config && !config?.isRequired) {
       return true;
     }
 

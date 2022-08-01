@@ -45,6 +45,7 @@ export class AccountMapper {
         })
       };
     };
+
     return prismaMapper.toWhere({
       AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
       OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),

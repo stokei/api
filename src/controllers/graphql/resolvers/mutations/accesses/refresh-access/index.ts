@@ -19,7 +19,7 @@ export class RefreshAccessResolver {
   constructor(private readonly refreshAccessService: RefreshAccessService) {}
 
   @UseGuards(AuthenticatedGuard, AppGuard)
-  @AuthenticationConfig({ hasExpiresValidation: false })
+  @AuthenticationConfig({ hasExpiresValidation: false, isRequired: true })
   @Mutation(() => AuthResponse)
   async refreshAccess(
     @CurrentAccount() currentAccount: IAuthenticatedAccount,

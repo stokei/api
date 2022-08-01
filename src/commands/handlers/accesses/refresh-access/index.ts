@@ -15,14 +15,14 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { FindAccessByIdRepository } from '@/repositories/accesses/find-access-by-id';
-import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
+import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 
 @CommandHandler(RefreshAccessCommand)
 export class RefreshAccessCommandHandler
   implements ICommandHandler<RefreshAccessCommand>
 {
   constructor(
-    private readonly findAccountByIdRepository: FindAccountByIdRepository,
+    private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findAccessByIdRepository: FindAccessByIdRepository,
     private readonly managementTokenService: ManagementTokenService
   ) {}
@@ -32,18 +32,20 @@ export class RefreshAccessCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    const accessId = splitServiceId(data.where?.access)?.id;
-    const accountId = splitServiceId(data.where?.account)?.id;
-    if (!accessId) {
+
+    if (!data.where?.access) {
       throw new ParamNotFoundException('accessId');
     }
-    if (!accountId) {
+    if (!data.where?.account) {
       throw new ParamNotFoundException('accountId');
     }
-    const account = await this.findAccountByIdRepository.execute(accountId);
+    const account = await this.findAccountByIdService.execute(
+      data.where?.account
+    );
     if (!account) {
       throw new AccountNotFoundException();
     }
+    const accessId = splitServiceId(data.where?.access)?.id;
     const access = await this.findAccessByIdRepository.execute(accessId);
     if (!access || access.parent !== account.id) {
       throw new AccessNotFoundException();

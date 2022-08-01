@@ -4,8 +4,7 @@ import {
   cleanObject,
   cleanValue,
   convertToISODateString,
-  ManagementTokenService,
-  splitServiceId
+  ManagementTokenService
 } from '@stokei/nestjs';
 
 import { CreateAccessCommand } from '@/commands/implements/accesses/create-access.command';
@@ -16,7 +15,7 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateAccessRepository } from '@/repositories/accesses/create-access';
-import { FindAccountByIdRepository } from '@/repositories/accounts/find-account-by-id';
+import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 
 type CreateAccessCommandKeys = keyof CreateAccessCommand;
 
@@ -26,7 +25,7 @@ export class CreateAccessCommandHandler
 {
   constructor(
     private readonly createAccessRepository: CreateAccessRepository,
-    private readonly findAccountByIdRepository: FindAccountByIdRepository,
+    private readonly findAccountByIdService: FindAccountByIdService,
     private readonly managementTokenService: ManagementTokenService,
     private readonly publisher: EventPublisher
   ) {}
@@ -40,9 +39,7 @@ export class CreateAccessCommandHandler
       throw new ParamNotFoundException<CreateAccessCommandKeys>('parent');
     }
 
-    const account = await this.findAccountByIdRepository.execute(
-      splitServiceId(data.parent)?.id
-    );
+    const account = await this.findAccountByIdService.execute(data.parent);
     if (!account) {
       throw new AccountNotFoundException();
     }

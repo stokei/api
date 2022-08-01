@@ -18,6 +18,7 @@ export class MeAccountResolver {
     if (!currentAccount?.id) {
       throw new UnauthorizedException();
     }
+
     const account = await this.accountsLoader.findByIds.load(
       currentAccount?.id
     );

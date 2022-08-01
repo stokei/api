@@ -3,8 +3,8 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 import { SubscriptionContractsLoader } from '@/controllers/graphql/dataloaders/subscription-contracts.loader';
 import { SubscriptionContract } from '@/controllers/graphql/types/subscription-contract';
 import {
-  SubscriptionContractNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SubscriptionContractNotFoundException
 } from '@/errors';
 
 @Resolver(() => SubscriptionContract)

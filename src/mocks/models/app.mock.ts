@@ -2,7 +2,7 @@ import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
 import { AppStatus } from '@/enums/app-status.enum';
-import { IAppModelData, AppModel } from '@/models/app.model';
+import { AppModel, IAppModelData } from '@/models/app.model';
 
 export class AppModelMock extends AppModel {
   constructor(data?: Partial<IAppModelData>) {

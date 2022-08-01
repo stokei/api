@@ -2,7 +2,7 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 
 import { AppsLoader } from '@/controllers/graphql/dataloaders/apps.loader';
 import { App } from '@/controllers/graphql/types/app';
-import { ParamNotFoundException, AppNotFoundException } from '@/errors';
+import { AppNotFoundException, ParamNotFoundException } from '@/errors';
 
 @Resolver(() => App)
 export class AppResolver {

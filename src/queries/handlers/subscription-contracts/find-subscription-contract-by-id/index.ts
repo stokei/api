@@ -2,9 +2,9 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import {
-  SubscriptionContractNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SubscriptionContractNotFoundException
 } from '@/errors';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 import { FindSubscriptionContractByIdQuery } from '@/queries/implements/subscription-contracts/find-subscription-contract-by-id.query';

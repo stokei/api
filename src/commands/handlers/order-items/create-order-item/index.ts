@@ -5,9 +5,15 @@ import { CreateOrderItemCommand } from '@/commands/implements/order-items/create
 import {
   DataNotFoundException,
   OrderItemNotFoundException,
-  ParamNotFoundException
+  OrderNotFoundException,
+  ParamNotFoundException,
+  PriceNotFoundException,
+  ProductNotFoundException
 } from '@/errors';
 import { CreateOrderItemRepository } from '@/repositories/order-items/create-order-item';
+import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
+import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
+import { FindProductByIdService } from '@/services/products/find-product-by-id';
 
 type CreateOrderItemCommandKeys = keyof CreateOrderItemCommand;
 
@@ -17,6 +23,9 @@ export class CreateOrderItemCommandHandler
 {
   constructor(
     private readonly createOrderItemRepository: CreateOrderItemRepository,
+    private readonly findOrderByIdService: FindOrderByIdService,
+    private readonly findProductByIdService: FindProductByIdService,
+    private readonly findPriceByIdService: FindPriceByIdService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -31,8 +40,29 @@ export class CreateOrderItemCommandHandler
     if (!data?.product) {
       throw new ParamNotFoundException<CreateOrderItemCommandKeys>('product');
     }
+    const order = await this.findOrderByIdService.execute(data.order);
+    if (!order) {
+      throw new OrderNotFoundException();
+    }
+    const product = await this.findProductByIdService.execute(data.product);
+    if (!product) {
+      throw new ProductNotFoundException();
+    }
+    const price = await this.findPriceByIdService.execute(data.price);
+    if (!price) {
+      throw new PriceNotFoundException();
+    }
 
-    const orderItemCreated = await this.createOrderItemRepository.execute(data);
+    const orderItemCreated = await this.createOrderItemRepository.execute({
+      ...data,
+      currency: order.currency,
+      name: product.name,
+      amount: price.amount,
+      fromAmount: price.fromAmount,
+      recurringIntervalCount: price.recurringIntervalCount,
+      recurringIntervalType: price.recurringIntervalType,
+      type: price.type
+    });
     if (!orderItemCreated) {
       throw new OrderItemNotFoundException();
     }

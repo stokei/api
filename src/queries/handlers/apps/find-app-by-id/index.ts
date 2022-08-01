@@ -2,9 +2,9 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import {
+  AppNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException,
-  AppNotFoundException
+  ParamNotFoundException
 } from '@/errors';
 import { AppModel } from '@/models/app.model';
 import { FindAppByIdQuery } from '@/queries/implements/apps/find-app-by-id.query';

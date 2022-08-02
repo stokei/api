@@ -6,7 +6,6 @@ import { AppGuard } from '@/common/guards/app';
 import { AccountsLoader } from '@/controllers/graphql/dataloaders/accounts.loader';
 import { MeAccount } from '@/controllers/graphql/types/me-account';
 import { AccountNotFoundException } from '@/errors';
-import { AccountModel } from '@/models/account.model';
 
 @Resolver(() => MeAccount)
 export class MeAccountResolver {
@@ -14,14 +13,12 @@ export class MeAccountResolver {
 
   @UseGuards(AuthenticatedGuard, AppGuard)
   @Query(() => MeAccount)
-  async me(@CurrentAccount() currentAccount: AccountModel) {
-    if (!currentAccount?.id) {
+  async me(@CurrentAccount('id') currentAccountId: string) {
+    if (!currentAccountId) {
       throw new UnauthorizedException();
     }
 
-    const account = await this.accountsLoader.findByIds.load(
-      currentAccount?.id
-    );
+    const account = await this.accountsLoader.findByIds.load(currentAccountId);
     if (!account) {
       throw new AccountNotFoundException();
     }

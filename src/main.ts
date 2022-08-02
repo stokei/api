@@ -23,8 +23,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  app.listen(PORT, HOST, () => {
-    Logger.log(`Microservise(${StokeiApiServerInfo.NAME}) started!`);
+  app.listen(PORT, HOST, async () => {
+    Logger.log(
+      `API(${StokeiApiServerInfo.NAME}) started at ${await app.getUrl()}!`
+    );
   });
 }
 bootstrap();

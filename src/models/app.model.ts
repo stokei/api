@@ -42,6 +42,7 @@ export class AppModel extends AggregateRoot {
   readonly favicon?: string;
   readonly logo?: string;
   readonly active: boolean;
+  readonly isStokei: boolean;
   readonly blockedAt?: string;
   readonly activatedAt?: string;
   readonly deactivatedAt?: string;
@@ -76,6 +77,7 @@ export class AppModel extends AggregateRoot {
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+    this.isStokei = !!this.id.match(/stokei/i);
   }
 
   createdApp({ createdBy }: { createdBy: string }) {

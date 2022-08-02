@@ -4,13 +4,15 @@ import {
   Prisma,
   PrismaClient
 } from '@prisma/client';
+import { encryptPassword, generateSalt } from '@stokei/nestjs';
 
 import { defaultAppId } from '@/constants/default-app-id';
+import { PASSWORD_SECRET_KEY } from '@/environments';
 import { AccountMapper } from '@/mappers/accounts';
 
 const myAccounts = (): Prisma.AccountCreateManyInput[] => {
-  const defaultPassword =
-    'TFXVbN5kEVvRCRdCHT4z51SaePa7VSR3Q+HHf9pu8zH1g58w6nERFP4n3/yjpbDjTrLjrqgtDq0ISRFKARpoMw==';
+  const salt = generateSalt(PASSWORD_SECRET_KEY);
+  const defaultPassword = encryptPassword('123456', salt, PASSWORD_SECRET_KEY);
   return [
     {
       id: 'stokei',
@@ -20,7 +22,7 @@ const myAccounts = (): Prisma.AccountCreateManyInput[] => {
       status: AccountStatus.ACTIVE,
       email: 'admin@stokei.com',
       password: defaultPassword,
-      salt: 'T2xko9DzwlhxQL7XA7nrCoWLCoHUSPjBwWeYR4XGbUtoJk73GbNQumRdc5rx/+t0TwxiFfeGPgowrHgwivHh5Q==',
+      salt,
       username: 'stokei',
       roles: [AccountRole.USER, AccountRole.ADMIN]
     }

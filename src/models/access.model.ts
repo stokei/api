@@ -13,6 +13,7 @@ import { AccessUpdatedEvent } from '@/events/implements/accesses/access-updated.
 import { AccountModel } from './account.model';
 
 export interface IAccessModelData {
+  prefixToken?: string;
   accessToken?: string;
   refreshToken?: string;
   readonly id?: string;
@@ -29,6 +30,7 @@ export interface IAccessModelData {
 }
 
 export class AccessModel extends AggregateRoot {
+  prefixToken?: string;
   accessToken?: string;
   refreshToken?: string;
   readonly id: string;
@@ -54,6 +56,7 @@ export class AccessModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.ACCESSES,
       id: data._id?.toString() || data.id
     });
+    this.prefixToken = data.prefixToken;
     this.accessToken = data.accessToken;
     this.refreshToken = data.refreshToken;
     this.parent = data.parent;

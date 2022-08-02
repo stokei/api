@@ -56,7 +56,7 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
     const accessCreated: AccessModel = await this.commandBus.execute(
       new CreateAccessCommand({
         parent: account.id,
-        app: account.id,
+        app: data.app,
         createdBy: account.id
       })
     );
@@ -65,6 +65,7 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
     }
     return {
       account: account,
+      prefixToken: accessCreated.prefixToken,
       accessToken: accessCreated.accessToken,
       refreshToken: accessCreated.refreshToken
     };

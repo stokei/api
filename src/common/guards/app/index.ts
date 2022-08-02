@@ -5,7 +5,7 @@ import {
   UnauthorizedException
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { GqlExecutionContext } from '@nestjs/graphql';
+import { extractRequestFromContext } from '@stokei/nestjs';
 
 import { APP_CONFIG } from '@/common/decorators/app-config.decorator';
 import { APP_ID_HEADER_NAME } from '@/constants/app-header-names';
@@ -20,10 +20,7 @@ export class AppGuard implements CanActivate {
   ) {}
 
   getRequest(context: ExecutionContext) {
-    if (context.getType() === 'http') {
-      return context.switchToHttp().getRequest();
-    }
-    return GqlExecutionContext.create(context).getContext().req;
+    return extractRequestFromContext(context);
   }
 
   async canActivate(context: ExecutionContext) {
@@ -36,7 +33,6 @@ export class AppGuard implements CanActivate {
     if (config && !config?.isRequired) {
       return true;
     }
-
     const appId = request?.headers[APP_ID_HEADER_NAME];
     if (!appId) {
       throw new UnauthorizedException();

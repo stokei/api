@@ -1,6 +1,11 @@
 import { UnauthorizedException } from '@nestjs/common';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  convertToISODateString,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { RemoveAccessCommand } from '@/commands/implements/accesses/remove-access.command';
 import {
@@ -31,6 +36,7 @@ export class RemoveAccessCommandHandler
     }
     const accessId = splitServiceId(data.where?.access)?.id;
     const accountId = data.where?.account;
+
     if (!accessId) {
       throw new ParamNotFoundException('accessId');
     }
@@ -39,7 +45,7 @@ export class RemoveAccessCommandHandler
     }
 
     const access = await this.findAccessByIdRepository.execute(accessId);
-    if (!access) {
+    if (!access || !access.active) {
       throw new AccessNotFoundException();
     }
     if (access.parent !== accountId) {
@@ -48,9 +54,13 @@ export class RemoveAccessCommandHandler
 
     const removed = await this.removeAccessRepository.execute({
       where: {
-        ...data.where,
-        access: accessId,
-        account: accountId
+        access: accessId
+      },
+      data: {
+        active: false,
+        updatedBy: accountId,
+        expiresIn: convertToISODateString(Date.now()),
+        canceledAt: convertToISODateString(Date.now())
       }
     });
     if (!removed) {
@@ -70,6 +80,7 @@ export class RemoveAccessCommandHandler
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
         app: cleanValue(command?.where?.app),
+        account: cleanValue(command?.where?.account),
         access: cleanValue(command?.where?.access)
       })
     });

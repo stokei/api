@@ -44,7 +44,7 @@ export class CreateAccessCommandHandler
       throw new AccountNotFoundException();
     }
 
-    const accessExpiresIn = addDays(15);
+    const accessExpiresIn = addDays(1);
     const accessCreated = await this.createAccessRepository.execute({
       ...data,
       active: true,
@@ -73,6 +73,7 @@ export class CreateAccessCommandHandler
       accountId: account.id,
       accessExpiresIn: accessCreated.expiresIn
     });
+    accessCreated.prefixToken = 'Bearer';
     accessCreated.accessToken = accessToken;
     accessCreated.refreshToken = refreshToken;
 

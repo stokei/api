@@ -5,7 +5,7 @@ import { LanguageMapper } from '@/mappers/languages';
 const myLanguages = (): Prisma.LanguageCreateManyInput[] => [
   {
     id: 'pt-br',
-    name: 'Português (Brasil)'
+    name: 'Português - BR'
   },
   {
     id: 'en',

@@ -69,10 +69,12 @@ export class RefreshAccessCommandHandler
       accountId: account.id,
       accessExpiresIn: access.expiresIn
     });
+    access.prefixToken = 'Bearer';
     access.accessToken = accessToken;
     access.refreshToken = refreshToken;
     return {
       account,
+      prefixToken: access.prefixToken,
       accessToken: access.accessToken,
       refreshToken: access.refreshToken
     };

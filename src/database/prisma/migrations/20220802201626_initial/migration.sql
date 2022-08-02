@@ -634,3 +634,6 @@ CREATE TABLE "phones" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "accounts_username_key" ON "accounts"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "accounts_salt_key" ON "accounts"("salt");

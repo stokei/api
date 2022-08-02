@@ -8,6 +8,9 @@ export class AuthResponse implements AuthResponse {
   account: MeAccount;
 
   @Field(() => String)
+  prefixToken: string;
+
+  @Field(() => String)
   accessToken: string;
 
   @Field(() => String)

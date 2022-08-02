@@ -33,7 +33,7 @@ export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {
     const accessCreated: AccessModel = await this.commandBus.execute(
       new CreateAccessCommand({
         parent: accountCreated.id,
-        app: accountCreated.id,
+        app: data.app,
         createdBy: accountCreated.id
       })
     );
@@ -43,6 +43,7 @@ export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {
 
     return {
       account: accountCreated,
+      prefixToken: accessCreated.prefixToken,
       accessToken: accessCreated.accessToken,
       refreshToken: accessCreated.refreshToken
     };

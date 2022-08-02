@@ -8,6 +8,7 @@ export class CartItemModelMock extends CartItemModel {
     super({
       _id: nanoid(),
       parent: data?.parent ?? 'anyParent',
+      product: data?.product ?? 'products.1sa21d5ad51as5d1as5',
       price: data?.price ?? 'prices.1sa21d5ad51as5d1as5',
       quantity: data?.quantity ?? 1,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),

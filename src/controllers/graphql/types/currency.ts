@@ -1,20 +1,43 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+
+import { Account } from './account';
+import { App } from './app';
 
 @ObjectType()
-//@Directive('@key(fields: "id")')
 export class Currency {
   @Field(() => ID)
   id: string;
 
   @Field(() => String)
-  parent: string;
+  name: string;
 
   @Field(() => String)
-  name: string;
+  symbol: string;
+
+  @Field(() => Int)
+  minorUnit: number;
+
+  @Field(() => Boolean)
+  active: boolean;
+
+  @Field(() => String, { nullable: true })
+  activatedAt?: string;
+
+  @Field(() => String, { nullable: true })
+  deactivatedAt?: string;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   createdAt?: string;
+
+  @Field(() => Account, { nullable: true })
+  updatedBy?: Account;
+
+  @Field(() => Account, { nullable: true })
+  createdBy?: Account;
+
+  @Field(() => App, { nullable: true })
+  app?: App;
 }

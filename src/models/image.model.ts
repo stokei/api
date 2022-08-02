@@ -22,6 +22,8 @@ export class ImageModel extends AggregateRoot {
   readonly id: string;
   @ApiProperty()
   readonly path: string;
+  @ApiProperty()
+  readonly url: string;
   @ApiProperty({ nullable: true })
   readonly updatedAt?: string;
   @ApiProperty({ nullable: true })
@@ -41,6 +43,7 @@ export class ImageModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.path = data.path;
+    this.url = data.path;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;

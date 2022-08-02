@@ -5,11 +5,14 @@ import { CreateCartItemCommand } from '@/commands/implements/cart-items/create-c
 import {
   CartItemNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PriceNotFoundException,
+  ProductNotFoundException
 } from '@/errors';
 import { CartItemAlreadyExistsException } from '@/errors/cart-item-already-exists';
 import { CreateCartItemRepository } from '@/repositories/cart-items/create-cart-item';
 import { ExistsCartItemsRepository } from '@/repositories/cart-items/exists-cart-items';
+import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 
 type CreateCartItemCommandKeys = keyof CreateCartItemCommand;
 
@@ -20,6 +23,7 @@ export class CreateCartItemCommandHandler
   constructor(
     private readonly createCartItemRepository: CreateCartItemRepository,
     private readonly existsCartItemsRepository: ExistsCartItemsRepository,
+    private readonly findPriceByIdService: FindPriceByIdService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -30,6 +34,9 @@ export class CreateCartItemCommandHandler
     }
     if (!data?.parent) {
       throw new ParamNotFoundException<CreateCartItemCommandKeys>('parent');
+    }
+    if (!data?.product) {
+      throw new ParamNotFoundException<CreateCartItemCommandKeys>('product');
     }
     if (!data?.price) {
       throw new ParamNotFoundException<CreateCartItemCommandKeys>('price');
@@ -45,6 +52,13 @@ export class CreateCartItemCommandHandler
     });
     if (!existsItem) {
       throw new CartItemAlreadyExistsException();
+    }
+    const price = await this.findPriceByIdService.execute(data.price);
+    if (!price || !price.active) {
+      throw new PriceNotFoundException();
+    }
+    if (price.parent !== data.product) {
+      throw new ProductNotFoundException();
     }
 
     const cartItemCreated = await this.createCartItemRepository.execute(data);
@@ -65,6 +79,7 @@ export class CreateCartItemCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       parent: cleanValue(command?.parent),
+      product: cleanValue(command?.product),
       price: cleanValue(command?.price),
       quantity: cleanValueNumber(command?.quantity)
     });

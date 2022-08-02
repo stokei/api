@@ -1,20 +1,68 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
+import { AppStatus } from '@/controllers/graphql/enums/app-status.enum';
+
+import { Account } from './account';
+import { Currency } from './currency';
+import { Image } from './image';
+import { Plan } from './plan';
+
 @ObjectType()
-//@Directive('@key(fields: "id")')
 export class App {
   @Field(() => ID)
   id: string;
 
   @Field(() => String)
-  parent: string;
+  name: string;
 
   @Field(() => String)
-  name: string;
+  slug: string;
+
+  @Field(() => String, { nullable: true })
+  description?: string;
+
+  @Field(() => AppStatus)
+  status: AppStatus;
+
+  @Field(() => Image, { nullable: true })
+  avatar?: Image;
+
+  @Field(() => Plan, { nullable: true })
+  plan?: Plan;
+
+  @Field(() => Currency)
+  currency: Currency;
+
+  @Field(() => Image, { nullable: true })
+  favicon?: Image;
+
+  @Field(() => Image, { nullable: true })
+  logo?: Image;
+
+  @Field(() => Boolean)
+  active: boolean;
+
+  @Field(() => Boolean)
+  isStokei: boolean;
+
+  @Field(() => String, { nullable: true })
+  blockedAt?: string;
+
+  @Field(() => String, { nullable: true })
+  activatedAt?: string;
+
+  @Field(() => String, { nullable: true })
+  deactivatedAt?: string;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   createdAt?: string;
+
+  @Field(() => Account, { nullable: true })
+  updatedBy?: Account;
+
+  @Field(() => Account, { nullable: true })
+  createdBy?: Account;
 }

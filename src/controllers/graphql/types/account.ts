@@ -3,8 +3,10 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { AccountRole } from '@/controllers/graphql/enums/account-role.enum';
 import { AccountStatus } from '@/controllers/graphql/enums/account-status.enum';
 
+import { Image } from './image';
+import { Language } from './language';
+
 @ObjectType()
-//@Directive('@key(fields: "id")')
 export class Account {
   @Field(() => ID)
   id: string;
@@ -27,14 +29,14 @@ export class Account {
   @Field(() => String)
   username: string;
 
-  @Field(() => String, { nullable: true })
-  avatar?: string;
+  @Field(() => Image, { nullable: true })
+  avatar?: Image;
 
   @Field(() => String, { nullable: true })
   country?: string;
 
-  @Field(() => String, { nullable: true })
-  language?: string;
+  @Field(() => Language, { nullable: true })
+  language?: Language;
 
   @Field(() => AccountStatus)
   status: AccountStatus;

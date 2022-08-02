@@ -9,6 +9,7 @@ export interface ICartItemModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
+  readonly product: string;
   readonly price: string;
   readonly quantity: number;
   readonly updatedAt?: Date | string;
@@ -21,6 +22,7 @@ export interface ICartItemModelData {
 export class CartItemModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
+  readonly product: string;
   readonly price: string;
   readonly quantity: number;
   readonly updatedAt?: string;
@@ -37,6 +39,7 @@ export class CartItemModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
+    this.product = data.product;
     this.price = data.price;
     this.quantity = data.quantity;
     this.updatedAt = convertToISODateString(data.updatedAt);

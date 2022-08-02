@@ -4,10 +4,7 @@ export class CreateVideoDTO {
   @ApiProperty()
   parent: string;
 
-  @ApiProperty()
-  app: string;
-
-  @ApiProperty()
+  @ApiProperty({ nullable: true })
   name?: string;
 
   @ApiProperty({ nullable: true })
@@ -16,6 +13,7 @@ export class CreateVideoDTO {
   @ApiProperty({ nullable: true })
   poster?: string;
 
+  app: string;
   path: string;
   createdBy: string;
 }

@@ -5,6 +5,7 @@ import { CreateCartItemDTO } from '@/dtos/cart-items/create-cart-item.dto';
 export class CreateCartItemCommand implements ICommand, CreateCartItemDTO {
   parent: string;
   price: string;
+  product: string;
   quantity?: number;
   app: string;
   createdBy: string;

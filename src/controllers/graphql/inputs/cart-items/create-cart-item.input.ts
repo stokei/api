@@ -7,4 +7,7 @@ export class CreateCartItemInput {
 
   @Field()
   price: string;
+
+  @Field()
+  product: string;
 }

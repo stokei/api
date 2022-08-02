@@ -24,8 +24,8 @@ export interface IDomainModelData {
 export class DomainModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly active: boolean;
   readonly name: string;
+  readonly active: boolean;
   readonly status: DomainStatus;
   readonly activatedAt?: string;
   readonly updatedAt?: string;

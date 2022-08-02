@@ -38,6 +38,8 @@ export class VideoModel extends AggregateRoot {
   readonly slug: string;
   @ApiProperty()
   readonly path: string;
+  @ApiProperty()
+  readonly url: string;
   @ApiProperty({ nullable: true })
   readonly description?: string;
   @ApiProperty({ nullable: true })
@@ -68,6 +70,7 @@ export class VideoModel extends AggregateRoot {
     this.parent = data.parent;
     this.slug = data.slug;
     this.path = data.path;
+    this.url = data.path;
     this.name = data.name;
     this.description = data.description;
     this.poster = data.poster;

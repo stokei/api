@@ -18,6 +18,7 @@ async function bootstrap() {
     .setTitle('Stokei API')
     .setDescription('Stokei RESTfull API')
     .setVersion('1.0')
+    .addBearerAuth()
     .addTag('Stokei')
     .build();
   const document = SwaggerModule.createDocument(app, config);

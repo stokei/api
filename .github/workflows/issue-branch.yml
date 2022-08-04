@@ -11,12 +11,12 @@ on:
     types: [closed]
 
 jobs:
-  create_issue_branch_job:
+  Create-Issue-Branch:
     runs-on: ubuntu-latest
     steps:
       - name: Create Issue Branch
         uses: robvanderleek/create-issue-branch@main
-        env:
+        with:
           gitSafeReplacementChar: '-'
           openPR: true
           autoCloseIssue: true
@@ -27,4 +27,5 @@ jobs:
           copyIssueMilestoneToPR: true
           commentMessage: 'Branch ${branchName} created for issue: ${issue.title}'
           branchName: '${issue.number}-${issue.title[0,64],}'
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

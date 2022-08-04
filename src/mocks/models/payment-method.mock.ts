@@ -17,6 +17,8 @@ export class PaymentMethodModelMock extends PaymentMethodModel {
       provider: data?.provider ?? PaymentMethodProvider.STRIPE,
       externalPaymentMethod:
         data?.externalPaymentMethod ?? 'anyExternalPaymentMethodId',
+      cardBrand: data?.cardBrand ?? 'visa',
+      lastFourCardNumber: data?.lastFourCardNumber ?? '4445',
       active: data?.active ?? true,
       activatedAt: data?.activatedAt ?? null,
       deactivatedAt: data?.deactivatedAt ?? null,

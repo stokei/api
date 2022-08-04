@@ -38,6 +38,7 @@ export class OrderItemMapper {
         app: prismaMapper.toWhereData(operatorData.app),
         order: prismaMapper.toWhereData(operatorData.order),
         product: prismaMapper.toWhereData(operatorData.product),
+        currency: prismaMapper.toWhereData(operatorData.currency),
         type: operatorData.type,
         recurringIntervalCount: prismaMapper.toWhereData(
           operatorData.recurringIntervalCount
@@ -75,6 +76,7 @@ export class OrderItemMapper {
         [operator]: {
           order: cleanWhereDataString(operatorData.order),
           product: cleanWhereDataString(operatorData.product),
+          currency: cleanWhereDataString(operatorData.currency),
           description: cleanWhereDataString(operatorData.description),
           type: operatorData.type,
           recurringIntervalCount: cleanWhereDataNumber(

@@ -8,6 +8,7 @@ export interface CountOrderItemsWhereDTO {
   app?: IWhereData;
   name?: IWhereDataSearch;
   order?: IWhereData;
+  currency?: IWhereData;
   product?: IWhereData;
   description?: IWhereDataSearch;
   type?: PriceType;

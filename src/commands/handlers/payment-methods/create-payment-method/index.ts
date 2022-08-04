@@ -38,7 +38,9 @@ export class CreatePaymentMethodCommandHandler
         ...data,
         type: PaymentMethodType.CREDIT_CARD,
         provider: PaymentMethodProvider.STRIPE,
-        externalPaymentMethod: null
+        externalPaymentMethod: null,
+        lastFourCardNumber: null,
+        cardBrand: null
       });
     if (!paymentMethodCreated) {
       throw new PaymentMethodNotFoundException();

@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 import { Account } from './account';
 import { App } from './app';
+import { Image } from './image';
 
 @ObjectType()
 export class Language {
@@ -10,6 +11,18 @@ export class Language {
 
   @Field(() => String)
   name: string;
+
+  @Field(() => Image, { nullable: true })
+  icon?: Image;
+
+  @Field(() => Boolean)
+  active: boolean;
+
+  @Field(() => String, { nullable: true })
+  activatedAt?: string;
+
+  @Field(() => String, { nullable: true })
+  deactivatedAt?: string;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;

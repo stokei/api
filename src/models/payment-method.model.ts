@@ -14,6 +14,8 @@ export interface IPaymentMethodModelData {
   readonly type: PaymentMethodType;
   readonly provider: PaymentMethodProvider;
   readonly externalPaymentMethod: string;
+  readonly lastFourCardNumber?: string;
+  readonly cardBrand?: string;
   readonly active: boolean;
   readonly activatedAt?: Date | string;
   readonly deactivatedAt?: Date | string;
@@ -30,6 +32,8 @@ export class PaymentMethodModel extends AggregateRoot {
   readonly type: PaymentMethodType;
   readonly provider: PaymentMethodProvider;
   readonly externalPaymentMethod: string;
+  readonly lastFourCardNumber?: string;
+  readonly cardBrand?: string;
   readonly active: boolean;
   readonly activatedAt?: string;
   readonly deactivatedAt?: string;
@@ -49,6 +53,8 @@ export class PaymentMethodModel extends AggregateRoot {
     this.type = data.type;
     this.provider = data.provider;
     this.externalPaymentMethod = data.externalPaymentMethod;
+    this.lastFourCardNumber = data.lastFourCardNumber;
+    this.cardBrand = data.cardBrand;
     this.active = data.active;
     this.activatedAt = convertToISODateString(data.activatedAt);
     this.deactivatedAt = convertToISODateString(data.deactivatedAt);

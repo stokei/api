@@ -12,6 +12,9 @@ export class Module {
   name: string;
 
   @Field(() => String, { nullable: true })
+  description?: string;
+
+  @Field(() => String, { nullable: true })
   updatedAt?: string;
 
   @Field(() => String, { nullable: true })

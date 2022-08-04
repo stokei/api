@@ -14,6 +14,7 @@ export interface WhereDataFindAllOrderItemsDTO {
   name?: IWhereDataSearch;
   order?: IWhereData;
   product?: IWhereData;
+  currency?: IWhereData;
   description?: IWhereDataSearch;
   type?: PriceType;
   recurringIntervalCount?: IWhereData<number>;

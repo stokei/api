@@ -8,4 +8,6 @@ export interface CreatePaymentMethodRepositoryDTO
   type: PaymentMethodType;
   provider: PaymentMethodProvider;
   externalPaymentMethod: string;
+  lastFourCardNumber?: string;
+  cardBrand?: string;
 }

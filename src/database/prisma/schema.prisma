@@ -394,6 +394,8 @@ model PaymentMethod {
   type                  PaymentMethodType
   provider              PaymentMethodProvider
   externalPaymentMethod String                @map("external_payment_method") @db.VarChar(255)
+  lastFourCardNumber    String?               @map("last_four_card_number") @db.VarChar(4)
+  cardBrand             String?               @map("card_brand") @db.VarChar(50)
   active                Boolean               @default(true)
   activatedAt           DateTime?             @default(now()) @map("activated_at")
   deactivatedAt         DateTime?             @map("deactivated_at")

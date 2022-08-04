@@ -10,6 +10,7 @@ export interface WhereDataFindAllPaymentMethodsDTO {
   type?: PaymentMethodType;
   provider?: PaymentMethodProvider;
   externalPaymentMethod?: IWhereData<string>;
+  cardBrand?: IWhereData<string>;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

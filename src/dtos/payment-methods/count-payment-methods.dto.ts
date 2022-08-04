@@ -7,6 +7,7 @@ export interface CountPaymentMethodsWhereDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereData;
+  cardBrand?: IWhereData<string>;
   type?: PaymentMethodType;
   provider?: PaymentMethodProvider;
   externalPaymentMethod?: IWhereData<string>;

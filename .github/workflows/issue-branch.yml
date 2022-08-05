@@ -16,16 +16,5 @@ jobs:
     steps:
       - name: Create Issue Branch
         uses: robvanderleek/create-issue-branch@main
-        with:
-          gitSafeReplacementChar: '-'
-          openPR: true
-          autoCloseIssue: true
-          copyIssueDescriptionToPR: true
-          copyIssueLabelsToPR: true
-          copyIssueAssigneeToPR: true
-          copyIssueProjectsToPR: true
-          copyIssueMilestoneToPR: true
-          commentMessage: 'Branch ${branchName} created for issue: ${issue.title}'
-          branchName: '${issue.number}-${issue.title[0,64],}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

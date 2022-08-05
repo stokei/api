@@ -1,0 +1,25 @@
+gitSafeReplacementChar: '-'
+openPR: true
+autoCloseIssue: true
+copyIssueDescriptionToPR: true
+copyIssueLabelsToPR: true
+copyIssueAssigneeToPR: true
+copyIssueProjectsToPR: true
+copyIssueMilestoneToPR: true
+commentMessage: 'Branch ${branchName} created for issue: ${issue.title}'
+branchName: '${issue.number}-${issue.title[0,64],}'
+branches:
+  - label: 'TYPE: HOTFIX'
+    prefix: hotfix/
+  - label: 'TYPE: IMPROVEMENT'
+    prefix: improvement/
+  - label: 'TYPE: FEATURE'
+    prefix: feature/
+  - label: 'TYPE: BUG'
+    prefix: bugfix/
+  - label: 'TYPE: TASK'
+    prefix: task/
+  - label: 'TYPE: DOCUMENTATION'
+    prefix: docs/
+  - label: '*'
+    skip: true

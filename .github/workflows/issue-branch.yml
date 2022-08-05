@@ -11,11 +11,13 @@ on:
     types: [closed]
 
 jobs:
-  Create-Issue-Branch:
+  create-issue-branch:
+    name: Create Issue Branch
     runs-on: ubuntu-latest
     if: github.event_name == 'issues' && github.event.action == 'assigned'
     steps:
       - name: Create Issue Branch
+        id: create-issue-branch
         uses: robvanderleek/create-issue-branch@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

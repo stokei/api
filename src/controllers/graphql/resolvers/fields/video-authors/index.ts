@@ -1,3 +1,9 @@
 import { VideoAuthorReferenceResolver } from './reference';
 
-export const VideoAuthorsFieldsResolvers = [VideoAuthorReferenceResolver];
+import { VideoAuthorAppResolver } from './app';
+import { VideoAuthorReferenceResolver } from './reference';
+
+export const VideoAuthorsFieldsResolvers = [
+  VideoAuthorReferenceResolver,
+  VideoAuthorAppResolver
+];

@@ -1,3 +1,6 @@
 import { CartReferenceResolver } from './reference';
 
-export const CartsFieldsResolvers = [CartReferenceResolver];
+import { CartAppResolver } from './app';
+import { CartReferenceResolver } from './reference';
+
+export const CartsFieldsResolvers = [CartReferenceResolver, CartAppResolver];

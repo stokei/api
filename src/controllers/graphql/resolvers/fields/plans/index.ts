@@ -1,3 +1,6 @@
 import { PlanReferenceResolver } from './reference';
 
-export const PlansFieldsResolvers = [PlanReferenceResolver];
+import { PlanAppResolver } from './app';
+import { PlanReferenceResolver } from './reference';
+
+export const PlansFieldsResolvers = [PlanReferenceResolver, PlanAppResolver];

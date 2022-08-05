@@ -1,3 +1,9 @@
 import { CourseStudentReferenceResolver } from './reference';
 
-export const CourseStudentsFieldsResolvers = [CourseStudentReferenceResolver];
+import { CourseStudentAppResolver } from './app';
+import { CourseStudentReferenceResolver } from './reference';
+
+export const CourseStudentsFieldsResolvers = [
+  CourseStudentReferenceResolver,
+  CourseStudentAppResolver
+];

@@ -20,9 +20,6 @@ export class PaymentMethod {
   @Field(() => PaymentMethodProvider)
   provider: PaymentMethodProvider;
 
-  @Field(() => String)
-  externalPaymentMethod: string;
-
   @Field(() => String, { nullable: true })
   lastFourCardNumber?: string;
 

@@ -1,5 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
+import { PhoneStatus } from '@/controllers/graphql/enums/phone-status.enum';
+
 import { Account } from './account';
 import { App } from './app';
 
@@ -9,7 +11,34 @@ export class Phone {
   id: string;
 
   @Field(() => String)
-  name: string;
+  fullnumber: string;
+
+  @Field(() => String)
+  countryCode: string;
+
+  @Field(() => String)
+  areaCode: string;
+
+  @Field(() => String)
+  number: string;
+
+  @Field(() => String)
+  validationCode: string;
+
+  @Field(() => PhoneStatus)
+  status: PhoneStatus;
+
+  @Field(() => Boolean)
+  default: boolean;
+
+  @Field(() => Boolean)
+  active: boolean;
+
+  @Field(() => String, { nullable: true })
+  activatedAt?: string;
+
+  @Field(() => String, { nullable: true })
+  validatedAt?: string;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;

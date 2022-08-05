@@ -1,4 +1,8 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+
+import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
+import { PriceType } from '@/controllers/graphql/enums/price-type.enum';
+import { RecurringType } from '@/controllers/graphql/enums/recurring-type.enum';
 
 import { Account } from './account';
 import { App } from './app';
@@ -9,7 +13,31 @@ export class Price {
   id: string;
 
   @Field(() => String)
-  name: string;
+  default: boolean;
+
+  @Field(() => Int)
+  fromAmount?: number;
+
+  @Field(() => Int)
+  amount: number;
+
+  @Field(() => PriceType)
+  type: PriceType;
+
+  @Field(() => InventoryType)
+  inventoryType: InventoryType;
+
+  @Field(() => Int)
+  recurringIntervalCount: number;
+
+  @Field(() => RecurringType)
+  recurringIntervalType: RecurringType;
+
+  @Field(() => Int)
+  quantity: number;
+
+  @Field(() => Boolean)
+  active: boolean;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;

@@ -5,6 +5,7 @@ import { AccountStatus } from '@/controllers/graphql/enums/account-status.enum';
 
 import { Image } from './image';
 import { Language } from './language';
+import { Phones } from './phones';
 
 @ObjectType()
 export class Account {
@@ -40,6 +41,9 @@ export class Account {
 
   @Field(() => AccountStatus)
   status: AccountStatus;
+
+  @Field(() => Phones, { nullable: true })
+  phones?: Phones;
 
   @Field(() => String, { nullable: true })
   canceledAt?: string;

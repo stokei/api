@@ -8,8 +8,8 @@ export class VideoAuthor {
   @Field(() => ID)
   id: string;
 
-  @Field(() => String)
-  name: string;
+  @Field(() => Account)
+  author: Account;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;

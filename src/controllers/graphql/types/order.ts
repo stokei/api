@@ -7,7 +7,6 @@ import { App } from './app';
 import { Cart } from './cart';
 import { Currency } from './currency';
 import { OrderItems } from './order-items';
-import { Payments } from './payments';
 
 @ObjectType()
 export class Order {
@@ -19,9 +18,6 @@ export class Order {
 
   @Field(() => OrderItems)
   items: OrderItems;
-
-  @Field(() => Payments)
-  payments: Payments;
 
   @Field(() => Account)
   customer: Account;

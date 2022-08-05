@@ -25,10 +25,10 @@ export interface IProductModelData {
 
 export class ProductModel extends AggregateRoot {
   readonly id: string;
+  readonly app: string;
   readonly parent: string;
   readonly name: string;
   readonly description?: string;
-  readonly app: string;
   readonly externalProduct: string;
   readonly checkoutVisible: boolean;
   readonly avatar?: string;

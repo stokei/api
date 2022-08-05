@@ -5,6 +5,7 @@ import { AppStatus } from '@/controllers/graphql/enums/app-status.enum';
 import { Account } from './account';
 import { Currency } from './currency';
 import { Image } from './image';
+import { Phones } from './phones';
 import { Plan } from './plan';
 
 @ObjectType()
@@ -29,6 +30,9 @@ export class App {
 
   @Field(() => Plan, { nullable: true })
   plan?: Plan;
+
+  @Field(() => Phones, { nullable: true })
+  phones?: Phones;
 
   @Field(() => Currency)
   currency: Currency;

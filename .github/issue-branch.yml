@@ -1,8 +1,5 @@
 gitSafeReplacementChar: '-'
-openPR: true
 autoCloseIssue: true
-copyIssueLabelsToPR: true
-copyIssueAssigneeToPR: true
 commentMessage: 'Branch ${branchName} created for issue: ${issue.title}'
 branchName: '${issue.number}-${issue.title[0,64],}'
 branches:
@@ -16,7 +13,5 @@ branches:
     prefix: bugfix/
   - label: 'TYPE: TASK'
     prefix: task/
-  - label: 'TYPE: DOCUMENTATION'
-    prefix: docs/
   - label: '*'
     skip: true

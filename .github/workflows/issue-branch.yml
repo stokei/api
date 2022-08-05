@@ -13,8 +13,39 @@ on:
 jobs:
   Create-Issue-Branch:
     runs-on: ubuntu-latest
+    if: github.event_name == 'issues' && github.event.action == 'assigned'
     steps:
       - name: Create Issue Branch
         uses: robvanderleek/create-issue-branch@main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Choose a pr template
+        if: steps.create-issue-branch.outputs.branchName != ''
+        id: template
+        env:
+          ISSUE_BRANCH_NAME: ${{ steps.create-issue-branch.outputs.branchName }}
+        run: |
+          name=$ISSUE_BRANCH_NAME
+          if [[ $name =~ ^bugfix/ ]]; then \
+            template="bug.md"; \
+          elif [[ $name =~ ^improvement/ ]]; then \
+            template="improvement.md"; \
+          elif [[ $name =~ ^feature/ ]]; then \
+            template="feature.md"; \
+          elif [[ $name =~ ^hotfix/ ]]; then \
+            template="hotfix.md"
+          elif [[ $name =~ ^task/ ]]; then \
+            template="task.md"
+          fi
+          echo "::set-output name=template-name::$template"
+      - name: Add pr link in comment
+        uses: mshick/add-pr-comment@master
+        if: steps.create-issue-branch.outputs.branchName != ''
+        env:
+          PULL_REQUEST_URL: ${{ format('https://github.com/{0}/compare/{1}...{2}?quick_pull=1&template={3}', github.repository, github.event.repository.default_branch, steps.create-issue-branch.outputs.branchName, steps.template.outputs.template-name) }}
+        with:
+          message: |
+            [Create a pull request](${{ env.PULL_REQUEST_URL }})
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: 'github-actions[bot]'

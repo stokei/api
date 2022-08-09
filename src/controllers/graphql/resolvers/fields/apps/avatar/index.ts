@@ -1,16 +1,16 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { ImagesLoader } from '@/controllers/graphql/dataloaders/images.loader';
-import { Account } from '@/controllers/graphql/types/account';
+import { App } from '@/controllers/graphql/types/app';
 import { Image } from '@/controllers/graphql/types/image';
-import { AccountModel } from '@/models/account.model';
+import { AppModel } from '@/models/app.model';
 
-@Resolver(() => Account)
-export class AccountAvatarResolver {
+@Resolver(() => App)
+export class AppAvatarResolver {
   constructor(private readonly imagesLoader: ImagesLoader) {}
 
   @ResolveField(() => Image, { nullable: true })
-  avatar(@Parent() account: AccountModel) {
-    return account.avatar && this.imagesLoader.findByIds.load(account.avatar);
+  avatar(@Parent() app: AppModel) {
+    return app.avatar && this.imagesLoader.findByIds.load(app.avatar);
   }
 }

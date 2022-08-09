@@ -292,22 +292,22 @@ model Product {
 }
 
 model Price {
-  id                     String        @id @default(cuid())
-  app                    String        @db.VarChar(255)
-  parent                 String        @db.VarChar(255)
-  default                Boolean       @default(false)
-  fromAmount             Int?          @map("from_amount")
-  amount                 Int           @map("amount")
+  id                     String         @id @default(cuid())
+  app                    String         @db.VarChar(255)
+  parent                 String         @db.VarChar(255)
+  default                Boolean        @default(false)
+  fromAmount             Int?           @map("from_amount")
+  amount                 Int            @map("amount")
   type                   PriceType
-  recurringIntervalCount Int           @map("recurring_interval_count")
-  recurringIntervalType  RecurringType @map("recurring_interval_type")
-  inventoryType          InventoryType @map("inventory_type")
-  quantity               Int
-  active                 Boolean       @default(true)
-  updatedAt              DateTime?     @updatedAt @map("updated_at")
-  createdAt              DateTime?     @default(now()) @map("created_at")
-  updatedBy              String?       @map("updated_by") @db.VarChar(255)
-  createdBy              String?       @map("created_by") @db.VarChar(255)
+  recurringIntervalCount Int?           @map("recurring_interval_count")
+  recurringIntervalType  RecurringType? @map("recurring_interval_type")
+  inventoryType          InventoryType  @map("inventory_type")
+  quantity               Int?
+  active                 Boolean        @default(true)
+  updatedAt              DateTime?      @updatedAt @map("updated_at")
+  createdAt              DateTime?      @default(now()) @map("created_at")
+  updatedBy              String?        @map("updated_by") @db.VarChar(255)
+  createdBy              String?        @map("created_by") @db.VarChar(255)
 
   @@map("prices")
 }

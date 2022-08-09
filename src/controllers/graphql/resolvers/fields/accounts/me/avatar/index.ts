@@ -9,7 +9,7 @@ import { AccountModel } from '@/models/account.model';
 export class MeAccountAvatarResolver {
   constructor(private readonly imagesLoader: ImagesLoader) {}
 
-  @ResolveField(() => Image)
+  @ResolveField(() => Image, { nullable: true })
   avatar(@Parent() account: AccountModel) {
     return account.avatar && this.imagesLoader.findByIds.load(account.avatar);
   }

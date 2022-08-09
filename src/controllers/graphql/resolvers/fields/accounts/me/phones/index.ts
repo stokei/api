@@ -1,30 +1,28 @@
 import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { PaginationInput } from '@stokei/nestjs';
 
-import { OrderByDataFindAllAccessesInput } from '@/controllers/graphql/inputs/accesses/find-all-accesses.input';
-import { Accesses } from '@/controllers/graphql/types/accesses';
+import { OrderByDataFindAllPhonesInput } from '@/controllers/graphql/inputs/phones/find-all-phones.input';
 import { MeAccount } from '@/controllers/graphql/types/me-account';
+import { Phones } from '@/controllers/graphql/types/phones';
 import { AccountModel } from '@/models/account.model';
-import { FindAllAccessesService } from '@/services/accesses/find-all-accesses';
+import { FindAllPhonesService } from '@/services/phones/find-all-phones';
 
 @Resolver(() => MeAccount)
-export class MeAccountAccessesResolver {
-  constructor(
-    private readonly findAllAccessesService: FindAllAccessesService
-  ) {}
+export class MeAccountPhonesResolver {
+  constructor(private readonly findAllPhonesService: FindAllPhonesService) {}
 
-  @ResolveField(() => Accesses, { nullable: true })
-  accesses(
+  @ResolveField(() => Phones, { nullable: true })
+  phones(
     @Args('page', { type: () => PaginationInput, nullable: true })
     page: PaginationInput,
     @Args('orderBy', {
-      type: () => OrderByDataFindAllAccessesInput,
+      type: () => OrderByDataFindAllPhonesInput,
       nullable: true
     })
-    orderBy: OrderByDataFindAllAccessesInput,
+    orderBy: OrderByDataFindAllPhonesInput,
     @Parent() account: AccountModel
   ) {
-    return this.findAllAccessesService.execute({
+    return this.findAllPhonesService.execute({
       page,
       orderBy,
       where: {

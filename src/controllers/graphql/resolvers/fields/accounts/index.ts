@@ -1,4 +1,5 @@
 import { AccountAppResolver } from './app';
+import { AccountAvatarResolver } from './avatar';
 import { AccountCreatedByResolver } from './created-by';
 import { MeAccountsFieldsResolvers } from './me';
 import { AccountReferenceResolver } from './reference';
@@ -8,6 +9,7 @@ export const AccountsFieldsResolvers = [
   ...MeAccountsFieldsResolvers,
   AccountReferenceResolver,
   AccountAppResolver,
+  AccountAvatarResolver,
   AccountCreatedByResolver,
   AccountUpdatedByResolver
 ];

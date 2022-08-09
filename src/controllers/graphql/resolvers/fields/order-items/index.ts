@@ -1,5 +1,3 @@
-import { OrderItemReferenceResolver } from './reference';
-
 import { OrderItemAppResolver } from './app';
 import { OrderItemReferenceResolver } from './reference';
 

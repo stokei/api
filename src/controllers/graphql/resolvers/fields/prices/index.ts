@@ -1,5 +1,3 @@
-import { PriceReferenceResolver } from './reference';
-
 import { PriceAppResolver } from './app';
 import { PriceReferenceResolver } from './reference';
 

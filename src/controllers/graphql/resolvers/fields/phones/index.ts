@@ -1,5 +1,3 @@
-import { PhoneReferenceResolver } from './reference';
-
 import { PhoneAppResolver } from './app';
 import { PhoneReferenceResolver } from './reference';
 

@@ -1,5 +1,3 @@
-import { PaymentMethodReferenceResolver } from './reference';
-
 import { PaymentMethodAppResolver } from './app';
 import { PaymentMethodReferenceResolver } from './reference';
 

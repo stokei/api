@@ -1,5 +1,3 @@
-import { CourseStudentReferenceResolver } from './reference';
-
 import { CourseStudentAppResolver } from './app';
 import { CourseStudentReferenceResolver } from './reference';
 

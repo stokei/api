@@ -1,5 +1,3 @@
-import { ModuleReferenceResolver } from './reference';
-
 import { ModuleAppResolver } from './app';
 import { ModuleReferenceResolver } from './reference';
 

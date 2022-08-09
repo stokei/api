@@ -1,5 +1,6 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { App } from '@/controllers/graphql/types/app';
 import { Image } from '@/controllers/graphql/types/image';
 import { ImageModel } from '@/models/image.model';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
@@ -8,7 +9,7 @@ import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 export class ImageAppResolver {
   constructor(private readonly findAppByIdService: FindAppByIdService) {}
 
-  @ResolveField(() => Image)
+  @ResolveField(() => App)
   app(@Parent() image: ImageModel) {
     return this.findAppByIdService.execute(image.app);
   }

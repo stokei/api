@@ -1,5 +1,6 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { App } from '@/controllers/graphql/types/app';
 import { Color } from '@/controllers/graphql/types/color';
 import { ColorModel } from '@/models/color.model';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
@@ -8,7 +9,7 @@ import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 export class ColorAppResolver {
   constructor(private readonly findAppByIdService: FindAppByIdService) {}
 
-  @ResolveField(() => Color)
+  @ResolveField(() => App)
   app(@Parent() color: ColorModel) {
     return this.findAppByIdService.execute(color.app);
   }

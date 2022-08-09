@@ -1,18 +1,19 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { AccountsLoader } from '@/controllers/graphql/dataloaders/accounts.loader';
 import { Account } from '@/controllers/graphql/types/account';
 import { Language } from '@/controllers/graphql/types/language';
 import { LanguageModel } from '@/models/language.model';
-import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 
 @Resolver(() => Language)
 export class LanguageCreatedByResolver {
-  constructor(
-    private readonly findAccountByIdService: FindAccountByIdService
-  ) {}
+  constructor(private readonly accountsLoader: AccountsLoader) {}
 
-  @ResolveField(() => Account)
+  @ResolveField(() => Account, { nullable: true })
   createdBy(@Parent() language: LanguageModel) {
-    return this.findAccountByIdService.execute(language.createdBy);
+    return (
+      language.updatedBy &&
+      this.accountsLoader.findByIds.load(language.createdBy)
+    );
   }
 }

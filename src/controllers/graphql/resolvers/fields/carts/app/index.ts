@@ -1,16 +1,16 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { AppsLoader } from '@/controllers/graphql/dataloaders/apps.loader';
 import { App } from '@/controllers/graphql/types/app';
 import { Cart } from '@/controllers/graphql/types/cart';
 import { CartModel } from '@/models/cart.model';
-import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 
 @Resolver(() => Cart)
 export class CartAppResolver {
-  constructor(private readonly findAppByIdService: FindAppByIdService) {}
+  constructor(private readonly appsLoader: AppsLoader) {}
 
   @ResolveField(() => App)
   app(@Parent() cart: CartModel) {
-    return this.findAppByIdService.execute(cart.app);
+    return cart.app && this.appsLoader.findByIds.load(cart.app);
   }
 }

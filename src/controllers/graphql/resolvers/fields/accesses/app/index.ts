@@ -1,16 +1,16 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { AppsLoader } from '@/controllers/graphql/dataloaders/apps.loader';
 import { Access } from '@/controllers/graphql/types/access';
 import { App } from '@/controllers/graphql/types/app';
 import { AccessModel } from '@/models/access.model';
-import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 
 @Resolver(() => Access)
 export class AccessAppResolver {
-  constructor(private readonly findAppByIdService: FindAppByIdService) {}
+  constructor(private readonly appsLoader: AppsLoader) {}
 
   @ResolveField(() => App)
   app(@Parent() access: AccessModel) {
-    return this.findAppByIdService.execute(access.app);
+    return access.app && this.appsLoader.findByIds.load(access.app);
   }
 }

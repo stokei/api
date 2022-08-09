@@ -3,6 +3,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { AccountRole } from '@/controllers/graphql/enums/account-role.enum';
 import { AccountStatus } from '@/controllers/graphql/enums/account-status.enum';
 
+import { App } from './app';
 import { Image } from './image';
 import { Language } from './language';
 import { Phones } from './phones';
@@ -21,8 +22,8 @@ export class Account {
   @Field(() => String)
   fullname: string;
 
-  @Field(() => String)
-  app: string;
+  @Field(() => App)
+  app: App;
 
   @Field(() => String)
   email: string;
@@ -53,6 +54,12 @@ export class Account {
 
   @Field(() => String, { nullable: true })
   createdAt?: string;
+
+  @Field(() => Account, { nullable: true })
+  updatedBy?: Account;
+
+  @Field(() => Account, { nullable: true })
+  createdBy?: Account;
 
   @Field(() => [AccountRole])
   roles: AccountRole[];

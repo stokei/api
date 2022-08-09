@@ -1,18 +1,18 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { AccountsLoader } from '@/controllers/graphql/dataloaders/accounts.loader';
 import { Account } from '@/controllers/graphql/types/account';
 import { Order } from '@/controllers/graphql/types/order';
 import { OrderModel } from '@/models/order.model';
-import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 
 @Resolver(() => Order)
 export class OrderUpdatedByResolver {
-  constructor(
-    private readonly findAccountByIdService: FindAccountByIdService
-  ) {}
+  constructor(private readonly accountsLoader: AccountsLoader) {}
 
-  @ResolveField(() => Account)
+  @ResolveField(() => Account, { nullable: true })
   updatedBy(@Parent() order: OrderModel) {
-    return this.findAccountByIdService.execute(order.updatedBy);
+    return (
+      order.updatedBy && this.accountsLoader.findByIds.load(order.updatedBy)
+    );
   }
 }

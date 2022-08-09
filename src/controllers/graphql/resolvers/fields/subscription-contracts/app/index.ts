@@ -1,16 +1,19 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { AppsLoader } from '@/controllers/graphql/dataloaders/apps.loader';
 import { App } from '@/controllers/graphql/types/app';
 import { SubscriptionContract } from '@/controllers/graphql/types/subscription-contract';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
-import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 
 @Resolver(() => SubscriptionContract)
 export class SubscriptionContractAppResolver {
-  constructor(private readonly findAppByIdService: FindAppByIdService) {}
+  constructor(private readonly appsLoader: AppsLoader) {}
 
   @ResolveField(() => App)
   app(@Parent() subscriptionContract: SubscriptionContractModel) {
-    return this.findAppByIdService.execute(subscriptionContract.app);
+    return (
+      subscriptionContract.app &&
+      this.appsLoader.findByIds.load(subscriptionContract.app)
+    );
   }
 }

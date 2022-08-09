@@ -20,7 +20,8 @@ const myApps = ({
     parent: admin,
     status: AppStatus.ACTIVE,
     currency,
-    language
+    language,
+    createdBy: admin
   }
 ];
 

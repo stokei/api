@@ -1,16 +1,16 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { AppsLoader } from '@/controllers/graphql/dataloaders/apps.loader';
 import { App } from '@/controllers/graphql/types/app';
 import { Image } from '@/controllers/graphql/types/image';
 import { ImageModel } from '@/models/image.model';
-import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 
 @Resolver(() => Image)
 export class ImageAppResolver {
-  constructor(private readonly findAppByIdService: FindAppByIdService) {}
+  constructor(private readonly appsLoader: AppsLoader) {}
 
   @ResolveField(() => App)
   app(@Parent() image: ImageModel) {
-    return this.findAppByIdService.execute(image.app);
+    return image.app && this.appsLoader.findByIds.load(image.app);
   }
 }

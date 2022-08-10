@@ -5,6 +5,7 @@ export interface ExistsPlansWhereDTO {
   name?: string;
   type?: PlanType;
   checkoutVisible?: boolean;
+  allowedToSell?: boolean;
   status?: PlanStatus;
   hasCustomDomain?: boolean;
   hasCustomSite?: boolean;

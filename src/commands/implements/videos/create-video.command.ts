@@ -6,7 +6,8 @@ export class CreateVideoCommand implements ICommand, CreateVideoDTO {
   name: string;
   parent: string;
   description?: string;
-  path: string;
+  path?: string;
+  url?: string;
   poster?: string;
   app: string;
   createdBy: string;

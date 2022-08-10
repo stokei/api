@@ -9,6 +9,7 @@ export interface CountPlansWhereDTO {
   name?: IWhereDataSearch;
   type?: PlanType;
   checkoutVisible?: IWhereData<boolean>;
+  allowedToSell?: IWhereData<boolean>;
   status?: PlanStatus;
   hasCustomDomain?: IWhereData<boolean>;
   hasCustomSite?: IWhereData<boolean>;

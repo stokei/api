@@ -14,6 +14,7 @@ export interface WhereDataFindAllPlansDTO {
   name?: IWhereDataSearch;
   type?: PlanType;
   checkoutVisible?: IWhereData<boolean>;
+  allowedToSell?: IWhereData<boolean>;
   status?: PlanStatus;
   hasCustomDomain?: IWhereData<boolean>;
   hasCustomSite?: IWhereData<boolean>;
@@ -32,6 +33,7 @@ export interface OrderByDataFindAllPlansDTO {
   name?: IOrderBy;
   type?: IOrderBy;
   checkoutVisible?: IOrderBy;
+  allowedToSell?: IOrderBy;
   status?: IOrderBy;
   hasCustomDomain?: IOrderBy;
   hasCustomSite?: IOrderBy;

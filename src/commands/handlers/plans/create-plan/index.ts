@@ -57,6 +57,7 @@ export class CreatePlanCommandHandler
       name: cleanValue(command?.name),
       type: cleanValue(command?.type),
       checkoutVisible: cleanValueBoolean(command?.checkoutVisible),
+      allowedToSell: cleanValueBoolean(command?.allowedToSell),
       hasCustomDomain: cleanValueBoolean(command?.hasCustomDomain),
       hasCustomSite: cleanValueBoolean(command?.hasCustomSite),
       quantityCourses: cleanValueNumber(command?.quantityCourses),

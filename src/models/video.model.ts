@@ -12,9 +12,11 @@ export interface IVideoModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
-  readonly name: string;
-  readonly slug: string;
-  readonly path: string;
+  readonly name?: string;
+  readonly slug?: string;
+  readonly path?: string;
+  readonly url?: string;
+  readonly external?: boolean;
   readonly description?: string;
   readonly poster?: string;
   readonly duration?: number;
@@ -33,15 +35,17 @@ export class VideoModel extends AggregateRoot {
   @ApiProperty()
   readonly parent: string;
   @ApiProperty({ nullable: true })
-  readonly name: string;
-  @ApiProperty({ nullable: true })
-  readonly slug: string;
-  @ApiProperty()
-  readonly path: string;
-  @ApiProperty()
-  readonly url: string;
+  readonly name?: string;
   @ApiProperty({ nullable: true })
   readonly description?: string;
+  @ApiProperty({ nullable: true })
+  readonly slug?: string;
+  @ApiProperty()
+  readonly path?: string;
+  @ApiProperty()
+  readonly url?: string;
+  @ApiProperty({ type: Boolean })
+  readonly external?: boolean;
   @ApiProperty({ nullable: true })
   readonly poster?: string;
   @ApiProperty({ nullable: true })
@@ -70,7 +74,8 @@ export class VideoModel extends AggregateRoot {
     this.parent = data.parent;
     this.slug = data.slug;
     this.path = data.path;
-    this.url = data.path;
+    this.url = data.url;
+    this.external = data.external;
     this.name = data.name;
     this.description = data.description;
     this.poster = data.poster;

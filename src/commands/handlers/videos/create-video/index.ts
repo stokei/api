@@ -26,12 +26,13 @@ export class CreateVideoCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.path) {
+    if (!data?.url && !data?.path) {
       throw new ParamNotFoundException<CreateVideoCommandKeys>('path');
     }
 
     const videoCreated = await this.createVideoRepository.execute({
       ...data,
+      external: !!data.url,
       status: VideoStatus.ACTIVE
     });
     if (!videoCreated) {
@@ -53,6 +54,7 @@ export class CreateVideoCommandHandler
       name: cleanValue(command?.name),
       description: cleanValue(command?.description),
       path: cleanValue(command?.path),
+      url: cleanValue(command?.url),
       poster: cleanValue(command?.poster),
       parent: cleanValue(command?.parent)
     });

@@ -12,6 +12,7 @@ export interface IPlanModelData {
   readonly name: string;
   readonly type: PlanType;
   readonly checkoutVisible: boolean;
+  readonly allowedToSell: boolean;
   readonly status: PlanStatus;
   readonly hasCustomDomain: boolean;
   readonly hasCustomSite: boolean;
@@ -34,6 +35,7 @@ export class PlanModel extends AggregateRoot {
   readonly name: string;
   readonly type: PlanType;
   readonly checkoutVisible: boolean;
+  readonly allowedToSell: boolean;
   readonly status: PlanStatus;
   readonly hasCustomDomain: boolean;
   readonly hasCustomSite: boolean;
@@ -60,6 +62,7 @@ export class PlanModel extends AggregateRoot {
     this.name = data.name;
     this.type = data.type;
     this.checkoutVisible = data.checkoutVisible;
+    this.allowedToSell = data.allowedToSell;
     this.status = data.status;
     this.hasCustomDomain = data.hasCustomDomain;
     this.hasCustomSite = data.hasCustomSite;

@@ -14,6 +14,9 @@ export class CreatePlanInput {
   checkoutVisible: boolean;
 
   @Field(() => Boolean)
+  allowedToSell: boolean;
+
+  @Field(() => Boolean)
   hasCustomDomain: boolean;
 
   @Field(() => Boolean)

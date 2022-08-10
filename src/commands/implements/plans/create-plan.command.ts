@@ -7,6 +7,7 @@ export class CreatePlanCommand implements ICommand, CreatePlanDTO {
   name: string;
   type: PlanType;
   checkoutVisible: boolean;
+  allowedToSell: boolean;
   hasCustomDomain: boolean;
   hasCustomSite: boolean;
   quantityCourses: number;

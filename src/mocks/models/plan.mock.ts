@@ -12,6 +12,7 @@ export class PlanModelMock extends PlanModel {
       name: data?.name ?? 'Plan Name',
       type: data?.type ?? PlanType.BASIC,
       checkoutVisible: data?.checkoutVisible ?? true,
+      allowedToSell: data?.allowedToSell ?? true,
       status: data?.status ?? PlanStatus.ACTIVE,
       hasCustomDomain: data?.hasCustomDomain ?? true,
       hasCustomSite: data?.hasCustomSite ?? true,

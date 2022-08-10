@@ -439,6 +439,7 @@ model Plan {
   type                         PlanType
   checkoutVisible              Boolean    @default(false) @map("checkout_visible")
   status                       PlanStatus
+  allowedToSell                Boolean    @default(true) @map("allowed_to_sell")
   hasCustomDomain              Boolean    @default(false) @map("has_custom_domain")
   hasCustomSite                Boolean    @default(false) @map("has_custom_site")
   quantityCourses              Int        @map("quantity_courses")
@@ -474,7 +475,9 @@ model Video {
   app         String      @db.VarChar(255)
   parent      String      @db.VarChar(255)
   slug        String?     @db.VarChar(255)
-  path        String      @db.VarChar(255)
+  path        String?     @db.VarChar(255)
+  url         String?     @db.VarChar(255)
+  external    Boolean?    @default(false)
   name        String?     @db.VarChar(255)
   description String?
   poster      String?     @db.VarChar(255)

@@ -13,6 +13,7 @@ export interface WhereDataFindAllVideosDTO {
   parent?: IWhereData;
   name?: IWhereDataSearch;
   slug?: IWhereData<string>;
+  external?: IWhereData<boolean>;
   description?: IWhereDataSearch;
   status?: VideoStatus;
   active?: IWhereData<boolean>;
@@ -24,6 +25,7 @@ export type IKeysWhereDataFindAllVideosDTO = keyof WhereDataFindAllVideosDTO;
 export interface OrderByDataFindAllVideosDTO {
   name?: IOrderBy;
   slug?: IOrderBy;
+  external?: IOrderBy;
   duration?: IOrderBy;
   status?: IOrderBy;
   active?: IOrderBy;

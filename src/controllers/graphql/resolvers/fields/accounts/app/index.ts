@@ -9,7 +9,7 @@ import { AccountModel } from '@/models/account.model';
 export class AccountAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() account: AccountModel) {
     return account.app && this.appsLoader.findByIds.load(account.app);
   }

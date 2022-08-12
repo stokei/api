@@ -9,7 +9,7 @@ import { PaymentModel } from '@/models/payment.model';
 export class PaymentAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() payment: PaymentModel) {
     return payment.app && this.appsLoader.findByIds.load(payment.app);
   }

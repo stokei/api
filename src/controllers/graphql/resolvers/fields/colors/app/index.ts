@@ -9,7 +9,7 @@ import { ColorModel } from '@/models/color.model';
 export class ColorAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() color: ColorModel) {
     return color.app && this.appsLoader.findByIds.load(color.app);
   }

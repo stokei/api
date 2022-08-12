@@ -9,7 +9,7 @@ import { DomainModel } from '@/models/domain.model';
 export class DomainAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() domain: DomainModel) {
     return domain.app && this.appsLoader.findByIds.load(domain.app);
   }

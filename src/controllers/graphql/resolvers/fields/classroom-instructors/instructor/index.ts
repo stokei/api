@@ -9,7 +9,7 @@ import { ClassroomInstructorModel } from '@/models/classroom-instructor.model';
 export class ClassroomInstructorInstructorResolver {
   constructor(private readonly accountsLoader: AccountsLoader) {}
 
-  @ResolveField(() => Account)
+  @ResolveField(() => Account, { nullable: true })
   instructor(@Parent() classroomInstructor: ClassroomInstructorModel) {
     return (
       classroomInstructor.instructor &&

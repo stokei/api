@@ -9,7 +9,7 @@ import { CartItemModel } from '@/models/cart-item.model';
 export class CartItemAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() cartItem: CartItemModel) {
     return cartItem.app && this.appsLoader.findByIds.load(cartItem.app);
   }

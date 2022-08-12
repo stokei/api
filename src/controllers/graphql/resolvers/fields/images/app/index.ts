@@ -9,7 +9,7 @@ import { ImageModel } from '@/models/image.model';
 export class ImageAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() image: ImageModel) {
     return image.app && this.appsLoader.findByIds.load(image.app);
   }

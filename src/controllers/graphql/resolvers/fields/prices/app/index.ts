@@ -9,7 +9,7 @@ import { PriceModel } from '@/models/price.model';
 export class PriceAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() price: PriceModel) {
     return price.app && this.appsLoader.findByIds.load(price.app);
   }

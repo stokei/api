@@ -9,7 +9,7 @@ import { AccessModel } from '@/models/access.model';
 export class AccessAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() access: AccessModel) {
     return access.app && this.appsLoader.findByIds.load(access.app);
   }

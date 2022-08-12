@@ -9,7 +9,7 @@ import { CourseInstructorModel } from '@/models/course-instructor.model';
 export class CourseInstructorCourseResolver {
   constructor(private readonly coursesLoader: CoursesLoader) {}
 
-  @ResolveField(() => Course)
+  @ResolveField(() => Course, { nullable: true })
   course(@Parent() courseInstructor: CourseInstructorModel) {
     return (
       courseInstructor.course &&

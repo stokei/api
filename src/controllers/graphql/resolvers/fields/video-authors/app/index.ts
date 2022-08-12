@@ -9,7 +9,7 @@ import { VideoAuthorModel } from '@/models/video-author.model';
 export class VideoAuthorAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() videoAuthor: VideoAuthorModel) {
     return videoAuthor.app && this.appsLoader.findByIds.load(videoAuthor.app);
   }

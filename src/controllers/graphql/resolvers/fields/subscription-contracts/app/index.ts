@@ -9,7 +9,7 @@ import { SubscriptionContractModel } from '@/models/subscription-contract.model'
 export class SubscriptionContractAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() subscriptionContract: SubscriptionContractModel) {
     return (
       subscriptionContract.app &&

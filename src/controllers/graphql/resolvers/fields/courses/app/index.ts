@@ -9,7 +9,7 @@ import { CourseModel } from '@/models/course.model';
 export class CourseAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() course: CourseModel) {
     return course.app && this.appsLoader.findByIds.load(course.app);
   }

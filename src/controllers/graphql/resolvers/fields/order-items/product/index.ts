@@ -1,18 +1,18 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { ProductsLoader } from '@/controllers/graphql/dataloaders/products.loader';
-import { CartItem } from '@/controllers/graphql/types/cart-item';
+import { OrderItem } from '@/controllers/graphql/types/order-item';
 import { Product } from '@/controllers/graphql/types/product';
-import { CartItemModel } from '@/models/cart-item.model';
+import { OrderItemModel } from '@/models/order-item.model';
 
-@Resolver(() => CartItem)
-export class CartItemProductResolver {
+@Resolver(() => OrderItem)
+export class OrderItemProductResolver {
   constructor(private readonly productsLoader: ProductsLoader) {}
 
   @ResolveField(() => Product, { nullable: true })
-  product(@Parent() cartItem: CartItemModel) {
+  product(@Parent() orderItem: OrderItemModel) {
     return (
-      cartItem.product && this.productsLoader.findByIds.load(cartItem.product)
+      orderItem.product && this.productsLoader.findByIds.load(orderItem.product)
     );
   }
 }

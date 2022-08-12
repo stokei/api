@@ -9,7 +9,7 @@ import { CartItemModel } from '@/models/cart-item.model';
 export class CartItemPriceResolver {
   constructor(private readonly pricesLoader: PricesLoader) {}
 
-  @ResolveField(() => Price)
+  @ResolveField(() => Price, { nullable: true })
   price(@Parent() cartItem: CartItemModel) {
     return cartItem.price && this.pricesLoader.findByIds.load(cartItem.price);
   }

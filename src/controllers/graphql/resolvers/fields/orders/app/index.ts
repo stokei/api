@@ -9,7 +9,7 @@ import { OrderModel } from '@/models/order.model';
 export class OrderAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() order: OrderModel) {
     return order.app && this.appsLoader.findByIds.load(order.app);
   }

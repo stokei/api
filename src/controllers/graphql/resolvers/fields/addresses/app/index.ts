@@ -9,7 +9,7 @@ import { AddressModel } from '@/models/address.model';
 export class AddressAppResolver {
   constructor(private readonly appsLoader: AppsLoader) {}
 
-  @ResolveField(() => App)
+  @ResolveField(() => App, { nullable: true })
   app(@Parent() address: AddressModel) {
     return address.app && this.appsLoader.findByIds.load(address.app);
   }

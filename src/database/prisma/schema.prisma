@@ -296,6 +296,7 @@ model Price {
   app                    String         @db.VarChar(255)
   parent                 String         @db.VarChar(255)
   default                Boolean        @default(false)
+  currency               String         @db.VarChar(255)
   fromAmount             Int?           @map("from_amount")
   amount                 Int            @map("amount")
   type                   PriceType
@@ -596,6 +597,9 @@ model SubscriptionContract {
   app                  String                     @db.VarChar(255)
   product              String                     @db.VarChar(255)
   parent               String                     @db.VarChar(255)
+  order                String                     @db.VarChar(255)
+  orderItem            String                     @map("order_item") @db.VarChar(255)
+  orderProduct         String                     @map("order_product") @db.VarChar(255)
   defaultPaymentMethod String?                    @map("default_payment_method") @db.VarChar(255)
   status               SubscriptionContractStatus
   type                 SubscriptionContractType

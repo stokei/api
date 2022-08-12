@@ -7,6 +7,7 @@ import { RecurringType } from '@/enums/recurring-type.enum';
 export interface WhereDataFindAllPricesDTO {
   ids?: string[];
   app?: IWhereData;
+  currency?: IWhereData;
   parent?: IWhereData;
   default?: IWhereData<boolean>;
   type?: PriceType;
@@ -21,6 +22,7 @@ export type IKeysWhereDataFindAllPricesDTO = keyof WhereDataFindAllPricesDTO;
 export interface OrderByDataFindAllPricesDTO {
   default?: IOrderBy;
   fromAmount?: IOrderBy;
+  currency?: IOrderBy;
   amount?: IOrderBy;
   type?: IOrderBy;
   inventoryType?: IOrderBy;

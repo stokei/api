@@ -6,6 +6,7 @@ import { RecurringType } from '@/controllers/graphql/enums/recurring-type.enum';
 
 import { Account } from './account';
 import { App } from './app';
+import { Currency } from './currency';
 
 @ObjectType()
 export class Price {
@@ -23,6 +24,9 @@ export class Price {
 
   @Field(() => PriceType)
   type: PriceType;
+
+  @Field(() => Currency)
+  currency: Currency;
 
   @Field(() => InventoryType)
   inventoryType: InventoryType;

@@ -33,6 +33,9 @@ export class CreatePriceCommandHandler
     if (!data?.parent) {
       throw new ParamNotFoundException<CreatePriceCommandKeys>('parent');
     }
+    if (!data?.currency) {
+      throw new ParamNotFoundException<CreatePriceCommandKeys>('currency');
+    }
 
     const priceCreated = await this.createPriceRepository.execute(data);
     if (!priceCreated) {
@@ -51,6 +54,7 @@ export class CreatePriceCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
+      currency: cleanValue(command?.currency),
       default: cleanValueBoolean(command?.default),
       fromAmount: cleanValueNumber(command?.fromAmount),
       amount: cleanValueNumber(command?.amount),

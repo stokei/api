@@ -8,6 +8,7 @@ export interface CountPricesWhereDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereData;
+  currency?: IWhereData;
   default?: IWhereData<boolean>;
   type?: PriceType;
   inventoryType?: InventoryType;

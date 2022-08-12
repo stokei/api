@@ -10,6 +10,7 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
   default: boolean;
   fromAmount?: number;
   amount: number;
+  currency: string;
   type: PriceType;
   inventoryType: InventoryType;
   recurringIntervalCount: number;

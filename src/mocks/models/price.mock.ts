@@ -1,6 +1,7 @@
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
+import { defaultCurrencyId } from '@/constants/default-currency-id';
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
 import { RecurringType } from '@/enums/recurring-type.enum';
@@ -15,6 +16,7 @@ export class PriceModelMock extends PriceModel {
       amount: data?.amount ?? 1000,
       fromAmount: data?.fromAmount ?? null,
       type: data?.type ?? PriceType.ONE_TIME,
+      currency: data?.currency ?? defaultCurrencyId,
       inventoryType: data?.inventoryType ?? InventoryType.INFINITE,
       recurringIntervalCount: data?.recurringIntervalCount ?? 1,
       recurringIntervalType: data?.recurringIntervalType ?? RecurringType.MONTH,

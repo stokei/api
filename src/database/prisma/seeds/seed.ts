@@ -13,7 +13,6 @@ const initializeSeeds = async () => {
   const currencies = await createCurrencies({ prismaClient });
   const languages = await createLanguages({ prismaClient });
   const accounts = await createAccounts({ prismaClient });
-  await createPlans({ prismaClient });
   const realCurrency = currencies.find((currency) => currency.id.match(/brl/i));
   const portugueseLanguage = languages.find((language) =>
     language.id.match(/pt-br/i)
@@ -21,6 +20,7 @@ const initializeSeeds = async () => {
   const stokeiAdmin = accounts.find(
     (account) => account.email === 'admin@stokei.com'
   );
+  await createPlans({ prismaClient, currency: realCurrency.id });
   await createApps({
     prismaClient,
     admin: stokeiAdmin.id,

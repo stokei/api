@@ -63,10 +63,12 @@ const createProduct = async ({
 
 const createPrice = async ({
   prismaClient,
-  product
+  product,
+  currency
 }: {
   product: ProductModel;
   prismaClient: PrismaClient;
+  currency: string;
 }) => {
   if (!product) {
     throw new ProductNotFoundException();
@@ -78,6 +80,7 @@ const createPrice = async ({
       app: product.app,
       amount: 0,
       active: true,
+      currency,
       type: PriceType.RECURRING,
       inventoryType: InventoryType.INFINITE
     }
@@ -89,9 +92,11 @@ const createPrice = async ({
 };
 
 export const createPlans = async ({
-  prismaClient
+  prismaClient,
+  currency
 }: {
   prismaClient: PrismaClient;
+  currency: string;
 }) => {
   const plans = myPlans();
   const planIds = plans.map((plan) => plan.id);
@@ -123,7 +128,7 @@ export const createPlans = async ({
             prismaClient,
             plan: planModel
           });
-          await createPrice({ prismaClient, product });
+          await createPrice({ prismaClient, product, currency });
         }
         return null;
       })

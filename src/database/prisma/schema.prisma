@@ -161,7 +161,7 @@ model App {
   plan          String?   @db.VarChar(255)
   currency      String    @db.VarChar(255)
   language      String    @db.VarChar(255)
-  favicon       String?   @db.VarChar(255)
+  icon       String?   @db.VarChar(255)
   logo          String?   @db.VarChar(255)
   active        Boolean   @default(true)
   blockedAt     DateTime? @map("blocked_at")

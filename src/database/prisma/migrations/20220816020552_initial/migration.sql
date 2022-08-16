@@ -103,7 +103,7 @@ CREATE TABLE "apps" (
     "plan" VARCHAR(255),
     "currency" VARCHAR(255) NOT NULL,
     "language" VARCHAR(255) NOT NULL,
-    "favicon" VARCHAR(255),
+    "icon" VARCHAR(255),
     "logo" VARCHAR(255),
     "active" BOOLEAN NOT NULL DEFAULT true,
     "blocked_at" TIMESTAMP(3),

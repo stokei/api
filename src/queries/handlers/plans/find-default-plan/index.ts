@@ -1,5 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
+import { PlanStatus } from '@/enums/plan-status.enum';
 import { PlanType } from '@/enums/plan-type.enum';
 import { PlanNotFoundException } from '@/errors';
 import { PlanModel } from '@/models/plan.model';
@@ -19,9 +20,13 @@ export class FindDefaultPlanQueryHandler
       page: {
         limit: 1
       },
+      orderBy: {
+        createdAt: 'desc'
+      },
       where: {
         AND: {
-          type: PlanType.FREE
+          type: PlanType.FREE,
+          status: PlanStatus.ACTIVE
         }
       }
     });

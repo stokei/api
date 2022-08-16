@@ -10,7 +10,7 @@ export class AppFaviconResolver {
   constructor(private readonly imagesLoader: ImagesLoader) {}
 
   @ResolveField(() => Image, { nullable: true })
-  favicon(@Parent() app: AppModel) {
-    return app.favicon && this.imagesLoader.findByIds.load(app.favicon);
+  icon(@Parent() app: AppModel) {
+    return app.icon && this.imagesLoader.findByIds.load(app.icon);
   }
 }

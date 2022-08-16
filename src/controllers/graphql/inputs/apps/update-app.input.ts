@@ -15,7 +15,7 @@ export class UpdateDataAppInput {
   plan?: string;
 
   @Field({ nullable: true })
-  favicon?: string;
+  icon?: string;
 
   @Field({ nullable: true })
   logo?: string;

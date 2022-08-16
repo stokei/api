@@ -1,7 +1,7 @@
 import { AppAvatarResolver } from './avatar';
 import { AppCreatedByResolver } from './created-by';
 import { AppCurrencyResolver } from './currency';
-import { AppFaviconResolver } from './favicon';
+import { AppFaviconResolver } from './icon';
 import { AppLogoResolver } from './logo';
 import { AppPhonesResolver } from './phones';
 import { AppPlanResolver } from './plan';

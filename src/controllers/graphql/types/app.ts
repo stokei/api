@@ -38,7 +38,7 @@ export class App {
   currency: Currency;
 
   @Field(() => Image, { nullable: true })
-  favicon?: Image;
+  icon?: Image;
 
   @Field(() => Image, { nullable: true })
   logo?: Image;

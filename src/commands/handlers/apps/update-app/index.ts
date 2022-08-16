@@ -69,7 +69,7 @@ export class UpdateAppCommandHandler
         description: cleanValue(command?.data?.description),
         avatar: cleanValue(command?.data?.avatar),
         plan: cleanValue(command?.data?.plan),
-        favicon: cleanValue(command?.data?.favicon),
+        icon: cleanValue(command?.data?.icon),
         logo: cleanValue(command?.data?.logo),
         updatedBy: cleanValue(command?.data?.name)
       })

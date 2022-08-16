@@ -17,7 +17,7 @@ export interface IAppModelData {
   readonly avatar?: string;
   readonly plan?: string;
   readonly currency: string;
-  readonly favicon?: string;
+  readonly icon?: string;
   readonly logo?: string;
   readonly active: boolean;
   readonly blockedAt?: Date | string;
@@ -39,7 +39,7 @@ export class AppModel extends AggregateRoot {
   readonly avatar?: string;
   readonly plan?: string;
   readonly currency: string;
-  readonly favicon?: string;
+  readonly icon?: string;
   readonly logo?: string;
   readonly active: boolean;
   readonly isStokei: boolean;
@@ -67,7 +67,7 @@ export class AppModel extends AggregateRoot {
     this.avatar = data.avatar;
     this.plan = data.plan;
     this.currency = data.currency;
-    this.favicon = data.favicon;
+    this.icon = data.icon;
     this.logo = data.logo;
     this.active = data.active;
     this.blockedAt = convertToISODateString(data.blockedAt);

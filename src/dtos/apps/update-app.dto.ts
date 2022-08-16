@@ -3,7 +3,7 @@ export interface UpdateAppDataDTO {
   description?: string;
   avatar?: string;
   plan?: string;
-  favicon?: string;
+  icon?: string;
   logo?: string;
   updatedBy: string;
 }

@@ -17,7 +17,7 @@ export class AppModelMock extends AppModel {
       plan: data?.plan ?? 'plans.sad451as1da',
       currency: data?.currency ?? 'BRL',
       logo: data?.logo ?? null,
-      favicon: data?.favicon ?? null,
+      icon: data?.icon ?? null,
       active: data?.active ?? true,
       blockedAt: data?.blockedAt ?? null,
       activatedAt: data?.activatedAt ?? null,

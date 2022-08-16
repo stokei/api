@@ -2,8 +2,6 @@ import { AccessesQueries } from './accesses';
 import { AccountsQueries } from './accounts';
 import { AddressesQueries } from './addresses';
 import { AppsQueries } from './apps';
-import { CartItemsQueries } from './cart-items';
-import { CartsQueries } from './carts';
 import { ClassroomInstructorsQueries } from './classroom-instructors';
 import { ClassroomModulesQueries } from './classroom-modules';
 import { ClassroomStudentsQueries } from './classroom-students';
@@ -17,9 +15,7 @@ import { DomainsQueries } from './domains';
 import { ImagesQueries } from './images';
 import { LanguagesQueries } from './languages';
 import { ModulesQueries } from './modules';
-import { OrdersQueries } from './orders';
 import { PaymentMethodsQueries } from './payment-methods';
-import { PaymentsQueries } from './payments';
 import { PhonesQueries } from './phones';
 import { PlansQueries } from './plans';
 import { PricesQueries } from './prices';
@@ -38,11 +34,7 @@ export const Queries = [
   ...ColorsQueries,
   ...ProductsQueries,
   ...PricesQueries,
-  ...OrdersQueries,
-  ...PaymentsQueries,
   ...PaymentMethodsQueries,
-  ...CartsQueries,
-  ...CartItemsQueries,
   ...PlansQueries,
   ...ImagesQueries,
   ...VideosQueries,

@@ -2,8 +2,6 @@ import { AccessServices } from './accesses';
 import { AccountServices } from './accounts';
 import { AddressServices } from './addresses';
 import { AppServices } from './apps';
-import { CartItemServices } from './cart-items';
-import { CartServices } from './carts';
 import { ClassroomInstructorServices } from './classroom-instructors';
 import { ClassroomModuleServices } from './classroom-modules';
 import { ClassroomStudentServices } from './classroom-students';
@@ -17,10 +15,7 @@ import { DomainServices } from './domains';
 import { ImageServices } from './images';
 import { LanguageServices } from './languages';
 import { ModuleServices } from './modules';
-import { OrderItemServices } from './order-items';
-import { OrderServices } from './orders';
 import { PaymentMethodServices } from './payment-methods';
-import { PaymentServices } from './payments';
 import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
 import { PriceServices } from './prices';
@@ -39,12 +34,7 @@ export const Services = [
   ...ColorServices,
   ...ProductServices,
   ...PriceServices,
-  ...OrderServices,
-  ...OrderItemServices,
-  ...PaymentServices,
   ...PaymentMethodServices,
-  ...CartServices,
-  ...CartItemServices,
   ...PlanServices,
   ...ImageServices,
   ...VideoServices,

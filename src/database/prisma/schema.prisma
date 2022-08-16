@@ -38,6 +38,7 @@ enum ColorType {
 enum DomainStatus {
   ACTIVE
   PENDING
+  ERROR
 }
 
 enum PaymentMethodProvider {
@@ -91,31 +92,9 @@ enum AppStatus {
   BLOCKED
 }
 
-enum AppMemberRole {
-  OWNER
-  ADMIN
-}
-
-enum OrderStatus {
-  PAID
-  PENDING
-  CANCELED
-  PAYMENT_ERROR
-  TOTAL_REFUNDED
-  PARCIAL_REFUNDED
-}
-
-enum PaymentStatus {
-  PAID
-  PENDING
-  CANCELED
-  PAYMENT_ERROR
-  TOTAL_REFUNDED
-  PARCIAL_REFUNDED
-}
-
 enum SubscriptionContractStatus {
   ACTIVE
+  PAYMENT_ERROR
   FINISHED
   CANCELED
 }
@@ -196,19 +175,6 @@ model App {
   @@map("apps")
 }
 
-model AppsMember {
-  id        String          @id @default(cuid())
-  app       String          @db.VarChar(255)
-  member    String          @db.VarChar(255)
-  roles     AppMemberRole[]
-  updatedAt DateTime?       @updatedAt @map("updated_at")
-  createdAt DateTime?       @default(now()) @map("created_at")
-  updatedBy String?         @map("updated_by") @db.VarChar(255)
-  createdBy String?         @map("created_by") @db.VarChar(255)
-
-  @@map("apps_members")
-}
-
 model Domain {
   id          String       @id @default(cuid())
   app         String       @db.VarChar(255)
@@ -277,6 +243,7 @@ model Product {
   parent          String    @db.VarChar(255)
   name            String    @db.VarChar(255)
   description     String?
+  purchaseUrl     String    @map("purchase_url") @db.VarChar(255)
   externalProduct String    @map("external_product") @db.VarChar(255)
   checkoutVisible Boolean   @map("checkout_visible")
   avatar          String?   @db.VarChar(255)
@@ -313,81 +280,6 @@ model Price {
   @@map("prices")
 }
 
-model Order {
-  id                       String       @id @default(cuid())
-  app                      String       @db.VarChar(255)
-  cart                     String       @db.VarChar(255)
-  customer                 String       @db.VarChar(255)
-  applicationFeePercentage Int          @map("application_fee_percentage")
-  applicationFeeAmount     Int          @map("application_fee_amount")
-  currency                 String       @db.VarChar(255)
-  amount                   Int
-  discountAmount           Int          @map("discount_amount")
-  subtotalAmount           Int          @map("subtotal_amount")
-  totalAmount              Int          @map("total_amount")
-  status                   OrderStatus
-  oldStatus                OrderStatus?
-  active                   Boolean      @default(false)
-  paidAt                   DateTime?    @map("paid_at")
-  canceledAt               DateTime?    @map("canceled_at")
-  paymentErrorAt           DateTime?    @map("payment_error_at")
-  totalRefundedAt          DateTime?    @map("total_refunded_at")
-  parcialRefundedAt        DateTime?    @map("parcial_refunded_at")
-  updatedAt                DateTime?    @updatedAt @map("updated_at")
-  createdAt                DateTime?    @default(now()) @map("created_at")
-  updatedBy                String?      @map("updated_by") @db.VarChar(255)
-  createdBy                String?      @map("created_by") @db.VarChar(255)
-
-  @@map("orders")
-}
-
-model OrderItem {
-  id                     String        @id @default(cuid())
-  app                    String        @db.VarChar(255)
-  order                  String        @db.VarChar(255)
-  product                String        @db.VarChar(255)
-  currency               String        @db.VarChar(255)
-  name                   String        @db.VarChar(255)
-  description            String?
-  amount                 Int
-  fromAmount             Int?          @map("from_amount")
-  avatar                 String?       @db.VarChar(255)
-  quantity               Int
-  type                   PriceType
-  recurringIntervalCount Int           @map("recurring_interval_count")
-  recurringIntervalType  RecurringType @map("recurring_interval_type")
-  updatedAt              DateTime?     @updatedAt @map("updated_at")
-  createdAt              DateTime?     @default(now()) @map("created_at")
-  updatedBy              String?       @map("updated_by") @db.VarChar(255)
-  createdBy              String?       @map("created_by") @db.VarChar(255)
-
-  @@map("orders_items")
-}
-
-model Payment {
-  id                String         @id @default(cuid())
-  app               String         @db.VarChar(255)
-  customer          String         @db.VarChar(255)
-  order             String         @db.VarChar(255)
-  amount            Int
-  externalPayment   String         @map("external_payment") @db.VarChar(255)
-  paymentMethod     String         @map("payment_method") @db.VarChar(255)
-  status            PaymentStatus
-  oldStatus         PaymentStatus?
-  active            Boolean        @default(false)
-  paidAt            DateTime?      @map("paid_at")
-  canceledAt        DateTime?      @map("canceled_at")
-  paymentErrorAt    DateTime?      @map("payment_error_at")
-  totalRefundedAt   DateTime?      @map("total_refunded_at")
-  parcialRefundedAt DateTime?      @map("parcial_refunded_at")
-  updatedAt         DateTime?      @updatedAt @map("updated_at")
-  createdAt         DateTime?      @default(now()) @map("created_at")
-  updatedBy         String?        @map("updated_by") @db.VarChar(255)
-  createdBy         String?        @map("created_by") @db.VarChar(255)
-
-  @@map("payments")
-}
-
 model PaymentMethod {
   id                    String                @id @default(cuid())
   app                   String                @db.VarChar(255)
@@ -406,32 +298,6 @@ model PaymentMethod {
   createdBy             String?               @map("created_by") @db.VarChar(255)
 
   @@map("payments_methods")
-}
-
-model Cart {
-  id        String    @id @default(cuid())
-  app       String    @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-
-  @@map("carts")
-}
-
-model CartItem {
-  id        String    @id @default(cuid())
-  app       String    @db.VarChar(255)
-  parent    String    @db.VarChar(255)
-  product   String    @db.VarChar(255)
-  price     String    @db.VarChar(255)
-  quantity  Int       @default(1)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-
-  @@map("carts_items")
 }
 
 model Plan {
@@ -597,9 +463,7 @@ model SubscriptionContract {
   app                  String                     @db.VarChar(255)
   product              String                     @db.VarChar(255)
   parent               String                     @db.VarChar(255)
-  order                String                     @db.VarChar(255)
-  orderItem            String                     @map("order_item") @db.VarChar(255)
-  orderProduct         String                     @map("order_product") @db.VarChar(255)
+  externalSubscription String                     @map("external_Subscription") @db.VarChar(255)
   defaultPaymentMethod String?                    @map("default_payment_method") @db.VarChar(255)
   status               SubscriptionContractStatus
   type                 SubscriptionContractType

@@ -2,8 +2,6 @@ import { AccessesSagas } from './accesses.saga';
 import { AccountsSagas } from './accounts.saga';
 import { AddressesSagas } from './addresses.saga';
 import { AppsSagas } from './apps.saga';
-import { CartItemsSagas } from './cart-items.saga';
-import { CartsSagas } from './carts.saga';
 import { ClassroomInstructorsSagas } from './classroom-instructors.saga';
 import { ClassroomModulesSagas } from './classroom-modules.saga';
 import { ClassroomStudentsSagas } from './classroom-students.saga';
@@ -17,10 +15,7 @@ import { DomainsSagas } from './domains.saga';
 import { ImagesSagas } from './images.saga';
 import { LanguagesSagas } from './languages.saga';
 import { ModulesSagas } from './modules.saga';
-import { OrderItemsSagas } from './order-items.saga';
-import { OrdersSagas } from './orders.saga';
 import { PaymentMethodsSagas } from './payment-methods.saga';
-import { PaymentsSagas } from './payments.saga';
 import { PhonesSagas } from './phones.saga';
 import { PlansSagas } from './plans.saga';
 import { PricesSagas } from './prices.saga';
@@ -39,12 +34,7 @@ export const Sagas = [
   ColorsSagas,
   ProductsSagas,
   PricesSagas,
-  OrdersSagas,
-  OrderItemsSagas,
-  PaymentsSagas,
   PaymentMethodsSagas,
-  CartsSagas,
-  CartItemsSagas,
   PlansSagas,
   ImagesSagas,
   VideosSagas,

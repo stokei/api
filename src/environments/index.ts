@@ -16,3 +16,5 @@ export const URL: string = process.env.URL || `http://${HOST}:${PORT}`;
 
 export const TOKEN_SECRET_KEY: string = process.env.TOKEN_SECRET_KEY;
 export const PASSWORD_SECRET_KEY: string = process.env.PASSWORD_SECRET_KEY;
+export const FREE_PLAN_PURCHASE_URL: string =
+  process.env.FREE_PLAN_PURCHASE_URL;

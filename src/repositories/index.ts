@@ -2,8 +2,6 @@ import { AccessesRepositories } from './accesses';
 import { AccountsRepositories } from './accounts';
 import { AddressesRepositories } from './addresses';
 import { AppsRepositories } from './apps';
-import { CartItemsRepositories } from './cart-items';
-import { CartsRepositories } from './carts';
 import { ClassroomInstructorsRepositories } from './classroom-instructors';
 import { ClassroomModulesRepositories } from './classroom-modules';
 import { ClassroomStudentsRepositories } from './classroom-students';
@@ -17,10 +15,7 @@ import { DomainsRepositories } from './domains';
 import { ImagesRepositories } from './images';
 import { LanguagesRepositories } from './languages';
 import { ModulesRepositories } from './modules';
-import { OrderItemsRepositories } from './order-items';
-import { OrdersRepositories } from './orders';
 import { PaymentMethodsRepositories } from './payment-methods';
-import { PaymentsRepositories } from './payments';
 import { PhonesRepositories } from './phones';
 import { PlansRepositories } from './plans';
 import { PricesRepositories } from './prices';
@@ -39,12 +34,7 @@ export const Repositories = [
   ...ColorsRepositories,
   ...ProductsRepositories,
   ...PricesRepositories,
-  ...OrdersRepositories,
-  ...OrderItemsRepositories,
-  ...PaymentsRepositories,
   ...PaymentMethodsRepositories,
-  ...CartsRepositories,
-  ...CartItemsRepositories,
   ...PlansRepositories,
   ...ImagesRepositories,
   ...VideosRepositories,

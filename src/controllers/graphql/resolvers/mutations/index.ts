@@ -2,8 +2,6 @@ import { AccessesMutations } from './accesses';
 import { AccountsMutations } from './accounts';
 import { AddressesMutations } from './addresses';
 import { AppsMutations } from './apps';
-import { CartItemsMutations } from './cart-items';
-import { CartsMutations } from './carts';
 import { ClassroomInstructorsMutations } from './classroom-instructors';
 import { ClassroomModulesMutations } from './classroom-modules';
 import { ClassroomStudentsMutations } from './classroom-students';
@@ -17,9 +15,7 @@ import { DomainsMutations } from './domains';
 import { ImagesMutations } from './images';
 import { LanguagesMutations } from './languages';
 import { ModulesMutations } from './modules';
-import { OrdersMutations } from './orders';
 import { PaymentMethodsMutations } from './payment-methods';
-import { PaymentsMutations } from './payments';
 import { PhonesMutations } from './phones';
 import { PlansMutations } from './plans';
 import { PricesMutations } from './prices';
@@ -39,11 +35,7 @@ export const Mutations = [
   ...ColorsMutations,
   ...ProductsMutations,
   ...PricesMutations,
-  ...OrdersMutations,
-  ...PaymentsMutations,
   ...PaymentMethodsMutations,
-  ...CartsMutations,
-  ...CartItemsMutations,
   ...PlansMutations,
   ...VideosMutations,
   ...VideoAuthorsMutations,

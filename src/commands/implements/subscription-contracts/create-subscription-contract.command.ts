@@ -8,9 +8,7 @@ export class CreateSubscriptionContractCommand
 {
   parent: string;
   product: string;
-  order: string;
-  orderItem: string;
-  orderProduct: string;
+  externalSubscription: string;
   type: SubscriptionContractType;
   automaticRenew?: boolean;
   startAt?: string;

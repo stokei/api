@@ -6,11 +6,8 @@ import { SubscriptionContractType } from '@/controllers/graphql/enums/subscripti
 import { Account } from './account';
 import { App } from './app';
 import { Classroom } from './classroom';
-import { Order } from './order';
-import { OrderItem } from './order-item';
 import { PaymentMethod } from './payment-method';
 import { Plan } from './plan';
-import { Product } from './product';
 
 @ObjectType()
 export class SubscriptionContract {
@@ -22,15 +19,6 @@ export class SubscriptionContract {
 
   @Field(() => Classroom, { nullable: true })
   classroom?: Classroom;
-
-  @Field(() => Order)
-  order: Order;
-
-  @Field(() => OrderItem)
-  orderItem: OrderItem;
-
-  @Field(() => Product)
-  orderProduct: Product;
 
   @Field(() => SubscriptionContractStatus)
   status: SubscriptionContractStatus;

@@ -11,7 +11,7 @@ CREATE TYPE "ThemeMode" AS ENUM ('DARK', 'LIGHT');
 CREATE TYPE "ColorType" AS ENUM ('TEXT', 'HEADING', 'PRIMARY', 'SECONDARY', 'SUCCESS', 'ERROR', 'WARNING', 'INFO');
 
 -- CreateEnum
-CREATE TYPE "DomainStatus" AS ENUM ('ACTIVE', 'PENDING');
+CREATE TYPE "DomainStatus" AS ENUM ('ACTIVE', 'PENDING', 'ERROR');
 
 -- CreateEnum
 CREATE TYPE "PaymentMethodProvider" AS ENUM ('STRIPE');
@@ -41,16 +41,7 @@ CREATE TYPE "InventoryType" AS ENUM ('INFINITE', 'FINITE');
 CREATE TYPE "AppStatus" AS ENUM ('ACTIVE', 'INACTIVE', 'BLOCKED');
 
 -- CreateEnum
-CREATE TYPE "AppMemberRole" AS ENUM ('OWNER', 'ADMIN');
-
--- CreateEnum
-CREATE TYPE "OrderStatus" AS ENUM ('PAID', 'PENDING', 'CANCELED', 'PAYMENT_ERROR', 'TOTAL_REFUNDED', 'PARCIAL_REFUNDED');
-
--- CreateEnum
-CREATE TYPE "PaymentStatus" AS ENUM ('PAID', 'PENDING', 'CANCELED', 'PAYMENT_ERROR', 'TOTAL_REFUNDED', 'PARCIAL_REFUNDED');
-
--- CreateEnum
-CREATE TYPE "SubscriptionContractStatus" AS ENUM ('ACTIVE', 'FINISHED', 'CANCELED');
+CREATE TYPE "SubscriptionContractStatus" AS ENUM ('ACTIVE', 'PAYMENT_ERROR', 'FINISHED', 'CANCELED');
 
 -- CreateEnum
 CREATE TYPE "PhoneStatus" AS ENUM ('ACTIVE', 'PENDING', 'INVALID');
@@ -127,20 +118,6 @@ CREATE TABLE "apps" (
 );
 
 -- CreateTable
-CREATE TABLE "apps_members" (
-    "id" TEXT NOT NULL,
-    "app" VARCHAR(255) NOT NULL,
-    "member" VARCHAR(255) NOT NULL,
-    "roles" "AppMemberRole"[],
-    "updated_at" TIMESTAMP(3),
-    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updated_by" VARCHAR(255),
-    "created_by" VARCHAR(255),
-
-    CONSTRAINT "apps_members_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "domains" (
     "id" TEXT NOT NULL,
     "app" VARCHAR(255) NOT NULL,
@@ -213,6 +190,7 @@ CREATE TABLE "products" (
     "parent" VARCHAR(255) NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "description" TEXT,
+    "purchase_url" VARCHAR(255) NOT NULL,
     "external_product" VARCHAR(255) NOT NULL,
     "checkout_visible" BOOLEAN NOT NULL,
     "avatar" VARCHAR(255),
@@ -251,84 +229,6 @@ CREATE TABLE "prices" (
 );
 
 -- CreateTable
-CREATE TABLE "orders" (
-    "id" TEXT NOT NULL,
-    "app" VARCHAR(255) NOT NULL,
-    "cart" VARCHAR(255) NOT NULL,
-    "customer" VARCHAR(255) NOT NULL,
-    "application_fee_percentage" INTEGER NOT NULL,
-    "application_fee_amount" INTEGER NOT NULL,
-    "currency" VARCHAR(255) NOT NULL,
-    "amount" INTEGER NOT NULL,
-    "discount_amount" INTEGER NOT NULL,
-    "subtotal_amount" INTEGER NOT NULL,
-    "total_amount" INTEGER NOT NULL,
-    "status" "OrderStatus" NOT NULL,
-    "oldStatus" "OrderStatus",
-    "active" BOOLEAN NOT NULL DEFAULT false,
-    "paid_at" TIMESTAMP(3),
-    "canceled_at" TIMESTAMP(3),
-    "payment_error_at" TIMESTAMP(3),
-    "total_refunded_at" TIMESTAMP(3),
-    "parcial_refunded_at" TIMESTAMP(3),
-    "updated_at" TIMESTAMP(3),
-    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updated_by" VARCHAR(255),
-    "created_by" VARCHAR(255),
-
-    CONSTRAINT "orders_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "orders_items" (
-    "id" TEXT NOT NULL,
-    "app" VARCHAR(255) NOT NULL,
-    "order" VARCHAR(255) NOT NULL,
-    "product" VARCHAR(255) NOT NULL,
-    "currency" VARCHAR(255) NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
-    "description" TEXT,
-    "amount" INTEGER NOT NULL,
-    "from_amount" INTEGER,
-    "avatar" VARCHAR(255),
-    "quantity" INTEGER NOT NULL,
-    "type" "PriceType" NOT NULL,
-    "recurring_interval_count" INTEGER NOT NULL,
-    "recurring_interval_type" "RecurringType" NOT NULL,
-    "updated_at" TIMESTAMP(3),
-    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updated_by" VARCHAR(255),
-    "created_by" VARCHAR(255),
-
-    CONSTRAINT "orders_items_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "payments" (
-    "id" TEXT NOT NULL,
-    "app" VARCHAR(255) NOT NULL,
-    "customer" VARCHAR(255) NOT NULL,
-    "order" VARCHAR(255) NOT NULL,
-    "amount" INTEGER NOT NULL,
-    "external_payment" VARCHAR(255) NOT NULL,
-    "payment_method" VARCHAR(255) NOT NULL,
-    "status" "PaymentStatus" NOT NULL,
-    "oldStatus" "PaymentStatus",
-    "active" BOOLEAN NOT NULL DEFAULT false,
-    "paid_at" TIMESTAMP(3),
-    "canceled_at" TIMESTAMP(3),
-    "payment_error_at" TIMESTAMP(3),
-    "total_refunded_at" TIMESTAMP(3),
-    "parcial_refunded_at" TIMESTAMP(3),
-    "updated_at" TIMESTAMP(3),
-    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updated_by" VARCHAR(255),
-    "created_by" VARCHAR(255),
-
-    CONSTRAINT "payments_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "payments_methods" (
     "id" TEXT NOT NULL,
     "app" VARCHAR(255) NOT NULL,
@@ -347,34 +247,6 @@ CREATE TABLE "payments_methods" (
     "created_by" VARCHAR(255),
 
     CONSTRAINT "payments_methods_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "carts" (
-    "id" TEXT NOT NULL,
-    "app" VARCHAR(255) NOT NULL,
-    "updated_at" TIMESTAMP(3),
-    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updated_by" VARCHAR(255),
-    "created_by" VARCHAR(255),
-
-    CONSTRAINT "carts_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "carts_items" (
-    "id" TEXT NOT NULL,
-    "app" VARCHAR(255) NOT NULL,
-    "parent" VARCHAR(255) NOT NULL,
-    "product" VARCHAR(255) NOT NULL,
-    "price" VARCHAR(255) NOT NULL,
-    "quantity" INTEGER NOT NULL DEFAULT 1,
-    "updated_at" TIMESTAMP(3),
-    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
-    "updated_by" VARCHAR(255),
-    "created_by" VARCHAR(255),
-
-    CONSTRAINT "carts_items_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -551,9 +423,7 @@ CREATE TABLE "subscription_contracts" (
     "app" VARCHAR(255) NOT NULL,
     "product" VARCHAR(255) NOT NULL,
     "parent" VARCHAR(255) NOT NULL,
-    "order" VARCHAR(255) NOT NULL,
-    "order_item" VARCHAR(255) NOT NULL,
-    "order_product" VARCHAR(255) NOT NULL,
+    "external_Subscription" VARCHAR(255) NOT NULL,
     "default_payment_method" VARCHAR(255),
     "status" "SubscriptionContractStatus" NOT NULL,
     "type" "SubscriptionContractType" NOT NULL,

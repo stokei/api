@@ -2,8 +2,6 @@ import { AccessesLoader } from './accesses.loader';
 import { AccountsLoader } from './accounts.loader';
 import { AddressesLoader } from './addresses.loader';
 import { AppsLoader } from './apps.loader';
-import { CartItemsLoader } from './cart-items.loader';
-import { CartsLoader } from './carts.loader';
 import { ClassroomInstructorsLoader } from './classroom-instructors.loader';
 import { ClassroomModulesLoader } from './classroom-modules.loader';
 import { ClassroomStudentsLoader } from './classroom-students.loader';
@@ -17,10 +15,7 @@ import { DomainsLoader } from './domains.loader';
 import { ImagesLoader } from './images.loader';
 import { LanguagesLoader } from './languages.loader';
 import { ModulesLoader } from './modules.loader';
-import { OrderItemsLoader } from './order-items.loader';
-import { OrdersLoader } from './orders.loader';
 import { PaymentMethodsLoader } from './payment-methods.loader';
-import { PaymentsLoader } from './payments.loader';
 import { PhonesLoader } from './phones.loader';
 import { PlansLoader } from './plans.loader';
 import { PricesLoader } from './prices.loader';
@@ -34,17 +29,12 @@ export const Loaders = [
   AccessesLoader,
   AppsLoader,
   DomainsLoader,
-  CartsLoader,
   CurrenciesLoader,
   LanguagesLoader,
   ColorsLoader,
   ProductsLoader,
   PricesLoader,
-  OrdersLoader,
-  OrderItemsLoader,
-  PaymentsLoader,
   PaymentMethodsLoader,
-  CartItemsLoader,
   PlansLoader,
   ImagesLoader,
   VideosLoader,

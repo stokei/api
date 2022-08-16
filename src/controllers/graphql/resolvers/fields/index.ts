@@ -2,8 +2,6 @@ import { AccessesFieldsResolvers } from './accesses';
 import { AccountsFieldsResolvers } from './accounts';
 import { AddressesFieldsResolvers } from './addresses';
 import { AppsFieldsResolvers } from './apps';
-import { CartItemsFieldsResolvers } from './cart-items';
-import { CartsFieldsResolvers } from './carts';
 import { ClassroomInstructorsFieldsResolvers } from './classroom-instructors';
 import { ClassroomModulesFieldsResolvers } from './classroom-modules';
 import { ClassroomStudentsFieldsResolvers } from './classroom-students';
@@ -17,9 +15,7 @@ import { DomainsFieldsResolvers } from './domains';
 import { ImagesFieldsResolvers } from './images';
 import { LanguagesFieldsResolvers } from './languages';
 import { ModulesFieldsResolvers } from './modules';
-import { OrdersFieldsResolvers } from './orders';
 import { PaymentMethodsFieldsResolvers } from './payment-methods';
-import { PaymentsFieldsResolvers } from './payments';
 import { PhonesFieldsResolvers } from './phones';
 import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
@@ -38,11 +34,7 @@ export const FieldsResolvers = [
   ...ColorsFieldsResolvers,
   ...ProductsFieldsResolvers,
   ...PricesFieldsResolvers,
-  ...OrdersFieldsResolvers,
-  ...PaymentsFieldsResolvers,
   ...PaymentMethodsFieldsResolvers,
-  ...CartsFieldsResolvers,
-  ...CartItemsFieldsResolvers,
   ...PlansFieldsResolvers,
   ...ImagesFieldsResolvers,
   ...VideosFieldsResolvers,

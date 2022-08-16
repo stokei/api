@@ -2,8 +2,6 @@ import { AccessQueriesHandlers } from './accesses';
 import { AccountQueriesHandlers } from './accounts';
 import { AddressQueriesHandlers } from './addresses';
 import { AppQueriesHandlers } from './apps';
-import { CartItemQueriesHandlers } from './cart-items';
-import { CartQueriesHandlers } from './carts';
 import { ClassroomInstructorQueriesHandlers } from './classroom-instructors';
 import { ClassroomModuleQueriesHandlers } from './classroom-modules';
 import { ClassroomStudentQueriesHandlers } from './classroom-students';
@@ -17,10 +15,7 @@ import { DomainQueriesHandlers } from './domains';
 import { ImageQueriesHandlers } from './images';
 import { LanguageQueriesHandlers } from './languages';
 import { ModuleQueriesHandlers } from './modules';
-import { OrderItemQueriesHandlers } from './order-items';
-import { OrderQueriesHandlers } from './orders';
 import { PaymentMethodQueriesHandlers } from './payment-methods';
-import { PaymentQueriesHandlers } from './payments';
 import { PhoneQueriesHandlers } from './phones';
 import { PlanQueriesHandlers } from './plans';
 import { PriceQueriesHandlers } from './prices';
@@ -39,12 +34,7 @@ export const QueriesHandlers = [
   ...ColorQueriesHandlers,
   ...ProductQueriesHandlers,
   ...PriceQueriesHandlers,
-  ...OrderQueriesHandlers,
-  ...OrderItemQueriesHandlers,
-  ...PaymentQueriesHandlers,
   ...PaymentMethodQueriesHandlers,
-  ...CartQueriesHandlers,
-  ...CartItemQueriesHandlers,
   ...PlanQueriesHandlers,
   ...ImageQueriesHandlers,
   ...VideoQueriesHandlers,

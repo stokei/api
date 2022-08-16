@@ -2,8 +2,6 @@ import { AccessCommandHandlers } from './accesses';
 import { AccountCommandHandlers } from './accounts';
 import { AddressCommandHandlers } from './addresses';
 import { AppCommandHandlers } from './apps';
-import { CartItemCommandHandlers } from './cart-items';
-import { CartCommandHandlers } from './carts';
 import { ClassroomInstructorCommandHandlers } from './classroom-instructors';
 import { ClassroomModuleCommandHandlers } from './classroom-modules';
 import { ClassroomStudentCommandHandlers } from './classroom-students';
@@ -17,10 +15,7 @@ import { DomainCommandHandlers } from './domains';
 import { ImageCommandHandlers } from './images';
 import { LanguageCommandHandlers } from './languages';
 import { ModuleCommandHandlers } from './modules';
-import { OrderItemCommandHandlers } from './order-items';
-import { OrderCommandHandlers } from './orders';
 import { PaymentMethodCommandHandlers } from './payment-methods';
-import { PaymentCommandHandlers } from './payments';
 import { PhoneCommandHandlers } from './phones';
 import { PlanCommandHandlers } from './plans';
 import { PriceCommandHandlers } from './prices';
@@ -39,12 +34,7 @@ export const CommandHandlers = [
   ...ColorCommandHandlers,
   ...ProductCommandHandlers,
   ...PriceCommandHandlers,
-  ...OrderCommandHandlers,
-  ...OrderItemCommandHandlers,
-  ...PaymentCommandHandlers,
   ...PaymentMethodCommandHandlers,
-  ...CartCommandHandlers,
-  ...CartItemCommandHandlers,
   ...PlanCommandHandlers,
   ...ImageCommandHandlers,
   ...VideoCommandHandlers,

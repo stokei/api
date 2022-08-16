@@ -17,10 +17,12 @@ export class CreatePriceResolver {
   async createPrice(
     @CurrentAccount('id') currentAccountId: string,
     @CurrentApp('id') appId: string,
+    @CurrentApp('currency') appCurrency: string,
     @Args('input') data: CreatePriceInput
   ) {
     const response = await this.createPriceService.execute({
       ...data,
+      currency: appCurrency,
       app: appId,
       createdBy: currentAccountId
     });

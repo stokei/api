@@ -12,7 +12,7 @@ export interface ISubscriptionContractModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly product: string;
-  readonly externalSubscription: string;
+  readonly stripeSubscription: string;
   readonly status: SubscriptionContractStatus;
   readonly type: SubscriptionContractType;
   readonly active: boolean;
@@ -32,7 +32,7 @@ export class SubscriptionContractModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
   readonly product: string;
-  readonly externalSubscription: string;
+  readonly stripeSubscription: string;
   readonly status: SubscriptionContractStatus;
   readonly type: SubscriptionContractType;
   readonly active: boolean;
@@ -56,7 +56,7 @@ export class SubscriptionContractModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.product = data.product;
-    this.externalSubscription = data.externalSubscription;
+    this.stripeSubscription = data.stripeSubscription;
     this.status = data.status;
     this.type = data.type;
     this.active = data.active;

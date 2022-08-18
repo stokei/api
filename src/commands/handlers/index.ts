@@ -2,6 +2,7 @@ import { AccessCommandHandlers } from './accesses';
 import { AccountCommandHandlers } from './accounts';
 import { AddressCommandHandlers } from './addresses';
 import { AppCommandHandlers } from './apps';
+import { CheckoutCommandHandlers } from './checkouts';
 import { ClassroomInstructorCommandHandlers } from './classroom-instructors';
 import { ClassroomModuleCommandHandlers } from './classroom-modules';
 import { ClassroomStudentCommandHandlers } from './classroom-students';
@@ -49,5 +50,6 @@ export const CommandHandlers = [
   ...ClassroomInstructorCommandHandlers,
   ...ClassroomModuleCommandHandlers,
   ...AddressCommandHandlers,
-  ...PhoneCommandHandlers
+  ...PhoneCommandHandlers,
+  ...CheckoutCommandHandlers
 ];

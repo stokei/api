@@ -8,7 +8,7 @@ export class CreateSubscriptionContractCommand
 {
   parent: string;
   product: string;
-  externalSubscription: string;
+  stripeSubscription: string;
   type: SubscriptionContractType;
   automaticRenew?: boolean;
   startAt?: string;

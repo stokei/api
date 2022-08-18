@@ -13,7 +13,7 @@ export interface IPaymentMethodModelData {
   readonly parent: string;
   readonly type: PaymentMethodType;
   readonly provider: PaymentMethodProvider;
-  readonly externalPaymentMethod: string;
+  readonly stripePaymentMethod: string;
   readonly lastFourCardNumber?: string;
   readonly cardBrand?: string;
   readonly active: boolean;
@@ -31,7 +31,7 @@ export class PaymentMethodModel extends AggregateRoot {
   readonly parent: string;
   readonly type: PaymentMethodType;
   readonly provider: PaymentMethodProvider;
-  readonly externalPaymentMethod: string;
+  readonly stripePaymentMethod: string;
   readonly lastFourCardNumber?: string;
   readonly cardBrand?: string;
   readonly active: boolean;
@@ -52,7 +52,7 @@ export class PaymentMethodModel extends AggregateRoot {
     });
     this.type = data.type;
     this.provider = data.provider;
-    this.externalPaymentMethod = data.externalPaymentMethod;
+    this.stripePaymentMethod = data.stripePaymentMethod;
     this.lastFourCardNumber = data.lastFourCardNumber;
     this.cardBrand = data.cardBrand;
     this.active = data.active;

@@ -22,7 +22,7 @@ export interface OrderByDataFindAllProductsDTO {
   name?: IOrderBy;
   description?: IOrderBy;
   app?: IOrderBy;
-  externalProduct?: IOrderBy;
+  stripeProduct?: IOrderBy;
   checkoutVisible?: IOrderBy;
   avatar?: IOrderBy;
   active?: IOrderBy;

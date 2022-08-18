@@ -15,8 +15,8 @@ export class PaymentMethodModelMock extends PaymentMethodModel {
       parent: data?.parent ?? 'anyParent',
       type: data?.type ?? PaymentMethodType.CREDIT_CARD,
       provider: data?.provider ?? PaymentMethodProvider.STRIPE,
-      externalPaymentMethod:
-        data?.externalPaymentMethod ?? 'anyExternalPaymentMethodId',
+      stripePaymentMethod:
+        data?.stripePaymentMethod ?? 'anyExternalPaymentMethodId',
       cardBrand: data?.cardBrand ?? 'visa',
       lastFourCardNumber: data?.lastFourCardNumber ?? '4445',
       active: data?.active ?? true,

@@ -6,7 +6,7 @@ import { RecurringType } from '@/controllers/graphql/enums/recurring-type.enum';
 
 @InputType()
 export class CreatePriceInput {
-  @Field()
+  @Field(() => String)
   parent: string;
 
   @Field(() => Boolean, { nullable: true })

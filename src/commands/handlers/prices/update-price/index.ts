@@ -75,6 +75,7 @@ export class UpdatePriceCommandHandler
         default: cleanValueBoolean(command?.data?.default),
         fromPrice: cleanValueNumber(command?.data?.fromPrice),
         quantity: cleanValueNumber(command?.data?.quantity),
+        purchaseUrl: cleanValue(command?.data?.purchaseUrl),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

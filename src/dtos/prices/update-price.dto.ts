@@ -1,6 +1,7 @@
 export interface UpdatePriceDataDTO {
   default?: boolean;
   fromPrice?: number;
+  purchaseUrl?: string;
   quantity?: number;
   updatedBy: string;
 }

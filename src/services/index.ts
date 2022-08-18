@@ -2,6 +2,7 @@ import { AccessServices } from './accesses';
 import { AccountServices } from './accounts';
 import { AddressServices } from './addresses';
 import { AppServices } from './apps';
+import { CheckoutServices } from './checkouts';
 import { ClassroomInstructorServices } from './classroom-instructors';
 import { ClassroomModuleServices } from './classroom-modules';
 import { ClassroomStudentServices } from './classroom-students';
@@ -20,6 +21,7 @@ import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
 import { PriceServices } from './prices';
 import { ProductServices } from './products';
+import { StripeServices } from './stripe';
 import { SubscriptionContractServices } from './subscription-contracts';
 import { VideoAuthorServices } from './video-authors';
 import { VideoServices } from './videos';
@@ -49,5 +51,7 @@ export const Services = [
   ...ClassroomInstructorServices,
   ...ClassroomModuleServices,
   ...AddressServices,
-  ...PhoneServices
+  ...PhoneServices,
+  ...StripeServices,
+  ...CheckoutServices
 ];

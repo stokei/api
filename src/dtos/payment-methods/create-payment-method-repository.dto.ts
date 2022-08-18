@@ -7,7 +7,7 @@ export interface CreatePaymentMethodRepositoryDTO
   extends CreatePaymentMethodDTO {
   type: PaymentMethodType;
   provider: PaymentMethodProvider;
-  externalPaymentMethod: string;
+  stripePaymentMethod: string;
   lastFourCardNumber?: string;
   cardBrand?: string;
 }

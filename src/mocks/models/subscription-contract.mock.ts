@@ -17,8 +17,7 @@ export class SubscriptionContractModelMock extends SubscriptionContractModel {
       type: data?.type ?? SubscriptionContractType.RECURRING,
       status: data?.status ?? SubscriptionContractStatus.ACTIVE,
       active: data?.active ?? true,
-      externalSubscription:
-        data?.externalSubscription ?? 'anyExternalSubscription',
+      stripeSubscription: data?.stripeSubscription ?? 'anyExternalSubscription',
       automaticRenew: data?.automaticRenew ?? false,
       startAt: data?.startAt ?? convertToISODateString(Date.now()),
       endAt: data?.endAt ?? convertToISODateString(Date.now() + 60000),

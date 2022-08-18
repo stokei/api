@@ -122,6 +122,7 @@ model Account {
   salt               String        @unique @db.VarChar(255)
   avatar             String?       @db.VarChar(255)
   forgotPasswordCode String?       @map("forgot_password_code") @db.VarChar(255)
+  stripeCustomer     String?       @map("stripe_customer") @db.VarChar(255)
   dateBirthday       DateTime?     @map("date_birthday")
   status             AccountStatus
   active             Boolean       @default(true)
@@ -161,9 +162,10 @@ model App {
   plan          String?   @db.VarChar(255)
   currency      String    @db.VarChar(255)
   language      String    @db.VarChar(255)
-  icon       String?   @db.VarChar(255)
+  icon          String?   @db.VarChar(255)
   logo          String?   @db.VarChar(255)
   active        Boolean   @default(true)
+  stripeAccount String?   @map("stripe_account") @db.VarChar(255)
   blockedAt     DateTime? @map("blocked_at")
   activatedAt   DateTime? @default(now()) @map("activated_at")
   deactivatedAt DateTime? @map("deactivated_at")
@@ -243,8 +245,7 @@ model Product {
   parent          String    @db.VarChar(255)
   name            String    @db.VarChar(255)
   description     String?
-  purchaseUrl     String    @map("purchase_url") @db.VarChar(255)
-  externalProduct String    @map("external_product") @db.VarChar(255)
+  stripeProduct   String    @map("stripe_product") @db.VarChar(255)
   checkoutVisible Boolean   @map("checkout_visible")
   avatar          String?   @db.VarChar(255)
   active          Boolean   @default(true)
@@ -264,6 +265,8 @@ model Price {
   parent                 String         @db.VarChar(255)
   default                Boolean        @default(false)
   currency               String         @db.VarChar(255)
+  purchaseUrl            String?        @map("purchase_url") @db.VarChar(255)
+  stripePrice            String?        @map("stripe_price")
   fromAmount             Int?           @map("from_amount")
   amount                 Int            @map("amount")
   type                   PriceType
@@ -281,21 +284,21 @@ model Price {
 }
 
 model PaymentMethod {
-  id                    String                @id @default(cuid())
-  app                   String                @db.VarChar(255)
-  parent                String                @db.VarChar(255)
-  type                  PaymentMethodType
-  provider              PaymentMethodProvider
-  externalPaymentMethod String                @map("external_payment_method") @db.VarChar(255)
-  lastFourCardNumber    String?               @map("last_four_card_number") @db.VarChar(4)
-  cardBrand             String?               @map("card_brand") @db.VarChar(50)
-  active                Boolean               @default(true)
-  activatedAt           DateTime?             @default(now()) @map("activated_at")
-  deactivatedAt         DateTime?             @map("deactivated_at")
-  updatedAt             DateTime?             @updatedAt @map("updated_at")
-  createdAt             DateTime?             @default(now()) @map("created_at")
-  updatedBy             String?               @map("updated_by") @db.VarChar(255)
-  createdBy             String?               @map("created_by") @db.VarChar(255)
+  id                  String                @id @default(cuid())
+  app                 String                @db.VarChar(255)
+  parent              String                @db.VarChar(255)
+  type                PaymentMethodType
+  provider            PaymentMethodProvider
+  stripePaymentMethod String                @map("stripe_payment_method") @db.VarChar(255)
+  lastFourCardNumber  String?               @map("last_four_card_number") @db.VarChar(4)
+  cardBrand           String?               @map("card_brand") @db.VarChar(50)
+  active              Boolean               @default(true)
+  activatedAt         DateTime?             @default(now()) @map("activated_at")
+  deactivatedAt       DateTime?             @map("deactivated_at")
+  updatedAt           DateTime?             @updatedAt @map("updated_at")
+  createdAt           DateTime?             @default(now()) @map("created_at")
+  updatedBy           String?               @map("updated_by") @db.VarChar(255)
+  createdBy           String?               @map("created_by") @db.VarChar(255)
 
   @@map("payments_methods")
 }
@@ -463,7 +466,7 @@ model SubscriptionContract {
   app                  String                     @db.VarChar(255)
   product              String                     @db.VarChar(255)
   parent               String                     @db.VarChar(255)
-  externalSubscription String                     @map("external_Subscription") @db.VarChar(255)
+  stripeSubscription   String                     @map("stripe_Subscription") @db.VarChar(255)
   defaultPaymentMethod String?                    @map("default_payment_method") @db.VarChar(255)
   status               SubscriptionContractStatus
   type                 SubscriptionContractType

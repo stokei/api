@@ -50,10 +50,9 @@ const createProduct = async ({
     data: {
       app: defaultAppId,
       checkoutVisible: plan.checkoutVisible,
-      externalProduct: plan.id,
+      stripeProduct: plan.id,
       name: plan.name,
       parent: plan.id,
-      purchaseUrl: FREE_PLAN_PURCHASE_URL,
       active: true
     }
   });
@@ -83,6 +82,7 @@ const createPrice = async ({
       amount: 0,
       active: true,
       currency,
+      purchaseUrl: FREE_PLAN_PURCHASE_URL,
       type: PriceType.RECURRING,
       inventoryType: InventoryType.INFINITE
     }

@@ -34,8 +34,8 @@ export class PaymentMethodMapper {
         parent: prismaMapper.toWhereData(operatorData.parent),
         type: operatorData.type,
         provider: operatorData.provider,
-        externalPaymentMethod: prismaMapper.toWhereData(
-          operatorData.externalPaymentMethod
+        stripePaymentMethod: prismaMapper.toWhereData(
+          operatorData.stripePaymentMethod
         ),
         cardBrand: prismaMapper.toWhereData(operatorData.cardBrand),
         active: prismaMapper.toWhereData(operatorData.active),
@@ -75,8 +75,8 @@ export class PaymentMethodMapper {
           parent: cleanWhereDataString(operatorData.parent),
           type: operatorData.type,
           provider: operatorData.provider,
-          externalPaymentMethod: cleanWhereDataString(
-            operatorData.externalPaymentMethod
+          stripePaymentMethod: cleanWhereDataString(
+            operatorData.stripePaymentMethod
           ),
           cardBrand: cleanWhereDataString(operatorData.cardBrand),
           active: operatorData.active,

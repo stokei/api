@@ -5,7 +5,7 @@ export interface ExistsPaymentMethodsWhereDTO {
   parent?: string;
   type?: PaymentMethodType;
   provider?: PaymentMethodProvider;
-  externalPaymentMethod?: string;
+  stripePaymentMethod?: string;
 }
 
 export interface ExistsPaymentMethodsDTO {

@@ -13,7 +13,7 @@ export class VideoModelMock extends VideoModel {
       parent: data?.parent ?? 'anyParent',
       path: data?.path ?? '/videos/any_video',
       url: data?.url ?? null,
-      external: data?.external ?? false,
+      stripe: data?.stripe ?? false,
       description: data?.description ?? null,
       poster: data?.poster ?? null,
       duration: data?.duration ?? 60000,

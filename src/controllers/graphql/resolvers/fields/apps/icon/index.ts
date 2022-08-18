@@ -6,7 +6,7 @@ import { Image } from '@/controllers/graphql/types/image';
 import { AppModel } from '@/models/app.model';
 
 @Resolver(() => App)
-export class AppFaviconResolver {
+export class AppIconResolver {
   constructor(private readonly imagesLoader: ImagesLoader) {}
 
   @ResolveField(() => Image, { nullable: true })

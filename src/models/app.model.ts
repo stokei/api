@@ -20,6 +20,7 @@ export interface IAppModelData {
   readonly icon?: string;
   readonly logo?: string;
   readonly active: boolean;
+  readonly stripeAccount?: string;
   readonly blockedAt?: Date | string;
   readonly activatedAt?: Date | string;
   readonly deactivatedAt?: Date | string;
@@ -42,6 +43,7 @@ export class AppModel extends AggregateRoot {
   readonly icon?: string;
   readonly logo?: string;
   readonly active: boolean;
+  readonly stripeAccount?: string;
   readonly isStokei: boolean;
   readonly blockedAt?: string;
   readonly activatedAt?: string;
@@ -78,6 +80,7 @@ export class AppModel extends AggregateRoot {
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
     this.isStokei = !!this.id.match(/stokei/i);
+    this.stripeAccount = !this.isStokei && data.stripeAccount;
   }
 
   createdApp({ createdBy }: { createdBy: string }) {

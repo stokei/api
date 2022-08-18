@@ -97,7 +97,7 @@ export class ProductMapper {
         name: cleanSortValue(query.orderBy?.name),
         description: cleanSortValue(query.orderBy?.description),
         app: cleanSortValue(query.orderBy?.app),
-        externalProduct: cleanSortValue(query.orderBy?.externalProduct),
+        stripeProduct: cleanSortValue(query.orderBy?.stripeProduct),
         checkoutVisible: cleanSortValue(query.orderBy?.checkoutVisible),
         avatar: cleanSortValue(query.orderBy?.avatar),
         active: cleanSortValue(query.orderBy?.active),

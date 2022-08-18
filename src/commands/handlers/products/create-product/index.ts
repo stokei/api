@@ -31,8 +31,7 @@ export class CreateProductCommandHandler
 
     const productCreated = await this.createProductRepository.execute({
       ...data,
-      purchaseUrl: 'https://google.com/purchase',
-      externalProduct: null
+      stripeProduct: null
     });
     if (!productCreated) {
       throw new ProductNotFoundException();

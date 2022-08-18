@@ -59,7 +59,7 @@ export class CreateSubscriptionContractCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       product: cleanValue(command?.product),
-      externalSubscription: cleanValue(command?.externalSubscription),
+      stripeSubscription: cleanValue(command?.stripeSubscription),
       automaticRenew: cleanValueBoolean(command?.automaticRenew),
       startAt: cleanValue(command?.startAt),
       endAt: cleanValue(command?.endAt),

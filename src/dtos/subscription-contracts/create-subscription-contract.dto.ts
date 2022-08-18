@@ -3,7 +3,7 @@ import { SubscriptionContractType } from '@/enums/subscription-contract-type.enu
 export interface CreateSubscriptionContractDTO {
   parent: string;
   product: string;
-  externalSubscription: string;
+  stripeSubscription: string;
   type: SubscriptionContractType;
   automaticRenew?: boolean;
   startAt?: string;

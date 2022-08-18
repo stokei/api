@@ -10,7 +10,7 @@ export interface CountPaymentMethodsWhereDTO {
   cardBrand?: IWhereData<string>;
   type?: PaymentMethodType;
   provider?: PaymentMethodProvider;
-  externalPaymentMethod?: IWhereData<string>;
+  stripePaymentMethod?: IWhereData<string>;
   active?: IWhereData<boolean>;
 }
 export type IKeysCountPaymentMethodsWhereDTO =

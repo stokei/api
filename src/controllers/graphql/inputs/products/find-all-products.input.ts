@@ -53,7 +53,7 @@ export class OrderByDataFindAllProductsInput
   app?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
-  externalProduct?: OrderBy;
+  stripeProduct?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   checkoutVisible?: OrderBy;

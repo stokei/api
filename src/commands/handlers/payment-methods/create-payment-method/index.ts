@@ -38,7 +38,7 @@ export class CreatePaymentMethodCommandHandler
         ...data,
         type: PaymentMethodType.CREDIT_CARD,
         provider: PaymentMethodProvider.STRIPE,
-        externalPaymentMethod: null,
+        stripePaymentMethod: null,
         lastFourCardNumber: null,
         cardBrand: null
       });

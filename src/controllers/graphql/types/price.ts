@@ -13,8 +13,11 @@ export class Price {
   @Field(() => ID)
   id: string;
 
-  @Field(() => String)
+  @Field(() => Boolean)
   default: boolean;
+
+  @Field(() => String)
+  purchaseUrl: string;
 
   @Field(() => Int)
   fromAmount?: number;

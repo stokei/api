@@ -1,7 +1,7 @@
 import { AppAvatarResolver } from './avatar';
 import { AppCreatedByResolver } from './created-by';
 import { AppCurrencyResolver } from './currency';
-import { AppFaviconResolver } from './icon';
+import { AppIconResolver } from './icon';
 import { AppLogoResolver } from './logo';
 import { AppPhonesResolver } from './phones';
 import { AppPlanResolver } from './plan';
@@ -16,6 +16,6 @@ export const AppsFieldsResolvers = [
   AppPlanResolver,
   AppPhonesResolver,
   AppLogoResolver,
-  AppFaviconResolver,
+  AppIconResolver,
   AppUpdatedByResolver
 ];

@@ -7,7 +7,6 @@ import {
   cleanWhereDataNumber,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -164,14 +163,7 @@ export class PlanMapper {
     };
   }
   toModel(plan: PlanEntity) {
-    return (
-      plan &&
-      new PlanModel({
-        ...plan,
-        updatedAt: convertToISODateString(plan.updatedAt),
-        createdAt: convertToISODateString(plan.createdAt)
-      })
-    );
+    return plan && new PlanModel(plan);
   }
   toModels(plans: PlanEntity[]) {
     return plans?.length > 0 ? plans.map(this.toModel).filter(Boolean) : [];

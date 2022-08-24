@@ -15,8 +15,8 @@ export interface ICourseModelData {
   readonly avatar?: string;
   readonly active: boolean;
   readonly canceledAt?: Date | string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
   readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;

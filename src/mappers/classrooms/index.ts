@@ -6,7 +6,6 @@ import {
   cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -107,14 +106,7 @@ export class ClassroomMapper {
     };
   }
   toModel(classroom: ClassroomEntity) {
-    return (
-      classroom &&
-      new ClassroomModel({
-        ...classroom,
-        updatedAt: convertToISODateString(classroom.updatedAt),
-        createdAt: convertToISODateString(classroom.createdAt)
-      })
-    );
+    return classroom && new ClassroomModel(classroom);
   }
   toModels(classrooms: ClassroomEntity[]) {
     return classrooms?.length > 0

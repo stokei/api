@@ -4,7 +4,6 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -112,14 +111,7 @@ export class PaymentMethodMapper {
     };
   }
   toModel(paymentMethod: PaymentMethodEntity) {
-    return (
-      paymentMethod &&
-      new PaymentMethodModel({
-        ...paymentMethod,
-        updatedAt: convertToISODateString(paymentMethod.updatedAt),
-        createdAt: convertToISODateString(paymentMethod.createdAt)
-      })
-    );
+    return paymentMethod && new PaymentMethodModel(paymentMethod);
   }
   toModels(paymentMethods: PaymentMethodEntity[]) {
     return paymentMethods?.length > 0

@@ -5,7 +5,6 @@ import {
   cleanValueNumber,
   cleanWhereDataBoolean,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -116,14 +115,7 @@ export class PhoneMapper {
     };
   }
   toModel(phone: PhoneEntity) {
-    return (
-      phone &&
-      new PhoneModel({
-        ...phone,
-        updatedAt: convertToISODateString(phone.updatedAt),
-        createdAt: convertToISODateString(phone.createdAt)
-      })
-    );
+    return phone && new PhoneModel(phone);
   }
   toModels(phones: PhoneEntity[]) {
     return phones?.length > 0 ? phones.map(this.toModel).filter(Boolean) : [];

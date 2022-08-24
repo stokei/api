@@ -5,7 +5,6 @@ import {
   cleanValueNumber,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -100,14 +99,7 @@ export class ModuleMapper {
     };
   }
   toModel(module: ModuleEntity) {
-    return (
-      module &&
-      new ModuleModel({
-        ...module,
-        updatedAt: convertToISODateString(module.updatedAt),
-        createdAt: convertToISODateString(module.createdAt)
-      })
-    );
+    return module && new ModuleModel(module);
   }
   toModels(modules: ModuleEntity[]) {
     return modules?.length > 0 ? modules.map(this.toModel).filter(Boolean) : [];

@@ -20,6 +20,7 @@ export const TOKEN_SECRET_KEY: string = process.env.TOKEN_SECRET_KEY;
 export const PASSWORD_SECRET_KEY: string = process.env.PASSWORD_SECRET_KEY;
 
 export const CHECKOUT_RESPONSE_URL: string = process.env.CHECKOUT_RESPONSE_URL;
+export const STRIPE_WEBHOOK_SECRET: string = process.env.STRIPE_WEBHOOK_SECRET;
 
 export const FREE_PLAN_PURCHASE_URL: string =
   process.env.FREE_PLAN_PURCHASE_URL;

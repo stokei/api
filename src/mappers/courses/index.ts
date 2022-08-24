@@ -5,7 +5,6 @@ import {
   cleanValueNumber,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -100,14 +99,7 @@ export class CourseMapper {
     };
   }
   toModel(course: CourseEntity) {
-    return (
-      course &&
-      new CourseModel({
-        ...course,
-        updatedAt: convertToISODateString(course.updatedAt),
-        createdAt: convertToISODateString(course.createdAt)
-      })
-    );
+    return course && new CourseModel(course);
   }
   toModels(courses: CourseEntity[]) {
     return courses?.length > 0 ? courses.map(this.toModel).filter(Boolean) : [];

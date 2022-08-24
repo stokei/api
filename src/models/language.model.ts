@@ -1,7 +1,6 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { convertToISODateString, createServiceId } from '@stokei/nestjs';
+import { convertToISODateString } from '@stokei/nestjs';
 
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { LanguageCreatedEvent } from '@/events/implements/languages/language-created.event';
 import { LanguageRemovedEvent } from '@/events/implements/languages/language-removed.event';
 import { LanguageUpdatedEvent } from '@/events/implements/languages/language-updated.event';
@@ -34,11 +33,7 @@ export class LanguageModel extends AggregateRoot {
   constructor(data: ILanguageModelData) {
     super();
 
-    this.id = createServiceId({
-      service: ServerStokeiApiIdPrefix.LANGUAGES,
-      module: ServerStokeiApiIdPrefix.LANGUAGES,
-      id: data._id?.toString() || data.id
-    });
+    this.id = data._id?.toString() || data.id;
     this.name = data.name;
     this.icon = data.icon;
     this.active = data.active;

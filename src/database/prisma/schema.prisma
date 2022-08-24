@@ -152,27 +152,29 @@ model Access {
 }
 
 model App {
-  id            String    @id @default(cuid())
-  parent        String    @db.VarChar(255)
-  slug          String    @db.VarChar(255)
-  name          String    @db.VarChar(255)
-  description   String?
-  status        AppStatus
-  avatar        String?   @db.VarChar(255)
-  plan          String?   @db.VarChar(255)
-  currency      String    @db.VarChar(255)
-  language      String    @db.VarChar(255)
-  icon          String?   @db.VarChar(255)
-  logo          String?   @db.VarChar(255)
-  active        Boolean   @default(true)
-  stripeAccount String?   @map("stripe_account") @db.VarChar(255)
-  blockedAt     DateTime? @map("blocked_at")
-  activatedAt   DateTime? @default(now()) @map("activated_at")
-  deactivatedAt DateTime? @map("deactivated_at")
-  updatedAt     DateTime? @updatedAt @map("updated_at")
-  createdAt     DateTime? @default(now()) @map("created_at")
-  updatedBy     String?   @map("updated_by") @db.VarChar(255)
-  createdBy     String?   @map("created_by") @db.VarChar(255)
+  id             String    @id @default(cuid())
+  parent         String    @db.VarChar(255)
+  slug           String    @db.VarChar(255)
+  name           String    @db.VarChar(255)
+  email          String    @db.VarChar(255)
+  description    String?
+  status         AppStatus
+  avatar         String?   @db.VarChar(255)
+  plan           String?   @db.VarChar(255)
+  currency       String    @db.VarChar(255)
+  language       String    @db.VarChar(255)
+  icon           String?   @db.VarChar(255)
+  logo           String?   @db.VarChar(255)
+  active         Boolean   @default(true)
+  stripeCustomer String?   @map("stripe_customer") @db.VarChar(255)
+  stripeAccount  String?   @map("stripe_account") @db.VarChar(255)
+  blockedAt      DateTime? @map("blocked_at")
+  activatedAt    DateTime? @default(now()) @map("activated_at")
+  deactivatedAt  DateTime? @map("deactivated_at")
+  updatedAt      DateTime? @updatedAt @map("updated_at")
+  createdAt      DateTime? @default(now()) @map("created_at")
+  updatedBy      String?   @map("updated_by") @db.VarChar(255)
+  createdBy      String?   @map("created_by") @db.VarChar(255)
 
   @@map("apps")
 }
@@ -265,7 +267,6 @@ model Price {
   parent                 String         @db.VarChar(255)
   default                Boolean        @default(false)
   currency               String         @db.VarChar(255)
-  purchaseUrl            String?        @map("purchase_url") @db.VarChar(255)
   stripePrice            String?        @map("stripe_price")
   fromAmount             Int?           @map("from_amount")
   amount                 Int            @map("amount")
@@ -462,23 +463,27 @@ model ClassroomStudent {
 }
 
 model SubscriptionContract {
-  id                   String                     @id @default(cuid())
-  app                  String                     @db.VarChar(255)
-  product              String                     @db.VarChar(255)
-  parent               String                     @db.VarChar(255)
-  stripeSubscription   String                     @map("stripe_Subscription") @db.VarChar(255)
-  defaultPaymentMethod String?                    @map("default_payment_method") @db.VarChar(255)
-  status               SubscriptionContractStatus
-  type                 SubscriptionContractType
-  startAt              DateTime?                  @map("start_at")
-  endAt                DateTime?                  @map("end_at")
-  canceledAt           DateTime?                  @map("canceled_at")
-  automaticRenew       Boolean                    @default(false)
-  active               Boolean                    @default(true)
-  updatedAt            DateTime?                  @updatedAt @map("updated_at")
-  createdAt            DateTime?                  @default(now()) @map("created_at")
-  updatedBy            String?                    @map("updated_by") @db.VarChar(255)
-  createdBy            String?                    @map("created_by") @db.VarChar(255)
+  id                         String                     @id @default(cuid())
+  app                        String                     @db.VarChar(255)
+  product                    String                     @db.VarChar(255)
+  parent                     String                     @db.VarChar(255)
+  totalAmount                Int?                       @map("total_amount")
+  subtotalAmount             Int?                       @map("subtotal_amount")
+  stripeCheckoutSession      String?                    @map("stripe_checkout_session") @db.VarChar(255)
+  stripeSubscription         String?                    @map("stripe_subscription") @db.VarChar(255)
+  defaultStripePaymentMethod String?                    @map("default_stripe_payment_method") @db.VarChar(255)
+  status                     SubscriptionContractStatus
+  type                       SubscriptionContractType
+  startAt                    DateTime?                  @map("start_at")
+  endAt                      DateTime?                  @map("end_at")
+  paymentErrorAt             DateTime?                  @map("payment_error_at")
+  canceledAt                 DateTime?                  @map("canceled_at")
+  automaticRenew             Boolean                    @default(false)
+  active                     Boolean                    @default(true)
+  updatedAt                  DateTime?                  @updatedAt @map("updated_at")
+  createdAt                  DateTime?                  @default(now()) @map("created_at")
+  updatedBy                  String?                    @map("updated_by") @db.VarChar(255)
+  createdBy                  String?                    @map("created_by") @db.VarChar(255)
 
   @@map("subscription_contracts")
 }

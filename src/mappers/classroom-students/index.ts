@@ -5,7 +5,6 @@ import {
   cleanValueNumber,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -99,14 +98,7 @@ export class ClassroomStudentMapper {
     };
   }
   toModel(classroomStudent: ClassroomStudentEntity) {
-    return (
-      classroomStudent &&
-      new ClassroomStudentModel({
-        ...classroomStudent,
-        updatedAt: convertToISODateString(classroomStudent.updatedAt),
-        createdAt: convertToISODateString(classroomStudent.createdAt)
-      })
-    );
+    return classroomStudent && new ClassroomStudentModel(classroomStudent);
   }
   toModels(classroomStudents: ClassroomStudentEntity[]) {
     return classroomStudents?.length > 0

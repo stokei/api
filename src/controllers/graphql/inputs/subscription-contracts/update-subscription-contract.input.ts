@@ -6,7 +6,7 @@ export class UpdateDataSubscriptionContractInput {
   automaticRenew?: boolean;
 
   @Field({ nullable: true })
-  defaultPaymentMethod?: string;
+  defaultStripePaymentMethod?: string;
 }
 
 @InputType()

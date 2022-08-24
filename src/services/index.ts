@@ -12,6 +12,7 @@ import { CourseInstructorServices } from './course-instructors';
 import { CourseStudentServices } from './course-students';
 import { CourseServices } from './courses';
 import { CurrencyServices } from './currencies';
+import { CustomerPortalSessionServices } from './customer-portal-sessions';
 import { DomainServices } from './domains';
 import { ImageServices } from './images';
 import { LanguageServices } from './languages';
@@ -53,5 +54,6 @@ export const Services = [
   ...AddressServices,
   ...PhoneServices,
   ...StripeServices,
-  ...CheckoutServices
+  ...CheckoutServices,
+  ...CustomerPortalSessionServices
 ];

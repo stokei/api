@@ -8,7 +8,9 @@ import { HOST, PORT } from './environments';
 import { MainModule } from './main.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(MainModule);
+  const app = await NestFactory.create<NestExpressApplication>(MainModule, {
+    bodyParser: false
+  });
 
   app.enableVersioning({
     type: VersioningType.URI
@@ -21,6 +23,7 @@ async function bootstrap() {
     .addBearerAuth()
     .addTag('Stokei')
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 

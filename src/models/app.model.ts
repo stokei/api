@@ -12,6 +12,7 @@ export interface IAppModelData {
   readonly parent: string;
   readonly slug: string;
   readonly name: string;
+  readonly email: string;
   readonly description?: string;
   readonly status: AppStatus;
   readonly avatar?: string;
@@ -21,6 +22,7 @@ export interface IAppModelData {
   readonly logo?: string;
   readonly active: boolean;
   readonly stripeAccount?: string;
+  readonly stripeCustomer?: string;
   readonly blockedAt?: Date | string;
   readonly activatedAt?: Date | string;
   readonly deactivatedAt?: Date | string;
@@ -34,6 +36,7 @@ export class AppModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
   readonly name: string;
+  readonly email: string;
   readonly slug: string;
   readonly description?: string;
   readonly status: AppStatus;
@@ -44,6 +47,7 @@ export class AppModel extends AggregateRoot {
   readonly logo?: string;
   readonly active: boolean;
   readonly stripeAccount?: string;
+  readonly stripeCustomer?: string;
   readonly isStokei: boolean;
   readonly blockedAt?: string;
   readonly activatedAt?: string;
@@ -63,6 +67,7 @@ export class AppModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.slug = data.slug;
+    this.email = data.email;
     this.name = data.name;
     this.description = data.description;
     this.status = data.status;
@@ -81,6 +86,7 @@ export class AppModel extends AggregateRoot {
     this.createdBy = data.createdBy;
     this.isStokei = !!this.id.match(/stokei/i);
     this.stripeAccount = !this.isStokei && data.stripeAccount;
+    this.stripeCustomer = !this.isStokei && data.stripeCustomer;
   }
 
   createdApp({ createdBy }: { createdBy: string }) {

@@ -12,5 +12,8 @@ export const mountCheckoutResponseURL = ({
   const url = new URL(domain || CHECKOUT_RESPONSE_URL);
   url.pathname = '/checkout/response';
   url.searchParams.set('success', success + '');
+  if (success) {
+    url.searchParams.set('checkoutSessionId', '{CHECKOUT_SESSION_ID}');
+  }
   return url.toString();
 };

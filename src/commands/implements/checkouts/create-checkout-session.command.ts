@@ -9,13 +9,13 @@ export class CreateCheckoutSessionCommand
   implements ICommand, CreateCheckoutSessionDTO
 {
   app: string;
-  account: string;
+  customer: string;
   prices: CreateCheckoutSessionPriceDTO[];
   createdBy: string;
 
   constructor(data: CreateCheckoutSessionDTO) {
     this.app = data.app;
-    this.account = data.account;
+    this.customer = data.customer;
     this.prices = data.prices;
     this.createdBy = data.createdBy;
   }

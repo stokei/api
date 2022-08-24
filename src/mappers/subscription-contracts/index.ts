@@ -5,7 +5,6 @@ import {
   cleanValueNumber,
   cleanWhereDataBoolean,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -118,11 +117,7 @@ export class SubscriptionContractMapper {
   toModel(subscriptionContract: SubscriptionContractEntity) {
     return (
       subscriptionContract &&
-      new SubscriptionContractModel({
-        ...subscriptionContract,
-        updatedAt: convertToISODateString(subscriptionContract.updatedAt),
-        createdAt: convertToISODateString(subscriptionContract.createdAt)
-      })
+      new SubscriptionContractModel(subscriptionContract)
     );
   }
   toModels(subscriptionContracts: SubscriptionContractEntity[]) {

@@ -8,6 +8,9 @@ export class CreateSubscriptionContractCommand
 {
   parent: string;
   product: string;
+  totalAmount: number;
+  subtotalAmount: number;
+  stripeCheckoutSession: string;
   stripeSubscription: string;
   type: SubscriptionContractType;
   automaticRenew?: boolean;

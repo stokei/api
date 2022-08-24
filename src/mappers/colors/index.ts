@@ -4,7 +4,6 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -100,14 +99,7 @@ export class ColorMapper {
     };
   }
   toModel(color: ColorEntity) {
-    return (
-      color &&
-      new ColorModel({
-        ...color,
-        updatedAt: convertToISODateString(color.updatedAt),
-        createdAt: convertToISODateString(color.createdAt)
-      })
-    );
+    return color && new ColorModel(color);
   }
   toModels(colors: ColorEntity[]) {
     return colors?.length > 0 ? colors.map(this.toModel).filter(Boolean) : [];

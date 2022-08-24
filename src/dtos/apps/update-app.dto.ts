@@ -5,6 +5,7 @@ export interface UpdateAppDataDTO {
   plan?: string;
   icon?: string;
   stripeAccount?: string;
+  stripeCustomer?: string;
   logo?: string;
   updatedBy: string;
 }

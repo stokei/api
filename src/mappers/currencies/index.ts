@@ -6,7 +6,6 @@ import {
   cleanWhereDataNumber,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -100,14 +99,7 @@ export class CurrencyMapper {
     };
   }
   toModel(currency: CurrencyEntity) {
-    return (
-      currency &&
-      new CurrencyModel({
-        ...currency,
-        updatedAt: convertToISODateString(currency.updatedAt),
-        createdAt: convertToISODateString(currency.createdAt)
-      })
-    );
+    return currency && new CurrencyModel(currency);
   }
   toModels(currencies: CurrencyEntity[]) {
     return currencies?.length > 0

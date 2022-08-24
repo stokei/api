@@ -6,7 +6,6 @@ import {
   cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -105,14 +104,7 @@ export class DomainMapper {
     };
   }
   toModel(domain: DomainEntity) {
-    return (
-      domain &&
-      new DomainModel({
-        ...domain,
-        updatedAt: convertToISODateString(domain.updatedAt),
-        createdAt: convertToISODateString(domain.createdAt)
-      })
-    );
+    return domain && new DomainModel(domain);
   }
   toModels(domains: DomainEntity[]) {
     return domains?.length > 0 ? domains.map(this.toModel).filter(Boolean) : [];

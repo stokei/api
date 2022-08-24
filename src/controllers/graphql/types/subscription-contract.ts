@@ -33,7 +33,7 @@ export class SubscriptionContract {
   automaticRenew: boolean;
 
   @Field(() => PaymentMethod, { nullable: true })
-  defaultPaymentMethod?: PaymentMethod;
+  defaultStripePaymentMethod?: PaymentMethod;
 
   @Field(() => String, { nullable: true })
   startAt?: string;

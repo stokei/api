@@ -6,9 +6,11 @@ export interface CreateStripeCheckoutSessionPriceDTO {
 export interface CreateStripeCheckoutSessionDTO {
   app: string;
   currency: string;
+  applicationFeePercentage: number;
   successUrl: string;
   cancelUrl: string;
   prices: CreateStripeCheckoutSessionPriceDTO[];
   customer: string;
+  customerEmail: string;
   stripeAccount: string;
 }

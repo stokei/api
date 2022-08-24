@@ -4,7 +4,6 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -98,14 +97,7 @@ export class VideoAuthorMapper {
     };
   }
   toModel(videoAuthor: VideoAuthorEntity) {
-    return (
-      videoAuthor &&
-      new VideoAuthorModel({
-        ...videoAuthor,
-        updatedAt: convertToISODateString(videoAuthor.updatedAt),
-        createdAt: convertToISODateString(videoAuthor.createdAt)
-      })
-    );
+    return videoAuthor && new VideoAuthorModel(videoAuthor);
   }
   toModels(videoAuthors: VideoAuthorEntity[]) {
     return videoAuthors?.length > 0

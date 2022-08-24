@@ -17,7 +17,6 @@ export class PriceModelMock extends PriceModel {
       fromAmount: data?.fromAmount ?? null,
       type: data?.type ?? PriceType.ONE_TIME,
       currency: data?.currency ?? defaultCurrencyId,
-      purchaseUrl: data?.purchaseUrl ?? 'https://google.com',
       inventoryType: data?.inventoryType ?? InventoryType.INFINITE,
       recurringIntervalCount: data?.recurringIntervalCount ?? 1,
       recurringIntervalType: data?.recurringIntervalType ?? RecurringType.MONTH,

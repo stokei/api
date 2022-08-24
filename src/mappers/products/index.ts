@@ -6,7 +6,6 @@ import {
   cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -111,14 +110,7 @@ export class ProductMapper {
     };
   }
   toModel(product: ProductEntity) {
-    return (
-      product &&
-      new ProductModel({
-        ...product,
-        updatedAt: convertToISODateString(product.updatedAt),
-        createdAt: convertToISODateString(product.createdAt)
-      })
-    );
+    return product && new ProductModel(product);
   }
   toModels(products: ProductEntity[]) {
     return products?.length > 0

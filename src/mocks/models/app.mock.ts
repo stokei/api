@@ -11,6 +11,7 @@ export class AppModelMock extends AppModel {
       parent: data?.parent ?? 'anyParent',
       name: data?.name ?? 'App Name',
       slug: data?.slug ?? 'app-name',
+      email: data?.email ?? 'app@email.com',
       description: data?.description ?? null,
       status: data?.status ?? AppStatus.ACTIVE,
       avatar: data?.avatar ?? null,

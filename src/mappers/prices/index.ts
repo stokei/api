@@ -6,7 +6,6 @@ import {
   cleanWhereDataBoolean,
   cleanWhereDataNumber,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -125,14 +124,7 @@ export class PriceMapper {
     };
   }
   toModel(price: PriceEntity) {
-    return (
-      price &&
-      new PriceModel({
-        ...price,
-        updatedAt: convertToISODateString(price.updatedAt),
-        createdAt: convertToISODateString(price.createdAt)
-      })
-    );
+    return price && new PriceModel(price);
   }
   toModels(prices: PriceEntity[]) {
     return prices?.length > 0 ? prices.map(this.toModel).filter(Boolean) : [];

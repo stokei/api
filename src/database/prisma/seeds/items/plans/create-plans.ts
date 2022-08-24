@@ -8,7 +8,6 @@ import {
 } from '@prisma/client';
 
 import { defaultAppId } from '@/constants/default-app-id';
-import { FREE_PLAN_PURCHASE_URL } from '@/environments';
 import { PlanNotFoundException, ProductNotFoundException } from '@/errors';
 import { PlanMapper } from '@/mappers/plans';
 import { PriceMapper } from '@/mappers/prices';
@@ -82,7 +81,6 @@ const createPrice = async ({
       amount: 0,
       active: true,
       currency,
-      purchaseUrl: FREE_PLAN_PURCHASE_URL,
       type: PriceType.RECURRING,
       inventoryType: InventoryType.INFINITE
     }

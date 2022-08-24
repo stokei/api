@@ -49,6 +49,7 @@
     "@stokei/nestjs": "^1.1.2",
     "apollo-server-core": "^3.6.3",
     "apollo-server-express": "^3.6.3",
+    "body-parser": "^1.20.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "crypto-js": "^4.1.1",

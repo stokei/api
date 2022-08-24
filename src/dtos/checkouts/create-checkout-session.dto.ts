@@ -5,7 +5,7 @@ export interface CreateCheckoutSessionPriceDTO {
 
 export interface CreateCheckoutSessionDTO {
   app: string;
-  account: string;
+  customer: string;
   prices: CreateCheckoutSessionPriceDTO[];
   createdBy: string;
 }

@@ -6,7 +6,6 @@ import {
   cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -117,14 +116,7 @@ export class AppMapper {
     };
   }
   toModel(app: AppEntity) {
-    return (
-      app &&
-      new AppModel({
-        ...app,
-        updatedAt: convertToISODateString(app.updatedAt),
-        createdAt: convertToISODateString(app.createdAt)
-      })
-    );
+    return app && new AppModel(app);
   }
   toModels(apps: AppEntity[]) {
     return apps?.length > 0 ? apps.map(this.toModel).filter(Boolean) : [];

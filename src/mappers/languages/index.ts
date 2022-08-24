@@ -6,7 +6,6 @@ import {
   cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -100,14 +99,7 @@ export class LanguageMapper {
     };
   }
   toModel(language: LanguageEntity) {
-    return (
-      language &&
-      new LanguageModel({
-        ...language,
-        updatedAt: convertToISODateString(language.updatedAt),
-        createdAt: convertToISODateString(language.createdAt)
-      })
-    );
+    return language && new LanguageModel(language);
   }
   toModels(languages: LanguageEntity[]) {
     return languages?.length > 0

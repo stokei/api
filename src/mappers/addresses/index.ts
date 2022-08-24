@@ -6,7 +6,6 @@ import {
   cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -117,14 +116,7 @@ export class AddressMapper {
     };
   }
   toModel(address: AddressEntity) {
-    return (
-      address &&
-      new AddressModel({
-        ...address,
-        updatedAt: convertToISODateString(address.updatedAt),
-        createdAt: convertToISODateString(address.createdAt)
-      })
-    );
+    return address && new AddressModel(address);
   }
   toModels(addresses: AddressEntity[]) {
     return addresses?.length > 0

@@ -6,7 +6,6 @@ import {
   cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -113,14 +112,7 @@ export class VideoMapper {
     };
   }
   toModel(video: VideoEntity) {
-    return (
-      video &&
-      new VideoModel({
-        ...video,
-        updatedAt: convertToISODateString(video.updatedAt),
-        createdAt: convertToISODateString(video.createdAt)
-      })
-    );
+    return video && new VideoModel(video);
   }
   toModels(videos: VideoEntity[]) {
     return videos?.length > 0 ? videos.map(this.toModel).filter(Boolean) : [];

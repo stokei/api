@@ -10,13 +10,13 @@ export class SubscriptionContractDefaultPaymentMethodResolver {
   constructor(private readonly paymentMethodsLoader: PaymentMethodsLoader) {}
 
   @ResolveField(() => PaymentMethod, { nullable: true })
-  defaultPaymentMethod(
+  defaultStripePaymentMethod(
     @Parent() subscriptionContract: SubscriptionContractModel
   ) {
     return (
-      subscriptionContract.defaultPaymentMethod &&
+      subscriptionContract.defaultStripePaymentMethod &&
       this.paymentMethodsLoader.findByIds.load(
-        subscriptionContract.defaultPaymentMethod
+        subscriptionContract.defaultStripePaymentMethod
       )
     );
   }

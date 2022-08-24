@@ -22,6 +22,10 @@ export interface OrderByDataFindAllSubscriptionContractsDTO {
   status?: IOrderBy;
   type?: IOrderBy;
   active?: IOrderBy;
+  totalAmount?: IOrderBy;
+  subtotalAmount?: IOrderBy;
+  stripeCheckoutSession?: IOrderBy;
+  paymentErrorAt?: IOrderBy;
   automaticRenew?: IOrderBy;
   startAt?: IOrderBy;
   endAt?: IOrderBy;

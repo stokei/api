@@ -4,7 +4,6 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -92,14 +91,7 @@ export class ImageMapper {
     };
   }
   toModel(image: ImageEntity) {
-    return (
-      image &&
-      new ImageModel({
-        ...image,
-        updatedAt: convertToISODateString(image.updatedAt),
-        createdAt: convertToISODateString(image.createdAt)
-      })
-    );
+    return image && new ImageModel(image);
   }
   toModels(images: ImageEntity[]) {
     return images?.length > 0 ? images.map(this.toModel).filter(Boolean) : [];

@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, cleanValueBoolean } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueBoolean,
+  cleanValueNumber
+} from '@stokei/nestjs';
 
 import { CreateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/create-subscription-contract.command';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
@@ -59,6 +64,9 @@ export class CreateSubscriptionContractCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       product: cleanValue(command?.product),
+      totalAmount: cleanValueNumber(command?.totalAmount),
+      subtotalAmount: cleanValueNumber(command?.subtotalAmount),
+      stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),
       stripeSubscription: cleanValue(command?.stripeSubscription),
       automaticRenew: cleanValueBoolean(command?.automaticRenew),
       startAt: cleanValue(command?.startAt),

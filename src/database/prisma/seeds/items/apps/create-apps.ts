@@ -18,6 +18,7 @@ const myApps = ({
     slug: 'stokei',
     name: 'Stokei',
     parent: admin,
+    email: 'contato@stokei.com',
     status: AppStatus.ACTIVE,
     currency,
     language,

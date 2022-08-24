@@ -5,7 +5,6 @@ import {
   cleanValueNumber,
   cleanWhereDataBoolean,
   cleanWhereDataString,
-  convertToISODateString,
   IOperator,
   IWhere,
   PrismaMapper,
@@ -100,16 +99,7 @@ export class AccessMapper {
     };
   }
   toModel(access: AccessEntity) {
-    return (
-      access &&
-      new AccessModel({
-        ...access,
-        expiresIn: convertToISODateString(access.expiresIn),
-        canceledAt: convertToISODateString(access.canceledAt),
-        updatedAt: convertToISODateString(access.updatedAt),
-        createdAt: convertToISODateString(access.createdAt)
-      })
-    );
+    return access && new AccessModel(access);
   }
   toModels(accesses: AccessEntity[]) {
     return accesses?.length > 0

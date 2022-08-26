@@ -68,6 +68,8 @@ export class AccountModel extends AggregateRoot {
   readonly updatedBy?: string;
   readonly createdBy?: string;
   readonly roles: AccountRole[];
+  readonly isStokei: boolean;
+
   constructor(data: IAccountModelData) {
     super();
 
@@ -97,6 +99,7 @@ export class AccountModel extends AggregateRoot {
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
     this.roles = data.roles;
+    this.isStokei = !!this.app.match(/stokei/i);
   }
 
   createdAccount({ createdBy }: { createdBy: string }) {

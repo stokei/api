@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { IBaseService, splitServiceId } from '@stokei/nestjs';
+import { IBaseService } from '@stokei/nestjs';
 import Stripe from 'stripe';
 
 import { stripeClient } from '@/clients/stripe';
@@ -16,7 +16,7 @@ export class CreateStripePriceService
   ): Promise<Stripe.Response<Stripe.Price>> {
     return stripeClient.prices.create(
       {
-        currency: splitServiceId(data.currency)?.id,
+        currency: data.currency,
         product: data.stripeProduct,
         unit_amount: data.amount,
         recurring: data.type === PriceType.RECURRING && {

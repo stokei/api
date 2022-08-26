@@ -71,6 +71,7 @@ export class UpdateAppCommandHandler
         plan: cleanValue(command?.data?.plan),
         icon: cleanValue(command?.data?.icon),
         logo: cleanValue(command?.data?.logo),
+        stripeBankAccount: cleanValue(command?.data?.stripeBankAccount),
         stripeAccount: cleanValue(command?.data?.stripeAccount),
         stripeCustomer: cleanValue(command?.data?.stripeCustomer),
         updatedBy: cleanValue(command?.data?.name)

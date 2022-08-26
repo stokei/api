@@ -152,29 +152,30 @@ model Access {
 }
 
 model App {
-  id             String    @id @default(cuid())
-  parent         String    @db.VarChar(255)
-  slug           String    @db.VarChar(255)
-  name           String    @db.VarChar(255)
-  email          String    @db.VarChar(255)
-  description    String?
-  status         AppStatus
-  avatar         String?   @db.VarChar(255)
-  plan           String?   @db.VarChar(255)
-  currency       String    @db.VarChar(255)
-  language       String    @db.VarChar(255)
-  icon           String?   @db.VarChar(255)
-  logo           String?   @db.VarChar(255)
-  active         Boolean   @default(true)
-  stripeCustomer String?   @map("stripe_customer") @db.VarChar(255)
-  stripeAccount  String?   @map("stripe_account") @db.VarChar(255)
-  blockedAt      DateTime? @map("blocked_at")
-  activatedAt    DateTime? @default(now()) @map("activated_at")
-  deactivatedAt  DateTime? @map("deactivated_at")
-  updatedAt      DateTime? @updatedAt @map("updated_at")
-  createdAt      DateTime? @default(now()) @map("created_at")
-  updatedBy      String?   @map("updated_by") @db.VarChar(255)
-  createdBy      String?   @map("created_by") @db.VarChar(255)
+  id                String    @id @default(cuid())
+  parent            String    @db.VarChar(255)
+  slug              String    @db.VarChar(255)
+  name              String    @db.VarChar(255)
+  email             String    @db.VarChar(255)
+  description       String?
+  status            AppStatus
+  avatar            String?   @db.VarChar(255)
+  plan              String?   @db.VarChar(255)
+  currency          String    @db.VarChar(255)
+  language          String    @db.VarChar(255)
+  icon              String?   @db.VarChar(255)
+  logo              String?   @db.VarChar(255)
+  active            Boolean   @default(true)
+  stripeBankAccount String?   @map("stripe_bank_account") @db.VarChar(255)
+  stripeCustomer    String?   @map("stripe_customer") @db.VarChar(255)
+  stripeAccount     String?   @map("stripe_account") @db.VarChar(255)
+  blockedAt         DateTime? @map("blocked_at")
+  activatedAt       DateTime? @default(now()) @map("activated_at")
+  deactivatedAt     DateTime? @map("deactivated_at")
+  updatedAt         DateTime? @updatedAt @map("updated_at")
+  createdAt         DateTime? @default(now()) @map("created_at")
+  updatedBy         String?   @map("updated_by") @db.VarChar(255)
+  createdBy         String?   @map("created_by") @db.VarChar(255)
 
   @@map("apps")
 }

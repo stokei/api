@@ -4,13 +4,13 @@ import { CurrencyMapper } from '@/mappers/currencies';
 
 const myCurrencies = (): Prisma.CurrencyCreateManyInput[] => [
   {
-    id: 'brl',
+    id: 'BRL',
     name: 'Real',
     symbol: 'R$',
     minorUnit: 2
   },
   {
-    id: 'usd',
+    id: 'USD',
     name: 'Dollar',
     symbol: '$',
     minorUnit: 2

@@ -24,8 +24,11 @@ export class CreateStripeCheckoutSessionService
         client_reference_id: data.app,
         customer: data.customer,
         mode: 'subscription',
-        subscription_data: {
-          application_fee_percent: data.applicationFeePercentage
+        subscription_data: data.stripeAccount && {
+          application_fee_percent: data.applicationFeePercentage,
+          transfer_data: {
+            destination: data.stripeAccount
+          }
         },
         line_items: data.prices.map((currentPrice) => ({
           price: currentPrice.price,

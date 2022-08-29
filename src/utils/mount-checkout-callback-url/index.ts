@@ -2,7 +2,7 @@ import { URL } from 'url';
 
 import { CHECKOUT_RESPONSE_URL } from '@/environments';
 
-export const mountCheckoutResponseURL = ({
+export const mountCheckoutCallbackURL = ({
   success,
   domain
 }: {
@@ -10,7 +10,7 @@ export const mountCheckoutResponseURL = ({
   domain?: string;
 }) => {
   const url = new URL(domain || CHECKOUT_RESPONSE_URL);
-  url.pathname = '/checkout/response';
+  url.pathname = '/checkout/callback';
   url.searchParams.set('success', success + '');
   if (success) {
     url.searchParams.set('checkoutSessionId', '{CHECKOUT_SESSION_ID}');

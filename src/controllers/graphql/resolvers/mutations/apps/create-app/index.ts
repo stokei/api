@@ -18,6 +18,7 @@ export class CreateAppResolver {
   ) {
     const response = await this.createAppService.execute({
       ...data,
+      parent: currentAccountId,
       createdBy: currentAccountId
     });
     return response;

@@ -5,7 +5,8 @@ import { CreateAppStripeCustomerCommand } from '@/commands/implements/apps/creat
 import {
   AppNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  StripeCustomerAlreadyExistsException
 } from '@/errors';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { UpdateAppService } from '@/services/apps/update-app';
@@ -37,6 +38,9 @@ export class CreateAppStripeCustomerCommandHandler
     const app = await this.findAppByIdService.execute(data.app);
     if (!app) {
       throw new AppNotFoundException();
+    }
+    if (app.stripeCustomer) {
+      throw new StripeCustomerAlreadyExistsException();
     }
 
     const customer = await this.createStripeCustomerService.execute({

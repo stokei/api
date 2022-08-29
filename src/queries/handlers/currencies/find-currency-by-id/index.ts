@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { cleanValue, splitServiceId } from '@stokei/nestjs';
+import { cleanValue } from '@stokei/nestjs';
 
 import {
   CurrencyNotFoundException,
@@ -23,12 +23,14 @@ export class FindCurrencyByIdQueryHandler
       throw new DataNotFoundException();
     }
 
-    const id = cleanValue(splitServiceId(query.id)?.id);
+    const id = cleanValue(query.id);
     if (!id) {
       throw new ParamNotFoundException('id');
     }
 
-    const currency = await this.findCurrencyByIdRepository.execute(id);
+    const currency = await this.findCurrencyByIdRepository.execute(
+      id.toUpperCase()
+    );
     if (!currency) {
       throw new CurrencyNotFoundException();
     }

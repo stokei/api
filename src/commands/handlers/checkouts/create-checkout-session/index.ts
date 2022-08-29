@@ -15,7 +15,7 @@ import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentPlanService } from '@/services/apps/find-app-current-plan';
 import { FindAllDomainsService } from '@/services/domains/find-all-domains';
 import { CreateStripeCheckoutSessionService } from '@/services/stripe/create-stripe-checkout-session';
-import { mountCheckoutResponseURL } from '@/utils/mount-checkout-response-url';
+import { mountCheckoutCallbackURL } from '@/utils/mount-checkout-callback-url';
 
 type CreateCheckoutSessionCommandKeys = keyof CreateCheckoutSessionCommand;
 
@@ -91,11 +91,11 @@ export class CreateCheckoutSessionCommandHandler
         applicationFeePercentage: appPlan.applicationFeePercentage,
         currency: app.currency,
         prices: data.prices,
-        successUrl: mountCheckoutResponseURL({
+        successUrl: mountCheckoutCallbackURL({
           success: true,
           domain: currentAppDomain?.name
         }),
-        cancelUrl: mountCheckoutResponseURL({
+        cancelUrl: mountCheckoutCallbackURL({
           success: false,
           domain: currentAppDomain?.name
         }),

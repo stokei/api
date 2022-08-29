@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { cleanValue, splitServiceId } from '@stokei/nestjs';
+import { cleanValue } from '@stokei/nestjs';
 
 import {
   DataNotFoundException,
@@ -23,7 +23,7 @@ export class FindLanguageByIdQueryHandler
       throw new DataNotFoundException();
     }
 
-    const id = cleanValue(splitServiceId(query.id)?.id);
+    const id = cleanValue(query.id);
     if (!id) {
       throw new ParamNotFoundException('id');
     }

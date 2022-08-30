@@ -1,4 +1,8 @@
-import { STRIPE_ONBOARDING_RETURN_URL } from '@/environments';
+import {
+  STRIPE_ONBOARDING_REFRESH_URL,
+  STRIPE_ONBOARDING_RETURN_URL
+} from '@/environments';
+import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 
 const stripeOnboardingBase = '/stripe/onboarding';
 
@@ -7,10 +11,9 @@ export const mountStripeAccountOnboardingReturnURL = ({
 }: {
   domain?: string;
 }) => {
-  return (
-    (domain || STRIPE_ONBOARDING_RETURN_URL) +
-    stripeOnboardingBase +
-    '/callback'
+  return appendPathnameToURL(
+    domain || STRIPE_ONBOARDING_RETURN_URL,
+    stripeOnboardingBase + '/callback'
   );
 };
 
@@ -19,7 +22,8 @@ export const mountStripeAccountOnboardingRefreshURL = ({
 }: {
   domain?: string;
 }) => {
-  return (
-    (domain || STRIPE_ONBOARDING_RETURN_URL) + stripeOnboardingBase + '/refresh'
+  return appendPathnameToURL(
+    domain || STRIPE_ONBOARDING_REFRESH_URL,
+    stripeOnboardingBase + '/refresh'
   );
 };

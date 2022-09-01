@@ -10,9 +10,9 @@ export interface CreatePriceDTO {
   currency: string;
   type: PriceType;
   inventoryType: InventoryType;
-  recurringIntervalCount: number;
-  recurringIntervalType: RecurringType;
-  quantity: number;
+  recurringIntervalCount?: number;
+  recurringIntervalType?: RecurringType;
+  quantity?: number;
   app: string;
   createdBy: string;
 }

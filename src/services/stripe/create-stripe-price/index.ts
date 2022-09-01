@@ -25,7 +25,7 @@ export class CreateStripePriceService
           interval_count: data.recurringIntervalCount
         },
         metadata: {
-          parent: data.parent
+          app: data.app
         }
       },
       { stripeAccount: data.stripeAccount }

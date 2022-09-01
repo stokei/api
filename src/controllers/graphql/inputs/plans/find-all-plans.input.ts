@@ -3,13 +3,10 @@ import {
   OrderBy,
   WhereDataBooleanInput,
   WhereDataIntInput,
-  WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
 
-import { PlanStatus } from '@/controllers/graphql/enums/plan-status.enum';
-import { PlanType } from '@/controllers/graphql/enums/plan-type.enum';
 import {
   OrderByDataFindAllPlansDTO,
   WhereDataFindAllPlansDTO
@@ -20,17 +17,11 @@ class WhereDataFindAllPlansDataInput implements WhereDataFindAllPlansDTO {
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field(() => WhereDataSearchInput, { nullable: true })
-  name?: WhereDataSearchInput;
-
-  @Field(() => PlanType, { nullable: true })
-  type?: PlanType;
+  @Field(() => WhereDataStringInput, { nullable: true })
+  app?: WhereDataStringInput;
 
   @Field(() => WhereDataBooleanInput, { nullable: true })
-  checkoutVisible?: WhereDataBooleanInput;
-
-  @Field(() => PlanStatus, { nullable: true })
-  status?: PlanStatus;
+  active?: WhereDataBooleanInput;
 
   @Field(() => WhereDataBooleanInput, { nullable: true })
   hasCustomDomain?: WhereDataBooleanInput;
@@ -68,16 +59,7 @@ export class OrderByDataFindAllPlansInput
   implements OrderByDataFindAllPlansDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
-  type?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
-  checkoutVisible?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
-  status?: OrderBy;
+  active?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   hasCustomDomain?: OrderBy;

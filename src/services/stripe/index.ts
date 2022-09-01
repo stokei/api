@@ -6,6 +6,7 @@ import { CreateStripeCheckoutSessionService } from './create-stripe-checkout-ses
 import { CreateStripeCustomerService } from './create-stripe-customer';
 import { CreateStripeCustomerPortalSessionService } from './create-stripe-customer-portal-session';
 import { CreateStripePriceService } from './create-stripe-price';
+import { CreateStripeProductService } from './create-stripe-product';
 import { UpdateStripeCustomerService } from './update-stripe-customer';
 
 export const StripeServices = [
@@ -16,6 +17,7 @@ export const StripeServices = [
   CreateStripeCustomerPortalSessionService,
   CreateStripeCheckoutSessionService,
   CreateStripeCustomerService,
+  CreateStripeProductService,
   CreateStripePriceService,
   UpdateStripeCustomerService
 ];

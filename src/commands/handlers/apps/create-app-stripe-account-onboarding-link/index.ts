@@ -2,13 +2,12 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateAppStripeAccountOnboardingLinkCommand } from '@/commands/implements/apps/create-app-stripe-account-onboarding-link.command';
-import { PlanType } from '@/enums/plan-type.enum';
 import {
   AppNotFoundException,
   AppUnauthorizedException,
   DataNotFoundException,
   ParamNotFoundException,
-  PlanUnauthorizedException,
+  PlanNotFoundException,
   StripeAccountNotFoundException
 } from '@/errors';
 import { LinkMapper } from '@/mappers/links';
@@ -57,8 +56,8 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
       throw new AppUnauthorizedException();
     }
     const appPlan = await this.findAppCurrentPlanService.execute(app.id);
-    if (appPlan?.type !== PlanType.FREE) {
-      throw new PlanUnauthorizedException();
+    if (!appPlan) {
+      throw new PlanNotFoundException();
     }
 
     let stripeAccount = app.stripeAccount;

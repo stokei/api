@@ -23,9 +23,6 @@ CREATE TYPE "PaymentMethodType" AS ENUM ('CREDIT_CARD', 'BOLETO');
 CREATE TYPE "PlanType" AS ENUM ('FREE', 'BASIC', 'ADVANCED', 'CUSTOM');
 
 -- CreateEnum
-CREATE TYPE "PlanStatus" AS ENUM ('ACTIVE', 'PENDING', 'CANCELED', 'FINISHED');
-
--- CreateEnum
 CREATE TYPE "RecurringType" AS ENUM ('DAY', 'WEEK', 'MONTH', 'YEAR');
 
 -- CreateEnum
@@ -102,12 +99,12 @@ CREATE TABLE "apps" (
     "description" TEXT,
     "status" "AppStatus" NOT NULL,
     "avatar" VARCHAR(255),
-    "plan" VARCHAR(255),
     "currency" VARCHAR(255) NOT NULL,
     "language" VARCHAR(255) NOT NULL,
     "icon" VARCHAR(255),
     "logo" VARCHAR(255),
     "active" BOOLEAN NOT NULL DEFAULT true,
+    "stripe_bank_account" VARCHAR(255),
     "stripe_customer" VARCHAR(255),
     "stripe_account" VARCHAR(255),
     "blocked_at" TIMESTAMP(3),
@@ -256,11 +253,7 @@ CREATE TABLE "payments_methods" (
 -- CreateTable
 CREATE TABLE "plans" (
     "id" TEXT NOT NULL,
-    "name" VARCHAR(255) NOT NULL,
-    "type" "PlanType" NOT NULL,
-    "checkout_visible" BOOLEAN NOT NULL DEFAULT false,
-    "status" "PlanStatus" NOT NULL,
-    "allowed_to_sell" BOOLEAN NOT NULL DEFAULT true,
+    "app" VARCHAR(255) NOT NULL,
     "has_custom_domain" BOOLEAN NOT NULL DEFAULT false,
     "has_custom_site" BOOLEAN NOT NULL DEFAULT false,
     "quantity_courses" INTEGER NOT NULL,
@@ -269,7 +262,7 @@ CREATE TABLE "plans" (
     "quantity_modules_per_classrooms" INTEGER NOT NULL,
     "quantity_videos_per_modules" INTEGER NOT NULL,
     "application_fee_percentage" INTEGER NOT NULL,
-    "active" BOOLEAN NOT NULL DEFAULT true,
+    "active" BOOLEAN NOT NULL DEFAULT false,
     "canceled_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,

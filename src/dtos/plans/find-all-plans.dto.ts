@@ -1,21 +1,9 @@
-import {
-  IBaseFindManyDTO,
-  IOrderBy,
-  IWhereData,
-  IWhereDataSearch
-} from '@stokei/nestjs';
-
-import { PlanStatus } from '@/enums/plan-status.enum';
-import { PlanType } from '@/enums/plan-type.enum';
+import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
 
 export interface WhereDataFindAllPlansDTO {
   ids?: string[];
   app?: IWhereData;
-  name?: IWhereDataSearch;
-  type?: PlanType;
-  checkoutVisible?: IWhereData<boolean>;
-  allowedToSell?: IWhereData<boolean>;
-  status?: PlanStatus;
+  active?: IWhereData<boolean>;
   hasCustomDomain?: IWhereData<boolean>;
   hasCustomSite?: IWhereData<boolean>;
   quantityCourses?: IWhereData<number>;
@@ -30,11 +18,7 @@ export interface WhereDataFindAllPlansDTO {
 export type IKeysWhereDataFindAllPlansDTO = keyof WhereDataFindAllPlansDTO;
 
 export interface OrderByDataFindAllPlansDTO {
-  name?: IOrderBy;
-  type?: IOrderBy;
-  checkoutVisible?: IOrderBy;
-  allowedToSell?: IOrderBy;
-  status?: IOrderBy;
+  active?: IOrderBy;
   hasCustomDomain?: IOrderBy;
   hasCustomSite?: IOrderBy;
   quantityCourses?: IOrderBy;

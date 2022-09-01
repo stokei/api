@@ -1,5 +1,4 @@
-export interface CreatePlanDTO {
-  app: string;
+export interface CalculatePlanPriceDTO {
   hasCustomDomain: boolean;
   hasCustomSite: boolean;
   quantityCourses: number;
@@ -7,5 +6,4 @@ export interface CreatePlanDTO {
   quantityClassroomsPerCourses: number;
   quantityModulesPerClassrooms: number;
   quantityVideosPerModules: number;
-  createdBy: string;
 }

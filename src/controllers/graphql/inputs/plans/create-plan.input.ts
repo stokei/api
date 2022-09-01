@@ -1,21 +1,7 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 
-import { PlanType } from '@/controllers/graphql/enums/plan-type.enum';
-
 @InputType()
 export class CreatePlanInput {
-  @Field()
-  name: string;
-
-  @Field(() => PlanType)
-  type: PlanType;
-
-  @Field(() => Boolean)
-  checkoutVisible: boolean;
-
-  @Field(() => Boolean)
-  allowedToSell: boolean;
-
   @Field(() => Boolean)
   hasCustomDomain: boolean;
 

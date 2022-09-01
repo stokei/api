@@ -5,7 +5,6 @@ import { createAccounts } from './items/accounts/create-accounts';
 import { createApps } from './items/apps/create-apps';
 import { createCurrencies } from './items/currencies/create-currencies';
 import { createLanguages } from './items/languages/create-languages';
-import { createPlans } from './items/plans/create-plans';
 
 const prismaClient = new PrismaClient();
 
@@ -20,7 +19,6 @@ const initializeSeeds = async () => {
   const stokeiAdmin = accounts.find(
     (account) => account.email === 'admin@stokei.com'
   );
-  await createPlans({ prismaClient, currency: realCurrency.id });
   await createApps({
     prismaClient,
     admin: stokeiAdmin.id,

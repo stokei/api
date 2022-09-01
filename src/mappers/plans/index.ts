@@ -5,7 +5,6 @@ import {
   cleanValueNumber,
   cleanWhereDataBoolean,
   cleanWhereDataNumber,
-  cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
   IWhere,
@@ -33,11 +32,7 @@ export class PlanMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        type: operatorData.type,
-        checkoutVisible: prismaMapper.toWhereData(operatorData.checkoutVisible),
-        allowedToSell: prismaMapper.toWhereData(operatorData.allowedToSell),
-        status: operatorData.status,
+        active: prismaMapper.toWhereData(operatorData.active),
         hasCustomDomain: prismaMapper.toWhereData(operatorData.hasCustomDomain),
         hasCustomSite: prismaMapper.toWhereData(operatorData.hasCustomSite),
         quantityCourses: prismaMapper.toWhereData(operatorData.quantityCourses),
@@ -87,11 +82,7 @@ export class PlanMapper {
       }
       return {
         [operator]: {
-          name: cleanWhereDataSearch(operatorData.name),
-          type: operatorData.type,
-          checkoutVisible: cleanWhereDataBoolean(operatorData.checkoutVisible),
-          allowedToSell: cleanWhereDataBoolean(operatorData.allowedToSell),
-          status: operatorData.status,
+          active: cleanWhereDataBoolean(operatorData.active),
           hasCustomDomain: cleanWhereDataBoolean(operatorData.hasCustomDomain),
           hasCustomSite: cleanWhereDataBoolean(operatorData.hasCustomSite),
           quantityCourses: cleanWhereDataNumber(operatorData.quantityCourses),
@@ -132,11 +123,7 @@ export class PlanMapper {
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        name: cleanSortValue(query.orderBy?.name),
-        type: cleanSortValue(query.orderBy?.type),
-        checkoutVisible: cleanSortValue(query.orderBy?.checkoutVisible),
-        allowedToSell: cleanSortValue(query.orderBy?.allowedToSell),
-        status: cleanSortValue(query.orderBy?.status),
+        active: cleanSortValue(query.orderBy?.active),
         hasCustomDomain: cleanSortValue(query.orderBy?.hasCustomDomain),
         hasCustomSite: cleanSortValue(query.orderBy?.hasCustomSite),
         quantityCourses: cleanSortValue(query.orderBy?.quantityCourses),

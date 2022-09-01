@@ -2,7 +2,7 @@ import { PriceType } from '@/enums/price-type.enum';
 import { RecurringType } from '@/enums/recurring-type.enum';
 
 export interface CreateStripePriceDTO {
-  parent: string;
+  app: string;
   amount: number;
   currency: string;
   type: PriceType;

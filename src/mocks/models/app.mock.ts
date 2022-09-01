@@ -15,7 +15,6 @@ export class AppModelMock extends AppModel {
       description: data?.description ?? null,
       status: data?.status ?? AppStatus.ACTIVE,
       avatar: data?.avatar ?? null,
-      plan: data?.plan ?? 'plans.sad451as1da',
       currency: data?.currency ?? 'BRL',
       logo: data?.logo ?? null,
       icon: data?.icon ?? null,

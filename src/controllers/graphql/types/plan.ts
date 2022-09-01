@@ -1,26 +1,11 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
-import { PlanStatus } from '@/controllers/graphql/enums/plan-status.enum';
-import { PlanType } from '@/controllers/graphql/enums/plan-type.enum';
-
 import { Account } from './account';
 
 @ObjectType()
 export class Plan {
   @Field(() => ID)
   id: string;
-
-  @Field(() => String)
-  name: string;
-
-  @Field(() => PlanType)
-  type: PlanType;
-
-  @Field(() => Boolean)
-  checkoutVisible: boolean;
-
-  @Field(() => PlanStatus)
-  status: PlanStatus;
 
   @Field(() => Boolean)
   hasCustomDomain: boolean;

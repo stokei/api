@@ -1,19 +1,13 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
-import { PlanStatus } from '@/enums/plan-status.enum';
-import { PlanType } from '@/enums/plan-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PlanCreatedEvent } from '@/events/implements/plans/plan-created.event';
 
 export interface IPlanModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly name: string;
-  readonly type: PlanType;
-  readonly checkoutVisible: boolean;
-  readonly allowedToSell: boolean;
-  readonly status: PlanStatus;
+  readonly app: string;
   readonly hasCustomDomain: boolean;
   readonly hasCustomSite: boolean;
   readonly quantityCourses: number;
@@ -32,11 +26,7 @@ export interface IPlanModelData {
 
 export class PlanModel extends AggregateRoot {
   readonly id: string;
-  readonly name: string;
-  readonly type: PlanType;
-  readonly checkoutVisible: boolean;
-  readonly allowedToSell: boolean;
-  readonly status: PlanStatus;
+  readonly app: string;
   readonly hasCustomDomain: boolean;
   readonly hasCustomSite: boolean;
   readonly quantityCourses: number;
@@ -59,11 +49,7 @@ export class PlanModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.PLANS,
       id: data._id?.toString() || data.id
     });
-    this.name = data.name;
-    this.type = data.type;
-    this.checkoutVisible = data.checkoutVisible;
-    this.allowedToSell = data.allowedToSell;
-    this.status = data.status;
+    this.app = data.app;
     this.hasCustomDomain = data.hasCustomDomain;
     this.hasCustomSite = data.hasCustomSite;
     this.quantityCourses = data.quantityCourses;

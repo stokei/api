@@ -1,9 +1,8 @@
-import { ICommand } from '@nestjs/cqrs';
+import { IQuery } from '@nestjs/cqrs';
 
-import { CreatePlanDTO } from '@/dtos/plans/create-plan.dto';
+import { CalculatePlanPriceDTO } from '@/dtos/plans/calculate-plan-price.dto';
 
-export class CreatePlanCommand implements ICommand, CreatePlanDTO {
-  app: string;
+export class CalculatePlanPriceQuery implements IQuery, CalculatePlanPriceDTO {
   hasCustomDomain: boolean;
   hasCustomSite: boolean;
   quantityCourses: number;
@@ -11,10 +10,8 @@ export class CreatePlanCommand implements ICommand, CreatePlanDTO {
   quantityClassroomsPerCourses: number;
   quantityModulesPerClassrooms: number;
   quantityVideosPerModules: number;
-  createdBy: string;
 
-  constructor(data: CreatePlanDTO) {
-    this.app = data.app;
+  constructor(data: CalculatePlanPriceDTO) {
     this.hasCustomDomain = data.hasCustomDomain;
     this.hasCustomSite = data.hasCustomSite;
     this.quantityCourses = data.quantityCourses;
@@ -22,6 +19,5 @@ export class CreatePlanCommand implements ICommand, CreatePlanDTO {
     this.quantityClassroomsPerCourses = data.quantityClassroomsPerCourses;
     this.quantityModulesPerClassrooms = data.quantityModulesPerClassrooms;
     this.quantityVideosPerModules = data.quantityVideosPerModules;
-    this.createdBy = data.createdBy;
   }
 }

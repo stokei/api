@@ -8,11 +8,16 @@ import {
 
 import { CreatePriceCommand } from '@/commands/implements/prices/create-price.command';
 import {
+  AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
-  PriceNotFoundException
+  PriceNotFoundException,
+  ProductNotFoundException
 } from '@/errors';
 import { CreatePriceRepository } from '@/repositories/prices/create-price';
+import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { FindProductByIdService } from '@/services/products/find-product-by-id';
+import { CreateStripePriceService } from '@/services/stripe/create-stripe-price';
 
 type CreatePriceCommandKeys = keyof CreatePriceCommand;
 
@@ -22,6 +27,9 @@ export class CreatePriceCommandHandler
 {
   constructor(
     private readonly createPriceRepository: CreatePriceRepository,
+    private readonly createStripePriceService: CreateStripePriceService,
+    private readonly findAppByIdService: FindAppByIdService,
+    private readonly findProductByIdService: FindProductByIdService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -36,8 +44,34 @@ export class CreatePriceCommandHandler
     if (!data?.currency) {
       throw new ParamNotFoundException<CreatePriceCommandKeys>('currency');
     }
+    if (!data?.app) {
+      throw new ParamNotFoundException<CreatePriceCommandKeys>('app');
+    }
 
-    const priceCreated = await this.createPriceRepository.execute(data);
+    const app = await this.findAppByIdService.execute(data.app);
+    if (!app) {
+      throw new AppNotFoundException();
+    }
+    const product = await this.findProductByIdService.execute(data.parent);
+    if (!product) {
+      throw new ProductNotFoundException();
+    }
+
+    const stripePrice = await this.createStripePriceService.execute({
+      amount: data.amount,
+      currency: data.currency,
+      app: app.id,
+      recurringIntervalCount: data.recurringIntervalCount,
+      recurringIntervalType: data.recurringIntervalType,
+      type: data.type,
+      stripeProduct: product.stripeProduct,
+      stripeAccount: app.stripeAccount
+    });
+
+    const priceCreated = await this.createPriceRepository.execute({
+      ...data,
+      stripePrice: stripePrice.id
+    });
     if (!priceCreated) {
       throw new PriceNotFoundException();
     }

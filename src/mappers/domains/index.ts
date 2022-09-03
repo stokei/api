@@ -33,7 +33,7 @@ export class DomainMapper {
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
         active: prismaMapper.toWhereData(operatorData.active),
         status: operatorData.status,
@@ -67,7 +67,7 @@ export class DomainMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           name: cleanWhereDataSearch(operatorData.name),
           app: cleanWhereDataString(operatorData.app),
           active: cleanWhereDataBoolean(operatorData.active),

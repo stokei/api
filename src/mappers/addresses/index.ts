@@ -32,7 +32,7 @@ export class AddressMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy),
@@ -71,7 +71,7 @@ export class AddressMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           default: cleanWhereDataBoolean(operatorData.default),
           street: cleanWhereDataSearch(operatorData.street),
           complement: cleanWhereDataSearch(operatorData.complement),

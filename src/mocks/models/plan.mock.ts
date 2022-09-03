@@ -7,7 +7,8 @@ export class PlanModelMock extends PlanModel {
   constructor(data?: Partial<IPlanModelData>) {
     super({
       _id: nanoid(),
-      app: data?.app ?? 'apps.stokei',
+      price: data?.price ?? 'prices.stokei',
+      product: data?.product ?? 'products.stokei',
       hasCustomDomain: data?.hasCustomDomain ?? true,
       hasCustomSite: data?.hasCustomSite ?? true,
       quantityCourses: data?.quantityCourses ?? 1,

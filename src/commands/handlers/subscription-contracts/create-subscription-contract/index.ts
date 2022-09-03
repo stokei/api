@@ -61,17 +61,19 @@ export class CreateSubscriptionContractCommandHandler
     command: CreateSubscriptionContractCommand
   ): CreateSubscriptionContractCommand {
     return cleanObject({
-      createdBy: cleanValue(command?.createdBy),
-      app: cleanValue(command?.app),
+      parent: cleanValue(command?.parent),
       product: cleanValue(command?.product),
+      currency: cleanValue(command?.currency),
       totalAmount: cleanValueNumber(command?.totalAmount),
       subtotalAmount: cleanValueNumber(command?.subtotalAmount),
       stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),
       stripeSubscription: cleanValue(command?.stripeSubscription),
+      type: cleanValue(command?.type),
       automaticRenew: cleanValueBoolean(command?.automaticRenew),
       startAt: cleanValue(command?.startAt),
       endAt: cleanValue(command?.endAt),
-      parent: cleanValue(command?.parent)
+      app: cleanValue(command?.app),
+      createdBy: cleanValue(command?.createdBy)
     });
   }
 }

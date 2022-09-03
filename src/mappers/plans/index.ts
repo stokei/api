@@ -51,7 +51,8 @@ export class PlanMapper {
         applicationFeePercentage: prismaMapper.toWhereData(
           operatorData.applicationFeePercentage
         ),
-        app: prismaMapper.toWhereData(operatorData.app),
+        product: prismaMapper.toWhereData(operatorData.product),
+        price: prismaMapper.toWhereData(operatorData.price),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
@@ -101,7 +102,8 @@ export class PlanMapper {
           applicationFeePercentage: cleanWhereDataNumber(
             operatorData.applicationFeePercentage
           ),
-          app: cleanWhereDataString(operatorData.app),
+          product: cleanWhereDataString(operatorData.product),
+          price: cleanWhereDataString(operatorData.price),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:

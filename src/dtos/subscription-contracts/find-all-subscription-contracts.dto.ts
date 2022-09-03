@@ -1,4 +1,9 @@
-import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
+import {
+  IBaseFindManyDTO,
+  IOrderBy,
+  IWhereData,
+  IWhereDataSearch
+} from '@stokei/nestjs';
 
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
@@ -6,7 +11,7 @@ import { SubscriptionContractType } from '@/enums/subscription-contract-type.enu
 export interface WhereDataFindAllSubscriptionContractsDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   product?: IWhereData<string>;
   status?: SubscriptionContractStatus;
   type?: SubscriptionContractType;

@@ -2,7 +2,8 @@ import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
 
 export interface WhereDataFindAllPlansDTO {
   ids?: string[];
-  app?: IWhereData;
+  product?: IWhereData;
+  price?: IWhereData;
   active?: IWhereData<boolean>;
   hasCustomDomain?: IWhereData<boolean>;
   hasCustomSite?: IWhereData<boolean>;

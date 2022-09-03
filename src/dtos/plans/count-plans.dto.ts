@@ -2,7 +2,8 @@ import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 
 export interface CountPlansWhereDTO {
   ids?: string[];
-  app?: IWhereData;
+  product?: IWhereData;
+  price?: IWhereData;
   active?: IWhereData<boolean>;
   hasCustomDomain?: IWhereData<boolean>;
   hasCustomSite?: IWhereData<boolean>;

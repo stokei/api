@@ -1,4 +1,5 @@
 export interface CalculatePlanPriceDTO {
+  currency: string;
   hasCustomDomain: boolean;
   hasCustomSite: boolean;
   quantityCourses: number;

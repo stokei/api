@@ -13,6 +13,7 @@ export class SubscriptionContractModelMock extends SubscriptionContractModel {
     super({
       _id: nanoid(),
       parent: data?.parent ?? 'parents.ss4d84asdsa5d1as5',
+      currency: data?.currency ?? 'currencys.ss4d84asdsa5d1as5',
       product: data?.product ?? 'plans.5a1sd5as1das',
       totalAmount: data?.totalAmount ?? 1000,
       subtotalAmount: data?.subtotalAmount ?? 1000,

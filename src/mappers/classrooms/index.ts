@@ -33,7 +33,7 @@ export class ClassroomMapper {
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         app: prismaMapper.toWhereData(operatorData.app),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
         description: prismaMapper.toWhereDataSearch(operatorData.description),
         hasAccessToAllModules: prismaMapper.toWhereData(
@@ -69,7 +69,7 @@ export class ClassroomMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           app: cleanWhereDataString(operatorData.app),
           name: cleanWhereDataSearch(operatorData.name),
           description: cleanWhereDataSearch(operatorData.description),

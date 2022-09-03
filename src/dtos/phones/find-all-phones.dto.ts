@@ -1,11 +1,16 @@
-import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
+import {
+  IBaseFindManyDTO,
+  IOrderBy,
+  IWhereData,
+  IWhereDataSearch
+} from '@stokei/nestjs';
 
 import { PhoneStatus } from '@/enums/phone-status.enum';
 
 export interface WhereDataFindAllPhonesDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   countryCode?: IWhereData<string>;
   areaCode?: IWhereData<string>;
   number?: IWhereData<string>;

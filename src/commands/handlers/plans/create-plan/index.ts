@@ -3,7 +3,8 @@ import {
   cleanObject,
   cleanValue,
   cleanValueBoolean,
-  cleanValueNumber
+  cleanValueNumber,
+  splitServiceId
 } from '@stokei/nestjs';
 
 import { CreatePlanCommand } from '@/commands/implements/plans/create-plan.command';
@@ -16,9 +17,12 @@ import {
   ParamNotFoundException,
   PlanNotFoundException
 } from '@/errors';
+import { PlanModel } from '@/models/plan.model';
 import { CreatePlanRepository } from '@/repositories/plans/create-plan';
+import { UpdatePlanRepository } from '@/repositories/plans/update-plan';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { CalculatePlanPriceService } from '@/services/plans/calculate-plan-price';
+import { FindPlanByIdService } from '@/services/plans/find-plan-by-id';
 import { CreatePriceService } from '@/services/prices/create-price';
 import { CreateProductService } from '@/services/products/create-product';
 
@@ -30,8 +34,10 @@ export class CreatePlanCommandHandler
 {
   constructor(
     private readonly createPlanRepository: CreatePlanRepository,
+    private readonly updatePlanRepository: UpdatePlanRepository,
     private readonly calculatePlanPriceService: CalculatePlanPriceService,
     private readonly findAppByIdService: FindAppByIdService,
+    private readonly findPlanByIdService: FindPlanByIdService,
     private readonly createProductService: CreateProductService,
     private readonly createPriceService: CreatePriceService,
     private readonly publisher: EventPublisher
@@ -61,13 +67,15 @@ export class CreatePlanCommandHandler
       data.quantityVideosPerModules = 0;
     }
 
-    const app = await this.findAppByIdService.execute(data.app);
+    const { app: appId, ...createPlanData } = data;
+    const app = await this.findAppByIdService.execute(appId);
     if (!app) {
       throw new AppNotFoundException();
     }
 
     const { applicationFeePercentage, totalPriceAmount } =
       await this.calculatePlanPriceService.execute({
+        currency: app.currency,
         hasCustomDomain: data.hasCustomDomain,
         hasCustomSite: data.hasCustomSite,
         quantityCourses: data.quantityCourses,
@@ -78,9 +86,8 @@ export class CreatePlanCommandHandler
       });
 
     const planCreated = await this.createPlanRepository.execute({
-      ...data,
-      applicationFeePercentage,
-      app: app.id
+      ...createPlanData,
+      applicationFeePercentage
     });
     if (!planCreated) {
       throw new PlanNotFoundException();
@@ -89,12 +96,12 @@ export class CreatePlanCommandHandler
     const product = await this.createProductService.execute({
       app: app.id,
       checkoutVisible: false,
-      name: `Plan (#${app.id} - ${app.name})`,
+      name: `Plan (${app.name})`,
       parent: planCreated.id,
       createdBy: data.createdBy
     });
 
-    await this.createPriceService.execute({
+    const price = await this.createPriceService.execute({
       parent: product.id,
       app: app.id,
       fromAmount: totalPriceAmount,
@@ -108,13 +115,19 @@ export class CreatePlanCommandHandler
       inventoryType: InventoryType.INFINITE
     });
 
-    const planModel = this.publisher.mergeObjectContext(planCreated);
+    const planUpdated = new PlanModel({
+      ...planCreated,
+      id: splitServiceId(planCreated.id)?.id,
+      product: product.id,
+      price: price.id
+    });
+    const planModel = this.publisher.mergeObjectContext(planUpdated);
     planModel.createdPlan({
       createdBy: data.createdBy
     });
     planModel.commit();
 
-    return planCreated;
+    return planUpdated;
   }
 
   private clearData(command: CreatePlanCommand): CreatePlanCommand {

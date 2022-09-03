@@ -32,7 +32,7 @@ export class ProductMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
         description: prismaMapper.toWhereDataSearch(operatorData.description),
         checkoutVisible: prismaMapper.toWhereData(operatorData.checkoutVisible),
@@ -67,7 +67,7 @@ export class ProductMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           name: cleanWhereDataSearch(operatorData.name),
           description: cleanWhereDataSearch(operatorData.description),
           checkoutVisible: cleanWhereDataBoolean(operatorData.checkoutVisible),

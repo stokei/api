@@ -15,7 +15,7 @@ import { DomainModel } from '@/models/domain.model';
 import { CreateAppStripeAccountService } from '@/services/apps/create-app-stripe-account';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentDomainService } from '@/services/apps/find-app-current-domain';
-import { FindAppCurrentPlanService } from '@/services/apps/find-app-current-plan';
+import { FindAppCurrentSubscriptionPlanService } from '@/services/apps/find-app-current-subscription-plan';
 import { CreateStripeAccountOnboardingLinkService } from '@/services/stripe/create-stripe-account-onboarding-link';
 import {
   mountStripeAccountOnboardingRefreshURL,
@@ -31,7 +31,7 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
 {
   constructor(
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findAppCurrentPlanService: FindAppCurrentPlanService,
+    private readonly findAppCurrentSubscriptionPlanService: FindAppCurrentSubscriptionPlanService,
     private readonly findAppCurrentDomainService: FindAppCurrentDomainService,
     private readonly createAppStripeAccountService: CreateAppStripeAccountService,
     private readonly createStripeAccountOnboardingLinkService: CreateStripeAccountOnboardingLinkService
@@ -55,7 +55,9 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
     if (app.isStokei) {
       throw new AppUnauthorizedException();
     }
-    const appPlan = await this.findAppCurrentPlanService.execute(app.id);
+    const appPlan = await this.findAppCurrentSubscriptionPlanService.execute(
+      app.id
+    );
     if (!appPlan) {
       throw new PlanNotFoundException();
     }

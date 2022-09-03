@@ -1,4 +1,9 @@
-import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
+import {
+  IBaseFindManyDTO,
+  IOrderBy,
+  IWhereData,
+  IWhereDataSearch
+} from '@stokei/nestjs';
 
 import { PaymentMethodProvider } from '@/enums/payment-method-provider.enum';
 import { PaymentMethodType } from '@/enums/payment-method-type.enum';
@@ -6,7 +11,7 @@ import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 export interface WhereDataFindAllPaymentMethodsDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   type?: PaymentMethodType;
   provider?: PaymentMethodProvider;
   stripePaymentMethod?: IWhereData<string>;

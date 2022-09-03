@@ -3,6 +3,7 @@ import { SubscriptionContractType } from '@/enums/subscription-contract-type.enu
 export interface CreateSubscriptionContractDTO {
   parent: string;
   product: string;
+  currency: string;
   totalAmount: number;
   subtotalAmount: number;
   stripeCheckoutSession: string;

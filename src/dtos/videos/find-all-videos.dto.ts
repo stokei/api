@@ -10,7 +10,7 @@ import { VideoStatus } from '@/enums/video-status.enum';
 export interface WhereDataFindAllVideosDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   slug?: IWhereData<string>;
   external?: IWhereData<boolean>;

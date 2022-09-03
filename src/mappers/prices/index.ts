@@ -5,6 +5,7 @@ import {
   cleanValueNumber,
   cleanWhereDataBoolean,
   cleanWhereDataNumber,
+  cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
   IWhere,
@@ -32,7 +33,7 @@ export class PriceMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         currency: prismaMapper.toWhereData(operatorData.currency),
         default: prismaMapper.toWhereData(operatorData.default),
         type: operatorData.type,
@@ -72,7 +73,7 @@ export class PriceMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           currency: cleanWhereDataString(operatorData.currency),
           default: cleanWhereDataBoolean(operatorData.default),
           type: operatorData.type,

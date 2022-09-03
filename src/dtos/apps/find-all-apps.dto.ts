@@ -10,7 +10,7 @@ import { AppStatus } from '@/enums/app-status.enum';
 export interface WhereDataFindAllAppsDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch<string>;
   status?: AppStatus;

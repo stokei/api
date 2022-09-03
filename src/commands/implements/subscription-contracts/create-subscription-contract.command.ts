@@ -8,6 +8,7 @@ export class CreateSubscriptionContractCommand
 {
   parent: string;
   product: string;
+  currency: string;
   totalAmount: number;
   subtotalAmount: number;
   stripeCheckoutSession: string;
@@ -21,8 +22,13 @@ export class CreateSubscriptionContractCommand
 
   constructor(data: CreateSubscriptionContractDTO) {
     this.parent = data.parent;
-    this.type = data.type;
     this.product = data.product;
+    this.currency = data.currency;
+    this.totalAmount = data.totalAmount;
+    this.subtotalAmount = data.subtotalAmount;
+    this.stripeCheckoutSession = data.stripeCheckoutSession;
+    this.stripeSubscription = data.stripeSubscription;
+    this.type = data.type;
     this.automaticRenew = data.automaticRenew;
     this.startAt = data.startAt;
     this.endAt = data.endAt;

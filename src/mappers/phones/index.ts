@@ -4,6 +4,7 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhereDataBoolean,
+  cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
   IWhere,
@@ -31,7 +32,7 @@ export class PhoneMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         countryCode: prismaMapper.toWhereData(operatorData.countryCode),
         areaCode: prismaMapper.toWhereData(operatorData.areaCode),
         number: prismaMapper.toWhereData(operatorData.number),
@@ -70,7 +71,7 @@ export class PhoneMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           countryCode: cleanWhereDataString(operatorData.countryCode),
           areaCode: cleanWhereDataString(operatorData.areaCode),
           number: cleanWhereDataString(operatorData.number),

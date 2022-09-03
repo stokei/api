@@ -8,7 +8,7 @@ import {
 export interface WhereDataFindAllProductsDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
   checkoutVisible?: IWhereData<boolean>;

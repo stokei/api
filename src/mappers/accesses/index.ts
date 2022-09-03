@@ -4,6 +4,7 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhereDataBoolean,
+  cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
   IWhere,
@@ -31,7 +32,7 @@ export class AccessMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         active: prismaMapper.toWhereData(operatorData.active),
         app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
@@ -64,7 +65,7 @@ export class AccessMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           active: cleanWhereDataBoolean(operatorData.active),
           app: cleanWhereDataString(operatorData.app),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),

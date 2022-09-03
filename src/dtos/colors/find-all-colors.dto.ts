@@ -1,4 +1,9 @@
-import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
+import {
+  IBaseFindManyDTO,
+  IOrderBy,
+  IWhereData,
+  IWhereDataSearch
+} from '@stokei/nestjs';
 
 import { ColorType } from '@/enums/color-type.enum';
 import { ThemeMode } from '@/enums/theme-mode.enum';
@@ -6,7 +11,7 @@ import { ThemeMode } from '@/enums/theme-mode.enum';
 export interface WhereDataFindAllColorsDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   themeMode?: ThemeMode;
   type?: ColorType;
   updatedBy?: IWhereData;

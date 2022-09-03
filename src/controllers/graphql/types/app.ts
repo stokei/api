@@ -6,7 +6,7 @@ import { Account } from './account';
 import { Currency } from './currency';
 import { Image } from './image';
 import { Phones } from './phones';
-import { Plan } from './plan';
+import { SubscriptionContract } from './subscription-contract';
 
 @ObjectType()
 export class App {
@@ -28,8 +28,8 @@ export class App {
   @Field(() => Image, { nullable: true })
   avatar?: Image;
 
-  @Field(() => Plan, { nullable: true })
-  plan?: Plan;
+  @Field(() => SubscriptionContract, { nullable: true })
+  currentSubscriptionPlan?: SubscriptionContract;
 
   @Field(() => Phones, { nullable: true })
   phones?: Phones;

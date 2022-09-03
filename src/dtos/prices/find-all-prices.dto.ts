@@ -1,4 +1,9 @@
-import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
+import {
+  IBaseFindManyDTO,
+  IOrderBy,
+  IWhereData,
+  IWhereDataSearch
+} from '@stokei/nestjs';
 
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
@@ -8,7 +13,7 @@ export interface WhereDataFindAllPricesDTO {
   ids?: string[];
   app?: IWhereData;
   currency?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   default?: IWhereData<boolean>;
   type?: PriceType;
   inventoryType?: InventoryType;

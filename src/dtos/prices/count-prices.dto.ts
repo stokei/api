@@ -1,4 +1,4 @@
-import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
+import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
@@ -7,7 +7,7 @@ import { RecurringType } from '@/enums/recurring-type.enum';
 export interface CountPricesWhereDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   currency?: IWhereData;
   default?: IWhereData<boolean>;
   type?: PriceType;

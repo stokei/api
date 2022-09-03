@@ -1,26 +1,26 @@
 export const defaultPlanPrices = {
   applicationFeePercentage: {
-    percentage: 0
+    percentage: 1000
   },
   hasCustomDomain: {
-    unitAmountInCents: 0
+    unitAmountInCents: 100
   },
   hasCustomSite: {
-    unitAmountInCents: 0
+    unitAmountInCents: 100
   },
   quantityCourses: {
-    unitAmountInCents: 0
+    unitAmountInCents: 100
   },
   quantityInstructorPerCourses: {
-    unitAmountInCents: 0
+    unitAmountInCents: 100
   },
   quantityClassroomsPerCourses: {
-    unitAmountInCents: 0
+    unitAmountInCents: 100
   },
   quantityModulesPerClassrooms: {
-    unitAmountInCents: 0
+    unitAmountInCents: 100
   },
   quantityVideosPerModules: {
-    unitAmountInCents: 0
+    unitAmountInCents: 100
   }
 };

@@ -8,7 +8,7 @@ import {
 export interface WhereDataFindAllAddressesDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   default?: IWhereData<boolean>;
   street?: IWhereDataSearch;
   complement?: IWhereDataSearch;

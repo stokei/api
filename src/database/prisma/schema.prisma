@@ -241,7 +241,7 @@ model Product {
   name            String    @db.VarChar(255)
   description     String?
   stripeProduct   String    @map("stripe_product") @db.VarChar(255)
-  checkoutVisible Boolean   @map("checkout_visible")
+  checkoutVisible Boolean   @default(true) @map("checkout_visible")
   avatar          String?   @db.VarChar(255)
   active          Boolean   @default(true)
   activatedAt     DateTime? @default(now()) @map("activated_at")
@@ -299,7 +299,8 @@ model PaymentMethod {
 
 model Plan {
   id                           String    @id @default(cuid())
-  app                          String    @db.VarChar(255)
+  product                      String?   @db.VarChar(255)
+  price                        String?   @db.VarChar(255)
   hasCustomDomain              Boolean   @default(false) @map("has_custom_domain")
   hasCustomSite                Boolean   @default(false) @map("has_custom_site")
   quantityCourses              Int       @map("quantity_courses")
@@ -456,6 +457,7 @@ model SubscriptionContract {
   app                        String                     @db.VarChar(255)
   product                    String                     @db.VarChar(255)
   parent                     String                     @db.VarChar(255)
+  currency                   String                     @db.VarChar(255)
   totalAmount                Int?                       @map("total_amount")
   subtotalAmount             Int?                       @map("subtotal_amount")
   stripeCheckoutSession      String?                    @map("stripe_checkout_session") @db.VarChar(255)

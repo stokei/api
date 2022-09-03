@@ -69,14 +69,16 @@ export class CreateProductCommandHandler
   }
 
   private clearData(command: CreateProductCommand): CreateProductCommand {
-    return cleanObject({
-      createdBy: cleanValue(command?.createdBy),
-      app: cleanValue(command?.app),
-      name: cleanValue(command?.name),
-      description: cleanValue(command?.description),
+    return {
       checkoutVisible: cleanValueBoolean(command?.checkoutVisible),
-      avatar: cleanValue(command?.avatar),
-      parent: cleanValue(command?.parent)
-    });
+      ...cleanObject({
+        createdBy: cleanValue(command?.createdBy),
+        app: cleanValue(command?.app),
+        name: cleanValue(command?.name),
+        description: cleanValue(command?.description),
+        avatar: cleanValue(command?.avatar),
+        parent: cleanValue(command?.parent)
+      })
+    };
   }
 }

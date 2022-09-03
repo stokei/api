@@ -3,6 +3,7 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
   IWhere,
@@ -30,7 +31,7 @@ export class ColorMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
         themeMode: operatorData.themeMode,
         type: operatorData.type,
@@ -64,7 +65,7 @@ export class ColorMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           themeMode: operatorData.themeMode,
           type: operatorData.type,
           app: cleanWhereDataString(operatorData.app),

@@ -8,7 +8,7 @@ import {
 export interface WhereDataFindAllClassroomsDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
   hasAccessToAllModules?: IWhereData<boolean>;

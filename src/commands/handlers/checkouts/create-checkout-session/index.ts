@@ -2,18 +2,21 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import { CreateCheckoutSessionCommand } from '@/commands/implements/checkouts/create-checkout-session.command';
+import { CreateCheckoutSessionPriceDTO } from '@/dtos/checkouts/create-checkout-session.dto';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import {
   AppNotFoundException,
   DataNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PricesNotFoundException
 } from '@/errors';
 import { CheckoutMapper } from '@/mappers/checkouts';
 import { AppModel } from '@/models/app.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { FindAppCurrentPlanService } from '@/services/apps/find-app-current-plan';
+import { FindAppCurrentSubscriptionPlanService } from '@/services/apps/find-app-current-subscription-plan';
 import { FindAllDomainsService } from '@/services/domains/find-all-domains';
+import { FindAllPricesService } from '@/services/prices/find-all-prices';
 import { CreateStripeCheckoutSessionService } from '@/services/stripe/create-stripe-checkout-session';
 import { mountCheckoutCallbackURL } from '@/utils/mount-checkout-callback-url';
 
@@ -26,7 +29,8 @@ export class CreateCheckoutSessionCommandHandler
   constructor(
     private readonly createStripeCheckoutSessionService: CreateStripeCheckoutSessionService,
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findAppCurrentPlanService: FindAppCurrentPlanService,
+    private readonly findAppCurrentSubscriptionPlanService: FindAppCurrentSubscriptionPlanService,
+    private readonly findAllPricesService: FindAllPricesService,
     private readonly findAllDomainsService: FindAllDomainsService,
     private readonly findAccountByIdService: FindAccountByIdService
   ) {}
@@ -60,7 +64,9 @@ export class CreateCheckoutSessionCommandHandler
       throw new AppNotFoundException();
     }
 
-    const appPlan = await this.findAppCurrentPlanService.execute(app.id);
+    const appCurrentSubscriptionPlan =
+      await this.findAppCurrentSubscriptionPlanService.execute(app.id);
+    const appPlan = appCurrentSubscriptionPlan?.plan;
 
     const { stripeCustomer, customerEmail } = await this.getCustomer({
       customer: data.customer,
@@ -85,12 +91,14 @@ export class CreateCheckoutSessionCommandHandler
     const currentAppDomain =
       appDomains?.items?.length > 0 && appDomains?.items[0];
 
+    const stripePrices = await this.getStripePrices(data.prices);
+
     const checkoutSession =
       await this.createStripeCheckoutSessionService.execute({
         app: app.id,
-        applicationFeePercentage: appPlan.applicationFeePercentage,
+        applicationFeePercentage: appPlan?.applicationFeePercentage,
         currency: app.currency,
-        prices: data.prices,
+        prices: stripePrices,
         successUrl: mountCheckoutCallbackURL({
           success: true,
           domain: currentAppDomain?.name
@@ -120,6 +128,34 @@ export class CreateCheckoutSessionCommandHandler
         })
       )
     });
+  }
+
+  private async getStripePrices(
+    checkoutPrices: CreateCheckoutSessionPriceDTO[]
+  ) {
+    const pricesIds = checkoutPrices.map(
+      (checkoutPrice) => checkoutPrice.price
+    );
+    const prices = await this.findAllPricesService.execute({
+      where: {
+        AND: {
+          ids: pricesIds
+        }
+      }
+    });
+    if (!prices?.items?.length) {
+      throw new PricesNotFoundException();
+    }
+    const stripePrices = checkoutPrices.map((checkoutPrice) => {
+      const currentPrice = prices.items.find(
+        (price) => checkoutPrice.price === price.id
+      );
+      return {
+        ...checkoutPrice,
+        price: currentPrice.stripePrice
+      };
+    });
+    return stripePrices;
   }
 
   private async getCustomer(data: {

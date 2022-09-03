@@ -33,7 +33,7 @@ export class VideoMapper {
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
         slug: prismaMapper.toWhereData(operatorData.slug),
         external: prismaMapper.toWhereData(operatorData.external),
@@ -70,7 +70,7 @@ export class VideoMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           slug: cleanWhereDataString(operatorData.slug),
           external: cleanWhereDataBoolean(operatorData.external),
           description: cleanWhereDataSearch(operatorData.description),

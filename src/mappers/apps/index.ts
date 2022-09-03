@@ -32,7 +32,7 @@ export class AppMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
         description: prismaMapper.toWhereDataSearch(operatorData.description),
         status: operatorData.status,
@@ -70,7 +70,7 @@ export class AppMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           name: cleanWhereDataSearch(operatorData.name),
           app: cleanWhereDataString(operatorData.app),
           description: cleanWhereDataString(operatorData.description),

@@ -22,7 +22,4 @@ export class CreatePlanInput {
 
   @Field(() => Int)
   quantityVideosPerModules: number;
-
-  @Field(() => Int)
-  applicationFeePercentage: number;
 }

@@ -1,5 +1,5 @@
 import { IQuery } from '@nestjs/cqrs';
 
-export class FindAppCurrentPlanQuery implements IQuery {
+export class FindAppCurrentSubscriptionPlanQuery implements IQuery {
   constructor(readonly appId: string) {}
 }

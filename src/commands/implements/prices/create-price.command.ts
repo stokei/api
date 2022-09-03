@@ -24,6 +24,7 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
     this.default = data.default;
     this.fromAmount = data.fromAmount;
     this.amount = data.amount;
+    this.currency = data.currency;
     this.type = data.type;
     this.inventoryType = data.inventoryType;
     this.recurringIntervalCount = data.recurringIntervalCount;

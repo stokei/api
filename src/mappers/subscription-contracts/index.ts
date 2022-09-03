@@ -4,6 +4,7 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhereDataBoolean,
+  cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
   IWhere,
@@ -33,7 +34,7 @@ export class SubscriptionContractMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
         product: prismaMapper.toWhereData(operatorData.product),
         status: operatorData.status,
@@ -72,7 +73,7 @@ export class SubscriptionContractMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           product: cleanWhereDataString(operatorData.product),
           status: operatorData.status,
           type: operatorData.type,

@@ -3,6 +3,7 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
   IWhere,
@@ -30,7 +31,7 @@ export class PaymentMethodMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         type: operatorData.type,
         provider: operatorData.provider,
         stripePaymentMethod: prismaMapper.toWhereData(
@@ -71,7 +72,7 @@ export class PaymentMethodMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
+          parent: cleanWhereDataSearch(operatorData.parent),
           type: operatorData.type,
           provider: operatorData.provider,
           stripePaymentMethod: cleanWhereDataString(

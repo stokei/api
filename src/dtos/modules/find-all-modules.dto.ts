@@ -8,7 +8,7 @@ import {
 export interface WhereDataFindAllModulesDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
   updatedBy?: IWhereData;

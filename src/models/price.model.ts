@@ -13,6 +13,7 @@ export interface IPriceModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
+  readonly stripePrice?: string;
   readonly default: boolean;
   readonly fromAmount?: number;
   readonly amount: number;
@@ -33,6 +34,7 @@ export interface IPriceModelData {
 export class PriceModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
+  readonly stripePrice?: string;
   readonly default: boolean;
   readonly fromAmount?: number;
   readonly amount: number;
@@ -62,6 +64,7 @@ export class PriceModel extends AggregateRoot {
     this.amount = data.amount;
     this.currency = data.currency;
     this.type = data.type;
+    this.stripePrice = data.stripePrice;
     this.inventoryType = data.inventoryType;
     this.recurringIntervalCount = data.recurringIntervalCount;
     this.recurringIntervalType = data.recurringIntervalType;

@@ -1,6 +1,6 @@
-import { BadRequestException } from '@nestjs/common';
+import { ForbiddenException } from '@nestjs/common';
 
-export class PlanUnauthorizedException extends BadRequestException {
+export class PlanUnauthorizedException extends ForbiddenException {
   constructor() {
     super('planUnauthorized');
   }

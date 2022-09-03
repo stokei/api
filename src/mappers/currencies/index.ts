@@ -8,8 +8,7 @@ import {
   cleanWhereDataString,
   IOperator,
   IWhere,
-  PrismaMapper,
-  splitServiceId
+  PrismaMapper
 } from '@stokei/nestjs';
 
 import {
@@ -72,7 +71,7 @@ export class CurrencyMapper {
           createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:
             operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
+              ? operatorData.ids.map((id) => cleanValue(id))
               : undefined
         }
       };

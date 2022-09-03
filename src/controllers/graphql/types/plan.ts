@@ -1,6 +1,7 @@
 import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
 import { Account } from './account';
+import { Price } from './price';
 
 @ObjectType()
 export class Plan {
@@ -33,6 +34,9 @@ export class Plan {
 
   @Field(() => Boolean)
   active: boolean;
+
+  @Field(() => Price, { nullable: true })
+  price?: Price;
 
   @Field(() => String, { nullable: true })
   canceledAt?: string;

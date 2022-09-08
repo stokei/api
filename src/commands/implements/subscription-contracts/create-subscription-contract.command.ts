@@ -1,6 +1,7 @@
 import { ICommand } from '@nestjs/cqrs';
 
 import { CreateSubscriptionContractDTO } from '@/dtos/subscription-contracts/create-subscription-contract.dto';
+import { RecurringType } from '@/enums/recurring-type.enum';
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
 
 export class CreateSubscriptionContractCommand
@@ -8,6 +9,8 @@ export class CreateSubscriptionContractCommand
 {
   parent: string;
   product: string;
+  recurringIntervalCount?: number;
+  recurringIntervalType?: RecurringType;
   currency: string;
   totalAmount: number;
   subtotalAmount: number;
@@ -15,14 +18,14 @@ export class CreateSubscriptionContractCommand
   stripeSubscription: string;
   type: SubscriptionContractType;
   automaticRenew?: boolean;
-  startAt?: string;
-  endAt?: string;
   app: string;
   createdBy: string;
 
   constructor(data: CreateSubscriptionContractDTO) {
     this.parent = data.parent;
     this.product = data.product;
+    this.recurringIntervalCount = data.recurringIntervalCount;
+    this.recurringIntervalType = data.recurringIntervalType;
     this.currency = data.currency;
     this.totalAmount = data.totalAmount;
     this.subtotalAmount = data.subtotalAmount;
@@ -30,8 +33,6 @@ export class CreateSubscriptionContractCommand
     this.stripeSubscription = data.stripeSubscription;
     this.type = data.type;
     this.automaticRenew = data.automaticRenew;
-    this.startAt = data.startAt;
-    this.endAt = data.endAt;
     this.app = data.app;
     this.createdBy = data.createdBy;
   }

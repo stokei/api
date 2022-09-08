@@ -10,6 +10,7 @@ export interface IPlanModelData {
   readonly _id?: string;
   readonly product: string;
   readonly price: string;
+  readonly name: string;
   readonly hasCustomDomain: boolean;
   readonly hasCustomSite: boolean;
   readonly quantityCourses: number;
@@ -30,6 +31,7 @@ export class PlanModel extends AggregateRoot {
   readonly id: string;
   readonly product: string;
   readonly price: string;
+  readonly name: string;
   readonly hasCustomDomain: boolean;
   readonly hasCustomSite: boolean;
   readonly quantityCourses: number;
@@ -52,6 +54,7 @@ export class PlanModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.PLANS,
       id: data._id?.toString() || data.id
     });
+    this.name = data.name;
     this.product = data.product;
     this.price = data.price;
     this.hasCustomDomain = data.hasCustomDomain;

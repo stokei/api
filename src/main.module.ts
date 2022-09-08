@@ -57,7 +57,7 @@ export class MainModule implements NestModule {
     consumer
       .apply(RawBodyMiddleware)
       .forRoutes({
-        path: REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
+        path: '/v1/' + REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
         method: RequestMethod.POST
       })
       .apply(JsonBodyMiddleware)

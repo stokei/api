@@ -50,13 +50,6 @@ enum PaymentMethodType {
   BOLETO
 }
 
-enum PlanType {
-  FREE
-  BASIC
-  ADVANCED
-  CUSTOM
-}
-
 enum RecurringType {
   DAY
   WEEK
@@ -299,6 +292,7 @@ model PaymentMethod {
 
 model Plan {
   id                           String    @id @default(cuid())
+  name                         String    @db.VarChar(255)
   product                      String?   @db.VarChar(255)
   price                        String?   @db.VarChar(255)
   hasCustomDomain              Boolean   @default(false) @map("has_custom_domain")

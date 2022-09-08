@@ -26,6 +26,7 @@ import { StripeServices } from './stripe';
 import { SubscriptionContractServices } from './subscription-contracts';
 import { VideoAuthorServices } from './video-authors';
 import { VideoServices } from './videos';
+import { WebhookServices } from './webhooks';
 
 export const Services = [
   ...AccountServices,
@@ -55,5 +56,6 @@ export const Services = [
   ...PhoneServices,
   ...StripeServices,
   ...CheckoutServices,
-  ...CustomerPortalSessionServices
+  ...CustomerPortalSessionServices,
+  ...WebhookServices
 ];

@@ -1,6 +1,6 @@
 import { CreateAppService } from './create-app';
 import { CreateAppStripeAccountService } from './create-app-stripe-account';
-import { CreateAppStripeAccountLoginLinkService } from './create-app-stripe-account-login-link';
+import { CreateAppStripeAccountDashboardLinkService } from './create-app-stripe-account-dashboard-link';
 import { CreateAppStripeAccountOnboardingLinkService } from './create-app-stripe-account-onboarding-link';
 import { CreateAppStripeAccountUpdateLinkService } from './create-app-stripe-account-update-link';
 import { FindAllAppsService } from './find-all-apps';
@@ -13,7 +13,7 @@ export const AppServices = [
   CreateAppService,
   UpdateAppService,
   CreateAppStripeAccountService,
-  CreateAppStripeAccountLoginLinkService,
+  CreateAppStripeAccountDashboardLinkService,
   CreateAppStripeAccountOnboardingLinkService,
   CreateAppStripeAccountUpdateLinkService,
   FindAppCurrentDomainService,

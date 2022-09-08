@@ -92,6 +92,9 @@ export class CreateCheckoutSessionCommandHandler
       appDomains?.items?.length > 0 && appDomains?.items[0];
 
     const stripePrices = await this.getStripePrices(data.prices);
+    if (!stripePrices) {
+      throw new PricesNotFoundException();
+    }
 
     const checkoutSession =
       await this.createStripeCheckoutSessionService.execute({
@@ -107,6 +110,7 @@ export class CreateCheckoutSessionCommandHandler
           success: false,
           domain: currentAppDomain?.name
         }),
+        customerReference: data.customer,
         customer: stripeCustomer,
         customerEmail,
         stripeAccount: app.stripeAccount
@@ -146,15 +150,20 @@ export class CreateCheckoutSessionCommandHandler
     if (!prices?.items?.length) {
       throw new PricesNotFoundException();
     }
-    const stripePrices = checkoutPrices.map((checkoutPrice) => {
-      const currentPrice = prices.items.find(
-        (price) => checkoutPrice.price === price.id
-      );
-      return {
-        ...checkoutPrice,
-        price: currentPrice.stripePrice
-      };
-    });
+    const stripePrices = checkoutPrices
+      .map((checkoutPrice) => {
+        const currentPrice = prices.items.find(
+          (price) => checkoutPrice.price === price.id
+        );
+        if (!currentPrice) {
+          return null;
+        }
+        return {
+          ...checkoutPrice,
+          price: currentPrice.stripePrice
+        };
+      })
+      .filter(Boolean);
     return stripePrices;
   }
 

@@ -20,9 +20,6 @@ CREATE TYPE "PaymentMethodProvider" AS ENUM ('STRIPE');
 CREATE TYPE "PaymentMethodType" AS ENUM ('CREDIT_CARD', 'BOLETO');
 
 -- CreateEnum
-CREATE TYPE "PlanType" AS ENUM ('FREE', 'BASIC', 'ADVANCED', 'CUSTOM');
-
--- CreateEnum
 CREATE TYPE "RecurringType" AS ENUM ('DAY', 'WEEK', 'MONTH', 'YEAR');
 
 -- CreateEnum
@@ -192,7 +189,7 @@ CREATE TABLE "products" (
     "name" VARCHAR(255) NOT NULL,
     "description" TEXT,
     "stripe_product" VARCHAR(255) NOT NULL,
-    "checkout_visible" BOOLEAN NOT NULL,
+    "checkout_visible" BOOLEAN NOT NULL DEFAULT true,
     "avatar" VARCHAR(255),
     "active" BOOLEAN NOT NULL DEFAULT true,
     "activated_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
@@ -253,7 +250,9 @@ CREATE TABLE "payments_methods" (
 -- CreateTable
 CREATE TABLE "plans" (
     "id" TEXT NOT NULL,
-    "app" VARCHAR(255) NOT NULL,
+    "name" VARCHAR(255) NOT NULL,
+    "product" VARCHAR(255),
+    "price" VARCHAR(255),
     "has_custom_domain" BOOLEAN NOT NULL DEFAULT false,
     "has_custom_site" BOOLEAN NOT NULL DEFAULT false,
     "quantity_courses" INTEGER NOT NULL,
@@ -420,6 +419,7 @@ CREATE TABLE "subscription_contracts" (
     "app" VARCHAR(255) NOT NULL,
     "product" VARCHAR(255) NOT NULL,
     "parent" VARCHAR(255) NOT NULL,
+    "currency" VARCHAR(255) NOT NULL,
     "total_amount" INTEGER,
     "subtotal_amount" INTEGER,
     "stripe_checkout_session" VARCHAR(255),

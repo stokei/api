@@ -14,7 +14,7 @@ import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
 import { STRIPE_WEBHOOK_SECRET } from '@/environments';
 import { StripeSignatureNotFoundException } from '@/errors/stripe-signature-not-found';
-import { CreateVideoService } from '@/services/videos/create-video';
+import { WebhookStripeCheckoutSessionCompletedService } from '@/services/webhooks/stripe-checkout-session-completed';
 
 @ApiTags(REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE)
 @Controller({
@@ -22,7 +22,9 @@ import { CreateVideoService } from '@/services/videos/create-video';
   version: REST_VERSIONS.V1
 })
 export class WebhookStripeController {
-  constructor(private readonly createVideoService: CreateVideoService) {}
+  constructor(
+    private readonly webhookStripeCheckoutSessionCompletedService: WebhookStripeCheckoutSessionCompletedService
+  ) {}
 
   @Post()
   async webhook(
@@ -43,43 +45,46 @@ export class WebhookStripeController {
       }
     }
 
-    const eventObject: any = event.data.object;
-    const eventType = event.type;
-    const connectAccount = event.account;
-
-    Logger.log(
-      { signature, eventType, connectAccount },
-      WebhookStripeController.name
-    );
-    Logger.log(eventObject, WebhookStripeController.name);
+    const eventObject: any = event?.data.object;
+    const eventType = event?.type;
+    const connectAccount = event?.account;
 
     const handlers = {
-      'checkout.session.completed': () => {
-        // Payment is successful and the subscription is created.
-        // You should provision the subscription and save the customer ID to your database.
-        const data: Stripe.Checkout.Session = eventObject;
+      'checkout.session.completed': async () => {
+        const checkoutSession: Stripe.Checkout.Session = eventObject;
         Logger.log(
-          'Payment is successful and the subscription is created -> ' + data.id,
+          'Payment is successful -> ' + checkoutSession.id,
           WebhookStripeController.name
         );
+
+        return await this.webhookStripeCheckoutSessionCompletedService.execute(
+          checkoutSession.id,
+          connectAccount
+        );
       },
-      'invoice.paid': () => {
+      'customer.subscription.updated': async () => {
+        return null;
+      },
+      'customer.subscription.deleted': async () => {
+        return null;
+      },
+      'invoice.paid': async () => {
         // Continue to provision the subscription as payments continue to be made.
         // Store the status in your database and check when a user accesses your service.
         // This approach helps you avoid hitting rate limits.
         const data: Stripe.Invoice = eventObject;
         Logger.log(
-          'Payment is successful and the subscription is created -> ' + data.id,
+          'Invoice payment is successful -> ' + data.id,
           WebhookStripeController.name
         );
       },
-      'invoice.payment_failed': () => {
+      'invoice.payment_failed': async () => {
         // The payment failed or the customer does not have a valid payment method.
         // The subscription becomes past_due. Notify your customer and send them to the
         // customer portal to update their payment information.
         const data: Stripe.Invoice = eventObject;
-        Logger.log(
-          'Payment is successful and the subscription is created -> ' + data.id,
+        Logger.warn(
+          'Invoice payment is failed -> ' + data.id,
           WebhookStripeController.name
         );
       }
@@ -87,7 +92,7 @@ export class WebhookStripeController {
 
     const bootstrapWebhook = handlers[eventType];
     if (bootstrapWebhook) {
-      bootstrapWebhook();
+      await bootstrapWebhook();
     }
     return { status: HttpStatus.OK };
   }

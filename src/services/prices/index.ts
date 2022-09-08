@@ -2,6 +2,7 @@ import { CalculatePricesInformationService } from './calculate-prices-informatio
 import { CreatePriceService } from './create-price';
 import { FindAllPricesService } from './find-all-prices';
 import { FindPriceByIdService } from './find-price-by-id';
+import { FindPricesByStripePriceIdsService } from './find-prices-by-stripe-price-ids';
 import { RemovePriceService } from './remove-price';
 import { UpdatePriceService } from './update-price';
 
@@ -11,5 +12,6 @@ export const PriceServices = [
   RemovePriceService,
   UpdatePriceService,
   FindPriceByIdService,
-  FindAllPricesService
+  FindAllPricesService,
+  FindPricesByStripePriceIdsService
 ];

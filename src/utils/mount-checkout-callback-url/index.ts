@@ -17,5 +17,5 @@ export const mountCheckoutCallbackURL = ({
   if (success) {
     url.searchParams.set('checkoutSessionId', '{CHECKOUT_SESSION_ID}');
   }
-  return url.toString();
+  return decodeURI(url.toString());
 };

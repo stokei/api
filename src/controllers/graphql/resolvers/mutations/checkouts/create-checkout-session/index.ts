@@ -21,8 +21,13 @@ export class CreateCheckoutSessionResolver {
     @CurrentApp('id') currentAppCurrentAppId: string,
     @Args('input') data: CreateCheckoutSessionInput
   ) {
+    const prices = data?.prices?.map((currentPrice) => ({
+      ...currentPrice,
+      quantity: 1
+    }));
     const response = await this.createCheckoutSessionService.execute({
       ...data,
+      prices,
       customer: data.app || currentAccountId,
       app: currentAppCurrentAppId,
       createdBy: currentAccountId

@@ -8,6 +8,9 @@ export class Plan {
   @Field(() => ID)
   id: string;
 
+  @Field(() => String)
+  name: string;
+
   @Field(() => Boolean)
   hasCustomDomain: boolean;
 

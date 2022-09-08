@@ -21,7 +21,7 @@ export class CreateStripeCheckoutSessionService
         cancel_url: data.cancelUrl,
         success_url: data.successUrl,
         currency: data.currency,
-        client_reference_id: data.app,
+        client_reference_id: data.customerReference,
         customer: data.customer,
         mode: 'subscription',
         line_items: data.prices.map((currentPrice) => ({

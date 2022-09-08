@@ -87,6 +87,7 @@ export class CreatePlanCommandHandler
 
     const planCreated = await this.createPlanRepository.execute({
       ...createPlanData,
+      name: `Plan (${app.name})`,
       applicationFeePercentage
     });
     if (!planCreated) {
@@ -96,7 +97,7 @@ export class CreatePlanCommandHandler
     const product = await this.createProductService.execute({
       app: app.id,
       checkoutVisible: false,
-      name: `Plan (${app.name})`,
+      name: planCreated.name,
       parent: planCreated.id,
       createdBy: data.createdBy
     });

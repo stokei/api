@@ -5,6 +5,7 @@ import {
   cleanValueNumber,
   cleanWhereDataBoolean,
   cleanWhereDataNumber,
+  cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
   IWhere,
@@ -33,6 +34,7 @@ export class PlanMapper {
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
         active: prismaMapper.toWhereData(operatorData.active),
+        name: prismaMapper.toWhereData(operatorData.name),
         hasCustomDomain: prismaMapper.toWhereData(operatorData.hasCustomDomain),
         hasCustomSite: prismaMapper.toWhereData(operatorData.hasCustomSite),
         quantityCourses: prismaMapper.toWhereData(operatorData.quantityCourses),
@@ -51,7 +53,7 @@ export class PlanMapper {
         applicationFeePercentage: prismaMapper.toWhereData(
           operatorData.applicationFeePercentage
         ),
-        product: prismaMapper.toWhereData(operatorData.product),
+        product: prismaMapper.toWhereDataSearch(operatorData.product),
         price: prismaMapper.toWhereData(operatorData.price),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
@@ -84,6 +86,7 @@ export class PlanMapper {
       return {
         [operator]: {
           active: cleanWhereDataBoolean(operatorData.active),
+          name: cleanWhereDataString(operatorData.name),
           hasCustomDomain: cleanWhereDataBoolean(operatorData.hasCustomDomain),
           hasCustomSite: cleanWhereDataBoolean(operatorData.hasCustomSite),
           quantityCourses: cleanWhereDataNumber(operatorData.quantityCourses),
@@ -102,7 +105,7 @@ export class PlanMapper {
           applicationFeePercentage: cleanWhereDataNumber(
             operatorData.applicationFeePercentage
           ),
-          product: cleanWhereDataString(operatorData.product),
+          product: cleanWhereDataSearch(operatorData.product),
           price: cleanWhereDataString(operatorData.price),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -126,6 +129,7 @@ export class PlanMapper {
       }),
       orderBy: cleanObject({
         active: cleanSortValue(query.orderBy?.active),
+        name: cleanSortValue(query.orderBy?.name),
         hasCustomDomain: cleanSortValue(query.orderBy?.hasCustomDomain),
         hasCustomSite: cleanSortValue(query.orderBy?.hasCustomSite),
         quantityCourses: cleanSortValue(query.orderBy?.quantityCourses),

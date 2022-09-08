@@ -42,10 +42,10 @@ export class FindAppCurrentSubscriptionPlanQueryHandler
       await this.findAllSubscriptionContractsService.execute({
         where: {
           AND: {
-            app: {
+            parent: {
               equals: app.id
             },
-            parent: {
+            product: {
               search: ServerStokeiApiIdPrefix.PLANS
             },
             active: {
@@ -67,7 +67,7 @@ export class FindAppCurrentSubscriptionPlanQueryHandler
       return null;
     }
     const plan = await this.findPlanByIdService.execute(
-      currentSubscriptionPlan.parent
+      currentSubscriptionPlan.product
     );
     return {
       subscription: currentSubscriptionPlan,

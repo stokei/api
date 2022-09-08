@@ -4,6 +4,7 @@ export interface WhereDataFindAllPlansDTO {
   ids?: string[];
   product?: IWhereData;
   price?: IWhereData;
+  name?: IWhereData;
   active?: IWhereData<boolean>;
   hasCustomDomain?: IWhereData<boolean>;
   hasCustomSite?: IWhereData<boolean>;
@@ -19,6 +20,7 @@ export interface WhereDataFindAllPlansDTO {
 export type IKeysWhereDataFindAllPlansDTO = keyof WhereDataFindAllPlansDTO;
 
 export interface OrderByDataFindAllPlansDTO {
+  name?: IOrderBy;
   active?: IOrderBy;
   hasCustomDomain?: IOrderBy;
   hasCustomSite?: IOrderBy;

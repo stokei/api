@@ -20,6 +20,9 @@ class WhereDataFindAllPlansDataInput implements WhereDataFindAllPlansDTO {
   @Field(() => WhereDataStringInput, { nullable: true })
   app?: WhereDataStringInput;
 
+  @Field(() => WhereDataStringInput, { nullable: true })
+  name?: WhereDataStringInput;
+
   @Field(() => WhereDataBooleanInput, { nullable: true })
   active?: WhereDataBooleanInput;
 
@@ -58,6 +61,9 @@ class WhereDataFindAllPlansDataInput implements WhereDataFindAllPlansDTO {
 export class OrderByDataFindAllPlansInput
   implements OrderByDataFindAllPlansDTO
 {
+  @Field(() => OrderBy, { nullable: true })
+  name?: OrderBy;
+
   @Field(() => OrderBy, { nullable: true })
   active?: OrderBy;
 

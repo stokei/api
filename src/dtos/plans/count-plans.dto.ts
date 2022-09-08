@@ -4,6 +4,7 @@ export interface CountPlansWhereDTO {
   ids?: string[];
   product?: IWhereData;
   price?: IWhereData;
+  name?: IWhereData;
   active?: IWhereData<boolean>;
   hasCustomDomain?: IWhereData<boolean>;
   hasCustomSite?: IWhereData<boolean>;

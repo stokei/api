@@ -36,9 +36,6 @@ export class CreatePaymentMethodCommandHandler
     const paymentMethodCreated =
       await this.createPaymentMethodRepository.execute({
         ...data,
-        type: PaymentMethodType.CREDIT_CARD,
-        provider: PaymentMethodProvider.STRIPE,
-        stripePaymentMethod: null,
         lastFourCardNumber: null,
         cardBrand: null
       });
@@ -61,7 +58,7 @@ export class CreatePaymentMethodCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
-      creditCardHash: cleanValue(command?.creditCardHash),
+      stripePaymentMethod: cleanValue(command?.stripePaymentMethod),
       parent: cleanValue(command?.parent)
     });
   }

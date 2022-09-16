@@ -1,3 +1,4 @@
+import { SubscriptionContractStatus } from '@prisma/client';
 import {
   cleanObject,
   cleanSortValue,
@@ -11,6 +12,7 @@ import {
   PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
+import Stripe from 'stripe';
 
 import {
   FindAllSubscriptionContractsDTO,
@@ -37,6 +39,8 @@ export class SubscriptionContractMapper {
         parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
         product: prismaMapper.toWhereData(operatorData.product),
+        invoiceProduct: prismaMapper.toWhereData(operatorData.invoiceProduct),
+        invoicePrice: prismaMapper.toWhereData(operatorData.invoicePrice),
         status: operatorData.status,
         type: operatorData.type,
         active: prismaMapper.toWhereData(operatorData.active),
@@ -75,6 +79,8 @@ export class SubscriptionContractMapper {
         [operator]: {
           parent: cleanWhereDataSearch(operatorData.parent),
           product: cleanWhereDataString(operatorData.product),
+          invoiceProduct: cleanWhereDataString(operatorData.invoiceProduct),
+          invoicePrice: cleanWhereDataString(operatorData.invoicePrice),
           status: operatorData.status,
           type: operatorData.type,
           active: cleanWhereDataBoolean(operatorData.active),
@@ -125,5 +131,18 @@ export class SubscriptionContractMapper {
     return subscriptionContracts?.length > 0
       ? subscriptionContracts.map(this.toModel).filter(Boolean)
       : [];
+  }
+  fromStripeStatusToStatus(status: Stripe.Subscription.Status) {
+    switch (status) {
+      case 'active':
+        return SubscriptionContractStatus.ACTIVE;
+      case 'canceled':
+      case 'incomplete_expired':
+        return SubscriptionContractStatus.FINISHED;
+      case 'incomplete':
+      case 'unpaid':
+      default:
+        return SubscriptionContractStatus.PENDING;
+    }
   }
 }

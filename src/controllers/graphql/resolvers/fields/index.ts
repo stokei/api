@@ -13,6 +13,7 @@ import { CoursesFieldsResolvers } from './courses';
 import { CurrenciesFieldsResolvers } from './currencies';
 import { DomainsFieldsResolvers } from './domains';
 import { ImagesFieldsResolvers } from './images';
+import { InvoicesFieldsResolvers } from './invoices';
 import { LanguagesFieldsResolvers } from './languages';
 import { ModulesFieldsResolvers } from './modules';
 import { PaymentMethodsFieldsResolvers } from './payment-methods';
@@ -49,5 +50,6 @@ export const FieldsResolvers = [
   ...ClassroomInstructorsFieldsResolvers,
   ...ClassroomModulesFieldsResolvers,
   ...AddressesFieldsResolvers,
-  ...PhonesFieldsResolvers
+  ...PhonesFieldsResolvers,
+  ...InvoicesFieldsResolvers
 ];

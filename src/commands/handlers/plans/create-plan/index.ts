@@ -51,6 +51,9 @@ export class CreatePlanCommandHandler
     if (!data?.app) {
       throw new ParamNotFoundException<CreatePlanCommandKeys>('app');
     }
+    if (!data?.createdBy) {
+      throw new ParamNotFoundException<CreatePlanCommandKeys>('createdBy');
+    }
     if (data.quantityCourses < 0) {
       data.quantityCourses = 0;
     }
@@ -87,7 +90,7 @@ export class CreatePlanCommandHandler
 
     const planCreated = await this.createPlanRepository.execute({
       ...createPlanData,
-      name: `Plan (${app.name})`,
+      name: `${app.name} Premium`,
       applicationFeePercentage
     });
     if (!planCreated) {

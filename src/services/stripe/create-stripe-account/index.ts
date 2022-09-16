@@ -16,11 +16,17 @@ export class CreateStripeAccountService
   async execute(
     data: CreateStripeAccountDTO
   ): Promise<Stripe.Response<Stripe.Account>> {
+    const currentApp = data.app;
     const account = await stripeClient.accounts.create({
       type: 'express',
-      email: data.appEmail,
+      email: currentApp.email,
+      default_currency: currentApp.currency,
+      business_profile: {
+        name: currentApp.name
+      },
       metadata: {
-        app: data.app
+        appParent: currentApp.parent,
+        app: currentApp.id
       }
     });
     return account;

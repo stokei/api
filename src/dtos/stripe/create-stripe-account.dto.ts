@@ -1,4 +1,5 @@
+import { AppModel } from '@/models/app.model';
+
 export interface CreateStripeAccountDTO {
-  appEmail: string;
-  app: string;
+  app: AppModel;
 }

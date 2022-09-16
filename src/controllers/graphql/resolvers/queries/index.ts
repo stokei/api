@@ -13,6 +13,7 @@ import { CoursesQueries } from './courses';
 import { CurrenciesQueries } from './currencies';
 import { DomainsQueries } from './domains';
 import { ImagesQueries } from './images';
+import { InvoicesQueries } from './invoices';
 import { LanguagesQueries } from './languages';
 import { ModulesQueries } from './modules';
 import { PaymentMethodsQueries } from './payment-methods';
@@ -49,5 +50,6 @@ export const Queries = [
   ...ClassroomInstructorsQueries,
   ...ClassroomModulesQueries,
   ...AddressesQueries,
-  ...PhonesQueries
+  ...PhonesQueries,
+  ...InvoicesQueries
 ];

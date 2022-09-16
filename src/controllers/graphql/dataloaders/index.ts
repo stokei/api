@@ -13,6 +13,7 @@ import { CoursesLoader } from './courses.loader';
 import { CurrenciesLoader } from './currencies.loader';
 import { DomainsLoader } from './domains.loader';
 import { ImagesLoader } from './images.loader';
+import { InvoicesLoader } from './invoices.loader';
 import { LanguagesLoader } from './languages.loader';
 import { ModulesLoader } from './modules.loader';
 import { PaymentMethodsLoader } from './payment-methods.loader';
@@ -49,5 +50,6 @@ export const Loaders = [
   ClassroomInstructorsLoader,
   ClassroomModulesLoader,
   AddressesLoader,
-  PhonesLoader
+  PhonesLoader,
+  InvoicesLoader
 ];

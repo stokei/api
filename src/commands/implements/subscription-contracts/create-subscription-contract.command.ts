@@ -9,12 +9,10 @@ export class CreateSubscriptionContractCommand
 {
   parent: string;
   product: string;
+  invoiceProduct: string;
+  invoicePrice: string;
   recurringIntervalCount?: number;
   recurringIntervalType?: RecurringType;
-  currency: string;
-  totalAmount: number;
-  subtotalAmount: number;
-  stripeCheckoutSession: string;
   stripeSubscription: string;
   type: SubscriptionContractType;
   automaticRenew?: boolean;
@@ -24,12 +22,10 @@ export class CreateSubscriptionContractCommand
   constructor(data: CreateSubscriptionContractDTO) {
     this.parent = data.parent;
     this.product = data.product;
+    this.invoiceProduct = data.invoiceProduct;
+    this.invoicePrice = data.invoicePrice;
     this.recurringIntervalCount = data.recurringIntervalCount;
     this.recurringIntervalType = data.recurringIntervalType;
-    this.currency = data.currency;
-    this.totalAmount = data.totalAmount;
-    this.subtotalAmount = data.subtotalAmount;
-    this.stripeCheckoutSession = data.stripeCheckoutSession;
     this.stripeSubscription = data.stripeSubscription;
     this.type = data.type;
     this.automaticRenew = data.automaticRenew;

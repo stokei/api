@@ -3,11 +3,9 @@ import { SubscriptionContractStatus } from '@/enums/subscription-contract-status
 import { CreateSubscriptionContractDTO } from './create-subscription-contract.dto';
 
 export interface CreateSubscriptionContractRepositoryDTO
-  extends Omit<
-    CreateSubscriptionContractDTO,
-    'recurringIntervalCount' | 'recurringIntervalType'
-  > {
+  extends CreateSubscriptionContractDTO {
   status: SubscriptionContractStatus;
+  active: boolean;
   startAt?: string;
   endAt?: string;
 }

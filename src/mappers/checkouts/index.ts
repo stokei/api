@@ -1,12 +1,10 @@
-import Stripe from 'stripe';
-
-import { CheckoutModel } from '@/models/checkout.model';
+import { CheckoutModel, ICheckoutModelData } from '@/models/checkout.model';
 
 export class CheckoutMapper {
-  toModel(checkout: Stripe.Checkout.Session) {
+  toModel(checkout: ICheckoutModelData) {
     return checkout && new CheckoutModel(checkout);
   }
-  toModels(checkouts: Stripe.Checkout.Session[]) {
+  toModels(checkouts: ICheckoutModelData[]) {
     return checkouts?.length > 0
       ? checkouts.map(this.toModel).filter(Boolean)
       : [];

@@ -13,6 +13,7 @@ import { CoursesRepositories } from './courses';
 import { CurrenciesRepositories } from './currencies';
 import { DomainsRepositories } from './domains';
 import { ImagesRepositories } from './images';
+import { InvoicesRepositories } from './invoices';
 import { LanguagesRepositories } from './languages';
 import { ModulesRepositories } from './modules';
 import { PaymentMethodsRepositories } from './payment-methods';
@@ -49,5 +50,6 @@ export const Repositories = [
   ...ClassroomInstructorsRepositories,
   ...ClassroomModulesRepositories,
   ...AddressesRepositories,
-  ...PhonesRepositories
+  ...PhonesRepositories,
+  ...InvoicesRepositories
 ];

@@ -78,11 +78,17 @@ enum AppStatus {
   BLOCKED
 }
 
+enum InvoiceStatus {
+  PAID
+  PENDING
+  PAYMENT_ERROR
+  CANCELED
+}
+
 enum SubscriptionContractStatus {
   ACTIVE
-  PAYMENT_ERROR
+  PENDING
   FINISHED
-  CANCELED
 }
 
 enum PhoneStatus {
@@ -271,21 +277,16 @@ model Price {
 }
 
 model PaymentMethod {
-  id                  String                @id @default(cuid())
-  app                 String                @db.VarChar(255)
-  parent              String                @db.VarChar(255)
-  type                PaymentMethodType
-  provider            PaymentMethodProvider
-  stripePaymentMethod String                @map("stripe_payment_method") @db.VarChar(255)
-  lastFourCardNumber  String?               @map("last_four_card_number") @db.VarChar(4)
-  cardBrand           String?               @map("card_brand") @db.VarChar(50)
-  active              Boolean               @default(true)
-  activatedAt         DateTime?             @default(now()) @map("activated_at")
-  deactivatedAt       DateTime?             @map("deactivated_at")
-  updatedAt           DateTime?             @updatedAt @map("updated_at")
-  createdAt           DateTime?             @default(now()) @map("created_at")
-  updatedBy           String?               @map("updated_by") @db.VarChar(255)
-  createdBy           String?               @map("created_by") @db.VarChar(255)
+  id                  String    @id @default(cuid())
+  app                 String    @db.VarChar(255)
+  parent              String    @db.VarChar(255)
+  stripePaymentMethod String    @map("stripe_payment_method") @db.VarChar(255)
+  lastFourCardNumber  String?   @map("last_four_card_number") @db.VarChar(4)
+  cardBrand           String?   @map("card_brand") @db.VarChar(50)
+  updatedAt           DateTime? @updatedAt @map("updated_at")
+  createdAt           DateTime? @default(now()) @map("created_at")
+  updatedBy           String?   @map("updated_by") @db.VarChar(255)
+  createdBy           String?   @map("created_by") @db.VarChar(255)
 
   @@map("payments_methods")
 }
@@ -446,29 +447,50 @@ model ClassroomStudent {
   @@map("classrooms_students")
 }
 
+model Invoice {
+  id             String        @id @default(cuid())
+  app            String        @db.VarChar(255)
+  customer       String        @db.VarChar(255)
+  subscription   String        @db.VarChar(255)
+  product        String        @db.VarChar(255)
+  price          String        @db.VarChar(255)
+  currency       String        @db.VarChar(255)
+  status         InvoiceStatus
+  totalAmount    Int           @map("total_amount")
+  subtotalAmount Int           @map("subtotal_amount")
+  active         Boolean       @default(false)
+  paidAt         DateTime?     @map("paid_at")
+  canceledAt     DateTime?     @map("canceled_at")
+  paymentErrorAt DateTime?     @map("payment_error_at")
+  stripeInvoice  String?       @map("stripe_invoice")
+  updatedAt      DateTime?     @updatedAt @map("updated_at")
+  createdAt      DateTime?     @default(now()) @map("created_at")
+  updatedBy      String?       @map("updated_by") @db.VarChar(255)
+  createdBy      String?
+}
+
 model SubscriptionContract {
-  id                         String                     @id @default(cuid())
-  app                        String                     @db.VarChar(255)
-  product                    String                     @db.VarChar(255)
-  parent                     String                     @db.VarChar(255)
-  currency                   String                     @db.VarChar(255)
-  totalAmount                Int?                       @map("total_amount")
-  subtotalAmount             Int?                       @map("subtotal_amount")
-  stripeCheckoutSession      String?                    @map("stripe_checkout_session") @db.VarChar(255)
-  stripeSubscription         String?                    @map("stripe_subscription") @db.VarChar(255)
-  defaultStripePaymentMethod String?                    @map("default_stripe_payment_method") @db.VarChar(255)
-  status                     SubscriptionContractStatus
-  type                       SubscriptionContractType
-  startAt                    DateTime?                  @map("start_at")
-  endAt                      DateTime?                  @map("end_at")
-  paymentErrorAt             DateTime?                  @map("payment_error_at")
-  canceledAt                 DateTime?                  @map("canceled_at")
-  automaticRenew             Boolean                    @default(false)
-  active                     Boolean                    @default(true)
-  updatedAt                  DateTime?                  @updatedAt @map("updated_at")
-  createdAt                  DateTime?                  @default(now()) @map("created_at")
-  updatedBy                  String?                    @map("updated_by") @db.VarChar(255)
-  createdBy                  String?                    @map("created_by") @db.VarChar(255)
+  id                     String                     @id @default(cuid())
+  app                    String                     @db.VarChar(255)
+  product                String                     @db.VarChar(255)
+  parent                 String                     @db.VarChar(255)
+  invoiceProduct         String                     @map("invoice_product") @db.VarChar(255)
+  invoicePrice           String                     @map("invoice_price") @db.VarChar(255)
+  paymentMethod          String                     @map("payment_method") @db.VarChar(255)
+  stripeSubscription     String?                    @map("stripe_subscription") @db.VarChar(255)
+  recurringIntervalCount Int?                       @map("recurring_interval_count")
+  recurringIntervalType  RecurringType?             @map("recurring_interval_type")
+  status                 SubscriptionContractStatus
+  type                   SubscriptionContractType
+  automaticRenew         Boolean                    @default(false)
+  active                 Boolean                    @default(false)
+  startAt                DateTime?                  @map("start_at")
+  endAt                  DateTime?                  @map("end_at")
+  canceledAt             DateTime?                  @map("canceled_at")
+  updatedAt              DateTime?                  @updatedAt @map("updated_at")
+  createdAt              DateTime?                  @default(now()) @map("created_at")
+  updatedBy              String?                    @map("updated_by") @db.VarChar(255)
+  createdBy              String?                    @map("created_by") @db.VarChar(255)
 
   @@map("subscription_contracts")
 }

@@ -4,12 +4,10 @@ import { SubscriptionContractType } from '@/enums/subscription-contract-type.enu
 export interface CreateSubscriptionContractDTO {
   parent: string;
   product: string;
+  invoiceProduct: string;
+  invoicePrice: string;
   recurringIntervalCount?: number;
   recurringIntervalType?: RecurringType;
-  currency: string;
-  totalAmount: number;
-  subtotalAmount: number;
-  stripeCheckoutSession: string;
   stripeSubscription: string;
   type: SubscriptionContractType;
   automaticRenew?: boolean;

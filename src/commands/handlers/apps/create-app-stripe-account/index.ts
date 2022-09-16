@@ -45,8 +45,7 @@ export class CreateAppStripeAccountCommandHandler
     }
 
     const stripeAccount = await this.createStripeAccountService.execute({
-      appEmail: app.email,
-      app: app.id
+      app
     });
     if (!stripeAccount) {
       throw new StripeAccountNotFoundException();

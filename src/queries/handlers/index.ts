@@ -13,6 +13,7 @@ import { CourseQueriesHandlers } from './courses';
 import { CurrencyQueriesHandlers } from './currencies';
 import { DomainQueriesHandlers } from './domains';
 import { ImageQueriesHandlers } from './images';
+import { InvoiceQueriesHandlers } from './invoices';
 import { LanguageQueriesHandlers } from './languages';
 import { ModuleQueriesHandlers } from './modules';
 import { PaymentMethodQueriesHandlers } from './payment-methods';
@@ -49,5 +50,6 @@ export const QueriesHandlers = [
   ...ClassroomInstructorQueriesHandlers,
   ...ClassroomModuleQueriesHandlers,
   ...AddressQueriesHandlers,
-  ...PhoneQueriesHandlers
+  ...PhoneQueriesHandlers,
+  ...InvoiceQueriesHandlers
 ];

@@ -1,3 +1,7 @@
-import { WebhookStripeCheckoutSessionCompletedService } from './stripe-checkout-session-completed';
+import { WebhookStripeService } from './stripe';
+import { WebhookStripeCheckoutInvoiceCreatedService } from './stripe-checkout-invoice-created';
 
-export const WebhookServices = [WebhookStripeCheckoutSessionCompletedService];
+export const WebhookServices = [
+  WebhookStripeCheckoutInvoiceCreatedService,
+  WebhookStripeService
+];

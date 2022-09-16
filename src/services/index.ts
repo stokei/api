@@ -15,6 +15,7 @@ import { CurrencyServices } from './currencies';
 import { CustomerPortalSessionServices } from './customer-portal-sessions';
 import { DomainServices } from './domains';
 import { ImageServices } from './images';
+import { InvoiceServices } from './invoices';
 import { LanguageServices } from './languages';
 import { ModuleServices } from './modules';
 import { PaymentMethodServices } from './payment-methods';
@@ -57,5 +58,6 @@ export const Services = [
   ...StripeServices,
   ...CheckoutServices,
   ...CustomerPortalSessionServices,
-  ...WebhookServices
+  ...WebhookServices,
+  ...InvoiceServices
 ];

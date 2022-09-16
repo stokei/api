@@ -1,3 +1,7 @@
-import { CreateCheckoutSessionCommandHandler } from './create-checkout-session';
+import { ConfirmCheckoutCommandHandler } from './confirm-checkout';
+import { CreateCheckoutCommandHandler } from './create-checkout';
 
-export const CheckoutCommandHandlers = [CreateCheckoutSessionCommandHandler];
+export const CheckoutCommandHandlers = [
+  CreateCheckoutCommandHandler,
+  ConfirmCheckoutCommandHandler
+];

@@ -61,17 +61,18 @@ export class CreateSubscriptionContractCommandHandler
         app: data.app,
         automaticRenew: data.automaticRenew,
         createdBy: data.createdBy,
-        currency: data.currency,
         parent: data.parent,
         product: data.product,
-        stripeCheckoutSession: data.stripeCheckoutSession,
+        invoiceProduct: data.invoiceProduct,
+        invoicePrice: data.invoicePrice,
+        recurringIntervalCount: data.recurringIntervalCount,
+        recurringIntervalType: data.recurringIntervalType,
         stripeSubscription: data.stripeSubscription,
-        subtotalAmount: data.subtotalAmount,
-        totalAmount: data.totalAmount,
         type: data.type,
+        active: false,
+        status: SubscriptionContractStatus.PENDING,
         startAt,
-        endAt,
-        status: SubscriptionContractStatus.ACTIVE
+        endAt
       });
     if (!subscriptionContractCreated) {
       throw new SubscriptionContractNotFoundException();
@@ -92,13 +93,11 @@ export class CreateSubscriptionContractCommandHandler
   ): CreateSubscriptionContractCommand {
     return cleanObject({
       parent: cleanValue(command?.parent),
+      invoiceProduct: cleanValue(command?.invoiceProduct),
+      invoicePrice: cleanValue(command?.invoicePrice),
       recurringIntervalType: cleanValue(command?.recurringIntervalType),
       recurringIntervalCount: cleanValueNumber(command?.recurringIntervalCount),
       product: cleanValue(command?.product),
-      currency: cleanValue(command?.currency),
-      totalAmount: cleanValueNumber(command?.totalAmount),
-      subtotalAmount: cleanValueNumber(command?.subtotalAmount),
-      stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),
       stripeSubscription: cleanValue(command?.stripeSubscription),
       type: cleanValue(command?.type),
       automaticRenew: cleanValueBoolean(command?.automaticRenew),

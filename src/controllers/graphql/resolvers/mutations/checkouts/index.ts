@@ -1,3 +1,7 @@
-import { CreateCheckoutSessionResolver } from './create-checkout-session';
+import { ConfirmCheckoutResolver } from './confirm-checkout';
+import { CreateCheckoutResolver } from './create-checkout';
 
-export const CheckoutsMutations = [CreateCheckoutSessionResolver];
+export const CheckoutsMutations = [
+  CreateCheckoutResolver,
+  ConfirmCheckoutResolver
+];

@@ -7,6 +7,8 @@ export interface CountSubscriptionContractsWhereDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
+  invoiceProduct?: IWhereData;
+  invoicePrice?: IWhereData;
   product?: IWhereDataSearch<string>;
   status?: SubscriptionContractStatus;
   type?: SubscriptionContractType;

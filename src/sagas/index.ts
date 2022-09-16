@@ -13,6 +13,7 @@ import { CoursesSagas } from './courses.saga';
 import { CurrenciesSagas } from './currencies.saga';
 import { DomainsSagas } from './domains.saga';
 import { ImagesSagas } from './images.saga';
+import { InvoicesSagas } from './invoices.saga';
 import { LanguagesSagas } from './languages.saga';
 import { ModulesSagas } from './modules.saga';
 import { PaymentMethodsSagas } from './payment-methods.saga';
@@ -49,5 +50,6 @@ export const Sagas = [
   ClassroomInstructorsSagas,
   ClassroomModulesSagas,
   AddressesSagas,
-  PhonesSagas
+  PhonesSagas,
+  InvoicesSagas
 ];

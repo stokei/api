@@ -35,6 +35,8 @@ export * from './error-updating-password';
 export * from './image-not-found';
 export * from './images-not-found';
 export * from './invalid-email-or-password';
+export * from './invoice-not-found';
+export * from './invoices-not-found';
 export * from './language-not-found';
 export * from './languages-not-found';
 export * from './module-not-found';

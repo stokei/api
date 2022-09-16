@@ -13,6 +13,8 @@ export interface WhereDataFindAllSubscriptionContractsDTO {
   app?: IWhereData;
   parent?: IWhereDataSearch;
   product?: IWhereDataSearch<string>;
+  invoiceProduct?: IWhereData;
+  invoicePrice?: IWhereData;
   status?: SubscriptionContractStatus;
   type?: SubscriptionContractType;
   active?: IWhereData<boolean>;

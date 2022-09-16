@@ -15,6 +15,7 @@ import { CurrencyCommandHandlers } from './currencies';
 import { CustomerPortalSessionCommandHandlers } from './customer-portal-sessions';
 import { DomainCommandHandlers } from './domains';
 import { ImageCommandHandlers } from './images';
+import { InvoiceCommandHandlers } from './invoices';
 import { LanguageCommandHandlers } from './languages';
 import { ModuleCommandHandlers } from './modules';
 import { PaymentMethodCommandHandlers } from './payment-methods';
@@ -53,5 +54,6 @@ export const CommandHandlers = [
   ...AddressCommandHandlers,
   ...PhoneCommandHandlers,
   ...CheckoutCommandHandlers,
-  ...CustomerPortalSessionCommandHandlers
+  ...CustomerPortalSessionCommandHandlers,
+  ...InvoiceCommandHandlers
 ];

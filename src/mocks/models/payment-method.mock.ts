@@ -1,8 +1,6 @@
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
-import { PaymentMethodProvider } from '@/enums/payment-method-provider.enum';
-import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import {
   IPaymentMethodModelData,
   PaymentMethodModel
@@ -13,15 +11,10 @@ export class PaymentMethodModelMock extends PaymentMethodModel {
     super({
       _id: nanoid(),
       parent: data?.parent ?? 'anyParent',
-      type: data?.type ?? PaymentMethodType.CREDIT_CARD,
-      provider: data?.provider ?? PaymentMethodProvider.STRIPE,
       stripePaymentMethod:
         data?.stripePaymentMethod ?? 'anyExternalPaymentMethodId',
       cardBrand: data?.cardBrand ?? 'visa',
       lastFourCardNumber: data?.lastFourCardNumber ?? '4445',
-      active: data?.active ?? true,
-      activatedAt: data?.activatedAt ?? null,
-      deactivatedAt: data?.deactivatedAt ?? null,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
       app: data?.app ?? 'apps.anyApp',

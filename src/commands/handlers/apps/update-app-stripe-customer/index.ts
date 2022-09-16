@@ -39,7 +39,7 @@ export class UpdateAppStripeCustomerCommandHandler
         email: app.email
       },
       where: {
-        stripeAccount: app.stripeAccount,
+        stripeAccount: null,
         stripeCustomer: app.stripeCustomer
       }
     });

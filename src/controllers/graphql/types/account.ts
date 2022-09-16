@@ -38,6 +38,9 @@ export class Account {
   @Field(() => AccountStatus)
   status: AccountStatus;
 
+  @Field(() => Boolean)
+  isStokei: boolean;
+
   @Field(() => String, { nullable: true })
   canceledAt?: string;
 

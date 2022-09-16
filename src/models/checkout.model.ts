@@ -1,19 +1,20 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 
+import { SubscriptionContractModel } from './subscription-contract.model';
+
 export interface ICheckoutModelData {
-  readonly id?: string;
-  readonly _id?: string;
-  readonly url: string;
+  readonly subscriptionContract: SubscriptionContractModel;
+  readonly clientSecret: string;
 }
 
 export class CheckoutModel extends AggregateRoot {
-  readonly id: string;
-  readonly url: string;
+  readonly subscriptionContract: SubscriptionContractModel;
+  readonly clientSecret: string;
 
   constructor(data: ICheckoutModelData) {
     super();
 
-    this.id = data._id?.toString() || data.id;
-    this.url = data.url;
+    this.subscriptionContract = data.subscriptionContract;
+    this.clientSecret = data.clientSecret;
   }
 }

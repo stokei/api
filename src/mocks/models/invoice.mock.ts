@@ -14,6 +14,7 @@ export class InvoiceModelMock extends InvoiceModel {
       subscription: data?.subscription ?? 'subscriptions.any',
       product: data?.product ?? 'products.any',
       price: data?.price ?? 'prices.any',
+      paymentMethod: data?.paymentMethod ?? 'paymentMethods.any',
       currency: data?.currency ?? defaultCurrencyId,
       status: data?.status ?? InvoiceStatus.PAID,
       totalAmount: data?.totalAmount ?? 1000,

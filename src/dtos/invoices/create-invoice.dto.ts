@@ -6,6 +6,7 @@ export interface CreateInvoiceDTO {
   subscription: string;
   product: string;
   price: string;
+  paymentMethod: string;
   currency: string;
   status: InvoiceStatus;
   totalAmount: number;

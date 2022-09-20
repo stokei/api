@@ -41,15 +41,6 @@ enum DomainStatus {
   ERROR
 }
 
-enum PaymentMethodProvider {
-  STRIPE
-}
-
-enum PaymentMethodType {
-  CREDIT_CARD
-  BOLETO
-}
-
 enum RecurringType {
   DAY
   WEEK
@@ -454,6 +445,7 @@ model Invoice {
   subscription   String        @db.VarChar(255)
   product        String        @db.VarChar(255)
   price          String        @db.VarChar(255)
+  paymentMethod  String        @map("payment_method") @db.VarChar(255)
   currency       String        @db.VarChar(255)
   status         InvoiceStatus
   totalAmount    Int           @map("total_amount")

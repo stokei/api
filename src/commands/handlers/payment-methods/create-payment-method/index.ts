@@ -2,14 +2,13 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreatePaymentMethodCommand } from '@/commands/implements/payment-methods/create-payment-method.command';
-import { PaymentMethodProvider } from '@/enums/payment-method-provider.enum';
-import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
   PaymentMethodNotFoundException
 } from '@/errors';
 import { CreatePaymentMethodRepository } from '@/repositories/payment-methods/create-payment-method';
+import { FindStripePaymentMethodByIdService } from '@/services/stripe/find-payment-method-by-id';
 
 type CreatePaymentMethodCommandKeys = keyof CreatePaymentMethodCommand;
 
@@ -19,6 +18,7 @@ export class CreatePaymentMethodCommandHandler
 {
   constructor(
     private readonly createPaymentMethodRepository: CreatePaymentMethodRepository,
+    private readonly findStripePaymentMethodByIdService: FindStripePaymentMethodByIdService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -32,12 +32,24 @@ export class CreatePaymentMethodCommandHandler
         'parent'
       );
     }
+    if (!data?.stripePaymentMethod) {
+      throw new ParamNotFoundException<CreatePaymentMethodCommandKeys>(
+        'stripePaymentMethod'
+      );
+    }
+    const stripePaymentMethod =
+      await this.findStripePaymentMethodByIdService.execute(
+        data.stripePaymentMethod
+      );
+    if (!stripePaymentMethod) {
+      throw new PaymentMethodNotFoundException();
+    }
 
     const paymentMethodCreated =
       await this.createPaymentMethodRepository.execute({
         ...data,
-        lastFourCardNumber: null,
-        cardBrand: null
+        lastFourCardNumber: stripePaymentMethod.card?.last4,
+        cardBrand: stripePaymentMethod.card?.brand
       });
     if (!paymentMethodCreated) {
       throw new PaymentMethodNotFoundException();

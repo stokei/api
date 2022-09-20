@@ -24,6 +24,7 @@ export class CreatePaymentMethodResolver {
     const response = await this.createPaymentMethodService.execute({
       ...data,
       app: appId,
+      parent: currentAccountId,
       createdBy: currentAccountId
     });
     return response;

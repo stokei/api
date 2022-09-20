@@ -14,6 +14,7 @@ export interface IInvoiceModelData {
   readonly product: string;
   readonly price: string;
   readonly currency: string;
+  readonly paymentMethod: string;
   readonly status: InvoiceStatus;
   readonly totalAmount: number;
   readonly subtotalAmount: number;
@@ -36,6 +37,7 @@ export class InvoiceModel extends AggregateRoot {
   readonly subscription: string;
   readonly product: string;
   readonly price: string;
+  readonly paymentMethod: string;
   readonly currency: string;
   readonly status: InvoiceStatus;
   readonly totalAmount: number;
@@ -54,8 +56,8 @@ export class InvoiceModel extends AggregateRoot {
     super();
 
     this.id = createServiceId({
-      service: ServerStokeiApiIdPrefix.PRODUCTS,
-      module: ServerStokeiApiIdPrefix.PRODUCTS,
+      service: ServerStokeiApiIdPrefix.INVOICES,
+      module: ServerStokeiApiIdPrefix.INVOICES,
       id: data._id?.toString() || data.id
     });
     this.app = data.app;
@@ -63,6 +65,7 @@ export class InvoiceModel extends AggregateRoot {
     this.subscription = data.subscription;
     this.product = data.product;
     this.price = data.price;
+    this.paymentMethod = data.paymentMethod;
     this.currency = data.currency;
     this.status = data.status;
     this.totalAmount = data.totalAmount;

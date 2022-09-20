@@ -8,6 +8,7 @@ export enum ServerStokeiApiIdPrefix {
   LANGUAGES = 'languages',
   COLORS = 'colors',
   PRODUCTS = 'products',
+  INVOICES = 'invoices',
   PRICES = 'prices',
   PAYMENT_METHODS = 'payments_methods',
   PLANS = 'plans',

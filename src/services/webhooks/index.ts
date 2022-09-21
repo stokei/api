@@ -1,7 +1,9 @@
 import { WebhookStripeService } from './stripe';
-import { WebhookStripeCheckoutInvoiceCreatedService } from './stripe-checkout-invoice-created';
+import { WebhookStripeInvoiceCreatedService } from './stripe-invoice-created';
+import { WebhookStripeSubscriptionContractCanceledService } from './stripe-subscription-contract-canceled';
 
 export const WebhookServices = [
-  WebhookStripeCheckoutInvoiceCreatedService,
-  WebhookStripeService
+  WebhookStripeService,
+  WebhookStripeInvoiceCreatedService,
+  WebhookStripeSubscriptionContractCanceledService
 ];

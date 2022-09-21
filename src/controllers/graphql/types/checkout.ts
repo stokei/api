@@ -1,10 +1,12 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+
+import { SubscriptionContract } from './subscription-contract';
 
 @ObjectType()
 export class Checkout {
-  @Field(() => ID)
-  id: string;
+  @Field(() => SubscriptionContract)
+  subscriptionContract: SubscriptionContract;
 
   @Field(() => String)
-  url: string;
+  clientSecret: string;
 }

@@ -47,9 +47,6 @@ export class FindAppCurrentSubscriptionPlanQueryHandler
             },
             product: {
               search: ServerStokeiApiIdPrefix.PLANS
-            },
-            active: {
-              equals: true
             }
           }
         },

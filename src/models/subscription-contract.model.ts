@@ -5,6 +5,8 @@ import { RecurringType } from '@/enums/recurring-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
+import { SubscriptionContractActivatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-activated.event';
+import { SubscriptionContractCanceledEvent } from '@/events/implements/subscription-contracts/subscription-contract-canceled.event';
 import { SubscriptionContractCreatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-created.event';
 import { SubscriptionContractUpdatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-updated.event';
 
@@ -45,7 +47,6 @@ export class SubscriptionContractModel extends AggregateRoot {
   readonly type: SubscriptionContractType;
   readonly recurringIntervalCount: number;
   readonly recurringIntervalType: RecurringType;
-  readonly isRecurring: boolean;
   readonly automaticRenew: boolean;
   readonly active: boolean;
   readonly startAt?: string;
@@ -70,7 +71,6 @@ export class SubscriptionContractModel extends AggregateRoot {
     this.invoicePrice = data.invoicePrice;
     this.type = data.type;
     this.stripeSubscription = data.stripeSubscription;
-    this.isRecurring = SubscriptionContractType.RECURRING === this.type;
     this.recurringIntervalCount = data.recurringIntervalCount;
     this.recurringIntervalType = data.recurringIntervalType;
     this.status = data.status;
@@ -83,6 +83,14 @@ export class SubscriptionContractModel extends AggregateRoot {
     this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+  }
+
+  get isRecurring() {
+    return SubscriptionContractType.RECURRING === this.type;
+  }
+
+  get isCanceled() {
+    return SubscriptionContractStatus.CANCELED === this.status;
   }
 
   createdSubscriptionContract({ createdBy }: { createdBy: string }) {
@@ -110,7 +118,18 @@ export class SubscriptionContractModel extends AggregateRoot {
   activatedSubscriptionContract() {
     if (this.id) {
       this.apply(
-        new SubscriptionContractUpdatedEvent({
+        new SubscriptionContractActivatedEvent({
+          updatedBy: this.updatedBy,
+          subscriptionContract: this
+        })
+      );
+    }
+  }
+
+  canceledSubscriptionContract() {
+    if (this.id) {
+      this.apply(
+        new SubscriptionContractCanceledEvent({
           updatedBy: this.updatedBy,
           subscriptionContract: this
         })

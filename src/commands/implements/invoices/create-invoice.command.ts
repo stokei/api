@@ -10,7 +10,7 @@ export class CreateInvoiceCommand implements ICommand, CreateInvoiceDTO {
   product: string;
   price: string;
   currency: string;
-  paymentMethod: string;
+  paymentMethod?: string;
   status: InvoiceStatus;
   totalAmount: number;
   subtotalAmount: number;

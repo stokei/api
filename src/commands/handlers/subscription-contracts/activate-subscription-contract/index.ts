@@ -65,6 +65,7 @@ export class ActivateSubscriptionContractCommandHandler
       });
     }
     const dataActivate: ActivateSubscriptionContractRepositoryDataDTO = {
+      paymentMethod: data.paymentMethod,
       active: true,
       status: SubscriptionContractStatus.ACTIVE,
       startAt,
@@ -100,6 +101,7 @@ export class ActivateSubscriptionContractCommandHandler
   ): ActivateSubscriptionContractCommand {
     return cleanObject({
       subscriptionContract: cleanValue(command?.subscriptionContract),
+      paymentMethod: cleanValue(command?.paymentMethod),
       app: cleanValue(command?.app),
       updatedBy: cleanValue(command?.updatedBy)
     });

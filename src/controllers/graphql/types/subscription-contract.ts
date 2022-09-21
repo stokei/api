@@ -26,7 +26,7 @@ export class SubscriptionContract {
   @Field(() => SubscriptionContractType)
   type: SubscriptionContractType;
 
-  @Field(() => Invoice)
+  @Field(() => Invoice, { nullable: true })
   lastInvoice: Invoice;
 
   @Field(() => Boolean)

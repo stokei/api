@@ -1,4 +1,5 @@
 import { ActivateSubscriptionContractRepository } from './activate-subscription-contract';
+import { CancelSubscriptionContractRepository } from './cancel-subscription-contract';
 import { CountSubscriptionContractsRepository } from './count-subscription-contracts';
 import { CreateSubscriptionContractRepository } from './create-subscription-contract';
 import { FindAllSubscriptionContractsRepository } from './find-all-subscription-contracts';
@@ -13,5 +14,6 @@ export const SubscriptionContractsRepositories = [
   FindAllSubscriptionContractsRepository,
   UpdateSubscriptionContractRepository,
   FindSubscriptionContractByStripeSubscriptionRepository,
-  ActivateSubscriptionContractRepository
+  ActivateSubscriptionContractRepository,
+  CancelSubscriptionContractRepository
 ];

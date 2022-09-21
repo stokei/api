@@ -14,7 +14,7 @@ export interface IInvoiceModelData {
   readonly product: string;
   readonly price: string;
   readonly currency: string;
-  readonly paymentMethod: string;
+  readonly paymentMethod?: string;
   readonly status: InvoiceStatus;
   readonly totalAmount: number;
   readonly subtotalAmount: number;
@@ -37,7 +37,7 @@ export class InvoiceModel extends AggregateRoot {
   readonly subscription: string;
   readonly product: string;
   readonly price: string;
-  readonly paymentMethod: string;
+  readonly paymentMethod?: string;
   readonly currency: string;
   readonly status: InvoiceStatus;
   readonly totalAmount: number;

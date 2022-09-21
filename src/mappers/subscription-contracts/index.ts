@@ -1,4 +1,3 @@
-import { SubscriptionContractStatus } from '@prisma/client';
 import {
   cleanObject,
   cleanSortValue,
@@ -12,7 +11,6 @@ import {
   PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
-import Stripe from 'stripe';
 
 import {
   FindAllSubscriptionContractsDTO,
@@ -131,18 +129,5 @@ export class SubscriptionContractMapper {
     return subscriptionContracts?.length > 0
       ? subscriptionContracts.map(this.toModel).filter(Boolean)
       : [];
-  }
-  fromStripeStatusToStatus(status: Stripe.Subscription.Status) {
-    switch (status) {
-      case 'active':
-        return SubscriptionContractStatus.ACTIVE;
-      case 'canceled':
-      case 'incomplete_expired':
-        return SubscriptionContractStatus.FINISHED;
-      case 'incomplete':
-      case 'unpaid':
-      default:
-        return SubscriptionContractStatus.PENDING;
-    }
   }
 }

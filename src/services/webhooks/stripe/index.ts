@@ -6,12 +6,14 @@ import { stripeClient } from '@/clients/stripe';
 import { WebhookStripeDTO } from '@/dtos/webhooks/webhook-stripe.dto';
 import { STRIPE_WEBHOOK_SECRET } from '@/environments';
 import { StripeSignatureNotFoundException } from '@/errors';
-import { WebhookStripeCheckoutInvoiceCreatedService } from '@/services/webhooks/stripe-checkout-invoice-created';
+import { WebhookStripeInvoiceCreatedService } from '@/services/webhooks/stripe-invoice-created';
+import { WebhookStripeSubscriptionContractCanceledService } from '@/services/webhooks/stripe-subscription-contract-canceled';
 
 @Injectable()
 export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
   constructor(
-    private readonly webhookStripeCheckoutInvoiceCreatedService: WebhookStripeCheckoutInvoiceCreatedService
+    private readonly webhookStripeInvoiceCreatedService: WebhookStripeInvoiceCreatedService,
+    private readonly webhookStripeSubscriptionContractCanceledService: WebhookStripeSubscriptionContractCanceledService
   ) {}
 
   async execute({ body, signature }: WebhookStripeDTO) {
@@ -34,15 +36,15 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
     const connectAccount = event?.account;
 
     const handlers = {
-      'customer.subscription.updated': async () => {
-        return null;
-      },
       'customer.subscription.deleted': async () => {
-        return null;
+        const data: Stripe.Subscription = eventObject;
+        return await this.webhookStripeSubscriptionContractCanceledService.execute(
+          data.id
+        );
       },
       'invoice.created': async () => {
         const data: Stripe.Invoice = eventObject;
-        return await this.webhookStripeCheckoutInvoiceCreatedService.execute({
+        return await this.webhookStripeInvoiceCreatedService.execute({
           invoice: data.id,
           stripeAccount: connectAccount
         });
@@ -71,7 +73,7 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
 
     const bootstrapWebhook = handlers[eventType];
     if (bootstrapWebhook) {
-      return { status: await bootstrapWebhook() };
+      return { status: (await bootstrapWebhook()) || HttpStatus.OK };
     }
     return { status: HttpStatus.OK };
   }

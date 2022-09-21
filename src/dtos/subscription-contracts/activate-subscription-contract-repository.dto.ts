@@ -1,6 +1,7 @@
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 
 export interface ActivateSubscriptionContractRepositoryDataDTO {
+  paymentMethod: string;
   status: SubscriptionContractStatus;
   active: boolean;
   startAt?: string;

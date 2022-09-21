@@ -1,10 +1,8 @@
-import { PaymentMethodProvider } from '@/enums/payment-method-provider.enum';
-import { PaymentMethodType } from '@/enums/payment-method-type.enum';
-
 export interface ExistsPaymentMethodsWhereDTO {
+  app?: string;
   parent?: string;
-  type?: PaymentMethodType;
-  provider?: PaymentMethodProvider;
+  cardBrand?: string;
+  lastFourCardNumber?: string;
   stripePaymentMethod?: string;
 }
 

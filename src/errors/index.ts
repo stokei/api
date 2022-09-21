@@ -42,6 +42,8 @@ export * from './languages-not-found';
 export * from './module-not-found';
 export * from './modules-not-found';
 export * from './param-not-found';
+export * from './payment-method-already-exists';
+export * from './payment-method-is-unique';
 export * from './payment-method-not-found';
 export * from './payment-methods-not-found';
 export * from './phone-not-found';

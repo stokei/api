@@ -468,7 +468,7 @@ model SubscriptionContract {
   parent                 String                     @db.VarChar(255)
   invoiceProduct         String                     @map("invoice_product") @db.VarChar(255)
   invoicePrice           String                     @map("invoice_price") @db.VarChar(255)
-  paymentMethod          String                     @map("payment_method") @db.VarChar(255)
+  paymentMethod          String?                    @map("payment_method") @db.VarChar(255)
   stripeSubscription     String?                    @map("stripe_subscription") @db.VarChar(255)
   recurringIntervalCount Int?                       @map("recurring_interval_count")
   recurringIntervalType  RecurringType?             @map("recurring_interval_type")

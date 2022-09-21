@@ -5,15 +5,10 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
-import { PaymentMethodProvider } from '@/enums/payment-method-provider.enum';
-import { PaymentMethodType } from '@/enums/payment-method-type.enum';
-
 export interface WhereDataFindAllPaymentMethodsDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
-  type?: PaymentMethodType;
-  provider?: PaymentMethodProvider;
   stripePaymentMethod?: IWhereData<string>;
   cardBrand?: IWhereData<string>;
   active?: IWhereData<boolean>;

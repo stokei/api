@@ -99,6 +99,8 @@ export class CreateCustomerPortalSessionCommandHandler
     };
 
     const customerType = splitServiceId(data.customer)?.service;
-    return handlers[customerType]() || handlers.accounts();
+    return (
+      handlers[customerType]() || handlers[ServerStokeiApiIdPrefix.ACCOUNTS]()
+    );
   }
 }

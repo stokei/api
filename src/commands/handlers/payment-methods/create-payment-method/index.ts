@@ -5,9 +5,11 @@ import { CreatePaymentMethodCommand } from '@/commands/implements/payment-method
 import {
   DataNotFoundException,
   ParamNotFoundException,
+  PaymentMethodAlreadyExistsException,
   PaymentMethodNotFoundException
 } from '@/errors';
 import { CreatePaymentMethodRepository } from '@/repositories/payment-methods/create-payment-method';
+import { ExistsPaymentMethodsRepository } from '@/repositories/payment-methods/exists-payment-methods';
 import { FindStripePaymentMethodByIdService } from '@/services/stripe/find-payment-method-by-id';
 
 type CreatePaymentMethodCommandKeys = keyof CreatePaymentMethodCommand;
@@ -18,6 +20,7 @@ export class CreatePaymentMethodCommandHandler
 {
   constructor(
     private readonly createPaymentMethodRepository: CreatePaymentMethodRepository,
+    private readonly existsPaymentMethodsRepository: ExistsPaymentMethodsRepository,
     private readonly findStripePaymentMethodByIdService: FindStripePaymentMethodByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -45,11 +48,27 @@ export class CreatePaymentMethodCommandHandler
       throw new PaymentMethodNotFoundException();
     }
 
+    const lastFourCardNumber = stripePaymentMethod.card?.last4;
+    const cardBrand = stripePaymentMethod.card?.brand;
+
+    const paymentMethodExists =
+      await this.existsPaymentMethodsRepository.execute({
+        where: {
+          parent: data.parent,
+          app: data.app,
+          lastFourCardNumber,
+          cardBrand
+        }
+      });
+    if (paymentMethodExists) {
+      throw new PaymentMethodAlreadyExistsException();
+    }
+
     const paymentMethodCreated =
       await this.createPaymentMethodRepository.execute({
         ...data,
-        lastFourCardNumber: stripePaymentMethod.card?.last4,
-        cardBrand: stripePaymentMethod.card?.brand
+        lastFourCardNumber,
+        cardBrand
       });
     if (!paymentMethodCreated) {
       throw new PaymentMethodNotFoundException();

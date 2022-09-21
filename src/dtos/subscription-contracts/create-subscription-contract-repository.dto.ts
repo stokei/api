@@ -6,6 +6,4 @@ export interface CreateSubscriptionContractRepositoryDTO
   extends CreateSubscriptionContractDTO {
   status: SubscriptionContractStatus;
   active: boolean;
-  startAt?: string;
-  endAt?: string;
 }

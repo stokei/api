@@ -439,7 +439,7 @@ CREATE TABLE "subscription_contracts" (
     "parent" VARCHAR(255) NOT NULL,
     "invoice_product" VARCHAR(255) NOT NULL,
     "invoice_price" VARCHAR(255) NOT NULL,
-    "payment_method" VARCHAR(255) NOT NULL,
+    "payment_method" VARCHAR(255),
     "stripe_subscription" VARCHAR(255),
     "recurring_interval_count" INTEGER,
     "recurring_interval_type" "RecurringType",

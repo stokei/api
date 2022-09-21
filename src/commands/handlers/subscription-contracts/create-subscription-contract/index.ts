@@ -1,19 +1,12 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import {
-  addDays,
-  addMonths,
-  addWeeks,
-  addYears,
   cleanObject,
   cleanValue,
   cleanValueBoolean,
-  cleanValueNumber,
-  convertToISODateString
+  cleanValueNumber
 } from '@stokei/nestjs';
 
 import { CreateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/create-subscription-contract.command';
-import { PriceType } from '@/enums/price-type.enum';
-import { RecurringType } from '@/enums/recurring-type.enum';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import {
   DataNotFoundException,
@@ -45,17 +38,6 @@ export class CreateSubscriptionContractCommandHandler
       );
     }
 
-    const isRecurringType = PriceType.RECURRING === data.type;
-    let startAt = null;
-    let endAt = null;
-    if (isRecurringType) {
-      startAt = this.getStartAt();
-      endAt = this.getEndAt({
-        startAt,
-        recurringIntervalCount: data.recurringIntervalCount,
-        recurringIntervalType: data.recurringIntervalType
-      });
-    }
     const subscriptionContractCreated =
       await this.createSubscriptionContractRepository.execute({
         app: data.app,
@@ -70,9 +52,7 @@ export class CreateSubscriptionContractCommandHandler
         stripeSubscription: data.stripeSubscription,
         type: data.type,
         active: false,
-        status: SubscriptionContractStatus.PENDING,
-        startAt,
-        endAt
+        status: SubscriptionContractStatus.PENDING
       });
     if (!subscriptionContractCreated) {
       throw new SubscriptionContractNotFoundException();
@@ -104,31 +84,5 @@ export class CreateSubscriptionContractCommandHandler
       app: cleanValue(command?.app),
       createdBy: cleanValue(command?.createdBy)
     });
-  }
-
-  private getStartAt() {
-    return convertToISODateString(Date.now());
-  }
-
-  private getEndAt({
-    startAt,
-    recurringIntervalCount,
-    recurringIntervalType
-  }: {
-    startAt: string;
-    recurringIntervalCount: number;
-    recurringIntervalType: RecurringType;
-  }) {
-    const createEndAtFunctions = {
-      [RecurringType.DAY]: addDays,
-      [RecurringType.WEEK]: addWeeks,
-      [RecurringType.MONTH]: addMonths,
-      [RecurringType.YEAR]: addYears
-    };
-    const createEndAt = createEndAtFunctions[recurringIntervalType];
-    if (!createEndAt) {
-      return null;
-    }
-    return convertToISODateString(createEndAt(recurringIntervalCount, startAt));
   }
 }

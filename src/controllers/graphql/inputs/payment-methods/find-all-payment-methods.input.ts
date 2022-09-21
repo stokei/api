@@ -6,8 +6,6 @@ import {
   WherePaginated
 } from '@stokei/nestjs';
 
-import { PaymentMethodProvider } from '@/controllers/graphql/enums/payment-method-provider.enum';
-import { PaymentMethodType } from '@/controllers/graphql/enums/payment-method-type.enum';
 import {
   OrderByDataFindAllPaymentMethodsDTO,
   WhereDataFindAllPaymentMethodsDTO
@@ -22,12 +20,6 @@ class WhereDataFindAllPaymentMethodsDataInput
 
   @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
-
-  @Field(() => PaymentMethodType, { nullable: true })
-  type?: PaymentMethodType;
-
-  @Field(() => PaymentMethodProvider, { nullable: true })
-  provider?: PaymentMethodProvider;
 
   @Field(() => WhereDataBooleanInput, { nullable: true })
   active?: WhereDataBooleanInput;

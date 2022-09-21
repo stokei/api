@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { RecurringType } from '@/enums/recurring-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
@@ -19,6 +20,8 @@ export interface ISubscriptionContractModelData {
   readonly paymentMethod: string;
   readonly status: SubscriptionContractStatus;
   readonly type: SubscriptionContractType;
+  readonly recurringIntervalCount: number;
+  readonly recurringIntervalType: RecurringType;
   readonly automaticRenew: boolean;
   readonly active: boolean;
   readonly startAt?: Date | string;
@@ -40,6 +43,9 @@ export class SubscriptionContractModel extends AggregateRoot {
   readonly paymentMethod: string;
   readonly status: SubscriptionContractStatus;
   readonly type: SubscriptionContractType;
+  readonly recurringIntervalCount: number;
+  readonly recurringIntervalType: RecurringType;
+  readonly isRecurring: boolean;
   readonly automaticRenew: boolean;
   readonly active: boolean;
   readonly startAt?: string;
@@ -62,9 +68,12 @@ export class SubscriptionContractModel extends AggregateRoot {
     this.paymentMethod = data.paymentMethod;
     this.invoiceProduct = data.invoiceProduct;
     this.invoicePrice = data.invoicePrice;
-    this.stripeSubscription = data.stripeSubscription;
-    this.status = data.status;
     this.type = data.type;
+    this.stripeSubscription = data.stripeSubscription;
+    this.isRecurring = SubscriptionContractType.RECURRING === this.type;
+    this.recurringIntervalCount = data.recurringIntervalCount;
+    this.recurringIntervalType = data.recurringIntervalType;
+    this.status = data.status;
     this.active = data.active;
     this.automaticRenew = data.automaticRenew;
     this.startAt = convertToISODateString(data.startAt);
@@ -92,6 +101,17 @@ export class SubscriptionContractModel extends AggregateRoot {
       this.apply(
         new SubscriptionContractUpdatedEvent({
           updatedBy,
+          subscriptionContract: this
+        })
+      );
+    }
+  }
+
+  activatedSubscriptionContract() {
+    if (this.id) {
+      this.apply(
+        new SubscriptionContractUpdatedEvent({
+          updatedBy: this.updatedBy,
           subscriptionContract: this
         })
       );

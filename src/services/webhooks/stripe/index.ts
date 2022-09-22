@@ -1,4 +1,4 @@
-import { HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { IBaseService } from '@stokei/nestjs';
 import Stripe from 'stripe';
 
@@ -7,12 +7,16 @@ import { WebhookStripeDTO } from '@/dtos/webhooks/webhook-stripe.dto';
 import { STRIPE_WEBHOOK_SECRET } from '@/environments';
 import { StripeSignatureNotFoundException } from '@/errors';
 import { WebhookStripeInvoiceCreatedService } from '@/services/webhooks/stripe-invoice-created';
+import { WebhookStripeInvoicePaidService } from '@/services/webhooks/stripe-invoice-paid';
+import { WebhookStripeInvoiceWithPaymentErrorService } from '@/services/webhooks/stripe-invoice-with-payment-error';
 import { WebhookStripeSubscriptionContractCanceledService } from '@/services/webhooks/stripe-subscription-contract-canceled';
 
 @Injectable()
 export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
   constructor(
     private readonly webhookStripeInvoiceCreatedService: WebhookStripeInvoiceCreatedService,
+    private readonly webhookStripeInvoiceWithPaymentErrorService: WebhookStripeInvoiceWithPaymentErrorService,
+    private readonly webhookStripeInvoicePaidService: WebhookStripeInvoicePaidService,
     private readonly webhookStripeSubscriptionContractCanceledService: WebhookStripeSubscriptionContractCanceledService
   ) {}
 
@@ -35,46 +39,29 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
     const eventType = event?.type;
     const connectAccount = event?.account;
 
-    const handlers = {
-      'customer.subscription.deleted': async () => {
-        const data: Stripe.Subscription = eventObject;
+    switch (eventType) {
+      case 'customer.subscription.deleted':
         return await this.webhookStripeSubscriptionContractCanceledService.execute(
-          data.id
+          eventObject.id
         );
-      },
-      'invoice.created': async () => {
-        const data: Stripe.Invoice = eventObject;
+      case 'invoice.created':
         return await this.webhookStripeInvoiceCreatedService.execute({
-          invoice: data.id,
+          invoice: eventObject.id,
           stripeAccount: connectAccount
         });
-      },
-      'invoice.paid': async () => {
-        // Continue to provision the subscription as payments continue to be made.
-        // Store the status in your database and check when a user accesses your service.
-        // This approach helps you avoid hitting rate limits.
-        const data: Stripe.Invoice = eventObject;
-        Logger.log(
-          'Invoice payment is successful -> ' + data.id,
-          WebhookStripeService.name
+      case 'invoice.paid':
+        return await this.webhookStripeInvoicePaidService.execute(
+          eventObject.id,
+          connectAccount
         );
-      },
-      'invoice.payment_failed': async () => {
-        // The payment failed or the customer does not have a valid payment method.
-        // The subscription becomes past_due. Notify your customer and send them to the
-        // customer portal to update their payment information.
-        const data: Stripe.Invoice = eventObject;
-        Logger.warn(
-          'Invoice payment is failed -> ' + data.id,
-          WebhookStripeService.name
+      case 'invoice.payment_failed':
+      case 'invoice.payment_action_required':
+        return await this.webhookStripeInvoiceWithPaymentErrorService.execute(
+          eventObject.id,
+          connectAccount
         );
-      }
-    };
-
-    const bootstrapWebhook = handlers[eventType];
-    if (bootstrapWebhook) {
-      return { status: (await bootstrapWebhook()) || HttpStatus.OK };
+      default:
+        return { status: HttpStatus.OK };
     }
-    return { status: HttpStatus.OK };
   }
 }

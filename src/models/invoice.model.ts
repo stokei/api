@@ -3,6 +3,8 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { InvoiceStatus } from '@/enums/invoice-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { InvoiceChangedToPaidEvent } from '@/events/implements/invoices/invoice-changed-to-paid.event';
+import { InvoiceChangedToPaymentErrorEvent } from '@/events/implements/invoices/invoice-changed-to-payment-error.event';
 import { InvoiceCreatedEvent } from '@/events/implements/invoices/invoice-created.event';
 
 export interface IInvoiceModelData {
@@ -12,6 +14,7 @@ export interface IInvoiceModelData {
   readonly customer: string;
   readonly subscription: string;
   readonly product: string;
+  readonly url?: string;
   readonly price: string;
   readonly currency: string;
   readonly paymentMethod?: string;
@@ -20,7 +23,6 @@ export interface IInvoiceModelData {
   readonly subtotalAmount: number;
   readonly active: boolean;
   readonly stripeInvoice?: string;
-  readonly stripeCheckoutSession?: string;
   readonly paidAt?: Date | string;
   readonly canceledAt?: Date | string;
   readonly paymentErrorAt?: Date | string;
@@ -36,6 +38,7 @@ export class InvoiceModel extends AggregateRoot {
   readonly customer: string;
   readonly subscription: string;
   readonly product: string;
+  readonly url?: string;
   readonly price: string;
   readonly paymentMethod?: string;
   readonly currency: string;
@@ -44,7 +47,6 @@ export class InvoiceModel extends AggregateRoot {
   readonly subtotalAmount: number;
   readonly active: boolean;
   readonly stripeInvoice?: string;
-  readonly stripeCheckoutSession?: string;
   readonly paidAt?: string;
   readonly canceledAt?: string;
   readonly paymentErrorAt?: string;
@@ -70,9 +72,9 @@ export class InvoiceModel extends AggregateRoot {
     this.status = data.status;
     this.totalAmount = data.totalAmount;
     this.subtotalAmount = data.subtotalAmount;
+    this.url = data.url;
     this.active = data.active || InvoiceModel.isActive(this.status);
     this.stripeInvoice = data.stripeInvoice;
-    this.stripeCheckoutSession = data.stripeCheckoutSession;
     this.paidAt = convertToISODateString(data.paidAt);
     this.canceledAt = convertToISODateString(data.canceledAt);
     this.paymentErrorAt = convertToISODateString(data.paymentErrorAt);
@@ -92,6 +94,28 @@ export class InvoiceModel extends AggregateRoot {
       this.apply(
         new InvoiceCreatedEvent({
           createdBy,
+          invoice: this
+        })
+      );
+    }
+  }
+
+  changedInvoiceToPaid() {
+    if (this.id) {
+      this.apply(
+        new InvoiceChangedToPaidEvent({
+          updatedBy: this.updatedBy,
+          invoice: this
+        })
+      );
+    }
+  }
+
+  changedInvoiceToPaymentError() {
+    if (this.id) {
+      this.apply(
+        new InvoiceChangedToPaymentErrorEvent({
+          updatedBy: this.updatedBy,
           invoice: this
         })
       );

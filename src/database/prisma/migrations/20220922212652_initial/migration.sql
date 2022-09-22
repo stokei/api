@@ -32,7 +32,7 @@ CREATE TYPE "AppStatus" AS ENUM ('ACTIVE', 'INACTIVE', 'BLOCKED');
 CREATE TYPE "InvoiceStatus" AS ENUM ('PAID', 'PENDING', 'PAYMENT_ERROR', 'CANCELED');
 
 -- CreateEnum
-CREATE TYPE "SubscriptionContractStatus" AS ENUM ('ACTIVE', 'PENDING', 'FINISHED');
+CREATE TYPE "SubscriptionContractStatus" AS ENUM ('ACTIVE', 'PENDING', 'CANCELED');
 
 -- CreateEnum
 CREATE TYPE "PhoneStatus" AS ENUM ('ACTIVE', 'PENDING', 'INVALID');
@@ -413,7 +413,8 @@ CREATE TABLE "Invoice" (
     "subscription" VARCHAR(255) NOT NULL,
     "product" VARCHAR(255) NOT NULL,
     "price" VARCHAR(255) NOT NULL,
-    "payment_method" VARCHAR(255) NOT NULL,
+    "url" VARCHAR(255),
+    "payment_method" VARCHAR(255),
     "currency" VARCHAR(255) NOT NULL,
     "status" "InvoiceStatus" NOT NULL,
     "total_amount" INTEGER NOT NULL,

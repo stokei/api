@@ -58,6 +58,7 @@ export class CancelSubscriptionContractCommandHandler
       active: false,
       status: SubscriptionContractStatus.CANCELED,
       endAt,
+      canceledAt: endAt,
       updatedBy: data.updatedBy
     };
     const subscriptionContractCanceled =

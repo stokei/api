@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { ActivateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/activate-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { InvoiceChangedToPaidEvent } from '@/events/implements/invoices/invoice-changed-to-paid.event';
 import { InvoiceChangedToPaymentErrorEvent } from '@/events/implements/invoices/invoice-changed-to-payment-error.event';
@@ -70,7 +71,14 @@ export class InvoicesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new ActivateSubscriptionContractCommand({
+            app: event.invoice.app,
+            paymentMethod: event.invoice.paymentMethod,
+            subscriptionContract: event.invoice.subscription,
+            updatedBy: event.updatedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

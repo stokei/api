@@ -1,3 +1,4 @@
+import { CancelStripeSubscriptionService } from './cancel-stripe-subscription';
 import { CreateStripeAccountService } from './create-stripe-account';
 import { CreateStripeAccountLoginLinkService } from './create-stripe-account-login-link';
 import { CreateStripeAccountOnboardingLinkService } from './create-stripe-account-onboarding-link';
@@ -16,6 +17,7 @@ import { UpdateStripeCustomerService } from './update-stripe-customer';
 
 export const StripeServices = [
   CreateStripeAccountService,
+  CancelStripeSubscriptionService,
   CreateStripeAccountLoginLinkService,
   CreateStripeAccountOnboardingLinkService,
   CreateStripeAccountUpdateLinkService,

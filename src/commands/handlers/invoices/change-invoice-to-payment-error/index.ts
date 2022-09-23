@@ -3,7 +3,8 @@ import { InvoiceStatus } from '@prisma/client';
 import {
   cleanObject,
   cleanValue,
-  convertToISODateString
+  convertToISODateString,
+  splitServiceId
 } from '@stokei/nestjs';
 
 import { ChangeInvoiceToPaymentErrorCommand } from '@/commands/implements/invoices/change-invoice-to-payment-error.command';
@@ -72,7 +73,7 @@ export class ChangeInvoiceToPaymentErrorCommandHandler
         data: dataChangeInvoiceToPaymentError,
         where: {
           app: app.id,
-          invoice: invoice.id
+          invoice: splitServiceId(invoice.id)?.id
         }
       });
     if (!invoiceUpdated) {

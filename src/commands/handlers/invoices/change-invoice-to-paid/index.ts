@@ -3,7 +3,8 @@ import { InvoiceStatus } from '@prisma/client';
 import {
   cleanObject,
   cleanValue,
-  convertToISODateString
+  convertToISODateString,
+  splitServiceId
 } from '@stokei/nestjs';
 
 import { ChangeInvoiceToPaidCommand } from '@/commands/implements/invoices/change-invoice-to-paid.command';
@@ -67,7 +68,7 @@ export class ChangeInvoiceToPaidCommandHandler
       data: dataChangeInvoiceToPaid,
       where: {
         app: app.id,
-        invoice: invoice.id
+        invoice: splitServiceId(invoice.id)?.id
       }
     });
     if (!invoiceUpdated) {

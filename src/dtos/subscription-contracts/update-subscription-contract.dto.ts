@@ -1,6 +1,8 @@
 export interface UpdateSubscriptionContractDataDTO {
   updatedBy: string;
   automaticRenew?: boolean;
+  startAt?: number | string;
+  endAt?: number | string;
 }
 
 export interface UpdateSubscriptionContractWhereDTO {

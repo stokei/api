@@ -10,6 +10,7 @@ import {
   ParamNotFoundException,
   PriceNotFoundException,
   ProductNotFoundException,
+  SubscriptionContractAlreadyActiveException,
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { CheckoutMapper } from '@/mappers/checkouts';
@@ -21,6 +22,7 @@ import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateStripeSubscriptionService } from '@/services/stripe/create-stripe-subscription';
 import { CreateSubscriptionContractService } from '@/services/subscription-contracts/create-subscription-contract';
+import { FindAllSubscriptionContractsService } from '@/services/subscription-contracts/find-all-subscription-contracts';
 
 type CreateCheckoutCommandKeys = keyof CreateCheckoutCommand;
 
@@ -32,6 +34,7 @@ export class CreateCheckoutCommandHandler
     private readonly createStripeSubscriptionService: CreateStripeSubscriptionService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findProductByIdService: FindProductByIdService,
+    private readonly findAllSubscriptionContractsService: FindAllSubscriptionContractsService,
     private readonly findAppCurrentSubscriptionPlanService: FindAppCurrentSubscriptionPlanService,
     private readonly findPriceByIdService: FindPriceByIdService,
     private readonly createSubscriptionContractService: CreateSubscriptionContractService,
@@ -46,8 +49,8 @@ export class CreateCheckoutCommandHandler
     if (!data?.customer) {
       throw new ParamNotFoundException<CreateCheckoutCommandKeys>('customer');
     }
-    if (!data?.app) {
-      throw new ParamNotFoundException<CreateCheckoutCommandKeys>('app');
+    if (!data?.fromApp) {
+      throw new ParamNotFoundException<CreateCheckoutCommandKeys>('fromApp');
     }
     if (!data?.createdBy) {
       throw new ParamNotFoundException<CreateCheckoutCommandKeys>('createdBy');
@@ -56,44 +59,73 @@ export class CreateCheckoutCommandHandler
       throw new ParamNotFoundException<CreateCheckoutCommandKeys>('price');
     }
 
-    const app = await this.findAppByIdService.execute(data?.app);
-    if (!app) {
+    const fromApp = await this.findAppByIdService.execute(data?.fromApp);
+    if (!fromApp) {
       throw new AppNotFoundException();
     }
+
     const price = await this.findPriceByIdService.execute(data?.price);
-    if (!price) {
+    const priceIsFromApp = price.app === fromApp.id;
+    if (!price || !priceIsFromApp) {
       throw new PriceNotFoundException();
     }
+
     const product = await this.findProductByIdService.execute(price.parent);
     if (!product) {
       throw new ProductNotFoundException();
     }
 
+    const customerSubscriptionContracts =
+      await this.findAllSubscriptionContractsService.execute({
+        where: {
+          AND: {
+            parent: {
+              equals: data.customer
+            },
+            invoicePrice: {
+              equals: price.id
+            },
+            active: {
+              equals: true
+            }
+          }
+        },
+        page: {
+          limit: 1
+        }
+      });
+
+    const existsActiveSubscriptionContracts =
+      customerSubscriptionContracts?.totalCount > 0;
+    if (existsActiveSubscriptionContracts) {
+      throw new SubscriptionContractAlreadyActiveException();
+    }
+
     const appCurrentSubscriptionPlan =
-      await this.findAppCurrentSubscriptionPlanService.execute(app.id);
+      await this.findAppCurrentSubscriptionPlanService.execute(fromApp.id);
     const appPlan = appCurrentSubscriptionPlan?.plan;
 
     const { stripeCustomer } = await this.getCustomer({
       customer: data.customer,
-      app
+      app: fromApp
     });
 
     const stripeSubscription =
       await this.createStripeSubscriptionService.execute({
-        app: app.id,
+        app: fromApp.id,
         applicationFeePercentage: appPlan?.applicationFeePercentage,
-        currency: app.currency,
+        currency: fromApp.currency,
         price: price.stripePrice,
         customer: stripeCustomer,
-        stripeAccount: app.stripeAccount
+        stripeAccount: fromApp.stripeAccount
       });
     if (!stripeSubscription) {
       throw new SubscriptionContractNotFoundException();
     }
     const subscriptionContract =
       await this.createSubscriptionContractService.execute({
-        app: price.app,
-        createdBy: price.createdBy,
+        app: fromApp.id,
+        createdBy: data.createdBy,
         parent: data.customer,
         product: product.parent,
         invoiceProduct: product.id,
@@ -119,7 +151,7 @@ export class CreateCheckoutCommandHandler
   private clearData(command: CreateCheckoutCommand): CreateCheckoutCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
-      app: cleanValue(command?.app),
+      fromApp: cleanValue(command?.fromApp),
       customer: cleanValue(command?.customer),
       price: cleanValue(command?.price)
     });

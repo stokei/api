@@ -2,13 +2,15 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { IBaseService } from '@stokei/nestjs';
 import Stripe from 'stripe';
 
+import { WebhookStripeInvoiceWithPaymentErrorDTO } from '@/dtos/webhooks/webhook-stripe-invoice-with-payment-error.dto';
 import { ChangeInvoiceToPaymentErrorService } from '@/services/invoices/change-invoice-to-payment-error';
 import { FindInvoiceByStripeInvoiceService } from '@/services/invoices/find-invoice-by-stripe-invoice';
 import { FindStripeInvoiceByIdService } from '@/services/stripe/find-invoice-by-id';
 
 @Injectable()
 export class WebhookStripeInvoiceWithPaymentErrorService
-  implements IBaseService<string, Promise<HttpStatus>>
+  implements
+    IBaseService<WebhookStripeInvoiceWithPaymentErrorDTO, Promise<HttpStatus>>
 {
   constructor(
     private readonly findStripeInvoiceByIdService: FindStripeInvoiceByIdService,
@@ -16,12 +18,11 @@ export class WebhookStripeInvoiceWithPaymentErrorService
     private readonly changeInvoiceToPaymentErrorService: ChangeInvoiceToPaymentErrorService
   ) {}
 
-  async execute(stripeInvoiceId: string, stripeAccount?: string) {
+  async execute(data: WebhookStripeInvoiceWithPaymentErrorDTO) {
     const stripeInvoice = await this.findStripeInvoiceByIdService.execute(
-      stripeInvoiceId,
-      stripeAccount
+      data.invoice,
+      data.stripeAccount
     );
-
     const invoice = await this.findInvoiceByStripeInvoiceService.execute(
       stripeInvoice.id as string
     );

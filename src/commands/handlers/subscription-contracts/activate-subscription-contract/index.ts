@@ -6,7 +6,8 @@ import {
   addYears,
   cleanObject,
   cleanValue,
-  convertToISODateString
+  convertToISODateString,
+  splitServiceId
 } from '@stokei/nestjs';
 
 import { ActivateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/activate-subscription-contract.command';
@@ -77,7 +78,7 @@ export class ActivateSubscriptionContractCommandHandler
         data: dataActivate,
         where: {
           app: data.app,
-          subscriptionContract: data.subscriptionContract
+          subscriptionContract: splitServiceId(subscriptionContract.id)?.id
         }
       });
     if (!subscriptionContractActivated) {

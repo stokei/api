@@ -2,7 +2,8 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import {
   cleanObject,
   cleanValue,
-  convertToISODateString
+  convertToISODateString,
+  splitServiceId
 } from '@stokei/nestjs';
 
 import { CancelSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/cancel-subscription-contract.command';
@@ -66,7 +67,7 @@ export class CancelSubscriptionContractCommandHandler
         data: dataCancel,
         where: {
           app: data.app,
-          subscriptionContract: data.subscriptionContract
+          subscriptionContract: splitServiceId(subscriptionContract.id)?.id
         }
       });
     if (!subscriptionContractCanceled) {

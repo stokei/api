@@ -2,18 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
-import { UpdateSubscriptionContractDTO } from '@/dtos/subscription-contracts/update-subscription-contract.dto';
+import { UpdateSubscriptionContractRepositoryDTO } from '@/dtos/subscription-contracts/update-subscription-contract-repository.dto';
 
 @Injectable()
 export class UpdateSubscriptionContractRepository
-  implements IBaseRepository<UpdateSubscriptionContractDTO, Promise<boolean>>
+  implements
+    IBaseRepository<UpdateSubscriptionContractRepositoryDTO, Promise<boolean>>
 {
   constructor(private readonly model: PrismaClient) {}
 
   async execute({
     data,
     where
-  }: UpdateSubscriptionContractDTO): Promise<boolean> {
+  }: UpdateSubscriptionContractRepositoryDTO): Promise<boolean> {
     const updated = await this.model.subscriptionContract.update({
       where: {
         id: where?.subscriptionContract

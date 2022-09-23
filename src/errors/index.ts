@@ -59,6 +59,7 @@ export * from './stripe-account-already-exists';
 export * from './stripe-account-not-found';
 export * from './stripe-customer-already-exists';
 export * from './stripe-signature-not-found';
+export * from './subscription-contract-already-active';
 export * from './subscription-contract-already-canceled';
 export * from './subscription-contract-already-finished';
 export * from './subscription-contract-not-found';

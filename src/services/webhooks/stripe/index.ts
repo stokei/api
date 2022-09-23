@@ -10,6 +10,7 @@ import { WebhookStripeInvoiceCreatedService } from '@/services/webhooks/stripe-i
 import { WebhookStripeInvoicePaidService } from '@/services/webhooks/stripe-invoice-paid';
 import { WebhookStripeInvoiceWithPaymentErrorService } from '@/services/webhooks/stripe-invoice-with-payment-error';
 import { WebhookStripeSubscriptionContractCanceledService } from '@/services/webhooks/stripe-subscription-contract-canceled';
+import { WebhookStripeSubscriptionUpdateService } from '@/services/webhooks/stripe-subscription-contract-update';
 
 @Injectable()
 export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
@@ -17,6 +18,7 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
     private readonly webhookStripeInvoiceCreatedService: WebhookStripeInvoiceCreatedService,
     private readonly webhookStripeInvoiceWithPaymentErrorService: WebhookStripeInvoiceWithPaymentErrorService,
     private readonly webhookStripeInvoicePaidService: WebhookStripeInvoicePaidService,
+    private readonly webhookStripeSubscriptionUpdateService: WebhookStripeSubscriptionUpdateService,
     private readonly webhookStripeSubscriptionContractCanceledService: WebhookStripeSubscriptionContractCanceledService
   ) {}
 
@@ -40,26 +42,36 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
     const connectAccount = event?.account;
 
     switch (eventType) {
+      case 'customer.subscription.updated':
       case 'customer.subscription.deleted':
-        return await this.webhookStripeSubscriptionContractCanceledService.execute(
-          eventObject.id
-        );
+        const customerSubscription: Stripe.Subscription = eventObject;
+        const cancelStatus = ['incomplete_expired', 'canceled'];
+        if (cancelStatus.includes(customerSubscription.status)) {
+          return await this.webhookStripeSubscriptionContractCanceledService.execute(
+            customerSubscription.id
+          );
+        }
+        return await this.webhookStripeSubscriptionUpdateService.execute({
+          stripeSubscription: customerSubscription.id,
+          startAt: customerSubscription.current_period_start * 1000,
+          endAt: customerSubscription.current_period_end * 1000
+        });
       case 'invoice.created':
         return await this.webhookStripeInvoiceCreatedService.execute({
           invoice: eventObject.id,
           stripeAccount: connectAccount
         });
       case 'invoice.paid':
-        return await this.webhookStripeInvoicePaidService.execute(
-          eventObject.id,
-          connectAccount
-        );
+        return await this.webhookStripeInvoicePaidService.execute({
+          invoice: eventObject.id,
+          stripeAccount: connectAccount
+        });
       case 'invoice.payment_failed':
       case 'invoice.payment_action_required':
-        return await this.webhookStripeInvoiceWithPaymentErrorService.execute(
-          eventObject.id,
-          connectAccount
-        );
+        return await this.webhookStripeInvoiceWithPaymentErrorService.execute({
+          invoice: eventObject.id,
+          stripeAccount: connectAccount
+        });
       default:
         return { status: HttpStatus.OK };
     }

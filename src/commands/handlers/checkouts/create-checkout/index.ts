@@ -14,7 +14,6 @@ import {
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { CheckoutMapper } from '@/mappers/checkouts';
-import { AppModel } from '@/models/app.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentSubscriptionPlanService } from '@/services/apps/find-app-current-subscription-plan';
@@ -49,9 +48,6 @@ export class CreateCheckoutCommandHandler
     if (!data?.customer) {
       throw new ParamNotFoundException<CreateCheckoutCommandKeys>('customer');
     }
-    if (!data?.fromApp) {
-      throw new ParamNotFoundException<CreateCheckoutCommandKeys>('fromApp');
-    }
     if (!data?.createdBy) {
       throw new ParamNotFoundException<CreateCheckoutCommandKeys>('createdBy');
     }
@@ -59,14 +55,18 @@ export class CreateCheckoutCommandHandler
       throw new ParamNotFoundException<CreateCheckoutCommandKeys>('price');
     }
 
-    const fromApp = await this.findAppByIdService.execute(data?.fromApp);
-    if (!fromApp) {
+    const { stripeCustomer, customerApp: customerAppId } =
+      await this.getCustomer({
+        customer: data.customer
+      });
+
+    const customerApp = await this.findAppByIdService.execute(customerAppId);
+    if (!customerApp) {
       throw new AppNotFoundException();
     }
 
     const price = await this.findPriceByIdService.execute(data?.price);
-    const priceIsFromApp = price.app === fromApp.id;
-    if (!price || !priceIsFromApp) {
+    if (!price) {
       throw new PriceNotFoundException();
     }
 
@@ -102,29 +102,24 @@ export class CreateCheckoutCommandHandler
     }
 
     const appCurrentSubscriptionPlan =
-      await this.findAppCurrentSubscriptionPlanService.execute(fromApp.id);
+      await this.findAppCurrentSubscriptionPlanService.execute(customerApp.id);
     const appPlan = appCurrentSubscriptionPlan?.plan;
-
-    const { stripeCustomer } = await this.getCustomer({
-      customer: data.customer,
-      app: fromApp
-    });
 
     const stripeSubscription =
       await this.createStripeSubscriptionService.execute({
-        app: fromApp.id,
+        app: customerApp.id,
         applicationFeePercentage: appPlan?.applicationFeePercentage,
-        currency: fromApp.currency,
+        currency: customerApp.currency,
         price: price.stripePrice,
         customer: stripeCustomer,
-        stripeAccount: fromApp.stripeAccount
+        stripeAccount: customerApp.stripeAccount
       });
     if (!stripeSubscription) {
       throw new SubscriptionContractNotFoundException();
     }
     const subscriptionContract =
       await this.createSubscriptionContractService.execute({
-        app: fromApp.id,
+        app: customerApp.id,
         createdBy: data.createdBy,
         parent: data.customer,
         product: product.parent,
@@ -151,29 +146,33 @@ export class CreateCheckoutCommandHandler
   private clearData(command: CreateCheckoutCommand): CreateCheckoutCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
-      fromApp: cleanValue(command?.fromApp),
+      app: cleanValue(command?.app),
       customer: cleanValue(command?.customer),
       price: cleanValue(command?.price)
     });
   }
 
-  private async getCustomer(data: {
-    customer: string;
-    app: AppModel;
-  }): Promise<{ stripeCustomer: string; customerEmail: string }> {
-    const customerIsTheCurrentApp = data.customer === data.app.id;
-
+  private async getCustomer(data: { customer }): Promise<{
+    stripeCustomer: string;
+    customerEmail: string;
+    customerApp: string;
+  }> {
     const handlers = {
       [ServerStokeiApiIdPrefix.ACCOUNTS]: async () => {
-        const { stripeCustomer, email } =
-          await this.findAccountByIdService.execute(data.customer);
-        return { stripeCustomer, email };
+        const {
+          stripeCustomer,
+          email,
+          app: customerApp
+        } = await this.findAccountByIdService.execute(data.customer);
+        return { stripeCustomer, email, customerApp };
       },
       [ServerStokeiApiIdPrefix.APPS]: async () => {
-        const { stripeCustomer, email } = customerIsTheCurrentApp
-          ? data.app
-          : await this.findAppByIdService.execute(data.customer);
-        return { stripeCustomer, email };
+        const {
+          stripeCustomer,
+          email,
+          id: customerApp
+        } = await this.findAppByIdService.execute(data.customer);
+        return { stripeCustomer, email, customerApp };
       }
     };
 

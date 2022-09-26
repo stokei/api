@@ -13,12 +13,16 @@ import {
   AppNotFoundException,
   DataNotFoundException,
   InvoiceNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PaymentMethodNotFoundException,
+  SubscriptionContractNotFoundException
 } from '@/errors';
 import { InvoiceModel } from '@/models/invoice.model';
 import { ChangeInvoiceToPaymentErrorRepository } from '@/repositories/invoices/change-invoice-to-payment-error';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindInvoiceByIdService } from '@/services/invoices/find-invoice-by-id';
+import { CreatePaymentMethodService } from '@/services/payment-methods/create-payment-method';
+import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 
 type ChangeInvoiceToPaymentErrorCommandKeys =
   keyof ChangeInvoiceToPaymentErrorCommand;
@@ -30,6 +34,8 @@ export class ChangeInvoiceToPaymentErrorCommandHandler
   constructor(
     private readonly changeInvoiceToPaymentErrorRepository: ChangeInvoiceToPaymentErrorRepository,
     private readonly findAppByIdService: FindAppByIdService,
+    private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
+    private readonly createPaymentMethodService: CreatePaymentMethodService,
     private readonly findInvoiceByIdService: FindInvoiceByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -58,13 +64,33 @@ export class ChangeInvoiceToPaymentErrorCommandHandler
     if (!invoice) {
       throw new InvoiceNotFoundException();
     }
+    const subscriptionContract =
+      await this.findSubscriptionContractByIdService.execute(
+        invoice.subscription
+      );
+    if (!subscriptionContract) {
+      throw new SubscriptionContractNotFoundException();
+    }
+    let paymentMethodId = subscriptionContract.paymentMethod;
+    if (!paymentMethodId) {
+      const paymentMethod = await this.createPaymentMethodService.execute({
+        app: app.id,
+        parent: invoice.customer,
+        stripePaymentMethod: data.paymentMethod,
+        createdBy: data.updatedBy
+      });
+      if (!paymentMethod) {
+        throw new PaymentMethodNotFoundException();
+      }
+      paymentMethodId = paymentMethod.id;
+    }
 
     const dataChangeInvoiceToPaymentError: ChangeInvoiceToPaymentErrorRepositoryDataDTO =
       {
         active: true,
         url: data.invoiceUrl,
         status: InvoiceStatus.PAID,
-        paymentMethod: data.paymentMethod,
+        paymentMethod: paymentMethodId,
         paymentErrorAt: convertToISODateString(Date.now()),
         updatedBy: data.updatedBy
       };

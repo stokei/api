@@ -3,7 +3,7 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class CreateCustomerPortalSessionInput {
   @Field(() => String, { nullable: true })
-  app?: string;
+  customer?: string;
 
   @Field(() => String)
   returnUrl: string;

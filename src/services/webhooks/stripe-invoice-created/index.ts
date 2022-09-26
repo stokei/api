@@ -40,8 +40,12 @@ export class WebhookStripeInvoiceCreatedService
       price: subscription.invoicePrice,
       product: subscription.invoiceProduct,
       paymentMethod: subscription.paymentMethod,
-      status: subscription.active ? InvoiceStatus.PAID : InvoiceStatus.PENDING,
+      status:
+        stripeInvoice.status === 'paid'
+          ? InvoiceStatus.PAID
+          : InvoiceStatus.PENDING,
       stripeInvoice: stripeInvoice.id,
+      url: stripeInvoice.hosted_invoice_url,
       createdBy: subscription.createdBy,
       currency: currency.id,
       customer: subscription.parent,

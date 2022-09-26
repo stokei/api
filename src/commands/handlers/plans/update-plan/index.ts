@@ -48,8 +48,7 @@ export class UpdatePlanCommandHandler
 
     const planUpdated = new PlanModel({
       ...plan,
-      ...data.data,
-      id: splitServiceId(plan.id)?.id
+      ...data.data
     });
     const planModel = this.publisher.mergeObjectContext(planUpdated);
     planModel.updatedPlan({

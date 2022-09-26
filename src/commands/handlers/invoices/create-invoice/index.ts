@@ -58,6 +58,7 @@ export class CreateInvoiceCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
+      url: cleanValue(command?.url),
       customer: cleanValue(command?.customer),
       subscription: cleanValue(command?.subscription),
       paymentMethod: cleanValue(command?.paymentMethod),

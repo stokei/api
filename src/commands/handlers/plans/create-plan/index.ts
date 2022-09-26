@@ -3,8 +3,7 @@ import {
   cleanObject,
   cleanValue,
   cleanValueBoolean,
-  cleanValueNumber,
-  splitServiceId
+  cleanValueNumber
 } from '@stokei/nestjs';
 
 import { CreatePlanCommand } from '@/commands/implements/plans/create-plan.command';
@@ -19,10 +18,8 @@ import {
 } from '@/errors';
 import { PlanModel } from '@/models/plan.model';
 import { CreatePlanRepository } from '@/repositories/plans/create-plan';
-import { UpdatePlanRepository } from '@/repositories/plans/update-plan';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { CalculatePlanPriceService } from '@/services/plans/calculate-plan-price';
-import { FindPlanByIdService } from '@/services/plans/find-plan-by-id';
 import { CreatePriceService } from '@/services/prices/create-price';
 import { CreateProductService } from '@/services/products/create-product';
 
@@ -34,10 +31,8 @@ export class CreatePlanCommandHandler
 {
   constructor(
     private readonly createPlanRepository: CreatePlanRepository,
-    private readonly updatePlanRepository: UpdatePlanRepository,
     private readonly calculatePlanPriceService: CalculatePlanPriceService,
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findPlanByIdService: FindPlanByIdService,
     private readonly createProductService: CreateProductService,
     private readonly createPriceService: CreatePriceService,
     private readonly publisher: EventPublisher
@@ -121,7 +116,6 @@ export class CreatePlanCommandHandler
 
     const planUpdated = new PlanModel({
       ...planCreated,
-      id: splitServiceId(planCreated.id)?.id,
       product: product.id,
       price: price.id
     });

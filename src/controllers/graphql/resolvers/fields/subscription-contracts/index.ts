@@ -2,6 +2,7 @@ import { SubscriptionContractAppResolver } from './app';
 import { SubscriptionContractClassroomResolver } from './classroom';
 import { SubscriptionContractCreatedByResolver } from './created-by';
 import { SubscriptionContractLastInvoiceResolver } from './last-invoice';
+import { SubscriptionContractPaymentMethodResolver } from './payment-method';
 import { SubscriptionContractPlanResolver } from './plan';
 import { SubscriptionContractReferenceResolver } from './reference';
 import { SubscriptionContractUpdatedByResolver } from './updated-by';
@@ -13,5 +14,6 @@ export const SubscriptionContractsFieldsResolvers = [
   SubscriptionContractPlanResolver,
   SubscriptionContractCreatedByResolver,
   SubscriptionContractUpdatedByResolver,
-  SubscriptionContractLastInvoiceResolver
+  SubscriptionContractLastInvoiceResolver,
+  SubscriptionContractPaymentMethodResolver
 ];

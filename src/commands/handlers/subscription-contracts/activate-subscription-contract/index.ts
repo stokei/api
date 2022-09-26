@@ -73,6 +73,7 @@ export class ActivateSubscriptionContractCommandHandler
       endAt,
       updatedBy: data.updatedBy
     };
+
     const subscriptionContractActivated =
       await this.activateSubscriptionContractRepository.execute({
         data: dataActivate,

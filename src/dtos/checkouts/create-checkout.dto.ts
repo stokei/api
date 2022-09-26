@@ -1,5 +1,5 @@
 export interface CreateCheckoutDTO {
-  fromApp: string;
+  app: string;
   customer: string;
   price: string;
   createdBy: string;

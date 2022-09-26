@@ -5,6 +5,7 @@ import { InvoiceStatus } from '@/controllers/graphql/enums/invoice-status.enum';
 import { Account } from './account';
 import { App } from './app';
 import { Currency } from './currency';
+import { PaymentMethod } from './payment-method';
 import { Price } from './price';
 import { Product } from './product';
 import { SubscriptionContract } from './subscription-contract';
@@ -19,6 +20,9 @@ export class Invoice {
 
   @Field(() => SubscriptionContract)
   subscription: SubscriptionContract;
+
+  @Field(() => PaymentMethod, { nullable: true })
+  paymentMethod?: PaymentMethod;
 
   @Field(() => Product)
   product: Product;
@@ -40,6 +44,9 @@ export class Invoice {
 
   @Field(() => Boolean)
   active: boolean;
+
+  @Field(() => String, { nullable: true })
+  url?: string;
 
   @Field(() => String, { nullable: true })
   paidAt?: string;

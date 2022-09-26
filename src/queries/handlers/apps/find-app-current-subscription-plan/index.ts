@@ -3,6 +3,7 @@ import { cleanValue } from '@stokei/nestjs';
 
 import { AppCurrentSubscriptionPlan } from '@/dtos/apps/app-current-subscription-plan.dto';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import {
   AppNotFoundException,
   DataNotFoundException,
@@ -48,9 +49,13 @@ export class FindAppCurrentSubscriptionPlanQueryHandler
             product: {
               search: ServerStokeiApiIdPrefix.PLANS
             }
+          },
+          NOT: {
+            status: SubscriptionContractStatus.CANCELED
           }
         },
         orderBy: {
+          status: 'asc',
           createdAt: 'desc'
         },
         page: {

@@ -21,8 +21,8 @@ export class CreateCheckoutResolver {
   ) {
     const response = await this.createCheckoutService.execute({
       ...data,
-      customer: data.toApp || currentAccountId,
-      fromApp: currentAppId,
+      customer: data.customer || currentAccountId,
+      app: currentAppId,
       createdBy: currentAccountId
     });
     return response;

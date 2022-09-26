@@ -5,7 +5,7 @@ import {
   UnauthorizedException
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { extractRequestFromContext } from '@stokei/nestjs';
+import { extractRequestFromContext, isBoolean } from '@stokei/nestjs';
 
 import { APP_CONFIG } from '@/common/decorators/app-config.decorator';
 import { APP_ID_HEADER_NAME } from '@/constants/app-header-names';
@@ -25,10 +25,15 @@ export class AppGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext) {
     const request = this.getRequest(context);
-    const config = this.reflector.getAllAndOverride<IAppConfigDecorator>(
-      APP_CONFIG,
-      [context.getHandler(), context.getClass()]
-    );
+    const config =
+      this.reflector.getAllAndOverride<IAppConfigDecorator>(APP_CONFIG, [
+        context.getHandler(),
+        context.getClass()
+      ]) || {};
+
+    config.isRequired = isBoolean(config?.isRequired)
+      ? config?.isRequired === true
+      : true;
 
     if (config && !config?.isRequired) {
       return true;

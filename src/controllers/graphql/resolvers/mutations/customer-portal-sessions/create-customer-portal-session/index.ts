@@ -23,7 +23,7 @@ export class CreateCustomerPortalSessionResolver {
   ) {
     const response = await this.createCustomerPortalSessionService.execute({
       ...data,
-      customer: data.app || currentAccountId,
+      customer: data.customer || currentAccountId,
       app: currentAppCurrentAppId
     });
     return response;

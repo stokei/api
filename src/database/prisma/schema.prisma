@@ -460,6 +460,8 @@ model Invoice {
   createdAt      DateTime?     @default(now()) @map("created_at")
   updatedBy      String?       @map("updated_by") @db.VarChar(255)
   createdBy      String?
+
+  @@map("invoices")
 }
 
 model SubscriptionContract {

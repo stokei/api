@@ -36,7 +36,7 @@ export class SubscriptionContractMapper {
         id: prismaMapper.toWhereIds(operatorData.ids),
         parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
-        product: prismaMapper.toWhereData(operatorData.product),
+        product: prismaMapper.toWhereDataSearch(operatorData.product),
         invoiceProduct: prismaMapper.toWhereData(operatorData.invoiceProduct),
         invoicePrice: prismaMapper.toWhereData(operatorData.invoicePrice),
         status: operatorData.status,
@@ -76,7 +76,7 @@ export class SubscriptionContractMapper {
       return {
         [operator]: {
           parent: cleanWhereDataSearch(operatorData.parent),
-          product: cleanWhereDataString(operatorData.product),
+          product: cleanWhereDataSearch(operatorData.product),
           invoiceProduct: cleanWhereDataString(operatorData.invoiceProduct),
           invoicePrice: cleanWhereDataString(operatorData.invoicePrice),
           status: operatorData.status,

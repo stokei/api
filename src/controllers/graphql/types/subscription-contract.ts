@@ -7,6 +7,7 @@ import { Account } from './account';
 import { App } from './app';
 import { Classroom } from './classroom';
 import { Invoice } from './invoice';
+import { PaymentMethod } from './payment-method';
 import { Plan } from './plan';
 
 @ObjectType()
@@ -19,6 +20,9 @@ export class SubscriptionContract {
 
   @Field(() => Classroom, { nullable: true })
   classroom?: Classroom;
+
+  @Field(() => PaymentMethod, { nullable: true })
+  paymentMethod?: PaymentMethod;
 
   @Field(() => SubscriptionContractStatus)
   status: SubscriptionContractStatus;

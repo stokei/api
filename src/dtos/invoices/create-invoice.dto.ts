@@ -2,6 +2,7 @@ import { InvoiceStatus } from '@/enums/invoice-status.enum';
 
 export interface CreateInvoiceDTO {
   app: string;
+  url: string;
   customer: string;
   subscription: string;
   product: string;

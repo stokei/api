@@ -1,4 +1,12 @@
-import { Controller, Post, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  ParseFilePipeBuilder,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
   AuthenticatedGuard,
@@ -24,18 +32,34 @@ export class CreateImageController {
   @Post()
   @UseGuards(AuthenticatedGuard, AppGuard)
   @AuthenticationConfig({ isRequired: false })
+  @UseInterceptors(FileInterceptor('file'))
   @ApiCreatedResponse({
     description: 'The image has been successfully created.',
     type: ImageModel
   })
   async createImage(
     @CurrentAccount('id') currentAccountId: string,
-    @CurrentApp('id') appId: string
+    @CurrentApp('id') appId: string,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: 'png'
+        })
+        .addMaxSizeValidator({
+          maxSize: 100000000
+        })
+        .build()
+    )
+    file: any
   ) {
+    console.log(file);
+    return { status: true };
+    /*
     return this.createImageService.execute({
       path: '',
       app: appId,
       createdBy: currentAccountId
     });
+    */
   }
 }

@@ -3,6 +3,7 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { ProductCreatedEvent } from '@/events/implements/products/product-created.event';
+import { ProductUpdatedEvent } from '@/events/implements/products/product-updated.event';
 
 export interface IProductModelData {
   readonly id?: string;
@@ -69,6 +70,17 @@ export class ProductModel extends AggregateRoot {
       this.apply(
         new ProductCreatedEvent({
           createdBy,
+          product: this
+        })
+      );
+    }
+  }
+
+  updatedProduct({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new ProductUpdatedEvent({
+          updatedBy,
           product: this
         })
       );

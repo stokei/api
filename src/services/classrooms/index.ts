@@ -1,13 +1,15 @@
+import { ActivateClassroomService } from './activate-classroom';
 import { CreateClassroomService } from './create-classroom';
+import { DeactivateClassroomService } from './deactivate-classroom';
 import { FindAllClassroomsService } from './find-all-classrooms';
 import { FindClassroomByIdService } from './find-classroom-by-id';
-import { RemoveClassroomService } from './remove-classroom';
 import { UpdateClassroomService } from './update-classroom';
 
 export const ClassroomServices = [
   CreateClassroomService,
-  RemoveClassroomService,
   UpdateClassroomService,
   FindClassroomByIdService,
-  FindAllClassroomsService
+  FindAllClassroomsService,
+  DeactivateClassroomService,
+  ActivateClassroomService
 ];

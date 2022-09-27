@@ -1,10 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
-import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
+import { hiddenPrivateDataFromObject, splitServiceId } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { CreateClassroomStudentCommand } from '@/commands/implements/classroom-students/create-classroom-student.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { SubscriptionContractActivatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-activated.event';
 import { SubscriptionContractCanceledEvent } from '@/events/implements/subscription-contracts/subscription-contract-canceled.event';
 import { SubscriptionContractCreatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-created.event';
@@ -75,7 +77,28 @@ export class SubscriptionContractsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        let commands = [];
+
+        const subscriptionContract = event.subscriptionContract;
+
+        const subscriptionContractServiceType = splitServiceId(
+          subscriptionContract.product
+        ).service;
+
+        if (
+          subscriptionContractServiceType === ServerStokeiApiIdPrefix.CLASSROOMS
+        ) {
+          commands = [
+            ...commands,
+            new CreateClassroomStudentCommand({
+              app: subscriptionContract.app,
+              classroom: subscriptionContract.product,
+              student: subscriptionContract.parent,
+              createdBy: subscriptionContract.createdBy
+            })
+          ];
+        }
+
         return commands;
       }),
       mergeMap((c) => c)

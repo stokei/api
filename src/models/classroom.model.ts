@@ -2,8 +2,9 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { ClassroomActivatedEvent } from '@/events/implements/classrooms/classroom-activated.event';
 import { ClassroomCreatedEvent } from '@/events/implements/classrooms/classroom-created.event';
-import { ClassroomRemovedEvent } from '@/events/implements/classrooms/classroom-removed.event';
+import { ClassroomDeactivatedEvent } from '@/events/implements/classrooms/classroom-deactivated.event';
 import { ClassroomUpdatedEvent } from '@/events/implements/classrooms/classroom-updated.event';
 
 export interface IClassroomModelData {
@@ -75,11 +76,22 @@ export class ClassroomModel extends AggregateRoot {
     }
   }
 
-  removedClassroom({ removedBy }: { removedBy: string }) {
+  deactivatedClassroom({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
-        new ClassroomRemovedEvent({
-          removedBy,
+        new ClassroomDeactivatedEvent({
+          updatedBy,
+          classroom: this
+        })
+      );
+    }
+  }
+
+  activatedClassroom({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new ClassroomActivatedEvent({
+          updatedBy,
           classroom: this
         })
       );

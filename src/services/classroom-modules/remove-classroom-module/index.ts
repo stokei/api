@@ -9,11 +9,13 @@ import { ClassroomModuleModel } from '@/models/classroom-module.model';
 @Injectable()
 export class RemoveClassroomModuleService
   implements
-    IBaseService<RemoveClassroomModuleDTO, Promise<ClassroomModuleModel>>
+    IBaseService<RemoveClassroomModuleDTO, Promise<ClassroomModuleModel[]>>
 {
   constructor(private readonly commandBus: CommandBus) {}
 
-  async execute(data: RemoveClassroomModuleDTO): Promise<ClassroomModuleModel> {
+  async execute(
+    data: RemoveClassroomModuleDTO
+  ): Promise<ClassroomModuleModel[]> {
     return await this.commandBus.execute(
       new RemoveClassroomModuleCommand(data)
     );

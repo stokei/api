@@ -29,6 +29,6 @@ export class RemoveClassroomModuleResolver {
         removedBy: currentAccountId
       }
     });
-    return response;
+    return response?.[0];
   }
 }

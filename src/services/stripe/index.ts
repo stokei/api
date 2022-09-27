@@ -9,11 +9,13 @@ import { CreateStripeCustomerPortalSessionService } from './create-stripe-custom
 import { CreateStripePriceService } from './create-stripe-price';
 import { CreateStripeProductService } from './create-stripe-product';
 import { CreateStripeSubscriptionService } from './create-stripe-subscription';
+import { DeleteStripePriceService } from './delete-stripe-price';
 import { DeleteStripeProductService } from './delete-stripe-product';
 import { FindStripeCheckoutSessionByIdService } from './find-checkout-session-by-id';
 import { FindStripeInvoiceByIdService } from './find-invoice-by-id';
 import { FindStripePaymentMethodByIdService } from './find-payment-method-by-id';
 import { UpdateStripeCustomerService } from './update-stripe-customer';
+import { UpdateStripeProductService } from './update-stripe-product';
 
 export const StripeServices = [
   CreateStripeAccountService,
@@ -31,5 +33,7 @@ export const StripeServices = [
   FindStripeInvoiceByIdService,
   UpdateStripeCustomerService,
   DeleteStripeProductService,
-  CreateStripeSubscriptionService
+  CreateStripeSubscriptionService,
+  UpdateStripeProductService,
+  DeleteStripePriceService
 ];

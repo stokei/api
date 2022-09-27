@@ -4,29 +4,29 @@ import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
-import { RemoveClassroomInput } from '@/controllers/graphql/inputs/classrooms/remove-classroom.input';
+import { DeactivateClassroomInput } from '@/controllers/graphql/inputs/classrooms/deactivate-classroom.input';
 import { Classroom } from '@/controllers/graphql/types/classroom';
-import { RemoveClassroomService } from '@/services/classrooms/remove-classroom';
+import { DeactivateClassroomService } from '@/services/classrooms/deactivate-classroom';
 
 @Resolver(() => Classroom)
-export class RemoveClassroomResolver {
+export class DeactivateClassroomResolver {
   constructor(
-    private readonly removeClassroomService: RemoveClassroomService
+    private readonly deactivateClassroomService: DeactivateClassroomService
   ) {}
 
   @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Classroom)
-  async removeClassroom(
+  async deactivateClassroom(
     @CurrentAccount('id') currentAccountId: string,
     @CurrentApp('id') appId: string,
-    @Args('input') data: RemoveClassroomInput
+    @Args('input') data: DeactivateClassroomInput
   ) {
-    const response = await this.removeClassroomService.execute({
+    const response = await this.deactivateClassroomService.execute({
       ...data,
       where: {
         ...data?.where,
         app: appId,
-        removedBy: currentAccountId
+        updatedBy: currentAccountId
       }
     });
     return response;

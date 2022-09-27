@@ -1,9 +1,11 @@
+import { ActivateClassroomCommandHandler } from './activate-classroom';
 import { CreateClassroomCommandHandler } from './create-classroom';
-import { RemoveClassroomCommandHandler } from './remove-classroom';
+import { DeactivateClassroomCommandHandler } from './deactivate-classroom';
 import { UpdateClassroomCommandHandler } from './update-classroom';
 
 export const ClassroomCommandHandlers = [
   CreateClassroomCommandHandler,
-  RemoveClassroomCommandHandler,
-  UpdateClassroomCommandHandler
+  UpdateClassroomCommandHandler,
+  ActivateClassroomCommandHandler,
+  DeactivateClassroomCommandHandler
 ];

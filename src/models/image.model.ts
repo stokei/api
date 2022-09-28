@@ -2,9 +2,13 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { ApiProperty } from '@nestjs/swagger';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
+import { REST_VERSIONS } from '@/constants/rest-versions';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { IS_DEVELOPMENT, SERVER_URL } from '@/environments';
 import { ImageCreatedEvent } from '@/events/implements/images/image-created.event';
 import { ImageRemovedEvent } from '@/events/implements/images/image-removed.event';
+import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 
 export interface IImageModelData {
   readonly id?: string;
@@ -43,12 +47,22 @@ export class ImageModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.path = data.path;
-    this.url = data.path;
+    this.url = ImageModel.createImageURL(data.path);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+  }
+
+  static createImageURL(imagePath: string) {
+    if (IS_DEVELOPMENT) {
+      return appendPathnameToURL(
+        SERVER_URL,
+        `${REST_VERSIONS.V1_TEXT}/${REST_CONTROLLERS_URL_NAMES.IMAGES}/${imagePath}`
+      );
+    }
+    return imagePath;
   }
 
   createdImage({ createdBy }: { createdBy: string }) {

@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { StokeiApiServerInfo } from './enums/server-info.enum';
-import { HOST, PORT } from './environments';
+import { SERVER_HOST, SERVER_PORT } from './environments';
 import { MainModule } from './main.module';
 
 async function bootstrap() {
@@ -27,7 +27,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  app.listen(PORT, HOST, async () => {
+  app.listen(SERVER_PORT, SERVER_HOST, async () => {
     Logger.log(
       `API(${StokeiApiServerInfo.NAME}) started at ${await app.getUrl()}!`
     );

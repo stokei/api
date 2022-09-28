@@ -1,4 +1,11 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors
+} from '@nestjs/common';
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import {
   AuthenticatedGuard,
@@ -11,6 +18,7 @@ import { AppGuard } from '@/common/guards/app';
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
 import { CreateVideoDTO } from '@/dtos/videos/create-video.dto';
+import { VideoUploaderInterceptor } from '@/interceptors';
 import { VideoModel } from '@/models/video.model';
 import { CreateVideoService } from '@/services/videos/create-video';
 
@@ -25,6 +33,11 @@ export class CreateVideoController {
   @Post()
   @UseGuards(AuthenticatedGuard, AppGuard)
   @AuthenticationConfig({ isRequired: false })
+  @UseInterceptors(
+    VideoUploaderInterceptor({
+      fieldName: 'video'
+    })
+  )
   @ApiCreatedResponse({
     description: 'The video has been successfully created.',
     type: VideoModel
@@ -32,10 +45,12 @@ export class CreateVideoController {
   async createVideo(
     @Body() data: CreateVideoDTO,
     @CurrentAccount('id') currentAccountId: string,
-    @CurrentApp('id') appId: string
+    @CurrentApp('id') appId: string,
+    @UploadedFile() videoFile: any
   ) {
     return this.createVideoService.execute({
       ...data,
+      path: videoFile?.filename,
       app: appId,
       createdBy: currentAccountId
     });

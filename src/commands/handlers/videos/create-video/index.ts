@@ -1,5 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
+import { nanoid } from 'nanoid';
 
 import { CreateVideoCommand } from '@/commands/implements/videos/create-video.command';
 import { VideoStatus } from '@/enums/video-status.enum';
@@ -26,12 +27,20 @@ export class CreateVideoCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data?.parent) {
+      throw new ParamNotFoundException<CreateVideoCommandKeys>('parent');
+    }
+    if (!data?.name) {
+      throw new ParamNotFoundException<CreateVideoCommandKeys>('name');
+    }
     if (!data?.url && !data?.path) {
       throw new ParamNotFoundException<CreateVideoCommandKeys>('path');
     }
 
+    const slug = cleanSlug(data.name + nanoid(8));
     const videoCreated = await this.createVideoRepository.execute({
       ...data,
+      slug,
       external: !!data.url,
       status: VideoStatus.ACTIVE
     });

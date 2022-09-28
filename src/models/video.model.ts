@@ -2,11 +2,15 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { ApiProperty } from '@nestjs/swagger';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
+import { REST_VERSIONS } from '@/constants/rest-versions';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { VideoStatus } from '@/enums/video-status.enum';
+import { IS_DEVELOPMENT, SERVER_URL } from '@/environments';
 import { VideoCreatedEvent } from '@/events/implements/videos/video-created.event';
 import { VideoRemovedEvent } from '@/events/implements/videos/video-removed.event';
 import { VideoUpdatedEvent } from '@/events/implements/videos/video-updated.event';
+import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 
 export interface IVideoModelData {
   readonly id?: string;
@@ -74,7 +78,10 @@ export class VideoModel extends AggregateRoot {
     this.parent = data.parent;
     this.slug = data.slug;
     this.path = data.path;
-    this.url = data.url;
+    this.url = VideoModel.createVideoURL({
+      url: data.url,
+      path: this.path
+    });
     this.stripe = data.stripe;
     this.name = data.name;
     this.description = data.description;
@@ -87,6 +94,19 @@ export class VideoModel extends AggregateRoot {
     this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+  }
+
+  static createVideoURL({ url, path }: { path?: string; url?: string }) {
+    if (url) {
+      return url;
+    }
+    if (IS_DEVELOPMENT) {
+      return appendPathnameToURL(
+        SERVER_URL,
+        `${REST_VERSIONS.V1_TEXT}/${REST_CONTROLLERS_URL_NAMES.VIDEOS}/${path}`
+      );
+    }
+    return path;
   }
 
   createdVideo({ createdBy }: { createdBy: string }) {

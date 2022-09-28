@@ -1,6 +1,8 @@
 node_modules/*
 dist/
 .github/
+images/
+videos/
 
 # ignore .git and .cache folders
 .git

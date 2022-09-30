@@ -1,50 +1,40 @@
-import { existsSync, mkdirSync } from 'fs';
-import * as path from 'path';
-import { v4 as uuid } from 'uuid';
+import { Injectable, mixin, NestInterceptor, Type } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 
-import { PATH_IMAGES, PATH_VIDEOS } from '@/constants/upload-file-paths';
-import { InvalidFileException } from '@/errors';
-
-export class FileUpload {
-  constructor(readonly request: any, readonly file: any) {}
-
-  get isImage() {
-    return !!this.file?.mimetype?.includes('image');
-  }
-
-  get isVideo() {
-    return !!this.file?.mimetype?.includes('video');
-  }
-
-  get destination() {
-    let dest = '';
-    if (this.isVideo) {
-      dest = PATH_VIDEOS;
-    }
-    if (this.isImage) {
-      dest = PATH_IMAGES;
-    }
-    if (!existsSync(dest)) {
-      mkdirSync(dest);
-    }
-    return dest;
-  }
-
-  get filename() {
-    return `${uuid()}${path.extname(this.file.originalname)}`;
-  }
-
-  filterVideo(callback: (error: Error, acceptFile: boolean) => void) {
-    if (!this.isVideo) {
-      return callback(new InvalidFileException(), false);
-    }
-    callback(null, true);
-  }
-
-  filterImage(callback: (error: Error, acceptFile: boolean) => void) {
-    if (!this.isImage) {
-      return callback(new InvalidFileException(), false);
-    }
-    callback(null, true);
-  }
+interface BaseFilesInterceptorOptions {
+  fieldName: string;
+  storage: any;
+  path?: string;
+  fileFilter?: MulterOptions['fileFilter'];
+  limits?: MulterOptions['limits'];
 }
+
+function BaseFilesInterceptor(
+  options: BaseFilesInterceptorOptions
+): Type<NestInterceptor> {
+  @Injectable()
+  class Interceptor implements NestInterceptor {
+    fileInterceptor: NestInterceptor;
+    constructor() {
+      const multerOptions: MulterOptions = {
+        storage: options.storage,
+        preservePath: true,
+        fileFilter: options.fileFilter,
+        limits: options.limits
+      };
+
+      this.fileInterceptor = new (FileInterceptor(
+        options.fieldName,
+        multerOptions
+      ))();
+    }
+
+    intercept(...args: Parameters<NestInterceptor['intercept']>) {
+      return this.fileInterceptor.intercept(...args);
+    }
+  }
+  return mixin(Interceptor);
+}
+
+export { BaseFilesInterceptor };

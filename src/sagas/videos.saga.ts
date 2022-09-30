@@ -4,8 +4,10 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { StartVideoEncodingCommand } from '@/commands/implements/videos/start-video-encoding.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { VideoCreatedEvent } from '@/events/implements/videos/video-created.event';
+import { VideoEncodingStartedEvent } from '@/events/implements/videos/video-encoding-started.event';
 import { VideoRemovedEvent } from '@/events/implements/videos/video-removed.event';
 import { VideoUpdatedEvent } from '@/events/implements/videos/video-updated.event';
 
@@ -30,7 +32,13 @@ export class VideosSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new StartVideoEncodingCommand({
+            app: event.video.app,
+            video: event.video.id,
+            updatedBy: event.createdBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)
@@ -64,6 +72,25 @@ export class VideosSagas {
       map((event) => {
         this.logger.log(
           'Inside [VideoUpdatedEvent] Saga event videoUpdated:' +
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
+        );
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
+    );
+  };
+
+  @Saga()
+  videoEncodingStarted = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(VideoEncodingStartedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [VideoEncodingStartedEvent] Saga event videoEncodingStart:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

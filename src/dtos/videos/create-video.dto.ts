@@ -11,12 +11,15 @@ export class CreateVideoDTO {
   description?: string;
 
   @ApiProperty({ nullable: true })
+  temporaryURL?: string;
+
+  @ApiProperty({ nullable: true })
   poster?: string;
 
   @ApiProperty({ nullable: true })
   url?: string;
 
   app: string;
-  path?: string;
+  filename?: string;
   createdBy: string;
 }

@@ -1,7 +1,9 @@
-import { IS_DEVELOPMENT } from '@/environments';
+import { IS_PRODUCTION } from '@/environments';
+import { FileUploadInterceptorModel } from '@/models/file-upload-interceptor.model';
+import { digitaloceanStorageFiles } from '@/storages/digital-ocean';
+import { localStorageFiles } from '@/storages/local';
 
-import { FileUpload } from './base';
-import { LocalFilesInterceptor } from './local';
+import { BaseFilesInterceptor } from './base';
 
 interface VideoUploaderInterceptorOptions {
   fieldName: string;
@@ -14,19 +16,19 @@ interface ImageUploaderInterceptorOptions {
 export const VideoUploaderInterceptor = (
   options: VideoUploaderInterceptorOptions
 ) =>
-  IS_DEVELOPMENT &&
-  LocalFilesInterceptor({
+  BaseFilesInterceptor({
     fieldName: options.fieldName,
+    storage: IS_PRODUCTION ? digitaloceanStorageFiles : localStorageFiles,
     fileFilter: (request, file, callback) =>
-      new FileUpload(request, file).filterVideo(callback)
+      new FileUploadInterceptorModel(request, file).filterVideo(callback)
   });
 
 export const ImageUploaderInterceptor = (
   options: ImageUploaderInterceptorOptions
 ) =>
-  IS_DEVELOPMENT &&
-  LocalFilesInterceptor({
+  BaseFilesInterceptor({
     fieldName: options.fieldName,
+    storage: IS_PRODUCTION ? digitaloceanStorageFiles : localStorageFiles,
     fileFilter: (request, file, callback) =>
-      new FileUpload(request, file).filterImage(callback)
+      new FileUploadInterceptorModel(request, file).filterImage(callback)
   });

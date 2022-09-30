@@ -19,7 +19,7 @@ export class Video {
   slug: string;
 
   @Field(() => String)
-  path: string;
+  filename: string;
 
   @Field(() => String)
   url: string;

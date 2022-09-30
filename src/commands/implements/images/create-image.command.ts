@@ -3,12 +3,12 @@ import { ICommand } from '@nestjs/cqrs';
 import { CreateImageDTO } from '@/dtos/images/create-image.dto';
 
 export class CreateImageCommand implements ICommand, CreateImageDTO {
-  path: string;
+  filename: string;
   app: string;
   createdBy: string;
 
   constructor(data: CreateImageDTO) {
-    this.path = data.path;
+    this.filename = data.filename;
     this.app = data.app;
     this.createdBy = data.createdBy;
   }

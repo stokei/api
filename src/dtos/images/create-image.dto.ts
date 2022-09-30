@@ -1,5 +1,5 @@
 export interface CreateImageDTO {
-  path: string;
+  filename: string;
   app: string;
   createdBy: string;
 }

@@ -13,7 +13,7 @@ import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 export interface IImageModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly path: string;
+  readonly filename: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly app: string;
@@ -25,7 +25,7 @@ export class ImageModel extends AggregateRoot {
   @ApiProperty()
   readonly id: string;
   @ApiProperty()
-  readonly path: string;
+  readonly filename: string;
   @ApiProperty()
   readonly url: string;
   @ApiProperty({ nullable: true })
@@ -46,8 +46,8 @@ export class ImageModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.IMAGES,
       id: data._id?.toString() || data.id
     });
-    this.path = data.path;
-    this.url = ImageModel.createImageURL(data.path);
+    this.filename = data.filename;
+    this.url = ImageModel.createImageURL(data.filename);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;

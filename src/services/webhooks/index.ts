@@ -1,3 +1,4 @@
+import { WebhookQencodeService } from './qencode';
 import { WebhookStripeService } from './stripe';
 import { WebhookStripeInvoiceCreatedService } from './stripe-invoice-created';
 import { WebhookStripeInvoicePaidService } from './stripe-invoice-paid';
@@ -6,6 +7,7 @@ import { WebhookStripeSubscriptionContractCanceledService } from './stripe-subsc
 import { WebhookStripeSubscriptionUpdateService } from './stripe-subscription-contract-update';
 
 export const WebhookServices = [
+  WebhookQencodeService,
   WebhookStripeService,
   WebhookStripeInvoiceCreatedService,
   WebhookStripeSubscriptionContractCanceledService,

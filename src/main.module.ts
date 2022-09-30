@@ -56,10 +56,16 @@ export class MainModule implements NestModule {
   public configure(consumer: MiddlewareConsumer): void {
     consumer
       .apply(RawBodyMiddleware)
-      .forRoutes({
-        path: '/v1/' + REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
-        method: RequestMethod.POST
-      })
+      .forRoutes(
+        {
+          path: '/v1/' + REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
+          method: RequestMethod.POST
+        },
+        {
+          path: '/v1/' + REST_CONTROLLERS_URL_NAMES.WEBHOOKS_QENCODE,
+          method: RequestMethod.POST
+        }
+      )
       .apply(JsonBodyMiddleware)
       .forRoutes('*');
   }

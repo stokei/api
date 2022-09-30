@@ -9,7 +9,7 @@ export class Image {
   id: string;
 
   @Field(() => String)
-  path: string;
+  filename: string;
 
   @Field(() => String)
   url: string;

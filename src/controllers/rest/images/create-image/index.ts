@@ -46,7 +46,7 @@ export class CreateImageController {
     @UploadedFile() imageFile: any
   ) {
     return await this.createImageService.execute({
-      path: imageFile?.filename,
+      filename: imageFile?.filename,
       app: appId,
       createdBy: currentAccountId
     });

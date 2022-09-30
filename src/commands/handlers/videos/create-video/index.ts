@@ -33,16 +33,18 @@ export class CreateVideoCommandHandler
     if (!data?.name) {
       throw new ParamNotFoundException<CreateVideoCommandKeys>('name');
     }
-    if (!data?.url && !data?.path) {
-      throw new ParamNotFoundException<CreateVideoCommandKeys>('path');
+    if (!data?.url && !data?.filename) {
+      throw new ParamNotFoundException<CreateVideoCommandKeys>('filename');
     }
 
     const slug = cleanSlug(data.name + nanoid(8));
+    const isExternal = !!data.url;
     const videoCreated = await this.createVideoRepository.execute({
       ...data,
+      active: isExternal,
       slug,
-      external: !!data.url,
-      status: VideoStatus.ACTIVE
+      external: isExternal,
+      status: isExternal ? VideoStatus.ACTIVE : VideoStatus.PENDING
     });
     if (!videoCreated) {
       throw new VideoNotFoundException();
@@ -62,7 +64,8 @@ export class CreateVideoCommandHandler
       app: cleanValue(command?.app),
       name: cleanValue(command?.name),
       description: cleanValue(command?.description),
-      path: cleanValue(command?.path),
+      temporaryURL: cleanValue(command?.temporaryURL),
+      filename: cleanValue(command?.filename),
       url: cleanValue(command?.url),
       poster: cleanValue(command?.poster),
       parent: cleanValue(command?.parent)

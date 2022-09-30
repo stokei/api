@@ -8,6 +8,7 @@ import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { VideoStatus } from '@/enums/video-status.enum';
 import { IS_DEVELOPMENT, SERVER_URL } from '@/environments';
 import { VideoCreatedEvent } from '@/events/implements/videos/video-created.event';
+import { VideoEncodingStartedEvent } from '@/events/implements/videos/video-encoding-started.event';
 import { VideoRemovedEvent } from '@/events/implements/videos/video-removed.event';
 import { VideoUpdatedEvent } from '@/events/implements/videos/video-updated.event';
 import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
@@ -18,9 +19,9 @@ export interface IVideoModelData {
   readonly parent: string;
   readonly name?: string;
   readonly slug?: string;
-  readonly path?: string;
+  readonly filename?: string;
+  readonly temporaryURL?: string;
   readonly url?: string;
-  readonly stripe?: boolean;
   readonly description?: string;
   readonly poster?: string;
   readonly duration?: number;
@@ -45,11 +46,11 @@ export class VideoModel extends AggregateRoot {
   @ApiProperty({ nullable: true })
   readonly slug?: string;
   @ApiProperty()
-  readonly path?: string;
+  readonly filename?: string;
   @ApiProperty()
   readonly url?: string;
-  @ApiProperty({ type: Boolean })
-  readonly stripe?: boolean;
+  @ApiProperty()
+  readonly temporaryURL?: string;
   @ApiProperty({ nullable: true })
   readonly poster?: string;
   @ApiProperty({ nullable: true })
@@ -77,12 +78,12 @@ export class VideoModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.slug = data.slug;
-    this.path = data.path;
+    this.filename = data.filename;
     this.url = VideoModel.createVideoURL({
       url: data.url,
-      path: this.path
+      filename: this.filename
     });
-    this.stripe = data.stripe;
+    this.temporaryURL = data.temporaryURL;
     this.name = data.name;
     this.description = data.description;
     this.poster = data.poster;
@@ -96,17 +97,23 @@ export class VideoModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  static createVideoURL({ url, path }: { path?: string; url?: string }) {
+  static createVideoURL({
+    url,
+    filename
+  }: {
+    filename?: string;
+    url?: string;
+  }) {
     if (url) {
       return url;
     }
     if (IS_DEVELOPMENT) {
       return appendPathnameToURL(
         SERVER_URL,
-        `${REST_VERSIONS.V1_TEXT}/${REST_CONTROLLERS_URL_NAMES.VIDEOS}/${path}`
+        `${REST_VERSIONS.V1_TEXT}/${REST_CONTROLLERS_URL_NAMES.VIDEOS}/${filename}`
       );
     }
-    return path;
+    return filename;
   }
 
   createdVideo({ createdBy }: { createdBy: string }) {
@@ -136,6 +143,17 @@ export class VideoModel extends AggregateRoot {
       this.apply(
         new VideoRemovedEvent({
           removedBy,
+          video: this
+        })
+      );
+    }
+  }
+
+  videoEncodingStarted({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new VideoEncodingStartedEvent({
+          updatedBy,
           video: this
         })
       );

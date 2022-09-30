@@ -28,3 +28,16 @@ export const STRIPE_ONBOARDING_REFRESH_URL: string =
 
 export const STRIPE_WEBHOOK_SECRET: string = process.env.STRIPE_WEBHOOK_SECRET;
 export const STRIPE_SECRET_KEY: string = process.env.STRIPE_SECRET_KEY;
+
+export const QENCODE_ACCESS_KEY: string = process.env.QENCODE_ACCESS_KEY;
+export const QENCODE_WEBHOOK_ENDPOINT: string =
+  process.env.QENCODE_WEBHOOK_ENDPOINT;
+
+export const DIGITALOCEAN_SPACES_ENDPOINT: string =
+  process.env.DIGITALOCEAN_SPACES_ENDPOINT;
+export const DIGITALOCEAN_SPACES_KEY: string =
+  process.env.DIGITALOCEAN_SPACES_KEY;
+export const DIGITALOCEAN_SPACES_SECRET: string =
+  process.env.DIGITALOCEAN_SPACES_SECRET;
+export const DIGITALOCEAN_SPACES_NAME: string =
+  process.env.DIGITALOCEAN_SPACES_NAME;

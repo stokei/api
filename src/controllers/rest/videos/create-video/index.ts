@@ -50,7 +50,7 @@ export class CreateVideoController {
   ) {
     return this.createVideoService.execute({
       ...data,
-      path: videoFile?.filename,
+      filename: videoFile?.filename,
       app: appId,
       createdBy: currentAccountId
     });

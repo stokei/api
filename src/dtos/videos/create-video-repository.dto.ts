@@ -5,5 +5,6 @@ import { CreateVideoDTO } from './create-video.dto';
 export interface CreateVideoRepositoryDTO extends CreateVideoDTO {
   status: VideoStatus;
   external: boolean;
+  active: boolean;
   slug: string;
 }

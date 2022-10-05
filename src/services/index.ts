@@ -14,6 +14,7 @@ import { CourseServices } from './courses';
 import { CurrencyServices } from './currencies';
 import { CustomerPortalSessionServices } from './customer-portal-sessions';
 import { DomainServices } from './domains';
+import { FileServices } from './files';
 import { ImageServices } from './images';
 import { InvoiceServices } from './invoices';
 import { LanguageServices } from './languages';
@@ -61,5 +62,6 @@ export const Services = [
   ...CustomerPortalSessionServices,
   ...WebhookServices,
   ...InvoiceServices,
-  ...QencodeServices
+  ...QencodeServices,
+  ...FileServices
 ];

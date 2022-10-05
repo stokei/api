@@ -14,6 +14,7 @@ export enum ServerStokeiApiIdPrefix {
   PLANS = 'plan',
   IMAGES = 'img',
   VIDEOS = 'video',
+  FILES = 'file',
   VIDEO_AUTHORS = 'author',
   MODULES = 'mod',
   MODULE_VIDEOS = 'mod_video',

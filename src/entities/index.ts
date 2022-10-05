@@ -12,6 +12,7 @@ export * from './course-instructor.entity';
 export * from './course-student.entity';
 export * from './currency.entity';
 export * from './domain.entity';
+export * from './file.entity';
 export * from './image.entity';
 export * from './invoice.entity';
 export * from './language.entity';

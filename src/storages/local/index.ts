@@ -5,17 +5,17 @@ import { FileUploadInterceptorModel } from '@/models/file-upload-interceptor.mod
 
 export const localStorageFiles = diskStorage({
   destination: (request, file, callback) =>
-    callback(null, new FileUploadInterceptorModel(request, file).destination),
+    callback(null, new FileUploadInterceptorModel(file).destination),
   filename: (request, file, callback) =>
-    callback(null, new FileUploadInterceptorModel(request, file).filename)
+    callback(null, new FileUploadInterceptorModel(file).generateFilename())
 });
 
-export const deleteFile = async (filePath: string): Promise<boolean> => {
+export const localDeleteFile = async (filename: string): Promise<boolean> => {
   try {
-    if (!existsSync(filePath)) {
+    if (!existsSync(filename)) {
       return false;
     }
-    await unlinkSync(filePath);
+    await unlinkSync(filename);
     return true;
   } catch (err) {
     return false;

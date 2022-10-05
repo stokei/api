@@ -12,6 +12,7 @@ import { CourseStudentsLoader } from './course-students.loader';
 import { CoursesLoader } from './courses.loader';
 import { CurrenciesLoader } from './currencies.loader';
 import { DomainsLoader } from './domains.loader';
+import { FilesLoader } from './files.loader';
 import { ImagesLoader } from './images.loader';
 import { InvoicesLoader } from './invoices.loader';
 import { LanguagesLoader } from './languages.loader';
@@ -51,5 +52,6 @@ export const Loaders = [
   ClassroomModulesLoader,
   AddressesLoader,
   PhonesLoader,
-  InvoicesLoader
+  InvoicesLoader,
+  FilesLoader
 ];

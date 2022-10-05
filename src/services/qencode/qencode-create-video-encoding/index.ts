@@ -45,7 +45,7 @@ export class QencodeCreateVideoEncodingService
           separate_audio: 1,
           segment_duration: '8',
           destination: {
-            url: `s3://${DIGITALOCEAN_SPACES_ENDPOINT}/${DIGITALOCEAN_SPACES_NAME}/videos/${data.video.name}`,
+            url: `s3://${DIGITALOCEAN_SPACES_ENDPOINT}/${DIGITALOCEAN_SPACES_NAME}/${data.video.filename}`,
             key: DIGITALOCEAN_SPACES_KEY,
             secret: DIGITALOCEAN_SPACES_SECRET,
             permissions: 'public-read'
@@ -77,12 +77,12 @@ export class QencodeCreateVideoEncodingService
               optimize_bitrate: optimizeBitrate
             }
           ],
-          playlist_name: `${data.video.name}.m3u8`
+          playlist_name: `${data.video.filename}.m3u8`
         }
       ],
       encoder_version: '2',
       callback_url: webhookURL.toString(),
-      source: data.video.temporaryURL
+      source: data.video.url
     };
 
     await task.StartCustom(taskTranscodingQueryParams, null);

@@ -1,19 +1,14 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { ApiProperty } from '@nestjs/swagger';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
-import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
-import { REST_VERSIONS } from '@/constants/rest-versions';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { IS_DEVELOPMENT, SERVER_URL } from '@/environments';
 import { ImageCreatedEvent } from '@/events/implements/images/image-created.event';
 import { ImageRemovedEvent } from '@/events/implements/images/image-removed.event';
-import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 
 export interface IImageModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly filename: string;
+  readonly file: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly app: string;
@@ -22,20 +17,12 @@ export interface IImageModelData {
 }
 
 export class ImageModel extends AggregateRoot {
-  @ApiProperty()
   readonly id: string;
-  @ApiProperty()
-  readonly filename: string;
-  @ApiProperty()
-  readonly url: string;
-  @ApiProperty({ nullable: true })
+  readonly file: string;
   readonly updatedAt?: string;
-  @ApiProperty({ nullable: true })
   readonly createdAt?: string;
-  @ApiProperty({ nullable: true })
   readonly app: string;
   readonly updatedBy?: string;
-  @ApiProperty({ nullable: true })
   readonly createdBy?: string;
 
   constructor(data: IImageModelData) {
@@ -46,23 +33,12 @@ export class ImageModel extends AggregateRoot {
       module: ServerStokeiApiIdPrefix.IMAGES,
       id: data._id?.toString() || data.id
     });
-    this.filename = data.filename;
-    this.url = ImageModel.createImageURL(data.filename);
+    this.file = data.file;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
-  }
-
-  static createImageURL(imagePath: string) {
-    if (IS_DEVELOPMENT) {
-      return appendPathnameToURL(
-        SERVER_URL,
-        `${REST_VERSIONS.V1_TEXT}/${REST_CONTROLLERS_URL_NAMES.IMAGES}/${imagePath}`
-      );
-    }
-    return imagePath;
   }
 
   createdImage({ createdBy }: { createdBy: string }) {

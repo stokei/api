@@ -34,6 +34,8 @@ export * from './domain-not-found';
 export * from './domains-not-found';
 export * from './error-updating-forgot-password-code';
 export * from './error-updating-password';
+export * from './file-not-found';
+export * from './files-not-found';
 export * from './image-not-found';
 export * from './images-not-found';
 export * from './invalid-email-or-password';

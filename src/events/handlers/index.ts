@@ -12,6 +12,7 @@ import { CourseStudentEventsHandlers } from './course-students';
 import { CourseEventsHandlers } from './courses';
 import { CurrencyEventsHandlers } from './currencies';
 import { DomainEventsHandlers } from './domains';
+import { FileEventsHandlers } from './files';
 import { ImageEventsHandlers } from './images';
 import { InvoiceEventsHandlers } from './invoices';
 import { LanguageEventsHandlers } from './languages';
@@ -36,6 +37,7 @@ export const EventsHandlers = [
   ...ProductEventsHandlers,
   ...PriceEventsHandlers,
   ...PaymentMethodEventsHandlers,
+  ...FileEventsHandlers,
   ...PlanEventsHandlers,
   ...InvoiceEventsHandlers,
   ...ImageEventsHandlers,

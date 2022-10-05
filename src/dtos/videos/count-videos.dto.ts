@@ -1,16 +1,12 @@
 import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
-import { VideoStatus } from '@/enums/video-status.enum';
-
 export interface CountVideosWhereDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   slug?: IWhereData<string>;
-  external?: IWhereData<boolean>;
-  description?: IWhereData<string>;
-  status?: VideoStatus;
+  description?: IWhereDataSearch;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

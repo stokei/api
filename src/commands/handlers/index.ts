@@ -14,6 +14,7 @@ import { CourseCommandHandlers } from './courses';
 import { CurrencyCommandHandlers } from './currencies';
 import { CustomerPortalSessionCommandHandlers } from './customer-portal-sessions';
 import { DomainCommandHandlers } from './domains';
+import { FileCommandHandlers } from './files';
 import { ImageCommandHandlers } from './images';
 import { InvoiceCommandHandlers } from './invoices';
 import { LanguageCommandHandlers } from './languages';
@@ -55,5 +56,6 @@ export const CommandHandlers = [
   ...PhoneCommandHandlers,
   ...CheckoutCommandHandlers,
   ...CustomerPortalSessionCommandHandlers,
-  ...InvoiceCommandHandlers
+  ...InvoiceCommandHandlers,
+  ...FileCommandHandlers
 ];

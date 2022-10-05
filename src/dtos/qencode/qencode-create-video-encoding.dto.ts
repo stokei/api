@@ -1,7 +1,7 @@
 interface QencodeCreateVideoEncodingVideoDTO {
   id: string;
-  name: string;
-  temporaryURL: string;
+  filename: string;
+  url: string;
 }
 
 export interface QencodeCreateVideoEncodingDTO {

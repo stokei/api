@@ -4,16 +4,21 @@ import { v4 as uuid } from 'uuid';
 
 import { PATH_IMAGES, PATH_VIDEOS } from '@/constants/upload-file-paths';
 import { InvalidFileException } from '@/errors';
+import { FileModel } from '@/models/file.model';
 
 export class FileUploadInterceptorModel {
-  constructor(readonly request: any, readonly file: any) {}
+  constructor(readonly file: any) {}
 
   get isImage() {
-    return !!this.file?.mimetype?.includes('image');
+    return FileModel.isImage(this.file?.mimetype);
   }
 
   get isVideo() {
-    return !!this.file?.mimetype?.includes('video');
+    return FileModel.isVideo(this.file?.mimetype);
+  }
+
+  get filename(): string {
+    return this.file?.key || this.file?.filename;
   }
 
   get destination() {
@@ -30,7 +35,15 @@ export class FileUploadInterceptorModel {
     return dest;
   }
 
-  get filename() {
+  get path(): string {
+    return this.destination + '/' + this.filename;
+  }
+
+  get temporaryURL(): string {
+    return this.file?.location;
+  }
+
+  generateFilename() {
     return `${uuid()}${path.extname(this.file.originalname)}`;
   }
 

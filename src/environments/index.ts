@@ -33,11 +33,5 @@ export const QENCODE_ACCESS_KEY: string = process.env.QENCODE_ACCESS_KEY;
 export const QENCODE_WEBHOOK_ENDPOINT: string =
   process.env.QENCODE_WEBHOOK_ENDPOINT;
 
-export const DIGITALOCEAN_SPACES_ENDPOINT: string =
-  process.env.DIGITALOCEAN_SPACES_ENDPOINT;
-export const DIGITALOCEAN_SPACES_KEY: string =
-  process.env.DIGITALOCEAN_SPACES_KEY;
-export const DIGITALOCEAN_SPACES_SECRET: string =
-  process.env.DIGITALOCEAN_SPACES_SECRET;
-export const DIGITALOCEAN_SPACES_NAME: string =
-  process.env.DIGITALOCEAN_SPACES_NAME;
+export const CLOUDFLARE_KEY: string = process.env.CLOUDFLARE_KEY;
+export const CLOUDFLARE_SECRET: string = process.env.CLOUDFLARE_SECRET;

@@ -1,9 +1,10 @@
 import { IS_PRODUCTION } from '@/environments';
 import { FileUploadInterceptorModel } from '@/models/file-upload-interceptor.model';
 import {
-  digitaloceanDeleteFile,
-  digitaloceanStorageFiles
-} from '@/storages/digital-ocean';
+  cloudflareImageStorage,
+  cloudflareVideoStorage
+} from '@/storages/cloudflare';
+import { digitaloceanDeleteFile } from '@/storages/digital-ocean';
 import { localDeleteFile, localStorageFiles } from '@/storages/local';
 
 import { BaseFilesInterceptor } from './base';
@@ -25,9 +26,7 @@ export const FileUploaderInterceptor = (
 ) =>
   BaseFilesInterceptor({
     fieldName: options.fieldName,
-    storage: IS_PRODUCTION ? digitaloceanStorageFiles : localStorageFiles,
-    fileFilter: (request, file, callback) =>
-      new FileUploadInterceptorModel(file).filterVideo(callback)
+    storage: localStorageFiles
   });
 
 export const VideoUploaderInterceptor = (
@@ -35,7 +34,7 @@ export const VideoUploaderInterceptor = (
 ) =>
   BaseFilesInterceptor({
     fieldName: options.fieldName,
-    storage: IS_PRODUCTION ? digitaloceanStorageFiles : localStorageFiles,
+    storage: IS_PRODUCTION ? cloudflareVideoStorage : localStorageFiles,
     fileFilter: (request, file, callback) =>
       new FileUploadInterceptorModel(file).filterVideo(callback)
   });
@@ -45,7 +44,7 @@ export const ImageUploaderInterceptor = (
 ) =>
   BaseFilesInterceptor({
     fieldName: options.fieldName,
-    storage: IS_PRODUCTION ? digitaloceanStorageFiles : localStorageFiles,
+    storage: IS_PRODUCTION ? cloudflareImageStorage : localStorageFiles,
     fileFilter: (request, file, callback) =>
       new FileUploadInterceptorModel(file).filterImage(callback)
   });

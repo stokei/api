@@ -2,12 +2,12 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateFileCommand } from '@/commands/implements/files/create-file.command';
-import { FileStatus } from '@/enums/file-status.enum';
 import {
   DataNotFoundException,
   FileNotFoundException,
   ParamNotFoundException
 } from '@/errors';
+import { FileModel } from '@/models/file.model';
 import { CreateFileRepository } from '@/repositories/files/create-file';
 
 type CreateFileCommandKeys = keyof CreateFileCommand;
@@ -33,10 +33,14 @@ export class CreateFileCommandHandler
       throw new ParamNotFoundException<CreateFileCommandKeys>('mimetype');
     }
 
+    const initialStatus = FileModel.initialStatus({
+      url: data.url,
+      mimetype: data.mimetype
+    });
     const fileCreated = await this.createFileRepository.execute({
       ...data,
-      active: false,
-      status: FileStatus.PENDING
+      active: FileModel.initialActive({ status: initialStatus }),
+      status: initialStatus
     });
     if (!fileCreated) {
       throw new FileNotFoundException();

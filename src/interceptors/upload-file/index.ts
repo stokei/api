@@ -4,7 +4,6 @@ import {
   cloudflareImageStorage,
   cloudflareVideoStorage
 } from '@/storages/cloudflare';
-import { digitaloceanDeleteFile } from '@/storages/digital-ocean';
 import { localDeleteFile, localStorageFiles } from '@/storages/local';
 
 import { BaseFilesInterceptor } from './base';
@@ -49,6 +48,5 @@ export const ImageUploaderInterceptor = (
       new FileUploadInterceptorModel(file).filterImage(callback)
   });
 
-export const deleteFile = IS_PRODUCTION
-  ? digitaloceanDeleteFile
-  : localDeleteFile;
+export const deleteFileImage = localDeleteFile;
+export const deleteFileVideo = localDeleteFile;

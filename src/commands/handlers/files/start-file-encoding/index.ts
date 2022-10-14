@@ -12,7 +12,6 @@ import {
 import { FileModel } from '@/models/file.model';
 import { StartFileEncodingRepository } from '@/repositories/files/start-file-encoding';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
-import { QencodeCreateVideoEncodingService } from '@/services/qencode/qencode-create-video-encoding';
 
 type StartFileEncodingCommandKeys = keyof StartFileEncodingCommand;
 
@@ -23,7 +22,6 @@ export class StartFileEncodingCommandHandler
   constructor(
     private readonly startFileEncodingRepository: StartFileEncodingRepository,
     private readonly findFileByIdService: FindFileByIdService,
-    private readonly qencodeCreateVideoEncodingService: QencodeCreateVideoEncodingService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -37,18 +35,6 @@ export class StartFileEncodingCommandHandler
     }
     const file = await this.findFileByIdService.execute(data.file);
     if (!file) {
-      throw new FileNotFoundException();
-    }
-
-    const taskQencodeFile =
-      await this.qencodeCreateVideoEncodingService.execute({
-        video: {
-          id: file.id,
-          filename: file.filename,
-          url: file.url
-        }
-      });
-    if (!taskQencodeFile) {
       throw new FileNotFoundException();
     }
 

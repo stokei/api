@@ -1,5 +1,6 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import {
+  CacheModule,
   MiddlewareConsumer,
   Module,
   NestModule,
@@ -27,6 +28,7 @@ import { Services } from './services';
 
 @Module({
   imports: [
+    CacheModule.register(),
     CqrsModule,
     DatabaseModule,
     AuthModule.forRoot({ secretKey: TOKEN_SECRET_KEY }),
@@ -56,16 +58,10 @@ export class MainModule implements NestModule {
   public configure(consumer: MiddlewareConsumer): void {
     consumer
       .apply(RawBodyMiddleware)
-      .forRoutes(
-        {
-          path: '/v1/' + REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
-          method: RequestMethod.POST
-        },
-        {
-          path: '/v1/' + REST_CONTROLLERS_URL_NAMES.WEBHOOKS_QENCODE,
-          method: RequestMethod.POST
-        }
-      )
+      .forRoutes({
+        path: '/v1/' + REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
+        method: RequestMethod.POST
+      })
       .apply(JsonBodyMiddleware)
       .forRoutes('*');
   }

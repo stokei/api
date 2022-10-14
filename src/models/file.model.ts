@@ -1,12 +1,20 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { ApiProperty } from '@nestjs/swagger';
-import { convertToISODateString, createServiceId } from '@stokei/nestjs';
+import {
+  convertToISODateString,
+  createServiceId,
+  Environment
+} from '@stokei/nestjs';
 
+import {
+  CLOUDFLARE_IMAGE_URL,
+  CLOUDFLARE_VIDEO_URL
+} from '@/constants/cloudflare';
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
 import { FileStatus } from '@/enums/file-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { IS_PRODUCTION, SERVER_URL } from '@/environments';
+import { IS_PRODUCTION, NODE_ENV, SERVER_URL } from '@/environments';
 import { FileCreatedEvent } from '@/events/implements/files/file-created.event';
 import { FileEncodingStartedEvent } from '@/events/implements/files/file-encoding-started.event';
 import { FileRemovedEvent } from '@/events/implements/files/file-removed.event';
@@ -36,6 +44,8 @@ export class FileModel extends AggregateRoot {
   readonly id: string;
   @ApiProperty({ nullable: true })
   readonly filename?: string;
+  @ApiProperty({ nullable: true })
+  readonly filenameAndExtension?: string;
   @ApiProperty({ nullable: true })
   readonly extension?: string;
   @ApiProperty({ nullable: true })
@@ -78,13 +88,16 @@ export class FileModel extends AggregateRoot {
     this.filename = data.filename;
     this.mimetype = data.mimetype;
     this.extension = data.extension;
+    this.filenameAndExtension = this.filename + '.' + this.extension;
     this.status = data.status;
     this.size = data.size;
     this.isImage = FileModel.isImage(this.mimetype);
     this.isVideo = FileModel.isVideo(this.mimetype);
     this.url = FileModel.createFileURL({
+      fileId: this.id,
       url: data.url,
-      filename: this.filename
+      filename: this.filename,
+      mimetype: this.mimetype
     });
     this.canStartEncoding = this.fileCanStartEncoding();
     this.duration = data.duration;
@@ -101,14 +114,60 @@ export class FileModel extends AggregateRoot {
     return IS_PRODUCTION && statusAllowed.includes(this.status);
   }
 
-  static createFileURL({ url, filename }: { filename?: string; url?: string }) {
+  static initialStatus({
+    url,
+    mimetype
+  }: {
+    url: string;
+    mimetype: string;
+  }): FileStatus {
+    if (url || !IS_PRODUCTION || FileModel.isImage(mimetype)) {
+      return FileStatus.ACTIVE;
+    }
+    return FileStatus.PENDING;
+  }
+
+  static initialActive({ status }: { status: FileStatus }): boolean {
+    return FileStatus.ACTIVE === status;
+  }
+
+  static createFileURL({
+    fileId,
+    url,
+    filename,
+    mimetype
+  }: {
+    fileId?: string;
+    mimetype?: string;
+    filename?: string;
+    url?: string;
+  }) {
     if (url) {
       return url;
     }
-    return appendPathnameToURL(
-      SERVER_URL,
-      `${REST_VERSIONS.V1_TEXT}/${REST_CONTROLLERS_URL_NAMES.VIDEOS}/${filename}`
-    );
+    const createURLFunctions = {
+      [Environment.PRODUCTION]: () => {
+        if (FileModel.isImage(mimetype)) {
+          return appendPathnameToURL(CLOUDFLARE_IMAGE_URL, filename);
+        }
+        return appendPathnameToURL(CLOUDFLARE_VIDEO_URL, filename);
+      },
+      DEFAULT: () => {
+        const baseURL = SERVER_URL;
+        const basePathnameURL = REST_VERSIONS.V1_TEXT;
+        if (FileModel.isImage(mimetype)) {
+          return appendPathnameToURL(
+            baseURL,
+            `${basePathnameURL}/${REST_CONTROLLERS_URL_NAMES.UPLOADS_IMAGES}/${fileId}`
+          );
+        }
+        return appendPathnameToURL(
+          baseURL,
+          `${basePathnameURL}/${REST_CONTROLLERS_URL_NAMES.UPLOADS_VIDEOS}/${fileId}`
+        );
+      }
+    };
+    return createURLFunctions[NODE_ENV]?.() || createURLFunctions.DEFAULT();
   }
 
   static isImage(mimetype: string): boolean {

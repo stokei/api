@@ -16,24 +16,24 @@ import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
-import { deleteFile, FileUploaderInterceptor } from '@/interceptors';
+import { deleteFileImage, ImageUploaderInterceptor } from '@/interceptors';
 import { FileModel } from '@/models/file.model';
 import { FileUploadInterceptorModel } from '@/models/file-upload-interceptor.model';
 import { CreateFileService } from '@/services/files/create-file';
 
-@ApiTags(REST_CONTROLLERS_URL_NAMES.FILES)
+@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS_IMAGES)
 @Controller({
-  path: REST_CONTROLLERS_URL_NAMES.FILES,
+  path: REST_CONTROLLERS_URL_NAMES.UPLOADS_IMAGES,
   version: REST_VERSIONS.V1
 })
-export class CreateFileController {
+export class CreateUploadImageController {
   constructor(private readonly createFileService: CreateFileService) {}
 
   @Post()
   @UseGuards(AuthenticatedGuard, AppGuard)
   @AuthenticationConfig({ isRequired: false })
   @UseInterceptors(
-    FileUploaderInterceptor({
+    ImageUploaderInterceptor({
       fieldName: 'file'
     })
   )
@@ -49,12 +49,15 @@ export class CreateFileController {
     const fileUploaded = new FileUploadInterceptorModel(fileFile);
     try {
       return await this.createFileService.execute({
-        file: fileUploaded.file,
+        filename: fileUploaded.filename,
+        mimetype: fileUploaded.mimetype,
+        extension: fileUploaded.extension,
+        size: fileUploaded.size,
         app: appId,
         createdBy: currentAccountId
       });
     } catch (error) {
-      await deleteFile(fileUploaded.file);
+      await deleteFileImage(fileUploaded.filenameAndPath);
       throw error;
     }
   }

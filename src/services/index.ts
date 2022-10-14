@@ -24,7 +24,6 @@ import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
 import { PriceServices } from './prices';
 import { ProductServices } from './products';
-import { QencodeServices } from './qencode';
 import { StripeServices } from './stripe';
 import { SubscriptionContractServices } from './subscription-contracts';
 import { VideoAuthorServices } from './video-authors';
@@ -62,6 +61,5 @@ export const Services = [
   ...CustomerPortalSessionServices,
   ...WebhookServices,
   ...InvoiceServices,
-  ...QencodeServices,
   ...FileServices
 ];

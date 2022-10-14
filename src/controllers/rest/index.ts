@@ -1,4 +1,4 @@
-import { FilesControllers } from './files';
+import { UploadsControllers } from './uploads';
 import { WebhooksControllers } from './webhooks';
 
-export const RestControllers = [...FilesControllers, ...WebhooksControllers];
+export const RestControllers = [...UploadsControllers, ...WebhooksControllers];

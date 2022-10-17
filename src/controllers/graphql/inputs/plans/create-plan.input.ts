@@ -12,13 +12,13 @@ export class CreatePlanInput {
   quantityCourses: number;
 
   @Field(() => Int)
-  quantityInstructorPerCourses: number;
+  quantityInstructorsPerCourse: number;
 
   @Field(() => Int)
   quantityClassroomsPerCourses: number;
 
   @Field(() => Int)
-  quantityModulesPerClassrooms: number;
+  quantityModulesPerCourse: number;
 
   @Field(() => Int)
   quantityVideosPerModules: number;

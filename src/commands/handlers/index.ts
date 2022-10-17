@@ -3,10 +3,6 @@ import { AccountCommandHandlers } from './accounts';
 import { AddressCommandHandlers } from './addresses';
 import { AppCommandHandlers } from './apps';
 import { CheckoutCommandHandlers } from './checkouts';
-import { ClassroomInstructorCommandHandlers } from './classroom-instructors';
-import { ClassroomModuleCommandHandlers } from './classroom-modules';
-import { ClassroomStudentCommandHandlers } from './classroom-students';
-import { ClassroomCommandHandlers } from './classrooms';
 import { ColorCommandHandlers } from './colors';
 import { CourseInstructorCommandHandlers } from './course-instructors';
 import { CourseStudentCommandHandlers } from './course-students';
@@ -47,11 +43,7 @@ export const CommandHandlers = [
   ...CourseCommandHandlers,
   ...CourseInstructorCommandHandlers,
   ...CourseStudentCommandHandlers,
-  ...ClassroomCommandHandlers,
-  ...ClassroomStudentCommandHandlers,
   ...SubscriptionContractCommandHandlers,
-  ...ClassroomInstructorCommandHandlers,
-  ...ClassroomModuleCommandHandlers,
   ...AddressCommandHandlers,
   ...PhoneCommandHandlers,
   ...CheckoutCommandHandlers,

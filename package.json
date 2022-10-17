@@ -47,7 +47,7 @@
     "@nestjs/swagger": "^6.0.4",
     "@nestjs/throttler": "^2.0.0",
     "@prisma/client": "^4.3.0",
-    "@stokei/nestjs": "^1.2.4",
+    "@stokei/nestjs": "^1.2.5",
     "apollo-server-core": "^3.10.2",
     "apollo-server-express": "^3.6.3",
     "axios": "^1.1.2",

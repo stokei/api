@@ -38,14 +38,11 @@ export class PlanMapper {
         hasCustomDomain: prismaMapper.toWhereData(operatorData.hasCustomDomain),
         hasCustomSite: prismaMapper.toWhereData(operatorData.hasCustomSite),
         quantityCourses: prismaMapper.toWhereData(operatorData.quantityCourses),
-        quantityInstructorPerCourses: prismaMapper.toWhereData(
-          operatorData.quantityInstructorPerCourses
+        quantityInstructorsPerCourse: prismaMapper.toWhereData(
+          operatorData.quantityInstructorsPerCourse
         ),
-        quantityClassroomsPerCourses: prismaMapper.toWhereData(
-          operatorData.quantityClassroomsPerCourses
-        ),
-        quantityModulesPerClassrooms: prismaMapper.toWhereData(
-          operatorData.quantityModulesPerClassrooms
+        quantityModulesPerCourse: prismaMapper.toWhereData(
+          operatorData.quantityModulesPerCourse
         ),
         quantityVideosPerModules: prismaMapper.toWhereData(
           operatorData.quantityVideosPerModules
@@ -90,14 +87,11 @@ export class PlanMapper {
           hasCustomDomain: cleanWhereDataBoolean(operatorData.hasCustomDomain),
           hasCustomSite: cleanWhereDataBoolean(operatorData.hasCustomSite),
           quantityCourses: cleanWhereDataNumber(operatorData.quantityCourses),
-          quantityInstructorPerCourses: cleanWhereDataNumber(
-            operatorData.quantityInstructorPerCourses
+          quantityInstructorsPerCourse: cleanWhereDataNumber(
+            operatorData.quantityInstructorsPerCourse
           ),
-          quantityClassroomsPerCourses: cleanWhereDataNumber(
-            operatorData.quantityClassroomsPerCourses
-          ),
-          quantityModulesPerClassrooms: cleanWhereDataNumber(
-            operatorData.quantityModulesPerClassrooms
+          quantityModulesPerCourse: cleanWhereDataNumber(
+            operatorData.quantityModulesPerCourse
           ),
           quantityVideosPerModules: cleanWhereDataNumber(
             operatorData.quantityVideosPerModules
@@ -133,14 +127,11 @@ export class PlanMapper {
         hasCustomDomain: cleanSortValue(query.orderBy?.hasCustomDomain),
         hasCustomSite: cleanSortValue(query.orderBy?.hasCustomSite),
         quantityCourses: cleanSortValue(query.orderBy?.quantityCourses),
-        quantityInstructorPerCourses: cleanSortValue(
-          query.orderBy?.quantityInstructorPerCourses
+        quantityInstructorsPerCourse: cleanSortValue(
+          query.orderBy?.quantityInstructorsPerCourse
         ),
-        quantityClassroomsPerCourses: cleanSortValue(
-          query.orderBy?.quantityClassroomsPerCourses
-        ),
-        quantityModulesPerClassrooms: cleanSortValue(
-          query.orderBy?.quantityModulesPerClassrooms
+        quantityModulesPerCourse: cleanSortValue(
+          query.orderBy?.quantityModulesPerCourse
         ),
         quantityVideosPerModules: cleanSortValue(
           query.orderBy?.quantityVideosPerModules

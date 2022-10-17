@@ -2,10 +2,6 @@ import { AccessQueriesHandlers } from './accesses';
 import { AccountQueriesHandlers } from './accounts';
 import { AddressQueriesHandlers } from './addresses';
 import { AppQueriesHandlers } from './apps';
-import { ClassroomInstructorQueriesHandlers } from './classroom-instructors';
-import { ClassroomModuleQueriesHandlers } from './classroom-modules';
-import { ClassroomStudentQueriesHandlers } from './classroom-students';
-import { ClassroomQueriesHandlers } from './classrooms';
 import { ColorQueriesHandlers } from './colors';
 import { CourseInstructorQueriesHandlers } from './course-instructors';
 import { CourseStudentQueriesHandlers } from './course-students';
@@ -45,11 +41,7 @@ export const QueriesHandlers = [
   ...CourseQueriesHandlers,
   ...CourseInstructorQueriesHandlers,
   ...CourseStudentQueriesHandlers,
-  ...ClassroomQueriesHandlers,
-  ...ClassroomStudentQueriesHandlers,
   ...SubscriptionContractQueriesHandlers,
-  ...ClassroomInstructorQueriesHandlers,
-  ...ClassroomModuleQueriesHandlers,
   ...AddressQueriesHandlers,
   ...PhoneQueriesHandlers,
   ...InvoiceQueriesHandlers,

@@ -52,14 +52,11 @@ export class CreatePlanCommandHandler
     if (data.quantityCourses < 0) {
       data.quantityCourses = 0;
     }
-    if (data.quantityInstructorPerCourses < 0) {
-      data.quantityInstructorPerCourses = 0;
+    if (data.quantityInstructorsPerCourse < 0) {
+      data.quantityInstructorsPerCourse = 0;
     }
-    if (data.quantityClassroomsPerCourses < 0) {
-      data.quantityClassroomsPerCourses = 0;
-    }
-    if (data.quantityModulesPerClassrooms < 0) {
-      data.quantityModulesPerClassrooms = 0;
+    if (data.quantityModulesPerCourse < 0) {
+      data.quantityModulesPerCourse = 0;
     }
     if (data.quantityVideosPerModules < 0) {
       data.quantityVideosPerModules = 0;
@@ -77,9 +74,8 @@ export class CreatePlanCommandHandler
         hasCustomDomain: data.hasCustomDomain,
         hasCustomSite: data.hasCustomSite,
         quantityCourses: data.quantityCourses,
-        quantityInstructorPerCourses: data.quantityInstructorPerCourses,
-        quantityClassroomsPerCourses: data.quantityClassroomsPerCourses,
-        quantityModulesPerClassrooms: data.quantityModulesPerClassrooms,
+        quantityInstructorsPerCourse: data.quantityInstructorsPerCourse,
+        quantityModulesPerCourse: data.quantityModulesPerCourse,
         quantityVideosPerModules: data.quantityVideosPerModules
       });
 
@@ -135,14 +131,11 @@ export class CreatePlanCommandHandler
       hasCustomDomain: cleanValueBoolean(command?.hasCustomDomain),
       hasCustomSite: cleanValueBoolean(command?.hasCustomSite),
       quantityCourses: cleanValueNumber(command?.quantityCourses),
-      quantityInstructorPerCourses: cleanValueNumber(
-        command?.quantityInstructorPerCourses
+      quantityInstructorsPerCourse: cleanValueNumber(
+        command?.quantityInstructorsPerCourse
       ),
-      quantityClassroomsPerCourses: cleanValueNumber(
-        command?.quantityClassroomsPerCourses
-      ),
-      quantityModulesPerClassrooms: cleanValueNumber(
-        command?.quantityModulesPerClassrooms
+      quantityModulesPerCourse: cleanValueNumber(
+        command?.quantityModulesPerCourse
       ),
       quantityVideosPerModules: cleanValueNumber(
         command?.quantityVideosPerModules

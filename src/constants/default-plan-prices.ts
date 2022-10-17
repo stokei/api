@@ -11,13 +11,13 @@ export const defaultPlanPrices = {
   quantityCourses: {
     unitAmountInCents: 100
   },
-  quantityInstructorPerCourses: {
+  quantityInstructorsPerCourse: {
     unitAmountInCents: 100
   },
   quantityClassroomsPerCourses: {
     unitAmountInCents: 100
   },
-  quantityModulesPerClassrooms: {
+  quantityModulesPerCourse: {
     unitAmountInCents: 100
   },
   quantityVideosPerModules: {

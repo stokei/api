@@ -292,9 +292,8 @@ model Plan {
   hasCustomDomain              Boolean   @default(false) @map("has_custom_domain")
   hasCustomSite                Boolean   @default(false) @map("has_custom_site")
   quantityCourses              Int       @map("quantity_courses")
-  quantityInstructorPerCourses Int       @map("quantity_instructor_per_courses")
-  quantityClassroomsPerCourses Int       @map("quantity_classrooms_per_courses")
-  quantityModulesPerClassrooms Int       @map("quantity_modules_per_classrooms")
+  quantityInstructorsPerCourse Int       @map("quantity_instructor_per_courses")
+  quantityModulesPerCourse     Int       @map("quantity_modules_per_courses")
   quantityVideosPerModules     Int       @map("quantity_videos_per_modules")
   applicationFeePercentage     Int       @map("application_fee_percentage")
   active                       Boolean   @default(false)
@@ -427,35 +426,6 @@ model CourseStudent {
   @@map("courses_students")
 }
 
-model Classroom {
-  id                    String    @id @default(cuid())
-  app                   String    @db.VarChar(255)
-  parent                String    @db.VarChar(255)
-  name                  String    @db.VarChar(255)
-  description           String?
-  hasAccessToAllModules Boolean   @default(true) @map("has_access_to_all_modules")
-  active                Boolean   @default(true)
-  updatedAt             DateTime? @updatedAt @map("updated_at")
-  createdAt             DateTime? @default(now()) @map("created_at")
-  updatedBy             String?   @map("updated_by") @db.VarChar(255)
-  createdBy             String?   @map("created_by") @db.VarChar(255)
-
-  @@map("classrooms")
-}
-
-model ClassroomStudent {
-  id        String    @id @default(cuid())
-  app       String    @db.VarChar(255)
-  classroom String    @db.VarChar(255)
-  student   String    @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-
-  @@map("classrooms_students")
-}
-
 model Invoice {
   id             String        @id @default(cuid())
   app            String        @db.VarChar(255)
@@ -506,32 +476,6 @@ model SubscriptionContract {
   createdBy              String?                    @map("created_by") @db.VarChar(255)
 
   @@map("subscription_contracts")
-}
-
-model ClassroomInstructor {
-  id         String    @id @default(cuid())
-  app        String    @db.VarChar(255)
-  classroom  String    @db.VarChar(255)
-  instructor String    @db.VarChar(255)
-  updatedAt  DateTime? @updatedAt @map("updated_at")
-  createdAt  DateTime? @default(now()) @map("created_at")
-  updatedBy  String?   @map("updated_by") @db.VarChar(255)
-  createdBy  String?   @map("created_by") @db.VarChar(255)
-
-  @@map("classrooms_instructors")
-}
-
-model ClassroomModule {
-  id        String    @id @default(cuid())
-  app       String    @db.VarChar(255)
-  classroom String    @db.VarChar(255)
-  module    String    @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-
-  @@map("classrooms_modules")
 }
 
 model Address {

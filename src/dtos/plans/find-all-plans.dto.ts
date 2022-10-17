@@ -9,9 +9,8 @@ export interface WhereDataFindAllPlansDTO {
   hasCustomDomain?: IWhereData<boolean>;
   hasCustomSite?: IWhereData<boolean>;
   quantityCourses?: IWhereData<number>;
-  quantityInstructorPerCourses?: IWhereData<number>;
-  quantityClassroomsPerCourses?: IWhereData<number>;
-  quantityModulesPerClassrooms?: IWhereData<number>;
+  quantityInstructorsPerCourse?: IWhereData<number>;
+  quantityModulesPerCourse?: IWhereData<number>;
   quantityVideosPerModules?: IWhereData<number>;
   applicationFeePercentage?: IWhereData<number>;
   updatedBy?: IWhereData;
@@ -25,9 +24,9 @@ export interface OrderByDataFindAllPlansDTO {
   hasCustomDomain?: IOrderBy;
   hasCustomSite?: IOrderBy;
   quantityCourses?: IOrderBy;
-  quantityInstructorPerCourses?: IOrderBy;
+  quantityInstructorsPerCourse?: IOrderBy;
   quantityClassroomsPerCourses?: IOrderBy;
-  quantityModulesPerClassrooms?: IOrderBy;
+  quantityModulesPerCourse?: IOrderBy;
   quantityVideosPerModules?: IOrderBy;
   applicationFeePercentage?: IOrderBy;
   updatedBy?: IOrderBy;

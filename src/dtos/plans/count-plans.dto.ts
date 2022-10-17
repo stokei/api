@@ -9,9 +9,8 @@ export interface CountPlansWhereDTO {
   hasCustomDomain?: IWhereData<boolean>;
   hasCustomSite?: IWhereData<boolean>;
   quantityCourses?: IWhereData<number>;
-  quantityInstructorPerCourses?: IWhereData<number>;
-  quantityClassroomsPerCourses?: IWhereData<number>;
-  quantityModulesPerClassrooms?: IWhereData<number>;
+  quantityInstructorsPerCourse?: IWhereData<number>;
+  quantityModulesPerCourse?: IWhereData<number>;
   quantityVideosPerModules?: IWhereData<number>;
   applicationFeePercentage?: IWhereData<number>;
   updatedBy?: IWhereData;

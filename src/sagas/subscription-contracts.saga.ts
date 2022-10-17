@@ -4,7 +4,7 @@ import { hiddenPrivateDataFromObject, splitServiceId } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { CreateClassroomStudentCommand } from '@/commands/implements/classroom-students/create-classroom-student.command';
+import { CreateOrFindCourseStudentCommand } from '@/commands/implements/course-students/create-or-find-course-student.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { SubscriptionContractActivatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-activated.event';
@@ -86,13 +86,13 @@ export class SubscriptionContractsSagas {
         ).service;
 
         if (
-          subscriptionContractServiceType === ServerStokeiApiIdPrefix.CLASSROOMS
+          subscriptionContractServiceType === ServerStokeiApiIdPrefix.COURSES
         ) {
           commands = [
             ...commands,
-            new CreateClassroomStudentCommand({
+            new CreateOrFindCourseStudentCommand({
               app: subscriptionContract.app,
-              classroom: subscriptionContract.product,
+              course: subscriptionContract.product,
               student: subscriptionContract.parent,
               createdBy: subscriptionContract.createdBy
             })

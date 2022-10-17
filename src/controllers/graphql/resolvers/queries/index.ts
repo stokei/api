@@ -2,10 +2,6 @@ import { AccessesQueries } from './accesses';
 import { AccountsQueries } from './accounts';
 import { AddressesQueries } from './addresses';
 import { AppsQueries } from './apps';
-import { ClassroomInstructorsQueries } from './classroom-instructors';
-import { ClassroomModulesQueries } from './classroom-modules';
-import { ClassroomStudentsQueries } from './classroom-students';
-import { ClassroomsQueries } from './classrooms';
 import { ColorsQueries } from './colors';
 import { CourseInstructorsQueries } from './course-instructors';
 import { CourseStudentsQueries } from './course-students';
@@ -44,11 +40,7 @@ export const Queries = [
   ...CoursesQueries,
   ...CourseInstructorsQueries,
   ...CourseStudentsQueries,
-  ...ClassroomsQueries,
-  ...ClassroomStudentsQueries,
   ...SubscriptionContractsQueries,
-  ...ClassroomInstructorsQueries,
-  ...ClassroomModulesQueries,
   ...AddressesQueries,
   ...PhonesQueries,
   ...InvoicesQueries

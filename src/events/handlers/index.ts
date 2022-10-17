@@ -2,10 +2,6 @@ import { AccessEventsHandlers } from './accesses';
 import { AccountEventsHandlers } from './accounts';
 import { AddressEventsHandlers } from './addresses';
 import { AppEventsHandlers } from './apps';
-import { ClassroomInstructorEventsHandlers } from './classroom-instructors';
-import { ClassroomModuleEventsHandlers } from './classroom-modules';
-import { ClassroomStudentEventsHandlers } from './classroom-students';
-import { ClassroomEventsHandlers } from './classrooms';
 import { ColorEventsHandlers } from './colors';
 import { CourseInstructorEventsHandlers } from './course-instructors';
 import { CourseStudentEventsHandlers } from './course-students';
@@ -47,11 +43,7 @@ export const EventsHandlers = [
   ...CourseEventsHandlers,
   ...CourseInstructorEventsHandlers,
   ...CourseStudentEventsHandlers,
-  ...ClassroomEventsHandlers,
-  ...ClassroomStudentEventsHandlers,
   ...SubscriptionContractEventsHandlers,
-  ...ClassroomInstructorEventsHandlers,
-  ...ClassroomModuleEventsHandlers,
   ...AddressEventsHandlers,
   ...PhoneEventsHandlers
 ];

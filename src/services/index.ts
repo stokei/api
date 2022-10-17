@@ -3,10 +3,6 @@ import { AccountServices } from './accounts';
 import { AddressServices } from './addresses';
 import { AppServices } from './apps';
 import { CheckoutServices } from './checkouts';
-import { ClassroomInstructorServices } from './classroom-instructors';
-import { ClassroomModuleServices } from './classroom-modules';
-import { ClassroomStudentServices } from './classroom-students';
-import { ClassroomServices } from './classrooms';
 import { ColorServices } from './colors';
 import { CourseInstructorServices } from './course-instructors';
 import { CourseStudentServices } from './course-students';
@@ -49,11 +45,7 @@ export const Services = [
   ...CourseServices,
   ...CourseInstructorServices,
   ...CourseStudentServices,
-  ...ClassroomServices,
-  ...ClassroomStudentServices,
   ...SubscriptionContractServices,
-  ...ClassroomInstructorServices,
-  ...ClassroomModuleServices,
   ...AddressServices,
   ...PhoneServices,
   ...StripeServices,

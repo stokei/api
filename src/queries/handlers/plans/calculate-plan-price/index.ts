@@ -49,19 +49,14 @@ export class CalculatePlanPriceQueryHandler
         quantity: data.quantityCourses
       });
     }
-    if (data.quantityInstructorPerCourses >= 0) {
+    if (data.quantityInstructorsPerCourse >= 0) {
       totalPriceAmount += this.calculateQuantityInstructorPerCoursesPriceAmount(
-        { quantity: data.quantityInstructorPerCourses }
+        { quantity: data.quantityInstructorsPerCourse }
       );
     }
-    if (data.quantityClassroomsPerCourses >= 0) {
-      totalPriceAmount += this.calculateQuantityClassroomsPerCoursesPriceAmount(
-        { quantity: data.quantityClassroomsPerCourses }
-      );
-    }
-    if (data.quantityModulesPerClassrooms >= 0) {
+    if (data.quantityModulesPerCourse >= 0) {
       totalPriceAmount += this.calculateQuantityModulesPerClassroomsPriceAmount(
-        { quantity: data.quantityModulesPerClassrooms }
+        { quantity: data.quantityModulesPerCourse }
       );
     }
     if (data.quantityVideosPerModules >= 0) {
@@ -84,14 +79,11 @@ export class CalculatePlanPriceQueryHandler
       hasCustomDomain: cleanValueBoolean(query?.hasCustomDomain),
       hasCustomSite: cleanValueBoolean(query?.hasCustomSite),
       quantityCourses: cleanValueNumber(query?.quantityCourses),
-      quantityInstructorPerCourses: cleanValueNumber(
-        query?.quantityInstructorPerCourses
+      quantityInstructorsPerCourse: cleanValueNumber(
+        query?.quantityInstructorsPerCourse
       ),
-      quantityClassroomsPerCourses: cleanValueNumber(
-        query?.quantityClassroomsPerCourses
-      ),
-      quantityModulesPerClassrooms: cleanValueNumber(
-        query?.quantityModulesPerClassrooms
+      quantityModulesPerCourse: cleanValueNumber(
+        query?.quantityModulesPerCourse
       ),
       quantityVideosPerModules: cleanValueNumber(
         query?.quantityVideosPerModules
@@ -125,27 +117,17 @@ export class CalculatePlanPriceQueryHandler
   }): number {
     return (
       quantity *
-      defaultPlanPrices.quantityInstructorPerCourses.unitAmountInCents
+      defaultPlanPrices.quantityInstructorsPerCourse.unitAmountInCents
     );
   }
-  calculateQuantityClassroomsPerCoursesPriceAmount({
-    quantity
-  }: {
-    quantity: number;
-  }): number {
-    return (
-      quantity *
-      defaultPlanPrices.quantityClassroomsPerCourses.unitAmountInCents
-    );
-  }
+
   calculateQuantityModulesPerClassroomsPriceAmount({
     quantity
   }: {
     quantity: number;
   }): number {
     return (
-      quantity *
-      defaultPlanPrices.quantityModulesPerClassrooms.unitAmountInCents
+      quantity * defaultPlanPrices.quantityModulesPerCourse.unitAmountInCents
     );
   }
   calculateQuantityVideosPerModulesPriceAmount({

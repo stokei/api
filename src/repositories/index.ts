@@ -2,10 +2,6 @@ import { AccessesRepositories } from './accesses';
 import { AccountsRepositories } from './accounts';
 import { AddressesRepositories } from './addresses';
 import { AppsRepositories } from './apps';
-import { ClassroomInstructorsRepositories } from './classroom-instructors';
-import { ClassroomModulesRepositories } from './classroom-modules';
-import { ClassroomStudentsRepositories } from './classroom-students';
-import { ClassroomsRepositories } from './classrooms';
 import { ColorsRepositories } from './colors';
 import { CourseInstructorsRepositories } from './course-instructors';
 import { CourseStudentsRepositories } from './course-students';
@@ -45,11 +41,7 @@ export const Repositories = [
   ...CoursesRepositories,
   ...CourseInstructorsRepositories,
   ...CourseStudentsRepositories,
-  ...ClassroomsRepositories,
-  ...ClassroomStudentsRepositories,
   ...SubscriptionContractsRepositories,
-  ...ClassroomInstructorsRepositories,
-  ...ClassroomModulesRepositories,
   ...AddressesRepositories,
   ...PhonesRepositories,
   ...InvoicesRepositories,

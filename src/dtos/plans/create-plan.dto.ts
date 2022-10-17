@@ -3,9 +3,8 @@ export interface CreatePlanDTO {
   hasCustomDomain: boolean;
   hasCustomSite: boolean;
   quantityCourses: number;
-  quantityInstructorPerCourses: number;
-  quantityClassroomsPerCourses: number;
-  quantityModulesPerClassrooms: number;
+  quantityInstructorsPerCourse: number;
+  quantityModulesPerCourse: number;
   quantityVideosPerModules: number;
   createdBy: string;
 }

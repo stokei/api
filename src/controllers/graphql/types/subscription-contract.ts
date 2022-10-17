@@ -5,7 +5,7 @@ import { SubscriptionContractType } from '@/controllers/graphql/enums/subscripti
 
 import { Account } from './account';
 import { App } from './app';
-import { Classroom } from './classroom';
+import { Course } from './course';
 import { Invoice } from './invoice';
 import { PaymentMethod } from './payment-method';
 import { Plan } from './plan';
@@ -18,8 +18,8 @@ export class SubscriptionContract {
   @Field(() => Plan, { nullable: true })
   plan?: Plan;
 
-  @Field(() => Classroom, { nullable: true })
-  classroom?: Classroom;
+  @Field(() => Course, { nullable: true })
+  course?: Course;
 
   @Field(() => PaymentMethod, { nullable: true })
   paymentMethod?: PaymentMethod;

@@ -14,9 +14,8 @@ export interface IPlanModelData {
   readonly hasCustomDomain: boolean;
   readonly hasCustomSite: boolean;
   readonly quantityCourses: number;
-  readonly quantityInstructorPerCourses: number;
-  readonly quantityClassroomsPerCourses: number;
-  readonly quantityModulesPerClassrooms: number;
+  readonly quantityInstructorsPerCourse: number;
+  readonly quantityModulesPerCourse: number;
   readonly quantityVideosPerModules: number;
   readonly applicationFeePercentage: number;
   readonly active: boolean;
@@ -35,9 +34,8 @@ export class PlanModel extends AggregateRoot {
   readonly hasCustomDomain: boolean;
   readonly hasCustomSite: boolean;
   readonly quantityCourses: number;
-  readonly quantityInstructorPerCourses: number;
-  readonly quantityClassroomsPerCourses: number;
-  readonly quantityModulesPerClassrooms: number;
+  readonly quantityInstructorsPerCourse: number;
+  readonly quantityModulesPerCourse: number;
   readonly quantityVideosPerModules: number;
   readonly applicationFeePercentage: number;
   readonly active: boolean;
@@ -60,9 +58,8 @@ export class PlanModel extends AggregateRoot {
     this.hasCustomDomain = data.hasCustomDomain;
     this.hasCustomSite = data.hasCustomSite;
     this.quantityCourses = data.quantityCourses;
-    this.quantityInstructorPerCourses = data.quantityInstructorPerCourses;
-    this.quantityClassroomsPerCourses = data.quantityClassroomsPerCourses;
-    this.quantityModulesPerClassrooms = data.quantityModulesPerClassrooms;
+    this.quantityInstructorsPerCourse = data.quantityInstructorsPerCourse;
+    this.quantityModulesPerCourse = data.quantityModulesPerCourse;
     this.quantityVideosPerModules = data.quantityVideosPerModules;
     this.applicationFeePercentage = data.applicationFeePercentage;
     this.active = data.active;

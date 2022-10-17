@@ -2,10 +2,6 @@ import { AccessesFieldsResolvers } from './accesses';
 import { AccountsFieldsResolvers } from './accounts';
 import { AddressesFieldsResolvers } from './addresses';
 import { AppsFieldsResolvers } from './apps';
-import { ClassroomInstructorsFieldsResolvers } from './classroom-instructors';
-import { ClassroomModulesFieldsResolvers } from './classroom-modules';
-import { ClassroomStudentsFieldsResolvers } from './classroom-students';
-import { ClassroomsFieldsResolvers } from './classrooms';
 import { ColorsFieldsResolvers } from './colors';
 import { CourseInstructorsFieldsResolvers } from './course-instructors';
 import { CourseStudentsFieldsResolvers } from './course-students';
@@ -44,11 +40,7 @@ export const FieldsResolvers = [
   ...CoursesFieldsResolvers,
   ...CourseInstructorsFieldsResolvers,
   ...CourseStudentsFieldsResolvers,
-  ...ClassroomsFieldsResolvers,
-  ...ClassroomStudentsFieldsResolvers,
   ...SubscriptionContractsFieldsResolvers,
-  ...ClassroomInstructorsFieldsResolvers,
-  ...ClassroomModulesFieldsResolvers,
   ...AddressesFieldsResolvers,
   ...PhonesFieldsResolvers,
   ...InvoicesFieldsResolvers

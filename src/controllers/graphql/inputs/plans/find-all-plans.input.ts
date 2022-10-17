@@ -36,13 +36,13 @@ class WhereDataFindAllPlansDataInput implements WhereDataFindAllPlansDTO {
   quantityCourses?: WhereDataIntInput;
 
   @Field(() => WhereDataIntInput, { nullable: true })
-  quantityInstructorPerCourses?: WhereDataIntInput;
+  quantityInstructorsPerCourse?: WhereDataIntInput;
 
   @Field(() => WhereDataIntInput, { nullable: true })
   quantityClassroomsPerCourses?: WhereDataIntInput;
 
   @Field(() => WhereDataIntInput, { nullable: true })
-  quantityModulesPerClassrooms?: WhereDataIntInput;
+  quantityModulesPerCourse?: WhereDataIntInput;
 
   @Field(() => WhereDataIntInput, { nullable: true })
   quantityVideosPerModules?: WhereDataIntInput;
@@ -77,13 +77,13 @@ export class OrderByDataFindAllPlansInput
   quantityCourses?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
-  quantityInstructorPerCourses?: OrderBy;
+  quantityInstructorsPerCourse?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   quantityClassroomsPerCourses?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
-  quantityModulesPerClassrooms?: OrderBy;
+  quantityModulesPerCourse?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   quantityVideosPerModules?: OrderBy;

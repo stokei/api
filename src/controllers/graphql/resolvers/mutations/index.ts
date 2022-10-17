@@ -3,10 +3,6 @@ import { AccountsMutations } from './accounts';
 import { AddressesMutations } from './addresses';
 import { AppsMutations } from './apps';
 import { CheckoutsMutations } from './checkouts';
-import { ClassroomInstructorsMutations } from './classroom-instructors';
-import { ClassroomModulesMutations } from './classroom-modules';
-import { ClassroomStudentsMutations } from './classroom-students';
-import { ClassroomsMutations } from './classrooms';
 import { ColorsMutations } from './colors';
 import { CourseInstructorsMutations } from './course-instructors';
 import { CourseStudentsMutations } from './course-students';
@@ -46,11 +42,7 @@ export const Mutations = [
   ...CoursesMutations,
   ...CourseInstructorsMutations,
   ...CourseStudentsMutations,
-  ...ClassroomsMutations,
-  ...ClassroomStudentsMutations,
   ...SubscriptionContractsMutations,
-  ...ClassroomInstructorsMutations,
-  ...ClassroomModulesMutations,
   ...AddressesMutations,
   ...PhonesMutations,
   ...CheckoutsMutations,

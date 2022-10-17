@@ -7,9 +7,8 @@ export class CreatePlanCommand implements ICommand, CreatePlanDTO {
   hasCustomDomain: boolean;
   hasCustomSite: boolean;
   quantityCourses: number;
-  quantityInstructorPerCourses: number;
-  quantityClassroomsPerCourses: number;
-  quantityModulesPerClassrooms: number;
+  quantityInstructorsPerCourse: number;
+  quantityModulesPerCourse: number;
   quantityVideosPerModules: number;
   createdBy: string;
 
@@ -18,9 +17,8 @@ export class CreatePlanCommand implements ICommand, CreatePlanDTO {
     this.hasCustomDomain = data.hasCustomDomain;
     this.hasCustomSite = data.hasCustomSite;
     this.quantityCourses = data.quantityCourses;
-    this.quantityInstructorPerCourses = data.quantityInstructorPerCourses;
-    this.quantityClassroomsPerCourses = data.quantityClassroomsPerCourses;
-    this.quantityModulesPerClassrooms = data.quantityModulesPerClassrooms;
+    this.quantityInstructorsPerCourse = data.quantityInstructorsPerCourse;
+    this.quantityModulesPerCourse = data.quantityModulesPerCourse;
     this.quantityVideosPerModules = data.quantityVideosPerModules;
     this.createdBy = data.createdBy;
   }

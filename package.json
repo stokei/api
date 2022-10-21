@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist && npm run db:generate",
     "build": "nest build",
     "prestart": "npm run db:migration:run",
     "start": "nest start",

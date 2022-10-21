@@ -4,6 +4,7 @@ import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
+import { AppPlanGuard } from '@/common/guards/app-plan';
 import { CreateCourseInput } from '@/controllers/graphql/inputs/courses/create-course.input';
 import { Course } from '@/controllers/graphql/types/course';
 import { CreateCourseService } from '@/services/courses/create-course';
@@ -12,7 +13,7 @@ import { CreateCourseService } from '@/services/courses/create-course';
 export class CreateCourseResolver {
   constructor(private readonly createCourseService: CreateCourseService) {}
 
-  @UseGuards(AuthenticatedGuard, AppGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard, AppPlanGuard)
   @Mutation(() => Course)
   async createCourse(
     @CurrentAccount('id') currentAccountId: string,

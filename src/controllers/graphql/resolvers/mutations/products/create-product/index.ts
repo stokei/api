@@ -4,6 +4,7 @@ import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
+import { AppPlanGuard } from '@/common/guards/app-plan';
 import { CreateProductInput } from '@/controllers/graphql/inputs/products/create-product.input';
 import { Product } from '@/controllers/graphql/types/product';
 import { CreateProductService } from '@/services/products/create-product';
@@ -12,7 +13,7 @@ import { CreateProductService } from '@/services/products/create-product';
 export class CreateProductResolver {
   constructor(private readonly createProductService: CreateProductService) {}
 
-  @UseGuards(AuthenticatedGuard, AppGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard, AppPlanGuard)
   @Mutation(() => Product)
   async createProduct(
     @CurrentAccount('id') currentAccountId: string,

@@ -2,6 +2,9 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { PriceTierCreatedEvent } from '@/events/implements/price-tiers/price-tier-created.event';
+import { PriceTierRemovedEvent } from '@/events/implements/price-tiers/price-tier-removed.event';
+import { PriceTierUpdatedEvent } from '@/events/implements/price-tiers/price-tier-updated.event';
 
 export interface IPriceTierModelData {
   readonly id?: string;
@@ -45,5 +48,38 @@ export class PriceTierModel extends AggregateRoot {
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+  }
+
+  createdPriceTier({ createdBy }: { createdBy: string }) {
+    if (this.id) {
+      this.apply(
+        new PriceTierCreatedEvent({
+          createdBy,
+          priceTier: this
+        })
+      );
+    }
+  }
+
+  updatedPriceTier({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new PriceTierUpdatedEvent({
+          updatedBy,
+          priceTier: this
+        })
+      );
+    }
+  }
+
+  removedPriceTier({ removedBy }: { removedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new PriceTierRemovedEvent({
+          removedBy,
+          priceTier: this
+        })
+      );
+    }
   }
 }

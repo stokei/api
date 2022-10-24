@@ -16,7 +16,7 @@ export class SubscriptionContractModelMock extends SubscriptionContractModel {
       parent: data?.parent ?? 'parents.ss4d84asdsa5d1as5',
       product: data?.product ?? 'plans.5a1sd5as1das',
       invoiceProduct: data?.invoiceProduct ?? 'products.5a1sd5as1das',
-      invoicePrice: data?.invoicePrice ?? 'prices.5a1sd5as1das',
+      price: data?.price ?? 'prices.5a1sd5as1das',
       paymentMethod: data?.paymentMethod ?? 'payment_methods.5a1sd5as1das',
       type: data?.type ?? SubscriptionContractType.RECURRING,
       status: data?.status ?? SubscriptionContractStatus.ACTIVE,

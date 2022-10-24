@@ -4,7 +4,6 @@ export interface CancelSubscriptionContractRepositoryDataDTO {
   status: SubscriptionContractStatus;
   active: boolean;
   endAt: string;
-  canceledAt: string;
   updatedBy: string;
 }
 

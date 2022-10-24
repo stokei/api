@@ -46,7 +46,7 @@ export class CreateSubscriptionContractCommandHandler
         parent: data.parent,
         product: data.product,
         invoiceProduct: data.invoiceProduct,
-        invoicePrice: data.invoicePrice,
+        price: data.price,
         recurringIntervalCount: data.recurringIntervalCount,
         recurringIntervalType: data.recurringIntervalType,
         stripeSubscription: data.stripeSubscription,
@@ -74,7 +74,7 @@ export class CreateSubscriptionContractCommandHandler
     return cleanObject({
       parent: cleanValue(command?.parent),
       invoiceProduct: cleanValue(command?.invoiceProduct),
-      invoicePrice: cleanValue(command?.invoicePrice),
+      price: cleanValue(command?.price),
       recurringIntervalType: cleanValue(command?.recurringIntervalType),
       recurringIntervalCount: cleanValueNumber(command?.recurringIntervalCount),
       product: cleanValue(command?.product),

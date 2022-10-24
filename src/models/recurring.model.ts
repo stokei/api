@@ -4,6 +4,8 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 import { IntervalType } from '@/enums/interval-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { UsageType } from '@/enums/usage-type.enum';
+import { RecurringCreatedEvent } from '@/events/implements/recurrings/recurring-created.event';
+import { RecurringRemovedEvent } from '@/events/implements/recurrings/recurring-removed.event';
 
 export interface IRecurringModelData {
   readonly id?: string;
@@ -44,5 +46,27 @@ export class RecurringModel extends AggregateRoot {
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+  }
+
+  createdRecurring({ createdBy }: { createdBy: string }) {
+    if (this.id) {
+      this.apply(
+        new RecurringCreatedEvent({
+          createdBy,
+          recurring: this
+        })
+      );
+    }
+  }
+
+  removedRecurring({ removedBy }: { removedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new RecurringRemovedEvent({
+          removedBy,
+          recurring: this
+        })
+      );
+    }
   }
 }

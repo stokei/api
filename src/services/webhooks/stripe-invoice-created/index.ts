@@ -37,7 +37,7 @@ export class WebhookStripeInvoiceCreatedService
     await this.createInvoiceService.execute({
       app: subscription.app,
       subscription: subscription.id,
-      price: subscription.invoicePrice,
+      price: subscription.price,
       product: subscription.invoiceProduct,
       paymentMethod: subscription.paymentMethod,
       status:

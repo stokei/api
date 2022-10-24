@@ -1,35 +1,24 @@
 import { ICommand } from '@nestjs/cqrs';
 
 import { CreateSubscriptionContractDTO } from '@/dtos/subscription-contracts/create-subscription-contract.dto';
-import { IntervalType } from '@/enums/interval-type.enum';
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
 
 export class CreateSubscriptionContractCommand
   implements ICommand, CreateSubscriptionContractDTO
 {
+  app: string;
   parent: string;
-  product: string;
-  invoiceProduct: string;
-  invoicePrice: string;
-  recurringIntervalCount?: number;
-  recurringIntervalType?: IntervalType;
   stripeSubscription: string;
   type: SubscriptionContractType;
-  automaticRenew?: boolean;
-  app: string;
+  automaticRenew: boolean;
   createdBy: string;
 
   constructor(data: CreateSubscriptionContractDTO) {
+    this.app = data.app;
     this.parent = data.parent;
-    this.product = data.product;
-    this.invoiceProduct = data.invoiceProduct;
-    this.invoicePrice = data.invoicePrice;
-    this.recurringIntervalCount = data.recurringIntervalCount;
-    this.recurringIntervalType = data.recurringIntervalType;
     this.stripeSubscription = data.stripeSubscription;
     this.type = data.type;
     this.automaticRenew = data.automaticRenew;
-    this.app = data.app;
     this.createdBy = data.createdBy;
   }
 }

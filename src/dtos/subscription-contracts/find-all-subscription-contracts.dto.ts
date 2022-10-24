@@ -12,9 +12,7 @@ export interface WhereDataFindAllSubscriptionContractsDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
-  product?: IWhereDataSearch<string>;
-  invoiceProduct?: IWhereData;
-  invoicePrice?: IWhereData;
+  paymentMethod?: IWhereData;
   status?: SubscriptionContractStatus;
   type?: SubscriptionContractType;
   active?: IWhereData<boolean>;
@@ -29,14 +27,9 @@ export interface OrderByDataFindAllSubscriptionContractsDTO {
   status?: IOrderBy;
   type?: IOrderBy;
   active?: IOrderBy;
-  totalAmount?: IOrderBy;
-  subtotalAmount?: IOrderBy;
-  stripeCheckoutSession?: IOrderBy;
-  paymentErrorAt?: IOrderBy;
   automaticRenew?: IOrderBy;
   startAt?: IOrderBy;
   endAt?: IOrderBy;
-  canceledAt?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

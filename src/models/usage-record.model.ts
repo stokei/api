@@ -3,6 +3,7 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { UsageRecordAction } from '@/enums/usage-record-action.enum';
+import { UsageRecordCreatedEvent } from '@/events/implements/usage-records/usage-record-created.event';
 
 export interface IUsageRecordModelData {
   readonly id?: string;
@@ -43,5 +44,16 @@ export class UsageRecordModel extends AggregateRoot {
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+  }
+
+  createdUsageRecord({ createdBy }: { createdBy: string }) {
+    if (this.id) {
+      this.apply(
+        new UsageRecordCreatedEvent({
+          createdBy,
+          usageRecord: this
+        })
+      );
+    }
   }
 }

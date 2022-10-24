@@ -82,7 +82,7 @@ export class CreateCheckoutCommandHandler
             parent: {
               equals: data.customer
             },
-            invoicePrice: {
+            price: {
               equals: price.id
             },
             active: {
@@ -124,7 +124,7 @@ export class CreateCheckoutCommandHandler
         parent: data.customer,
         product: product.parent,
         invoiceProduct: product.id,
-        invoicePrice: price.id,
+        price: price.id,
         stripeSubscription: stripeSubscription.id,
         type: price.type,
         automaticRenew: true,

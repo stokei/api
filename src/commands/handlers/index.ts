@@ -10,6 +10,7 @@ import { CourseCommandHandlers } from './courses';
 import { CurrencyCommandHandlers } from './currencies';
 import { CustomerPortalSessionCommandHandlers } from './customer-portal-sessions';
 import { DomainCommandHandlers } from './domains';
+import { FeatureCommandHandlers } from './features';
 import { FileCommandHandlers } from './files';
 import { ImageCommandHandlers } from './images';
 import { InvoiceCommandHandlers } from './invoices';
@@ -18,9 +19,13 @@ import { ModuleCommandHandlers } from './modules';
 import { PaymentMethodCommandHandlers } from './payment-methods';
 import { PhoneCommandHandlers } from './phones';
 import { PlanCommandHandlers } from './plans';
+import { PriceTierCommandHandlers } from './price-tiers';
 import { PriceCommandHandlers } from './prices';
 import { ProductCommandHandlers } from './products';
+import { RecurringCommandHandlers } from './recurrings';
+import { SubscriptionContractItemCommandHandlers } from './subscription-contract-items';
 import { SubscriptionContractCommandHandlers } from './subscription-contracts';
+import { UsageRecordCommandHandlers } from './usage-records';
 import { VideoAuthorCommandHandlers } from './video-authors';
 import { VideoCommandHandlers } from './videos';
 
@@ -49,5 +54,10 @@ export const CommandHandlers = [
   ...CheckoutCommandHandlers,
   ...CustomerPortalSessionCommandHandlers,
   ...InvoiceCommandHandlers,
-  ...FileCommandHandlers
+  ...FileCommandHandlers,
+  ...RecurringCommandHandlers,
+  ...FeatureCommandHandlers,
+  ...PriceTierCommandHandlers,
+  ...SubscriptionContractItemCommandHandlers,
+  ...UsageRecordCommandHandlers
 ];

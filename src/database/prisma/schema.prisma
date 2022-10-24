@@ -555,8 +555,7 @@ model SubscriptionContractItem {
   parent                 String    @db.VarChar(255)
   product                String    @db.VarChar(255)
   quantity               Int
-  invoiceProduct         String    @map("invoice_product") @db.VarChar(255)
-  invoicePrice           String    @map("invoice_price") @db.VarChar(255)
+  price                  String    @db.VarChar(255)
   stripeSubscriptionItem String?   @map("stripe_subscription_item") @db.VarChar(255)
   recurring              String?
   updatedAt              DateTime? @updatedAt @map("updated_at")

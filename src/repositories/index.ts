@@ -8,6 +8,7 @@ import { CourseStudentsRepositories } from './course-students';
 import { CoursesRepositories } from './courses';
 import { CurrenciesRepositories } from './currencies';
 import { DomainsRepositories } from './domains';
+import { FeaturesRepositories } from './features';
 import { FilesRepositories } from './files';
 import { ImagesRepositories } from './images';
 import { InvoicesRepositories } from './invoices';
@@ -16,9 +17,13 @@ import { ModulesRepositories } from './modules';
 import { PaymentMethodsRepositories } from './payment-methods';
 import { PhonesRepositories } from './phones';
 import { PlansRepositories } from './plans';
+import { PriceTiersRepositories } from './price-tiers';
 import { PricesRepositories } from './prices';
 import { ProductsRepositories } from './products';
+import { RecurringsRepositories } from './recurrings';
+import { SubscriptionContractItemsRepositories } from './subscription-contract-items';
 import { SubscriptionContractsRepositories } from './subscription-contracts';
+import { UsageRecordsRepositories } from './usage-records';
 import { VideoAuthorsRepositories } from './video-authors';
 import { VideosRepositories } from './videos';
 
@@ -45,5 +50,10 @@ export const Repositories = [
   ...AddressesRepositories,
   ...PhonesRepositories,
   ...InvoicesRepositories,
-  ...FilesRepositories
+  ...FilesRepositories,
+  ...RecurringsRepositories,
+  ...FeaturesRepositories,
+  ...PriceTiersRepositories,
+  ...SubscriptionContractItemsRepositories,
+  ...UsageRecordsRepositories
 ];

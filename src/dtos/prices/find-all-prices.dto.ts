@@ -5,9 +5,10 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
+import { BillingScheme } from '@/enums/billing-scheme.enum';
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
-import { IntervalType } from '@/enums/interval-type.enum';
+import { TiersMode } from '@/enums/tiers-mode.enum';
 
 export interface WhereDataFindAllPricesDTO {
   ids?: string[];
@@ -17,8 +18,8 @@ export interface WhereDataFindAllPricesDTO {
   default?: IWhereData<boolean>;
   type?: PriceType;
   inventoryType?: InventoryType;
-  recurringIntervalCount?: IWhereData<number>;
-  recurringIntervalType?: IntervalType;
+  billingScheme?: BillingScheme;
+  tiersMode?: TiersMode;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -31,8 +32,8 @@ export interface OrderByDataFindAllPricesDTO {
   amount?: IOrderBy;
   type?: IOrderBy;
   inventoryType?: IOrderBy;
-  recurringIntervalCount?: IOrderBy;
-  recurringIntervalType?: IOrderBy;
+  billingScheme?: IOrderBy;
+  tiersMode?: IOrderBy;
   quantity?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;

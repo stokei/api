@@ -8,6 +8,7 @@ import { CourseStudentsSagas } from './course-students.saga';
 import { CoursesSagas } from './courses.saga';
 import { CurrenciesSagas } from './currencies.saga';
 import { DomainsSagas } from './domains.saga';
+import { FeaturesSagas } from './features.saga';
 import { FilesSagas } from './files.saga';
 import { ImagesSagas } from './images.saga';
 import { InvoicesSagas } from './invoices.saga';
@@ -16,9 +17,13 @@ import { ModulesSagas } from './modules.saga';
 import { PaymentMethodsSagas } from './payment-methods.saga';
 import { PhonesSagas } from './phones.saga';
 import { PlansSagas } from './plans.saga';
+import { PriceTiersSagas } from './price-tiers.saga';
 import { PricesSagas } from './prices.saga';
 import { ProductsSagas } from './products.saga';
+import { RecurringsSagas } from './recurrings.saga';
+import { SubscriptionContractItemsSagas } from './subscription-contract-items.saga';
 import { SubscriptionContractsSagas } from './subscription-contracts.saga';
+import { UsageRecordsSagas } from './usage-records.saga';
 import { VideoAuthorsSagas } from './video-authors.saga';
 import { VideosSagas } from './videos.saga';
 
@@ -45,5 +50,10 @@ export const Sagas = [
   AddressesSagas,
   PhonesSagas,
   InvoicesSagas,
-  FilesSagas
+  FilesSagas,
+  FeaturesSagas,
+  PriceTiersSagas,
+  RecurringsSagas,
+  SubscriptionContractItemsSagas,
+  UsageRecordsSagas
 ];

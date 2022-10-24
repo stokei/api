@@ -1,6 +1,7 @@
+import { BillingScheme } from '@/enums/billing-scheme.enum';
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
-import { IntervalType } from '@/enums/interval-type.enum';
+import { TiersMode } from '@/enums/tiers-mode.enum';
 
 export interface CreatePriceDTO {
   parent: string;
@@ -10,8 +11,9 @@ export interface CreatePriceDTO {
   currency: string;
   type: PriceType;
   inventoryType: InventoryType;
-  recurringIntervalCount?: number;
-  recurringIntervalType?: IntervalType;
+  billingScheme: BillingScheme;
+  tiersMode: TiersMode;
+  recurring?: string;
   quantity?: number;
   app: string;
   createdBy: string;

@@ -2,6 +2,9 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { FeatureCreatedEvent } from '@/events/implements/features/feature-created.event';
+import { FeatureRemovedEvent } from '@/events/implements/features/feature-removed.event';
+import { FeatureUpdatedEvent } from '@/events/implements/features/feature-updated.event';
 
 export interface IFeatureModelData {
   readonly id?: string;
@@ -42,5 +45,38 @@ export class FeatureModel extends AggregateRoot {
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+  }
+
+  createdFeature({ createdBy }: { createdBy: string }) {
+    if (this.id) {
+      this.apply(
+        new FeatureCreatedEvent({
+          createdBy,
+          feature: this
+        })
+      );
+    }
+  }
+
+  updatedFeature({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new FeatureUpdatedEvent({
+          updatedBy,
+          feature: this
+        })
+      );
+    }
+  }
+
+  removedFeature({ removedBy }: { removedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new FeatureRemovedEvent({
+          removedBy,
+          feature: this
+        })
+      );
+    }
   }
 }

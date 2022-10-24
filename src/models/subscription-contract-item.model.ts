@@ -2,6 +2,9 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { SubscriptionContractItemCreatedEvent } from '@/events/implements/subscription-contract-items/subscription-contract-item-created.event';
+import { SubscriptionContractItemRemovedEvent } from '@/events/implements/subscription-contract-items/subscription-contract-item-removed.event';
+import { SubscriptionContractItemUpdatedEvent } from '@/events/implements/subscription-contract-items/subscription-contract-item-updated.event';
 
 export interface ISubscriptionContractItemModelData {
   readonly id?: string;
@@ -10,8 +13,7 @@ export interface ISubscriptionContractItemModelData {
   readonly parent: string;
   readonly product: string;
   readonly quantity: number;
-  readonly invoiceProduct: string;
-  readonly invoicePrice: string;
+  readonly price: string;
   readonly stripeSubscriptionItem?: string;
   readonly recurring?: string;
   readonly updatedAt?: Date | string;
@@ -26,8 +28,7 @@ export class SubscriptionContractItemModel extends AggregateRoot {
   readonly parent: string;
   readonly product: string;
   readonly quantity: number;
-  readonly invoiceProduct: string;
-  readonly invoicePrice: string;
+  readonly price: string;
   readonly stripeSubscriptionItem?: string;
   readonly recurring?: string;
   readonly updatedAt?: string;
@@ -46,13 +47,45 @@ export class SubscriptionContractItemModel extends AggregateRoot {
     this.parent = data.parent;
     this.product = data.product;
     this.quantity = data.quantity;
-    this.invoiceProduct = data.invoiceProduct;
-    this.invoicePrice = data.invoicePrice;
+    this.price = data.price;
     this.stripeSubscriptionItem = data.stripeSubscriptionItem;
     this.recurring = data.recurring;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+  }
+
+  createdSubscriptionContractItem({ createdBy }: { createdBy: string }) {
+    if (this.id) {
+      this.apply(
+        new SubscriptionContractItemCreatedEvent({
+          createdBy,
+          subscriptionContractItem: this
+        })
+      );
+    }
+  }
+
+  updatedSubscriptionContractItem({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new SubscriptionContractItemUpdatedEvent({
+          updatedBy,
+          subscriptionContractItem: this
+        })
+      );
+    }
+  }
+
+  removedSubscriptionContractItem({ removedBy }: { removedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new SubscriptionContractItemRemovedEvent({
+          removedBy,
+          subscriptionContractItem: this
+        })
+      );
+    }
   }
 }

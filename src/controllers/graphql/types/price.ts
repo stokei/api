@@ -2,12 +2,12 @@ import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
 import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
 import { PriceType } from '@/controllers/graphql/enums/price-type.enum';
-import { IntervalType } from '@/controllers/graphql/enums/interval-type.enum';
 
 import { Account } from './account';
 import { App } from './app';
 import { Currency } from './currency';
 import { Product } from './product';
+import { Recurring } from './recurring';
 
 @ObjectType()
 export class Price {
@@ -38,11 +38,8 @@ export class Price {
   @Field(() => InventoryType)
   inventoryType: InventoryType;
 
-  @Field(() => Int)
-  recurringIntervalCount: number;
-
-  @Field(() => IntervalType)
-  recurringIntervalType: IntervalType;
+  @Field(() => Recurring, { nullable: true })
+  recurring?: Recurring;
 
   @Field(() => Int)
   quantity: number;

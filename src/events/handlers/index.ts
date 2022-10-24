@@ -8,6 +8,7 @@ import { CourseStudentEventsHandlers } from './course-students';
 import { CourseEventsHandlers } from './courses';
 import { CurrencyEventsHandlers } from './currencies';
 import { DomainEventsHandlers } from './domains';
+import { FeatureEventsHandlers } from './features';
 import { FileEventsHandlers } from './files';
 import { ImageEventsHandlers } from './images';
 import { InvoiceEventsHandlers } from './invoices';
@@ -16,9 +17,13 @@ import { ModuleEventsHandlers } from './modules';
 import { PaymentMethodEventsHandlers } from './payment-methods';
 import { PhoneEventsHandlers } from './phones';
 import { PlanEventsHandlers } from './plans';
+import { PriceTierEventsHandlers } from './price-tiers';
 import { PriceEventsHandlers } from './prices';
 import { ProductEventsHandlers } from './products';
+import { RecurringEventsHandlers } from './recurrings';
+import { SubscriptionContractItemEventsHandlers } from './subscription-contract-items';
 import { SubscriptionContractEventsHandlers } from './subscription-contracts';
+import { UsageRecordEventsHandlers } from './usage-records';
 import { VideoAuthorEventsHandlers } from './video-authors';
 import { VideoEventsHandlers } from './videos';
 
@@ -45,5 +50,10 @@ export const EventsHandlers = [
   ...CourseStudentEventsHandlers,
   ...SubscriptionContractEventsHandlers,
   ...AddressEventsHandlers,
-  ...PhoneEventsHandlers
+  ...PhoneEventsHandlers,
+  ...RecurringEventsHandlers,
+  ...FeatureEventsHandlers,
+  ...PriceTierEventsHandlers,
+  ...SubscriptionContractItemEventsHandlers,
+  ...UsageRecordEventsHandlers
 ];

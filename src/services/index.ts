@@ -10,6 +10,7 @@ import { CourseServices } from './courses';
 import { CurrencyServices } from './currencies';
 import { CustomerPortalSessionServices } from './customer-portal-sessions';
 import { DomainServices } from './domains';
+import { FeatureServices } from './features';
 import { FileServices } from './files';
 import { ImageServices } from './images';
 import { InvoiceServices } from './invoices';
@@ -18,10 +19,14 @@ import { ModuleServices } from './modules';
 import { PaymentMethodServices } from './payment-methods';
 import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
+import { PriceTierServices } from './price-tiers';
 import { PriceServices } from './prices';
 import { ProductServices } from './products';
+import { RecurringServices } from './recurrings';
 import { StripeServices } from './stripe';
+import { SubscriptionContractItemServices } from './subscription-contract-items';
 import { SubscriptionContractServices } from './subscription-contracts';
+import { UsageRecordServices } from './usage-records';
 import { VideoAuthorServices } from './video-authors';
 import { VideoServices } from './videos';
 import { WebhookServices } from './webhooks';
@@ -53,5 +58,10 @@ export const Services = [
   ...CustomerPortalSessionServices,
   ...WebhookServices,
   ...InvoiceServices,
-  ...FileServices
+  ...FileServices,
+  ...RecurringServices,
+  ...FeatureServices,
+  ...PriceTierServices,
+  ...SubscriptionContractItemServices,
+  ...UsageRecordServices
 ];

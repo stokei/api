@@ -1,7 +1,7 @@
 import { ICommand } from '@nestjs/cqrs';
 
 import { CreateSubscriptionContractDTO } from '@/dtos/subscription-contracts/create-subscription-contract.dto';
-import { RecurringType } from '@/enums/recurring-type.enum';
+import { IntervalType } from '@/enums/interval-type.enum';
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
 
 export class CreateSubscriptionContractCommand
@@ -12,7 +12,7 @@ export class CreateSubscriptionContractCommand
   invoiceProduct: string;
   invoicePrice: string;
   recurringIntervalCount?: number;
-  recurringIntervalType?: RecurringType;
+  recurringIntervalType?: IntervalType;
   stripeSubscription: string;
   type: SubscriptionContractType;
   automaticRenew?: boolean;

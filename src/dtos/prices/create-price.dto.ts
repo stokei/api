@@ -1,6 +1,6 @@
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
-import { RecurringType } from '@/enums/recurring-type.enum';
+import { IntervalType } from '@/enums/interval-type.enum';
 
 export interface CreatePriceDTO {
   parent: string;
@@ -11,7 +11,7 @@ export interface CreatePriceDTO {
   type: PriceType;
   inventoryType: InventoryType;
   recurringIntervalCount?: number;
-  recurringIntervalType?: RecurringType;
+  recurringIntervalType?: IntervalType;
   quantity?: number;
   app: string;
   createdBy: string;

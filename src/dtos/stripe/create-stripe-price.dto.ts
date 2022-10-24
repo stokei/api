@@ -1,5 +1,5 @@
 import { PriceType } from '@/enums/price-type.enum';
-import { RecurringType } from '@/enums/recurring-type.enum';
+import { IntervalType } from '@/enums/interval-type.enum';
 
 export interface CreateStripePriceDTO {
   app: string;
@@ -7,7 +7,7 @@ export interface CreateStripePriceDTO {
   currency: string;
   type: PriceType;
   recurringIntervalCount: number;
-  recurringIntervalType: RecurringType;
+  recurringIntervalType: IntervalType;
   stripeProduct: string;
   stripeAccount: string;
 }

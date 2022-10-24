@@ -9,7 +9,7 @@ import {
 import { CreatePlanCommand } from '@/commands/implements/plans/create-plan.command';
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
-import { RecurringType } from '@/enums/recurring-type.enum';
+import { IntervalType } from '@/enums/interval-type.enum';
 import {
   AppNotFoundException,
   DataNotFoundException,
@@ -106,7 +106,7 @@ export class CreatePlanCommandHandler
       type: PriceType.RECURRING,
       recurringIntervalCount: 1,
       default: true,
-      recurringIntervalType: RecurringType.MONTH,
+      recurringIntervalType: IntervalType.MONTH,
       inventoryType: InventoryType.INFINITE
     });
 

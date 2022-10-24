@@ -1,4 +1,4 @@
-import { RecurringType } from '@/enums/recurring-type.enum';
+import { IntervalType } from '@/enums/interval-type.enum';
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
 
 export interface CreateSubscriptionContractDTO {
@@ -7,7 +7,7 @@ export interface CreateSubscriptionContractDTO {
   invoiceProduct: string;
   invoicePrice: string;
   recurringIntervalCount?: number;
-  recurringIntervalType?: RecurringType;
+  recurringIntervalType?: IntervalType;
   stripeSubscription: string;
   type: SubscriptionContractType;
   automaticRenew?: boolean;

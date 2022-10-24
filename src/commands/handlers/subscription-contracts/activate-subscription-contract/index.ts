@@ -12,7 +12,7 @@ import {
 
 import { ActivateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/activate-subscription-contract.command';
 import { ActivateSubscriptionContractRepositoryDataDTO } from '@/dtos/subscription-contracts/activate-subscription-contract-repository.dto';
-import { RecurringType } from '@/enums/recurring-type.enum';
+import { IntervalType } from '@/enums/interval-type.enum';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import {
   DataNotFoundException,
@@ -120,13 +120,13 @@ export class ActivateSubscriptionContractCommandHandler
   }: {
     startAt: string;
     recurringIntervalCount: number;
-    recurringIntervalType: RecurringType;
+    recurringIntervalType: IntervalType;
   }) {
     const createEndAtFunctions = {
-      [RecurringType.DAY]: addDays,
-      [RecurringType.WEEK]: addWeeks,
-      [RecurringType.MONTH]: addMonths,
-      [RecurringType.YEAR]: addYears
+      [IntervalType.DAY]: addDays,
+      [IntervalType.WEEK]: addWeeks,
+      [IntervalType.MONTH]: addMonths,
+      [IntervalType.YEAR]: addYears
     };
     const createEndAt = createEndAtFunctions[recurringIntervalType];
     if (!createEndAt) {

@@ -3,7 +3,7 @@ import { ICommand } from '@nestjs/cqrs';
 import { CreatePriceDTO } from '@/dtos/prices/create-price.dto';
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
-import { RecurringType } from '@/enums/recurring-type.enum';
+import { IntervalType } from '@/enums/interval-type.enum';
 
 export class CreatePriceCommand implements ICommand, CreatePriceDTO {
   parent: string;
@@ -14,7 +14,7 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
   type: PriceType;
   inventoryType: InventoryType;
   recurringIntervalCount: number;
-  recurringIntervalType: RecurringType;
+  recurringIntervalType: IntervalType;
   quantity: number;
   app: string;
   createdBy: string;

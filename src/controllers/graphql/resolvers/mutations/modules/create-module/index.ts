@@ -4,7 +4,6 @@ import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
-import { AppPlanGuard } from '@/common/guards/app-plan';
 import { CreateModuleInput } from '@/controllers/graphql/inputs/modules/create-module.input';
 import { Module } from '@/controllers/graphql/types/module';
 import { CreateModuleService } from '@/services/modules/create-module';
@@ -13,7 +12,7 @@ import { CreateModuleService } from '@/services/modules/create-module';
 export class CreateModuleResolver {
   constructor(private readonly createModuleService: CreateModuleService) {}
 
-  @UseGuards(AuthenticatedGuard, AppGuard, AppPlanGuard)
+  @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Module)
   async createModule(
     @CurrentAccount('id') currentAccountId: string,

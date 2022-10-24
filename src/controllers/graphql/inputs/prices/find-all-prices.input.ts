@@ -9,7 +9,7 @@ import {
 
 import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
 import { PriceType } from '@/controllers/graphql/enums/price-type.enum';
-import { RecurringType } from '@/controllers/graphql/enums/recurring-type.enum';
+import { IntervalType } from '@/controllers/graphql/enums/interval-type.enum';
 import {
   OrderByDataFindAllPricesDTO,
   WhereDataFindAllPricesDTO
@@ -35,8 +35,8 @@ class WhereDataFindAllPricesDataInput implements WhereDataFindAllPricesDTO {
   @Field(() => WhereDataIntInput, { nullable: true })
   recurringIntervalCount?: WhereDataIntInput;
 
-  @Field(() => RecurringType, { nullable: true })
-  recurringIntervalType?: RecurringType;
+  @Field(() => IntervalType, { nullable: true })
+  recurringIntervalType?: IntervalType;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;

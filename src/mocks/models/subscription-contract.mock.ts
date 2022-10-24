@@ -1,7 +1,7 @@
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
-import { RecurringType } from '@/enums/recurring-type.enum';
+import { IntervalType } from '@/enums/interval-type.enum';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
 import {
@@ -22,7 +22,7 @@ export class SubscriptionContractModelMock extends SubscriptionContractModel {
       status: data?.status ?? SubscriptionContractStatus.ACTIVE,
       active: data?.active ?? true,
       recurringIntervalCount: data?.recurringIntervalCount ?? 1,
-      recurringIntervalType: data?.recurringIntervalType ?? RecurringType.MONTH,
+      recurringIntervalType: data?.recurringIntervalType ?? IntervalType.MONTH,
       stripeSubscription: data?.stripeSubscription ?? 'anyExternalSubscription',
       automaticRenew: data?.automaticRenew ?? false,
       startAt: data?.startAt ?? convertToISODateString(Date.now()),

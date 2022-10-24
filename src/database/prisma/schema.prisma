@@ -19,6 +19,13 @@ enum AccountRole {
   ADMIN
 }
 
+enum PlanType {
+  DOMAIN
+  INSTRUCTOR
+  COURSE
+  STORAGE
+}
+
 enum ThemeMode {
   DARK
   LIGHT
@@ -41,16 +48,35 @@ enum DomainStatus {
   ERROR
 }
 
-enum RecurringType {
+enum IntervalType {
   DAY
   WEEK
   MONTH
   YEAR
 }
 
+enum UsageType {
+  LICENSED
+  METERED
+}
+
+enum UsageRecordAction {
+  SUM
+  INCREMENT
+}
+
 enum PriceType {
   RECURRING
   ONE_TIME
+}
+
+enum BillingScheme {
+  PER_UNIT
+  TIERED
+}
+
+enum TiersMode {
+  VOLUME
 }
 
 enum SubscriptionContractType {
@@ -246,27 +272,71 @@ model Product {
   @@map("products")
 }
 
+model UsageRecord {
+  id        String            @id @default(cuid())
+  app       String            @db.VarChar(255)
+  parent    String            @db.VarChar(255)
+  quantity  Int
+  action    UsageRecordAction
+  updatedAt DateTime?         @updatedAt @map("updated_at")
+  createdAt DateTime?         @default(now()) @map("created_at")
+  updatedBy String?           @map("updated_by") @db.VarChar(255)
+  createdBy String?           @map("created_by") @db.VarChar(255)
+
+  @@map("usage_records")
+}
+
+model Recurring {
+  id            String       @id @default(cuid())
+  app           String       @db.VarChar(255)
+  usageType     UsageType    @map("usage_type")
+  intervalCount Int          @map("interval_count")
+  interval      IntervalType
+  updatedAt     DateTime?    @updatedAt @map("updated_at")
+  createdAt     DateTime?    @default(now()) @map("created_at")
+  updatedBy     String?      @map("updated_by") @db.VarChar(255)
+  createdBy     String?      @map("created_by") @db.VarChar(255)
+
+  @@map("recurrings")
+}
+
 model Price {
-  id                     String         @id @default(cuid())
-  app                    String         @db.VarChar(255)
-  parent                 String         @db.VarChar(255)
-  default                Boolean        @default(false)
-  currency               String         @db.VarChar(255)
-  stripePrice            String?        @map("stripe_price")
-  fromAmount             Int?           @map("from_amount")
-  amount                 Int            @map("amount")
-  type                   PriceType
-  recurringIntervalCount Int?           @map("recurring_interval_count")
-  recurringIntervalType  RecurringType? @map("recurring_interval_type")
-  inventoryType          InventoryType  @map("inventory_type")
-  quantity               Int?
-  active                 Boolean        @default(true)
-  updatedAt              DateTime?      @updatedAt @map("updated_at")
-  createdAt              DateTime?      @default(now()) @map("created_at")
-  updatedBy              String?        @map("updated_by") @db.VarChar(255)
-  createdBy              String?        @map("created_by") @db.VarChar(255)
+  id            String        @id @default(cuid())
+  app           String        @db.VarChar(255)
+  parent        String        @db.VarChar(255)
+  default       Boolean       @default(false)
+  currency      String        @db.VarChar(255)
+  stripePrice   String?       @map("stripe_price")
+  fromAmount    Int?          @map("from_amount")
+  amount        Int           @map("amount")
+  type          PriceType
+  billingScheme BillingScheme @map("billing_scheme")
+  tiersMode     TiersMode     @map("tiers_mode")
+  recurring     String?
+  inventoryType InventoryType @map("inventory_type")
+  quantity      Int?
+  active        Boolean       @default(true)
+  updatedAt     DateTime?     @updatedAt @map("updated_at")
+  createdAt     DateTime?     @default(now()) @map("created_at")
+  updatedBy     String?       @map("updated_by") @db.VarChar(255)
+  createdBy     String?       @map("created_by") @db.VarChar(255)
 
   @@map("prices")
+}
+
+model PriceTier {
+  id        String    @id @default(cuid())
+  app       String    @db.VarChar(255)
+  parent    String    @db.VarChar(255)
+  amount    Int
+  upTo      Int?
+  infinite  Boolean   @default(true)
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
+
+  @@map("price_tiers")
 }
 
 model PaymentMethod {
@@ -285,25 +355,32 @@ model PaymentMethod {
 }
 
 model Plan {
-  id                           String    @id @default(cuid())
-  name                         String    @db.VarChar(255)
-  product                      String?   @db.VarChar(255)
-  price                        String?   @db.VarChar(255)
-  hasCustomDomain              Boolean   @default(false) @map("has_custom_domain")
-  hasCustomSite                Boolean   @default(false) @map("has_custom_site")
-  quantityCourses              Int       @map("quantity_courses")
-  quantityInstructorsPerCourse Int       @map("quantity_instructor_per_courses")
-  quantityModulesPerCourse     Int       @map("quantity_modules_per_courses")
-  quantityVideosPerModules     Int       @map("quantity_videos_per_modules")
-  applicationFeePercentage     Int       @map("application_fee_percentage")
-  active                       Boolean   @default(false)
-  canceledAt                   DateTime? @map("canceled_at")
-  updatedAt                    DateTime? @updatedAt @map("updated_at")
-  createdAt                    DateTime? @default(now()) @map("created_at")
-  updatedBy                    String?   @map("updated_by") @db.VarChar(255)
-  createdBy                    String?   @map("created_by") @db.VarChar(255)
+  id          String    @id @default(cuid())
+  app         String    @db.VarChar(255)
+  name        String    @db.VarChar(255)
+  description String?   @db.VarChar(255)
+  type        PlanType
+  active      Boolean   @default(false)
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  createdAt   DateTime? @default(now()) @map("created_at")
+  updatedBy   String?   @map("updated_by") @db.VarChar(255)
+  createdBy   String?   @map("created_by") @db.VarChar(255)
 
   @@map("plans")
+}
+
+model Feature {
+  id          String    @id @default(cuid())
+  app         String    @db.VarChar(255)
+  parent      String    @db.VarChar(255)
+  name        String    @db.VarChar(255)
+  description String?   @db.VarChar(255)
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  createdAt   DateTime? @default(now()) @map("created_at")
+  updatedBy   String?   @map("updated_by") @db.VarChar(255)
+  createdBy   String?   @map("created_by") @db.VarChar(255)
+
+  @@map("features")
 }
 
 model File {
@@ -453,29 +530,41 @@ model Invoice {
 }
 
 model SubscriptionContract {
-  id                     String                     @id @default(cuid())
-  app                    String                     @db.VarChar(255)
-  product                String                     @db.VarChar(255)
-  parent                 String                     @db.VarChar(255)
-  invoiceProduct         String                     @map("invoice_product") @db.VarChar(255)
-  invoicePrice           String                     @map("invoice_price") @db.VarChar(255)
-  paymentMethod          String?                    @map("payment_method") @db.VarChar(255)
-  stripeSubscription     String?                    @map("stripe_subscription") @db.VarChar(255)
-  recurringIntervalCount Int?                       @map("recurring_interval_count")
-  recurringIntervalType  RecurringType?             @map("recurring_interval_type")
-  status                 SubscriptionContractStatus
-  type                   SubscriptionContractType
-  automaticRenew         Boolean                    @default(false)
-  active                 Boolean                    @default(false)
-  startAt                DateTime?                  @map("start_at")
-  endAt                  DateTime?                  @map("end_at")
-  canceledAt             DateTime?                  @map("canceled_at")
-  updatedAt              DateTime?                  @updatedAt @map("updated_at")
-  createdAt              DateTime?                  @default(now()) @map("created_at")
-  updatedBy              String?                    @map("updated_by") @db.VarChar(255)
-  createdBy              String?                    @map("created_by") @db.VarChar(255)
+  id                 String                     @id @default(cuid())
+  app                String                     @db.VarChar(255)
+  parent             String                     @db.VarChar(255)
+  paymentMethod      String?                    @map("payment_method") @db.VarChar(255)
+  stripeSubscription String?                    @map("stripe_subscription") @db.VarChar(255)
+  status             SubscriptionContractStatus
+  type               SubscriptionContractType
+  automaticRenew     Boolean                    @default(false)
+  active             Boolean                    @default(false)
+  startAt            DateTime?                  @map("start_at")
+  endAt              DateTime?                  @map("end_at")
+  updatedAt          DateTime?                  @updatedAt @map("updated_at")
+  createdAt          DateTime?                  @default(now()) @map("created_at")
+  updatedBy          String?                    @map("updated_by") @db.VarChar(255)
+  createdBy          String?                    @map("created_by") @db.VarChar(255)
 
   @@map("subscription_contracts")
+}
+
+model SubscriptionContractItem {
+  id                     String    @id @default(cuid())
+  app                    String    @db.VarChar(255)
+  parent                 String    @db.VarChar(255)
+  product                String    @db.VarChar(255)
+  quantity               Int
+  invoiceProduct         String    @map("invoice_product") @db.VarChar(255)
+  invoicePrice           String    @map("invoice_price") @db.VarChar(255)
+  stripeSubscriptionItem String?   @map("stripe_subscription_item") @db.VarChar(255)
+  recurring              String?
+  updatedAt              DateTime? @updatedAt @map("updated_at")
+  createdAt              DateTime? @default(now()) @map("created_at")
+  updatedBy              String?   @map("updated_by") @db.VarChar(255)
+  createdBy              String?   @map("created_by") @db.VarChar(255)
+
+  @@map("subscription_contract_items")
 }
 
 model Address {

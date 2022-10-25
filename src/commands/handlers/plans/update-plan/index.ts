@@ -65,8 +65,8 @@ export class UpdatePlanCommandHandler
         plan: cleanValue(command?.where?.plan)
       }),
       data: cleanObject({
-        price: cleanValue(command?.data?.price),
-        product: cleanValue(command?.data?.product),
+        name: cleanValue(command?.data?.name),
+        description: cleanValue(command?.data?.description),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

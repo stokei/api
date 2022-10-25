@@ -1,21 +1,24 @@
 import { ICommand } from '@nestjs/cqrs';
 
 import { CreatePriceDTO } from '@/dtos/prices/create-price.dto';
+import { CreateRecurringDTO } from '@/dtos/recurrings/create-recurring.dto';
+import { BillingScheme } from '@/enums/billing-scheme.enum';
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
-import { IntervalType } from '@/enums/interval-type.enum';
+import { TiersMode } from '@/enums/tiers-mode.enum';
 
 export class CreatePriceCommand implements ICommand, CreatePriceDTO {
   parent: string;
-  default: boolean;
+  default?: boolean;
   fromAmount?: number;
   amount: number;
   currency: string;
   type: PriceType;
   inventoryType: InventoryType;
-  recurringIntervalCount: number;
-  recurringIntervalType: IntervalType;
-  quantity: number;
+  billingScheme: BillingScheme;
+  tiersMode: TiersMode;
+  recurring?: CreateRecurringDTO;
+  quantity?: number;
   app: string;
   createdBy: string;
 
@@ -27,8 +30,9 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
     this.currency = data.currency;
     this.type = data.type;
     this.inventoryType = data.inventoryType;
-    this.recurringIntervalCount = data.recurringIntervalCount;
-    this.recurringIntervalType = data.recurringIntervalType;
+    this.billingScheme = data.billingScheme;
+    this.tiersMode = data.tiersMode;
+    this.recurring = data.recurring;
     this.quantity = data.quantity;
     this.app = data.app;
     this.createdBy = data.createdBy;

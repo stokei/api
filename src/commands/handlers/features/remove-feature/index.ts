@@ -4,18 +4,18 @@ import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 import { RemoveFeatureCommand } from '@/commands/implements/features/remove-feature.command';
 import {
   DataNotFoundException,
-  ParamNotFoundException,
-  FeatureNotFoundException
+  FeatureNotFoundException,
+  ParamNotFoundException
 } from '@/errors';
-import { FindFeatureByIdRepository } from '@/repositories/features/find-feature-by-id';
 import { RemoveFeatureRepository } from '@/repositories/features/remove-feature';
+import { FindFeatureByIdService } from '@/services/features/find-feature-by-id';
 
 @CommandHandler(RemoveFeatureCommand)
 export class RemoveFeatureCommandHandler
   implements ICommandHandler<RemoveFeatureCommand>
 {
   constructor(
-    private readonly findFeatureByIdRepository: FindFeatureByIdRepository,
+    private readonly findFeatureByIdService: FindFeatureByIdService,
     private readonly removeFeatureRepository: RemoveFeatureRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -33,7 +33,9 @@ export class RemoveFeatureCommandHandler
       throw new ParamNotFoundException('featureId');
     }
 
-    const feature = await this.findFeatureByIdRepository.execute(featureId);
+    const feature = await this.findFeatureByIdService.execute(
+      data.where?.feature
+    );
     if (!feature) {
       throw new FeatureNotFoundException();
     }

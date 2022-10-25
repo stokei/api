@@ -72,6 +72,7 @@ export class CreateSubscriptionContractCommandHandler
     command: CreateSubscriptionContractCommand
   ): CreateSubscriptionContractCommand {
     return cleanObject({
+      app: cleanValue(command?.app),
       parent: cleanValue(command?.parent),
       invoiceProduct: cleanValue(command?.invoiceProduct),
       price: cleanValue(command?.price),
@@ -81,7 +82,6 @@ export class CreateSubscriptionContractCommandHandler
       stripeSubscription: cleanValue(command?.stripeSubscription),
       type: cleanValue(command?.type),
       automaticRenew: cleanValueBoolean(command?.automaticRenew),
-      app: cleanValue(command?.app),
       createdBy: cleanValue(command?.createdBy)
     });
   }

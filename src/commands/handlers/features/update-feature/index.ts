@@ -4,18 +4,18 @@ import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 import { UpdateFeatureCommand } from '@/commands/implements/features/update-feature.command';
 import {
   DataNotFoundException,
-  ParamNotFoundException,
-  FeatureNotFoundException
+  FeatureNotFoundException,
+  ParamNotFoundException
 } from '@/errors';
-import { FindFeatureByIdRepository } from '@/repositories/features/find-feature-by-id';
 import { UpdateFeatureRepository } from '@/repositories/features/update-feature';
+import { FindFeatureByIdService } from '@/services/features/find-feature-by-id';
 
 @CommandHandler(UpdateFeatureCommand)
 export class UpdateFeatureCommandHandler
   implements ICommandHandler<UpdateFeatureCommand>
 {
   constructor(
-    private readonly findFeatureByIdRepository: FindFeatureByIdRepository,
+    private readonly findFeatureByIdService: FindFeatureByIdService,
     private readonly updateFeatureRepository: UpdateFeatureRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -30,7 +30,7 @@ export class UpdateFeatureCommandHandler
       throw new ParamNotFoundException('featureId');
     }
 
-    const feature = await this.findFeatureByIdRepository.execute(featureId);
+    const feature = await this.findFeatureByIdService.execute(featureId);
     if (!feature) {
       throw new FeatureNotFoundException();
     }
@@ -46,9 +46,7 @@ export class UpdateFeatureCommandHandler
       throw new DataNotFoundException();
     }
 
-    const featureUpdated = await this.findFeatureByIdRepository.execute(
-      featureId
-    );
+    const featureUpdated = await this.findFeatureByIdService.execute(featureId);
     if (!featureUpdated) {
       throw new FeatureNotFoundException();
     }
@@ -70,7 +68,6 @@ export class UpdateFeatureCommandHandler
       data: cleanObject({
         name: cleanValue(command?.data?.name),
         description: cleanValue(command?.data?.description),
-        poster: cleanValue(command?.data?.poster),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

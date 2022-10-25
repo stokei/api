@@ -1,12 +1,11 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
-import { nanoid } from 'nanoid';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateFeatureCommand } from '@/commands/implements/features/create-feature.command';
 import {
   DataNotFoundException,
-  ParamNotFoundException,
-  FeatureNotFoundException
+  FeatureNotFoundException,
+  ParamNotFoundException
 } from '@/errors';
 import { CreateFeatureRepository } from '@/repositories/features/create-feature';
 
@@ -26,22 +25,19 @@ export class CreateFeatureCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
+    if (!data.parent) {
       throw new ParamNotFoundException<CreateFeatureCommandKeys>('parent');
     }
-    if (!data?.name) {
+    if (!data.name) {
       throw new ParamNotFoundException<CreateFeatureCommandKeys>('name');
     }
-    if (!data?.file) {
-      throw new ParamNotFoundException<CreateFeatureCommandKeys>('file');
+    if (!data.app) {
+      throw new ParamNotFoundException<CreateFeatureCommandKeys>('app');
     }
-
-    const slug = cleanSlug(data.name + nanoid(8));
-    const featureCreated = await this.createFeatureRepository.execute({
-      ...data,
-      active: false,
-      slug
-    });
+    if (!data.createdBy) {
+      throw new ParamNotFoundException<CreateFeatureCommandKeys>('createdBy');
+    }
+    const featureCreated = await this.createFeatureRepository.execute(data);
     if (!featureCreated) {
       throw new FeatureNotFoundException();
     }
@@ -56,13 +52,11 @@ export class CreateFeatureCommandHandler
 
   private clearData(command: CreateFeatureCommand): CreateFeatureCommand {
     return cleanObject({
-      createdBy: cleanValue(command?.createdBy),
+      parent: cleanValue(command?.parent),
       app: cleanValue(command?.app),
       name: cleanValue(command?.name),
       description: cleanValue(command?.description),
-      file: cleanValue(command?.file),
-      poster: cleanValue(command?.poster),
-      parent: cleanValue(command?.parent)
+      createdBy: cleanValue(command?.createdBy)
     });
   }
 }

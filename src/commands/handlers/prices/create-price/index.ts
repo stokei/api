@@ -7,16 +7,20 @@ import {
 } from '@stokei/nestjs';
 
 import { CreatePriceCommand } from '@/commands/implements/prices/create-price.command';
+import { PriceType } from '@/enums/price-type.enum';
 import {
   AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
   PriceNotFoundException,
-  ProductNotFoundException
+  ProductNotFoundException,
+  RecurringNotFoundException
 } from '@/errors';
+import { RecurringModel } from '@/models/recurring.model';
 import { CreatePriceRepository } from '@/repositories/prices/create-price';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
+import { CreateRecurringService } from '@/services/recurrings/create-recurring';
 import { CreateStripePriceService } from '@/services/stripe/create-stripe-price';
 
 type CreatePriceCommandKeys = keyof CreatePriceCommand;
@@ -30,6 +34,7 @@ export class CreatePriceCommandHandler
     private readonly createStripePriceService: CreateStripePriceService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findProductByIdService: FindProductByIdService,
+    private readonly createRecurringService: CreateRecurringService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -56,13 +61,19 @@ export class CreatePriceCommandHandler
     if (!product) {
       throw new ProductNotFoundException();
     }
+    let recurring: RecurringModel;
+    if (data.type === PriceType.RECURRING) {
+      recurring = await this.createRecurringService.execute(data.recurring);
+      if (!recurring) {
+        throw new RecurringNotFoundException();
+      }
+    }
 
     const stripePrice = await this.createStripePriceService.execute({
       amount: data.amount,
       currency: data.currency,
       app: app.id,
-      recurringIntervalCount: data.recurringIntervalCount,
-      recurringIntervalType: data.recurringIntervalType,
+      recurring,
       type: data.type,
       stripeProduct: product.stripeProduct,
       stripeAccount: app.stripeAccount
@@ -70,6 +81,7 @@ export class CreatePriceCommandHandler
 
     const priceCreated = await this.createPriceRepository.execute({
       ...data,
+      recurring: recurring?.id,
       stripePrice: stripePrice.id
     });
     if (!priceCreated) {
@@ -86,18 +98,19 @@ export class CreatePriceCommandHandler
 
   private clearData(command: CreatePriceCommand): CreatePriceCommand {
     return cleanObject({
-      createdBy: cleanValue(command?.createdBy),
-      app: cleanValue(command?.app),
-      currency: cleanValue(command?.currency),
+      parent: cleanValue(command?.parent),
       default: cleanValueBoolean(command?.default),
       fromAmount: cleanValueNumber(command?.fromAmount),
       amount: cleanValueNumber(command?.amount),
-      type: command?.type,
-      inventoryType: command?.inventoryType,
-      recurringIntervalCount: cleanValueNumber(command?.recurringIntervalCount),
-      recurringIntervalType: command?.recurringIntervalType,
+      currency: cleanValue(command?.currency),
+      type: cleanValue(command?.type),
+      inventoryType: cleanValue(command?.inventoryType),
+      billingScheme: cleanValue(command?.billingScheme),
+      tiersMode: cleanValue(command?.tiersMode),
+      recurring: command?.recurring,
       quantity: cleanValueNumber(command?.quantity),
-      parent: cleanValue(command?.parent)
+      app: cleanValue(command?.app),
+      createdBy: cleanValue(command?.createdBy)
     });
   }
 }

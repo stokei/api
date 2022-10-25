@@ -1,3 +1,4 @@
+import { CreateRecurringDTO } from '@/dtos/recurrings/create-recurring.dto';
 import { BillingScheme } from '@/enums/billing-scheme.enum';
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
@@ -13,7 +14,7 @@ export interface CreatePriceDTO {
   inventoryType: InventoryType;
   billingScheme: BillingScheme;
   tiersMode: TiersMode;
-  recurring?: string;
+  recurring?: CreateRecurringDTO;
   quantity?: number;
   app: string;
   createdBy: string;

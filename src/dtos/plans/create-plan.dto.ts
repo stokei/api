@@ -1,10 +1,9 @@
+import { PlanType } from '@/enums/plan-type.enum';
+
 export interface CreatePlanDTO {
   app: string;
-  hasCustomDomain: boolean;
-  hasCustomSite: boolean;
-  quantityCourses: number;
-  quantityInstructorsPerCourse: number;
-  quantityModulesPerCourse: number;
-  quantityVideosPerModules: number;
+  name: string;
+  description?: string;
+  type: PlanType;
   createdBy: string;
 }

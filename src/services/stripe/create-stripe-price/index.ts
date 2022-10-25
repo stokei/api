@@ -21,8 +21,8 @@ export class CreateStripePriceService
         unit_amount: data.amount,
         recurring: data.type === PriceType.RECURRING && {
           interval:
-            data.recurringIntervalType.toLowerCase() as Stripe.PriceCreateParams.Recurring.Interval,
-          interval_count: data.recurringIntervalCount
+            data.recurring?.interval?.toLowerCase() as Stripe.PriceCreateParams.Recurring.Interval,
+          interval_count: data.recurring?.intervalCount
         },
         metadata: {
           app: data.app

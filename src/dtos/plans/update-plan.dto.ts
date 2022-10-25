@@ -1,6 +1,6 @@
 export interface UpdatePlanDataDTO {
-  product?: string;
-  price?: string;
+  name?: string;
+  description?: string;
   updatedBy: string;
 }
 

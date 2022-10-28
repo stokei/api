@@ -7,7 +7,6 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { RecurringCreatedEvent } from '@/events/implements/recurrings/recurring-created.event';
 import { RecurringRemovedEvent } from '@/events/implements/recurrings/recurring-removed.event';
-import { RecurringUpdatedEvent } from '@/events/implements/recurrings/recurring-updated.event';
 
 @Injectable()
 export class RecurringsSagas {
@@ -45,25 +44,6 @@ export class RecurringsSagas {
       map((event) => {
         this.logger.log(
           'Inside [RecurringRemovedEvent] Saga event recurringRemoved:' +
-            JSON.stringify(
-              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
-            )
-        );
-        const commands = [];
-        return commands;
-      }),
-      mergeMap((c) => c)
-    );
-  };
-
-  @Saga()
-  recurringUpdated = (events$: Observable<any>): Observable<ICommand> => {
-    return events$.pipe(
-      ofType(RecurringUpdatedEvent),
-      delay(500),
-      map((event) => {
-        this.logger.log(
-          'Inside [RecurringUpdatedEvent] Saga event recurringUpdated:' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

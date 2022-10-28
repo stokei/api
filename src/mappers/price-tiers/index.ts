@@ -4,6 +4,7 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhereDataBoolean,
+  cleanWhereDataNumber,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
@@ -32,12 +33,11 @@ export class PriceTierMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
-        slug: prismaMapper.toWhereData(operatorData.slug),
-        description: prismaMapper.toWhereDataSearch(operatorData.description),
-        active: prismaMapper.toWhereData(operatorData.active),
+        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
+        amount: prismaMapper.toWhereData(operatorData.amount),
+        upTo: prismaMapper.toWhereData(operatorData.upTo),
+        infinite: prismaMapper.toWhereData(operatorData.infinite),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
@@ -69,9 +69,9 @@ export class PriceTierMapper {
       return {
         [operator]: {
           parent: cleanWhereDataSearch(operatorData.parent),
-          slug: cleanWhereDataString(operatorData.slug),
-          description: cleanWhereDataSearch(operatorData.description),
-          active: cleanWhereDataBoolean(operatorData.active),
+          amount: cleanWhereDataNumber(operatorData.amount),
+          upTo: cleanWhereDataNumber(operatorData.upTo),
+          infinite: cleanWhereDataBoolean(operatorData.infinite),
           app: cleanWhereDataString(operatorData.app),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -94,9 +94,9 @@ export class PriceTierMapper {
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        name: cleanSortValue(query.orderBy?.name),
-        slug: cleanSortValue(query.orderBy?.slug),
-        active: cleanSortValue(query.orderBy?.active),
+        amount: cleanSortValue(query.orderBy?.amount),
+        upTo: cleanSortValue(query.orderBy?.upTo),
+        infinite: cleanSortValue(query.orderBy?.infinite),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

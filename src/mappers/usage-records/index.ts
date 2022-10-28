@@ -3,7 +3,6 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
-  cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
@@ -32,12 +31,9 @@ export class UsageRecordMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
         parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
-        slug: prismaMapper.toWhereData(operatorData.slug),
-        description: prismaMapper.toWhereDataSearch(operatorData.description),
-        active: prismaMapper.toWhereData(operatorData.active),
+        action: operatorData.action,
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
@@ -71,9 +67,7 @@ export class UsageRecordMapper {
       return {
         [operator]: {
           parent: cleanWhereDataSearch(operatorData.parent),
-          slug: cleanWhereDataString(operatorData.slug),
-          description: cleanWhereDataSearch(operatorData.description),
-          active: cleanWhereDataBoolean(operatorData.active),
+          action: operatorData.action,
           app: cleanWhereDataString(operatorData.app),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -96,9 +90,8 @@ export class UsageRecordMapper {
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        name: cleanSortValue(query.orderBy?.name),
-        slug: cleanSortValue(query.orderBy?.slug),
-        active: cleanSortValue(query.orderBy?.active),
+        quantity: cleanSortValue(query.orderBy?.quantity),
+        action: cleanSortValue(query.orderBy?.action),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

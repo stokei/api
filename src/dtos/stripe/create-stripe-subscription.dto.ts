@@ -6,8 +6,7 @@ export interface CreateStripeCheckoutSessionPriceDTO {
 export interface CreateStripeSubscriptionDTO {
   app: string;
   currency: string;
-  applicationFeePercentage: number;
-  price: string;
+  prices: CreateStripeCheckoutSessionPriceDTO[];
   customer: string;
   stripeAccount: string;
 }

@@ -1,8 +1,10 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 
+import { BillingScheme } from '@/controllers/graphql/enums/billing-scheme.enum';
 import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
 import { PriceType } from '@/controllers/graphql/enums/price-type.enum';
-import { IntervalType } from '@/controllers/graphql/enums/interval-type.enum';
+import { TiersMode } from '@/controllers/graphql/enums/tiers-mode.enum';
+import { Recurring } from '@/controllers/graphql/types/recurring';
 
 @InputType()
 export class CreatePriceInput {
@@ -21,14 +23,17 @@ export class CreatePriceInput {
   @Field(() => PriceType)
   type: PriceType;
 
+  @Field(() => BillingScheme)
+  billingScheme: BillingScheme;
+
+  @Field(() => TiersMode)
+  tiersMode: TiersMode;
+
   @Field(() => InventoryType)
   inventoryType: InventoryType;
 
-  @Field(() => Int)
-  recurringIntervalCount: number;
-
-  @Field(() => IntervalType)
-  recurringIntervalType: IntervalType;
+  @Field(() => Recurring, { nullable: true })
+  recurring?: Recurring;
 
   @Field(() => Int)
   quantity: number;

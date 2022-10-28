@@ -11,15 +11,16 @@ import {
   PriceNotFoundException,
   ProductNotFoundException,
   SubscriptionContractAlreadyActiveException,
+  SubscriptionContractItemNotFoundException,
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { CheckoutMapper } from '@/mappers/checkouts';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { FindAppCurrentSubscriptionPlanService } from '@/services/apps/find-app-current-subscription-plan';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateStripeSubscriptionService } from '@/services/stripe/create-stripe-subscription';
+import { CreateSubscriptionContractItemService } from '@/services/subscription-contract-items/create-subscription-contract-item';
 import { CreateSubscriptionContractService } from '@/services/subscription-contracts/create-subscription-contract';
 import { FindAllSubscriptionContractsService } from '@/services/subscription-contracts/find-all-subscription-contracts';
 
@@ -34,7 +35,7 @@ export class CreateCheckoutCommandHandler
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findProductByIdService: FindProductByIdService,
     private readonly findAllSubscriptionContractsService: FindAllSubscriptionContractsService,
-    private readonly findAppCurrentSubscriptionPlanService: FindAppCurrentSubscriptionPlanService,
+    private readonly createSubscriptionContractItemService: CreateSubscriptionContractItemService,
     private readonly findPriceByIdService: FindPriceByIdService,
     private readonly createSubscriptionContractService: CreateSubscriptionContractService,
     private readonly findAccountByIdService: FindAccountByIdService
@@ -82,9 +83,6 @@ export class CreateCheckoutCommandHandler
             parent: {
               equals: data.customer
             },
-            price: {
-              equals: price.id
-            },
             active: {
               equals: true
             }
@@ -101,16 +99,11 @@ export class CreateCheckoutCommandHandler
       throw new SubscriptionContractAlreadyActiveException();
     }
 
-    const appCurrentSubscriptionPlan =
-      await this.findAppCurrentSubscriptionPlanService.execute(customerApp.id);
-    const appPlan = appCurrentSubscriptionPlan?.plan;
-
     const stripeSubscription =
       await this.createStripeSubscriptionService.execute({
         app: customerApp.id,
-        applicationFeePercentage: appPlan?.applicationFeePercentage,
         currency: customerApp.currency,
-        price: price.stripePrice,
+        prices: [{ price: price.stripePrice, quantity: 1 }],
         customer: stripeCustomer,
         stripeAccount: customerApp.stripeAccount
       });
@@ -122,17 +115,26 @@ export class CreateCheckoutCommandHandler
         app: customerApp.id,
         createdBy: data.createdBy,
         parent: data.customer,
-        product: product.parent,
-        invoiceProduct: product.id,
-        price: price.id,
         stripeSubscription: stripeSubscription.id,
         type: price.type,
-        automaticRenew: true,
-        recurringIntervalCount: price.recurringIntervalCount,
-        recurringIntervalType: price.recurringIntervalType
+        automaticRenew: true
       });
     if (!subscriptionContract) {
       throw new SubscriptionContractNotFoundException();
+    }
+    const subscriptionContractItem =
+      await this.createSubscriptionContractItemService.execute({
+        app: customerApp.id,
+        product: product.parent,
+        price: price.id,
+        recurring: price.recurring,
+        parent: subscriptionContract.id,
+        quantity: 1,
+        createdBy: data.createdBy,
+        stripeSubscriptionItem: stripeSubscription.items.data[0].id
+      });
+    if (!subscriptionContractItem) {
+      throw new SubscriptionContractItemNotFoundException();
     }
     return new CheckoutMapper().toModel({
       subscriptionContract,

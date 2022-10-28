@@ -4,7 +4,6 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhereDataBoolean,
-  cleanWhereDataNumber,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
@@ -38,10 +37,8 @@ export class PriceMapper {
         default: prismaMapper.toWhereData(operatorData.default),
         type: operatorData.type,
         inventoryType: operatorData.inventoryType,
-        recurringIntervalCount: prismaMapper.toWhereData(
-          operatorData.recurringIntervalCount
-        ),
-        recurringIntervalType: operatorData.recurringIntervalType,
+        billingScheme: operatorData.billingScheme,
+        tiersMode: operatorData.tiersMode,
         app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
@@ -78,10 +75,8 @@ export class PriceMapper {
           default: cleanWhereDataBoolean(operatorData.default),
           type: operatorData.type,
           inventoryType: operatorData.inventoryType,
-          recurringIntervalCount: cleanWhereDataNumber(
-            operatorData.recurringIntervalCount
-          ),
-          recurringIntervalType: operatorData.recurringIntervalType,
+          billingScheme: operatorData.billingScheme,
+          tiersMode: operatorData.tiersMode,
           app: cleanWhereDataString(operatorData.app),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -110,12 +105,8 @@ export class PriceMapper {
         fromAmount: cleanSortValue(query.orderBy?.fromAmount),
         type: cleanSortValue(query.orderBy?.type),
         inventoryType: cleanSortValue(query.orderBy?.inventoryType),
-        recurringIntervalCount: cleanSortValue(
-          query.orderBy?.recurringIntervalCount
-        ),
-        recurringIntervalType: cleanSortValue(
-          query.orderBy?.recurringIntervalType
-        ),
+        billingScheme: cleanSortValue(query.orderBy?.billingScheme),
+        tiersMode: cleanSortValue(query.orderBy?.tiersMode),
         quantity: cleanSortValue(query.orderBy?.quantity),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),

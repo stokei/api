@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 
 import { stripeClient } from '@/clients/stripe';
 import { CreateStripeSubscriptionDTO } from '@/dtos/stripe/create-stripe-subscription.dto';
+import { APPLICATION_FEE_PERCENT } from '@/environments';
 
 @Injectable()
 export class CreateStripeSubscriptionService
@@ -20,15 +21,14 @@ export class CreateStripeSubscriptionService
       {
         currency: data.currency,
         customer: data.customer,
-        items: [
-          {
-            price: data.price
-          }
-        ],
+        items: data?.prices?.map((price) => ({
+          price: price.price,
+          quantity: price.quantity
+        })),
         payment_behavior: 'default_incomplete',
         expand: ['latest_invoice.payment_intent'],
         ...(data.stripeAccount && {
-          application_fee_percent: data.applicationFeePercentage,
+          application_fee_percent: APPLICATION_FEE_PERCENT,
           transfer_data: {
             destination: data.stripeAccount
           }

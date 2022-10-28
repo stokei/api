@@ -1,10 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import {
-  cleanObject,
-  cleanValue,
-  cleanValueBoolean,
-  cleanValueNumber
-} from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueBoolean } from '@stokei/nestjs';
 
 import { CreateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/create-subscription-contract.command';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
@@ -37,6 +32,16 @@ export class CreateSubscriptionContractCommandHandler
         'parent'
       );
     }
+    if (!data?.app) {
+      throw new ParamNotFoundException<CreateSubscriptionContractCommandKeys>(
+        'app'
+      );
+    }
+    if (!data?.app) {
+      throw new ParamNotFoundException<CreateSubscriptionContractCommandKeys>(
+        'app'
+      );
+    }
 
     const subscriptionContractCreated =
       await this.createSubscriptionContractRepository.execute({
@@ -44,11 +49,6 @@ export class CreateSubscriptionContractCommandHandler
         automaticRenew: data.automaticRenew,
         createdBy: data.createdBy,
         parent: data.parent,
-        product: data.product,
-        invoiceProduct: data.invoiceProduct,
-        price: data.price,
-        recurringIntervalCount: data.recurringIntervalCount,
-        recurringIntervalType: data.recurringIntervalType,
         stripeSubscription: data.stripeSubscription,
         type: data.type,
         active: false,
@@ -74,11 +74,6 @@ export class CreateSubscriptionContractCommandHandler
     return cleanObject({
       app: cleanValue(command?.app),
       parent: cleanValue(command?.parent),
-      invoiceProduct: cleanValue(command?.invoiceProduct),
-      price: cleanValue(command?.price),
-      recurringIntervalType: cleanValue(command?.recurringIntervalType),
-      recurringIntervalCount: cleanValueNumber(command?.recurringIntervalCount),
-      product: cleanValue(command?.product),
       stripeSubscription: cleanValue(command?.stripeSubscription),
       type: cleanValue(command?.type),
       automaticRenew: cleanValueBoolean(command?.automaticRenew),

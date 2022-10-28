@@ -3,7 +3,6 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
-  cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
@@ -35,9 +34,7 @@ export class FeatureMapper {
         name: prismaMapper.toWhereDataSearch(operatorData.name),
         parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
-        slug: prismaMapper.toWhereData(operatorData.slug),
         description: prismaMapper.toWhereDataSearch(operatorData.description),
-        active: prismaMapper.toWhereData(operatorData.active),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
@@ -69,9 +66,8 @@ export class FeatureMapper {
       return {
         [operator]: {
           parent: cleanWhereDataSearch(operatorData.parent),
-          slug: cleanWhereDataString(operatorData.slug),
+          name: cleanWhereDataSearch(operatorData.name),
           description: cleanWhereDataSearch(operatorData.description),
-          active: cleanWhereDataBoolean(operatorData.active),
           app: cleanWhereDataString(operatorData.app),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -95,8 +91,6 @@ export class FeatureMapper {
       }),
       orderBy: cleanObject({
         name: cleanSortValue(query.orderBy?.name),
-        slug: cleanSortValue(query.orderBy?.slug),
-        active: cleanSortValue(query.orderBy?.active),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

@@ -3,8 +3,7 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
-  cleanWhereDataBoolean,
-  cleanWhereDataSearch,
+  cleanWhereDataNumber,
   cleanWhereDataString,
   IOperator,
   IWhere,
@@ -32,12 +31,10 @@ export class RecurringMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
-        slug: prismaMapper.toWhereData(operatorData.slug),
-        description: prismaMapper.toWhereDataSearch(operatorData.description),
-        active: prismaMapper.toWhereData(operatorData.active),
+        usageType: operatorData.usageType,
+        intervalCount: prismaMapper.toWhereData(operatorData.intervalCount),
+        interval: operatorData.interval,
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
@@ -68,10 +65,9 @@ export class RecurringMapper {
       }
       return {
         [operator]: {
-          parent: cleanWhereDataSearch(operatorData.parent),
-          slug: cleanWhereDataString(operatorData.slug),
-          description: cleanWhereDataSearch(operatorData.description),
-          active: cleanWhereDataBoolean(operatorData.active),
+          usageType: operatorData.usageType,
+          intervalCount: cleanWhereDataNumber(operatorData.intervalCount),
+          interval: operatorData.interval,
           app: cleanWhereDataString(operatorData.app),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -94,9 +90,9 @@ export class RecurringMapper {
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        name: cleanSortValue(query.orderBy?.name),
-        slug: cleanSortValue(query.orderBy?.slug),
-        active: cleanSortValue(query.orderBy?.active),
+        usageType: cleanSortValue(query.orderBy?.usageType),
+        intervalCount: cleanSortValue(query.orderBy?.intervalCount),
+        interval: cleanSortValue(query.orderBy?.interval),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

@@ -4,7 +4,6 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { UpdatePlanCommand } from '@/commands/implements/plans/update-plan.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { PlanCreatedEvent } from '@/events/implements/plans/plan-created.event';
 import { PlanUpdatedEvent } from '@/events/implements/plans/plan-updated.event';
@@ -30,18 +29,7 @@ export class PlansSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
-          new UpdatePlanCommand({
-            data: {
-              price: event.plan.price,
-              product: event.plan.product,
-              updatedBy: event.createdBy
-            },
-            where: {
-              plan: event.plan.id
-            }
-          })
-        ];
+        const commands = [];
         return commands;
       }),
       mergeMap((c) => c)

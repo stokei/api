@@ -1,6 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
-import { nanoid } from 'nanoid';
+import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateRecurringCommand } from '@/commands/implements/recurrings/create-recurring.command';
 import {
@@ -26,22 +25,19 @@ export class CreateRecurringCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreateRecurringCommandKeys>('parent');
+    if (!data?.app) {
+      throw new ParamNotFoundException<CreateRecurringCommandKeys>('app');
     }
-    if (!data?.name) {
-      throw new ParamNotFoundException<CreateRecurringCommandKeys>('name');
+    if (!data?.interval) {
+      throw new ParamNotFoundException<CreateRecurringCommandKeys>('interval');
     }
-    if (!data?.file) {
-      throw new ParamNotFoundException<CreateRecurringCommandKeys>('file');
+    if (data?.intervalCount <= 0) {
+      throw new ParamNotFoundException<CreateRecurringCommandKeys>(
+        'intervalCount'
+      );
     }
 
-    const slug = cleanSlug(data.name + nanoid(8));
-    const recurringCreated = await this.createRecurringRepository.execute({
-      ...data,
-      active: false,
-      slug
-    });
+    const recurringCreated = await this.createRecurringRepository.execute(data);
     if (!recurringCreated) {
       throw new RecurringNotFoundException();
     }
@@ -58,11 +54,9 @@ export class CreateRecurringCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
-      name: cleanValue(command?.name),
-      description: cleanValue(command?.description),
-      file: cleanValue(command?.file),
-      poster: cleanValue(command?.poster),
-      parent: cleanValue(command?.parent)
+      usageType: cleanValue(command?.usageType),
+      intervalCount: cleanValueNumber(command?.intervalCount),
+      interval: cleanValue(command?.interval)
     });
   }
 }

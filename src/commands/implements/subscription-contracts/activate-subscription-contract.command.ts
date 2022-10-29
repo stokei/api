@@ -8,11 +8,15 @@ export class ActivateSubscriptionContractCommand
   subscriptionContract: string;
   paymentMethod: string;
   app: string;
+  startAt: string;
+  endAt: string;
   updatedBy: string;
   constructor(data: ActivateSubscriptionContractDTO) {
     this.subscriptionContract = data.subscriptionContract;
     this.paymentMethod = data.paymentMethod;
     this.app = data.app;
+    this.startAt = data.startAt;
+    this.endAt = data.endAt;
     this.updatedBy = data.updatedBy;
   }
 }

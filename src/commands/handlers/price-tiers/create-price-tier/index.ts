@@ -1,6 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
-import { nanoid } from 'nanoid';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueBoolean,
+  cleanValueNumber
+} from '@stokei/nestjs';
 
 import { CreatePriceTierCommand } from '@/commands/implements/price-tiers/create-price-tier.command';
 import {
@@ -29,19 +33,8 @@ export class CreatePriceTierCommandHandler
     if (!data?.parent) {
       throw new ParamNotFoundException<CreatePriceTierCommandKeys>('parent');
     }
-    if (!data?.name) {
-      throw new ParamNotFoundException<CreatePriceTierCommandKeys>('name');
-    }
-    if (!data?.file) {
-      throw new ParamNotFoundException<CreatePriceTierCommandKeys>('file');
-    }
 
-    const slug = cleanSlug(data.name + nanoid(8));
-    const priceTierCreated = await this.createPriceTierRepository.execute({
-      ...data,
-      active: false,
-      slug
-    });
+    const priceTierCreated = await this.createPriceTierRepository.execute(data);
     if (!priceTierCreated) {
       throw new PriceTierNotFoundException();
     }
@@ -58,11 +51,10 @@ export class CreatePriceTierCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
-      name: cleanValue(command?.name),
-      description: cleanValue(command?.description),
-      file: cleanValue(command?.file),
-      poster: cleanValue(command?.poster),
-      parent: cleanValue(command?.parent)
+      parent: cleanValue(command?.parent),
+      amount: cleanValueNumber(command?.amount),
+      upTo: cleanValueNumber(command?.upTo),
+      infinite: cleanValueBoolean(command?.infinite)
     });
   }
 }

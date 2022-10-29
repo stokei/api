@@ -1,6 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
-import { nanoid } from 'nanoid';
+import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateSubscriptionContractItemCommand } from '@/commands/implements/subscription-contract-items/create-subscription-contract-item.command';
 import {
@@ -32,24 +31,18 @@ export class CreateSubscriptionContractItemCommandHandler
         'parent'
       );
     }
-    if (!data?.name) {
+    if (!data?.price) {
       throw new ParamNotFoundException<CreateSubscriptionContractItemCommandKeys>(
-        'name'
+        'price'
       );
     }
-    if (!data?.file) {
+    if (!data?.product) {
       throw new ParamNotFoundException<CreateSubscriptionContractItemCommandKeys>(
-        'file'
+        'product'
       );
     }
-
-    const slug = cleanSlug(data.name + nanoid(8));
     const subscriptionContractItemCreated =
-      await this.createSubscriptionContractItemRepository.execute({
-        ...data,
-        active: false,
-        slug
-      });
+      await this.createSubscriptionContractItemRepository.execute(data);
     if (!subscriptionContractItemCreated) {
       throw new SubscriptionContractItemNotFoundException();
     }
@@ -70,11 +63,12 @@ export class CreateSubscriptionContractItemCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
-      name: cleanValue(command?.name),
-      description: cleanValue(command?.description),
-      file: cleanValue(command?.file),
-      poster: cleanValue(command?.poster),
-      parent: cleanValue(command?.parent)
+      parent: cleanValue(command?.parent),
+      product: cleanValue(command?.product),
+      quantity: cleanValueNumber(command?.quantity),
+      price: cleanValue(command?.price),
+      stripeSubscriptionItem: cleanValue(command?.stripeSubscriptionItem),
+      recurring: cleanValue(command?.recurring)
     });
   }
 }

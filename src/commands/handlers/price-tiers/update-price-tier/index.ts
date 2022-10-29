@@ -1,5 +1,11 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueBoolean,
+  cleanValueNumber,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { UpdatePriceTierCommand } from '@/commands/implements/price-tiers/update-price-tier.command';
 import {
@@ -7,15 +13,16 @@ import {
   ParamNotFoundException,
   PriceTierNotFoundException
 } from '@/errors';
-import { FindPriceTierByIdRepository } from '@/repositories/price-tiers/find-price-tier-by-id';
+import { PriceTierModel } from '@/models/price-tier.model';
 import { UpdatePriceTierRepository } from '@/repositories/price-tiers/update-price-tier';
+import { FindPriceTierByIdService } from '@/services/price-tiers/find-price-tier-by-id';
 
 @CommandHandler(UpdatePriceTierCommand)
 export class UpdatePriceTierCommandHandler
   implements ICommandHandler<UpdatePriceTierCommand>
 {
   constructor(
-    private readonly findPriceTierByIdRepository: FindPriceTierByIdRepository,
+    private readonly findPriceTierByIdService: FindPriceTierByIdService,
     private readonly updatePriceTierRepository: UpdatePriceTierRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -30,15 +37,15 @@ export class UpdatePriceTierCommandHandler
       throw new ParamNotFoundException('priceTierId');
     }
 
-    const priceTier = await this.findPriceTierByIdRepository.execute(
-      priceTierId
+    const priceTier = await this.findPriceTierByIdService.execute(
+      data.where?.priceTier
     );
     if (!priceTier) {
       throw new PriceTierNotFoundException();
     }
-
+    const dataUpdated = data.data;
     const updated = await this.updatePriceTierRepository.execute({
-      ...data,
+      data: dataUpdated,
       where: {
         ...data.where,
         priceTier: priceTierId
@@ -48,12 +55,10 @@ export class UpdatePriceTierCommandHandler
       throw new DataNotFoundException();
     }
 
-    const priceTierUpdated = await this.findPriceTierByIdRepository.execute(
-      priceTierId
-    );
-    if (!priceTierUpdated) {
-      throw new PriceTierNotFoundException();
-    }
+    const priceTierUpdated = new PriceTierModel({
+      ...priceTier,
+      ...dataUpdated
+    });
     const priceTierModel = this.publisher.mergeObjectContext(priceTierUpdated);
     priceTierModel.updatedPriceTier({
       updatedBy: data.data.updatedBy
@@ -70,9 +75,9 @@ export class UpdatePriceTierCommandHandler
         priceTier: cleanValue(command?.where?.priceTier)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name),
-        description: cleanValue(command?.data?.description),
-        poster: cleanValue(command?.data?.poster),
+        amount: cleanValueNumber(command?.data?.amount),
+        upTo: cleanValueNumber(command?.data?.upTo),
+        infinite: cleanValueBoolean(command?.data?.infinite),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

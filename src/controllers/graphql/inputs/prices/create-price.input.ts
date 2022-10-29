@@ -4,7 +4,7 @@ import { BillingScheme } from '@/controllers/graphql/enums/billing-scheme.enum';
 import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
 import { PriceType } from '@/controllers/graphql/enums/price-type.enum';
 import { TiersMode } from '@/controllers/graphql/enums/tiers-mode.enum';
-import { Recurring } from '@/controllers/graphql/types/recurring';
+import { CreateRecurringInput } from '@/controllers/graphql/inputs/recurrings/create-recurring.input';
 
 @InputType()
 export class CreatePriceInput {
@@ -32,8 +32,8 @@ export class CreatePriceInput {
   @Field(() => InventoryType)
   inventoryType: InventoryType;
 
-  @Field(() => Recurring, { nullable: true })
-  recurring?: Recurring;
+  @Field(() => CreateRecurringInput, { nullable: true })
+  recurring?: CreateRecurringInput;
 
   @Field(() => Int)
   quantity: number;

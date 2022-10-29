@@ -1,6 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
-import { nanoid } from 'nanoid';
+import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateUsageRecordCommand } from '@/commands/implements/usage-records/create-usage-record.command';
 import {
@@ -29,19 +28,16 @@ export class CreateUsageRecordCommandHandler
     if (!data?.parent) {
       throw new ParamNotFoundException<CreateUsageRecordCommandKeys>('parent');
     }
-    if (!data?.name) {
-      throw new ParamNotFoundException<CreateUsageRecordCommandKeys>('name');
+    if (!data?.app) {
+      throw new ParamNotFoundException<CreateUsageRecordCommandKeys>('app');
     }
-    if (!data?.file) {
-      throw new ParamNotFoundException<CreateUsageRecordCommandKeys>('file');
+    if (!data?.quantity) {
+      data.quantity = 1;
     }
 
-    const slug = cleanSlug(data.name + nanoid(8));
-    const usageRecordCreated = await this.createUsageRecordRepository.execute({
-      ...data,
-      active: false,
-      slug
-    });
+    const usageRecordCreated = await this.createUsageRecordRepository.execute(
+      data
+    );
     if (!usageRecordCreated) {
       throw new UsageRecordNotFoundException();
     }
@@ -61,11 +57,9 @@ export class CreateUsageRecordCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
-      name: cleanValue(command?.name),
-      description: cleanValue(command?.description),
-      file: cleanValue(command?.file),
-      poster: cleanValue(command?.poster),
-      parent: cleanValue(command?.parent)
+      parent: cleanValue(command?.parent),
+      quantity: cleanValueNumber(command?.quantity),
+      action: cleanValue(command?.action)
     });
   }
 }

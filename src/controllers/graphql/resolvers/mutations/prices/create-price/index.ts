@@ -22,6 +22,11 @@ export class CreatePriceResolver {
   ) {
     const response = await this.createPriceService.execute({
       ...data,
+      recurring: data?.recurring && {
+        ...data?.recurring,
+        app: appId,
+        createdBy: currentAccountId
+      },
       currency: appCurrency,
       app: appId,
       createdBy: currentAccountId

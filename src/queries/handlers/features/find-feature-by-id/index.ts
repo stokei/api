@@ -3,8 +3,8 @@ import { cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import {
   DataNotFoundException,
-  ParamNotFoundException,
-  FeatureNotFoundException
+  FeatureNotFoundException,
+  ParamNotFoundException
 } from '@/errors';
 import { FeatureModel } from '@/models/feature.model';
 import { FindFeatureByIdQuery } from '@/queries/implements/features/find-feature-by-id.query';

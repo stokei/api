@@ -55,22 +55,12 @@ export class ActivateSubscriptionContractCommandHandler
       throw new SubscriptionContractNotFoundException();
     }
 
-    let startAt = null;
-    let endAt = null;
-    if (subscriptionContract.isRecurring) {
-      startAt = this.getStartAt();
-      endAt = this.getEndAt({
-        startAt,
-        recurringIntervalCount: subscriptionContract.recurringIntervalCount,
-        recurringIntervalType: subscriptionContract.recurringIntervalType
-      });
-    }
     const dataActivate: ActivateSubscriptionContractRepositoryDataDTO = {
       paymentMethod: data.paymentMethod,
       active: true,
       status: SubscriptionContractStatus.ACTIVE,
-      startAt,
-      endAt,
+      startAt: data.startAt,
+      endAt: data.endAt,
       updatedBy: data.updatedBy
     };
 
@@ -105,6 +95,8 @@ export class ActivateSubscriptionContractCommandHandler
       subscriptionContract: cleanValue(command?.subscriptionContract),
       paymentMethod: cleanValue(command?.paymentMethod),
       app: cleanValue(command?.app),
+      startAt: cleanValue(command?.startAt),
+      endAt: cleanValue(command?.endAt),
       updatedBy: cleanValue(command?.updatedBy)
     });
   }

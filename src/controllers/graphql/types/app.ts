@@ -29,7 +29,7 @@ export class App {
   avatar?: Image;
 
   @Field(() => SubscriptionContract, { nullable: true })
-  currentSubscriptionPlan?: SubscriptionContract;
+  currentSubscriptionContract?: SubscriptionContract;
 
   @Field(() => Phones, { nullable: true })
   phones?: Phones;

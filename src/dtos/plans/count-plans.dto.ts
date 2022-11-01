@@ -1,18 +1,13 @@
-import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
+import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
+
+import { PlanType } from '@/enums/plan-type.enum';
 
 export interface CountPlansWhereDTO {
   ids?: string[];
-  product?: IWhereData;
-  price?: IWhereData;
-  name?: IWhereData;
-  active?: IWhereData<boolean>;
-  hasCustomDomain?: IWhereData<boolean>;
-  hasCustomSite?: IWhereData<boolean>;
-  quantityCourses?: IWhereData<number>;
-  quantityInstructorsPerCourse?: IWhereData<number>;
-  quantityModulesPerCourse?: IWhereData<number>;
-  quantityVideosPerModules?: IWhereData<number>;
-  applicationFeePercentage?: IWhereData<number>;
+  app?: IWhereData;
+  name?: IWhereDataSearch;
+  description?: IWhereDataSearch;
+  type?: PlanType;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

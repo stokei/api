@@ -42,6 +42,7 @@ export class PriceModel extends AggregateRoot {
   readonly stripePrice?: string;
   readonly fromAmount?: number;
   readonly amount: number;
+  readonly isUsageBilling: boolean;
   readonly type: PriceType;
   readonly billingScheme: BillingScheme;
   readonly tiersMode: TiersMode;
@@ -72,6 +73,7 @@ export class PriceModel extends AggregateRoot {
     this.type = data.type;
     this.billingScheme = data.billingScheme;
     this.tiersMode = data.tiersMode;
+    this.isUsageBilling = data.billingScheme === BillingScheme.TIERED;
     this.inventoryType = data.inventoryType;
     this.recurring = data.recurring;
     this.quantity =

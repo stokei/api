@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
-import { AddDomainToAppSubscriptionContractCommand } from '@/commands/implements/domains/add-domain-to-app-subscription-contract.command';
+import { RemoveDomainFromAppSubscriptionContractCommand } from '@/commands/implements/domains/remove-domain-from-app-subscription-contract.command';
 import { PlanType } from '@/enums/plan-type.enum';
 import {
   DataNotFoundException,
@@ -10,32 +10,32 @@ import {
   PriceNotFoundException
 } from '@/errors';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
-import { AddItemToAppSubscriptionContractService } from '@/services/apps/add-item-to-app-subscription-contract';
+import { RemoveItemFromAppSubscriptionContractService } from '@/services/apps/remove-item-from-app-subscription-contract';
 import { FindDomainByIdService } from '@/services/domains/find-domain-by-id';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
 
-type AddDomainToAppSubscriptionContractCommandKeys =
-  keyof AddDomainToAppSubscriptionContractCommand;
+type RemoveDomainFromAppSubscriptionContractCommandKeys =
+  keyof RemoveDomainFromAppSubscriptionContractCommand;
 
-@CommandHandler(AddDomainToAppSubscriptionContractCommand)
-export class AddDomainToAppSubscriptionContractCommandHandler
-  implements ICommandHandler<AddDomainToAppSubscriptionContractCommand>
+@CommandHandler(RemoveDomainFromAppSubscriptionContractCommand)
+export class RemoveDomainFromAppSubscriptionContractCommandHandler
+  implements ICommandHandler<RemoveDomainFromAppSubscriptionContractCommand>
 {
   constructor(
     private readonly findDomainByIdService: FindDomainByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
-    private readonly addItemToAppSubscriptionContractService: AddItemToAppSubscriptionContractService
+    private readonly removeItemFromAppSubscriptionContractService: RemoveItemFromAppSubscriptionContractService
   ) {}
 
   async execute(
-    command: AddDomainToAppSubscriptionContractCommand
+    command: RemoveDomainFromAppSubscriptionContractCommand
   ): Promise<SubscriptionContractItemModel> {
     const data = this.clearData(command);
     if (!data) {
       throw new DataNotFoundException();
     }
     if (!data?.domain) {
-      throw new ParamNotFoundException<AddDomainToAppSubscriptionContractCommandKeys>(
+      throw new ParamNotFoundException<RemoveDomainFromAppSubscriptionContractCommandKeys>(
         'domain'
       );
     }
@@ -53,20 +53,19 @@ export class AddDomainToAppSubscriptionContractCommandHandler
     }
 
     const subscriptionContractItem =
-      await this.addItemToAppSubscriptionContractService.execute({
+      await this.removeItemFromAppSubscriptionContractService.execute({
         app: domain.app,
         price: domainPrice.id,
-        createdBy: data.createdBy,
-        quantity: 1
+        removedBy: data.removedBy
       });
     return subscriptionContractItem;
   }
 
   private clearData(
-    command: AddDomainToAppSubscriptionContractCommand
-  ): AddDomainToAppSubscriptionContractCommand {
+    command: RemoveDomainFromAppSubscriptionContractCommand
+  ): RemoveDomainFromAppSubscriptionContractCommand {
     return cleanObject({
-      createdBy: cleanValue(command?.createdBy),
+      removedBy: cleanValue(command?.removedBy),
       domain: cleanValue(command?.domain)
     });
   }

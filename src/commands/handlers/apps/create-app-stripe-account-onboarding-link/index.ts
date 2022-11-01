@@ -7,15 +7,15 @@ import {
   AppUnauthorizedException,
   DataNotFoundException,
   ParamNotFoundException,
-  PlanNotFoundException,
-  StripeAccountNotFoundException
+  StripeAccountNotFoundException,
+  SubscriptionContractNotFoundException
 } from '@/errors';
 import { LinkMapper } from '@/mappers/links';
 import { DomainModel } from '@/models/domain.model';
 import { CreateAppStripeAccountService } from '@/services/apps/create-app-stripe-account';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentDomainService } from '@/services/apps/find-app-current-domain';
-import { FindAppCurrentSubscriptionPlanService } from '@/services/apps/find-app-current-subscription-plan';
+import { FindAppCurrentSubscriptionContractService } from '@/services/apps/find-app-current-subscription-contract';
 import { CreateStripeAccountOnboardingLinkService } from '@/services/stripe/create-stripe-account-onboarding-link';
 import {
   mountStripeAccountOnboardingRefreshURL,
@@ -31,7 +31,7 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
 {
   constructor(
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findAppCurrentSubscriptionPlanService: FindAppCurrentSubscriptionPlanService,
+    private readonly findAppCurrentSubscriptionContractService: FindAppCurrentSubscriptionContractService,
     private readonly findAppCurrentDomainService: FindAppCurrentDomainService,
     private readonly createAppStripeAccountService: CreateAppStripeAccountService,
     private readonly createStripeAccountOnboardingLinkService: CreateStripeAccountOnboardingLinkService
@@ -55,11 +55,10 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
     if (app.isStokei) {
       throw new AppUnauthorizedException();
     }
-    const appPlan = await this.findAppCurrentSubscriptionPlanService.execute(
-      app.id
-    );
-    if (!appPlan) {
-      throw new PlanNotFoundException();
+    const appSubscriptionContract =
+      await this.findAppCurrentSubscriptionContractService.execute(app.id);
+    if (!appSubscriptionContract) {
+      throw new SubscriptionContractNotFoundException();
     }
 
     let stripeAccount = app.stripeAccount;

@@ -1,3 +1,4 @@
+import { AddItemToAppSubscriptionContractService } from './add-item-to-app-subscription-contract';
 import { CreateAppService } from './create-app';
 import { CreateAppStripeAccountService } from './create-app-stripe-account';
 import { CreateAppStripeAccountDashboardLinkService } from './create-app-stripe-account-dashboard-link';
@@ -6,7 +7,8 @@ import { CreateAppStripeAccountUpdateLinkService } from './create-app-stripe-acc
 import { FindAllAppsService } from './find-all-apps';
 import { FindAppByIdService } from './find-app-by-id';
 import { FindAppCurrentDomainService } from './find-app-current-domain';
-import { FindAppCurrentSubscriptionPlanService } from './find-app-current-subscription-plan';
+import { FindAppCurrentSubscriptionContractService } from './find-app-current-subscription-contract';
+import { RemoveItemFromAppSubscriptionContractService } from './remove-item-from-app-subscription-contract';
 import { UpdateAppService } from './update-app';
 
 export const AppServices = [
@@ -17,7 +19,9 @@ export const AppServices = [
   CreateAppStripeAccountOnboardingLinkService,
   CreateAppStripeAccountUpdateLinkService,
   FindAppCurrentDomainService,
-  FindAppCurrentSubscriptionPlanService,
+  FindAppCurrentSubscriptionContractService,
+  AddItemToAppSubscriptionContractService,
+  RemoveItemFromAppSubscriptionContractService,
   FindAppByIdService,
   FindAllAppsService
 ];

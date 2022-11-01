@@ -3,8 +3,6 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
-  cleanWhereDataBoolean,
-  cleanWhereDataNumber,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
@@ -33,25 +31,10 @@ export class PlanMapper {
       }
       return {
         id: prismaMapper.toWhereIds(operatorData.ids),
-        active: prismaMapper.toWhereData(operatorData.active),
-        name: prismaMapper.toWhereData(operatorData.name),
-        hasCustomDomain: prismaMapper.toWhereData(operatorData.hasCustomDomain),
-        hasCustomSite: prismaMapper.toWhereData(operatorData.hasCustomSite),
-        quantityCourses: prismaMapper.toWhereData(operatorData.quantityCourses),
-        quantityInstructorsPerCourse: prismaMapper.toWhereData(
-          operatorData.quantityInstructorsPerCourse
-        ),
-        quantityModulesPerCourse: prismaMapper.toWhereData(
-          operatorData.quantityModulesPerCourse
-        ),
-        quantityVideosPerModules: prismaMapper.toWhereData(
-          operatorData.quantityVideosPerModules
-        ),
-        applicationFeePercentage: prismaMapper.toWhereData(
-          operatorData.applicationFeePercentage
-        ),
-        product: prismaMapper.toWhereDataSearch(operatorData.product),
-        price: prismaMapper.toWhereData(operatorData.price),
+        app: prismaMapper.toWhereData(operatorData.app),
+        name: prismaMapper.toWhereDataSearch(operatorData.name),
+        description: prismaMapper.toWhereDataSearch(operatorData.description),
+        type: operatorData.type,
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
@@ -82,25 +65,10 @@ export class PlanMapper {
       }
       return {
         [operator]: {
-          active: cleanWhereDataBoolean(operatorData.active),
-          name: cleanWhereDataString(operatorData.name),
-          hasCustomDomain: cleanWhereDataBoolean(operatorData.hasCustomDomain),
-          hasCustomSite: cleanWhereDataBoolean(operatorData.hasCustomSite),
-          quantityCourses: cleanWhereDataNumber(operatorData.quantityCourses),
-          quantityInstructorsPerCourse: cleanWhereDataNumber(
-            operatorData.quantityInstructorsPerCourse
-          ),
-          quantityModulesPerCourse: cleanWhereDataNumber(
-            operatorData.quantityModulesPerCourse
-          ),
-          quantityVideosPerModules: cleanWhereDataNumber(
-            operatorData.quantityVideosPerModules
-          ),
-          applicationFeePercentage: cleanWhereDataNumber(
-            operatorData.applicationFeePercentage
-          ),
-          product: cleanWhereDataSearch(operatorData.product),
-          price: cleanWhereDataString(operatorData.price),
+          app: cleanWhereDataSearch(operatorData.app),
+          name: cleanWhereDataSearch(operatorData.name),
+          description: cleanWhereDataSearch(operatorData.description),
+          type: cleanValue(operatorData.type),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:
@@ -122,23 +90,8 @@ export class PlanMapper {
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        active: cleanSortValue(query.orderBy?.active),
         name: cleanSortValue(query.orderBy?.name),
-        hasCustomDomain: cleanSortValue(query.orderBy?.hasCustomDomain),
-        hasCustomSite: cleanSortValue(query.orderBy?.hasCustomSite),
-        quantityCourses: cleanSortValue(query.orderBy?.quantityCourses),
-        quantityInstructorsPerCourse: cleanSortValue(
-          query.orderBy?.quantityInstructorsPerCourse
-        ),
-        quantityModulesPerCourse: cleanSortValue(
-          query.orderBy?.quantityModulesPerCourse
-        ),
-        quantityVideosPerModules: cleanSortValue(
-          query.orderBy?.quantityVideosPerModules
-        ),
-        applicationFeePercentage: cleanSortValue(
-          query.orderBy?.applicationFeePercentage
-        ),
+        type: cleanSortValue(query.orderBy?.type),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

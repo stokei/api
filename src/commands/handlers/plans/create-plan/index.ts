@@ -5,9 +5,11 @@ import { CreatePlanCommand } from '@/commands/implements/plans/create-plan.comma
 import {
   DataNotFoundException,
   ParamNotFoundException,
+  PlanAlreadyExistsException,
   PlanNotFoundException
 } from '@/errors';
 import { CreatePlanRepository } from '@/repositories/plans/create-plan';
+import { FindAllPlansService } from '@/services/plans/find-all-plans';
 
 type CreatePlanCommandKeys = keyof CreatePlanCommand;
 
@@ -17,6 +19,7 @@ export class CreatePlanCommandHandler
 {
   constructor(
     private readonly createPlanRepository: CreatePlanRepository,
+    private readonly findAllPlansService: FindAllPlansService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -36,6 +39,23 @@ export class CreatePlanCommandHandler
     }
     if (!data?.createdBy) {
       throw new ParamNotFoundException<CreatePlanCommandKeys>('createdBy');
+    }
+
+    const plans = await this.findAllPlansService.execute({
+      where: {
+        AND: {
+          app: {
+            equals: data.app
+          },
+          type: data.type
+        }
+      },
+      page: {
+        limit: 1
+      }
+    });
+    if (plans?.totalCount > 0) {
+      throw new PlanAlreadyExistsException();
     }
 
     const planCreated = await this.createPlanRepository.execute(data);

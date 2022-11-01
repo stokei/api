@@ -37,11 +37,6 @@ export class CreateSubscriptionContractCommandHandler
         'app'
       );
     }
-    if (!data?.app) {
-      throw new ParamNotFoundException<CreateSubscriptionContractCommandKeys>(
-        'app'
-      );
-    }
 
     const subscriptionContractCreated =
       await this.createSubscriptionContractRepository.execute({

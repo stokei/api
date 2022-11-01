@@ -61,7 +61,7 @@ enum UsageType {
 }
 
 enum UsageRecordAction {
-  SUM
+  SET
   INCREMENT
 }
 

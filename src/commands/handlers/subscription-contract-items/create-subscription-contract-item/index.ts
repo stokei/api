@@ -3,11 +3,18 @@ import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateSubscriptionContractItemCommand } from '@/commands/implements/subscription-contract-items/create-subscription-contract-item.command';
 import {
+  AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
-  SubscriptionContractItemNotFoundException
+  PriceNotFoundException,
+  SubscriptionContractItemNotFoundException,
+  SubscriptionContractNotFoundException
 } from '@/errors';
 import { CreateSubscriptionContractItemRepository } from '@/repositories/subscription-contract-items/create-subscription-contract-item';
+import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
+import { CreateStripeSubscriptionItemService } from '@/services/stripe/create-stripe-subscription-item';
+import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 
 type CreateSubscriptionContractItemCommandKeys =
   keyof CreateSubscriptionContractItemCommand;
@@ -18,6 +25,10 @@ export class CreateSubscriptionContractItemCommandHandler
 {
   constructor(
     private readonly createSubscriptionContractItemRepository: CreateSubscriptionContractItemRepository,
+    private readonly createStripeSubscriptionItemService: CreateStripeSubscriptionItemService,
+    private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
+    private readonly findPriceByIdService: FindPriceByIdService,
+    private readonly findAppByIdService: FindAppByIdService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -41,8 +52,42 @@ export class CreateSubscriptionContractItemCommandHandler
         'product'
       );
     }
+
+    const price = await this.findPriceByIdService.execute(data.price);
+    if (!price) {
+      throw new PriceNotFoundException();
+    }
+    const subscriptionContract =
+      await this.findSubscriptionContractByIdService.execute(data.parent);
+    if (!subscriptionContract) {
+      throw new SubscriptionContractNotFoundException();
+    }
+    const app = await this.findAppByIdService.execute(data.app);
+    if (!app) {
+      throw new AppNotFoundException();
+    }
+
+    const existsStripeSubscriptionItem = !!data?.stripeSubscriptionItem;
+    let stripeSubscriptionItemId = data.stripeSubscriptionItem;
+    if (!existsStripeSubscriptionItem) {
+      const stripeSubscriptionItem =
+        await this.createStripeSubscriptionItemService.execute({
+          price: price.stripePrice,
+          quantity: data.quantity,
+          subscription: subscriptionContract.stripeSubscription,
+          stripeAccount: app.stripeAccount
+        });
+      if (!stripeSubscriptionItem) {
+        throw new SubscriptionContractItemNotFoundException();
+      }
+      stripeSubscriptionItemId = stripeSubscriptionItem.id;
+    }
+
     const subscriptionContractItemCreated =
-      await this.createSubscriptionContractItemRepository.execute(data);
+      await this.createSubscriptionContractItemRepository.execute({
+        ...data,
+        stripeSubscriptionItem: stripeSubscriptionItemId
+      });
     if (!subscriptionContractItemCreated) {
       throw new SubscriptionContractItemNotFoundException();
     }

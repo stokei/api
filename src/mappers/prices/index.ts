@@ -11,12 +11,15 @@ import {
   PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
+import Stripe from 'stripe';
 
 import {
   FindAllPricesDTO,
   WhereDataFindAllPricesDTO
 } from '@/dtos/prices/find-all-prices.dto';
 import { PriceEntity } from '@/entities';
+import { BillingScheme } from '@/enums/billing-scheme.enum';
+import { TiersMode } from '@/enums/tiers-mode.enum';
 import { PriceModel } from '@/models/price.model';
 import { FindAllPricesQuery } from '@/queries/implements/prices/find-all-prices.query';
 
@@ -120,5 +123,25 @@ export class PriceMapper {
   }
   toModels(prices: PriceEntity[]) {
     return prices?.length > 0 ? prices.map(this.toModel).filter(Boolean) : [];
+  }
+  billingSchemeToStripeBillingScheme(
+    billingScheme: BillingScheme
+  ): Stripe.Price.BillingScheme {
+    const billingSchemes: Record<
+      BillingScheme,
+      Stripe.PriceCreateParams.BillingScheme
+    > = {
+      [BillingScheme.PER_UNIT]: 'per_unit',
+      [BillingScheme.TIERED]: 'tiered'
+    };
+    return (
+      billingSchemes[billingScheme] || billingSchemes[BillingScheme.PER_UNIT]
+    );
+  }
+  tiersModeToStripeTiersMode(tiersMode: TiersMode): Stripe.Price.TiersMode {
+    const tiersModes: Record<TiersMode, Stripe.PriceCreateParams.TiersMode> = {
+      [TiersMode.VOLUME]: 'volume'
+    };
+    return tiersModes[tiersMode] || tiersModes[TiersMode.VOLUME];
   }
 }

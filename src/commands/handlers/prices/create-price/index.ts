@@ -7,18 +7,22 @@ import {
 } from '@stokei/nestjs';
 
 import { CreatePriceCommand } from '@/commands/implements/prices/create-price.command';
+import { BillingScheme } from '@/enums/billing-scheme.enum';
 import { PriceType } from '@/enums/price-type.enum';
 import {
   AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
   PriceNotFoundException,
+  PriceTiersNotFoundException,
   ProductNotFoundException,
   RecurringNotFoundException
 } from '@/errors';
+import { PriceMapper } from '@/mappers/prices';
 import { RecurringModel } from '@/models/recurring.model';
 import { CreatePriceRepository } from '@/repositories/prices/create-price';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { CreatePriceTierService } from '@/services/price-tiers/create-price-tier';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateRecurringService } from '@/services/recurrings/create-recurring';
 import { CreateStripePriceService } from '@/services/stripe/create-stripe-price';
@@ -35,6 +39,7 @@ export class CreatePriceCommandHandler
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findProductByIdService: FindProductByIdService,
     private readonly createRecurringService: CreateRecurringService,
+    private readonly createPriceTierService: CreatePriceTierService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -68,10 +73,31 @@ export class CreatePriceCommandHandler
         throw new RecurringNotFoundException();
       }
     }
-
+    let tiers = [];
+    if (data.billingScheme === BillingScheme.TIERED) {
+      if (!data.tiers?.length) {
+        throw new PriceTiersNotFoundException();
+      }
+      const priceTiers = await Promise.all(
+        data.tiers?.map(this.createPriceTierService.execute)
+      );
+      if (!priceTiers?.length) {
+        throw new PriceTiersNotFoundException();
+      }
+      tiers = priceTiers.map((priceTier) => ({
+        up_to: priceTier.stripeUpTo,
+        unit_amount: priceTier.amount
+      }));
+    }
+    const priceMapper = new PriceMapper();
     const stripePrice = await this.createStripePriceService.execute({
       amount: data.amount,
       currency: data.currency,
+      billingScheme: priceMapper.billingSchemeToStripeBillingScheme(
+        data.billingScheme
+      ),
+      tiers,
+      tiersMode: priceMapper.tiersModeToStripeTiersMode(data.tiersMode),
       app: app.id,
       recurring,
       type: data.type,
@@ -104,6 +130,7 @@ export class CreatePriceCommandHandler
       amount: cleanValueNumber(command?.amount),
       currency: cleanValue(command?.currency),
       type: cleanValue(command?.type),
+      tiers: command?.tiers,
       inventoryType: cleanValue(command?.inventoryType),
       billingScheme: cleanValue(command?.billingScheme),
       tiersMode: cleanValue(command?.tiersMode),

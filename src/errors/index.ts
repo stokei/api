@@ -66,6 +66,7 @@ export * from './subscription-contract-already-active';
 export * from './subscription-contract-already-canceled';
 export * from './subscription-contract-already-finished';
 export * from './subscription-contract-item-not-found';
+export * from './subscription-contract-item-price-unauthorized-update';
 export * from './subscription-contract-items-not-found';
 export * from './subscription-contract-not-found';
 export * from './subscription-contracts-not-found';

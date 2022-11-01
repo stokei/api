@@ -1,3 +1,4 @@
+import { CreatePriceTierDTO } from '@/dtos/price-tiers/create-price-tier.dto';
 import { CreateRecurringDTO } from '@/dtos/recurrings/create-recurring.dto';
 import { BillingScheme } from '@/enums/billing-scheme.enum';
 import { InventoryType } from '@/enums/inventory-type.enum';
@@ -8,6 +9,7 @@ export interface CreatePriceDTO {
   parent: string;
   default?: boolean;
   fromAmount?: number;
+  tiers?: CreatePriceTierDTO[];
   amount: number;
   currency: string;
   type: PriceType;

@@ -19,6 +19,14 @@ export class CreateStripePriceService
         currency: data.currency,
         product: data.stripeProduct,
         unit_amount: data.amount,
+        ...(data.tiersMode && { tiers_mode: data.tiersMode }),
+        ...(data.billingScheme && {
+          billing_scheme: data.billingScheme
+        }),
+        tiers: data.tiers?.map((tier) => ({
+          up_to: tier.infinite ? 'inf' : tier.upTo,
+          unit_amount: tier.amount
+        })),
         recurring: data.type === PriceType.RECURRING && {
           interval:
             data.recurring?.interval?.toLowerCase() as Stripe.PriceCreateParams.Recurring.Interval,

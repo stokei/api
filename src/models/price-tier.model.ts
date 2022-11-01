@@ -26,6 +26,7 @@ export class PriceTierModel extends AggregateRoot {
   readonly parent: string;
   readonly amount: number;
   readonly upTo?: number;
+  readonly stripeUpTo?: 'inf' | number;
   readonly infinite: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
@@ -44,6 +45,7 @@ export class PriceTierModel extends AggregateRoot {
     this.amount = data.amount;
     this.upTo = data.upTo;
     this.infinite = data.infinite;
+    this.stripeUpTo = data.infinite ? 'inf' : data.upTo;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;

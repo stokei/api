@@ -7,15 +7,17 @@ import {
   ParamNotFoundException,
   SubscriptionContractItemNotFoundException
 } from '@/errors';
-import { FindSubscriptionContractItemByIdRepository } from '@/repositories/subscription-contract-items/find-subscription-contract-item-by-id';
 import { RemoveSubscriptionContractItemRepository } from '@/repositories/subscription-contract-items/remove-subscription-contract-item';
+import { DeleteStripeSubscriptionItemService } from '@/services/stripe/delete-stripe-subscription-item';
+import { FindSubscriptionContractItemByIdService } from '@/services/subscription-contract-items/find-subscription-contract-item-by-id';
 
 @CommandHandler(RemoveSubscriptionContractItemCommand)
 export class RemoveSubscriptionContractItemCommandHandler
   implements ICommandHandler<RemoveSubscriptionContractItemCommand>
 {
   constructor(
-    private readonly findSubscriptionContractItemByIdRepository: FindSubscriptionContractItemByIdRepository,
+    private readonly findSubscriptionContractItemByIdService: FindSubscriptionContractItemByIdService,
+    private readonly deleteStripeSubscriptionItemService: DeleteStripeSubscriptionItemService,
     private readonly removeSubscriptionContractItemRepository: RemoveSubscriptionContractItemRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -36,8 +38,8 @@ export class RemoveSubscriptionContractItemCommandHandler
     }
 
     const subscriptionContractItem =
-      await this.findSubscriptionContractItemByIdRepository.execute(
-        subscriptionContractItemId
+      await this.findSubscriptionContractItemByIdService.execute(
+        data.where?.subscriptionContractItem
       );
     if (!subscriptionContractItem) {
       throw new SubscriptionContractItemNotFoundException();
@@ -54,6 +56,11 @@ export class RemoveSubscriptionContractItemCommandHandler
     if (!removed) {
       throw new DataNotFoundException();
     }
+
+    await this.deleteStripeSubscriptionItemService.execute(
+      subscriptionContractItem.stripeSubscriptionItem
+    );
+
     const subscriptionContractItemModel = this.publisher.mergeObjectContext(
       subscriptionContractItem
     );

@@ -1,6 +1,8 @@
 import { AccessesQueries } from './accesses';
 import { AccountsQueries } from './accounts';
 import { AddressesQueries } from './addresses';
+import { AppAdminsQueries } from './app-admins';
+import { AppInstructorsQueries } from './app-instructors';
 import { AppsQueries } from './apps';
 import { ColorsQueries } from './colors';
 import { CourseInstructorsQueries } from './course-instructors';
@@ -25,6 +27,8 @@ export const Queries = [
   ...AccountsQueries,
   ...AccessesQueries,
   ...AppsQueries,
+  ...AppAdminsQueries,
+  ...AppInstructorsQueries,
   ...DomainsQueries,
   ...CurrenciesQueries,
   ...LanguagesQueries,

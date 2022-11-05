@@ -4,6 +4,8 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { CreateAppAdminCommand } from '@/commands/implements/app-admins/create-app-admin.command';
+import { CreateAppInstructorCommand } from '@/commands/implements/app-instructors/create-app-instructor.command';
 import { CreateAppStripeCustomerCommand } from '@/commands/implements/apps/create-app-stripe-customer.command';
 import { UpdateAppStripeCustomerCommand } from '@/commands/implements/apps/update-app-stripe-customer.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
@@ -33,6 +35,16 @@ export class AppsSagas {
         );
         const commands = [
           new CreateAppStripeCustomerCommand({
+            app: event.app.id,
+            createdBy: event.createdBy
+          }),
+          new CreateAppAdminCommand({
+            admin: event.app.parent,
+            app: event.app.id,
+            createdBy: event.createdBy
+          }),
+          new CreateAppInstructorCommand({
+            instructor: event.app.parent,
             app: event.app.id,
             createdBy: event.createdBy
           })

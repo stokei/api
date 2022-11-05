@@ -110,7 +110,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
           customer: app.stripeCustomer,
           prices: [
             {
-              price: price.id,
+              price: price.stripePrice,
               quantity: 1
             }
           ]

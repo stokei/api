@@ -1,6 +1,8 @@
 import { AccessEventsHandlers } from './accesses';
 import { AccountEventsHandlers } from './accounts';
 import { AddressEventsHandlers } from './addresses';
+import { AppAdminEventsHandlers } from './app-admins';
+import { AppInstructorEventsHandlers } from './app-instructors';
 import { AppEventsHandlers } from './apps';
 import { ColorEventsHandlers } from './colors';
 import { CourseInstructorEventsHandlers } from './course-instructors';
@@ -31,6 +33,8 @@ export const EventsHandlers = [
   ...AccountEventsHandlers,
   ...AccessEventsHandlers,
   ...AppEventsHandlers,
+  ...AppAdminEventsHandlers,
+  ...AppInstructorEventsHandlers,
   ...DomainEventsHandlers,
   ...CurrencyEventsHandlers,
   ...LanguageEventsHandlers,

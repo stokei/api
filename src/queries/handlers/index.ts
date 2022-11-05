@@ -1,6 +1,8 @@
 import { AccessQueriesHandlers } from './accesses';
 import { AccountQueriesHandlers } from './accounts';
 import { AddressQueriesHandlers } from './addresses';
+import { AppAdminQueriesHandlers } from './app-admins';
+import { AppInstructorQueriesHandlers } from './app-instructors';
 import { AppQueriesHandlers } from './apps';
 import { ColorQueriesHandlers } from './colors';
 import { CourseInstructorQueriesHandlers } from './course-instructors';
@@ -31,6 +33,8 @@ export const QueriesHandlers = [
   ...AccountQueriesHandlers,
   ...AccessQueriesHandlers,
   ...AppQueriesHandlers,
+  ...AppAdminQueriesHandlers,
+  ...AppInstructorQueriesHandlers,
   ...DomainQueriesHandlers,
   ...CurrencyQueriesHandlers,
   ...LanguageQueriesHandlers,

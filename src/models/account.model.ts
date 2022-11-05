@@ -6,7 +6,6 @@ import {
 } from '@stokei/nestjs';
 import { Exclude } from 'class-transformer';
 
-import { AccountRole } from '@/enums/account-role.enum';
 import { AccountStatus } from '@/enums/account-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
@@ -37,7 +36,6 @@ export interface IAccountModelData {
   readonly stripeCustomer?: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
-  readonly roles: AccountRole[];
 }
 
 export class AccountModel extends AggregateRoot {
@@ -67,7 +65,6 @@ export class AccountModel extends AggregateRoot {
   readonly stripeCustomer?: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
-  readonly roles: AccountRole[];
   readonly isStokei: boolean;
 
   constructor(data: IAccountModelData) {
@@ -98,7 +95,6 @@ export class AccountModel extends AggregateRoot {
     this.stripeCustomer = data.stripeCustomer;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
-    this.roles = data.roles;
     this.isStokei = !!this.app.match(/stokei/i);
   }
 

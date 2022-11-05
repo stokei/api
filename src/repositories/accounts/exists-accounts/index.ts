@@ -13,14 +13,7 @@ export class ExistsAccountsRepository
   async execute({ where }: ExistsAccountsDTO): Promise<boolean> {
     return (
       (await this.model.account.count({
-        where: {
-          ...where,
-          ...(where?.roles?.length > 0 && {
-            roles: {
-              hasEvery: where?.roles
-            }
-          })
-        }
+        where
       })) > 0
     );
   }

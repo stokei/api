@@ -1,12 +1,41 @@
 import { Logger } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
+import { AccountModel } from '@/models/account.model';
+import { AppModel } from '@/models/app.model';
+
 import { createAccounts } from './items/accounts/create-accounts';
+import { createAppAdmins } from './items/app-admins/create-app-admins';
+import { createAppInstructors } from './items/app-instructors/create-app-instructors';
 import { createApps } from './items/apps/create-apps';
 import { createCurrencies } from './items/currencies/create-currencies';
 import { createLanguages } from './items/languages/create-languages';
 
 const prismaClient = new PrismaClient();
+
+const appendAppDependencies = async ({
+  prismaClient,
+  stokeiAdmin,
+  apps
+}: {
+  apps: AppModel[];
+  stokeiAdmin: AccountModel;
+  prismaClient: PrismaClient;
+}) =>
+  Promise.all(
+    apps.map(async (app) => {
+      await createAppAdmins({
+        prismaClient,
+        app: app.id,
+        admin: stokeiAdmin.id
+      });
+      await createAppInstructors({
+        prismaClient,
+        app: app.id,
+        instructor: stokeiAdmin.id
+      });
+    })
+  );
 
 const initializeSeeds = async () => {
   const currencies = await createCurrencies({ prismaClient });
@@ -19,11 +48,17 @@ const initializeSeeds = async () => {
   const stokeiAdmin = accounts.find(
     (account) => account.email === 'admin@stokei.com'
   );
-  await createApps({
+  const apps = await createApps({
     prismaClient,
     admin: stokeiAdmin.id,
     currency: realCurrency.id,
     language: portugueseLanguage.id
+  });
+
+  await appendAppDependencies({
+    apps,
+    stokeiAdmin,
+    prismaClient
   });
 };
 

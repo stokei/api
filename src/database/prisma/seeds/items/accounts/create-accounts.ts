@@ -1,9 +1,4 @@
-import {
-  AccountRole,
-  AccountStatus,
-  Prisma,
-  PrismaClient
-} from '@prisma/client';
+import { AccountStatus, Prisma, PrismaClient } from '@prisma/client';
 import { encryptPassword, generateSalt } from '@stokei/nestjs';
 
 import { defaultAppId } from '@/constants/default-app-id';
@@ -23,8 +18,7 @@ const myAccounts = (): Prisma.AccountCreateManyInput[] => {
       email: 'admin@stokei.com',
       password: defaultPassword,
       salt,
-      username: 'stokei',
-      roles: [AccountRole.USER, AccountRole.ADMIN]
+      username: 'stokei'
     }
   ];
 };

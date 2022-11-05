@@ -6,7 +6,6 @@ import {
 } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
-import { AccountRole } from '@/enums/account-role.enum';
 import { AccountStatus } from '@/enums/account-status.enum';
 import { PASSWORD_SECRET_KEY } from '@/environments';
 import { AccountModel, IAccountModelData } from '@/models/account.model';
@@ -27,7 +26,6 @@ export class AccountModelMock extends AccountModel {
       ),
       salt,
       status: data?.status ?? AccountStatus.ACTIVE,
-      roles: data?.roles ?? [AccountRole.USER],
       app: data?.app ?? 'anyParent',
       avatar: data?.avatar ?? 'anyavatar',
       active: data?.active ?? true,

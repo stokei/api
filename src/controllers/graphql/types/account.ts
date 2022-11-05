@@ -1,6 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
-import { AccountRole } from '@/controllers/graphql/enums/account-role.enum';
 import { AccountStatus } from '@/controllers/graphql/enums/account-status.enum';
 
 import { App } from './app';
@@ -55,7 +54,4 @@ export class Account {
 
   @Field(() => Account, { nullable: true })
   createdBy?: Account;
-
-  @Field(() => [AccountRole])
-  roles: AccountRole[];
 }

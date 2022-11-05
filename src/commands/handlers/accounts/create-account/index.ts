@@ -9,7 +9,6 @@ import {
 import { nanoid } from 'nanoid';
 
 import { CreateAccountCommand } from '@/commands/implements/accounts/create-account.command';
-import { AccountRole } from '@/enums/account-role.enum';
 import { AccountStatus } from '@/enums/account-status.enum';
 import { PASSWORD_SECRET_KEY } from '@/environments';
 import {
@@ -81,8 +80,7 @@ export class CreateAccountCommandHandler
       ...data,
       username,
       salt,
-      status: AccountStatus.ACTIVE,
-      roles: [AccountRole.USER]
+      status: AccountStatus.ACTIVE
     });
     if (!accountCreated) {
       throw new AccountNotFoundException();

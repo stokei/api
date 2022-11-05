@@ -1,6 +1,8 @@
 import { AccessesSagas } from './accesses.saga';
 import { AccountsSagas } from './accounts.saga';
 import { AddressesSagas } from './addresses.saga';
+import { AppAdminsSagas } from './app-admins.saga';
+import { AppInstructorsSagas } from './app-instructors.saga';
 import { AppsSagas } from './apps.saga';
 import { ColorsSagas } from './colors.saga';
 import { CourseInstructorsSagas } from './course-instructors.saga';
@@ -31,6 +33,8 @@ export const Sagas = [
   AccountsSagas,
   AccessesSagas,
   AppsSagas,
+  AppAdminsSagas,
+  AppInstructorsSagas,
   DomainsSagas,
   CurrenciesSagas,
   LanguagesSagas,

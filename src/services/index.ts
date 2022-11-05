@@ -1,6 +1,8 @@
 import { AccessServices } from './accesses';
 import { AccountServices } from './accounts';
 import { AddressServices } from './addresses';
+import { AppAdminServices } from './app-admins';
+import { AppInstructorServices } from './app-instructors';
 import { AppServices } from './apps';
 import { CheckoutServices } from './checkouts';
 import { ColorServices } from './colors';
@@ -35,6 +37,8 @@ export const Services = [
   ...AccountServices,
   ...AccessServices,
   ...AppServices,
+  ...AppInstructorServices,
+  ...AppAdminServices,
   ...DomainServices,
   ...CurrencyServices,
   ...LanguageServices,

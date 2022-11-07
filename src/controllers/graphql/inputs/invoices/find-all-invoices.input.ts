@@ -2,7 +2,6 @@ import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
   WhereDataBooleanInput,
-  WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
@@ -26,12 +25,6 @@ class WhereDataFindAllInvoicesDataInput implements WhereDataFindAllInvoicesDTO {
 
   @Field(() => WhereDataStringInput, { nullable: true })
   subscription?: WhereDataStringInput;
-
-  @Field(() => WhereDataSearchInput, { nullable: true })
-  product?: WhereDataSearchInput;
-
-  @Field(() => WhereDataStringInput, { nullable: true })
-  price?: WhereDataStringInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   currency?: WhereDataStringInput;

@@ -6,8 +6,6 @@ import { Account } from './account';
 import { App } from './app';
 import { Currency } from './currency';
 import { PaymentMethod } from './payment-method';
-import { Price } from './price';
-import { Product } from './product';
 import { SubscriptionContract } from './subscription-contract';
 
 @ObjectType()
@@ -23,12 +21,6 @@ export class Invoice {
 
   @Field(() => PaymentMethod, { nullable: true })
   paymentMethod?: PaymentMethod;
-
-  @Field(() => Product)
-  product: Product;
-
-  @Field(() => Price)
-  price: Price;
 
   @Field(() => Currency)
   currency: Currency;

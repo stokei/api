@@ -1,9 +1,4 @@
-import {
-  IBaseFindManyDTO,
-  IOrderBy,
-  IWhereData,
-  IWhereDataSearch
-} from '@stokei/nestjs';
+import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
 
 import { InvoiceStatus } from '@/enums/invoice-status.enum';
 
@@ -12,8 +7,6 @@ export interface WhereDataFindAllInvoicesDTO {
   app?: IWhereData;
   customer?: IWhereData;
   subscription?: IWhereData;
-  product?: IWhereDataSearch;
-  price?: IWhereData;
   currency?: IWhereData;
   status?: InvoiceStatus;
   active?: IWhereData<boolean>;

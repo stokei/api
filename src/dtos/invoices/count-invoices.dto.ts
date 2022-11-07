@@ -1,4 +1,4 @@
-import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
+import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 
 import { InvoiceStatus } from '@/enums/invoice-status.enum';
 
@@ -7,8 +7,6 @@ export interface CountInvoicesWhereDTO {
   app?: IWhereData;
   customer?: IWhereData;
   subscription?: IWhereData;
-  product?: IWhereDataSearch;
-  price?: IWhereData;
   currency?: IWhereData;
   status?: InvoiceStatus;
   active?: IWhereData<boolean>;

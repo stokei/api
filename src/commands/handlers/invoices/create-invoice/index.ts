@@ -62,8 +62,6 @@ export class CreateInvoiceCommandHandler
       customer: cleanValue(command?.customer),
       subscription: cleanValue(command?.subscription),
       paymentMethod: cleanValue(command?.paymentMethod),
-      product: cleanValue(command?.product),
-      price: cleanValue(command?.price),
       currency: cleanValue(command?.currency),
       status: cleanValue(command?.status),
       totalAmount: cleanValueNumber(command?.totalAmount),

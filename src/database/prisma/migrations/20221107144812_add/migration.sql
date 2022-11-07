@@ -2,10 +2,7 @@
 CREATE TYPE "AccountStatus" AS ENUM ('ACTIVE', 'INACTIVE', 'CANCELED', 'BLOCKED');
 
 -- CreateEnum
-CREATE TYPE "AccountRole" AS ENUM ('USER', 'ADMIN');
-
--- CreateEnum
-CREATE TYPE "PlanType" AS ENUM ('DOMAIN', 'INSTRUCTOR', 'COURSE', 'STORAGE');
+CREATE TYPE "PlanType" AS ENUM ('DOMAIN', 'ADMIN', 'INSTRUCTOR', 'COURSE', 'STORAGE');
 
 -- CreateEnum
 CREATE TYPE "ThemeMode" AS ENUM ('DARK', 'LIGHT');
@@ -72,7 +69,6 @@ CREATE TABLE "accounts" (
     "date_birthday" TIMESTAMP(3),
     "status" "AccountStatus" NOT NULL,
     "active" BOOLEAN NOT NULL DEFAULT true,
-    "roles" "AccountRole"[],
     "canceled_at" TIMESTAMP(3),
     "updated_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
@@ -125,6 +121,32 @@ CREATE TABLE "apps" (
     "created_by" VARCHAR(255),
 
     CONSTRAINT "apps_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "app_admins" (
+    "id" TEXT NOT NULL,
+    "app" VARCHAR(255) NOT NULL,
+    "admin" VARCHAR(255) NOT NULL,
+    "updated_at" TIMESTAMP(3),
+    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
+
+    CONSTRAINT "app_admins_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "app_instructors" (
+    "id" TEXT NOT NULL,
+    "app" VARCHAR(255) NOT NULL,
+    "instructor" VARCHAR(255) NOT NULL,
+    "updated_at" TIMESTAMP(3),
+    "created_at" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "updated_by" VARCHAR(255),
+    "created_by" VARCHAR(255),
+
+    CONSTRAINT "app_instructors_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -433,7 +455,7 @@ CREATE TABLE "courses" (
 );
 
 -- CreateTable
-CREATE TABLE "courses_instructors" (
+CREATE TABLE "course_instructors" (
     "id" TEXT NOT NULL,
     "app" VARCHAR(255) NOT NULL,
     "course" VARCHAR(255) NOT NULL,
@@ -443,11 +465,11 @@ CREATE TABLE "courses_instructors" (
     "updated_by" VARCHAR(255),
     "created_by" VARCHAR(255),
 
-    CONSTRAINT "courses_instructors_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "course_instructors_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "courses_students" (
+CREATE TABLE "course_students" (
     "id" TEXT NOT NULL,
     "app" VARCHAR(255) NOT NULL,
     "course" VARCHAR(255) NOT NULL,
@@ -457,7 +479,7 @@ CREATE TABLE "courses_students" (
     "updated_by" VARCHAR(255),
     "created_by" VARCHAR(255),
 
-    CONSTRAINT "courses_students_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "course_students_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -466,8 +488,6 @@ CREATE TABLE "invoices" (
     "app" VARCHAR(255) NOT NULL,
     "customer" VARCHAR(255) NOT NULL,
     "subscription" VARCHAR(255) NOT NULL,
-    "product" VARCHAR(255) NOT NULL,
-    "price" VARCHAR(255) NOT NULL,
     "url" VARCHAR(255),
     "payment_method" VARCHAR(255),
     "currency" VARCHAR(255) NOT NULL,

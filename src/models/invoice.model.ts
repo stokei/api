@@ -13,9 +13,7 @@ export interface IInvoiceModelData {
   readonly app: string;
   readonly customer: string;
   readonly subscription: string;
-  readonly product: string;
   readonly url?: string;
-  readonly price: string;
   readonly currency: string;
   readonly paymentMethod?: string;
   readonly status: InvoiceStatus;
@@ -37,9 +35,7 @@ export class InvoiceModel extends AggregateRoot {
   readonly app: string;
   readonly customer: string;
   readonly subscription: string;
-  readonly product: string;
   readonly url?: string;
-  readonly price: string;
   readonly paymentMethod?: string;
   readonly currency: string;
   readonly status: InvoiceStatus;
@@ -65,8 +61,6 @@ export class InvoiceModel extends AggregateRoot {
     this.app = data.app;
     this.customer = data.customer;
     this.subscription = data.subscription;
-    this.product = data.product;
-    this.price = data.price;
     this.paymentMethod = data.paymentMethod;
     this.currency = data.currency;
     this.status = data.status;

@@ -16,6 +16,7 @@ enum AccountStatus {
 
 enum PlanType {
   DOMAIN
+  ADMIN
   INSTRUCTOR
   COURSE
   STORAGE
@@ -526,8 +527,6 @@ model Invoice {
   app            String        @db.VarChar(255)
   customer       String        @db.VarChar(255)
   subscription   String        @db.VarChar(255)
-  product        String        @db.VarChar(255)
-  price          String        @db.VarChar(255)
   url            String?       @db.VarChar(255)
   paymentMethod  String?       @map("payment_method") @db.VarChar(255)
   currency       String        @db.VarChar(255)

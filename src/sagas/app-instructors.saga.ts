@@ -4,6 +4,8 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { AddAppInstructorToAppSubscriptionContractCommand } from '@/commands/implements/app-instructors/add-app-instructor-to-app-subscription-contract.command';
+import { RemoveAppInstructorFromAppSubscriptionContractCommand } from '@/commands/implements/app-instructors/remove-app-instructor-from-app-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AppInstructorCreatedEvent } from '@/events/implements/app-instructors/app-instructor-created.event';
 import { AppInstructorRemovedEvent } from '@/events/implements/app-instructors/app-instructor-removed.event';
@@ -29,7 +31,12 @@ export class AppInstructorsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new AddAppInstructorToAppSubscriptionContractCommand({
+            appInstructor: event.appInstructor.id,
+            createdBy: event.createdBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)
@@ -48,7 +55,12 @@ export class AppInstructorsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new RemoveAppInstructorFromAppSubscriptionContractCommand({
+            appInstructor: event.appInstructor.id,
+            removedBy: event.removedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

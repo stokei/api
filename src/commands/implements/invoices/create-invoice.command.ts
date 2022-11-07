@@ -8,8 +8,6 @@ export class CreateInvoiceCommand implements ICommand, CreateInvoiceDTO {
   url: string;
   customer: string;
   subscription: string;
-  product: string;
-  price: string;
   currency: string;
   paymentMethod?: string;
   status: InvoiceStatus;
@@ -24,8 +22,6 @@ export class CreateInvoiceCommand implements ICommand, CreateInvoiceDTO {
     this.customer = data.customer;
     this.subscription = data.subscription;
     this.paymentMethod = data.paymentMethod;
-    this.product = data.product;
-    this.price = data.price;
     this.currency = data.currency;
     this.status = data.status;
     this.totalAmount = data.totalAmount;

@@ -5,8 +5,6 @@ export interface CreateInvoiceDTO {
   url: string;
   customer: string;
   subscription: string;
-  product: string;
-  price: string;
   paymentMethod?: string;
   currency: string;
   status: InvoiceStatus;

@@ -4,6 +4,8 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { AddAppAdminToAppSubscriptionContractCommand } from '@/commands/implements/app-admins/add-app-admin-to-app-subscription-contract.command';
+import { RemoveAppAdminFromAppSubscriptionContractCommand } from '@/commands/implements/app-admins/remove-app-admin-from-app-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AppAdminCreatedEvent } from '@/events/implements/app-admins/app-admin-created.event';
 import { AppAdminRemovedEvent } from '@/events/implements/app-admins/app-admin-removed.event';
@@ -29,7 +31,12 @@ export class AppAdminsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new AddAppAdminToAppSubscriptionContractCommand({
+            appAdmin: event.appAdmin.id,
+            createdBy: event.createdBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)
@@ -48,7 +55,12 @@ export class AppAdminsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new RemoveAppAdminFromAppSubscriptionContractCommand({
+            appAdmin: event.appAdmin.id,
+            removedBy: event.removedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

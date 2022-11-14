@@ -4,8 +4,8 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // ---------- ENVIRONMENT ----------
-export const NODE_ENV: string = process.env.NODE_ENV;
-export const IS_PRODUCTION: boolean = NODE_ENV === Environment.PRODUCTION;
+export const NODE_ENV: string = Environment.DEVELOPMENT; //process.env.NODE_ENV;
+export const IS_PRODUCTION: boolean = false; //NODE_ENV === Environment.PRODUCTION;
 export const IS_DEVELOPMENT: boolean = NODE_ENV === Environment.DEVELOPMENT;
 
 // ---------- SERVER ----------
@@ -36,5 +36,9 @@ export const QENCODE_ACCESS_KEY: string = process.env.QENCODE_ACCESS_KEY;
 export const QENCODE_WEBHOOK_ENDPOINT: string =
   process.env.QENCODE_WEBHOOK_ENDPOINT;
 
-export const CLOUDFLARE_KEY: string = process.env.CLOUDFLARE_KEY;
-export const CLOUDFLARE_SECRET: string = process.env.CLOUDFLARE_SECRET;
+export const CLOUDFLARE_ACCOUNT: string = process.env.CLOUDFLARE_ACCOUNT;
+export const CLOUDFLARE_ACCOUNT_HASH: string =
+  process.env.CLOUDFLARE_ACCOUNT_HASH;
+export const CLOUDFLARE_TOKEN: string = process.env.CLOUDFLARE_TOKEN;
+export const CLOUDFLARE_STREAM_CUSTOMER_CODE: string =
+  process.env.CLOUDFLARE_STREAM_CUSTOMER_CODE;

@@ -327,7 +327,7 @@ model Price {
   currency      String        @db.VarChar(255)
   stripePrice   String?       @map("stripe_price")
   fromAmount    Int?          @map("from_amount")
-  amount        Int           @map("amount")
+  amount        Int?          @map("amount")
   type          PriceType
   billingScheme BillingScheme @map("billing_scheme")
   tiersMode     TiersMode     @map("tiers_mode")
@@ -379,7 +379,7 @@ model Plan {
   name        String    @db.VarChar(255)
   description String?   @db.VarChar(255)
   type        PlanType
-  active      Boolean   @default(false)
+  active      Boolean   @default(true)
   updatedAt   DateTime? @updatedAt @map("updated_at")
   createdAt   DateTime? @default(now()) @map("created_at")
   updatedBy   String?   @map("updated_by") @db.VarChar(255)
@@ -403,21 +403,20 @@ model Feature {
 }
 
 model File {
-  id                  String     @id @default(cuid())
-  app                 String     @db.VarChar(255)
-  filename            String?    @db.VarChar(255)
-  extension           String?    @db.VarChar(255)
-  mimetype            String?    @db.VarChar(255)
-  cloudflareVideoCode String?    @db.VarChar(255)
-  size                Int?
-  url                 String?    @db.VarChar(255)
-  duration            Int?
-  status              FileStatus
-  active              Boolean    @default(false)
-  updatedAt           DateTime?  @updatedAt @map("updated_at")
-  createdAt           DateTime?  @default(now()) @map("created_at")
-  updatedBy           String?    @map("updated_by") @db.VarChar(255)
-  createdBy           String?    @map("created_by") @db.VarChar(255)
+  id        String     @id @default(cuid())
+  app       String     @db.VarChar(255)
+  filename  String?    @db.VarChar(255)
+  extension String?    @db.VarChar(255)
+  mimetype  String?    @db.VarChar(255)
+  size      Int?
+  url       String?    @db.VarChar(255)
+  duration  Int?
+  status    FileStatus
+  active    Boolean    @default(false)
+  updatedAt DateTime?  @updatedAt @map("updated_at")
+  createdAt DateTime?  @default(now()) @map("created_at")
+  updatedBy String?    @map("updated_by") @db.VarChar(255)
+  createdBy String?    @map("created_by") @db.VarChar(255)
 
   @@map("files")
 }

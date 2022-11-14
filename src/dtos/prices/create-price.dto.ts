@@ -9,8 +9,8 @@ export interface CreatePriceDTO {
   parent: string;
   default?: boolean;
   fromAmount?: number;
-  tiers?: CreatePriceTierDTO[];
-  amount: number;
+  tiers?: Omit<CreatePriceTierDTO, 'parent'>[];
+  amount?: number;
   currency: string;
   type: PriceType;
   inventoryType: InventoryType;

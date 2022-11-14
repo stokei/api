@@ -1,9 +1,6 @@
 import { IS_PRODUCTION } from '@/environments';
 import { FileUploadInterceptorModel } from '@/models/file-upload-interceptor.model';
-import {
-  cloudflareImageStorage,
-  cloudflareVideoStorage
-} from '@/storages/cloudflare';
+import { cloudflareImageStorage } from '@/storages/cloudflare';
 import { localDeleteFile, localStorageFiles } from '@/storages/local';
 
 import { BaseFilesInterceptor } from './base';
@@ -33,7 +30,7 @@ export const VideoUploaderInterceptor = (
 ) =>
   BaseFilesInterceptor({
     fieldName: options.fieldName,
-    storage: IS_PRODUCTION ? cloudflareVideoStorage : localStorageFiles,
+    storage: localStorageFiles,
     fileFilter: (request, file, callback) =>
       new FileUploadInterceptorModel(file).filterVideo(callback)
   });

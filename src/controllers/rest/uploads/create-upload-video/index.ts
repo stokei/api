@@ -1,5 +1,6 @@
 import {
   Controller,
+  Param,
   Post,
   UploadedFile,
   UseGuards,
@@ -19,7 +20,8 @@ import { REST_VERSIONS } from '@/constants/rest-versions';
 import { deleteFileVideo, VideoUploaderInterceptor } from '@/interceptors';
 import { FileModel } from '@/models/file.model';
 import { FileUploadInterceptorModel } from '@/models/file-upload-interceptor.model';
-import { CreateFileService } from '@/services/files/create-file';
+import { ActivateFileService } from '@/services/files/activate-file';
+import { UpdateFileService } from '@/services/files/update-file';
 
 @ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS_VIDEOS)
 @Controller({
@@ -27,9 +29,12 @@ import { CreateFileService } from '@/services/files/create-file';
   version: REST_VERSIONS.V1
 })
 export class CreateUploadVideoController {
-  constructor(private readonly createFileService: CreateFileService) {}
+  constructor(
+    private readonly updateFileService: UpdateFileService,
+    private readonly activateFileService: ActivateFileService
+  ) {}
 
-  @Post()
+  @Post(':fileId')
   @UseGuards(AuthenticatedGuard, AppGuard)
   @AuthenticationConfig({ isRequired: false })
   @UseInterceptors(
@@ -44,17 +49,28 @@ export class CreateUploadVideoController {
   async createFile(
     @CurrentAccount('id') currentAccountId: string,
     @CurrentApp('id') appId: string,
-    @UploadedFile() fileFile: any
+    @Param('fileId') fileId: string,
+    @UploadedFile() file: any
   ) {
-    const fileUploaded = new FileUploadInterceptorModel(fileFile);
+    const fileUploaded = new FileUploadInterceptorModel(file);
     try {
-      return await this.createFileService.execute({
-        filename: fileUploaded.filename,
-        mimetype: fileUploaded.mimetype,
-        extension: fileUploaded.extension,
-        size: fileUploaded.size,
+      await this.updateFileService.execute({
+        data: {
+          filename: fileUploaded.filename,
+          mimetype: fileUploaded.mimetype,
+          extension: fileUploaded.extension,
+          size: fileUploaded.size,
+          updatedBy: currentAccountId
+        },
+        where: {
+          app: appId,
+          file: fileId
+        }
+      });
+      return await this.activateFileService.execute({
         app: appId,
-        createdBy: currentAccountId
+        file: fileId,
+        updatedBy: currentAccountId
       });
     } catch (error) {
       await deleteFileVideo(fileUploaded.filenameAndPath);

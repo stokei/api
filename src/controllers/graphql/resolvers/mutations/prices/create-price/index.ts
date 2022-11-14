@@ -22,6 +22,11 @@ export class CreatePriceResolver {
   ) {
     const response = await this.createPriceService.execute({
       ...data,
+      tiers: data.tiers?.map((tier) => ({
+        ...tier,
+        app: appId,
+        createdBy: currentAccountId
+      })),
       recurring: data?.recurring && {
         ...data?.recurring,
         app: appId,

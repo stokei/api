@@ -1,9 +1,10 @@
+import { ActivateFileRepository } from './activate-file';
 import { CountFilesRepository } from './count-files';
 import { CreateFileRepository } from './create-file';
 import { FindAllFilesRepository } from './find-all-files';
+import { FindFileByFilenameRepository } from './find-file-by-filename';
 import { FindFileByIdRepository } from './find-file-by-id';
 import { RemoveFileRepository } from './remove-file';
-import { StartFileEncodingRepository } from './start-file-encoding';
 import { UpdateFileRepository } from './update-file';
 
 export const FilesRepositories = [
@@ -13,5 +14,6 @@ export const FilesRepositories = [
   FindAllFilesRepository,
   RemoveFileRepository,
   UpdateFileRepository,
-  StartFileEncodingRepository
+  ActivateFileRepository,
+  FindFileByFilenameRepository
 ];

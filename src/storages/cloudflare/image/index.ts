@@ -3,14 +3,15 @@ import FormData from 'form-data';
 import multer from 'multer';
 
 import { axiosClient } from '@/clients/axios';
-import { CLOUDFLARE_KEY, CLOUDFLARE_SECRET } from '@/environments';
+import { CLOUDFLARE_ACCOUNT, CLOUDFLARE_TOKEN } from '@/environments';
 import {
   ErrorRemovingFileException,
   ErrorUploadingFileException
 } from '@/errors';
 import { CloudflareCDNUploadResponse } from '@/interfaces';
+import { FileUploadInterceptorModel } from '@/models/file-upload-interceptor.model';
 
-const DESTINATION_URL = `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_KEY}/images/v1`;
+const DESTINATION_URL = `https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT}/images/v1`;
 
 class CloudflareStorageImageEngine implements multer.StorageEngine {
   _handleFile(
@@ -20,20 +21,30 @@ class CloudflareStorageImageEngine implements multer.StorageEngine {
   ): void {
     const body = new FormData();
     body.append('file', file.stream);
+
+    const fileUploadInterceptorModel = new FileUploadInterceptorModel(file);
+    const mimetype = fileUploadInterceptorModel.mimetype;
+    const extension = fileUploadInterceptorModel.extension;
+
     void axiosClient
       .post<CloudflareCDNUploadResponse>(DESTINATION_URL, body, {
         headers: {
-          Authorization: `Bearer ${CLOUDFLARE_SECRET}`,
-          ...body.getHeaders()
+          ...body.getHeaders(),
+          Authorization: `Bearer ${CLOUDFLARE_TOKEN}`
         }
       })
       .then((response) => {
-        if (response.data)
+        if (response.data) {
           return callback(null, {
-            path: response.data.result.variants[0],
-            filename: response.data.result.filename,
-            destination: response.data.result.id
+            url: response.data.result.variants[0],
+            filename: response.data.result.id,
+            mimetype,
+            extension
           });
+        }
+        return callback(new ErrorUploadingFileException());
+      })
+      .catch(() => {
         return callback(new ErrorUploadingFileException());
       });
   }
@@ -46,7 +57,7 @@ class CloudflareStorageImageEngine implements multer.StorageEngine {
     void axiosClient
       .delete(`${DESTINATION_URL}/${file.destination}`, {
         headers: {
-          Authorization: `Bearer ${CLOUDFLARE_SECRET}`
+          Authorization: `Bearer ${CLOUDFLARE_TOKEN}`
         }
       })
       .then((response) => {

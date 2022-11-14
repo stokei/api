@@ -1,15 +1,15 @@
 import { FileModel } from '@/models/file.model';
 
-interface IDataFileEncodingStartedEvent {
+interface IDataFileActivatedEvent {
   readonly updatedBy: string;
   readonly file: FileModel;
 }
 
-export class FileEncodingStartedEvent {
+export class FileActivatedEvent {
   readonly updatedBy: string;
   readonly file: FileModel;
 
-  constructor(data: IDataFileEncodingStartedEvent) {
+  constructor(data: IDataFileActivatedEvent) {
     this.updatedBy = data.updatedBy;
     this.file = data.file;
   }

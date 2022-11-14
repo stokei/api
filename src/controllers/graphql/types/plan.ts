@@ -1,7 +1,9 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+
+import { PlanType } from '@/controllers/graphql/enums/plan-type.enum';
 
 import { Account } from './account';
-import { Price } from './price';
+import { App } from './app';
 
 @ObjectType()
 export class Plan {
@@ -11,38 +13,14 @@ export class Plan {
   @Field(() => String)
   name: string;
 
-  @Field(() => Boolean)
-  hasCustomDomain: boolean;
+  @Field(() => String, { nullable: true })
+  description?: string;
 
-  @Field(() => Boolean)
-  hasCustomSite: boolean;
-
-  @Field(() => Int)
-  quantityCourses: number;
-
-  @Field(() => Int)
-  quantityInstructorsPerCourse: number;
-
-  @Field(() => Int)
-  quantityClassroomsPerCourses: number;
-
-  @Field(() => Int)
-  quantityModulesPerCourse: number;
-
-  @Field(() => Int)
-  quantityVideosPerModules: number;
-
-  @Field(() => Int)
-  applicationFeePercentage: number;
+  @Field(() => PlanType)
+  type: PlanType;
 
   @Field(() => Boolean)
   active: boolean;
-
-  @Field(() => Price, { nullable: true })
-  price?: Price;
-
-  @Field(() => String, { nullable: true })
-  canceledAt?: string;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;
@@ -55,4 +33,7 @@ export class Plan {
 
   @Field(() => Account, { nullable: true })
   createdBy?: Account;
+
+  @Field(() => App, { nullable: true })
+  app?: App;
 }

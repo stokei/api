@@ -15,7 +15,7 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
   amount: number;
   currency: string;
   type: PriceType;
-  tiers?: CreatePriceTierDTO[];
+  tiers?: Omit<CreatePriceTierDTO, 'parent'>[];
   inventoryType: InventoryType;
   billingScheme: BillingScheme;
   tiersMode: TiersMode;

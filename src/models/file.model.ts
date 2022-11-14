@@ -15,8 +15,8 @@ import { REST_VERSIONS } from '@/constants/rest-versions';
 import { FileStatus } from '@/enums/file-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { IS_PRODUCTION, NODE_ENV, SERVER_URL } from '@/environments';
+import { FileActivatedEvent } from '@/events/implements/files/file-activated.event';
 import { FileCreatedEvent } from '@/events/implements/files/file-created.event';
-import { FileEncodingStartedEvent } from '@/events/implements/files/file-encoding-started.event';
 import { FileRemovedEvent } from '@/events/implements/files/file-removed.event';
 import { FileUpdatedEvent } from '@/events/implements/files/file-updated.event';
 import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
@@ -62,8 +62,6 @@ export class FileModel extends AggregateRoot {
   readonly isImage: boolean;
   @ApiProperty()
   readonly isVideo: boolean;
-  @ApiProperty()
-  readonly canStartEncoding: boolean;
   @ApiProperty({ nullable: true })
   readonly updatedAt?: string;
   @ApiProperty({ nullable: true })
@@ -99,7 +97,6 @@ export class FileModel extends AggregateRoot {
       filename: this.filename,
       mimetype: this.mimetype
     });
-    this.canStartEncoding = this.fileCanStartEncoding();
     this.duration = data.duration;
     this.active = this.status === FileStatus.ACTIVE || data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);
@@ -109,11 +106,6 @@ export class FileModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  private fileCanStartEncoding(): boolean {
-    const statusAllowed: FileStatus[] = [FileStatus.PENDING, FileStatus.ERROR];
-    return IS_PRODUCTION && statusAllowed.includes(this.status);
-  }
-
   static initialStatus({
     url,
     mimetype
@@ -121,10 +113,14 @@ export class FileModel extends AggregateRoot {
     url: string;
     mimetype: string;
   }): FileStatus {
-    if (url || !IS_PRODUCTION || FileModel.isImage(mimetype)) {
+    if (url) {
       return FileStatus.ACTIVE;
     }
-    return FileStatus.PENDING;
+    const isVideo = FileModel.isVideo(mimetype);
+    if (isVideo) {
+      return FileStatus.ENCODING;
+    }
+    return FileStatus.ACTIVE;
   }
 
   static initialActive({ status }: { status: FileStatus }): boolean {
@@ -145,17 +141,24 @@ export class FileModel extends AggregateRoot {
     if (url) {
       return url;
     }
+    const isImage = FileModel.isImage(mimetype);
     const createURLFunctions = {
       [Environment.PRODUCTION]: () => {
-        if (FileModel.isImage(mimetype)) {
-          return appendPathnameToURL(CLOUDFLARE_IMAGE_URL, filename);
+        if (isImage) {
+          return appendPathnameToURL(
+            CLOUDFLARE_IMAGE_URL,
+            filename + '/public'
+          );
         }
-        return appendPathnameToURL(CLOUDFLARE_VIDEO_URL, filename);
+        return appendPathnameToURL(
+          CLOUDFLARE_VIDEO_URL,
+          filename + '/manifest/video.m3u8'
+        );
       },
       DEFAULT: () => {
         const baseURL = SERVER_URL;
         const basePathnameURL = REST_VERSIONS.V1_TEXT;
-        if (FileModel.isImage(mimetype)) {
+        if (isImage) {
           return appendPathnameToURL(
             baseURL,
             `${basePathnameURL}/${REST_CONTROLLERS_URL_NAMES.UPLOADS_IMAGES}/${fileId}`
@@ -210,10 +213,10 @@ export class FileModel extends AggregateRoot {
     }
   }
 
-  fileEncodingStarted({ updatedBy }: { updatedBy: string }) {
+  fileActivated({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
-        new FileEncodingStartedEvent({
+        new FileActivatedEvent({
           updatedBy,
           file: this
         })

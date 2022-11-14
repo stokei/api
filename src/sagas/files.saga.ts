@@ -4,12 +4,13 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { StartFileEncodingCommand } from '@/commands/implements/files/start-file-encoding.command';
+import { AddFileToAppSubscriptionContractCommand } from '@/commands/implements/files/add-file-to-app-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
+import { FileActivatedEvent } from '@/events/implements/files/file-activated.event';
 import { FileCreatedEvent } from '@/events/implements/files/file-created.event';
-import { FileEncodingStartedEvent } from '@/events/implements/files/file-encoding-started.event';
 import { FileRemovedEvent } from '@/events/implements/files/file-removed.event';
 import { FileUpdatedEvent } from '@/events/implements/files/file-updated.event';
+import { VideoUploadURLCreatedEvent } from '@/events/implements/files/video-upload-url-created.event';
 
 @Injectable()
 export class FilesSagas {
@@ -32,14 +33,7 @@ export class FilesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
-          event.file.canStartEncoding &&
-            new StartFileEncodingCommand({
-              app: event.file.app,
-              file: event.file.id,
-              updatedBy: event.createdBy
-            })
-        ];
+        const commands = [];
         return commands;
       }),
       mergeMap((c) => c)
@@ -85,13 +79,38 @@ export class FilesSagas {
   };
 
   @Saga()
-  fileEncodingStarted = (events$: Observable<any>): Observable<ICommand> => {
+  fileActivated = (events$: Observable<any>): Observable<ICommand> => {
     return events$.pipe(
-      ofType(FileEncodingStartedEvent),
+      ofType(FileActivatedEvent),
       delay(500),
       map((event) => {
         this.logger.log(
-          'Inside [FileEncodingStartedEvent] Saga event fileEncodingStart:' +
+          'Inside [FileActivatedEvent] Saga event fileActivated:' +
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
+        );
+        const commands = [
+          event.file.isVideo &&
+            new AddFileToAppSubscriptionContractCommand({
+              file: event.file.id,
+              createdBy: event.updatedBy
+            })
+        ];
+        return commands;
+      }),
+      mergeMap((c) => c)
+    );
+  };
+
+  @Saga()
+  videoUploadURLCreated = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(VideoUploadURLCreatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [VideoUploadURLCreatedEvent] Saga event videoUploadURLCreated: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

@@ -3,9 +3,9 @@ import { ICommand } from '@nestjs/cqrs';
 import { CreateFileDTO } from '@/dtos/files/create-file.dto';
 
 export class CreateFileCommand implements ICommand, CreateFileDTO {
-  filename: string;
+  filename?: string;
   extension?: string;
-  mimetype: string;
+  mimetype?: string;
   size?: number;
   url?: string;
   app: string;

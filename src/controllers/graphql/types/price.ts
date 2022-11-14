@@ -20,11 +20,11 @@ export class Price {
   @Field(() => String)
   purchaseUrl: string;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   fromAmount?: number;
 
-  @Field(() => Int)
-  amount: number;
+  @Field(() => Int, { nullable: true })
+  amount?: number;
 
   @Field(() => PriceType)
   type: PriceType;

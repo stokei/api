@@ -1,4 +1,8 @@
 export interface UpdateFileDataDTO {
+  filename?: string;
+  extension?: string;
+  mimetype?: string;
+  size?: number;
   duration?: number;
   updatedBy: string;
 }

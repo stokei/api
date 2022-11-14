@@ -1,8 +1,8 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
-import { StartFileEncodingCommand } from '@/commands/implements/files/start-file-encoding.command';
-import { StartFileEncodingRepositoryDataDTO } from '@/dtos/files/start-file-encoding-repository.dto';
+import { ActivateFileCommand } from '@/commands/implements/files/activate-file.command';
+import { ActivateFileRepositoryDataDTO } from '@/dtos/files/activate-file-repository.dto';
 import { FileStatus } from '@/enums/file-status.enum';
 import {
   DataNotFoundException,
@@ -10,40 +10,40 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { FileModel } from '@/models/file.model';
-import { StartFileEncodingRepository } from '@/repositories/files/start-file-encoding';
+import { ActivateFileRepository } from '@/repositories/files/activate-file';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 
-type StartFileEncodingCommandKeys = keyof StartFileEncodingCommand;
+type ActivateFileCommandKeys = keyof ActivateFileCommand;
 
-@CommandHandler(StartFileEncodingCommand)
-export class StartFileEncodingCommandHandler
-  implements ICommandHandler<StartFileEncodingCommand>
+@CommandHandler(ActivateFileCommand)
+export class ActivateFileCommandHandler
+  implements ICommandHandler<ActivateFileCommand>
 {
   constructor(
-    private readonly startFileEncodingRepository: StartFileEncodingRepository,
+    private readonly activateFileRepository: ActivateFileRepository,
     private readonly findFileByIdService: FindFileByIdService,
     private readonly publisher: EventPublisher
   ) {}
 
-  async execute(command: StartFileEncodingCommand) {
+  async execute(command: ActivateFileCommand) {
     const data = this.clearData(command);
     if (!data) {
       throw new DataNotFoundException();
     }
     if (!data?.file) {
-      throw new ParamNotFoundException<StartFileEncodingCommandKeys>('file');
+      throw new ParamNotFoundException<ActivateFileCommandKeys>('file');
     }
     const file = await this.findFileByIdService.execute(data.file);
     if (!file) {
       throw new FileNotFoundException();
     }
 
-    const fileDataUpdated: StartFileEncodingRepositoryDataDTO = {
-      active: false,
-      status: FileStatus.ENCODING,
+    const fileDataUpdated: ActivateFileRepositoryDataDTO = {
+      active: true,
+      status: FileStatus.ACTIVE,
       updatedBy: data.updatedBy
     };
-    const updated = await this.startFileEncodingRepository.execute({
+    const updated = await this.activateFileRepository.execute({
       data: fileDataUpdated,
       where: {
         app: file.app,
@@ -58,7 +58,7 @@ export class StartFileEncodingCommandHandler
       ...fileDataUpdated
     });
     const fileModel = this.publisher.mergeObjectContext(fileUpdated);
-    fileModel.fileEncodingStarted({
+    fileModel.fileActivated({
       updatedBy: data.updatedBy
     });
     fileModel.commit();
@@ -66,9 +66,7 @@ export class StartFileEncodingCommandHandler
     return fileUpdated;
   }
 
-  private clearData(
-    command: StartFileEncodingCommand
-  ): StartFileEncodingCommand {
+  private clearData(command: ActivateFileCommand): ActivateFileCommand {
     return cleanObject({
       updatedBy: cleanValue(command?.updatedBy),
       app: cleanValue(command?.app),

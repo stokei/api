@@ -2,15 +2,9 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateFileCommand } from '@/commands/implements/files/create-file.command';
-import {
-  DataNotFoundException,
-  FileNotFoundException,
-  ParamNotFoundException
-} from '@/errors';
+import { DataNotFoundException, FileNotFoundException } from '@/errors';
 import { FileModel } from '@/models/file.model';
 import { CreateFileRepository } from '@/repositories/files/create-file';
-
-type CreateFileCommandKeys = keyof CreateFileCommand;
 
 @CommandHandler(CreateFileCommand)
 export class CreateFileCommandHandler
@@ -25,12 +19,6 @@ export class CreateFileCommandHandler
     const data = this.clearData(command);
     if (!data) {
       throw new DataNotFoundException();
-    }
-    if (!data?.filename) {
-      throw new ParamNotFoundException<CreateFileCommandKeys>('filename');
-    }
-    if (!data?.mimetype) {
-      throw new ParamNotFoundException<CreateFileCommandKeys>('mimetype');
     }
 
     const initialStatus = FileModel.initialStatus({

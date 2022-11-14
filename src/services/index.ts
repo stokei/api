@@ -5,6 +5,7 @@ import { AppAdminServices } from './app-admins';
 import { AppInstructorServices } from './app-instructors';
 import { AppServices } from './apps';
 import { CheckoutServices } from './checkouts';
+import { CloudflareServices } from './cloudflare';
 import { ColorServices } from './colors';
 import { CourseInstructorServices } from './course-instructors';
 import { CourseStudentServices } from './course-students';
@@ -67,5 +68,6 @@ export const Services = [
   ...FeatureServices,
   ...PriceTierServices,
   ...SubscriptionContractItemServices,
-  ...UsageRecordServices
+  ...UsageRecordServices,
+  ...CloudflareServices
 ];

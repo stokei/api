@@ -1,7 +1,7 @@
 export class CreateFileDTO {
-  filename: string;
+  filename?: string;
   extension?: string;
-  mimetype: string;
+  mimetype?: string;
   size?: number;
   url?: string;
   app: string;

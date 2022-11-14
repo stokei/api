@@ -71,6 +71,10 @@ export class UpdateFileCommandHandler
         file: cleanValue(command?.where?.file)
       }),
       data: cleanObject({
+        filename: cleanValue(command?.data?.filename),
+        extension: cleanValue(command?.data?.extension),
+        mimetype: cleanValue(command?.data?.mimetype),
+        size: cleanValueNumber(command?.data?.size),
         duration: cleanValueNumber(command?.data?.duration),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })

@@ -73,21 +73,11 @@ export class CreatePriceCommandHandler
         throw new RecurringNotFoundException();
       }
     }
-    let tiers = [];
+    const { tiers, ...dataCreated } = data;
     if (data.billingScheme === BillingScheme.TIERED) {
-      if (!data.tiers?.length) {
+      if (!tiers?.length) {
         throw new PriceTiersNotFoundException();
       }
-      const priceTiers = await Promise.all(
-        data.tiers?.map(this.createPriceTierService.execute)
-      );
-      if (!priceTiers?.length) {
-        throw new PriceTiersNotFoundException();
-      }
-      tiers = priceTiers.map((priceTier) => ({
-        up_to: priceTier.stripeUpTo,
-        unit_amount: priceTier.amount
-      }));
     }
     const priceMapper = new PriceMapper();
     const stripePrice = await this.createStripePriceService.execute({
@@ -96,7 +86,7 @@ export class CreatePriceCommandHandler
       billingScheme: priceMapper.billingSchemeToStripeBillingScheme(
         data.billingScheme
       ),
-      tiers,
+      tiers: tiers,
       tiersMode: priceMapper.tiersModeToStripeTiersMode(data.tiersMode),
       app: app.id,
       recurring,
@@ -106,12 +96,27 @@ export class CreatePriceCommandHandler
     });
 
     const priceCreated = await this.createPriceRepository.execute({
-      ...data,
+      ...dataCreated,
       recurring: recurring?.id,
       stripePrice: stripePrice.id
     });
     if (!priceCreated) {
       throw new PriceNotFoundException();
+    }
+    const priceTiers = await Promise.all(
+      tiers?.map((tier) =>
+        this.createPriceTierService.execute({
+          amount: tier.amount,
+          app: tier.app,
+          infinite: tier.infinite,
+          parent: priceCreated.id,
+          upTo: tier.upTo,
+          createdBy: tier.createdBy
+        })
+      )
+    );
+    if (!priceTiers?.length) {
+      throw new PriceTiersNotFoundException();
     }
     const priceModel = this.publisher.mergeObjectContext(priceCreated);
     priceModel.createdPrice({

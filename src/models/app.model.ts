@@ -92,8 +92,8 @@ export class AppModel extends AggregateRoot {
     this.stripeBankAccount = data.stripeBankAccount;
     this.stripeAccount = data.stripeAccount;
     this.stripeCustomer = data.stripeCustomer;
-    this.isAllowedToSell = !!this.stripeAccount;
-    this.isAllowedToUsePlan = !!this.paymentMethod;
+    this.isAllowedToSell = this.isStokei || !!this.stripeAccount;
+    this.isAllowedToUsePlan = this.isStokei || !!this.paymentMethod;
   }
 
   createdApp({ createdBy }: { createdBy: string }) {

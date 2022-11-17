@@ -23,6 +23,7 @@ export interface IAppModelData {
   readonly stripeBankAccount?: string;
   readonly stripeAccount?: string;
   readonly stripeCustomer?: string;
+  readonly paymentMethod?: string;
   readonly blockedAt?: Date | string;
   readonly activatedAt?: Date | string;
   readonly deactivatedAt?: Date | string;
@@ -48,7 +49,10 @@ export class AppModel extends AggregateRoot {
   readonly stripeBankAccount?: string;
   readonly stripeAccount?: string;
   readonly stripeCustomer?: string;
+  readonly paymentMethod?: string;
   readonly isStokei: boolean;
+  readonly isAllowedToSell: boolean;
+  readonly isAllowedToUsePlan: boolean;
   readonly blockedAt?: string;
   readonly activatedAt?: string;
   readonly deactivatedAt?: string;
@@ -76,6 +80,7 @@ export class AppModel extends AggregateRoot {
     this.icon = data.icon;
     this.logo = data.logo;
     this.active = data.active;
+    this.paymentMethod = data.paymentMethod;
     this.blockedAt = convertToISODateString(data.blockedAt);
     this.activatedAt = convertToISODateString(data.activatedAt);
     this.deactivatedAt = convertToISODateString(data.deactivatedAt);
@@ -87,6 +92,8 @@ export class AppModel extends AggregateRoot {
     this.stripeBankAccount = data.stripeBankAccount;
     this.stripeAccount = data.stripeAccount;
     this.stripeCustomer = data.stripeCustomer;
+    this.isAllowedToSell = !!this.stripeAccount;
+    this.isAllowedToUsePlan = !!this.paymentMethod;
   }
 
   createdApp({ createdBy }: { createdBy: string }) {

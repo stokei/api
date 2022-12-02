@@ -5,11 +5,14 @@ import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
 import { TiersMode } from '@/enums/tiers-mode.enum';
 
+export type CreatePriceTiersDTO = Omit<CreatePriceTierDTO, 'parent'>[];
+
 export interface CreatePriceDTO {
   parent: string;
+  nickname?: string;
   default?: boolean;
   fromAmount?: number;
-  tiers?: Omit<CreatePriceTierDTO, 'parent'>[];
+  tiers?: CreatePriceTiersDTO;
   amount?: number;
   currency: string;
   type: PriceType;

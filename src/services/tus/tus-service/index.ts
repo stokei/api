@@ -13,7 +13,7 @@ import { UpdateFileService } from '@/services/files/update-file';
 
 @Injectable()
 export class TusService implements OnModuleInit {
-  private logger = new Logger('TusService');
+  private logger: Logger;
   private tusServer: tus.Server;
 
   constructor(
@@ -21,6 +21,7 @@ export class TusService implements OnModuleInit {
     private readonly findFileByIdService: FindFileByIdService,
     private readonly activateFileService: ActivateFileService
   ) {
+    this.logger = new Logger(TusService.name);
     this.tusServer = new tus.Server({
       path: LOCAL_UPLOAD_URL_PATHNAME,
       namingFunction: this.fileNameFromRequest

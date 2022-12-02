@@ -15,6 +15,7 @@ export interface IPriceModelData {
   readonly _id?: string;
   readonly app: string;
   readonly parent: string;
+  readonly nickname?: string;
   readonly default: boolean;
   readonly currency: string;
   readonly stripePrice?: string;
@@ -37,6 +38,7 @@ export class PriceModel extends AggregateRoot {
   readonly id: string;
   readonly app: string;
   readonly parent: string;
+  readonly nickname?: string;
   readonly default: boolean;
   readonly currency: string;
   readonly stripePrice?: string;
@@ -63,6 +65,7 @@ export class PriceModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
+    this.nickname = data.nickname;
     this.app = data.app;
     this.parent = data.parent;
     this.default = data.default;

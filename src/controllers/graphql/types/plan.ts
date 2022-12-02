@@ -4,6 +4,7 @@ import { PlanType } from '@/controllers/graphql/enums/plan-type.enum';
 
 import { Account } from './account';
 import { App } from './app';
+import { Features } from './features';
 
 @ObjectType()
 export class Plan {
@@ -36,4 +37,7 @@ export class Plan {
 
   @Field(() => App, { nullable: true })
   app?: App;
+
+  @Field(() => Features, { nullable: true })
+  features?: Features;
 }

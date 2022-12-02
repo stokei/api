@@ -10,7 +10,6 @@ import { createAppInstructors } from './items/app-instructors/create-app-instruc
 import { createApps } from './items/apps/create-apps';
 import { createCurrencies } from './items/currencies/create-currencies';
 import { createLanguages } from './items/languages/create-languages';
-import { createPlans } from './items/plans/create-plans';
 
 const prismaClient = new PrismaClient();
 
@@ -42,7 +41,6 @@ const initializeSeeds = async () => {
   const currencies = await createCurrencies({ prismaClient });
   const languages = await createLanguages({ prismaClient });
   const accounts = await createAccounts({ prismaClient });
-  await createPlans({ prismaClient });
   const realCurrency = currencies.find((currency) => currency.id.match(/brl/i));
   const portugueseLanguage = languages.find((language) =>
     language.id.match(/pt-br/i)

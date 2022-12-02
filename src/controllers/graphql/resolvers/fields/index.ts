@@ -8,6 +8,7 @@ import { CourseStudentsFieldsResolvers } from './course-students';
 import { CoursesFieldsResolvers } from './courses';
 import { CurrenciesFieldsResolvers } from './currencies';
 import { DomainsFieldsResolvers } from './domains';
+import { FeaturesFieldsResolvers } from './features';
 import { ImagesFieldsResolvers } from './images';
 import { InvoicesFieldsResolvers } from './invoices';
 import { LanguagesFieldsResolvers } from './languages';
@@ -43,5 +44,6 @@ export const FieldsResolvers = [
   ...SubscriptionContractsFieldsResolvers,
   ...AddressesFieldsResolvers,
   ...PhonesFieldsResolvers,
-  ...InvoicesFieldsResolvers
+  ...InvoicesFieldsResolvers,
+  ...FeaturesFieldsResolvers
 ];

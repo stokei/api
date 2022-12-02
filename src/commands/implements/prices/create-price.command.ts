@@ -1,7 +1,9 @@
 import { ICommand } from '@nestjs/cqrs';
 
-import { CreatePriceTierDTO } from '@/dtos/price-tiers/create-price-tier.dto';
-import { CreatePriceDTO } from '@/dtos/prices/create-price.dto';
+import {
+  CreatePriceDTO,
+  CreatePriceTiersDTO
+} from '@/dtos/prices/create-price.dto';
 import { CreateRecurringDTO } from '@/dtos/recurrings/create-recurring.dto';
 import { BillingScheme } from '@/enums/billing-scheme.enum';
 import { InventoryType } from '@/enums/inventory-type.enum';
@@ -10,12 +12,13 @@ import { TiersMode } from '@/enums/tiers-mode.enum';
 
 export class CreatePriceCommand implements ICommand, CreatePriceDTO {
   parent: string;
+  nickname?: string;
   default?: boolean;
   fromAmount?: number;
   amount: number;
   currency: string;
   type: PriceType;
-  tiers?: Omit<CreatePriceTierDTO, 'parent'>[];
+  tiers?: CreatePriceTiersDTO;
   inventoryType: InventoryType;
   billingScheme: BillingScheme;
   tiersMode: TiersMode;
@@ -26,6 +29,7 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
 
   constructor(data: CreatePriceDTO) {
     this.parent = data.parent;
+    this.nickname = data.nickname;
     this.default = data.default;
     this.fromAmount = data.fromAmount;
     this.amount = data.amount;

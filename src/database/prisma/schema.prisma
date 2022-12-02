@@ -324,6 +324,7 @@ model Price {
   id            String        @id @default(cuid())
   app           String        @db.VarChar(255)
   parent        String        @db.VarChar(255)
+  nickname      String?       @db.VarChar(255)
   default       Boolean       @default(false)
   currency      String        @db.VarChar(255)
   stripePrice   String?       @map("stripe_price")
@@ -331,7 +332,7 @@ model Price {
   amount        Int?          @map("amount")
   type          PriceType
   billingScheme BillingScheme @map("billing_scheme")
-  tiersMode     TiersMode     @map("tiers_mode")
+  tiersMode     TiersMode?    @map("tiers_mode")
   recurring     String?
   inventoryType InventoryType @map("inventory_type")
   quantity      Int?

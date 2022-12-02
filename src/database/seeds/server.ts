@@ -1,18 +1,18 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-import { SeedsRunner } from './seeds/runner';
-import { SeedsModule } from './seeds/seeds.module';
+import { SeedsRunner } from './runner';
+import { SeedsModule } from './seeds.module';
 
 async function bootstrap() {
   NestFactory.createApplicationContext(SeedsModule)
     .then((appContext) => {
-      const logger = appContext.get(Logger);
+      const logger = new Logger('SeedsServer');
       const seeder = appContext.get(SeedsRunner);
       seeder
         .seed()
         .then(() => {
-          logger.debug('Seeding complete!');
+          logger.log('Seeding complete!');
         })
         .catch((error) => {
           logger.error('Seeding failed!');

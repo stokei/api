@@ -1,9 +1,4 @@
-import { CalculatePlanPriceResolver } from './calculate-plan-price';
 import { PlanResolver } from './plan';
 import { PlansResolver } from './plans';
 
-export const PlansQueries = [
-  PlanResolver,
-  PlansResolver,
-  CalculatePlanPriceResolver
-];
+export const PlansQueries = [PlanResolver, PlansResolver];

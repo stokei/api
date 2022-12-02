@@ -18,6 +18,7 @@ export class CreateStripePriceService
       {
         currency: data.currency,
         product: data.stripeProduct,
+        nickname: data.nickname,
         unit_amount: data.amount,
         ...(data.tiersMode && { tiers_mode: data.tiersMode }),
         ...(data.billingScheme && {

@@ -6,15 +6,16 @@ import { PlansSeeds } from '../plans';
 export class SeedsRunner {
   private logger: Logger;
   constructor(private readonly plansSeeds: PlansSeeds) {
-    this.logger = new Logger();
+    this.logger = new Logger(SeedsRunner.name);
   }
   async seed() {
     await this.plansSeeds
       .execute()
       .then(() => {
-        this.logger.debug('Successfuly completed seeding plans...');
+        this.logger.log('Successfuly completed seeding plans...');
       })
-      .catch(() => {
+      .catch((e) => {
+        this.logger.error(e.message);
         this.logger.error('Failed seeding plans...');
       });
   }

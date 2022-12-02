@@ -73,11 +73,15 @@ export class CreatePriceCommandHandler
         throw new RecurringNotFoundException();
       }
     }
-    const { tiers, ...dataCreated } = data;
+    const { tiers: tiersPrices, ...dataCreated } = data;
+    let tiers = tiersPrices;
     if (data.billingScheme === BillingScheme.TIERED) {
       if (!tiers?.length) {
         throw new PriceTiersNotFoundException();
       }
+    } else {
+      tiers = undefined;
+      dataCreated.tiersMode = undefined;
     }
     const priceMapper = new PriceMapper();
     const stripePrice = await this.createStripePriceService.execute({
@@ -86,8 +90,10 @@ export class CreatePriceCommandHandler
       billingScheme: priceMapper.billingSchemeToStripeBillingScheme(
         data.billingScheme
       ),
-      tiers: tiers,
-      tiersMode: priceMapper.tiersModeToStripeTiersMode(data.tiersMode),
+      tiers,
+      tiersMode: data.tiersMode
+        ? priceMapper.tiersModeToStripeTiersMode(data.tiersMode)
+        : undefined,
       app: app.id,
       recurring,
       type: data.type,
@@ -103,20 +109,23 @@ export class CreatePriceCommandHandler
     if (!priceCreated) {
       throw new PriceNotFoundException();
     }
-    const priceTiers = await Promise.all(
-      tiers?.map((tier) =>
-        this.createPriceTierService.execute({
-          amount: tier.amount,
-          app: tier.app,
-          infinite: tier.infinite,
-          parent: priceCreated.id,
-          upTo: tier.upTo,
-          createdBy: tier.createdBy
-        })
-      )
-    );
-    if (!priceTiers?.length) {
-      throw new PriceTiersNotFoundException();
+
+    if (data.billingScheme === BillingScheme.TIERED) {
+      const priceTiers = await Promise.all(
+        tiers?.map((tier) =>
+          this.createPriceTierService.execute({
+            amount: tier.amount,
+            app: tier.app,
+            infinite: tier.infinite,
+            parent: priceCreated.id,
+            upTo: tier.upTo,
+            createdBy: tier.createdBy
+          })
+        )
+      );
+      if (!priceTiers?.length) {
+        throw new PriceTiersNotFoundException();
+      }
     }
     const priceModel = this.publisher.mergeObjectContext(priceCreated);
     priceModel.createdPrice({
@@ -130,6 +139,7 @@ export class CreatePriceCommandHandler
   private clearData(command: CreatePriceCommand): CreatePriceCommand {
     return cleanObject({
       parent: cleanValue(command?.parent),
+      nickname: cleanValue(command?.nickname),
       default: cleanValueBoolean(command?.default),
       fromAmount: cleanValueNumber(command?.fromAmount),
       amount: cleanValueNumber(command?.amount),

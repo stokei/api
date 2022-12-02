@@ -6,11 +6,12 @@ import { RecurringModel } from '@/models/recurring.model';
 
 export interface CreateStripePriceDTO {
   app: string;
+  nickname?: string;
   amount?: number;
   currency: string;
   tiers?: Omit<CreatePriceTierDTO, 'parent'>[];
   billingScheme: Stripe.Price.BillingScheme;
-  tiersMode: Stripe.Price.TiersMode;
+  tiersMode?: Stripe.Price.TiersMode;
   type: PriceType;
   recurring: RecurringModel;
   stripeProduct: string;

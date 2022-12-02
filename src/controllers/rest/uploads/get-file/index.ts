@@ -7,21 +7,21 @@ import path from 'path';
 
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
-import { PATH_IMAGES } from '@/constants/upload-file-paths';
+import { PATH_FILES } from '@/constants/upload-file-paths';
 import { FileNotFoundException } from '@/errors';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 
-@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS_IMAGES)
+@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS)
 @Controller({
-  path: REST_CONTROLLERS_URL_NAMES.UPLOADS_IMAGES,
+  path: REST_CONTROLLERS_URL_NAMES.UPLOADS,
   version: REST_VERSIONS.V1
 })
-export class GetImageController {
+export class GetFileController {
   constructor(private readonly findFileByIdService: FindFileByIdService) {}
 
   @Get(':file')
   @AuthenticationConfig({ isRequired: false })
-  async getImage(
+  async getFile(
     @Param('file') fileId: any,
     @Res({ passthrough: true }) response: Response
   ) {
@@ -32,7 +32,7 @@ export class GetImageController {
     if (!file) {
       throw new FileNotFoundException();
     }
-    const filePath = path.join(PATH_IMAGES, file.filenameAndExtension);
+    const filePath = path.join(PATH_FILES, file.filenameAndExtension);
     if (!existsSync(filePath)) {
       throw new FileNotFoundException();
     }

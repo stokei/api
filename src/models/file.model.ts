@@ -14,7 +14,7 @@ import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
 import { FileStatus } from '@/enums/file-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { IS_PRODUCTION, NODE_ENV, SERVER_URL } from '@/environments';
+import { NODE_ENV, SERVER_URL } from '@/environments';
 import { FileActivatedEvent } from '@/events/implements/files/file-activated.event';
 import { FileCreatedEvent } from '@/events/implements/files/file-created.event';
 import { FileRemovedEvent } from '@/events/implements/files/file-removed.event';
@@ -158,15 +158,9 @@ export class FileModel extends AggregateRoot {
       DEFAULT: () => {
         const baseURL = SERVER_URL;
         const basePathnameURL = REST_VERSIONS.V1_TEXT;
-        if (isImage) {
-          return appendPathnameToURL(
-            baseURL,
-            `${basePathnameURL}/${REST_CONTROLLERS_URL_NAMES.UPLOADS_IMAGES}/${fileId}`
-          );
-        }
         return appendPathnameToURL(
           baseURL,
-          `${basePathnameURL}/${REST_CONTROLLERS_URL_NAMES.UPLOADS_VIDEOS}/${fileId}`
+          `${basePathnameURL}/${REST_CONTROLLERS_URL_NAMES.UPLOADS}/${fileId}`
         );
       }
     };

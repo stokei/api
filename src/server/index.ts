@@ -12,6 +12,10 @@ export const createApp = async () => {
     bodyParser: false
   });
 
+  app.enableCors({
+    origin: '*'
+  });
+
   app.enableVersioning({
     type: VersioningType.URI
   });

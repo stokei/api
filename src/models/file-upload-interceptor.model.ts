@@ -3,7 +3,7 @@ import * as path from 'path';
 import { v4 as uuid } from 'uuid';
 
 import { MAX_VIDEO_UPLOAD_SIZE } from '@/constants/max-upload-sizes';
-import { PATH_IMAGES, PATH_VIDEOS } from '@/constants/upload-file-paths';
+import { PATH_FILES } from '@/constants/upload-file-paths';
 import { InvalidFileException } from '@/errors';
 import { FileModel } from '@/models/file.model';
 import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
@@ -34,10 +34,7 @@ export class FileUploadInterceptorModel {
   }
 
   get filenameAndPath(): string {
-    return appendPathnameToURL(
-      this.isImage ? PATH_IMAGES : PATH_VIDEOS,
-      this.filenameAndExtension
-    );
+    return appendPathnameToURL(PATH_FILES, this.filenameAndExtension);
   }
 
   get extension(): string {
@@ -77,13 +74,7 @@ export class FileUploadInterceptorModel {
   }
 
   get destination() {
-    let dest = '';
-    if (this.isVideo) {
-      dest = PATH_VIDEOS;
-    }
-    if (this.isImage) {
-      dest = PATH_IMAGES;
-    }
+    const dest = PATH_FILES;
     if (!existsSync(dest)) {
       mkdirSync(dest);
     }

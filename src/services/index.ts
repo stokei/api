@@ -29,6 +29,7 @@ import { RecurringServices } from './recurrings';
 import { StripeServices } from './stripe';
 import { SubscriptionContractItemServices } from './subscription-contract-items';
 import { SubscriptionContractServices } from './subscription-contracts';
+import { TusServices } from './tus';
 import { UsageRecordServices } from './usage-records';
 import { VideoAuthorServices } from './video-authors';
 import { VideoServices } from './videos';
@@ -69,5 +70,6 @@ export const Services = [
   ...PriceTierServices,
   ...SubscriptionContractItemServices,
   ...UsageRecordServices,
-  ...CloudflareServices
+  ...CloudflareServices,
+  ...TusServices
 ];

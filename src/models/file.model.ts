@@ -85,7 +85,8 @@ export class FileModel extends AggregateRoot {
     this.filename = data.filename;
     this.mimetype = data.mimetype;
     this.extension = data.extension;
-    this.filenameAndExtension = this.filename + '.' + this.extension;
+    this.filenameAndExtension =
+      this.filename + (this.extension ? `.${this.extension}` : '');
     this.status = data.status;
     this.size = data.size;
     this.isImage = FileModel.isImage(this.mimetype);

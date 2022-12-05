@@ -53,24 +53,19 @@ export class TusService implements OnModuleInit {
       const metadata = this.getFileMetadata(event.file?.upload_metadata);
       const [fileId] = event.file?.id?.split('.') || [];
 
-      this.findFileByIdService
-        .execute(fileId)
-        .then((file) => {
-          this.updateFileService
-            .execute({
-              data: {
-                filename: fileId as string,
-                mimetype: metadata?.filetype,
-                extension: metadata?.extension,
-                size: parseInt(metadata?.size, 10),
-                updatedBy: metadata?.accountId
-              },
-              where: {
-                app: metadata?.appId,
-                file: file.id
-              }
-            })
-            .catch((e) => this.logger.error(e.message));
+      this.updateFileService
+        .execute({
+          data: {
+            filename: fileId as string,
+            mimetype: metadata?.filetype,
+            extension: metadata?.extension,
+            size: parseInt(metadata?.size, 10),
+            updatedBy: metadata?.accountId
+          },
+          where: {
+            app: metadata?.appId,
+            file: fileId
+          }
         })
         .catch((e) => this.logger.error(e.message));
     });
@@ -79,19 +74,11 @@ export class TusService implements OnModuleInit {
       const metadata = this.getFileMetadata(event.file?.upload_metadata);
       const [fileId] = event.file?.id?.split('.') || [];
 
-      this.findFileByIdService
-        .execute(fileId)
-        .then((file) => {
-          this.activateFileService
-            .execute({
-              app: metadata?.appId,
-              file: file.id,
-              updatedBy: metadata?.accountId
-            })
-            .catch((e) => {
-              this.logger.error(e.message);
-              this.tusServer.datastore.remove(event.file.id);
-            });
+      this.activateFileService
+        .execute({
+          app: metadata?.appId,
+          file: fileId,
+          updatedBy: metadata?.accountId
         })
         .catch((e) => {
           this.logger.error(e.message);
@@ -127,7 +114,7 @@ export class TusService implements OnModuleInit {
     let extension: string = metadata.filename
       ? metadata.filename.split('.').pop()
       : null;
-    extension = extension && extension.length === 3 ? extension : null;
+    extension = extension || null;
     metadata.extension = extension;
 
     return metadata;

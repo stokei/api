@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 import { v4 as uuid } from 'uuid';
 
-import { CreateVideoUploadURLCommand } from '@/commands/implements/files/create-video-upload-url.command';
+import { CreateImageUploadURLCommand } from '@/commands/implements/files/create-image-upload-url.command';
 import { LOCAL_UPLOAD_URL } from '@/constants/upload-url';
 import { IS_PRODUCTION } from '@/environments';
 import {
@@ -10,20 +10,20 @@ import {
   ErrorUploadingFileException,
   FileNotFoundException
 } from '@/errors';
-import { CreateCloudflareVideoUploadURLService } from '@/services/cloudflare/create-video-upload-url';
+import { CreateCloudflareImageUploadURLService } from '@/services/cloudflare/create-image-upload-url';
 import { CreateFileService } from '@/services/files/create-file';
 import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 
-@CommandHandler(CreateVideoUploadURLCommand)
-export class CreateVideoUploadURLCommandHandler
-  implements ICommandHandler<CreateVideoUploadURLCommand>
+@CommandHandler(CreateImageUploadURLCommand)
+export class CreateImageUploadURLCommandHandler
+  implements ICommandHandler<CreateImageUploadURLCommand>
 {
   constructor(
     private readonly createFileService: CreateFileService,
-    private readonly createCloudflareVideoUploadURLService: CreateCloudflareVideoUploadURLService
+    private readonly createCloudflareImageUploadURLService: CreateCloudflareImageUploadURLService
   ) {}
 
-  async execute(command: CreateVideoUploadURLCommand) {
+  async execute(command: CreateImageUploadURLCommand) {
     const data = this.clearData(command);
     if (!data) {
       throw new DataNotFoundException();
@@ -35,12 +35,12 @@ export class CreateVideoUploadURLCommandHandler
       filename = uuid();
       uploadURL = LOCAL_UPLOAD_URL;
     } else {
-      const cloudflareVideoUploadURL =
-        await this.createCloudflareVideoUploadURLService.execute();
-      if (!cloudflareVideoUploadURL) {
+      const cloudflareImageUploadURL =
+        await this.createCloudflareImageUploadURLService.execute();
+      if (!cloudflareImageUploadURL) {
         throw new ErrorUploadingFileException();
       }
-      filename = cloudflareVideoUploadURL.filename;
+      filename = cloudflareImageUploadURL.filename;
     }
     const file = await this.createFileService.execute({
       filename,
@@ -57,8 +57,8 @@ export class CreateVideoUploadURLCommandHandler
   }
 
   private clearData(
-    command: CreateVideoUploadURLCommand
-  ): CreateVideoUploadURLCommand {
+    command: CreateImageUploadURLCommand
+  ): CreateImageUploadURLCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app)

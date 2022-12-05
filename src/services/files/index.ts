@@ -1,5 +1,6 @@
 import { ActivateFileService } from './activate-file';
 import { CreateFileService } from './create-file';
+import { CreateImageUploadURLService } from './create-image-upload-url';
 import { CreateVideoUploadURLService } from './create-video-upload-url';
 import { FindAllFilesService } from './find-all-files';
 import { FindFileByFilenameService } from './find-file-by-filename';
@@ -14,6 +15,7 @@ export const FileServices = [
   FindFileByIdService,
   FindAllFilesService,
   CreateVideoUploadURLService,
+  CreateImageUploadURLService,
   FindFileByFilenameService,
   ActivateFileService
 ];

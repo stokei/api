@@ -33,6 +33,8 @@ export class TusService implements OnModuleInit {
   }
 
   async handleTus(req, res) {
+    const [fileId] = req.params.file?.split('.') || [];
+    await this.findFileByIdService.execute(fileId);
     return this.tusServer.handle(req, res);
   }
 
@@ -50,23 +52,27 @@ export class TusService implements OnModuleInit {
     this.tusServer.on(tus.EVENTS.EVENT_FILE_CREATED, (event) => {
       const metadata = this.getFileMetadata(event.file?.upload_metadata);
       const [fileId] = event.file?.id?.split('.') || [];
-      this.findFileByIdService.execute(fileId).then((file) => {
-        this.updateFileService
-          .execute({
-            data: {
-              filename: fileId as string,
-              mimetype: metadata?.filetype,
-              extension: metadata?.extension,
-              size: parseInt(metadata?.size, 10),
-              updatedBy: metadata?.accountId
-            },
-            where: {
-              app: metadata?.appId,
-              file: file.id
-            }
-          })
-          .catch((e) => this.logger.error(e.message));
-      });
+
+      this.findFileByIdService
+        .execute(fileId)
+        .then((file) => {
+          this.updateFileService
+            .execute({
+              data: {
+                filename: fileId as string,
+                mimetype: metadata?.filetype,
+                extension: metadata?.extension,
+                size: parseInt(metadata?.size, 10),
+                updatedBy: metadata?.accountId
+              },
+              where: {
+                app: metadata?.appId,
+                file: file.id
+              }
+            })
+            .catch((e) => this.logger.error(e.message));
+        })
+        .catch((e) => this.logger.error(e.message));
     });
 
     this.tusServer.on(tus.EVENTS.EVENT_UPLOAD_COMPLETE, (event) => {
@@ -82,9 +88,15 @@ export class TusService implements OnModuleInit {
               file: file.id,
               updatedBy: metadata?.accountId
             })
-            .catch((e) => this.logger.error(e.message));
+            .catch((e) => {
+              this.logger.error(e.message);
+              this.tusServer.datastore.remove(event.file.id);
+            });
         })
-        .catch((e) => this.logger.error(e.message));
+        .catch((e) => {
+          this.logger.error(e.message);
+          this.tusServer.datastore.remove(event.file.id);
+        });
     });
   }
 

@@ -33,7 +33,6 @@ export class LanguageMapper {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
         active: prismaMapper.toWhereData(operatorData.active),
-        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
@@ -66,7 +65,6 @@ export class LanguageMapper {
         [operator]: {
           active: cleanWhereDataBoolean(operatorData.active),
           name: cleanWhereDataSearch(operatorData.name),
-          app: cleanWhereDataString(operatorData.app),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:

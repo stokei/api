@@ -7,7 +7,6 @@ import {
 
 export interface WhereDataFindAllLanguagesDTO {
   ids?: string[];
-  app?: IWhereData;
   active?: IWhereData<boolean>;
   name?: IWhereDataSearch;
   updatedBy?: IWhereData;

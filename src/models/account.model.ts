@@ -72,7 +72,6 @@ export class AccountModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.ACCOUNTS,
-      module: ServerStokeiApiIdPrefix.ACCOUNTS,
       id: data._id?.toString() || data.id
     });
     this.firstname = data.firstname;

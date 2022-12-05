@@ -10,6 +10,7 @@ import {
   PriceNotFoundException
 } from '@/errors';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
+import { FindAllAppAdminsService } from '@/services/app-admins/find-all-app-admins';
 import { FindAppAdminByIdService } from '@/services/app-admins/find-app-admin-by-id';
 import { AddItemToAppSubscriptionContractService } from '@/services/apps/add-item-to-app-subscription-contract';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
@@ -23,6 +24,7 @@ export class AddAppAdminToAppSubscriptionContractCommandHandler
 {
   constructor(
     private readonly findAppAdminByIdService: FindAppAdminByIdService,
+    private readonly findAllAppAdminsService: FindAllAppAdminsService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
     private readonly addItemToAppSubscriptionContractService: AddItemToAppSubscriptionContractService
   ) {}
@@ -43,6 +45,25 @@ export class AddAppAdminToAppSubscriptionContractCommandHandler
     const appAdmin = await this.findAppAdminByIdService.execute(data.appAdmin);
     if (!appAdmin) {
       throw new AppAdminNotFoundException();
+    }
+
+    const appAdmins = await this.findAllAppAdminsService.execute({
+      where: {
+        AND: {
+          admin: {
+            equals: appAdmin.admin
+          },
+          app: {
+            equals: appAdmin.app
+          }
+        }
+      },
+      page: {
+        limit: 1
+      }
+    });
+    if (appAdmins?.totalCount <= 1) {
+      return;
     }
 
     const appAdminPrice = await this.findPlanPriceByTypeService.execute(

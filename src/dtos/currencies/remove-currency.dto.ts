@@ -1,6 +1,5 @@
 export interface RemoveCurrencyWhereDTO {
   removedBy: string;
-  app: string;
   currency: string;
 }
 

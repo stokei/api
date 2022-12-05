@@ -42,7 +42,6 @@ export class VideoModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.VIDEOS,
-      module: ServerStokeiApiIdPrefix.VIDEOS,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;

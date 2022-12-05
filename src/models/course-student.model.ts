@@ -31,7 +31,6 @@ export class CourseStudentModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.COURSE_STUDENTS,
-      module: ServerStokeiApiIdPrefix.COURSE_STUDENTS,
       id: data._id?.toString() || data.id
     });
     this.course = data.course;

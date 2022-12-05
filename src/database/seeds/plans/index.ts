@@ -25,17 +25,66 @@ interface PlanDataDTO {
   price: CreatePriceDTO;
 }
 
-@Injectable()
-export class PlansSeeds implements IBaseService<any, Promise<PlanModel[]>> {
-  private readonly plansData: PlanDataDTO[];
+interface PlansSeedsDTO {
+  appId: string;
+  accountId: string;
+}
 
+@Injectable()
+export class PlansSeeds
+  implements IBaseService<PlansSeedsDTO, Promise<PlanModel[]>>
+{
   constructor(
     private readonly createProductService: CreateProductService,
     private readonly createPriceService: CreatePriceService,
     private readonly createPlanService: CreatePlanService,
     private readonly findAllPlansService: FindAllPlansService
-  ) {
-    this.plansData = [
+  ) {}
+
+  async execute(): Promise<PlanModel[]> {
+    const planData = this.createData();
+    const plansFounded = await this.findAllPlansService.execute({
+      where: {
+        AND: {
+          app: {
+            equals: defaultAccountId
+          }
+        }
+      }
+    });
+    let plansToCreate = planData;
+    if (plansFounded?.items?.length > 0) {
+      plansToCreate = plansToCreate?.filter(({ plan }) => {
+        const existsLanguage = plansFounded?.items?.find(
+          (planFounded) => planFounded.type === plan.type
+        );
+        return !existsLanguage;
+      });
+    }
+    const plansCreated = await Promise.all(
+      plansToCreate?.map(async (planData) => {
+        const plan = await this.createPlanService.execute(planData.plan);
+        const product = await this.createProductService.execute({
+          app: plan.app,
+          parent: plan.id,
+          name: plan.name,
+          description: plan.description,
+          checkoutVisible: true,
+          createdBy: plan.createdBy
+        });
+        await this.createPriceService.execute({
+          ...planData.price,
+          nickname: product.name,
+          parent: product.id
+        });
+        return plan;
+      })
+    );
+    return [...plansFounded?.items, ...plansCreated];
+  }
+
+  private createData(): PlanDataDTO[] {
+    return [
       {
         plan: {
           name: 'Serviço de Administradores',
@@ -194,46 +243,5 @@ export class PlansSeeds implements IBaseService<any, Promise<PlanModel[]>> {
         }
       }
     ];
-  }
-
-  async execute(): Promise<PlanModel[]> {
-    const plansFounded = await this.findAllPlansService.execute({
-      where: {
-        AND: {
-          app: {
-            equals: defaultAppId
-          }
-        }
-      }
-    });
-    let plansToCreate = this.plansData;
-    if (plansFounded?.items?.length > 0) {
-      plansToCreate = this.plansData?.filter(({ plan }) => {
-        const existsLanguage = plansFounded?.items?.find(
-          (planFounded) => planFounded.type === plan.type
-        );
-        return !existsLanguage;
-      });
-    }
-    const plansCreated = await Promise.all(
-      plansToCreate?.map(async (planData) => {
-        const plan = await this.createPlanService.execute(planData.plan);
-        const product = await this.createProductService.execute({
-          app: plan.app,
-          parent: plan.id,
-          name: plan.name,
-          description: plan.description,
-          checkoutVisible: true,
-          createdBy: plan.createdBy
-        });
-        await this.createPriceService.execute({
-          ...planData.price,
-          nickname: product.name,
-          parent: product.id
-        });
-        return plan;
-      })
-    );
-    return [...plansFounded?.items, ...plansCreated];
   }
 }

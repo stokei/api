@@ -43,7 +43,7 @@ export class CreateAppCommandHandler
       throw new ParamNotFoundException<CreateAppCommandKeys>('currency');
     }
 
-    const slug = cleanSlug(data.name + uuid());
+    const slug = data.slug || cleanSlug(data.name + uuid());
 
     const currency = await this.findCurrencyByIdService.execute(data?.currency);
     if (!currency) {
@@ -76,6 +76,8 @@ export class CreateAppCommandHandler
   private clearData(command: CreateAppCommand): CreateAppCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
+      id: cleanValue(command?.id),
+      slug: cleanValue(command?.slug),
       parent: cleanValue(command?.parent),
       app: cleanValue(command?.app),
       email: cleanValue(command?.email),

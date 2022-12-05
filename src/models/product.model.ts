@@ -45,7 +45,6 @@ export class ProductModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.PRODUCTS,
-      module: ServerStokeiApiIdPrefix.PRODUCTS,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;

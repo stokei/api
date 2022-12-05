@@ -64,7 +64,6 @@ export class UpdateLanguageCommandHandler
   private clearData(command: UpdateLanguageCommand): UpdateLanguageCommand {
     return cleanObject({
       where: cleanObject({
-        app: cleanValue(command?.where?.app),
         language: cleanValue(command?.where?.language)
       }),
       data: cleanObject({

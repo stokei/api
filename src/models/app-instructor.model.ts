@@ -29,7 +29,6 @@ export class AppInstructorModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.APP_INSTRUCTORS,
-      module: ServerStokeiApiIdPrefix.APP_INSTRUCTORS,
       id: data._id?.toString() || data.id
     });
     this.app = data.app;

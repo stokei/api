@@ -60,7 +60,6 @@ export class RemoveCurrencyCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        app: cleanValue(command?.where?.app),
         currency: cleanValue(command?.where?.currency)
       })
     });

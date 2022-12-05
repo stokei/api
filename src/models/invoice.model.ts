@@ -55,7 +55,6 @@ export class InvoiceModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.INVOICES,
-      module: ServerStokeiApiIdPrefix.INVOICES,
       id: data._id?.toString() || data.id
     });
     this.app = data.app;

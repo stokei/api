@@ -33,7 +33,6 @@ export class CurrencyMapper {
         id: prismaMapper.toWhereIds(operatorData.ids),
         name: prismaMapper.toWhereDataSearch(operatorData.name),
         minorUnit: prismaMapper.toWhereData(operatorData.minorUnit),
-        app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
@@ -66,7 +65,6 @@ export class CurrencyMapper {
         [operator]: {
           minorUnit: cleanWhereDataNumber(operatorData.minorUnit),
           name: cleanWhereDataSearch(operatorData.name),
-          app: cleanWhereDataString(operatorData.app),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:

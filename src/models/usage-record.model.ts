@@ -33,7 +33,6 @@ export class UsageRecordModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.USAGE_RECORDS,
-      module: ServerStokeiApiIdPrefix.USAGE_RECORDS,
       id: data._id?.toString() || data.id
     });
     this.app = data.app;

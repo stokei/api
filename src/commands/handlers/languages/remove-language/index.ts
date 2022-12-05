@@ -60,7 +60,6 @@ export class RemoveLanguageCommandHandler
     return cleanObject({
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
-        app: cleanValue(command?.where?.app),
         language: cleanValue(command?.where?.language)
       })
     });

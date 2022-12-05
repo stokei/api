@@ -7,6 +7,7 @@ export * from './accounts-not-found';
 export * from './address-not-found';
 export * from './addresses-not-found';
 export * from './app-admin-not-found';
+export * from './app-admin-unauthorized-remove';
 export * from './app-admins-not-found';
 export * from './app-instructor-not-found';
 export * from './app-instructors-not-found';

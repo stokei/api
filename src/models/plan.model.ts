@@ -36,7 +36,6 @@ export class PlanModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.PLANS,
-      module: ServerStokeiApiIdPrefix.PLANS,
       id: data._id?.toString() || data.id
     });
     this.name = data.name;

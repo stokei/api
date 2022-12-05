@@ -29,7 +29,6 @@ export class AppAdminModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.APP_ADMINS,
-      module: ServerStokeiApiIdPrefix.APP_ADMINS,
       id: data._id?.toString() || data.id
     });
     this.app = data.app;

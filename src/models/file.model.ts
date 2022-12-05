@@ -80,7 +80,6 @@ export class FileModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.FILES,
-      module: ServerStokeiApiIdPrefix.FILES,
       id: data._id?.toString() || data.id
     });
     this.filename = data.filename;

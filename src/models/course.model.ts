@@ -40,7 +40,6 @@ export class CourseModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.COURSES,
-      module: ServerStokeiApiIdPrefix.COURSES,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;

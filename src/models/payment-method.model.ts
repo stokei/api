@@ -35,7 +35,6 @@ export class PaymentMethodModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.PAYMENT_METHODS,
-      module: ServerStokeiApiIdPrefix.PAYMENT_METHODS,
       id: data._id?.toString() || data.id
     });
     this.stripePaymentMethod = data.stripePaymentMethod;

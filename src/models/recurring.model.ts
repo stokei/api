@@ -35,7 +35,6 @@ export class RecurringModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.RECURRINGS,
-      module: ServerStokeiApiIdPrefix.RECURRINGS,
       id: data._id?.toString() || data.id
     });
     this.app = data.app;

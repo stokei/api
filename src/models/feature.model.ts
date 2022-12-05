@@ -34,7 +34,6 @@ export class FeatureModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.FEATURES,
-      module: ServerStokeiApiIdPrefix.FEATURES,
       id: data._id?.toString() || data.id
     });
     this.app = data.app;

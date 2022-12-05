@@ -61,7 +61,6 @@ export class PriceModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.PRICES,
-      module: ServerStokeiApiIdPrefix.PRICES,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;

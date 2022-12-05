@@ -4,18 +4,19 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 import { RemoveAppAdminCommand } from '@/commands/implements/app-admins/remove-app-admin.command';
 import {
   AppAdminNotFoundException,
+  AppAdminUnauthorizedRemoveException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
-import { FindAllAppAdminsRepository } from '@/repositories/app-admins/find-all-app-admins';
 import { RemoveAppAdminRepository } from '@/repositories/app-admins/remove-app-admin';
+import { FindAllAppAdminsService } from '@/services/app-admins/find-all-app-admins';
 
 @CommandHandler(RemoveAppAdminCommand)
 export class RemoveAppAdminCommandHandler
   implements ICommandHandler<RemoveAppAdminCommand>
 {
   constructor(
-    private readonly findAllAppAdminsRepository: FindAllAppAdminsRepository,
+    private readonly findAllAppAdminsService: FindAllAppAdminsService,
     private readonly removeAppAdminRepository: RemoveAppAdminRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -36,7 +37,7 @@ export class RemoveAppAdminCommandHandler
       throw new ParamNotFoundException('adminId');
     }
 
-    const appAdmins = await this.findAllAppAdminsRepository.execute({
+    const appAdmins = await this.findAllAppAdminsService.execute({
       where: {
         AND: {
           app: {
@@ -48,8 +49,11 @@ export class RemoveAppAdminCommandHandler
         }
       }
     });
-    if (!appAdmins?.length) {
+    if (!appAdmins?.totalCount) {
       throw new AppAdminNotFoundException();
+    }
+    if (appAdmins?.totalCount == 1) {
+      throw new AppAdminUnauthorizedRemoveException();
     }
     const appAdmin = appAdmins[0];
     const removed = await this.removeAppAdminRepository.execute({

@@ -39,7 +39,6 @@ export class DomainModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.DOMAINS,
-      module: ServerStokeiApiIdPrefix.DOMAINS,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;

@@ -50,7 +50,6 @@ export class SubscriptionContractModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.SUBSCRIPTION_CONTRACTS,
-      module: ServerStokeiApiIdPrefix.SUBSCRIPTION_CONTRACTS,
       id: data._id?.toString() || data.id
     });
     this.app = data.app;

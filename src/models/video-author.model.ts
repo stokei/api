@@ -31,7 +31,6 @@ export class VideoAuthorModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.VIDEO_AUTHORS,
-      module: ServerStokeiApiIdPrefix.VIDEO_AUTHORS,
       id: data._id?.toString() || data.id
     });
     this.video = data.video;

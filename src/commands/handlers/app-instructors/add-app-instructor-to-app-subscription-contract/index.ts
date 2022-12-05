@@ -10,6 +10,7 @@ import {
   PriceNotFoundException
 } from '@/errors';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
+import { FindAllAppInstructorsService } from '@/services/app-instructors/find-all-app-instructors';
 import { FindAppInstructorByIdService } from '@/services/app-instructors/find-app-instructor-by-id';
 import { AddItemToAppSubscriptionContractService } from '@/services/apps/add-item-to-app-subscription-contract';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
@@ -24,6 +25,7 @@ export class AddAppInstructorToAppSubscriptionContractCommandHandler
   constructor(
     private readonly findAppInstructorByIdService: FindAppInstructorByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
+    private readonly findAllAppInstructorsService: FindAllAppInstructorsService,
     private readonly addItemToAppSubscriptionContractService: AddItemToAppSubscriptionContractService
   ) {}
 
@@ -47,6 +49,24 @@ export class AddAppInstructorToAppSubscriptionContractCommandHandler
       throw new AppInstructorNotFoundException();
     }
 
+    const appInstructors = await this.findAllAppInstructorsService.execute({
+      where: {
+        AND: {
+          instructor: {
+            equals: appInstructor.instructor
+          },
+          app: {
+            equals: appInstructor.app
+          }
+        }
+      },
+      page: {
+        limit: 1
+      }
+    });
+    if (appInstructors?.totalCount <= 1) {
+      return;
+    }
     const appInstructorPrice = await this.findPlanPriceByTypeService.execute(
       PlanType.INSTRUCTOR
     );

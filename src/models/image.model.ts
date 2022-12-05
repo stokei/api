@@ -30,7 +30,6 @@ export class ImageModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.IMAGES,
-      module: ServerStokeiApiIdPrefix.IMAGES,
       id: data._id?.toString() || data.id
     });
     this.file = data.file;

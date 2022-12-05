@@ -50,7 +50,6 @@ export class PhoneModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.PHONES,
-      module: ServerStokeiApiIdPrefix.PHONES,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;

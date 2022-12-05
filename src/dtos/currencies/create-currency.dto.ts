@@ -3,6 +3,5 @@ export interface CreateCurrencyDTO {
   name: string;
   symbol: string;
   minorUnit: number;
-  app: string;
   createdBy: string;
 }

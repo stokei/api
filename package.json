@@ -20,7 +20,6 @@
     "db:generate": "prisma generate --schema=./src/database/prisma/schema.prisma",
     "db:pull": "prisma db pull --schema=./src/database/prisma/schema.prisma",
     "db:seeds:run": "prisma db seed",
-    "db:seeds:run:teste": "ts-node -r tsconfig-paths/register ./src/database/seeds/server.ts",
     "db:migration:run": "prisma migrate deploy --schema=./src/database/prisma/schema.prisma",
     "db:migration:dev:run": "prisma migrate dev --preview-feature --schema=./src/database/prisma/schema.prisma",
     "db:migration:reset": "prisma migrate reset --schema=./src/database/prisma/schema.prisma",
@@ -34,7 +33,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "prisma": {
-    "seed": "ts-node-dev -r tsconfig-paths/register ./src/database/prisma/seeds/seed.ts"
+    "seed": "ts-node -r tsconfig-paths/register ./src/database/seeds/server.ts"
   },
   "dependencies": {
     "@apollo/subgraph": "^0.3.1",
@@ -48,7 +47,7 @@
     "@nestjs/swagger": "^6.0.4",
     "@nestjs/throttler": "^2.0.0",
     "@prisma/client": "^4.7.1",
-    "@stokei/nestjs": "^1.2.5",
+    "@stokei/nestjs": "^1.2.6",
     "apollo-server-core": "^3.11.1",
     "apollo-server-express": "^3.6.3",
     "axios": "^1.1.2",

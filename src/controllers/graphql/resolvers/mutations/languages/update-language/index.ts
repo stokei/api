@@ -2,7 +2,6 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
-import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
 import { UpdateLanguageInput } from '@/controllers/graphql/inputs/languages/update-language.input';
 import { Language } from '@/controllers/graphql/types/language';
@@ -16,13 +15,11 @@ export class UpdateLanguageResolver {
   @Mutation(() => Language)
   async updateLanguage(
     @CurrentAccount('id') currentAccountId: string,
-    @CurrentApp('id') appId: string,
     @Args('input') data: UpdateLanguageInput
   ) {
     const response = await this.updateLanguageService.execute({
       where: {
-        ...data?.where,
-        app: appId
+        ...data?.where
       },
       data: {
         ...data?.data,

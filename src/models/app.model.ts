@@ -66,7 +66,6 @@ export class AppModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.APPS,
-      module: ServerStokeiApiIdPrefix.APPS,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;

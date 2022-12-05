@@ -69,7 +69,6 @@ export class UpdateCurrencyCommandHandler
   private clearData(command: UpdateCurrencyCommand): UpdateCurrencyCommand {
     return cleanObject({
       where: cleanObject({
-        app: cleanValue(command?.where?.app),
         currency: cleanValue(command?.where?.currency)
       }),
       data: cleanObject({

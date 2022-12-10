@@ -4,8 +4,8 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // ---------- ENVIRONMENT ----------
-export const NODE_ENV: string = Environment.DEVELOPMENT; //process.env.NODE_ENV;
-export const IS_PRODUCTION: boolean = false; //NODE_ENV === Environment.PRODUCTION;
+export const NODE_ENV: string = Environment.PRODUCTION; //process.env.NODE_ENV;
+export const IS_PRODUCTION: boolean = true; //NODE_ENV === Environment.PRODUCTION;
 export const IS_DEVELOPMENT: boolean = NODE_ENV === Environment.DEVELOPMENT;
 
 // ---------- SERVER ----------

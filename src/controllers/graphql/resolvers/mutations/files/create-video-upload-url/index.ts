@@ -4,22 +4,25 @@ import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
 import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
-import { CreateVideoUploadURLResponse } from '@/controllers/graphql/types/create-video-upload-url-response';
+import { CreateFileUploadURLResponse } from '@/controllers/graphql/types/create-file-upload-url-response';
 import { CreateVideoUploadURLService } from '@/services/files/create-video-upload-url';
 
-@Resolver(() => CreateVideoUploadURLResponse)
+@Resolver(() => CreateFileUploadURLResponse)
 export class CreateVideoUploadURLResolver {
   constructor(
     private readonly createVideoUploadURLService: CreateVideoUploadURLService
   ) {}
 
   @UseGuards(AppGuard, AuthenticatedGuard)
-  @Mutation(() => CreateVideoUploadURLResponse)
+  @Mutation(() => CreateFileUploadURLResponse)
   async createVideoUploadURL(
     @CurrentAccount('id') currentAccountId: string,
     @CurrentApp('id') appId: string
   ) {
     const response = await this.createVideoUploadURLService.execute({
+      tusResumable: null,
+      uploadLength: null,
+      uploadMetadata: null,
       app: appId,
       createdBy: currentAccountId
     });

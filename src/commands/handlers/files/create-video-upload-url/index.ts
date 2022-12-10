@@ -36,11 +36,17 @@ export class CreateVideoUploadURLCommandHandler
       uploadURL = LOCAL_UPLOAD_URL;
     } else {
       const cloudflareVideoUploadURL =
-        await this.createCloudflareVideoUploadURLService.execute();
+        await this.createCloudflareVideoUploadURLService.execute({
+          createdBy: data.createdBy,
+          tusResumable: data.tusResumable,
+          uploadLength: data.uploadLength,
+          uploadMetadata: data.uploadMetadata
+        });
       if (!cloudflareVideoUploadURL) {
         throw new ErrorUploadingFileException();
       }
       filename = cloudflareVideoUploadURL.filename;
+      uploadURL = cloudflareVideoUploadURL.uploadURL;
     }
     const file = await this.createFileService.execute({
       filename,
@@ -51,7 +57,9 @@ export class CreateVideoUploadURLCommandHandler
       throw new FileNotFoundException();
     }
     return {
-      uploadURL: appendPathnameToURL(uploadURL, file.id),
+      uploadURL: IS_PRODUCTION
+        ? uploadURL
+        : appendPathnameToURL(uploadURL, file.id),
       file
     };
   }
@@ -60,6 +68,9 @@ export class CreateVideoUploadURLCommandHandler
     command: CreateVideoUploadURLCommand
   ): CreateVideoUploadURLCommand {
     return cleanObject({
+      tusResumable: cleanValue(command?.tusResumable),
+      uploadLength: cleanValue(command?.uploadLength),
+      uploadMetadata: cleanValue(command?.uploadMetadata),
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app)
     });

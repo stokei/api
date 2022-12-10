@@ -41,6 +41,7 @@ export class CreateImageUploadURLCommandHandler
         throw new ErrorUploadingFileException();
       }
       filename = cloudflareImageUploadURL.filename;
+      uploadURL = cloudflareImageUploadURL.uploadURL;
     }
     const file = await this.createFileService.execute({
       filename,
@@ -51,7 +52,9 @@ export class CreateImageUploadURLCommandHandler
       throw new FileNotFoundException();
     }
     return {
-      uploadURL: appendPathnameToURL(uploadURL, file.id),
+      uploadURL: IS_PRODUCTION
+        ? uploadURL
+        : appendPathnameToURL(uploadURL, file.id),
       file
     };
   }

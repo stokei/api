@@ -1,4 +1,6 @@
 export interface CreateCloudflareVideoUploadURLDTO {
-  app: string;
   createdBy: string;
+  tusResumable: string;
+  uploadLength: string;
+  uploadMetadata: string;
 }

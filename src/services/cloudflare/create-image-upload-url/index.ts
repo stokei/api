@@ -17,18 +17,22 @@ export class CreateCloudflareImageUploadURLService
     >
 {
   async execute(): Promise<CreateCloudflareImageUploadURLResponse> {
-    const response = await axiosClient.post(
-      CLOUDFLARE_CREATE_IMAGE_UPLOAD_URL,
-      null,
-      {
-        headers: {
-          Authorization: `Bearer ${CLOUDFLARE_TOKEN}`
+    let response;
+    try {
+      response = await axiosClient.post(
+        CLOUDFLARE_CREATE_IMAGE_UPLOAD_URL,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${CLOUDFLARE_TOKEN}`
+          }
         }
-      }
-    );
-    if (!response.data) {
+      );
+    } catch (error) {
       throw new ErrorUploadingFileException();
     }
+
     return {
       uploadURL: response.data.result.uploadURL,
       filename: response.data.result.id

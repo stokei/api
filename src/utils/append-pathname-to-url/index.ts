@@ -1,4 +1,7 @@
 const removeTextSlash = (text: string, from: 'START' | 'END') => {
+  if (!text) {
+    return text;
+  }
   const textSplited = text.split('');
   const slashItem = textSplited[from === 'END' ? textSplited.length - 1 : 0];
   if (slashItem !== '/') {

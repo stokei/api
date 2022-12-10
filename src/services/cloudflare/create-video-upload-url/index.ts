@@ -16,22 +16,32 @@ export class CreateCloudflareVideoUploadURLService
       Promise<CreateCloudflareVideoUploadURLResponse>
     >
 {
-  async execute(): Promise<CreateCloudflareVideoUploadURLResponse> {
-    const response = await axiosClient.post(
-      CLOUDFLARE_CREATE_VIDEO_UPLOAD_URL,
-      null,
-      {
-        headers: {
-          Authorization: `Bearer ${CLOUDFLARE_TOKEN}`
+  async execute(
+    data: CreateCloudflareVideoUploadURLDTO
+  ): Promise<CreateCloudflareVideoUploadURLResponse> {
+    try {
+      const response = await axiosClient.post(
+        CLOUDFLARE_CREATE_VIDEO_UPLOAD_URL,
+        {
+          allowedOrigins: ['*']
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${CLOUDFLARE_TOKEN}`,
+            'Tus-Resumable': data.tusResumable,
+            'Content-Type': 'application/json',
+            'Upload-Creator': data.createdBy,
+            'Upload-Length': data.uploadLength,
+            'Upload-Metadata': data.uploadMetadata
+          }
         }
-      }
-    );
-    if (!response.data) {
+      );
+      return {
+        uploadURL: response.headers['location'],
+        filename: response.headers['stream-media-id']
+      };
+    } catch (error) {
       throw new ErrorUploadingFileException();
     }
-    return {
-      uploadURL: response.data.result.uploadURL,
-      filename: response.data.result.id
-    };
   }
 }

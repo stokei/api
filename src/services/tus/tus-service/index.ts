@@ -2,7 +2,6 @@ import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { existsSync, mkdirSync } from 'fs';
 
 import { PATH_FILES } from '@/constants/upload-file-paths';
-import { TusFileMetadataModel } from '@/models/tus-file-metadata.model';
 
 import tus = require('tus-node-server');
 
@@ -10,6 +9,7 @@ import { LOCAL_UPLOAD_URL_PATHNAME } from '@/constants/upload-url';
 import { ActivateFileService } from '@/services/files/activate-file';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { UpdateFileService } from '@/services/files/update-file';
+import { getFileMetadata } from '@/utils/get-file-metadata';
 
 @Injectable()
 export class TusService implements OnModuleInit {
@@ -50,7 +50,7 @@ export class TusService implements OnModuleInit {
     });
 
     this.tusServer.on(tus.EVENTS.EVENT_FILE_CREATED, (event) => {
-      const metadata = this.getFileMetadata(event.file?.upload_metadata);
+      const metadata = getFileMetadata(event.file?.upload_metadata);
       const [fileId] = event.file?.id?.split('.') || [];
 
       this.updateFileService
@@ -71,7 +71,7 @@ export class TusService implements OnModuleInit {
     });
 
     this.tusServer.on(tus.EVENTS.EVENT_UPLOAD_COMPLETE, (event) => {
-      const metadata = this.getFileMetadata(event.file?.upload_metadata);
+      const metadata = getFileMetadata(event.file?.upload_metadata);
       const [fileId] = event.file?.id?.split('.') || [];
 
       this.activateFileService
@@ -89,7 +89,7 @@ export class TusService implements OnModuleInit {
 
   private fileNameFromRequest = (req) => {
     try {
-      const metadata = this.getFileMetadata(req.header('Upload-Metadata'));
+      const metadata = getFileMetadata(req.header('Upload-Metadata'));
       const [fileId] = req.params.file?.split('.') || [];
       const fileName = metadata.extension
         ? fileId + '.' + metadata.extension
@@ -100,23 +100,4 @@ export class TusService implements OnModuleInit {
       throw e;
     }
   };
-
-  private getFileMetadata(uploadMeta: string): TusFileMetadataModel {
-    const metadata = new TusFileMetadataModel();
-
-    uploadMeta.split(',').map((item) => {
-      const tmp = item.split(' ');
-      const key = tmp[0];
-      const value = Buffer.from(tmp[1], 'base64').toString('ascii');
-      metadata[`${key}`] = value;
-    });
-
-    let extension: string = metadata.filename
-      ? metadata.filename.split('.').pop()
-      : null;
-    extension = extension || null;
-    metadata.extension = extension;
-
-    return metadata;
-  }
 }

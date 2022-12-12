@@ -10,9 +10,11 @@ import {
   ErrorUploadingFileException,
   FileNotFoundException
 } from '@/errors';
+import { TusFileMetadataModel } from '@/models/tus-file-metadata.model';
 import { CreateCloudflareVideoUploadURLService } from '@/services/cloudflare/create-video-upload-url';
 import { CreateFileService } from '@/services/files/create-file';
 import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
+import { getFileMetadata } from '@/utils/get-file-metadata';
 
 @CommandHandler(CreateVideoUploadURLCommand)
 export class CreateVideoUploadURLCommandHandler
@@ -30,6 +32,7 @@ export class CreateVideoUploadURLCommandHandler
     }
 
     let filename;
+    let metadata: TusFileMetadataModel;
     let uploadURL;
     if (!IS_PRODUCTION) {
       filename = uuid();
@@ -45,13 +48,17 @@ export class CreateVideoUploadURLCommandHandler
       if (!cloudflareVideoUploadURL) {
         throw new ErrorUploadingFileException();
       }
+      metadata = getFileMetadata(data.uploadMetadata);
       filename = cloudflareVideoUploadURL.filename;
       uploadURL = cloudflareVideoUploadURL.uploadURL;
     }
     const file = await this.createFileService.execute({
       filename,
-      app: data.app,
-      createdBy: data.createdBy
+      extension: metadata?.extension,
+      mimetype: metadata?.filetype,
+      size: data.uploadLength && parseInt(data.uploadLength),
+      app: data.app || metadata.appId,
+      createdBy: data.createdBy || metadata.accountId
     });
     if (!file) {
       throw new FileNotFoundException();

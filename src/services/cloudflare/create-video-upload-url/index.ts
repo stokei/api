@@ -22,16 +22,14 @@ export class CreateCloudflareVideoUploadURLService
     try {
       const response = await axiosClient.post(
         CLOUDFLARE_CREATE_VIDEO_UPLOAD_URL,
-        {
-          allowedOrigins: ['*']
-        },
+        {},
         {
           headers: {
             Authorization: `Bearer ${CLOUDFLARE_TOKEN}`,
             'Tus-Resumable': data.tusResumable,
             'Content-Type': 'application/json',
             'Upload-Creator': data.createdBy,
-            'Upload-Length': data.uploadLength,
+            'Upload-Length': parseInt(data.uploadLength),
             'Upload-Metadata': data.uploadMetadata
           }
         }

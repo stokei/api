@@ -1,10 +1,7 @@
-import { Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Post, Req, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CurrentAccount } from '@stokei/nestjs';
 import { Request, Response } from 'express';
 
-import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
-import { AppGuard } from '@/common/guards/app';
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
 import { ErrorUploadingFileException } from '@/errors';
@@ -21,26 +18,21 @@ export class CreateVideoUploadController {
   ) {}
 
   @Post()
-  @UseGuards(AppGuard)
-  async createVideoUpload(
-    @Req() request: Request,
-    @Res() response: Response,
-    @CurrentAccount('id') currentAccountId: string,
-    @CurrentApp('id') appId: string
-  ) {
+  async createVideoUpload(@Req() request: Request, @Res() response: Response) {
     try {
       const result = await this.createVideoUploadURLService.execute({
         tusResumable: request.headers['tus-resumable'] as string,
         uploadLength: request.headers['upload-length'] as string,
         uploadMetadata: request.headers['upload-metadata'] as string,
-        app: appId,
-        createdBy: currentAccountId
+        app: null,
+        createdBy: null
       });
       const destination = result.uploadURL;
       return response
         .set({
-          'Access-Control-Expose-Headers': '*',
           'Access-Control-Allow-Headers': '*',
+          'Access-Control-Expose-Headers': '*',
+          'Access-Control-Allow-Methods': '*',
           'Access-Control-Allow-Origin': '*',
           Location: destination
         })

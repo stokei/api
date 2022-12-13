@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IBaseService } from '@stokei/nestjs';
+import FormData from 'form-data';
 
 import { axiosClient } from '@/clients/axios';
 import { CLOUDFLARE_CREATE_IMAGE_UPLOAD_URL } from '@/constants/cloudflare';
@@ -19,12 +20,17 @@ export class CreateCloudflareImageUploadURLService
   async execute(): Promise<CreateCloudflareImageUploadURLResponse> {
     let response;
     try {
+      const formData = new FormData();
+
+      formData.append('metadata', '{}');
+      formData.append('requireSignedURLs', 'false');
+
       response = await axiosClient.post(
         CLOUDFLARE_CREATE_IMAGE_UPLOAD_URL,
-        {},
+        formData,
         {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${CLOUDFLARE_TOKEN}`
           }
         }

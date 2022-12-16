@@ -1,15 +1,18 @@
 import { IS_PRODUCTION } from '@/environments';
 
-import { CreateImageUploadController } from './create-image-upload';
-import { CreateUploadController } from './create-upload';
+import { CreateImageUploadDevelopmentController } from './create-image-upload-development';
 import { CreateVideoUploadController } from './create-video-upload';
+import { CreateVideoUploadDevelopmentController } from './create-video-upload-development';
 import { GetFileController } from './get-file';
 
 const devControllers = !IS_PRODUCTION
-  ? [GetFileController, CreateUploadController]
+  ? [
+      GetFileController,
+      CreateVideoUploadDevelopmentController,
+      CreateImageUploadDevelopmentController
+    ]
   : [];
 export const UploadsControllers = [
   ...devControllers,
-  CreateVideoUploadController,
-  CreateImageUploadController
+  CreateVideoUploadController
 ];

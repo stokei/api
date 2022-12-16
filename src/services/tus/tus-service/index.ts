@@ -1,40 +1,46 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { FileStore } from '@tus/file-store';
+import { Server, Upload } from '@tus/server';
 import { existsSync, mkdirSync } from 'fs';
+import { IncomingMessage, ServerResponse } from 'http';
+import { v4 as uuid } from 'uuid';
 
 import { PATH_FILES } from '@/constants/upload-file-paths';
-
-import tus = require('tus-node-server');
-
-import { LOCAL_UPLOAD_URL_PATHNAME } from '@/constants/upload-url';
+import { LOCAL_UPLOAD_VIDEO_URL_PATHNAME } from '@/constants/upload-url';
 import { ActivateFileService } from '@/services/files/activate-file';
-import { FindFileByIdService } from '@/services/files/find-file-by-id';
+import { CreateFileService } from '@/services/files/create-file';
+import { FindFileByFilenameService } from '@/services/files/find-file-by-filename';
 import { UpdateFileService } from '@/services/files/update-file';
 import { getFileMetadata } from '@/utils/get-file-metadata';
 
 @Injectable()
 export class TusService implements OnModuleInit {
   private logger: Logger;
-  private tusServer: tus.Server;
+  private tusServer: Server;
 
   constructor(
     private readonly updateFileService: UpdateFileService,
-    private readonly findFileByIdService: FindFileByIdService,
+    private readonly createFileService: CreateFileService,
+    private readonly findFileByFilenameService: FindFileByFilenameService,
     private readonly activateFileService: ActivateFileService
   ) {
     this.logger = new Logger(TusService.name);
-    this.tusServer = new tus.Server({
-      path: LOCAL_UPLOAD_URL_PATHNAME,
-      namingFunction: this.fileNameFromRequest
-    });
   }
 
   onModuleInit() {
+    this.tusServer = new Server({
+      path: LOCAL_UPLOAD_VIDEO_URL_PATHNAME,
+      onUploadCreate: (...args) => this.onUploadCreate(...args),
+      onUploadFinish: (...args) => this.onUploadFinish(...args),
+      namingFunction: (...args) => this.fileNameFromRequest(...args),
+      datastore: new FileStore({
+        directory: PATH_FILES
+      })
+    });
     this.initializeTusServer();
   }
 
   async handleTus(req, res) {
-    const [fileId] = req.params.file?.split('.') || [];
-    await this.findFileByIdService.execute(fileId);
     return this.tusServer.handle(req, res);
   }
 
@@ -44,60 +50,66 @@ export class TusService implements OnModuleInit {
     if (!existsSync(PATH_FILES)) {
       mkdirSync(PATH_FILES, { recursive: true });
     }
-
-    this.tusServer.datastore = new tus.FileStore({
-      directory: PATH_FILES
-    });
-
-    this.tusServer.on(tus.EVENTS.EVENT_FILE_CREATED, (event) => {
-      const metadata = getFileMetadata(event.file?.upload_metadata);
-      const [fileId] = event.file?.id?.split('.') || [];
-
-      this.updateFileService
-        .execute({
-          data: {
-            filename: fileId as string,
-            mimetype: metadata?.filetype,
-            extension: metadata?.extension,
-            size: parseInt(metadata?.size, 10),
-            updatedBy: metadata?.accountId
-          },
-          where: {
-            app: metadata?.appId,
-            file: fileId
-          }
-        })
-        .catch((e) => this.logger.error(e.message));
-    });
-
-    this.tusServer.on(tus.EVENTS.EVENT_UPLOAD_COMPLETE, (event) => {
-      const metadata = getFileMetadata(event.file?.upload_metadata);
-      const [fileId] = event.file?.id?.split('.') || [];
-
-      this.activateFileService
-        .execute({
-          app: metadata?.appId,
-          file: fileId,
-          updatedBy: metadata?.accountId
-        })
-        .catch((e) => {
-          this.logger.error(e.message);
-          this.tusServer.datastore.remove(event.file.id);
-        });
-    });
   }
 
-  private fileNameFromRequest = (req) => {
+  private getFilenameFromUploadID(uploadID: string): string {
+    const [fileId] = uploadID?.split('.') || [];
+    return fileId;
+  }
+
+  private fileNameFromRequest(req) {
     try {
-      const metadata = getFileMetadata(req.header('Upload-Metadata'));
-      const [fileId] = req.params.file?.split('.') || [];
-      const fileName = metadata.extension
-        ? fileId + '.' + metadata.extension
-        : fileId;
+      const metadata = getFileMetadata(
+        req.header('Upload-Metadata') || req.header('upload-metadata')
+      );
+      const id = uuid();
+      const fileName = metadata.extension ? id + '.' + metadata.extension : id;
       return fileName;
     } catch (e) {
       this.logger.error(e.message);
       throw e;
     }
-  };
+  }
+
+  private async onUploadCreate(
+    req: IncomingMessage,
+    res: ServerResponse<IncomingMessage>,
+    upload: Upload
+  ): Promise<ServerResponse<IncomingMessage>> {
+    const metadata = getFileMetadata(upload?.metadata);
+    const filename = this.getFilenameFromUploadID(upload?.id);
+
+    const file = await this.createFileService.execute({
+      filename,
+      mimetype: metadata?.filetype,
+      extension: metadata?.extension,
+      size: parseInt(metadata?.size, 10),
+      app: metadata?.appId,
+      createdBy: metadata?.accountId
+    });
+
+    return res.setHeader('file-id', file.id);
+  }
+
+  private async onUploadFinish(
+    req: IncomingMessage,
+    res: ServerResponse<IncomingMessage>,
+    upload: Upload
+  ): Promise<ServerResponse<IncomingMessage>> {
+    const metadata = getFileMetadata(upload?.metadata);
+    const filename = this.getFilenameFromUploadID(upload?.id);
+    const file = await this.findFileByFilenameService.execute(filename);
+
+    this.activateFileService
+      .execute({
+        app: metadata?.appId,
+        file: file.id,
+        updatedBy: metadata?.accountId
+      })
+      .catch((e) => {
+        this.logger.error(e.message);
+        this.tusServer.datastore.remove(upload?.id);
+      });
+    return res.setHeader('file-id', file.id);
+  }
 }

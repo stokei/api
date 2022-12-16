@@ -147,7 +147,9 @@ export class AddItemToAppSubscriptionContractCommandHandler
     price: PriceModel;
   }) {
     try {
-      return this.findAppCurrentSubscriptionContractService.execute(app.id);
+      return await this.findAppCurrentSubscriptionContractService.execute(
+        app.id
+      );
     } catch (error) {
       const stripeSubscription =
         await this.createStripeSubscriptionService.execute({
@@ -171,7 +173,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
           type: price.type
         });
       const startAt = convertToISODateString(Date.now());
-      return this.activateSubscriptionContractService.execute({
+      return await this.activateSubscriptionContractService.execute({
         app: app.id,
         paymentMethod: app.paymentMethod,
         subscriptionContract: subscriptionCreated.id,
@@ -212,7 +214,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
           limit: 1
         }
       });
-
+    console.log(subscriptionContractItems);
     if (subscriptionContractItems?.totalCount > 0) {
       return subscriptionContractItems.items[0];
     } else {

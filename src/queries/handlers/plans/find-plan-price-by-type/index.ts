@@ -75,6 +75,9 @@ export class FindPlanPriceByTypeQueryHandler
           },
           parent: {
             equals: product.id
+          },
+          default: {
+            equals: true
           }
         }
       },

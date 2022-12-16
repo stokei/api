@@ -3,7 +3,7 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 import { v4 as uuid } from 'uuid';
 
 import { CreateImageUploadURLCommand } from '@/commands/implements/files/create-image-upload-url.command';
-import { LOCAL_UPLOAD_URL } from '@/constants/upload-url';
+import { LOCAL_UPLOAD_IMAGE_URL } from '@/constants/upload-url';
 import { IS_PRODUCTION } from '@/environments';
 import {
   DataNotFoundException,
@@ -33,7 +33,7 @@ export class CreateImageUploadURLCommandHandler
     let uploadURL;
     if (!IS_PRODUCTION) {
       filename = uuid();
-      uploadURL = LOCAL_UPLOAD_URL;
+      uploadURL = LOCAL_UPLOAD_IMAGE_URL;
     } else {
       const cloudflareImageUploadURL =
         await this.createCloudflareImageUploadURLService.execute();

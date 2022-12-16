@@ -13,7 +13,7 @@ import { SubscriptionContractItemModel } from '@/models/subscription-contract-it
 import { AddItemToAppSubscriptionContractService } from '@/services/apps/add-item-to-app-subscription-contract';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
-import { convertSecondsToMinutes } from '@/utils/convert-seconds-to-minutes';
+import { convertBytesToKilobytes } from '@/utils/convert-bytes-to-kilobytes';
 
 type AddFileToAppSubscriptionContractCommandKeys =
   keyof AddFileToAppSubscriptionContractCommand;
@@ -58,7 +58,7 @@ export class AddFileToAppSubscriptionContractCommandHandler
         app: file.app,
         price: filePrice.id,
         createdBy: data.createdBy,
-        quantity: convertSecondsToMinutes(file.duration)
+        quantity: convertBytesToKilobytes(file.size)
       });
     return subscriptionContractItem;
   }

@@ -9,7 +9,7 @@ import {
 export class PaymentMethodModelMock extends PaymentMethodModel {
   constructor(data?: Partial<IPaymentMethodModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       parent: data?.parent ?? 'anyParent',
       stripePaymentMethod:
         data?.stripePaymentMethod ?? 'anyExternalPaymentMethodId',

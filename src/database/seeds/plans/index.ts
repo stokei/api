@@ -19,6 +19,7 @@ import { CreatePlanService } from '@/services/plans/create-plan';
 import { FindAllPlansService } from '@/services/plans/find-all-plans';
 import { CreatePriceService } from '@/services/prices/create-price';
 import { CreateProductService } from '@/services/products/create-product';
+import { sleep } from '@/utils/sleep';
 
 interface PlanDataDTO {
   plan: CreatePlanDTO;
@@ -64,6 +65,7 @@ export class PlansSeeds
     const plansCreated = await Promise.all(
       plansToCreate?.map(async (planData) => {
         const plan = await this.createPlanService.execute(planData.plan);
+        await sleep(1500);
         const product = await this.createProductService.execute({
           app: plan.app,
           parent: plan.id,
@@ -72,11 +74,13 @@ export class PlansSeeds
           checkoutVisible: true,
           createdBy: plan.createdBy
         });
+        await sleep(1500);
         await this.createPriceService.execute({
           ...planData.price,
           nickname: product.name,
           parent: product.id
         });
+        await sleep(1500);
         return plan;
       })
     );
@@ -95,6 +99,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
+          nickname: 'Serviço de Administradores',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -125,6 +130,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
+          nickname: 'Serviço de Cursos',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -155,6 +161,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
+          nickname: 'Serviço de Domínios',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -185,6 +192,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
+          nickname: 'Serviço de Professores',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -215,6 +223,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
+          nickname: 'Serviço de Storage',
           billingScheme: BillingScheme.TIERED,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,

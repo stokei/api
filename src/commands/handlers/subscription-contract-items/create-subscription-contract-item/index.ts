@@ -68,6 +68,7 @@ export class CreateSubscriptionContractItemCommandHandler
     }
 
     const existsStripeSubscriptionItem = !!data?.stripeSubscriptionItem;
+
     let stripeSubscriptionItemId = data.stripeSubscriptionItem;
     if (!existsStripeSubscriptionItem) {
       const stripeSubscriptionItem =

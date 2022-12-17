@@ -6,7 +6,7 @@ import { CourseModel, ICourseModelData } from '@/models/course.model';
 export class CourseModelMock extends CourseModel {
   constructor(data?: Partial<ICourseModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       parent: data?.parent ?? 'anyParent',
       name: data?.name ?? 'Course Name',
       description: data?.description ?? null,

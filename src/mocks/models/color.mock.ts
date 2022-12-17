@@ -8,7 +8,7 @@ import { ColorModel, IColorModelData } from '@/models/color.model';
 export class ColorModelMock extends ColorModel {
   constructor(data?: Partial<IColorModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       parent: data?.parent ?? 'anyParent',
       themeMode: data?.themeMode ?? ThemeMode.LIGHT,
       type: data?.type ?? ColorType.PRIMARY,

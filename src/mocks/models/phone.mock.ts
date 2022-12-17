@@ -7,7 +7,7 @@ import { IPhoneModelData, PhoneModel } from '@/models/phone.model';
 export class PhoneModelMock extends PhoneModel {
   constructor(data?: Partial<IPhoneModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       parent: data?.parent ?? 'anyParent',
       fullnumber: data?.fullnumber ?? '1451999993333',
       countryCode: data?.countryCode ?? '14',

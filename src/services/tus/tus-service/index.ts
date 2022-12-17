@@ -83,7 +83,7 @@ export class TusService implements OnModuleInit {
       filename,
       mimetype: metadata?.filetype,
       extension: metadata?.extension,
-      size: parseInt(metadata?.size, 10),
+      size: upload?.size || parseInt(metadata?.size, 10),
       app: metadata?.appId,
       createdBy: metadata?.accountId
     });

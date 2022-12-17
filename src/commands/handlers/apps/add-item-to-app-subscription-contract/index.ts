@@ -25,6 +25,7 @@ import { FindAppCurrentSubscriptionContractService } from '@/services/apps/find-
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateStripeSubscriptionService } from '@/services/stripe/create-stripe-subscription';
+import { FindStripeSubscriptionByIdService } from '@/services/stripe/find-subscription-by-id';
 import { CreateSubscriptionContractItemService } from '@/services/subscription-contract-items/create-subscription-contract-item';
 import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
 import { UpdateSubscriptionContractItemService } from '@/services/subscription-contract-items/update-subscription-contract-item';
@@ -50,6 +51,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
     private readonly activateSubscriptionContractService: ActivateSubscriptionContractService,
     private readonly findAppCurrentSubscriptionContractService: FindAppCurrentSubscriptionContractService,
     private readonly findAllSubscriptionContractItemsService: FindAllSubscriptionContractItemsService,
+    private readonly findStripeSubscriptionByIdService: FindStripeSubscriptionByIdService,
     private readonly updateSubscriptionContractItemService: UpdateSubscriptionContractItemService
   ) {}
 
@@ -88,7 +90,10 @@ export class AddItemToAppSubscriptionContractCommandHandler
       throw new PriceNotFoundException();
     }
 
-    const appCurrentSubscriptionContract = await this.findOrCreateSubscription({
+    const {
+      subscriptionContract: appCurrentSubscriptionContract,
+      stripeSubscriptionContractItemId
+    } = await this.findOrCreateSubscription({
       app,
       price,
       createdBy: data.createdBy
@@ -97,11 +102,13 @@ export class AddItemToAppSubscriptionContractCommandHandler
     const subscriptionContractItem = await this.findOrCreateSubscriptionItem({
       app,
       price,
+      stripeSubscriptionContractItemId,
       appCurrentSubscriptionContract,
       createdBy: data.createdBy
     });
 
     if (price.isUsageBilling) {
+      // Verificar o UsageRecord -> Error: You cannot set the quantity for metered plans.
       await this.createUsageRecordService.execute({
         action: UsageRecordAction.INCREMENT,
         app: app.id,
@@ -137,7 +144,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
     });
   }
 
-  private async findOrCreateSubscription({
+  async findOrCreateSubscription({
     createdBy,
     app,
     price
@@ -147,9 +154,9 @@ export class AddItemToAppSubscriptionContractCommandHandler
     price: PriceModel;
   }) {
     try {
-      return await this.findAppCurrentSubscriptionContractService.execute(
-        app.id
-      );
+      const subscriptionContract =
+        await this.findAppCurrentSubscriptionContractService.execute(app.id);
+      return { subscriptionContract };
     } catch (error) {
       const stripeSubscription =
         await this.createStripeSubscriptionService.execute({
@@ -173,24 +180,31 @@ export class AddItemToAppSubscriptionContractCommandHandler
           type: price.type
         });
       const startAt = convertToISODateString(Date.now());
-      return await this.activateSubscriptionContractService.execute({
-        app: app.id,
-        paymentMethod: app.paymentMethod,
-        subscriptionContract: subscriptionCreated.id,
-        startAt,
-        endAt: convertToISODateString(addMonths(1, startAt)),
-        updatedBy: createdBy
-      });
+      const subscriptionContract =
+        await this.activateSubscriptionContractService.execute({
+          app: app.id,
+          paymentMethod: app.paymentMethod,
+          subscriptionContract: subscriptionCreated.id,
+          startAt,
+          endAt: convertToISODateString(addMonths(1, startAt)),
+          updatedBy: createdBy
+        });
+      return {
+        subscriptionContract,
+        stripeSubscriptionContractItemId: stripeSubscription.items.data[0].id
+      };
     }
   }
 
-  private async findOrCreateSubscriptionItem({
+  async findOrCreateSubscriptionItem({
     appCurrentSubscriptionContract,
+    stripeSubscriptionContractItemId,
     createdBy,
     app,
     price
   }: {
     appCurrentSubscriptionContract: SubscriptionContractModel;
+    stripeSubscriptionContractItemId?: string;
     createdBy: string;
     app: AppModel;
     price: PriceModel;
@@ -214,13 +228,29 @@ export class AddItemToAppSubscriptionContractCommandHandler
           limit: 1
         }
       });
-    console.log(subscriptionContractItems);
     if (subscriptionContractItems?.totalCount > 0) {
       return subscriptionContractItems.items[0];
     } else {
       const product = await this.findProductByIdService.execute(price.parent);
-      return this.createSubscriptionContractItemService.execute({
+      const existsStripeSubscriptionItem = !!stripeSubscriptionContractItemId;
+      if (!existsStripeSubscriptionItem) {
+        const stripeSubscription =
+          await this.findStripeSubscriptionByIdService.execute(
+            appCurrentSubscriptionContract.stripeSubscription,
+            app.stripeAccount
+          );
+        if (stripeSubscription) {
+          const stripeSubscriptionContractItem =
+            stripeSubscription.items.data.find(
+              (subscriptionItem) =>
+                subscriptionItem.price?.id === price.stripePrice
+            );
+          stripeSubscriptionContractItemId = stripeSubscriptionContractItem?.id;
+        }
+      }
+      return await this.createSubscriptionContractItemService.execute({
         app: app.id,
+        stripeSubscriptionItem: stripeSubscriptionContractItemId,
         parent: appCurrentSubscriptionContract.id,
         price: price.id,
         product: product.parent,

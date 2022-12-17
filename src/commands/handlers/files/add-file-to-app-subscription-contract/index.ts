@@ -52,6 +52,7 @@ export class AddFileToAppSubscriptionContractCommandHandler
     if (!filePrice) {
       throw new PriceNotFoundException();
     }
+    console.log(filePrice);
 
     const subscriptionContractItem =
       await this.addItemToAppSubscriptionContractService.execute({

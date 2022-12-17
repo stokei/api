@@ -29,6 +29,8 @@ export class CreateStripePriceService
           unit_amount: tier.amount
         })),
         recurring: data.type === PriceType.RECURRING && {
+          usage_type:
+            data.recurring?.usageType?.toLowerCase() as Stripe.PriceCreateParams.Recurring.UsageType,
           interval:
             data.recurring?.interval?.toLowerCase() as Stripe.PriceCreateParams.Recurring.Interval,
           interval_count: data.recurring?.intervalCount

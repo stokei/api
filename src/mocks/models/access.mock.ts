@@ -6,7 +6,7 @@ import { AccessModel, IAccessModelData } from '@/models/access.model';
 export class AccessModelMock extends AccessModel {
   constructor(data?: Partial<IAccessModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       expiresIn: data?.expiresIn ?? convertToISODateString(Date.now()),
       accessToken: data?.accessToken ?? 'myToken',
       refreshToken: data?.refreshToken ?? 'myRefreshToken',

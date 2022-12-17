@@ -14,7 +14,7 @@ export class AccountModelMock extends AccountModel {
   constructor(data?: Partial<IAccountModelData>) {
     const salt = data?.salt ?? generateSalt(PASSWORD_SECRET_KEY);
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       firstname: data?.firstname ?? 'Joao',
       lastname: data?.lastname ?? 'Sinners',
       username: data?.username ?? 'joaosinners',

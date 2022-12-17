@@ -6,7 +6,7 @@ import { IProductModelData, ProductModel } from '@/models/product.model';
 export class ProductModelMock extends ProductModel {
   constructor(data?: Partial<IProductModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       parent: data?.parent ?? 'anyParent',
       name: data?.name ?? 'Product Name',
       description: data?.description ?? null,

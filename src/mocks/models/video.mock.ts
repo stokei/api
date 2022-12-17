@@ -6,7 +6,7 @@ import { IVideoModelData, VideoModel } from '@/models/video.model';
 export class VideoModelMock extends VideoModel {
   constructor(data?: Partial<IVideoModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       name: data?.name ?? 'Video Name',
       slug: data?.slug ?? 'video-name',
       parent: data?.parent ?? 'anyParent',

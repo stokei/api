@@ -49,7 +49,7 @@ export class CreateFileCommandHandler
       filename: cleanValue(command?.filename),
       extension: cleanValue(command?.extension),
       mimetype: cleanValue(command?.mimetype),
-      size: cleanValueNumber(command?.size),
+      size: cleanValueNumber(parseInt(command?.size as any)),
       url: cleanValue(command?.url)
     });
   }

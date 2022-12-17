@@ -17,6 +17,7 @@ import { DeleteStripeSubscriptionItemService } from './delete-stripe-subscriptio
 import { FindStripeCheckoutSessionByIdService } from './find-checkout-session-by-id';
 import { FindStripeInvoiceByIdService } from './find-invoice-by-id';
 import { FindStripePaymentMethodByIdService } from './find-payment-method-by-id';
+import { FindStripeSubscriptionByIdService } from './find-subscription-by-id';
 import { UpdateStripeCustomerService } from './update-stripe-customer';
 import { UpdateStripeProductService } from './update-stripe-product';
 import { UpdateStripeSubscriptionItemService } from './update-stripe-subscription-item';
@@ -43,5 +44,6 @@ export const StripeServices = [
   CreateStripeSubscriptionItemService,
   UpdateStripeSubscriptionItemService,
   DeleteStripeSubscriptionItemService,
-  CreateStripeUsageRecordService
+  CreateStripeUsageRecordService,
+  FindStripeSubscriptionByIdService
 ];

@@ -8,7 +8,7 @@ import { IInvoiceModelData, InvoiceModel } from '@/models/invoice.model';
 export class InvoiceModelMock extends InvoiceModel {
   constructor(data?: Partial<IInvoiceModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       app: data?.app ?? 'apps.any',
       customer: data?.customer ?? 'accounts.any',
       subscription: data?.subscription ?? 'subscriptions.any',

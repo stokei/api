@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
 import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
-import { catchError, delay, map, mergeMap } from 'rxjs/operators';
+import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { AddFileToAppSubscriptionContractCommand } from '@/commands/implements/files/add-file-to-app-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
@@ -99,11 +99,7 @@ export class FilesSagas {
         ];
         return commands;
       }),
-      mergeMap((c) => c),
-      catchError((error, caught) => {
-        this.logger.error('Error --> ' + error?.message);
-        return caught;
-      })
+      mergeMap((c) => c)
     );
   };
 

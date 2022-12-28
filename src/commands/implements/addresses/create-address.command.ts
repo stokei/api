@@ -4,7 +4,6 @@ import { CreateAddressDTO } from '@/dtos/addresses/create-address.dto';
 
 export class CreateAddressCommand implements ICommand, CreateAddressDTO {
   parent: string;
-  default: boolean;
   street: string;
   complement?: string;
   number: string;
@@ -17,7 +16,6 @@ export class CreateAddressCommand implements ICommand, CreateAddressDTO {
 
   constructor(data: CreateAddressDTO) {
     this.parent = data.parent;
-    this.default = data.default;
     this.street = data.street;
     this.complement = data.complement;
     this.number = data.number;

@@ -1,7 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
-  WhereDataBooleanInput,
   WhereDataIntInput,
   WhereDataStringInput,
   WherePaginated
@@ -22,9 +21,6 @@ class WhereDataFindAllPricesDataInput implements WhereDataFindAllPricesDTO {
 
   @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
-
-  @Field(() => WhereDataBooleanInput, { nullable: true })
-  default?: WhereDataBooleanInput;
 
   @Field(() => PriceType, { nullable: true })
   type?: PriceType;

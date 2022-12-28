@@ -3,7 +3,6 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
-  cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
@@ -37,7 +36,6 @@ export class PriceMapper {
         id: prismaMapper.toWhereIds(operatorData.ids),
         parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         currency: prismaMapper.toWhereData(operatorData.currency),
-        default: prismaMapper.toWhereData(operatorData.default),
         type: operatorData.type,
         inventoryType: operatorData.inventoryType,
         billingScheme: operatorData.billingScheme,
@@ -75,7 +73,6 @@ export class PriceMapper {
         [operator]: {
           parent: cleanWhereDataSearch(operatorData.parent),
           currency: cleanWhereDataString(operatorData.currency),
-          default: cleanWhereDataBoolean(operatorData.default),
           type: operatorData.type,
           inventoryType: operatorData.inventoryType,
           billingScheme: operatorData.billingScheme,
@@ -102,7 +99,6 @@ export class PriceMapper {
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        default: cleanSortValue(query.orderBy?.default),
         amount: cleanSortValue(query.orderBy?.amount),
         currency: cleanSortValue(query.orderBy?.currency),
         fromAmount: cleanSortValue(query.orderBy?.fromAmount),

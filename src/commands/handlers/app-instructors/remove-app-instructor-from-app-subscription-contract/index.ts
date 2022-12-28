@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
@@ -22,6 +23,9 @@ export class RemoveAppInstructorFromAppSubscriptionContractCommandHandler
   implements
     ICommandHandler<RemoveAppInstructorFromAppSubscriptionContractCommand>
 {
+  private readonly logger = new Logger(
+    RemoveAppInstructorFromAppSubscriptionContractCommandHandler.name
+  );
   constructor(
     private readonly findAppInstructorByIdService: FindAppInstructorByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
@@ -32,36 +36,42 @@ export class RemoveAppInstructorFromAppSubscriptionContractCommandHandler
     command: RemoveAppInstructorFromAppSubscriptionContractCommand
   ): Promise<SubscriptionContractItemModel> {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.appInstructor) {
-      throw new ParamNotFoundException<RemoveAppInstructorFromAppSubscriptionContractCommandKeys>(
-        'appInstructor'
+
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
+      }
+      if (!data?.appInstructor) {
+        throw new ParamNotFoundException<RemoveAppInstructorFromAppSubscriptionContractCommandKeys>(
+          'appInstructor'
+        );
+      }
+
+      const appInstructor = await this.findAppInstructorByIdService.execute(
+        data.appInstructor
       );
-    }
+      if (!appInstructor) {
+        throw new AppInstructorNotFoundException();
+      }
 
-    const appInstructor = await this.findAppInstructorByIdService.execute(
-      data.appInstructor
-    );
-    if (!appInstructor) {
-      throw new AppInstructorNotFoundException();
-    }
+      const appInstructorPrice = await this.findPlanPriceByTypeService.execute(
+        PlanType.INSTRUCTOR
+      );
+      if (!appInstructorPrice) {
+        throw new PriceNotFoundException();
+      }
 
-    const appInstructorPrice = await this.findPlanPriceByTypeService.execute(
-      PlanType.INSTRUCTOR
-    );
-    if (!appInstructorPrice) {
-      throw new PriceNotFoundException();
+      const subscriptionContractItem =
+        await this.removeItemFromAppSubscriptionContractService.execute({
+          app: appInstructor.app,
+          price: appInstructorPrice.id,
+          removedBy: data.removedBy
+        });
+      return subscriptionContractItem;
+    } catch (error) {
+      this.logger.error(error?.message);
+      return;
     }
-
-    const subscriptionContractItem =
-      await this.removeItemFromAppSubscriptionContractService.execute({
-        app: appInstructor.app,
-        price: appInstructorPrice.id,
-        removedBy: data.removedBy
-      });
-    return subscriptionContractItem;
   }
 
   private clearData(

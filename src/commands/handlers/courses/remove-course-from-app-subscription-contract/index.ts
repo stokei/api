@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
@@ -21,6 +22,9 @@ type RemoveCourseFromAppSubscriptionContractCommandKeys =
 export class RemoveCourseFromAppSubscriptionContractCommandHandler
   implements ICommandHandler<RemoveCourseFromAppSubscriptionContractCommand>
 {
+  private readonly logger = new Logger(
+    RemoveCourseFromAppSubscriptionContractCommandHandler.name
+  );
   constructor(
     private readonly findCourseByIdService: FindCourseByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
@@ -31,34 +35,39 @@ export class RemoveCourseFromAppSubscriptionContractCommandHandler
     command: RemoveCourseFromAppSubscriptionContractCommand
   ): Promise<SubscriptionContractItemModel> {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.course) {
-      throw new ParamNotFoundException<RemoveCourseFromAppSubscriptionContractCommandKeys>(
-        'course'
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
+      }
+      if (!data?.course) {
+        throw new ParamNotFoundException<RemoveCourseFromAppSubscriptionContractCommandKeys>(
+          'course'
+        );
+      }
+
+      const course = await this.findCourseByIdService.execute(data.course);
+      if (!course) {
+        throw new CourseNotFoundException();
+      }
+
+      const coursePrice = await this.findPlanPriceByTypeService.execute(
+        PlanType.COURSE
       );
-    }
+      if (!coursePrice) {
+        throw new PriceNotFoundException();
+      }
 
-    const course = await this.findCourseByIdService.execute(data.course);
-    if (!course) {
-      throw new CourseNotFoundException();
+      const subscriptionContractItem =
+        await this.removeItemFromAppSubscriptionContractService.execute({
+          app: course.app,
+          price: coursePrice.id,
+          removedBy: data.removedBy
+        });
+      return subscriptionContractItem;
+    } catch (error) {
+      this.logger.error(error?.message);
+      return;
     }
-
-    const coursePrice = await this.findPlanPriceByTypeService.execute(
-      PlanType.COURSE
-    );
-    if (!coursePrice) {
-      throw new PriceNotFoundException();
-    }
-
-    const subscriptionContractItem =
-      await this.removeItemFromAppSubscriptionContractService.execute({
-        app: course.app,
-        price: coursePrice.id,
-        removedBy: data.removedBy
-      });
-    return subscriptionContractItem;
   }
 
   private clearData(

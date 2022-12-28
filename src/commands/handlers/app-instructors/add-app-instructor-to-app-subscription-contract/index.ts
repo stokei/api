@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
@@ -22,6 +23,9 @@ type AddAppInstructorToAppSubscriptionContractCommandKeys =
 export class AddAppInstructorToAppSubscriptionContractCommandHandler
   implements ICommandHandler<AddAppInstructorToAppSubscriptionContractCommand>
 {
+  private readonly logger = new Logger(
+    AddAppInstructorToAppSubscriptionContractCommandHandler.name
+  );
   constructor(
     private readonly findAppInstructorByIdService: FindAppInstructorByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
@@ -33,55 +37,61 @@ export class AddAppInstructorToAppSubscriptionContractCommandHandler
     command: AddAppInstructorToAppSubscriptionContractCommand
   ): Promise<SubscriptionContractItemModel> {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.appInstructor) {
-      throw new ParamNotFoundException<AddAppInstructorToAppSubscriptionContractCommandKeys>(
-        'appInstructor'
-      );
-    }
 
-    const appInstructor = await this.findAppInstructorByIdService.execute(
-      data.appInstructor
-    );
-    if (!appInstructor) {
-      throw new AppInstructorNotFoundException();
-    }
-
-    const appInstructors = await this.findAllAppInstructorsService.execute({
-      where: {
-        AND: {
-          instructor: {
-            equals: appInstructor.instructor
-          },
-          app: {
-            equals: appInstructor.app
-          }
-        }
-      },
-      page: {
-        limit: 1
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
       }
-    });
-    if (appInstructors?.totalCount <= 1) {
+      if (!data?.appInstructor) {
+        throw new ParamNotFoundException<AddAppInstructorToAppSubscriptionContractCommandKeys>(
+          'appInstructor'
+        );
+      }
+
+      const appInstructor = await this.findAppInstructorByIdService.execute(
+        data.appInstructor
+      );
+      if (!appInstructor) {
+        throw new AppInstructorNotFoundException();
+      }
+
+      const appInstructors = await this.findAllAppInstructorsService.execute({
+        where: {
+          AND: {
+            instructor: {
+              equals: appInstructor.instructor
+            },
+            app: {
+              equals: appInstructor.app
+            }
+          }
+        },
+        page: {
+          limit: 1
+        }
+      });
+      if (appInstructors?.totalCount <= 1) {
+        return;
+      }
+      const appInstructorPrice = await this.findPlanPriceByTypeService.execute(
+        PlanType.INSTRUCTOR
+      );
+      if (!appInstructorPrice) {
+        throw new PriceNotFoundException();
+      }
+
+      const subscriptionContractItem =
+        await this.addItemToAppSubscriptionContractService.execute({
+          app: appInstructor.app,
+          price: appInstructorPrice.id,
+          createdBy: data.createdBy,
+          quantity: 1
+        });
+      return subscriptionContractItem;
+    } catch (error) {
+      this.logger.error(error?.message);
       return;
     }
-    const appInstructorPrice = await this.findPlanPriceByTypeService.execute(
-      PlanType.INSTRUCTOR
-    );
-    if (!appInstructorPrice) {
-      throw new PriceNotFoundException();
-    }
-
-    const subscriptionContractItem =
-      await this.addItemToAppSubscriptionContractService.execute({
-        app: appInstructor.app,
-        price: appInstructorPrice.id,
-        createdBy: data.createdBy,
-        quantity: 1
-      });
-    return subscriptionContractItem;
   }
 
   private clearData(

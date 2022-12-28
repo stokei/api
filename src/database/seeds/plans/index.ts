@@ -65,7 +65,7 @@ export class PlansSeeds
     const plansCreated = await Promise.all(
       plansToCreate?.map(async (planData) => {
         const plan = await this.createPlanService.execute(planData.plan);
-        await sleep(1500);
+        await sleep(5000);
         const product = await this.createProductService.execute({
           app: plan.app,
           parent: plan.id,
@@ -74,13 +74,13 @@ export class PlansSeeds
           checkoutVisible: true,
           createdBy: plan.createdBy
         });
-        await sleep(1500);
+        await sleep(5000);
         await this.createPriceService.execute({
           ...planData.price,
           nickname: product.name,
           parent: product.id
         });
-        await sleep(1500);
+        await sleep(5000);
         return plan;
       })
     );
@@ -106,7 +106,6 @@ export class PlansSeeds
           tiersMode: undefined,
           type: PriceType.RECURRING,
           amount: getPlanPriceAmountByType(PlanType.ADMIN),
-          default: true,
           fromAmount: undefined,
           quantity: undefined,
           tiers: undefined,
@@ -137,7 +136,6 @@ export class PlansSeeds
           tiersMode: undefined,
           type: PriceType.RECURRING,
           amount: getPlanPriceAmountByType(PlanType.COURSE),
-          default: true,
           fromAmount: undefined,
           quantity: undefined,
           tiers: undefined,
@@ -168,7 +166,6 @@ export class PlansSeeds
           tiersMode: undefined,
           type: PriceType.RECURRING,
           amount: getPlanPriceAmountByType(PlanType.DOMAIN),
-          default: true,
           fromAmount: undefined,
           quantity: undefined,
           tiers: undefined,
@@ -199,7 +196,6 @@ export class PlansSeeds
           tiersMode: undefined,
           type: PriceType.RECURRING,
           amount: getPlanPriceAmountByType(PlanType.INSTRUCTOR),
-          default: true,
           fromAmount: undefined,
           quantity: undefined,
           tiers: undefined,
@@ -230,7 +226,6 @@ export class PlansSeeds
           tiersMode: TiersMode.VOLUME,
           type: PriceType.RECURRING,
           amount: undefined,
-          default: true,
           fromAmount: undefined,
           quantity: undefined,
           tiers: [

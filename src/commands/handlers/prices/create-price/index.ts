@@ -1,10 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import {
-  cleanObject,
-  cleanValue,
-  cleanValueBoolean,
-  cleanValueNumber
-} from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreatePriceCommand } from '@/commands/implements/prices/create-price.command';
 import { BillingScheme } from '@/enums/billing-scheme.enum';
@@ -140,7 +135,6 @@ export class CreatePriceCommandHandler
     return cleanObject({
       parent: cleanValue(command?.parent),
       nickname: cleanValue(command?.nickname),
-      default: cleanValueBoolean(command?.default),
       fromAmount: cleanValueNumber(command?.fromAmount),
       amount: cleanValueNumber(command?.amount),
       currency: cleanValue(command?.currency),

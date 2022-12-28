@@ -1,6 +1,5 @@
 export interface CreateAddressDTO {
   parent: string;
-  default?: boolean;
   street: string;
   complement?: string;
   number: string;

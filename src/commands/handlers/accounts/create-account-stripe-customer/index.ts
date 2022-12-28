@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
@@ -20,6 +21,9 @@ type CreateAccountStripeCustomerCommandKeys =
 export class CreateAccountStripeCustomerCommandHandler
   implements ICommandHandler<CreateAccountStripeCustomerCommand>
 {
+  private readonly logger = new Logger(
+    CreateAccountStripeCustomerCommandHandler.name
+  );
   constructor(
     private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findAppByIdService: FindAppByIdService,
@@ -29,50 +33,55 @@ export class CreateAccountStripeCustomerCommandHandler
 
   async execute(command: CreateAccountStripeCustomerCommand) {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.account) {
-      throw new ParamNotFoundException<CreateAccountStripeCustomerCommandKeys>(
-        'account'
-      );
-    }
-    if (!data?.app) {
-      throw new ParamNotFoundException<CreateAccountStripeCustomerCommandKeys>(
-        'app'
-      );
-    }
-
-    const account = await this.findAccountByIdService.execute(data.account);
-    if (!account) {
-      throw new AccountNotFoundException();
-    }
-
-    const app = await this.findAppByIdService.execute(data.app);
-    if (!app) {
-      throw new AppNotFoundException();
-    }
-
-    const customer = await this.createStripeCustomerService.execute({
-      name: account.fullname,
-      email: account.email,
-      parent: account.id,
-      stripeAccount: app.stripeAccount
-    });
-    if (!customer) {
-      throw new AccountNotFoundException();
-    }
-    const updated = await this.updateAccountService.execute({
-      data: {
-        stripeCustomer: customer.id,
-        updatedBy: data.createdBy
-      },
-      where: {
-        account: account.id,
-        app: app.id
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
       }
-    });
-    return updated;
+      if (!data?.account) {
+        throw new ParamNotFoundException<CreateAccountStripeCustomerCommandKeys>(
+          'account'
+        );
+      }
+      if (!data?.app) {
+        throw new ParamNotFoundException<CreateAccountStripeCustomerCommandKeys>(
+          'app'
+        );
+      }
+
+      const account = await this.findAccountByIdService.execute(data.account);
+      if (!account) {
+        throw new AccountNotFoundException();
+      }
+
+      const app = await this.findAppByIdService.execute(data.app);
+      if (!app) {
+        throw new AppNotFoundException();
+      }
+
+      const customer = await this.createStripeCustomerService.execute({
+        name: account.fullname,
+        email: account.email,
+        parent: account.id,
+        stripeAccount: app.stripeAccount
+      });
+      if (!customer) {
+        throw new AccountNotFoundException();
+      }
+      const updated = await this.updateAccountService.execute({
+        data: {
+          stripeCustomer: customer.id,
+          updatedBy: data.createdBy
+        },
+        where: {
+          account: account.id,
+          app: app.id
+        }
+      });
+      return updated;
+    } catch (error) {
+      this.logger.error(`Account(#${data.account}) -> ` + error?.message);
+      return;
+    }
   }
 
   private clearData(

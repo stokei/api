@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
@@ -22,6 +23,9 @@ type AddFileToAppSubscriptionContractCommandKeys =
 export class AddFileToAppSubscriptionContractCommandHandler
   implements ICommandHandler<AddFileToAppSubscriptionContractCommand>
 {
+  private readonly logger = new Logger(
+    AddFileToAppSubscriptionContractCommandHandler.name
+  );
   constructor(
     private readonly findFileByIdService: FindFileByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
@@ -32,36 +36,40 @@ export class AddFileToAppSubscriptionContractCommandHandler
     command: AddFileToAppSubscriptionContractCommand
   ): Promise<SubscriptionContractItemModel> {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.file) {
-      throw new ParamNotFoundException<AddFileToAppSubscriptionContractCommandKeys>(
-        'file'
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
+      }
+      if (!data?.file) {
+        throw new ParamNotFoundException<AddFileToAppSubscriptionContractCommandKeys>(
+          'file'
+        );
+      }
+
+      const file = await this.findFileByIdService.execute(data.file);
+      if (!file) {
+        throw new FileNotFoundException();
+      }
+
+      const filePrice = await this.findPlanPriceByTypeService.execute(
+        PlanType.STORAGE
       );
-    }
+      if (!filePrice) {
+        throw new PriceNotFoundException();
+      }
 
-    const file = await this.findFileByIdService.execute(data.file);
-    if (!file) {
-      throw new FileNotFoundException();
+      const subscriptionContractItem =
+        await this.addItemToAppSubscriptionContractService.execute({
+          app: file.app,
+          price: filePrice.id,
+          createdBy: data.createdBy,
+          quantity: convertBytesToKilobytes(file.size)
+        });
+      return subscriptionContractItem;
+    } catch (error) {
+      this.logger.error(error?.message);
+      return;
     }
-
-    const filePrice = await this.findPlanPriceByTypeService.execute(
-      PlanType.STORAGE
-    );
-    if (!filePrice) {
-      throw new PriceNotFoundException();
-    }
-    console.log(filePrice);
-
-    const subscriptionContractItem =
-      await this.addItemToAppSubscriptionContractService.execute({
-        app: file.app,
-        price: filePrice.id,
-        createdBy: data.createdBy,
-        quantity: convertBytesToKilobytes(file.size)
-      });
-    return subscriptionContractItem;
   }
 
   private clearData(

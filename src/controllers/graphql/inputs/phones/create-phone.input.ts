@@ -13,7 +13,4 @@ export class CreatePhoneInput {
 
   @Field()
   number: string;
-
-  @Field({ nullable: true })
-  default?: boolean;
 }

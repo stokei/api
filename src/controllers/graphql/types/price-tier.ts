@@ -1,4 +1,4 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
 import { Account } from './account';
 import { App } from './app';
@@ -11,10 +11,10 @@ export class PriceTier {
   @Field(() => String)
   parent: string;
 
-  @Field(() => Int)
+  @Field(() => Float)
   amount: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   upTo?: number;
 
   @Field(() => Boolean)

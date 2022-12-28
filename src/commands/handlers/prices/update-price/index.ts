@@ -2,7 +2,6 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import {
   cleanObject,
   cleanValue,
-  cleanValueBoolean,
   cleanValueNumber,
   splitServiceId
 } from '@stokei/nestjs';
@@ -72,7 +71,6 @@ export class UpdatePriceCommandHandler
         price: cleanValue(command?.where?.price)
       }),
       data: cleanObject({
-        default: cleanValueBoolean(command?.data?.default),
         fromPrice: cleanValueNumber(command?.data?.fromPrice),
         quantity: cleanValueNumber(command?.data?.quantity),
         updatedBy: cleanValue(command?.data?.updatedBy)

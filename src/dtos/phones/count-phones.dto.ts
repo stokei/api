@@ -11,7 +11,6 @@ export interface CountPhonesWhereDTO {
   number?: IWhereData<string>;
   validationCode?: IWhereData<string>;
   status?: PhoneStatus;
-  default?: IWhereData<boolean>;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

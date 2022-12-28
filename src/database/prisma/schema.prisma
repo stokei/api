@@ -325,11 +325,10 @@ model Price {
   app           String        @db.VarChar(255)
   parent        String        @db.VarChar(255)
   nickname      String?       @db.VarChar(255)
-  default       Boolean       @default(false)
   currency      String        @db.VarChar(255)
   stripePrice   String?       @map("stripe_price")
-  fromAmount    Int?          @map("from_amount")
-  amount        Int?          @map("amount")
+  fromAmount    Float?        @map("from_amount")
+  amount        Float?        @map("amount")
   type          PriceType
   billingScheme BillingScheme @map("billing_scheme")
   tiersMode     TiersMode?    @map("tiers_mode")
@@ -349,8 +348,8 @@ model PriceTier {
   id        String    @id @default(cuid())
   app       String    @db.VarChar(255)
   parent    String    @db.VarChar(255)
-  amount    Int
-  upTo      Int?
+  amount    Float
+  upTo      Float?
   infinite  Boolean   @default(true)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
@@ -532,8 +531,8 @@ model Invoice {
   paymentMethod  String?       @map("payment_method") @db.VarChar(255)
   currency       String        @db.VarChar(255)
   status         InvoiceStatus
-  totalAmount    Int           @map("total_amount")
-  subtotalAmount Int           @map("subtotal_amount")
+  totalAmount    Float         @map("total_amount")
+  subtotalAmount Float         @map("subtotal_amount")
   active         Boolean       @default(false)
   paidAt         DateTime?     @map("paid_at")
   canceledAt     DateTime?     @map("canceled_at")
@@ -588,7 +587,6 @@ model Address {
   id         String    @id @default(cuid())
   app        String    @db.VarChar(255)
   parent     String    @db.VarChar(255)
-  default    Boolean   @default(false)
   street     String    @db.VarChar(255)
   complement String?   @db.VarChar(255)
   number     String    @db.VarChar(255)
@@ -614,7 +612,6 @@ model Phone {
   number         String      @db.VarChar(255)
   validationCode String      @map("validation_code") @db.VarChar(255)
   status         PhoneStatus
-  default        Boolean     @default(false)
   active         Boolean     @default(false)
   activatedAt    DateTime?   @map("activated_at")
   validatedAt    DateTime?   @map("validated_at")

@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
@@ -21,6 +22,9 @@ type RemoveAppAdminFromAppSubscriptionContractCommandKeys =
 export class RemoveAppAdminFromAppSubscriptionContractCommandHandler
   implements ICommandHandler<RemoveAppAdminFromAppSubscriptionContractCommand>
 {
+  private readonly logger = new Logger(
+    RemoveAppAdminFromAppSubscriptionContractCommandHandler.name
+  );
   constructor(
     private readonly findAppAdminByIdService: FindAppAdminByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
@@ -31,6 +35,12 @@ export class RemoveAppAdminFromAppSubscriptionContractCommandHandler
     command: RemoveAppAdminFromAppSubscriptionContractCommand
   ): Promise<SubscriptionContractItemModel> {
     const data = this.clearData(command);
+
+    try {
+    } catch (error) {
+      this.logger.error(error?.message);
+      return;
+    }
     if (!data) {
       throw new DataNotFoundException();
     }

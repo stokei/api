@@ -16,7 +16,6 @@ export interface WhereDataFindAllPhonesDTO {
   number?: IWhereData<string>;
   validationCode?: IWhereData<string>;
   status?: PhoneStatus;
-  default?: IWhereData<boolean>;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
@@ -29,7 +28,6 @@ export interface OrderByDataFindAllPhonesDTO {
   areaCode?: IOrderBy;
   number?: IOrderBy;
   status?: IOrderBy;
-  default?: IOrderBy;
   active?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;

@@ -36,9 +36,6 @@ class WhereDataFindAllPhonesDataInput implements WhereDataFindAllPhonesDTO {
   status?: PhoneStatus;
 
   @Field(() => WhereDataBooleanInput, { nullable: true })
-  default?: WhereDataBooleanInput;
-
-  @Field(() => WhereDataBooleanInput, { nullable: true })
   active?: WhereDataBooleanInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })

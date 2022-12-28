@@ -15,7 +15,6 @@ export interface WhereDataFindAllPricesDTO {
   app?: IWhereData;
   currency?: IWhereData;
   parent?: IWhereDataSearch;
-  default?: IWhereData<boolean>;
   type?: PriceType;
   inventoryType?: InventoryType;
   billingScheme?: BillingScheme;
@@ -26,7 +25,6 @@ export interface WhereDataFindAllPricesDTO {
 export type IKeysWhereDataFindAllPricesDTO = keyof WhereDataFindAllPricesDTO;
 
 export interface OrderByDataFindAllPricesDTO {
-  default?: IOrderBy;
   fromAmount?: IOrderBy;
   currency?: IOrderBy;
   amount?: IOrderBy;

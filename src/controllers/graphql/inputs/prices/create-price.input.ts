@@ -12,9 +12,6 @@ export class CreatePriceInput {
   @Field(() => String)
   parent: string;
 
-  @Field(() => Boolean, { nullable: true })
-  default?: boolean;
-
   @Field(() => Int, { nullable: true })
   fromAmount?: number;
 

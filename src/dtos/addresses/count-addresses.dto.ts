@@ -4,7 +4,6 @@ export interface CountAddressesWhereDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
-  default?: IWhereData<boolean>;
   street?: IWhereDataSearch;
   complement?: IWhereDataSearch;
   city?: IWhereDataSearch;

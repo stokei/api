@@ -1,4 +1,4 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 
 import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
 import { PriceType } from '@/controllers/graphql/enums/price-type.enum';
@@ -23,10 +23,10 @@ export class Price {
   @Field(() => String)
   purchaseUrl: string;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   fromAmount?: number;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   amount?: number;
 
   @Field(() => PriceType)

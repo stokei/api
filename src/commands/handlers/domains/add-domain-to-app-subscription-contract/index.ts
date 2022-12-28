@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
@@ -21,6 +22,9 @@ type AddDomainToAppSubscriptionContractCommandKeys =
 export class AddDomainToAppSubscriptionContractCommandHandler
   implements ICommandHandler<AddDomainToAppSubscriptionContractCommand>
 {
+  private readonly logger = new Logger(
+    AddDomainToAppSubscriptionContractCommandHandler.name
+  );
   constructor(
     private readonly findDomainByIdService: FindDomainByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
@@ -31,35 +35,40 @@ export class AddDomainToAppSubscriptionContractCommandHandler
     command: AddDomainToAppSubscriptionContractCommand
   ): Promise<SubscriptionContractItemModel> {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.domain) {
-      throw new ParamNotFoundException<AddDomainToAppSubscriptionContractCommandKeys>(
-        'domain'
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
+      }
+      if (!data?.domain) {
+        throw new ParamNotFoundException<AddDomainToAppSubscriptionContractCommandKeys>(
+          'domain'
+        );
+      }
+
+      const domain = await this.findDomainByIdService.execute(data.domain);
+      if (!domain) {
+        throw new DomainNotFoundException();
+      }
+
+      const domainPrice = await this.findPlanPriceByTypeService.execute(
+        PlanType.DOMAIN
       );
-    }
+      if (!domainPrice) {
+        throw new PriceNotFoundException();
+      }
 
-    const domain = await this.findDomainByIdService.execute(data.domain);
-    if (!domain) {
-      throw new DomainNotFoundException();
+      const subscriptionContractItem =
+        await this.addItemToAppSubscriptionContractService.execute({
+          app: domain.app,
+          price: domainPrice.id,
+          createdBy: data.createdBy,
+          quantity: 1
+        });
+      return subscriptionContractItem;
+    } catch (error) {
+      this.logger.error(error?.message);
+      return;
     }
-
-    const domainPrice = await this.findPlanPriceByTypeService.execute(
-      PlanType.DOMAIN
-    );
-    if (!domainPrice) {
-      throw new PriceNotFoundException();
-    }
-
-    const subscriptionContractItem =
-      await this.addItemToAppSubscriptionContractService.execute({
-        app: domain.app,
-        price: domainPrice.id,
-        createdBy: data.createdBy,
-        quantity: 1
-      });
-    return subscriptionContractItem;
   }
 
   private clearData(

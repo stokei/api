@@ -1,4 +1,4 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
 import { InvoiceStatus } from '@/controllers/graphql/enums/invoice-status.enum';
 
@@ -28,10 +28,10 @@ export class Invoice {
   @Field(() => InvoiceStatus)
   status: InvoiceStatus;
 
-  @Field(() => Int)
+  @Field(() => Float)
   totalAmount: number;
 
-  @Field(() => Int)
+  @Field(() => Float)
   subtotalAmount: number;
 
   @Field(() => Boolean)

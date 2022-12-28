@@ -2,6 +2,7 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
+import { AppConfig } from '@/common/decorators/app-config.decorator';
 import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
 import { CreateAppInstructorInput } from '@/controllers/graphql/inputs/app-instructors/create-app-instructor.input';
@@ -14,6 +15,10 @@ export class CreateAppInstructorResolver {
     private readonly createAppInstructorService: CreateAppInstructorService
   ) {}
 
+  @AppConfig({
+    isAllowedToUsePlan: true,
+    isRequired: true
+  })
   @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => AppInstructor)
   async createAppInstructor(

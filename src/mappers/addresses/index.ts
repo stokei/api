@@ -3,7 +3,6 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
-  cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IOperator,
@@ -36,7 +35,6 @@ export class AddressMapper {
         app: prismaMapper.toWhereData(operatorData.app),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        default: prismaMapper.toWhereData(operatorData.default),
         street: prismaMapper.toWhereDataSearch(operatorData.street),
         complement: prismaMapper.toWhereDataSearch(operatorData.complement),
         city: prismaMapper.toWhereDataSearch(operatorData.city),
@@ -72,7 +70,6 @@ export class AddressMapper {
       return {
         [operator]: {
           parent: cleanWhereDataSearch(operatorData.parent),
-          default: cleanWhereDataBoolean(operatorData.default),
           street: cleanWhereDataSearch(operatorData.street),
           complement: cleanWhereDataSearch(operatorData.complement),
           city: cleanWhereDataSearch(operatorData.city),

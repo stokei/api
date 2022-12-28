@@ -30,7 +30,6 @@ export const createApp = async () => {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
-
   app.listen(SERVER_PORT, SERVER_HOST, async () => {
     Logger.log(
       `API(${StokeiApiServerInfo.NAME}) started at ${await app.getUrl()}!`

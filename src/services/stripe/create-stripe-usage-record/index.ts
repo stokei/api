@@ -25,8 +25,7 @@ export class CreateStripeUsageRecordService
         quantity: data.quantity
       },
       {
-        stripeAccount: data.stripeAccount,
-        idempotencyKey: data.subscriptionItem
+        stripeAccount: data.stripeAccount
       }
     );
   }

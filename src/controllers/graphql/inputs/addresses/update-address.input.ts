@@ -5,9 +5,6 @@ export class UpdateDataAddressInput {
   @Field({ nullable: true })
   parent?: string;
 
-  @Field(() => Boolean, { nullable: true })
-  default?: boolean;
-
   @Field({ nullable: true })
   street?: string;
 

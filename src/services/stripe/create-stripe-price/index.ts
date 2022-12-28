@@ -19,14 +19,16 @@ export class CreateStripePriceService
         currency: data.currency,
         product: data.stripeProduct,
         nickname: data.nickname,
-        unit_amount: data.amount,
+        ...(data.amount > 0 && {
+          unit_amount_decimal: data.amount + ''
+        }),
         ...(data.tiersMode && { tiers_mode: data.tiersMode }),
         ...(data.billingScheme && {
           billing_scheme: data.billingScheme
         }),
         tiers: data.tiers?.map((tier) => ({
           up_to: tier.infinite ? 'inf' : tier.upTo,
-          unit_amount: tier.amount
+          unit_amount_decimal: tier.amount + ''
         })),
         recurring: data.type === PriceType.RECURRING && {
           usage_type:

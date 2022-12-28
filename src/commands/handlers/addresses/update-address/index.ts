@@ -1,10 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import {
-  cleanObject,
-  cleanValue,
-  cleanValueBoolean,
-  splitServiceId
-} from '@stokei/nestjs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import { UpdateAddressCommand } from '@/commands/implements/addresses/update-address.command';
 import {
@@ -74,7 +69,6 @@ export class UpdateAddressCommandHandler
       }),
       data: cleanObject({
         updatedBy: cleanValue(command?.data?.updatedBy),
-        default: cleanValueBoolean(command?.data?.default),
         street: cleanValue(command?.data?.street),
         complement: cleanValue(command?.data?.complement),
         number: cleanValue(command?.data?.number),

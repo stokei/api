@@ -10,7 +10,6 @@ export interface CountPricesWhereDTO {
   app?: IWhereData;
   parent?: IWhereDataSearch;
   currency?: IWhereData;
-  default?: IWhereData<boolean>;
   type?: PriceType;
   inventoryType?: InventoryType;
   billingScheme?: BillingScheme;

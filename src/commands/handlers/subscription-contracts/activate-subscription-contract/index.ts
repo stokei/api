@@ -85,7 +85,7 @@ export class ActivateSubscriptionContractCommandHandler
     subscriptionContractModel.activatedSubscriptionContract();
     subscriptionContractModel.commit();
 
-    return subscriptionContractActivated;
+    return subscriptionContractActive;
   }
 
   private clearData(

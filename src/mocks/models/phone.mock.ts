@@ -15,7 +15,6 @@ export class PhoneModelMock extends PhoneModel {
       number: data?.number ?? '999993333',
       validationCode: data?.validationCode ?? null,
       status: data?.status ?? PhoneStatus.ACTIVE,
-      default: data?.default ?? false,
       active: data?.active ?? true,
       activatedAt: data?.activatedAt ?? null,
       validatedAt: data?.validatedAt ?? null,

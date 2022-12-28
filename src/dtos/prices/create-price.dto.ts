@@ -10,7 +10,6 @@ export type CreatePriceTiersDTO = Omit<CreatePriceTierDTO, 'parent'>[];
 export interface CreatePriceDTO {
   parent: string;
   nickname?: string;
-  default?: boolean;
   fromAmount?: number;
   tiers?: CreatePriceTiersDTO;
   amount?: number;

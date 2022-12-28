@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, cleanValueBoolean } from '@stokei/nestjs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateAddressCommand } from '@/commands/implements/addresses/create-address.command';
 import {
@@ -68,7 +68,6 @@ export class CreateAddressCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       parent: cleanValue(command?.parent),
-      default: cleanValueBoolean(command?.default),
       street: cleanValue(command?.street),
       complement: cleanValue(command?.complement),
       number: cleanValue(command?.number),

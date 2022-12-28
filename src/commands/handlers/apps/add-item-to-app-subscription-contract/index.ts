@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   addMonths,
@@ -40,6 +41,9 @@ type AddItemToAppSubscriptionContractCommandKeys =
 export class AddItemToAppSubscriptionContractCommandHandler
   implements ICommandHandler<AddItemToAppSubscriptionContractCommand>
 {
+  private readonly logger = new Logger(
+    AddItemToAppSubscriptionContractCommandHandler.name
+  );
   constructor(
     private readonly findAppByIdService: FindAppByIdService,
     private readonly createSubscriptionContractService: CreateSubscriptionContractService,
@@ -59,78 +63,84 @@ export class AddItemToAppSubscriptionContractCommandHandler
     command: AddItemToAppSubscriptionContractCommand
   ): Promise<SubscriptionContractItemModel> {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.app) {
-      throw new ParamNotFoundException<AddItemToAppSubscriptionContractCommandKeys>(
-        'app'
-      );
-    }
-    if (!data?.price) {
-      throw new ParamNotFoundException<AddItemToAppSubscriptionContractCommandKeys>(
-        'price'
-      );
-    }
-    if (data?.quantity < 1) {
-      throw new ParamNotFoundException<AddItemToAppSubscriptionContractCommandKeys>(
-        'quantity'
-      );
-    }
-
-    const app = await this.findAppByIdService.execute(data.app);
-    if (!app) {
-      throw new AppNotFoundException();
-    }
-    if (!app.isAllowedToUsePlan) {
-      throw new AppUnauthorizedException();
-    }
-    const price = await this.findPriceByIdService.execute(data.price);
-    if (!price) {
-      throw new PriceNotFoundException();
-    }
-
-    const {
-      subscriptionContract: appCurrentSubscriptionContract,
-      stripeSubscriptionContractItemId
-    } = await this.findOrCreateSubscription({
-      app,
-      price,
-      createdBy: data.createdBy
-    });
-
-    const subscriptionContractItem = await this.findOrCreateSubscriptionItem({
-      app,
-      price,
-      stripeSubscriptionContractItemId,
-      appCurrentSubscriptionContract,
-      createdBy: data.createdBy
-    });
-
-    if (price.isUsageBilling) {
-      // Verificar o UsageRecord -> Error: You cannot set the quantity for metered plans.
-      await this.createUsageRecordService.execute({
-        action: UsageRecordAction.INCREMENT,
-        app: app.id,
-        createdBy: data.createdBy,
-        parent: subscriptionContractItem.id,
-        quantity: data.quantity
-      });
-      return subscriptionContractItem;
-    }
-
-    const incrementedSubscriptionContractItemQuantity =
-      subscriptionContractItem.quantity + data.quantity;
-    return this.updateSubscriptionContractItemService.execute({
-      data: {
-        quantity: incrementedSubscriptionContractItemQuantity,
-        updatedBy: data.createdBy
-      },
-      where: {
-        app: app.id,
-        subscriptionContractItem: subscriptionContractItem.id
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
       }
-    });
+      if (!data?.app) {
+        throw new ParamNotFoundException<AddItemToAppSubscriptionContractCommandKeys>(
+          'app'
+        );
+      }
+      if (!data?.price) {
+        throw new ParamNotFoundException<AddItemToAppSubscriptionContractCommandKeys>(
+          'price'
+        );
+      }
+      if (data?.quantity < 1) {
+        throw new ParamNotFoundException<AddItemToAppSubscriptionContractCommandKeys>(
+          'quantity'
+        );
+      }
+
+      const app = await this.findAppByIdService.execute(data.app);
+      if (!app) {
+        throw new AppNotFoundException();
+      }
+      if (!app.isAllowedToUsePlan) {
+        throw new AppUnauthorizedException();
+      }
+      const price = await this.findPriceByIdService.execute(data.price);
+      if (!price) {
+        throw new PriceNotFoundException();
+      }
+
+      const {
+        subscriptionContract: appCurrentSubscriptionContract,
+        stripeSubscriptionContractItemId
+      } = await this.findOrCreateSubscription({
+        app,
+        price,
+        quantity: data?.quantity,
+        createdBy: data.createdBy
+      });
+
+      const subscriptionContractItem = await this.findOrCreateSubscriptionItem({
+        app,
+        price,
+        stripeSubscriptionContractItemId,
+        appCurrentSubscriptionContract,
+        quantity: data?.quantity,
+        createdBy: data.createdBy
+      });
+
+      if (price.isUsageBilling) {
+        await this.createUsageRecordService.execute({
+          action: UsageRecordAction.INCREMENT,
+          app: app.id,
+          createdBy: data.createdBy,
+          parent: subscriptionContractItem.id,
+          quantity: data.quantity
+        });
+        return subscriptionContractItem;
+      }
+
+      const incrementedSubscriptionContractItemQuantity =
+        subscriptionContractItem.quantity + data.quantity;
+      return this.updateSubscriptionContractItemService.execute({
+        data: {
+          quantity: incrementedSubscriptionContractItemQuantity,
+          updatedBy: data.createdBy
+        },
+        where: {
+          app: app.id,
+          subscriptionContractItem: subscriptionContractItem.id
+        }
+      });
+    } catch (error) {
+      this.logger.error(`App(#${data.app}) -> ` + error?.message);
+      return;
+    }
   }
 
   private clearData(
@@ -147,9 +157,11 @@ export class AddItemToAppSubscriptionContractCommandHandler
   async findOrCreateSubscription({
     createdBy,
     app,
-    price
+    price,
+    quantity
   }: {
     createdBy: string;
+    quantity: number;
     app: AppModel;
     price: PriceModel;
   }) {
@@ -166,7 +178,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
           prices: [
             {
               price: price.stripePrice,
-              quantity: 1
+              ...(!price.isUsageBilling && { quantity })
             }
           ]
         });
@@ -189,6 +201,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
           endAt: convertToISODateString(addMonths(1, startAt)),
           updatedBy: createdBy
         });
+
       return {
         subscriptionContract,
         stripeSubscriptionContractItemId: stripeSubscription.items.data[0].id
@@ -201,11 +214,13 @@ export class AddItemToAppSubscriptionContractCommandHandler
     stripeSubscriptionContractItemId,
     createdBy,
     app,
+    quantity,
     price
   }: {
     appCurrentSubscriptionContract: SubscriptionContractModel;
     stripeSubscriptionContractItemId?: string;
     createdBy: string;
+    quantity: number;
     app: AppModel;
     price: PriceModel;
   }) {
@@ -234,11 +249,13 @@ export class AddItemToAppSubscriptionContractCommandHandler
       const product = await this.findProductByIdService.execute(price.parent);
       const existsStripeSubscriptionItem = !!stripeSubscriptionContractItemId;
       if (!existsStripeSubscriptionItem) {
+        console.log({ response: 'ESTOU ANTES DO FIND' });
         const stripeSubscription =
           await this.findStripeSubscriptionByIdService.execute(
             appCurrentSubscriptionContract.stripeSubscription,
             app.stripeAccount
           );
+        console.log({ response: 'ESTOU DEPOIS DO FIND', stripeSubscription });
         if (stripeSubscription) {
           const stripeSubscriptionContractItem =
             stripeSubscription.items.data.find(
@@ -254,7 +271,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
         parent: appCurrentSubscriptionContract.id,
         price: price.id,
         product: product.parent,
-        quantity: 1,
+        quantity,
         recurring: null,
         createdBy
       });

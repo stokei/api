@@ -13,8 +13,10 @@ export class FindStripeSubscriptionByIdService
     subscription: string,
     stripeAccount?: string
   ): Promise<Stripe.Response<Stripe.Subscription>> {
-    return stripeClient.subscriptions.retrieve(subscription, {
-      stripeAccount
+    return await stripeClient.subscriptions.retrieve(subscription, {
+      stripeAccount,
+      maxNetworkRetries: 0,
+      timeout: 5000
     });
   }
 }

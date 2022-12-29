@@ -58,9 +58,6 @@ export class AddAppInstructorToAppSubscriptionContractCommandHandler
       const appInstructors = await this.findAllAppInstructorsService.execute({
         where: {
           AND: {
-            instructor: {
-              equals: appInstructor.instructor
-            },
             app: {
               equals: appInstructor.app
             }

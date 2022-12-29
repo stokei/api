@@ -59,9 +59,6 @@ export class AddAppAdminToAppSubscriptionContractCommandHandler
     const appAdmins = await this.findAllAppAdminsService.execute({
       where: {
         AND: {
-          admin: {
-            equals: appAdmin.admin
-          },
           app: {
             equals: appAdmin.app
           }

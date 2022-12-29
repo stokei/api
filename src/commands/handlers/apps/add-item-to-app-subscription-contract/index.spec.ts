@@ -17,6 +17,7 @@ import { FindAppCurrentSubscriptionContractService } from '@/services/apps/find-
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateStripeSubscriptionService } from '@/services/stripe/create-stripe-subscription';
+import { FindStripeSubscriptionByIdService } from '@/services/stripe/find-subscription-by-id';
 import { CreateSubscriptionContractItemService } from '@/services/subscription-contract-items/create-subscription-contract-item';
 import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
 import { UpdateSubscriptionContractItemService } from '@/services/subscription-contract-items/update-subscription-contract-item';
@@ -30,6 +31,7 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
   let addItemToAppSubscriptionContractCommandHandler: AddItemToAppSubscriptionContractCommandHandler;
   let activateSubscriptionContractService: ActivateSubscriptionContractService;
   let findAppByIdService: FindAppByIdService;
+  let findStripeSubscriptionByIdService: FindStripeSubscriptionByIdService;
   let createSubscriptionContractService: CreateSubscriptionContractService;
   let createSubscriptionContractItemService: CreateSubscriptionContractItemService;
   let createStripeSubscriptionService: CreateStripeSubscriptionService;
@@ -68,6 +70,12 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
         },
         {
           provide: CreateSubscriptionContractItemService,
+          useValue: {
+            execute: jest.fn()
+          }
+        },
+        {
+          provide: FindStripeSubscriptionByIdService,
           useValue: {
             execute: jest.fn()
           }
@@ -128,6 +136,10 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
         AddItemToAppSubscriptionContractCommandHandler
       );
     findAppByIdService = moduleRef.get<FindAppByIdService>(FindAppByIdService);
+    findStripeSubscriptionByIdService =
+      moduleRef.get<FindStripeSubscriptionByIdService>(
+        FindStripeSubscriptionByIdService
+      );
     activateSubscriptionContractService =
       moduleRef.get<ActivateSubscriptionContractService>(
         ActivateSubscriptionContractService
@@ -171,6 +183,7 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
   it('should be defined', () => {
     expect(addItemToAppSubscriptionContractCommandHandler).toBeDefined();
     expect(findAppByIdService).toBeDefined();
+    expect(findStripeSubscriptionByIdService).toBeDefined();
     expect(activateSubscriptionContractService).toBeDefined();
     expect(createSubscriptionContractService).toBeDefined();
     expect(createSubscriptionContractItemService).toBeDefined();
@@ -212,7 +225,7 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
           addItemToAppSubscriptionContractCommandHandler,
           'findOrCreateSubscription'
         )
-        .mockResolvedValue(subscriptionContract);
+        .mockResolvedValue({ subscriptionContract });
       jest
         .spyOn(
           addItemToAppSubscriptionContractCommandHandler,
@@ -254,6 +267,7 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
       const quantityToAdd = 100;
       const expectSubscriptionContractItemResponse =
         new SubscriptionContractItemModelMock({
+          id: subscriptionContractItem.id,
           parent: subscriptionContract.id,
           app: app.id,
           quantity: subscriptionContractItem.quantity
@@ -265,7 +279,7 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
           addItemToAppSubscriptionContractCommandHandler,
           'findOrCreateSubscription'
         )
-        .mockResolvedValue(subscriptionContract);
+        .mockResolvedValue({ subscriptionContract });
       jest
         .spyOn(
           addItemToAppSubscriptionContractCommandHandler,
@@ -309,13 +323,17 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
           {
             app: app,
             price: price,
+            quantity: 1,
             createdBy: account.id
           }
         )
-      ).toStrictEqual(expectSubscriptionContractResponse);
+      ).toStrictEqual({
+        subscriptionContract: expectSubscriptionContractResponse
+      });
     });
     it('should create a new subscription when app has no subscription', async () => {
       const stripeSubscription = 'stripeSubscriptionId';
+      const stripeSubscriptionItemId = 'stripeSubscriptionItemId';
       const price = new PriceModelMock({
         parent: product.id,
         app: app.id,
@@ -342,6 +360,17 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
         .spyOn(createSubscriptionContractService, 'execute')
         .mockResolvedValue(subscriptionContractCreated);
       jest
+        .spyOn(findStripeSubscriptionByIdService, 'execute')
+        .mockResolvedValue({
+          items: {
+            data: [
+              {
+                id: stripeSubscriptionItemId
+              }
+            ]
+          }
+        } as any);
+      jest
         .spyOn(activateSubscriptionContractService, 'execute')
         .mockResolvedValue(expectSubscriptionContractResponse);
       jest
@@ -353,10 +382,14 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
           {
             app: app,
             price: price,
+            quantity: 1,
             createdBy: account.id
           }
         )
-      ).toStrictEqual(expectSubscriptionContractResponse);
+      ).toStrictEqual({
+        subscriptionContract: expectSubscriptionContractResponse,
+        stripeSubscriptionContractItemId: stripeSubscriptionItemId
+      });
     });
   });
   describe('findOrCreateSubscriptionItem', () => {
@@ -390,6 +423,7 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
             appCurrentSubscriptionContract: subscriptionContract,
             app: app,
             price: price,
+            quantity: 1,
             createdBy: account.id
           }
         )
@@ -431,6 +465,7 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
             appCurrentSubscriptionContract: subscriptionContract,
             app: app,
             price: price,
+            quantity: 1,
             createdBy: account.id
           }
         )

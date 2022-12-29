@@ -249,13 +249,12 @@ export class AddItemToAppSubscriptionContractCommandHandler
       const product = await this.findProductByIdService.execute(price.parent);
       const existsStripeSubscriptionItem = !!stripeSubscriptionContractItemId;
       if (!existsStripeSubscriptionItem) {
-        console.log({ response: 'ESTOU ANTES DO FIND' });
         const stripeSubscription =
           await this.findStripeSubscriptionByIdService.execute(
             appCurrentSubscriptionContract.stripeSubscription,
             app.stripeAccount
           );
-        console.log({ response: 'ESTOU DEPOIS DO FIND', stripeSubscription });
+        console.log({ stripeSubscription });
         if (stripeSubscription) {
           const stripeSubscriptionContractItem =
             stripeSubscription.items.data.find(

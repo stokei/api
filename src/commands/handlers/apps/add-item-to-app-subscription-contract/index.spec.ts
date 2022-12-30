@@ -354,28 +354,24 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
         });
 
       jest.spyOn(createStripeSubscriptionService, 'execute').mockResolvedValue({
-        id: expectSubscriptionContractResponse.stripeSubscription
+        id: expectSubscriptionContractResponse.stripeSubscription,
+        items: {
+          data: [
+            {
+              id: stripeSubscriptionItemId
+            }
+          ]
+        }
       } as any);
       jest
         .spyOn(createSubscriptionContractService, 'execute')
         .mockResolvedValue(subscriptionContractCreated);
       jest
-        .spyOn(findStripeSubscriptionByIdService, 'execute')
-        .mockResolvedValue({
-          items: {
-            data: [
-              {
-                id: stripeSubscriptionItemId
-              }
-            ]
-          }
-        } as any);
+        .spyOn(findAppCurrentSubscriptionContractService, 'execute')
+        .mockRejectedValue(new SubscriptionContractNotFoundException());
       jest
         .spyOn(activateSubscriptionContractService, 'execute')
         .mockResolvedValue(expectSubscriptionContractResponse);
-      jest
-        .spyOn(findAppCurrentSubscriptionContractService, 'execute')
-        .mockRejectedValue(new SubscriptionContractNotFoundException());
 
       expect(
         await addItemToAppSubscriptionContractCommandHandler.findOrCreateSubscription(

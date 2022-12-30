@@ -254,7 +254,6 @@ export class AddItemToAppSubscriptionContractCommandHandler
             appCurrentSubscriptionContract.stripeSubscription,
             app.stripeAccount
           );
-        console.log({ stripeSubscription });
         if (stripeSubscription) {
           const stripeSubscriptionContractItem =
             stripeSubscription.items.data.find(

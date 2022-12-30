@@ -7,8 +7,7 @@ import {
   AppUnauthorizedException,
   DataNotFoundException,
   ParamNotFoundException,
-  StripeAccountNotFoundException,
-  SubscriptionContractNotFoundException
+  StripeAccountNotFoundException
 } from '@/errors';
 import { LinkMapper } from '@/mappers/links';
 import { DomainModel } from '@/models/domain.model';
@@ -54,11 +53,6 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
     }
     if (app.isStokei) {
       throw new AppUnauthorizedException();
-    }
-    const appSubscriptionContract =
-      await this.findAppCurrentSubscriptionContractService.execute(app.id);
-    if (!appSubscriptionContract) {
-      throw new SubscriptionContractNotFoundException();
     }
 
     let stripeAccount = app.stripeAccount;

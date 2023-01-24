@@ -4,6 +4,7 @@ import { AddressServices } from './addresses';
 import { AppAdminServices } from './app-admins';
 import { AppInstructorServices } from './app-instructors';
 import { AppServices } from './apps';
+import { CacheServices } from './cache';
 import { CheckoutServices } from './checkouts';
 import { CloudflareServices } from './cloudflare';
 import { ColorServices } from './colors';
@@ -41,6 +42,7 @@ export const Services = [
   ...AppServices,
   ...AppInstructorServices,
   ...AppAdminServices,
+  ...CacheServices,
   ...DomainServices,
   ...CurrencyServices,
   ...LanguageServices,

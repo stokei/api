@@ -6,10 +6,15 @@ import { AppGuard } from '@/common/guards/app';
 import { AccountsLoader } from '@/controllers/graphql/dataloaders/accounts.loader';
 import { MeAccount } from '@/controllers/graphql/types/me-account';
 import { AccountNotFoundException } from '@/errors';
+import { AccountModel } from '@/models/account.model';
+import { GetOrSetCacheService } from '@/services/cache/get-or-set-cache';
 
 @Resolver(() => MeAccount)
 export class MeAccountResolver {
-  constructor(private readonly accountsLoader: AccountsLoader) {}
+  constructor(
+    private readonly accountsLoader: AccountsLoader,
+    private readonly getOrSetCacheService: GetOrSetCacheService
+  ) {}
 
   @UseGuards(AuthenticatedGuard, AppGuard)
   @Query(() => MeAccount)
@@ -18,7 +23,10 @@ export class MeAccountResolver {
       throw new UnauthorizedException();
     }
 
-    const account = await this.accountsLoader.findByIds.load(currentAccountId);
+    const account = await this.getOrSetCacheService.execute<AccountModel>(
+      currentAccountId,
+      () => this.accountsLoader.findByIds.load(currentAccountId)
+    );
     if (!account) {
       throw new AccountNotFoundException();
     }

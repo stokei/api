@@ -3,6 +3,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { AppStatus } from '@/controllers/graphql/enums/app-status.enum';
 
 import { Account } from './account';
+import { Colors } from './colors';
 import { Currency } from './currency';
 import { Image } from './image';
 import { Phones } from './phones';
@@ -33,6 +34,9 @@ export class App {
 
   @Field(() => Phones, { nullable: true })
   phones?: Phones;
+
+  @Field(() => Colors, { nullable: true })
+  colors?: Colors;
 
   @Field(() => Currency)
   currency: Currency;

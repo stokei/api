@@ -14,6 +14,7 @@ export * from './app-instructors-not-found';
 export * from './app-not-found';
 export * from './app-unauthorized';
 export * from './apps-not-found';
+export * from './color-already-exists';
 export * from './color-not-found';
 export * from './colors-not-found';
 export * from './course-instructor-not-found';

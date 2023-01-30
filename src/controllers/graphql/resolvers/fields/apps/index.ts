@@ -1,4 +1,5 @@
 import { AppAvatarResolver } from './avatar';
+import { AppColorsResolver } from './colors';
 import { AppCreatedByResolver } from './created-by';
 import { AppCurrencyResolver } from './currency';
 import { AppCurrentSubscriptionContractResolver } from './current-subscription-contract';
@@ -17,5 +18,6 @@ export const AppsFieldsResolvers = [
   AppPhonesResolver,
   AppLogoResolver,
   AppIconResolver,
+  AppColorsResolver,
   AppUpdatedByResolver
 ];

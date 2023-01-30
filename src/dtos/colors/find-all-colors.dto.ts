@@ -11,6 +11,7 @@ import { ThemeMode } from '@/enums/theme-mode.enum';
 export interface WhereDataFindAllColorsDTO {
   ids?: string[];
   app?: IWhereData;
+  color?: IWhereData;
   parent?: IWhereDataSearch;
   themeMode?: ThemeMode;
   type?: ColorType;

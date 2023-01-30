@@ -33,6 +33,7 @@ export class ColorMapper {
         id: prismaMapper.toWhereIds(operatorData.ids),
         parent: prismaMapper.toWhereDataSearch(operatorData.parent),
         app: prismaMapper.toWhereData(operatorData.app),
+        color: prismaMapper.toWhereData(operatorData.color),
         themeMode: operatorData.themeMode,
         type: operatorData.type,
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
@@ -69,6 +70,7 @@ export class ColorMapper {
           themeMode: operatorData.themeMode,
           type: operatorData.type,
           app: cleanWhereDataString(operatorData.app),
+          color: cleanWhereDataString(operatorData.color),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
           ids:

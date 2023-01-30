@@ -12,9 +12,6 @@ export class Image {
   @Field(() => File)
   file: File;
 
-  @Field(() => String)
-  url: string;
-
   @Field(() => String, { nullable: true })
   updatedAt?: string;
 

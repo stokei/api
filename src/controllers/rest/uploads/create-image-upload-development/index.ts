@@ -15,6 +15,7 @@ import { FileUploadInterceptorModel } from '@/models/file-upload-interceptor.mod
 import { ActivateFileService } from '@/services/files/activate-file';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { UpdateFileService } from '@/services/files/update-file';
+import { CreateImageService } from '@/services/images/create-image';
 
 @ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS_IMAGES)
 @Controller({
@@ -25,6 +26,7 @@ export class CreateImageUploadDevelopmentController {
   constructor(
     private readonly updateFileService: UpdateFileService,
     private readonly findFileByIdService: FindFileByIdService,
+    private readonly createImageService: CreateImageService,
     private readonly activateFileService: ActivateFileService
   ) {}
 
@@ -40,6 +42,11 @@ export class CreateImageUploadDevelopmentController {
   ) {
     try {
       const file = await this.findFileByIdService.execute(fileId);
+      const image = await this.createImageService.execute({
+        app: file.app,
+        file: file.id,
+        createdBy: file.createdBy
+      });
       const fileData = new FileUploadInterceptorModel(fileUploaded);
       await this.updateFileService.execute({
         data: {
@@ -59,7 +66,7 @@ export class CreateImageUploadDevelopmentController {
         file: file?.id,
         updatedBy: file?.createdBy
       });
-      return { file };
+      return { file, image };
     } catch (error) {
       throw new ErrorUploadingFileException();
     }

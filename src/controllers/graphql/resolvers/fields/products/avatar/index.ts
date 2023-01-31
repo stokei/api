@@ -1,16 +1,16 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
-import { FilesLoader } from '@/controllers/graphql/dataloaders/files.loader';
-import { File } from '@/controllers/graphql/types/file';
+import { ImagesLoader } from '@/controllers/graphql/dataloaders/images.loader';
+import { Image } from '@/controllers/graphql/types/image';
 import { Product } from '@/controllers/graphql/types/product';
 import { ProductModel } from '@/models/product.model';
 
 @Resolver(() => Product)
 export class ProductAvatarResolver {
-  constructor(private readonly filesLoader: FilesLoader) {}
+  constructor(private readonly imagesLoader: ImagesLoader) {}
 
-  @ResolveField(() => File, { nullable: true })
+  @ResolveField(() => Image, { nullable: true })
   avatar(@Parent() product: ProductModel) {
-    return product.avatar && this.filesLoader.findByIds.load(product.avatar);
+    return product.avatar && this.imagesLoader.findByIds.load(product.avatar);
   }
 }

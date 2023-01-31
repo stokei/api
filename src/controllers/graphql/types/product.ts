@@ -2,7 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 import { Account } from './account';
 import { App } from './app';
-import { File } from './file';
+import { Image } from './image';
 
 @ObjectType()
 export class Product {
@@ -18,8 +18,8 @@ export class Product {
   @Field(() => Boolean)
   checkoutVisible: boolean;
 
-  @Field(() => File, { nullable: true })
-  avatar?: File;
+  @Field(() => Image, { nullable: true })
+  avatar?: Image;
 
   @Field(() => String)
   active: boolean;

@@ -1,6 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { FileStore } from '@tus/file-store';
-import { Server, Upload } from '@tus/server';
+import { Server } from '@tus/server';
 import { existsSync, mkdirSync } from 'fs';
 import { IncomingMessage, ServerResponse } from 'http';
 import { v4 as uuid } from 'uuid';
@@ -74,7 +74,7 @@ export class TusService implements OnModuleInit {
   private async onUploadCreate(
     req: IncomingMessage,
     res: ServerResponse<IncomingMessage>,
-    upload: Upload
+    upload: any
   ): Promise<ServerResponse<IncomingMessage>> {
     const metadata = getFileMetadata(upload?.metadata);
     const filename = this.getFilenameFromUploadID(upload?.id);
@@ -94,7 +94,7 @@ export class TusService implements OnModuleInit {
   private async onUploadFinish(
     req: IncomingMessage,
     res: ServerResponse<IncomingMessage>,
-    upload: Upload
+    upload: any
   ): Promise<ServerResponse<IncomingMessage>> {
     const metadata = getFileMetadata(upload?.metadata);
     const filename = this.getFilenameFromUploadID(upload?.id);

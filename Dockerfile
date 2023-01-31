@@ -1,5 +1,5 @@
 # Builder stage
-FROM node:16.13.0-alpine AS builder
+FROM node:16.19.0-alpine AS builder
 
 # Use /app as the CWD
 WORKDIR /app            
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./   
 
 # Install all dependencies
-RUN npm i --legacy-peer-deps
+RUN npm i
 
 # Copy the rest of the code
 COPY . . 
@@ -21,7 +21,7 @@ RUN npm run build
 
 
 # Final stage
-FROM node:16.13.0-alpine AS service
+FROM node:16.19.0-alpine AS service
 
 # Set node environment to production
 ENV NODE_ENV production
@@ -33,7 +33,7 @@ RUN mkdir -p /home/node/app/dist && chown -R node:node /home/node/app
 WORKDIR /home/node/app
 
 # Install PM2
-RUN npm i -g pm2 --legacy-peer-deps
+RUN npm i -g pm2
 
 # Copy package.json, package-lock.json and process.yml
 COPY package*.json ./
@@ -43,7 +43,7 @@ COPY package*.json ./
 USER node
 
 # Install libraries as user node
-RUN npm i --omit=dev --legacy-peer-deps
+RUN npm i --omit=dev
 
 # Copy js files and change ownership to user node
 COPY --chown=node:node --from=builder /app/dist ./dist

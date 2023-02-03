@@ -91,7 +91,7 @@ export class PlansSeeds
     return [
       {
         plan: {
-          name: 'Serviço de Administradores',
+          name: 'Administradores',
           app: defaultAppId,
           type: PlanType.ADMIN,
           createdBy: defaultAccountId
@@ -99,7 +99,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
-          nickname: 'Serviço de Administradores',
+          nickname: 'Administradores',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -121,7 +121,7 @@ export class PlansSeeds
       },
       {
         plan: {
-          name: 'Serviço de Cursos',
+          name: 'Cursos',
           app: defaultAppId,
           type: PlanType.COURSE,
           createdBy: defaultAccountId
@@ -129,7 +129,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
-          nickname: 'Serviço de Cursos',
+          nickname: 'Cursos',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -151,7 +151,7 @@ export class PlansSeeds
       },
       {
         plan: {
-          name: 'Serviço de Domínios',
+          name: 'Domínios',
           app: defaultAppId,
           type: PlanType.DOMAIN,
           createdBy: defaultAccountId
@@ -159,7 +159,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
-          nickname: 'Serviço de Domínios',
+          nickname: 'Domínios',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -181,7 +181,7 @@ export class PlansSeeds
       },
       {
         plan: {
-          name: 'Serviço de Professores',
+          name: 'Professores',
           app: defaultAppId,
           type: PlanType.INSTRUCTOR,
           createdBy: defaultAccountId
@@ -189,7 +189,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
-          nickname: 'Serviço de Professores',
+          nickname: 'Professores',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -211,7 +211,7 @@ export class PlansSeeds
       },
       {
         plan: {
-          name: 'Serviço de Storage',
+          name: 'Storage',
           app: defaultAppId,
           type: PlanType.STORAGE,
           createdBy: defaultAccountId
@@ -219,7 +219,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
-          nickname: 'Serviço de Storage',
+          nickname: 'Storage',
           billingScheme: BillingScheme.TIERED,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,

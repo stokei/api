@@ -7,6 +7,9 @@ import { Phones } from './phones';
 
 @ObjectType()
 export class MeAccount extends Account {
+  @Field(() => Boolean, { nullable: true })
+  isAdmin?: boolean;
+
   @Field(() => String, { nullable: true })
   dateBirthday?: string;
 

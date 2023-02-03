@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 import { Account } from './account';
 import { App } from './app';
+import { CourseInstructors } from './course-instructors';
 import { Image } from './image';
 
 @ObjectType()
@@ -17,6 +18,9 @@ export class Course {
 
   @Field(() => Image, { nullable: true })
   avatar?: Image;
+
+  @Field(() => CourseInstructors, { nullable: true })
+  instructors?: CourseInstructors;
 
   @Field(() => Boolean)
   active: boolean;

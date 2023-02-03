@@ -70,6 +70,7 @@ export class UpdateProductCommandHandler
       data: cleanObject({
         name: cleanValue(command?.data?.name),
         description: cleanValue(command?.data?.description),
+        defaultPrice: cleanValue(command?.data?.defaultPrice),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

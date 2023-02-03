@@ -19,6 +19,12 @@ export class CreatePriceInput {
   amount?: number;
 
   @Field(() => String, { nullable: true })
+  nickname?: string;
+
+  @Field(() => Boolean, { nullable: true })
+  defaultPrice?: boolean;
+
+  @Field(() => String, { nullable: true })
   unit?: string;
 
   @Field(() => PriceType)

@@ -279,6 +279,7 @@ model Product {
   name            String    @db.VarChar(255)
   description     String?
   stripeProduct   String    @map("stripe_product") @db.VarChar(255)
+  defaultPrice    String?   @map("default_price") @db.VarChar(255)
   checkoutVisible Boolean   @default(true) @map("checkout_visible")
   avatar          String?   @db.VarChar(255)
   active          Boolean   @default(true)

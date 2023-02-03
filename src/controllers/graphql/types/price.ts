@@ -19,6 +19,9 @@ export class Price {
   @Field(() => String, { nullable: true })
   nickname?: string;
 
+  @Field(() => String, { nullable: true })
+  unit?: string;
+
   @Field(() => Boolean)
   default: boolean;
 

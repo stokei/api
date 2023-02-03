@@ -2,13 +2,19 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 import { Account } from './account';
 import { App } from './app';
+import { Course } from './course';
 import { Image } from './image';
+import { Plan } from './plan';
+import { Price } from './price';
 import { Prices } from './prices';
 
 @ObjectType()
 export class Product {
   @Field(() => ID)
   id: string;
+
+  @Field(() => String, { nullable: true })
+  parent?: string;
 
   @Field(() => String)
   name: string;
@@ -21,6 +27,12 @@ export class Product {
 
   @Field(() => Image, { nullable: true })
   avatar?: Image;
+
+  @Field(() => Plan, { nullable: true })
+  plan?: Plan;
+
+  @Field(() => Course, { nullable: true })
+  course?: Course;
 
   @Field(() => String)
   active: boolean;
@@ -42,6 +54,9 @@ export class Product {
 
   @Field(() => Account, { nullable: true })
   createdBy?: Account;
+
+  @Field(() => Price, { nullable: true })
+  defaultPrice?: Price;
 
   @Field(() => Prices, { nullable: true })
   prices?: Prices;

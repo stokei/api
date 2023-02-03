@@ -13,6 +13,8 @@ import { TiersMode } from '@/enums/tiers-mode.enum';
 export class CreatePriceCommand implements ICommand, CreatePriceDTO {
   parent: string;
   nickname?: string;
+  defaultPrice?: boolean;
+  unit?: string;
   fromAmount?: number;
   amount: number;
   currency: string;
@@ -29,6 +31,8 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
   constructor(data: CreatePriceDTO) {
     this.parent = data.parent;
     this.nickname = data.nickname;
+    this.defaultPrice = data.defaultPrice;
+    this.unit = data.unit;
     this.fromAmount = data.fromAmount;
     this.amount = data.amount;
     this.tiers = data.tiers;

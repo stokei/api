@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { UpdateProductCommand } from '@/commands/implements/products/update-product.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { PriceCreatedEvent } from '@/events/implements/prices/price-created.event';
 import { PriceRemovedEvent } from '@/events/implements/prices/price-removed.event';
@@ -31,6 +32,20 @@ export class PricesSagas {
             )
         );
         const commands = [];
+        if (event.defaultPrice) {
+          commands.push(
+            new UpdateProductCommand({
+              data: {
+                defaultPrice: event.price.id,
+                updatedBy: event.createdBy
+              },
+              where: {
+                product: event.price.parent,
+                app: event.price.app
+              }
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)

@@ -87,11 +87,18 @@ export class PriceModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdPrice({ createdBy }: { createdBy: string }) {
+  createdPrice({
+    createdBy,
+    defaultPrice
+  }: {
+    createdBy: string;
+    defaultPrice?: boolean;
+  }) {
     if (this.id) {
       this.apply(
         new PriceCreatedEvent({
           createdBy,
+          defaultPrice,
           price: this
         })
       );

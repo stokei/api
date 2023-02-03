@@ -11,6 +11,7 @@ export interface IProductModelData {
   readonly parent: string;
   readonly name: string;
   readonly description?: string;
+  readonly defaultPrice?: string;
   readonly app: string;
   readonly stripeProduct: string;
   readonly checkoutVisible: boolean;
@@ -30,6 +31,7 @@ export class ProductModel extends AggregateRoot {
   readonly parent: string;
   readonly name: string;
   readonly description?: string;
+  readonly defaultPrice?: string;
   readonly stripeProduct: string;
   readonly checkoutVisible: boolean;
   readonly avatar?: string;
@@ -52,6 +54,7 @@ export class ProductModel extends AggregateRoot {
     this.description = data.description;
     this.app = data.app;
     this.stripeProduct = data.stripeProduct;
+    this.defaultPrice = data.defaultPrice;
     this.checkoutVisible = data.checkoutVisible;
     this.avatar = data.avatar;
     this.active = data.active;

@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueBoolean,
+  cleanValueNumber
+} from '@stokei/nestjs';
 
 import { CreatePriceCommand } from '@/commands/implements/prices/create-price.command';
 import { BillingScheme } from '@/enums/billing-scheme.enum';
@@ -61,6 +66,8 @@ export class CreatePriceCommandHandler
     if (!product) {
       throw new ProductNotFoundException();
     }
+    data.unit = data.unit || null;
+
     let recurring: RecurringModel;
     if (data.type === PriceType.RECURRING) {
       recurring = await this.createRecurringService.execute(data.recurring);
@@ -68,7 +75,7 @@ export class CreatePriceCommandHandler
         throw new RecurringNotFoundException();
       }
     }
-    const { tiers: tiersPrices, ...dataCreated } = data;
+    const { tiers: tiersPrices, defaultPrice, ...dataCreated } = data;
     let tiers = tiersPrices;
     if (data.billingScheme === BillingScheme.TIERED) {
       if (!tiers?.length) {
@@ -80,18 +87,18 @@ export class CreatePriceCommandHandler
     }
     const priceMapper = new PriceMapper();
     const stripePrice = await this.createStripePriceService.execute({
-      amount: data.amount,
-      currency: data.currency,
+      amount: dataCreated.amount,
+      currency: dataCreated.currency,
       billingScheme: priceMapper.billingSchemeToStripeBillingScheme(
-        data.billingScheme
+        dataCreated.billingScheme
       ),
       tiers,
-      tiersMode: data.tiersMode
-        ? priceMapper.tiersModeToStripeTiersMode(data.tiersMode)
+      tiersMode: dataCreated.tiersMode
+        ? priceMapper.tiersModeToStripeTiersMode(dataCreated.tiersMode)
         : undefined,
       app: app.id,
       recurring,
-      type: data.type,
+      type: dataCreated.type,
       stripeProduct: product.stripeProduct,
       stripeAccount: app.stripeAccount
     });
@@ -105,7 +112,7 @@ export class CreatePriceCommandHandler
       throw new PriceNotFoundException();
     }
 
-    if (data.billingScheme === BillingScheme.TIERED) {
+    if (dataCreated.billingScheme === BillingScheme.TIERED) {
       const priceTiers = await Promise.all(
         tiers?.map((tier) =>
           this.createPriceTierService.execute({
@@ -124,7 +131,8 @@ export class CreatePriceCommandHandler
     }
     const priceModel = this.publisher.mergeObjectContext(priceCreated);
     priceModel.createdPrice({
-      createdBy: data.createdBy
+      createdBy: dataCreated.createdBy,
+      defaultPrice
     });
     priceModel.commit();
 
@@ -135,6 +143,7 @@ export class CreatePriceCommandHandler
     return cleanObject({
       parent: cleanValue(command?.parent),
       nickname: cleanValue(command?.nickname),
+      defaultPrice: cleanValueBoolean(command?.defaultPrice),
       fromAmount: cleanValueNumber(command?.fromAmount),
       amount: cleanValueNumber(command?.amount),
       currency: cleanValue(command?.currency),

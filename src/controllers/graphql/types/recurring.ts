@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
 
 import { IntervalType } from '@/controllers/graphql/enums/interval-type.enum';
 import { UsageType } from '@/controllers/graphql/enums/usage-type.enum';
@@ -11,13 +11,13 @@ export class Recurring {
   @Field(() => ID)
   id: string;
 
-  @Field(() => UsageType)
+  @Field(() => UsageType, { nullable: true })
   usageType: UsageType;
 
-  @Field(() => String)
+  @Field(() => Int)
   intervalCount: number;
 
-  @Field(() => IntervalType)
+  @Field(() => IntervalType, { nullable: true })
   interval: IntervalType;
 
   @Field(() => String, { nullable: true })

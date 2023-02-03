@@ -1,12 +1,14 @@
 import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
 
+import { BillingScheme } from '@/controllers/graphql/enums/billing-scheme.enum';
 import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
 import { PriceType } from '@/controllers/graphql/enums/price-type.enum';
+import { TiersMode } from '@/controllers/graphql/enums/tiers-mode.enum';
 
 import { Account } from './account';
 import { App } from './app';
 import { Currency } from './currency';
-import { Product } from './product';
+import { PriceTiers } from './price-tiers';
 import { Recurring } from './recurring';
 
 @ObjectType()
@@ -20,26 +22,29 @@ export class Price {
   @Field(() => Boolean)
   default: boolean;
 
-  @Field(() => String)
-  purchaseUrl: string;
-
   @Field(() => Float, { nullable: true })
   fromAmount?: number;
 
   @Field(() => Float, { nullable: true })
   amount?: number;
 
+  @Field(() => PriceTiers, { nullable: true })
+  tiers?: PriceTiers;
+
   @Field(() => PriceType)
   type: PriceType;
-
-  @Field(() => Product)
-  product: Product;
 
   @Field(() => Currency)
   currency: Currency;
 
-  @Field(() => InventoryType)
+  @Field(() => InventoryType, { nullable: true })
   inventoryType: InventoryType;
+
+  @Field(() => BillingScheme, { nullable: true })
+  billingScheme: BillingScheme;
+
+  @Field(() => TiersMode, { nullable: true })
+  tiersMode: TiersMode;
 
   @Field(() => Recurring, { nullable: true })
   recurring?: Recurring;

@@ -13,6 +13,7 @@ export interface CreatePriceDTO {
   fromAmount?: number;
   tiers?: CreatePriceTiersDTO;
   amount?: number;
+  unit?: string;
   currency: string;
   type: PriceType;
   inventoryType: InventoryType;

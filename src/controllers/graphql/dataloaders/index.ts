@@ -21,6 +21,7 @@ import { PhonesLoader } from './phones.loader';
 import { PlansLoader } from './plans.loader';
 import { PricesLoader } from './prices.loader';
 import { ProductsLoader } from './products.loader';
+import { RecurringsLoader } from './recurrings.loader';
 import { SubscriptionContractsLoader } from './subscription-contracts.loader';
 import { VideoAuthorsLoader } from './video-authors.loader';
 import { VideosLoader } from './videos.loader';
@@ -51,5 +52,6 @@ export const Loaders = [
   PhonesLoader,
   InvoicesLoader,
   FilesLoader,
-  FeaturesLoader
+  FeaturesLoader,
+  RecurringsLoader
 ];

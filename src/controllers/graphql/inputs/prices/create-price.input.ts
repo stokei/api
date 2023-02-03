@@ -18,6 +18,9 @@ export class CreatePriceInput {
   @Field(() => Int, { nullable: true })
   amount?: number;
 
+  @Field(() => String, { nullable: true })
+  unit?: string;
+
   @Field(() => PriceType)
   type: PriceType;
 

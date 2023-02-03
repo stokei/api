@@ -3,6 +3,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Account } from './account';
 import { App } from './app';
 import { Image } from './image';
+import { Prices } from './prices';
 
 @ObjectType()
 export class Product {
@@ -41,6 +42,9 @@ export class Product {
 
   @Field(() => Account, { nullable: true })
   createdBy?: Account;
+
+  @Field(() => Prices, { nullable: true })
+  prices?: Prices;
 
   @Field(() => App, { nullable: true })
   app?: App;

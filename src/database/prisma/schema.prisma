@@ -325,6 +325,7 @@ model Price {
   app           String        @db.VarChar(255)
   parent        String        @db.VarChar(255)
   nickname      String?       @db.VarChar(255)
+  unit          String?       @default("un") @db.VarChar(10)
   currency      String        @db.VarChar(255)
   stripePrice   String?       @map("stripe_price")
   fromAmount    Float?        @map("from_amount")

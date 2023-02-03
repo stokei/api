@@ -22,6 +22,9 @@ class WhereDataFindAllPricesDataInput implements WhereDataFindAllPricesDTO {
   @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
 
+  @Field(() => WhereDataStringInput, { nullable: true })
+  unit?: WhereDataStringInput;
+
   @Field(() => PriceType, { nullable: true })
   type?: PriceType;
 
@@ -53,6 +56,9 @@ export class OrderByDataFindAllPricesInput
 
   @Field(() => OrderBy, { nullable: true })
   amount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  unit?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   type?: OrderBy;

@@ -1,4 +1,4 @@
-import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
 import { BillingScheme } from '@/controllers/graphql/enums/billing-scheme.enum';
 import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
@@ -24,6 +24,9 @@ export class Price {
 
   @Field(() => Boolean)
   default: boolean;
+
+  @Field(() => Float, { nullable: true })
+  discountPercent?: number;
 
   @Field(() => Float, { nullable: true })
   fromAmount?: number;
@@ -52,7 +55,7 @@ export class Price {
   @Field(() => Recurring, { nullable: true })
   recurring?: Recurring;
 
-  @Field(() => Int)
+  @Field(() => Float)
   quantity: number;
 
   @Field(() => Boolean)

@@ -1,6 +1,7 @@
 import { PriceAppResolver } from './app';
 import { PriceCreatedByResolver } from './created-by';
 import { PriceCurrencyResolver } from './currency';
+import { PriceDiscountPercentResolver } from './discount-percent';
 import { PriceRecurringResolver } from './recurring';
 import { PriceReferenceResolver } from './reference';
 import { PricePriceTiersResolver } from './tiers';
@@ -13,5 +14,6 @@ export const PricesFieldsResolvers = [
   PriceCreatedByResolver,
   PriceUpdatedByResolver,
   PriceRecurringResolver,
-  PricePriceTiersResolver
+  PricePriceTiersResolver,
+  PriceDiscountPercentResolver
 ];

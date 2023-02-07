@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanSlug,
+  cleanValue,
+  cleanValueBoolean
+} from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
 import { CreateVideoCommand } from '@/commands/implements/videos/create-video.command';
@@ -32,9 +37,6 @@ export class CreateVideoCommandHandler
     if (!data?.name) {
       throw new ParamNotFoundException<CreateVideoCommandKeys>('name');
     }
-    if (!data?.file) {
-      throw new ParamNotFoundException<CreateVideoCommandKeys>('file');
-    }
 
     const slug = cleanSlug(data.name + nanoid(8));
     const videoCreated = await this.createVideoRepository.execute({
@@ -62,6 +64,7 @@ export class CreateVideoCommandHandler
       description: cleanValue(command?.description),
       file: cleanValue(command?.file),
       poster: cleanValue(command?.poster),
+      private: cleanValueBoolean(command?.private),
       parent: cleanValue(command?.parent)
     });
   }

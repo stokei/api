@@ -441,10 +441,11 @@ model Video {
   app         String    @db.VarChar(255)
   parent      String    @db.VarChar(255)
   slug        String?   @db.VarChar(255)
-  file        String    @db.VarChar(255)
+  file        String?   @db.VarChar(255)
   name        String?   @db.VarChar(255)
   description String?
   poster      String?   @db.VarChar(255)
+  private     Boolean?  @default(true)
   active      Boolean   @default(false)
   updatedAt   DateTime? @updatedAt @map("updated_at")
   createdAt   DateTime? @default(now()) @map("created_at")

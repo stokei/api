@@ -29,6 +29,9 @@ export class Video {
   @Field(() => Boolean)
   active: boolean;
 
+  @Field(() => Boolean)
+  private: boolean;
+
   @Field(() => VideoAuthors)
   authors: VideoAuthors;
 

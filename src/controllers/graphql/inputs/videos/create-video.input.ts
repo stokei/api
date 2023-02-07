@@ -6,14 +6,17 @@ export class CreateVideoInput {
   parent: string;
 
   @Field()
-  file: string;
-
-  @Field()
   name: string;
 
   @Field({ nullable: true })
   description?: string;
 
   @Field({ nullable: true })
+  file?: string;
+
+  @Field({ nullable: true })
   poster?: string;
+
+  @Field(() => Boolean, { nullable: true })
+  private?: boolean;
 }

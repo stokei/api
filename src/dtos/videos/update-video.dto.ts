@@ -1,7 +1,9 @@
 export interface UpdateVideoDataDTO {
-  name: string;
+  name?: string;
+  file?: string;
   description?: string;
   poster?: string;
+  private?: boolean;
   updatedBy: string;
 }
 

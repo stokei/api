@@ -13,6 +13,7 @@ export interface WhereDataFindAllVideosDTO {
   slug?: IWhereData<string>;
   description?: IWhereDataSearch;
   active?: IWhereData<boolean>;
+  private?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -22,6 +23,7 @@ export interface OrderByDataFindAllVideosDTO {
   name?: IOrderBy;
   slug?: IOrderBy;
   active?: IOrderBy;
+  private?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

@@ -7,6 +7,7 @@ export interface CountVideosWhereDTO {
   name?: IWhereDataSearch;
   slug?: IWhereData<string>;
   description?: IWhereDataSearch;
+  private?: IWhereData<boolean>;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

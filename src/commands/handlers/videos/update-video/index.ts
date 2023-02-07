@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueBoolean,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { UpdateVideoCommand } from '@/commands/implements/videos/update-video.command';
 import {
@@ -69,6 +74,7 @@ export class UpdateVideoCommandHandler
         name: cleanValue(command?.data?.name),
         description: cleanValue(command?.data?.description),
         poster: cleanValue(command?.data?.poster),
+        private: cleanValueBoolean(command?.data?.private),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

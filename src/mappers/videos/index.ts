@@ -38,6 +38,7 @@ export class VideoMapper {
         slug: prismaMapper.toWhereData(operatorData.slug),
         description: prismaMapper.toWhereDataSearch(operatorData.description),
         active: prismaMapper.toWhereData(operatorData.active),
+        private: prismaMapper.toWhereData(operatorData.private),
         updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
         createdBy: prismaMapper.toWhereData(operatorData.createdBy)
       };
@@ -72,6 +73,7 @@ export class VideoMapper {
           slug: cleanWhereDataString(operatorData.slug),
           description: cleanWhereDataSearch(operatorData.description),
           active: cleanWhereDataBoolean(operatorData.active),
+          private: cleanWhereDataBoolean(operatorData.private),
           app: cleanWhereDataString(operatorData.app),
           updatedBy: cleanWhereDataString(operatorData.updatedBy),
           createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -97,6 +99,7 @@ export class VideoMapper {
         name: cleanSortValue(query.orderBy?.name),
         slug: cleanSortValue(query.orderBy?.slug),
         active: cleanSortValue(query.orderBy?.active),
+        private: cleanSortValue(query.orderBy?.private),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

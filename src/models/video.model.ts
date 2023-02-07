@@ -12,7 +12,8 @@ export interface IVideoModelData {
   readonly app: string;
   readonly parent: string;
   readonly slug?: string;
-  readonly file: string;
+  readonly private?: boolean;
+  readonly file?: string;
   readonly name?: string;
   readonly description?: string;
   readonly poster?: string;
@@ -28,7 +29,8 @@ export class VideoModel extends AggregateRoot {
   readonly parent: string;
   readonly app: string;
   readonly slug?: string;
-  readonly file: string;
+  readonly private?: boolean;
+  readonly file?: string;
   readonly name?: string;
   readonly description?: string;
   readonly poster?: string;
@@ -47,6 +49,7 @@ export class VideoModel extends AggregateRoot {
     this.parent = data.parent;
     this.app = data.app;
     this.slug = data.slug;
+    this.private = !!data.private;
     this.file = data.file;
     this.name = data.name;
     this.description = data.description;

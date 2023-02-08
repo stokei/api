@@ -17,7 +17,7 @@ export class Video {
   @Field(() => String)
   slug: string;
 
-  @Field(() => File)
+  @Field(() => File, { nullable: true })
   file: File;
 
   @Field(() => String, { nullable: true })

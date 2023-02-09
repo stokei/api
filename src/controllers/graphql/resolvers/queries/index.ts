@@ -10,6 +10,7 @@ import { CourseStudentsQueries } from './course-students';
 import { CoursesQueries } from './courses';
 import { CurrenciesQueries } from './currencies';
 import { DomainsQueries } from './domains';
+import { FeaturesQueries } from './features';
 import { ImagesQueries } from './images';
 import { InvoicesQueries } from './invoices';
 import { LanguagesQueries } from './languages';
@@ -47,5 +48,6 @@ export const Queries = [
   ...SubscriptionContractsQueries,
   ...AddressesQueries,
   ...PhonesQueries,
-  ...InvoicesQueries
+  ...InvoicesQueries,
+  ...FeaturesQueries
 ];

@@ -3,6 +3,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Account } from './account';
 import { App } from './app';
 import { Course } from './course';
+import { Features } from './features';
 import { Image } from './image';
 import { Plan } from './plan';
 import { Price } from './price';
@@ -60,6 +61,9 @@ export class Product {
 
   @Field(() => Prices, { nullable: true })
   prices?: Prices;
+
+  @Field(() => Features, { nullable: true })
+  features?: Features;
 
   @Field(() => App, { nullable: true })
   app?: App;

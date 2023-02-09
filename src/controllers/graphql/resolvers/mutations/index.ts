@@ -12,6 +12,7 @@ import { CoursesMutations } from './courses';
 import { CurrenciesMutations } from './currencies';
 import { CustomerPortalSessionsMutations } from './customer-portal-sessions';
 import { DomainsMutations } from './domains';
+import { FeaturesMutations } from './features';
 import { FilesMutations } from './files';
 import { ImagesMutations } from './images';
 import { InvoicesMutations } from './invoices';
@@ -53,5 +54,6 @@ export const Mutations = [
   ...CheckoutsMutations,
   ...CustomerPortalSessionsMutations,
   ...InvoicesMutations,
-  ...FilesMutations
+  ...FilesMutations,
+  ...FeaturesMutations
 ];

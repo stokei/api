@@ -3,6 +3,7 @@ import { ProductAvatarResolver } from './avatar';
 import { ProductCourseResolver } from './course';
 import { ProductCreatedByResolver } from './created-by';
 import { ProductDefaultPriceResolver } from './default-price';
+import { ProductFeaturesResolver } from './features';
 import { ProductPlanResolver } from './plan';
 import { ProductPricesResolver } from './prices';
 import { ProductReferenceResolver } from './reference';
@@ -17,5 +18,6 @@ export const ProductsFieldsResolvers = [
   ProductPricesResolver,
   ProductCourseResolver,
   ProductPlanResolver,
-  ProductDefaultPriceResolver
+  ProductDefaultPriceResolver,
+  ProductFeaturesResolver
 ];

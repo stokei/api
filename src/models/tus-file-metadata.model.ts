@@ -1,3 +1,5 @@
+import { cleanObject, cleanValue } from '@stokei/nestjs';
+
 interface TusFileMetadataModelData {
   relativePath?: string;
   name?: string;
@@ -9,6 +11,13 @@ interface TusFileMetadataModelData {
   appId?: string;
   accountId?: string;
 }
+
+const cleanValueWithUndefinedText = (value?: string) => {
+  if (value === 'undefined' || value === 'null') {
+    return;
+  }
+  return cleanValue(value);
+};
 
 export class TusFileMetadataModel {
   relativePath?: string;
@@ -22,14 +31,18 @@ export class TusFileMetadataModel {
   accountId?: string;
 
   constructor(data?: TusFileMetadataModelData) {
-    this.relativePath = data?.relativePath;
-    this.name = data?.name;
-    this.type = data?.type;
-    this.size = data?.size;
-    this.filetype = data?.filetype;
-    this.filename = data?.filename;
-    this.extension = data?.extension;
-    this.appId = data?.appId;
-    this.accountId = data?.accountId;
+    this.relativePath = cleanValueWithUndefinedText(data?.relativePath);
+    this.name = cleanValueWithUndefinedText(data?.name);
+    this.type = cleanValueWithUndefinedText(data?.type);
+    this.size = cleanValueWithUndefinedText(data?.size);
+    this.filetype = cleanValueWithUndefinedText(data?.filetype);
+    this.filename = cleanValueWithUndefinedText(data?.filename);
+    this.extension = cleanValueWithUndefinedText(data?.extension);
+    this.appId = cleanValueWithUndefinedText(data?.appId);
+    this.accountId = cleanValueWithUndefinedText(data?.accountId);
+  }
+
+  get isEmpty(): boolean {
+    return !Object.values(cleanObject(this)).length;
   }
 }

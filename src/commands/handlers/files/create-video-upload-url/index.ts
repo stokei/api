@@ -1,7 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { v4 as uuid } from 'uuid';
 
 import { CreateVideoUploadURLCommand } from '@/commands/implements/files/create-video-upload-url.command';
+import { LOCAL_UPLOAD_VIDEO_URL } from '@/constants/upload-url';
+import { IS_PRODUCTION } from '@/environments';
 import {
   DataNotFoundException,
   ErrorUploadingFileException,
@@ -29,18 +32,25 @@ export class CreateVideoUploadURLCommandHandler
     const metadata =
       data.uploadMetadata && getFileMetadata(data.uploadMetadata);
 
-    const cloudflareVideoUploadURL =
-      await this.createCloudflareVideoUploadURLService.execute({
-        createdBy: data.createdBy,
-        tusResumable: data.tusResumable,
-        uploadLength: data.uploadLength,
-        uploadMetadata: data.uploadMetadata
-      });
-    if (!cloudflareVideoUploadURL) {
-      throw new ErrorUploadingFileException();
+    let filename;
+    let uploadURL;
+    if (!IS_PRODUCTION) {
+      filename = uuid();
+      uploadURL = LOCAL_UPLOAD_VIDEO_URL;
+    } else {
+      const cloudflareVideoUploadURL =
+        await this.createCloudflareVideoUploadURLService.execute({
+          createdBy: data.createdBy,
+          tusResumable: data.tusResumable,
+          uploadLength: data.uploadLength,
+          uploadMetadata: data.uploadMetadata
+        });
+      if (!cloudflareVideoUploadURL) {
+        throw new ErrorUploadingFileException();
+      }
+      filename = cloudflareVideoUploadURL.filename;
+      uploadURL = cloudflareVideoUploadURL.uploadURL;
     }
-    const filename = cloudflareVideoUploadURL.filename;
-    const uploadURL = cloudflareVideoUploadURL.uploadURL;
 
     const file = await this.createFileService.execute({
       filename,
@@ -52,6 +62,11 @@ export class CreateVideoUploadURLCommandHandler
     });
     if (!file) {
       throw new FileNotFoundException();
+    }
+    if (!IS_PRODUCTION) {
+      const url = new URL(uploadURL);
+      url.searchParams.set('file', file.id);
+      uploadURL = url.toString();
     }
     return {
       uploadURL,

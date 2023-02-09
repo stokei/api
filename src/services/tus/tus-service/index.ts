@@ -1,6 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { FileStore } from '@tus/file-store';
-import { Server } from '@tus/server';
+import { Server, Upload } from '@tus/server';
 import { existsSync, mkdirSync } from 'fs';
 import { IncomingMessage, ServerResponse } from 'http';
 import { v4 as uuid } from 'uuid';
@@ -8,7 +8,6 @@ import { v4 as uuid } from 'uuid';
 import { PATH_FILES } from '@/constants/upload-file-paths';
 import { LOCAL_UPLOAD_VIDEO_URL_PATHNAME } from '@/constants/upload-url';
 import { ActivateFileService } from '@/services/files/activate-file';
-import { CreateFileService } from '@/services/files/create-file';
 import { FindFileByFilenameService } from '@/services/files/find-file-by-filename';
 import { UpdateFileService } from '@/services/files/update-file';
 import { getFileMetadata } from '@/utils/get-file-metadata';
@@ -20,7 +19,6 @@ export class TusService implements OnModuleInit {
 
   constructor(
     private readonly updateFileService: UpdateFileService,
-    private readonly createFileService: CreateFileService,
     private readonly findFileByFilenameService: FindFileByFilenameService,
     private readonly activateFileService: ActivateFileService
   ) {
@@ -57,13 +55,20 @@ export class TusService implements OnModuleInit {
     return fileId;
   }
 
-  private fileNameFromRequest(req) {
+  private getFileIDFromRequest(req): string {
+    const fileId = req?.query?.file || '';
+    return fileId;
+  }
+
+  private fileNameFromRequest(req: any) {
     try {
       const metadata = getFileMetadata(
         req.header('Upload-Metadata') || req.header('upload-metadata')
       );
       const id = uuid();
-      const fileName = metadata.extension ? id + '.' + metadata.extension : id;
+      const fileName = metadata?.extension
+        ? id + '.' + metadata?.extension
+        : metadata?.filetype?.split('/').pop();
       return fileName;
     } catch (e) {
       this.logger.error(e.message);
@@ -74,18 +79,24 @@ export class TusService implements OnModuleInit {
   private async onUploadCreate(
     req: IncomingMessage,
     res: ServerResponse<IncomingMessage>,
-    upload: any
+    upload: Upload
   ): Promise<ServerResponse<IncomingMessage>> {
     const metadata = getFileMetadata(upload?.metadata);
+    const fileId = this.getFileIDFromRequest(req);
     const filename = this.getFilenameFromUploadID(upload?.id);
 
-    const file = await this.createFileService.execute({
-      filename,
-      mimetype: metadata?.filetype,
-      extension: metadata?.extension,
-      size: upload?.size || parseInt(metadata?.size, 10),
-      app: metadata?.appId,
-      createdBy: metadata?.accountId
+    const file = await this.updateFileService.execute({
+      where: {
+        app: metadata?.appId,
+        file: fileId
+      },
+      data: {
+        filename,
+        mimetype: metadata?.filetype,
+        extension: metadata?.extension,
+        size: upload?.size || parseInt(metadata?.size, 10),
+        updatedBy: metadata?.accountId
+      }
     });
 
     return res.setHeader('file-id', file.id);

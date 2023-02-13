@@ -37,9 +37,18 @@ export class TusFileMetadataModel {
     this.size = cleanValueWithUndefinedText(data?.size);
     this.filetype = cleanValueWithUndefinedText(data?.filetype);
     this.filename = cleanValueWithUndefinedText(data?.filename);
-    this.extension = cleanValueWithUndefinedText(data?.extension);
+    this.extension = this.getExtension(
+      cleanValueWithUndefinedText(data?.extension)
+    );
     this.appId = cleanValueWithUndefinedText(data?.appId);
     this.accountId = cleanValueWithUndefinedText(data?.accountId);
+  }
+
+  private getExtension(dataExtension?: string) {
+    if (dataExtension) {
+      return dataExtension;
+    }
+    return this.filename ? this.filename?.split('.')?.pop() : null;
   }
 
   get isEmpty(): boolean {

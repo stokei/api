@@ -220,6 +220,7 @@ export class PlansSeeds
           parent: undefined,
           app: defaultAppId,
           nickname: 'Storage',
+          unit: 'Kb',
           billingScheme: BillingScheme.TIERED,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,

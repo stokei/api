@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Res, StreamableFile } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Logger,
+  Param,
+  Res,
+  StreamableFile
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthenticationConfig } from '@stokei/nestjs';
 import { Response } from 'express';
@@ -41,6 +48,8 @@ export class GetFileController {
       'Content-Disposition': `inline; file="${file.filenameAndExtension}"`,
       'Content-Type': file.mimetype
     });
-    return new StreamableFile(stream);
+    return new StreamableFile(stream).setErrorHandler(
+      (err) => err && new Logger(GetFileController.name).error(err.message)
+    );
   }
 }

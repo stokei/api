@@ -48,25 +48,26 @@ export class CreateImageUploadDevelopmentController {
         createdBy: file.createdBy
       });
       const fileData = new FileUploadInterceptorModel(fileUploaded);
+      const dataUpdated = {
+        filename: fileData?.filename,
+        mimetype: fileData?.mimetype,
+        extension: fileData?.extension,
+        size: fileData?.size,
+        updatedBy: file?.createdBy
+      };
       await this.updateFileService.execute({
-        data: {
-          filename: fileData?.filename,
-          mimetype: fileData?.mimetype,
-          extension: fileData?.extension,
-          size: fileData?.size,
-          updatedBy: file?.createdBy
-        },
+        data: dataUpdated,
         where: {
           app: file?.app,
           file: file?.id
         }
       });
-      await this.activateFileService.execute({
+      const fileActivated = await this.activateFileService.execute({
         app: file?.app,
         file: file?.id,
         updatedBy: file?.createdBy
       });
-      return { file, image };
+      return { file: fileActivated, image };
     } catch (error) {
       throw new ErrorUploadingFileException();
     }

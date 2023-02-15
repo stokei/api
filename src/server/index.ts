@@ -9,7 +9,8 @@ import { MainModule } from '@/main.module';
 
 export const createApp = async () => {
   const app = await NestFactory.create<NestExpressApplication>(MainModule, {
-    bodyParser: false
+    bodyParser: false,
+    abortOnError: false
   });
 
   app.enableCors({

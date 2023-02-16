@@ -1,7 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
-  WhereDataBooleanInput,
+  WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
@@ -18,11 +18,14 @@ class WhereDataFindAllPaymentMethodsDataInput
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field(() => WhereDataStringInput, { nullable: true })
-  parent?: WhereDataStringInput;
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  parent?: WhereDataSearchInput;
 
-  @Field(() => WhereDataBooleanInput, { nullable: true })
-  active?: WhereDataBooleanInput;
+  @Field(() => WhereDataStringInput, { nullable: true })
+  cardBrand?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  app?: WhereDataStringInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
@@ -36,10 +39,7 @@ export class OrderByDataFindAllPaymentMethodsInput
   implements OrderByDataFindAllPaymentMethodsDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  type?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
-  provider?: OrderBy;
+  cardBrand?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

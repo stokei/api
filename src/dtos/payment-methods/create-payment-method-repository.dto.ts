@@ -5,4 +5,6 @@ export interface CreatePaymentMethodRepositoryDTO
   stripePaymentMethod: string;
   lastFourCardNumber?: string;
   cardBrand?: string;
+  cardExpiryMonth?: string;
+  cardExpiryYear?: string;
 }

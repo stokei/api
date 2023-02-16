@@ -9,7 +9,6 @@ export interface WhereDataFindAllPaymentMethodsDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
-  stripePaymentMethod?: IWhereData<string>;
   cardBrand?: IWhereData<string>;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
@@ -19,8 +18,7 @@ export type IKeysWhereDataFindAllPaymentMethodsDTO =
   keyof WhereDataFindAllPaymentMethodsDTO;
 
 export interface OrderByDataFindAllPaymentMethodsDTO {
-  type?: IOrderBy;
-  provider?: IOrderBy;
+  cardBrand?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

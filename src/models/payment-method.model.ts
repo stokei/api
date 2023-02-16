@@ -11,6 +11,8 @@ export interface IPaymentMethodModelData {
   readonly parent: string;
   readonly stripePaymentMethod: string;
   readonly lastFourCardNumber?: string;
+  readonly cardExpiryMonth?: string;
+  readonly cardExpiryYear?: string;
   readonly cardBrand?: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
@@ -24,6 +26,8 @@ export class PaymentMethodModel extends AggregateRoot {
   readonly parent: string;
   readonly stripePaymentMethod: string;
   readonly lastFourCardNumber?: string;
+  readonly cardExpiryMonth?: string;
+  readonly cardExpiryYear?: string;
   readonly cardBrand?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
@@ -37,8 +41,11 @@ export class PaymentMethodModel extends AggregateRoot {
       service: ServerStokeiApiIdPrefix.PAYMENT_METHODS,
       id: data._id?.toString() || data.id
     });
+    this.parent = data.parent;
     this.stripePaymentMethod = data.stripePaymentMethod;
     this.lastFourCardNumber = data.lastFourCardNumber;
+    this.cardExpiryMonth = data.cardExpiryMonth;
+    this.cardExpiryYear = data.cardExpiryYear;
     this.cardBrand = data.cardBrand;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);

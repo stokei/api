@@ -8,14 +8,23 @@ export class PaymentMethod {
   @Field(() => ID)
   id: string;
 
-  @Field(() => Account)
-  parent: Account;
+  @Field(() => String)
+  parent: string;
+
+  @Field(() => String, { nullable: true })
+  stripePaymentMethod?: string;
 
   @Field(() => String, { nullable: true })
   lastFourCardNumber?: string;
 
   @Field(() => String, { nullable: true })
   cardBrand?: string;
+
+  @Field(() => String, { nullable: true })
+  cardExpiryMonth?: string;
+
+  @Field(() => String, { nullable: true })
+  cardExpiryYear?: string;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;

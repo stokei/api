@@ -367,6 +367,8 @@ model PaymentMethod {
   parent              String    @db.VarChar(255)
   stripePaymentMethod String    @map("stripe_payment_method") @db.VarChar(255)
   lastFourCardNumber  String?   @map("last_four_card_number") @db.VarChar(4)
+  cardExpiryMonth     String?   @map("card_expiry_month") @db.VarChar(4)
+  cardExpiryYear      String?   @map("card_expiry_year") @db.VarChar(4)
   cardBrand           String?   @map("card_brand") @db.VarChar(50)
   updatedAt           DateTime? @updatedAt @map("updated_at")
   createdAt           DateTime? @default(now()) @map("created_at")

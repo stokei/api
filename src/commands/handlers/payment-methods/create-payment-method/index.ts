@@ -50,6 +50,8 @@ export class CreatePaymentMethodCommandHandler
 
     const lastFourCardNumber = stripePaymentMethod.card?.last4;
     const cardBrand = stripePaymentMethod.card?.brand;
+    const cardExpiryMonth = stripePaymentMethod.card?.exp_month;
+    const cardExpiryYear = stripePaymentMethod.card?.exp_year;
 
     const paymentMethodExists =
       await this.existsPaymentMethodsRepository.execute({
@@ -68,7 +70,9 @@ export class CreatePaymentMethodCommandHandler
       await this.createPaymentMethodRepository.execute({
         ...data,
         lastFourCardNumber,
-        cardBrand
+        cardBrand,
+        cardExpiryMonth: cardExpiryMonth && cardExpiryMonth + '',
+        cardExpiryYear: cardExpiryYear && cardExpiryYear + ''
       });
     if (!paymentMethodCreated) {
       throw new PaymentMethodNotFoundException();

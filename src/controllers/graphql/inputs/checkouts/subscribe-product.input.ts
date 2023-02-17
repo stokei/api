@@ -4,4 +4,7 @@ import { Field, InputType } from '@nestjs/graphql';
 export class SubscribeProductInput {
   @Field(() => String)
   price: string;
+
+  @Field(() => String)
+  paymentMethod: string;
 }

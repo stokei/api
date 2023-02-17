@@ -17,6 +17,7 @@ import {
 import { CheckoutMapper } from '@/mappers/checkouts';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { FindPaymentMethodByIdService } from '@/services/payment-methods/find-payment-method-by-id';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateStripeSubscriptionService } from '@/services/stripe/create-stripe-subscription';
@@ -37,6 +38,7 @@ export class CreateCheckoutCommandHandler
     private readonly findAllSubscriptionContractsService: FindAllSubscriptionContractsService,
     private readonly createSubscriptionContractItemService: CreateSubscriptionContractItemService,
     private readonly findPriceByIdService: FindPriceByIdService,
+    private readonly findPaymentMethodByIdService: FindPaymentMethodByIdService,
     private readonly createSubscriptionContractService: CreateSubscriptionContractService,
     private readonly findAccountByIdService: FindAccountByIdService
   ) {}
@@ -68,6 +70,13 @@ export class CreateCheckoutCommandHandler
 
     const price = await this.findPriceByIdService.execute(data?.price);
     if (!price) {
+      throw new PriceNotFoundException();
+    }
+
+    const paymentMethod = await this.findPaymentMethodByIdService.execute(
+      data?.paymentMethod
+    );
+    if (!paymentMethod) {
       throw new PriceNotFoundException();
     }
 
@@ -103,6 +112,7 @@ export class CreateCheckoutCommandHandler
       await this.createStripeSubscriptionService.execute({
         app: customerApp.id,
         currency: customerApp.currency,
+        paymentMethod: paymentMethod?.stripePaymentMethod,
         prices: [{ price: price.stripePrice, quantity: 1 }],
         customer: stripeCustomer,
         stripeAccount: customerApp.stripeAccount
@@ -115,6 +125,7 @@ export class CreateCheckoutCommandHandler
         app: customerApp.id,
         createdBy: data.createdBy,
         parent: data.customer,
+        paymentMethod: paymentMethod?.id,
         stripeSubscription: stripeSubscription.id,
         type: price.type,
         automaticRenew: true
@@ -149,6 +160,7 @@ export class CreateCheckoutCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
+      paymentMethod: cleanValue(command?.paymentMethod),
       customer: cleanValue(command?.customer),
       price: cleanValue(command?.price)
     });

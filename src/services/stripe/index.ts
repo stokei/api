@@ -1,3 +1,4 @@
+import { AttachStripePaymentMethodToCustomerService } from './attach-stripe-payment-method-to-customer';
 import { CancelStripeSubscriptionService } from './cancel-stripe-subscription';
 import { CreateStripeAccountService } from './create-stripe-account';
 import { CreateStripeAccountLoginLinkService } from './create-stripe-account-login-link';
@@ -45,5 +46,6 @@ export const StripeServices = [
   UpdateStripeSubscriptionItemService,
   DeleteStripeSubscriptionItemService,
   CreateStripeUsageRecordService,
-  FindStripeSubscriptionByIdService
+  FindStripeSubscriptionByIdService,
+  AttachStripePaymentMethodToCustomerService
 ];

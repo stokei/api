@@ -9,6 +9,7 @@ export class CreateSubscriptionContractCommand
   app: string;
   parent: string;
   stripeSubscription: string;
+  paymentMethod?: string;
   type: SubscriptionContractType;
   automaticRenew: boolean;
   createdBy: string;
@@ -18,6 +19,7 @@ export class CreateSubscriptionContractCommand
     this.parent = data.parent;
     this.stripeSubscription = data.stripeSubscription;
     this.type = data.type;
+    this.paymentMethod = data.paymentMethod;
     this.automaticRenew = data.automaticRenew;
     this.createdBy = data.createdBy;
   }

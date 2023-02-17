@@ -17,6 +17,7 @@ export class CreateStripeSubscriptionService
   async execute(
     data: CreateStripeSubscriptionDTO
   ): Promise<Stripe.Response<Stripe.Subscription>> {
+    const startPaymentWhenSubscriptionIsCreated = !!data.paymentMethod;
     return stripeClient.subscriptions.create(
       {
         currency: data.currency,
@@ -25,7 +26,17 @@ export class CreateStripeSubscriptionService
           price: price.price,
           quantity: price.quantity
         })),
-        payment_behavior: 'default_incomplete',
+        ...(startPaymentWhenSubscriptionIsCreated
+          ? {
+              default_payment_method: data?.paymentMethod,
+              payment_settings: {
+                save_default_payment_method: 'on_subscription'
+              },
+              collection_method: 'charge_automatically'
+            }
+          : {
+              payment_behavior: 'default_incomplete'
+            }),
         expand: ['latest_invoice.payment_intent'],
         ...(data.stripeAccount && {
           application_fee_percent: APPLICATION_FEE_PERCENT,

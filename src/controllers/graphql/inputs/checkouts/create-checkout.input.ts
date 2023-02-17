@@ -7,4 +7,7 @@ export class CreateCheckoutInput {
 
   @Field(() => String)
   price: string;
+
+  @Field(() => String)
+  paymentMethod: string;
 }

@@ -3,6 +3,8 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreatePaymentMethodCommand } from '@/commands/implements/payment-methods/create-payment-method.command';
 import {
+  AccountNotFoundException,
+  AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
   PaymentMethodAlreadyExistsException,
@@ -10,6 +12,9 @@ import {
 } from '@/errors';
 import { CreatePaymentMethodRepository } from '@/repositories/payment-methods/create-payment-method';
 import { ExistsPaymentMethodsRepository } from '@/repositories/payment-methods/exists-payment-methods';
+import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
+import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { AttachStripePaymentMethodToCustomerService } from '@/services/stripe/attach-stripe-payment-method-to-customer';
 import { FindStripePaymentMethodByIdService } from '@/services/stripe/find-payment-method-by-id';
 
 type CreatePaymentMethodCommandKeys = keyof CreatePaymentMethodCommand;
@@ -19,9 +24,12 @@ export class CreatePaymentMethodCommandHandler
   implements ICommandHandler<CreatePaymentMethodCommand>
 {
   constructor(
+    private readonly findAccountByIdService: FindAccountByIdService,
+    private readonly findAppByIdService: FindAppByIdService,
     private readonly createPaymentMethodRepository: CreatePaymentMethodRepository,
     private readonly existsPaymentMethodsRepository: ExistsPaymentMethodsRepository,
     private readonly findStripePaymentMethodByIdService: FindStripePaymentMethodByIdService,
+    private readonly attachStripePaymentMethodToCustomerService: AttachStripePaymentMethodToCustomerService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -40,6 +48,16 @@ export class CreatePaymentMethodCommandHandler
         'stripePaymentMethod'
       );
     }
+
+    const account = await this.findAccountByIdService.execute(data.parent);
+    if (!account) {
+      throw new AccountNotFoundException();
+    }
+    const app = await this.findAppByIdService.execute(data.app);
+    if (!app) {
+      throw new AppNotFoundException();
+    }
+
     const stripePaymentMethod =
       await this.findStripePaymentMethodByIdService.execute(
         data.stripePaymentMethod
@@ -50,16 +68,22 @@ export class CreatePaymentMethodCommandHandler
 
     const lastFourCardNumber = stripePaymentMethod.card?.last4;
     const cardBrand = stripePaymentMethod.card?.brand;
-    const cardExpiryMonth = stripePaymentMethod.card?.exp_month;
-    const cardExpiryYear = stripePaymentMethod.card?.exp_year;
+    const cardExpiryMonth = stripePaymentMethod.card?.exp_month
+      ? stripePaymentMethod.card.exp_month + ''
+      : undefined;
+    const cardExpiryYear = stripePaymentMethod.card?.exp_year
+      ? stripePaymentMethod.card.exp_year + ''
+      : undefined;
 
     const paymentMethodExists =
       await this.existsPaymentMethodsRepository.execute({
         where: {
-          parent: data.parent,
-          app: data.app,
+          parent: account.id,
+          app: app.id,
           lastFourCardNumber,
-          cardBrand
+          cardBrand,
+          cardExpiryMonth,
+          cardExpiryYear
         }
       });
     if (paymentMethodExists) {
@@ -71,12 +95,20 @@ export class CreatePaymentMethodCommandHandler
         ...data,
         lastFourCardNumber,
         cardBrand,
-        cardExpiryMonth: cardExpiryMonth && cardExpiryMonth + '',
-        cardExpiryYear: cardExpiryYear && cardExpiryYear + ''
+        cardExpiryMonth,
+        cardExpiryYear
       });
     if (!paymentMethodCreated) {
       throw new PaymentMethodNotFoundException();
     }
+
+    await this.attachStripePaymentMethodToCustomerService.execute({
+      app: app.id,
+      customer: account?.stripeCustomer,
+      paymentMethod: paymentMethodCreated.stripePaymentMethod,
+      stripeAccount: app.stripeAccount
+    });
+
     const paymentMethodModel =
       this.publisher.mergeObjectContext(paymentMethodCreated);
     paymentMethodModel.createdPaymentMethod({

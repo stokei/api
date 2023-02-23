@@ -28,6 +28,12 @@ export class Account {
   @Field(() => String)
   username: string;
 
+  @Field(() => Boolean, { nullable: true })
+  isAdmin?: boolean;
+
+  @Field(() => Boolean, { nullable: true })
+  isInstructor?: boolean;
+
   @Field(() => Image, { nullable: true })
   avatar?: Image;
 

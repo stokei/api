@@ -32,6 +32,9 @@ export class Account {
   isAdmin?: boolean;
 
   @Field(() => Boolean, { nullable: true })
+  isOwner?: boolean;
+
+  @Field(() => Boolean, { nullable: true })
   isInstructor?: boolean;
 
   @Field(() => Image, { nullable: true })

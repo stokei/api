@@ -37,6 +37,7 @@ import { Services } from './services';
     ...Entities,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      fieldResolverEnhancers: ['guards', 'interceptors'],
       playground: !IS_PRODUCTION,
       debug: !IS_PRODUCTION,
       introspection: !IS_PRODUCTION,

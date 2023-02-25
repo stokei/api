@@ -8,6 +8,7 @@ export interface CreateStripeSubscriptionDTO {
   currency: string;
   prices: CreateStripeCheckoutSessionPriceDTO[];
   customer: string;
+  startPaymentWhenSubscriptionIsCreated: boolean;
   paymentMethod?: string;
   stripeAccount?: string;
 }

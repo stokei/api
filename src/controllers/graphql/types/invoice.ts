@@ -13,8 +13,11 @@ export class Invoice {
   @Field(() => ID)
   id: string;
 
-  @Field(() => Account)
-  customer: Account;
+  @Field(() => Account, { nullable: true })
+  customerAccount: Account;
+
+  @Field(() => App, { nullable: true })
+  customerApp: App;
 
   @Field(() => SubscriptionContract)
   subscription: SubscriptionContract;

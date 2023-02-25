@@ -38,55 +38,57 @@ export class AddAppAdminToAppSubscriptionContractCommandHandler
   ): Promise<SubscriptionContractItemModel> {
     const data = this.clearData(command);
     try {
+      if (!data) {
+        throw new DataNotFoundException();
+      }
+      if (!data?.appAdmin) {
+        throw new ParamNotFoundException<AddAppAdminToAppSubscriptionContractCommandKeys>(
+          'appAdmin'
+        );
+      }
+
+      const appAdmin = await this.findAppAdminByIdService.execute(
+        data.appAdmin
+      );
+      if (!appAdmin) {
+        throw new AppAdminNotFoundException();
+      }
+
+      const appAdmins = await this.findAllAppAdminsService.execute({
+        where: {
+          AND: {
+            app: {
+              equals: appAdmin.app
+            }
+          }
+        },
+        page: {
+          limit: 1
+        }
+      });
+      if (appAdmins?.totalCount <= 1) {
+        return;
+      }
+
+      const appAdminPrice = await this.findPlanPriceByTypeService.execute(
+        PlanType.ADMIN
+      );
+      if (!appAdminPrice) {
+        throw new PriceNotFoundException();
+      }
+
+      const subscriptionContractItem =
+        await this.addItemToAppSubscriptionContractService.execute({
+          app: appAdmin.app,
+          price: appAdminPrice.id,
+          createdBy: data.createdBy,
+          quantity: 1
+        });
+      return subscriptionContractItem;
     } catch (error) {
       this.logger.error(error?.message);
       return;
     }
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.appAdmin) {
-      throw new ParamNotFoundException<AddAppAdminToAppSubscriptionContractCommandKeys>(
-        'appAdmin'
-      );
-    }
-
-    const appAdmin = await this.findAppAdminByIdService.execute(data.appAdmin);
-    if (!appAdmin) {
-      throw new AppAdminNotFoundException();
-    }
-
-    const appAdmins = await this.findAllAppAdminsService.execute({
-      where: {
-        AND: {
-          app: {
-            equals: appAdmin.app
-          }
-        }
-      },
-      page: {
-        limit: 1
-      }
-    });
-    if (appAdmins?.totalCount <= 1) {
-      return;
-    }
-
-    const appAdminPrice = await this.findPlanPriceByTypeService.execute(
-      PlanType.ADMIN
-    );
-    if (!appAdminPrice) {
-      throw new PriceNotFoundException();
-    }
-
-    const subscriptionContractItem =
-      await this.addItemToAppSubscriptionContractService.execute({
-        app: appAdmin.app,
-        price: appAdminPrice.id,
-        createdBy: data.createdBy,
-        quantity: 1
-      });
-    return subscriptionContractItem;
   }
 
   private clearData(

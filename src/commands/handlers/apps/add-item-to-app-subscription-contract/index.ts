@@ -9,13 +9,15 @@ import {
 } from '@stokei/nestjs';
 
 import { AddItemToAppSubscriptionContractCommand } from '@/commands/implements/apps/add-item-to-app-subscription-contract.command';
+import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import { UsageRecordAction } from '@/enums/usage-record-action.enum';
 import {
   AppNotFoundException,
   AppUnauthorizedException,
   DataNotFoundException,
   ParamNotFoundException,
-  PriceNotFoundException
+  PriceNotFoundException,
+  SubscriptionContractNotFoundException
 } from '@/errors';
 import { AppModel } from '@/models/app.model';
 import { PriceModel } from '@/models/price.model';
@@ -23,6 +25,7 @@ import { SubscriptionContractModel } from '@/models/subscription-contract.model'
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentSubscriptionContractService } from '@/services/apps/find-app-current-subscription-contract';
+import { FindPaymentMethodByIdService } from '@/services/payment-methods/find-payment-method-by-id';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateStripeSubscriptionService } from '@/services/stripe/create-stripe-subscription';
@@ -31,6 +34,7 @@ import { CreateSubscriptionContractItemService } from '@/services/subscription-c
 import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
 import { UpdateSubscriptionContractItemService } from '@/services/subscription-contract-items/update-subscription-contract-item';
 import { ActivateSubscriptionContractService } from '@/services/subscription-contracts/activate-subscription-contract';
+import { CancelSubscriptionContractService } from '@/services/subscription-contracts/cancel-subscription-contract';
 import { CreateSubscriptionContractService } from '@/services/subscription-contracts/create-subscription-contract';
 import { CreateUsageRecordService } from '@/services/usage-records/create-usage-record';
 
@@ -53,8 +57,10 @@ export class AddItemToAppSubscriptionContractCommandHandler
     private readonly findPriceByIdService: FindPriceByIdService,
     private readonly findProductByIdService: FindProductByIdService,
     private readonly activateSubscriptionContractService: ActivateSubscriptionContractService,
+    private readonly cancelSubscriptionContractService: CancelSubscriptionContractService,
     private readonly findAppCurrentSubscriptionContractService: FindAppCurrentSubscriptionContractService,
     private readonly findAllSubscriptionContractItemsService: FindAllSubscriptionContractItemsService,
+    private readonly findPaymentMethodByIdService: FindPaymentMethodByIdService,
     private readonly findStripeSubscriptionByIdService: FindStripeSubscriptionByIdService,
     private readonly updateSubscriptionContractItemService: UpdateSubscriptionContractItemService
   ) {}
@@ -168,13 +174,42 @@ export class AddItemToAppSubscriptionContractCommandHandler
     try {
       const subscriptionContract =
         await this.findAppCurrentSubscriptionContractService.execute(app.id);
+
+      const stripeSubscription =
+        await this.findStripeSubscriptionByIdService.execute(
+          subscriptionContract.stripeSubscription,
+          app.stripeAccount
+        );
+      const isInactiveSubscription =
+        stripeSubscription?.status !== 'active' ||
+        subscriptionContract.status !== SubscriptionContractStatus.ACTIVE;
+
+      if (isInactiveSubscription) {
+        const isCanceledSubscription =
+          subscriptionContract.status === SubscriptionContractStatus.CANCELED;
+        if (!isCanceledSubscription) {
+          await this.cancelSubscriptionContractService.execute({
+            subscriptionContract: subscriptionContract.id,
+            app: subscriptionContract.app,
+            updatedBy: createdBy
+          });
+        }
+
+        throw new SubscriptionContractNotFoundException();
+      }
       return { subscriptionContract };
     } catch (error) {
+      const appPaymentMethod = await this.findPaymentMethodByIdService.execute(
+        app.paymentMethod
+      );
       const stripeSubscription =
         await this.createStripeSubscriptionService.execute({
           app: app.id,
           currency: app.currency,
           customer: app.stripeCustomer,
+          paymentMethod: appPaymentMethod.stripePaymentMethod,
+          stripeAccount: app.stripeAccount,
+          startPaymentWhenSubscriptionIsCreated: false,
           prices: [
             {
               price: price.stripePrice,

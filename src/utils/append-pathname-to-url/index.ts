@@ -8,11 +8,11 @@ const removeTextSlash = (text: string, from: 'START' | 'END') => {
     return text;
   }
   if (from === 'END') {
-    const removeLastSlash = textSplited.slice(0, textSplited.length - 1);
-    return removeLastSlash.join('');
+    const removeLastSlash = textSplited?.slice(0, textSplited?.length - 1);
+    return removeLastSlash?.join('');
   }
-  const removeFirstSlash = textSplited.slice(1, textSplited.length);
-  return removeFirstSlash.join('');
+  const removeFirstSlash = textSplited?.slice(1, textSplited?.length);
+  return removeFirstSlash?.join('');
 };
 
 export const appendPathnameToURL = (url: string, pathname: string) => {

@@ -37,38 +37,40 @@ export class RemoveAppAdminFromAppSubscriptionContractCommandHandler
     const data = this.clearData(command);
 
     try {
+      if (!data) {
+        throw new DataNotFoundException();
+      }
+      if (!data?.appAdmin) {
+        throw new ParamNotFoundException<RemoveAppAdminFromAppSubscriptionContractCommandKeys>(
+          'appAdmin'
+        );
+      }
+
+      const appAdmin = await this.findAppAdminByIdService.execute(
+        data.appAdmin
+      );
+      if (!appAdmin) {
+        throw new AppAdminNotFoundException();
+      }
+
+      const appAdminPrice = await this.findPlanPriceByTypeService.execute(
+        PlanType.ADMIN
+      );
+      if (!appAdminPrice) {
+        throw new PriceNotFoundException();
+      }
+
+      const subscriptionContractItem =
+        await this.removeItemFromAppSubscriptionContractService.execute({
+          app: appAdmin.app,
+          price: appAdminPrice.id,
+          removedBy: data.removedBy
+        });
+      return subscriptionContractItem;
     } catch (error) {
       this.logger.error(error?.message);
       return;
     }
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.appAdmin) {
-      throw new ParamNotFoundException<RemoveAppAdminFromAppSubscriptionContractCommandKeys>(
-        'appAdmin'
-      );
-    }
-
-    const appAdmin = await this.findAppAdminByIdService.execute(data.appAdmin);
-    if (!appAdmin) {
-      throw new AppAdminNotFoundException();
-    }
-
-    const appAdminPrice = await this.findPlanPriceByTypeService.execute(
-      PlanType.ADMIN
-    );
-    if (!appAdminPrice) {
-      throw new PriceNotFoundException();
-    }
-
-    const subscriptionContractItem =
-      await this.removeItemFromAppSubscriptionContractService.execute({
-        app: appAdmin.app,
-        price: appAdminPrice.id,
-        removedBy: data.removedBy
-      });
-    return subscriptionContractItem;
   }
 
   private clearData(

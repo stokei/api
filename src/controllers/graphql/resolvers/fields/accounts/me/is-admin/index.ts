@@ -1,5 +1,8 @@
+import { UseGuards } from '@nestjs/common';
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
+import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
+import { AppGuard } from '@/common/guards/app';
 import { MeAccount } from '@/controllers/graphql/types/me-account';
 import { AccountModel } from '@/models/account.model';
 import { FindAllAppAdminsService } from '@/services/app-admins/find-all-app-admins';
@@ -12,10 +15,14 @@ export class MeAccountIsAdminResolver {
     private readonly getOrSetCacheService: GetOrSetCacheService
   ) {}
 
+  @UseGuards(AppGuard)
   @ResolveField(() => Boolean, { nullable: true })
-  async isAdmin(@Parent() account: AccountModel) {
+  async isAdmin(
+    @Parent() account: AccountModel,
+    @CurrentApp('id') appId: string
+  ) {
     const admins = await this.getOrSetCacheService.execute(
-      account?.id + account?.app,
+      account?.id + account?.app + MeAccountIsAdminResolver.name,
       () =>
         this.findAllAppAdminsService.execute({
           where: {
@@ -24,7 +31,7 @@ export class MeAccountIsAdminResolver {
                 equals: account?.id
               },
               app: {
-                equals: account?.app
+                equals: appId
               }
             }
           },

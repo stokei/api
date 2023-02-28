@@ -4,11 +4,9 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { AddAccountRoleCommand } from '@/commands/implements/accounts/add-account-role.command';
 import { CreateAppStripeCustomerCommand } from '@/commands/implements/apps/create-app-stripe-customer.command';
 import { UpdateAppStripeCustomerCommand } from '@/commands/implements/apps/update-app-stripe-customer.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
-import { AccountRole } from '@/enums/account-role.enum';
 import { AppCreatedEvent } from '@/events/implements/apps/app-created.event';
 import { AppUpdatedEvent } from '@/events/implements/apps/app-updated.event';
 
@@ -36,11 +34,6 @@ export class AppsSagas {
         const commands = [
           new CreateAppStripeCustomerCommand({
             app: event.app.id,
-            createdBy: event.createdBy
-          }),
-          new AddAccountRoleCommand({
-            account: event.app.parent,
-            role: AccountRole.ADMIN,
             createdBy: event.createdBy
           })
         ];

@@ -1,8 +1,6 @@
 import { AccessesMutations } from './accesses';
 import { AccountsMutations } from './accounts';
 import { AddressesMutations } from './addresses';
-import { AppAdminsMutations } from './app-admins';
-import { AppInstructorsMutations } from './app-instructors';
 import { AppsMutations } from './apps';
 import { CheckoutsMutations } from './checkouts';
 import { ColorsMutations } from './colors';
@@ -31,8 +29,6 @@ export const Mutations = [
   ...AccountsMutations,
   ...AccessesMutations,
   ...AppsMutations,
-  ...AppInstructorsMutations,
-  ...AppAdminsMutations,
   ...DomainsMutations,
   ...CurrenciesMutations,
   ...ImagesMutations,

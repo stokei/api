@@ -59,6 +59,7 @@ export class RemoveCourseFromAppSubscriptionContractCommandHandler
 
       const subscriptionContractItem =
         await this.removeItemFromAppSubscriptionContractService.execute({
+          quantity: 1,
           app: course.app,
           price: coursePrice.id,
           removedBy: data.removedBy

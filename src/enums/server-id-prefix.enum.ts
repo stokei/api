@@ -22,8 +22,6 @@ export enum ServerStokeiApiIdPrefix {
   VIDEO_AUTHORS = 'author',
   MODULES = 'mod',
   COURSES = 'course',
-  APP_INSTRUCTORS = 'app_instructor',
-  APP_ADMINS = 'app_admin',
   COURSE_INSTRUCTORS = 'course_instructor',
   COURSE_STUDENTS = 'course_stud',
   SUBSCRIPTION_CONTRACTS = 'sub',

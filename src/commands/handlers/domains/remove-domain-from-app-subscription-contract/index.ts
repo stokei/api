@@ -59,6 +59,7 @@ export class RemoveDomainFromAppSubscriptionContractCommandHandler
 
       const subscriptionContractItem =
         await this.removeItemFromAppSubscriptionContractService.execute({
+          quantity: 1,
           app: domain.app,
           price: domainPrice.id,
           removedBy: data.removedBy

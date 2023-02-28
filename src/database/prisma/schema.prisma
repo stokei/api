@@ -14,6 +14,12 @@ enum AccountStatus {
   BLOCKED
 }
 
+enum AccountRole {
+  ADMIN
+  STUDENT
+  INSTRUCTOR
+}
+
 enum PlanType {
   DOMAIN
   ADMIN
@@ -132,6 +138,7 @@ model Account {
   stripeCustomer     String?       @map("stripe_customer") @db.VarChar(255)
   dateBirthday       DateTime?     @map("date_birthday")
   status             AccountStatus
+  roles              AccountRole[] @default([])
   active             Boolean       @default(true)
   canceledAt         DateTime?     @map("canceled_at")
   updatedAt          DateTime?     @updatedAt @map("updated_at")
@@ -184,30 +191,6 @@ model App {
   createdBy         String?   @map("created_by") @db.VarChar(255)
 
   @@map("apps")
-}
-
-model AppAdmin {
-  id        String    @id @default(cuid())
-  app       String    @db.VarChar(255)
-  admin     String    @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-
-  @@map("app_admins")
-}
-
-model AppInstructor {
-  id         String    @id @default(cuid())
-  app        String    @db.VarChar(255)
-  instructor String    @db.VarChar(255)
-  updatedAt  DateTime? @updatedAt @map("updated_at")
-  createdAt  DateTime? @default(now()) @map("created_at")
-  updatedBy  String?   @map("updated_by") @db.VarChar(255)
-  createdBy  String?   @map("created_by") @db.VarChar(255)
-
-  @@map("app_instructors")
 }
 
 model Domain {

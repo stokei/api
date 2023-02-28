@@ -6,10 +6,13 @@ import {
 } from '@stokei/nestjs';
 import { Exclude } from 'class-transformer';
 
+import { AccountRole } from '@/enums/account-role.enum';
 import { AccountStatus } from '@/enums/account-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
 import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
+import { AccountRoleCreatedEvent } from '@/events/implements/accounts/account-role-created.event';
+import { AccountRoleRemovedEvent } from '@/events/implements/accounts/account-role-removed.event';
 import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
 import { PasswordChangedEvent } from '@/events/implements/accounts/password-changed.event';
 import { PasswordForgottenEvent } from '@/events/implements/accounts/password-forgotten.event';
@@ -29,6 +32,7 @@ export interface IAccountModelData {
   readonly forgotPasswordCode?: string;
   readonly dateBirthday?: Date | string;
   readonly status: AccountStatus;
+  readonly roles: AccountRole[];
   readonly canceledAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
@@ -57,6 +61,7 @@ export class AccountModel extends AggregateRoot {
   readonly forgotPasswordCode?: string;
   readonly dateBirthday?: string;
   readonly status: AccountStatus;
+  readonly roles: AccountRole[];
   readonly active: boolean;
   readonly canceledAt?: string;
   readonly updatedAt?: string;
@@ -83,6 +88,7 @@ export class AccountModel extends AggregateRoot {
     this.lastPassword = data.lastPassword;
     this.salt = data.salt;
     this.avatar = data.avatar;
+    this.roles = data.roles || [];
     this.forgotPasswordCode = data.forgotPasswordCode;
     this.dateBirthday = convertToISODateString(data.dateBirthday);
     this.status = data.status || AccountStatus.ACTIVE;
@@ -144,6 +150,42 @@ export class AccountModel extends AggregateRoot {
     if (this.id && this.email) {
       this.apply(
         new PasswordForgottenEvent({
+          account: this
+        })
+      );
+    }
+  }
+
+  createdRoleAccount({
+    createdBy,
+    role
+  }: {
+    createdBy: string;
+    role: AccountRole;
+  }) {
+    if (this.id) {
+      this.apply(
+        new AccountRoleCreatedEvent({
+          createdBy,
+          role,
+          account: this
+        })
+      );
+    }
+  }
+
+  removedRoleAccount({
+    removedBy,
+    role
+  }: {
+    removedBy: string;
+    role: AccountRole;
+  }) {
+    if (this.id) {
+      this.apply(
+        new AccountRoleRemovedEvent({
+          removedBy,
+          role,
           account: this
         })
       );

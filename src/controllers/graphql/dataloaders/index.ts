@@ -1,8 +1,6 @@
 import { AccessesLoader } from './accesses.loader';
 import { AccountsLoader } from './accounts.loader';
 import { AddressesLoader } from './addresses.loader';
-import { AppAdminsLoader } from './app-admins.loader';
-import { AppInstructorsLoader } from './app-instructors.loader';
 import { AppsLoader } from './apps.loader';
 import { ColorsLoader } from './colors.loader';
 import { CourseInstructorsLoader } from './course-instructors.loader';
@@ -30,8 +28,6 @@ export const Loaders = [
   AccountsLoader,
   AccessesLoader,
   AppsLoader,
-  AppAdminsLoader,
-  AppInstructorsLoader,
   DomainsLoader,
   CurrenciesLoader,
   LanguagesLoader,

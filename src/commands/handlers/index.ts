@@ -1,8 +1,6 @@
 import { AccessCommandHandlers } from './accesses';
 import { AccountCommandHandlers } from './accounts';
 import { AddressCommandHandlers } from './addresses';
-import { AppAdminCommandHandlers } from './app-admins';
-import { AppInstructorCommandHandlers } from './app-instructors';
 import { AppCommandHandlers } from './apps';
 import { CheckoutCommandHandlers } from './checkouts';
 import { ColorCommandHandlers } from './colors';
@@ -35,8 +33,6 @@ export const CommandHandlers = [
   ...AccessCommandHandlers,
   ...AccountCommandHandlers,
   ...AppCommandHandlers,
-  ...AppAdminCommandHandlers,
-  ...AppInstructorCommandHandlers,
   ...DomainCommandHandlers,
   ...CurrencyCommandHandlers,
   ...LanguageCommandHandlers,

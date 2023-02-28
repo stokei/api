@@ -4,7 +4,9 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { AddAccountRoleCommand } from '@/commands/implements/accounts/add-account-role.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
+import { AccountRole } from '@/enums/account-role.enum';
 import { CourseInstructorCreatedEvent } from '@/events/implements/course-instructors/course-instructor-created.event';
 import { CourseInstructorRemovedEvent } from '@/events/implements/course-instructors/course-instructor-removed.event';
 
@@ -31,7 +33,13 @@ export class CourseInstructorsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new AddAccountRoleCommand({
+            account: event.courseInstructor.instructor,
+            role: AccountRole.ADMIN,
+            createdBy: event.createdBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

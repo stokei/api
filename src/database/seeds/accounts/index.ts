@@ -8,6 +8,7 @@ import { CreateAccountDTO } from '@/dtos/accounts/create-account.dto';
 import { AccountModel } from '@/models/account.model';
 import { CreateAccountService } from '@/services/accounts/create-account';
 import { FindAllAccountsService } from '@/services/accounts/find-all-accounts';
+import { UpdateAccountService } from '@/services/accounts/update-account';
 
 type AccountDataDTO = CreateAccountDTO;
 
@@ -17,6 +18,7 @@ export class AccountsSeeds
 {
   constructor(
     private readonly createAccountService: CreateAccountService,
+    private readonly updateAccountService: UpdateAccountService,
     private readonly findAllAccountsService: FindAllAccountsService
   ) {}
 
@@ -61,5 +63,22 @@ export class AccountsSeeds
         createdBy: defaultAccountId
       }
     ];
+  }
+  async runAccountEventsAfterCreation() {
+    return await Promise.all(
+      this.createData()?.map(async (accountData) => {
+        const account = await this.updateAccountService.execute({
+          data: {
+            firstname: accountData.firstname,
+            updatedBy: accountData.createdBy
+          },
+          where: {
+            account: accountData.id,
+            app: accountData.app
+          }
+        });
+        return account;
+      })
+    );
   }
 }

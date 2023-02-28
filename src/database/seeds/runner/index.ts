@@ -38,6 +38,14 @@ export class SeedsRunner {
       this.logger.error('Failed seeding languages...');
     }
     try {
+      await this.accountsSeeds.execute();
+      this.logger.log('Successfuly completed seeding accounts...');
+      await sleep(DELAY_ONE_SECOND);
+    } catch (error) {
+      this.logger.error(error.message);
+      this.logger.error('Failed seeding accounts...');
+    }
+    try {
       await this.appsSeeds.execute();
       this.logger.log('Successfuly completed seeding apps...');
       await sleep(DELAY_ONE_SECOND);
@@ -46,12 +54,14 @@ export class SeedsRunner {
       this.logger.error('Failed seeding apps...');
     }
     try {
-      await this.accountsSeeds.execute();
-      this.logger.log('Successfuly completed seeding accounts...');
+      await this.accountsSeeds.runAccountEventsAfterCreation();
+      this.logger.log(
+        'Successfuly completed seeding accounts events after creation...'
+      );
       await sleep(DELAY_ONE_SECOND);
     } catch (error) {
       this.logger.error(error.message);
-      this.logger.error('Failed seeding accounts...');
+      this.logger.error('Failed seeding accounts events after creation...');
     }
     try {
       await this.plansSeeds.execute();

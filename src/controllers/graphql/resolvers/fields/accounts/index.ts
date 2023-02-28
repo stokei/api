@@ -1,8 +1,6 @@
 import { AccountAppResolver } from './app';
 import { AccountAvatarResolver } from './avatar';
 import { AccountCreatedByResolver } from './created-by';
-import { AccountIsAdminResolver } from './is-admin';
-import { AccountIsInstructorResolver } from './is-instructor';
 import { AccountIsOwnerResolver } from './is-owner';
 import { MeAccountsFieldsResolvers } from './me';
 import { AccountReferenceResolver } from './reference';
@@ -15,7 +13,5 @@ export const AccountsFieldsResolvers = [
   AccountAvatarResolver,
   AccountCreatedByResolver,
   AccountUpdatedByResolver,
-  AccountIsAdminResolver,
-  AccountIsOwnerResolver,
-  AccountIsInstructorResolver
+  AccountIsOwnerResolver
 ];

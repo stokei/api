@@ -25,6 +25,7 @@ export class AccountModelMock extends AccountModel {
         PASSWORD_SECRET_KEY
       ),
       salt,
+      roles: [],
       status: data?.status ?? AccountStatus.ACTIVE,
       app: data?.app ?? 'anyParent',
       avatar: data?.avatar ?? 'anyavatar',

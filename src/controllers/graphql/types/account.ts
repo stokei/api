@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
+import { AccountRole } from '@/controllers/graphql/enums/account-role.enum';
 import { AccountStatus } from '@/controllers/graphql/enums/account-status.enum';
 
 import { App } from './app';
@@ -45,6 +46,9 @@ export class Account {
 
   @Field(() => AccountStatus)
   status: AccountStatus;
+
+  @Field(() => [AccountRole])
+  roles: AccountRole[];
 
   @Field(() => Boolean)
   isStokei: boolean;

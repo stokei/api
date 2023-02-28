@@ -1,8 +1,6 @@
 import { AccessesRepositories } from './accesses';
 import { AccountsRepositories } from './accounts';
 import { AddressesRepositories } from './addresses';
-import { AppAdminsRepositories } from './app-admins';
-import { AppInstructorsRepositories } from './app-instructors';
 import { AppsRepositories } from './apps';
 import { ColorsRepositories } from './colors';
 import { CourseInstructorsRepositories } from './course-instructors';
@@ -33,8 +31,6 @@ export const Repositories = [
   ...AccountsRepositories,
   ...AccessesRepositories,
   ...AppsRepositories,
-  ...AppAdminsRepositories,
-  ...AppInstructorsRepositories,
   ...DomainsRepositories,
   ...CurrenciesRepositories,
   ...LanguagesRepositories,

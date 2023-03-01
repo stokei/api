@@ -2,6 +2,7 @@ import { AccessQueriesHandlers } from './accesses';
 import { AccountQueriesHandlers } from './accounts';
 import { AddressQueriesHandlers } from './addresses';
 import { AppQueriesHandlers } from './apps';
+import { CatalogItemQueriesHandlers } from './catalog-items';
 import { CatalogQueriesHandlers } from './catalogs';
 import { ColorQueriesHandlers } from './colors';
 import { CourseInstructorQueriesHandlers } from './course-instructors';
@@ -57,5 +58,6 @@ export const QueriesHandlers = [
   ...PriceTierQueriesHandlers,
   ...SubscriptionContractItemQueriesHandlers,
   ...UsageRecordQueriesHandlers,
-  ...CatalogQueriesHandlers
+  ...CatalogQueriesHandlers,
+  ...CatalogItemQueriesHandlers
 ];

@@ -2,6 +2,7 @@ import { AccessesFieldsResolvers } from './accesses';
 import { AccountsFieldsResolvers } from './accounts';
 import { AddressesFieldsResolvers } from './addresses';
 import { AppsFieldsResolvers } from './apps';
+import { CatalogItemsFieldsResolvers } from './catalog-items';
 import { CatalogsFieldsResolvers } from './catalogs';
 import { ColorsFieldsResolvers } from './colors';
 import { CourseInstructorsFieldsResolvers } from './course-instructors';
@@ -47,5 +48,6 @@ export const FieldsResolvers = [
   ...PhonesFieldsResolvers,
   ...InvoicesFieldsResolvers,
   ...FeaturesFieldsResolvers,
-  ...CatalogsFieldsResolvers
+  ...CatalogsFieldsResolvers,
+  ...CatalogItemsFieldsResolvers
 ];

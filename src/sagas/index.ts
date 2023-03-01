@@ -2,6 +2,7 @@ import { AccessesSagas } from './accesses.saga';
 import { AccountsSagas } from './accounts.saga';
 import { AddressesSagas } from './addresses.saga';
 import { AppsSagas } from './apps.saga';
+import { CatalogItemsSagas } from './catalog-items.saga';
 import { CatalogsSagas } from './catalogs.saga';
 import { ColorsSagas } from './colors.saga';
 import { CourseInstructorsSagas } from './course-instructors.saga';
@@ -57,5 +58,6 @@ export const Sagas = [
   RecurringsSagas,
   SubscriptionContractItemsSagas,
   UsageRecordsSagas,
-  CatalogsSagas
+  CatalogsSagas,
+  CatalogItemsSagas
 ];

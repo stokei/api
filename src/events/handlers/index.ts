@@ -2,6 +2,7 @@ import { AccessEventsHandlers } from './accesses';
 import { AccountEventsHandlers } from './accounts';
 import { AddressEventsHandlers } from './addresses';
 import { AppEventsHandlers } from './apps';
+import { CatalogItemEventsHandlers } from './catalog-items';
 import { CatalogEventsHandlers } from './catalogs';
 import { ColorEventsHandlers } from './colors';
 import { CourseInstructorEventsHandlers } from './course-instructors';
@@ -57,5 +58,6 @@ export const EventsHandlers = [
   ...PriceTierEventsHandlers,
   ...SubscriptionContractItemEventsHandlers,
   ...UsageRecordEventsHandlers,
-  ...CatalogEventsHandlers
+  ...CatalogEventsHandlers,
+  ...CatalogItemEventsHandlers
 ];

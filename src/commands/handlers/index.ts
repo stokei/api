@@ -2,6 +2,7 @@ import { AccessCommandHandlers } from './accesses';
 import { AccountCommandHandlers } from './accounts';
 import { AddressCommandHandlers } from './addresses';
 import { AppCommandHandlers } from './apps';
+import { CatalogItemCommandHandlers } from './catalog-items';
 import { CheckoutCommandHandlers } from './checkouts';
 import { ColorCommandHandlers } from './colors';
 import { CourseInstructorCommandHandlers } from './course-instructors';
@@ -59,5 +60,6 @@ export const CommandHandlers = [
   ...FeatureCommandHandlers,
   ...PriceTierCommandHandlers,
   ...SubscriptionContractItemCommandHandlers,
-  ...UsageRecordCommandHandlers
+  ...UsageRecordCommandHandlers,
+  ...CatalogItemCommandHandlers
 ];

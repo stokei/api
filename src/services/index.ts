@@ -3,6 +3,7 @@ import { AccountServices } from './accounts';
 import { AddressServices } from './addresses';
 import { AppServices } from './apps';
 import { CacheServices } from './cache';
+import { CatalogItemServices } from './catalog-items';
 import { CatalogServices } from './catalogs';
 import { CheckoutServices } from './checkouts';
 import { CloudflareServices } from './cloudflare';
@@ -71,5 +72,6 @@ export const Services = [
   ...UsageRecordServices,
   ...CloudflareServices,
   ...TusServices,
-  ...CatalogServices
+  ...CatalogServices,
+  ...CatalogItemServices
 ];

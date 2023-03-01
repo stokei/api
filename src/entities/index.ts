@@ -2,6 +2,8 @@ export * from './access.entity';
 export * from './account.entity';
 export * from './address.entity';
 export * from './app.entity';
+export * from './catalog.entity';
+export * from './catalog-item.entity';
 export * from './color.entity';
 export * from './course.entity';
 export * from './course-instructor.entity';

@@ -2,6 +2,7 @@ import { AccessesMutations } from './accesses';
 import { AccountsMutations } from './accounts';
 import { AddressesMutations } from './addresses';
 import { AppsMutations } from './apps';
+import { CatalogsMutations } from './catalogs';
 import { CheckoutsMutations } from './checkouts';
 import { ColorsMutations } from './colors';
 import { CourseInstructorsMutations } from './course-instructors';
@@ -51,5 +52,6 @@ export const Mutations = [
   ...CustomerPortalSessionsMutations,
   ...InvoicesMutations,
   ...FilesMutations,
-  ...FeaturesMutations
+  ...FeaturesMutations,
+  ...CatalogsMutations
 ];

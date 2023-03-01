@@ -2,6 +2,7 @@ import { AccessesRepositories } from './accesses';
 import { AccountsRepositories } from './accounts';
 import { AddressesRepositories } from './addresses';
 import { AppsRepositories } from './apps';
+import { CatalogsRepositories } from './catalogs';
 import { ColorsRepositories } from './colors';
 import { CourseInstructorsRepositories } from './course-instructors';
 import { CourseStudentsRepositories } from './course-students';
@@ -55,5 +56,6 @@ export const Repositories = [
   ...FeaturesRepositories,
   ...PriceTiersRepositories,
   ...SubscriptionContractItemsRepositories,
-  ...UsageRecordsRepositories
+  ...UsageRecordsRepositories,
+  ...CatalogsRepositories
 ];

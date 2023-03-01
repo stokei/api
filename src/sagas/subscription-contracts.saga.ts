@@ -4,6 +4,8 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { ActivateSubscriptionContractItemsCommand } from '@/commands/implements/subscription-contract-items/activate-subscription-contract-items.command';
+import { CancelSubscriptionContractItemsCommand } from '@/commands/implements/subscription-contract-items/cancel-subscription-contract-items.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { SubscriptionContractActivatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-activated.event';
 import { SubscriptionContractCanceledEvent } from '@/events/implements/subscription-contracts/subscription-contract-canceled.event';
@@ -75,7 +77,12 @@ export class SubscriptionContractsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new ActivateSubscriptionContractItemsCommand({
+            subscriptionContract: event.subscriptionContract.id,
+            updatedBy: event.updatedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)
@@ -96,7 +103,12 @@ export class SubscriptionContractsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new CancelSubscriptionContractItemsCommand({
+            subscriptionContract: event.subscriptionContract.id,
+            updatedBy: event.updatedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

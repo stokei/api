@@ -53,11 +53,18 @@ export class CourseInstructorModel extends AggregateRoot {
     }
   }
 
-  removedCourseInstructor({ removedBy }: { removedBy: string }) {
+  removedCourseInstructor({
+    removedBy,
+    isLastCourseInstructor
+  }: {
+    removedBy: string;
+    isLastCourseInstructor: boolean;
+  }) {
     if (this.id) {
       this.apply(
         new CourseInstructorRemovedEvent({
           removedBy,
+          isLastCourseInstructor,
           courseInstructor: this
         })
       );

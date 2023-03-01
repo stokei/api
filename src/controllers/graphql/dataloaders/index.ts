@@ -2,6 +2,7 @@ import { AccessesLoader } from './accesses.loader';
 import { AccountsLoader } from './accounts.loader';
 import { AddressesLoader } from './addresses.loader';
 import { AppsLoader } from './apps.loader';
+import { CatalogsLoader } from './catalogs.loader';
 import { ColorsLoader } from './colors.loader';
 import { CourseInstructorsLoader } from './course-instructors.loader';
 import { CourseStudentsLoader } from './course-students.loader';
@@ -49,5 +50,6 @@ export const Loaders = [
   InvoicesLoader,
   FilesLoader,
   FeaturesLoader,
-  RecurringsLoader
+  RecurringsLoader,
+  CatalogsLoader
 ];

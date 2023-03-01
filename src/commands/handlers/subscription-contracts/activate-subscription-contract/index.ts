@@ -1,18 +1,8 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import {
-  addDays,
-  addMonths,
-  addWeeks,
-  addYears,
-  cleanObject,
-  cleanValue,
-  convertToISODateString,
-  splitServiceId
-} from '@stokei/nestjs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import { ActivateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/activate-subscription-contract.command';
 import { ActivateSubscriptionContractRepositoryDataDTO } from '@/dtos/subscription-contracts/activate-subscription-contract-repository.dto';
-import { IntervalType } from '@/enums/interval-type.enum';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import {
   DataNotFoundException,
@@ -99,31 +89,5 @@ export class ActivateSubscriptionContractCommandHandler
       endAt: cleanValue(command?.endAt),
       updatedBy: cleanValue(command?.updatedBy)
     });
-  }
-
-  private getStartAt() {
-    return convertToISODateString(Date.now());
-  }
-
-  private getEndAt({
-    startAt,
-    recurringIntervalCount,
-    recurringIntervalType
-  }: {
-    startAt: string;
-    recurringIntervalCount: number;
-    recurringIntervalType: IntervalType;
-  }) {
-    const createEndAtFunctions = {
-      [IntervalType.DAY]: addDays,
-      [IntervalType.WEEK]: addWeeks,
-      [IntervalType.MONTH]: addMonths,
-      [IntervalType.YEAR]: addYears
-    };
-    const createEndAt = createEndAtFunctions[recurringIntervalType];
-    if (!createEndAt) {
-      return null;
-    }
-    return convertToISODateString(createEndAt(recurringIntervalCount, startAt));
   }
 }

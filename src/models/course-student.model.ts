@@ -53,11 +53,18 @@ export class CourseStudentModel extends AggregateRoot {
     }
   }
 
-  removedCourseStudent({ removedBy }: { removedBy: string }) {
+  removedCourseStudent({
+    removedBy,
+    isLastCourseStudent
+  }: {
+    removedBy: string;
+    isLastCourseStudent: boolean;
+  }) {
     if (this.id) {
       this.apply(
         new CourseStudentRemovedEvent({
           removedBy,
+          isLastCourseStudent,
           courseStudent: this
         })
       );

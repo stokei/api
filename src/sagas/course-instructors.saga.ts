@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { AddAccountRoleCommand } from '@/commands/implements/accounts/add-account-role.command';
+import { RemoveAccountRoleCommand } from '@/commands/implements/accounts/remove-account-role.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AccountRole } from '@/enums/account-role.enum';
 import { CourseInstructorCreatedEvent } from '@/events/implements/course-instructors/course-instructor-created.event';
@@ -36,7 +37,7 @@ export class CourseInstructorsSagas {
         const commands = [
           new AddAccountRoleCommand({
             account: event.courseInstructor.instructor,
-            role: AccountRole.ADMIN,
+            role: AccountRole.INSTRUCTOR,
             createdBy: event.createdBy
           })
         ];
@@ -61,6 +62,15 @@ export class CourseInstructorsSagas {
             )
         );
         const commands = [];
+        if (event.isLastCourseInstructor) {
+          commands.push(
+            new RemoveAccountRoleCommand({
+              account: event.courseInstructor.instructor,
+              role: AccountRole.INSTRUCTOR,
+              removedBy: event.removedBy
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)

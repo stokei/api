@@ -2,6 +2,7 @@ import { AccessesQueries } from './accesses';
 import { AccountsQueries } from './accounts';
 import { AddressesQueries } from './addresses';
 import { AppsQueries } from './apps';
+import { CatalogsQueries } from './catalogs';
 import { ColorsQueries } from './colors';
 import { CourseInstructorsQueries } from './course-instructors';
 import { CourseStudentsQueries } from './course-students';
@@ -45,5 +46,6 @@ export const Queries = [
   ...AddressesQueries,
   ...PhonesQueries,
   ...InvoicesQueries,
-  ...FeaturesQueries
+  ...FeaturesQueries,
+  ...CatalogsQueries
 ];

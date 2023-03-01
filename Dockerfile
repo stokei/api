@@ -1,5 +1,5 @@
 # Builder stage
-FROM node:16.19.0-alpine AS builder
+FROM node:18.12.1-alpine AS builder
 
 # Use /app as the CWD
 WORKDIR /app            
@@ -21,7 +21,7 @@ RUN npm run build
 
 
 # Final stage
-FROM node:16.19.0-alpine AS service
+FROM node:18.12.1-alpine AS service
 
 # Set node environment to production
 ENV NODE_ENV production

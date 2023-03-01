@@ -3,6 +3,7 @@ import { AccountCommandHandlers } from './accounts';
 import { AddressCommandHandlers } from './addresses';
 import { AppCommandHandlers } from './apps';
 import { CatalogItemCommandHandlers } from './catalog-items';
+import { CatalogCommandHandlers } from './catalogs';
 import { CheckoutCommandHandlers } from './checkouts';
 import { ColorCommandHandlers } from './colors';
 import { CourseInstructorCommandHandlers } from './course-instructors';
@@ -61,5 +62,6 @@ export const CommandHandlers = [
   ...PriceTierCommandHandlers,
   ...SubscriptionContractItemCommandHandlers,
   ...UsageRecordCommandHandlers,
-  ...CatalogItemCommandHandlers
+  ...CatalogItemCommandHandlers,
+  ...CatalogCommandHandlers
 ];

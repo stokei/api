@@ -3,11 +3,13 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateCatalogItemCommand } from '@/commands/implements/catalog-items/create-catalog-item.command';
 import {
+  CatalogItemAlreadyExistsException,
   CatalogItemNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateCatalogItemRepository } from '@/repositories/catalog-items/create-catalog-item';
+import { ExistsCatalogItemsRepository } from '@/repositories/catalog-items/exists-catalog-items';
 
 type CreateCatalogItemCommandKeys = keyof CreateCatalogItemCommand;
 
@@ -16,6 +18,7 @@ export class CreateCatalogItemCommandHandler
   implements ICommandHandler<CreateCatalogItemCommand>
 {
   constructor(
+    private readonly existsCatalogItemsRepository: ExistsCatalogItemsRepository,
     private readonly createCatalogItemRepository: CreateCatalogItemRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -30,6 +33,16 @@ export class CreateCatalogItemCommandHandler
     }
     if (!data?.product) {
       throw new ParamNotFoundException<CreateCatalogItemCommandKeys>('product');
+    }
+
+    const existsCatalogItem = await this.existsCatalogItemsRepository.execute({
+      where: {
+        catalog: data.catalog,
+        product: data.product
+      }
+    });
+    if (existsCatalogItem) {
+      throw new CatalogItemAlreadyExistsException();
     }
 
     const catalogItemCreated = await this.createCatalogItemRepository.execute(

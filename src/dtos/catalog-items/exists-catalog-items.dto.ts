@@ -1,6 +1,6 @@
 export interface ExistsCatalogItemsWhereDTO {
   catalog?: string;
-  instructor?: string;
+  product?: string;
 }
 
 export interface ExistsCatalogItemsDTO {

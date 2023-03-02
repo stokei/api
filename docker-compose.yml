@@ -5,6 +5,7 @@ networks:
     driver: bridge
 
 volumes:
+  mysql-data:
   postgresql-data:
 services:
   api:
@@ -29,6 +30,20 @@ services:
       - ./:/app/
     depends_on:
       - postgresql
+    networks:
+      - stokei-network
+
+  mysql:
+    image: bitnami/mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_USER: dev
+      MYSQL_ROOT_PASSWORD: dev
+      MYSQL_DATABASE: stokei-api
+    ports:
+      - '5432:5432'
+    volumes:
+      - mysql-data::/bitnami/mysql/data
     networks:
       - stokei-network
 

@@ -20,6 +20,7 @@ import {
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { AppModel } from '@/models/app.model';
+import { PaymentMethodModel } from '@/models/payment-method.model';
 import { PriceModel } from '@/models/price.model';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
@@ -83,7 +84,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
           'price'
         );
       }
-      if (data?.quantity < 1) {
+      if (data?.quantity <= 0) {
         throw new ParamNotFoundException<AddItemToAppSubscriptionContractCommandKeys>(
           'quantity'
         );
@@ -199,15 +200,18 @@ export class AddItemToAppSubscriptionContractCommandHandler
       }
       return { subscriptionContract };
     } catch (error) {
-      const appPaymentMethod = await this.findPaymentMethodByIdService.execute(
-        app.paymentMethod
-      );
+      let appPaymentMethod: PaymentMethodModel;
+      try {
+        appPaymentMethod = await this.findPaymentMethodByIdService.execute(
+          app.paymentMethod
+        );
+      } catch (error) {}
       const stripeSubscription =
         await this.createStripeSubscriptionService.execute({
           app: app.id,
           currency: app.currency,
           customer: app.stripeCustomer,
-          paymentMethod: appPaymentMethod.stripePaymentMethod,
+          paymentMethod: appPaymentMethod?.stripePaymentMethod,
           stripeAccount: app.stripeAccount,
           startPaymentWhenSubscriptionIsCreated: false,
           prices: [

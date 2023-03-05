@@ -1,6 +1,7 @@
 export enum ServerStokeiApiIdPrefix {
   ACCOUNTS = 'acc',
   ACCESSES = 'access',
+  ROLES = 'role',
   APPS = 'app',
   SITES = 'site',
   DOMAINS = 'domain',

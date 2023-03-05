@@ -23,6 +23,7 @@ import { PriceTierEventsHandlers } from './price-tiers';
 import { PriceEventsHandlers } from './prices';
 import { ProductEventsHandlers } from './products';
 import { RecurringEventsHandlers } from './recurrings';
+import { RoleEventsHandlers } from './roles';
 import { SubscriptionContractItemEventsHandlers } from './subscription-contract-items';
 import { SubscriptionContractEventsHandlers } from './subscription-contracts';
 import { UsageRecordEventsHandlers } from './usage-records';
@@ -59,5 +60,6 @@ export const EventsHandlers = [
   ...SubscriptionContractItemEventsHandlers,
   ...UsageRecordEventsHandlers,
   ...CatalogEventsHandlers,
-  ...CatalogItemEventsHandlers
+  ...CatalogItemEventsHandlers,
+  ...RoleEventsHandlers
 ];

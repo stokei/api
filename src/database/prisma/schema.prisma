@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DB_URL")
 }
 
@@ -12,12 +12,6 @@ enum AccountStatus {
   INACTIVE
   CANCELED
   BLOCKED
-}
-
-enum AccountRole {
-  ADMIN
-  STUDENT
-  INSTRUCTOR
 }
 
 enum PlanType {
@@ -138,7 +132,6 @@ model Account {
   stripeCustomer     String?       @map("stripe_customer") @db.VarChar(255)
   dateBirthday       DateTime?     @map("date_birthday")
   status             AccountStatus
-  roles              AccountRole[] @default([])
   active             Boolean       @default(true)
   canceledAt         DateTime?     @map("canceled_at")
   updatedAt          DateTime?     @updatedAt @map("updated_at")
@@ -147,6 +140,19 @@ model Account {
   createdBy          String?       @map("created_by") @db.VarChar(255)
 
   @@map("accounts")
+}
+
+model Role {
+  id        String    @id @default(cuid())
+  app       String    @db.VarChar(255)
+  parent    String    @db.VarChar(255)
+  name      String    @db.VarChar(255)
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
+
+  @@map("roles")
 }
 
 model Access {

@@ -41,9 +41,9 @@ services:
       MYSQL_ROOT_PASSWORD: dev
       MYSQL_DATABASE: stokei-api
     ports:
-      - '5432:5432'
+      - '3306:3306'
     volumes:
-      - mysql-data::/bitnami/mysql/data
+      - mysql-data:/bitnami/mysql/data
     networks:
       - stokei-network
 

@@ -73,6 +73,8 @@ export * from './product-not-found';
 export * from './products-not-found';
 export * from './recurring-not-found';
 export * from './recurrings-not-found';
+export * from './role-not-found';
+export * from './roles-not-found';
 export * from './stripe-account-already-exists';
 export * from './stripe-account-not-found';
 export * from './stripe-customer-already-exists';

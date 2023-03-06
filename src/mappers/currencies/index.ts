@@ -3,10 +3,10 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
   cleanWhereDataNumber,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  IOperator,
   IWhere,
   PrismaMapper
 } from '@stokei/nestjs';
@@ -22,25 +22,20 @@ import { FindAllCurrenciesQuery } from '@/queries/implements/currencies/find-all
 export class CurrencyMapper {
   toWhereFindAllPrisma(where: IWhere<WhereDataFindAllCurrenciesDTO>) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        minorUnit: prismaMapper.toWhereData(operatorData.minorUnit),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          name: prismaMapper.toWhereDataSearch(operatorData.name),
+          minorUnit: prismaMapper.toWhereData(operatorData.minorUnit),
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllCurrenciesDTO) {
@@ -56,31 +51,26 @@ export class CurrencyMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          minorUnit: cleanWhereDataNumber(operatorData.minorUnit),
-          name: cleanWhereDataSearch(operatorData.name),
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => cleanValue(id))
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        allowIsEmptyValues: {
+          NOT: true
+        },
+        operatorMapper(operatorData) {
+          return {
+            minorUnit: cleanWhereDataNumber(operatorData.minorUnit),
+            name: cleanWhereDataSearch(operatorData.name),
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map((id) => cleanValue(id))
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)

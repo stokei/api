@@ -3,10 +3,10 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
   cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  IOperator,
   IWhere,
   PrismaMapper,
   splitServiceId
@@ -23,26 +23,21 @@ import { FindAllAccessesQuery } from '@/queries/implements/accesses/find-all-acc
 export class AccessMapper {
   toWhereFindAllPrisma(where: IWhere<WhereDataFindAllAccessesDTO>) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
-        active: prismaMapper.toWhereData(operatorData.active),
-        app: prismaMapper.toWhereData(operatorData.app),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          parent: prismaMapper.toWhereDataSearch(operatorData.parent),
+          active: prismaMapper.toWhereData(operatorData.active),
+          app: prismaMapper.toWhereData(operatorData.app),
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllAccessesDTO) {
@@ -58,32 +53,29 @@ export class AccessMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          parent: cleanWhereDataSearch(operatorData.parent),
-          active: cleanWhereDataBoolean(operatorData.active),
-          app: cleanWhereDataString(operatorData.app),
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        allowIsEmptyValues: {
+          NOT: true
+        },
+        operatorMapper(operatorData) {
+          return {
+            parent: cleanWhereDataSearch(operatorData.parent),
+            active: cleanWhereDataBoolean(operatorData.active),
+            app: cleanWhereDataString(operatorData.app),
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map(
+                    (id) => splitServiceId(cleanValue(id))?.id
+                  )
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)

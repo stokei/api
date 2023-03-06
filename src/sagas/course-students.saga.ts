@@ -4,8 +4,8 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { AddAccountRoleCommand } from '@/commands/implements/accounts/add-account-role.command';
-import { RemoveAccountRoleCommand } from '@/commands/implements/accounts/remove-account-role.command';
+import { CreateRoleCommand } from '@/commands/implements/roles/create-role.command';
+import { RemoveRoleCommand } from '@/commands/implements/roles/remove-role.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AccountRole } from '@/enums/account-role.enum';
 import { CourseStudentCreatedEvent } from '@/events/implements/course-students/course-student-created.event';
@@ -33,9 +33,10 @@ export class CourseStudentsSagas {
             )
         );
         const commands = [
-          new AddAccountRoleCommand({
-            account: event.courseStudent.student,
-            role: AccountRole.STUDENT,
+          new CreateRoleCommand({
+            parent: event.courseStudent.student,
+            name: AccountRole.STUDENT,
+            app: event.courseStudent.app,
             createdBy: event.createdBy
           })
         ];
@@ -60,10 +61,13 @@ export class CourseStudentsSagas {
         const commands = [];
         if (event.isLastCourseStudent) {
           commands.push(
-            new RemoveAccountRoleCommand({
-              account: event.courseStudent.student,
-              role: AccountRole.STUDENT,
-              removedBy: event.removedBy
+            new RemoveRoleCommand({
+              where: {
+                parent: event.courseStudent.student,
+                name: AccountRole.STUDENT,
+                app: event.courseStudent.app,
+                removedBy: event.removedBy
+              }
             })
           );
         }

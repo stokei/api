@@ -25,6 +25,7 @@ import { PriceTierCommandHandlers } from './price-tiers';
 import { PriceCommandHandlers } from './prices';
 import { ProductCommandHandlers } from './products';
 import { RecurringCommandHandlers } from './recurrings';
+import { RoleCommandHandlers } from './roles';
 import { SubscriptionContractItemCommandHandlers } from './subscription-contract-items';
 import { SubscriptionContractCommandHandlers } from './subscription-contracts';
 import { UsageRecordCommandHandlers } from './usage-records';
@@ -63,5 +64,6 @@ export const CommandHandlers = [
   ...SubscriptionContractItemCommandHandlers,
   ...UsageRecordCommandHandlers,
   ...CatalogItemCommandHandlers,
-  ...CatalogCommandHandlers
+  ...CatalogCommandHandlers,
+  ...RoleCommandHandlers
 ];

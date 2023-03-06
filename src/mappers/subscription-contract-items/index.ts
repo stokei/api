@@ -3,9 +3,9 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  IOperator,
   IWhere,
   PrismaMapper,
   splitServiceId
@@ -24,27 +24,22 @@ export class SubscriptionContractItemMapper {
     where: IWhere<WhereDataFindAllSubscriptionContractItemsDTO>
   ) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereDataSearch(operatorData.parent),
-        product: prismaMapper.toWhereDataSearch(operatorData.product),
-        app: prismaMapper.toWhereData(operatorData.app),
-        price: prismaMapper.toWhereData(operatorData.price),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          parent: prismaMapper.toWhereDataSearch(operatorData.parent),
+          product: prismaMapper.toWhereDataSearch(operatorData.product),
+          app: prismaMapper.toWhereData(operatorData.app),
+          price: prismaMapper.toWhereData(operatorData.price),
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllSubscriptionContractItemsDTO) {
@@ -62,33 +57,30 @@ export class SubscriptionContractItemMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          parent: cleanWhereDataSearch(operatorData.parent),
-          product: cleanWhereDataString(operatorData.product),
-          price: cleanWhereDataSearch(operatorData.price),
-          app: cleanWhereDataString(operatorData.app),
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        allowIsEmptyValues: {
+          NOT: true
+        },
+        operatorMapper(operatorData) {
+          return {
+            parent: cleanWhereDataSearch(operatorData.parent),
+            product: cleanWhereDataString(operatorData.product),
+            price: cleanWhereDataSearch(operatorData.price),
+            app: cleanWhereDataString(operatorData.app),
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map(
+                    (id) => splitServiceId(cleanValue(id))?.id
+                  )
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)

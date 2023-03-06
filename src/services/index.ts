@@ -27,6 +27,7 @@ import { PriceTierServices } from './price-tiers';
 import { PriceServices } from './prices';
 import { ProductServices } from './products';
 import { RecurringServices } from './recurrings';
+import { RoleServices } from './roles';
 import { StripeServices } from './stripe';
 import { SubscriptionContractItemServices } from './subscription-contract-items';
 import { SubscriptionContractServices } from './subscription-contracts';
@@ -73,5 +74,6 @@ export const Services = [
   ...CloudflareServices,
   ...TusServices,
   ...CatalogServices,
-  ...CatalogItemServices
+  ...CatalogItemServices,
+  ...RoleServices
 ];

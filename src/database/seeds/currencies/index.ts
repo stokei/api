@@ -1,25 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
 import { IBaseService } from '@stokei/nestjs';
 
 import { defaultAccountId } from '@/constants/default-account-id';
 import { CreateCurrencyDTO } from '@/dtos/currencies/create-currency.dto';
-import { CurrencyModel } from '@/models/currency.model';
 import { CreateCurrencyService } from '@/services/currencies/create-currency';
 import { FindAllCurrenciesService } from '@/services/currencies/find-all-currencies';
+
+import { BaseSeeds } from '../base-seeds';
 
 type CurrencyDataDTO = CreateCurrencyDTO;
 
 @Injectable()
 export class CurrenciesSeeds
-  implements IBaseService<any, Promise<CurrencyModel[]>>
+  extends BaseSeeds
+  implements IBaseService<any, Promise<void>>
 {
   constructor(
     private readonly createCurrencyService: CreateCurrencyService,
     private readonly findAllCurrenciesService: FindAllCurrenciesService
-  ) {}
+  ) {
+    super();
+  }
 
-  async execute(): Promise<CurrencyModel[]> {
+  async execute(): Promise<void> {
     const currenciesData = this.createData();
     const currenciesIds = currenciesData.map((currency) => currency.id);
     const currenciesFounded = await this.findAllCurrenciesService.execute({
@@ -38,15 +41,11 @@ export class CurrenciesSeeds
         return !existsLanguage;
       });
     }
-    const prismaClient = new PrismaClient();
-    const currenciesCreated = await Promise.all(
-      currenciesToCreate?.map(async (currencyData) => {
-        const currency = await this.createCurrencyService.execute(currencyData);
-        return currency;
-      })
-    );
-    prismaClient.$disconnect();
-    return [...currenciesFounded?.items, ...currenciesCreated];
+
+    currenciesToCreate?.forEach(async (currencyData) => {
+      const currency = await this.createCurrencyService.execute(currencyData);
+      return currency;
+    });
   }
 
   private createData(): CurrencyDataDTO[] {

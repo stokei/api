@@ -1,28 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
 import { IBaseService, splitServiceId } from '@stokei/nestjs';
 
 import { defaultAccountId } from '@/constants/default-account-id';
 import { defaultAppId } from '@/constants/default-app-id';
 import { CreateAccountDTO } from '@/dtos/accounts/create-account.dto';
-import { AccountModel } from '@/models/account.model';
 import { CreateAccountService } from '@/services/accounts/create-account';
 import { FindAllAccountsService } from '@/services/accounts/find-all-accounts';
 import { UpdateAccountService } from '@/services/accounts/update-account';
+
+import { BaseSeeds } from '../base-seeds';
 
 type AccountDataDTO = CreateAccountDTO;
 
 @Injectable()
 export class AccountsSeeds
-  implements IBaseService<any, Promise<AccountModel[]>>
+  extends BaseSeeds
+  implements IBaseService<any, Promise<void>>
 {
   constructor(
     private readonly createAccountService: CreateAccountService,
     private readonly updateAccountService: UpdateAccountService,
     private readonly findAllAccountsService: FindAllAccountsService
-  ) {}
+  ) {
+    super();
+  }
 
-  async execute(): Promise<AccountModel[]> {
+  async execute() {
     const accountsData = this.createData();
     const accountsFounded = await this.findAllAccountsService.execute({
       where: {
@@ -40,15 +43,11 @@ export class AccountsSeeds
         return !existsLanguage;
       });
     }
-    const prismaClient = new PrismaClient();
-    const accountsCreated = await Promise.all(
-      accountsToCreate?.map(async (accountData) => {
-        const account = await this.createAccountService.execute(accountData);
-        return account;
-      })
-    );
-    prismaClient.$disconnect();
-    return [...accountsFounded?.items, ...accountsCreated];
+
+    accountsToCreate?.forEach(async (accountData) => {
+      const account = await this.createAccountService.execute(accountData);
+      return account;
+    });
   }
 
   private createData(): AccountDataDTO[] {

@@ -1,25 +1,28 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
 import { IBaseService } from '@stokei/nestjs';
 
 import { defaultAccountId } from '@/constants/default-account-id';
 import { CreateLanguageDTO } from '@/dtos/languages/create-language.dto';
-import { LanguageModel } from '@/models/language.model';
 import { CreateLanguageService } from '@/services/languages/create-language';
 import { FindAllLanguagesService } from '@/services/languages/find-all-languages';
+
+import { BaseSeeds } from '../base-seeds';
 
 type LanguageDataDTO = CreateLanguageDTO;
 
 @Injectable()
 export class LanguagesSeeds
-  implements IBaseService<any, Promise<LanguageModel[]>>
+  extends BaseSeeds
+  implements IBaseService<any, Promise<void>>
 {
   constructor(
     private readonly createLanguageService: CreateLanguageService,
     private readonly findAllLanguagesService: FindAllLanguagesService
-  ) {}
+  ) {
+    super();
+  }
 
-  async execute(): Promise<LanguageModel[]> {
+  async execute(): Promise<void> {
     const languagesData = this.createData();
     const languagesIds = languagesData.map((language) => language.id);
     const languagesFounded = await this.findAllLanguagesService.execute({
@@ -38,15 +41,10 @@ export class LanguagesSeeds
         return !existsLanguage;
       });
     }
-    const prismaClient = new PrismaClient();
-    const languagesCreated = await Promise.all(
-      languagesToCreate?.map(async (languageData) => {
-        const language = await this.createLanguageService.execute(languageData);
-        return language;
-      })
-    );
-    prismaClient.$disconnect();
-    return [...languagesFounded?.items, ...languagesCreated];
+    languagesToCreate?.forEach(async (languageData) => {
+      const language = await this.createLanguageService.execute(languageData);
+      return language;
+    });
   }
 
   private createData(): LanguageDataDTO[] {

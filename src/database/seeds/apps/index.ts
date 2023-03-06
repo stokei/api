@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
 import { IBaseService, splitServiceId } from '@stokei/nestjs';
 
 import { defaultAccountId } from '@/constants/default-account-id';
@@ -7,20 +6,26 @@ import { defaultAppId } from '@/constants/default-app-id';
 import { defaultCurrencyId } from '@/constants/default-currency-id';
 import { defaultLanguageId } from '@/constants/default-language-id';
 import { CreateAppDTO } from '@/dtos/apps/create-app.dto';
-import { AppModel } from '@/models/app.model';
 import { CreateAppService } from '@/services/apps/create-app';
 import { FindAllAppsService } from '@/services/apps/find-all-apps';
+
+import { BaseSeeds } from '../base-seeds';
 
 type AppDataDTO = CreateAppDTO;
 
 @Injectable()
-export class AppsSeeds implements IBaseService<any, Promise<AppModel[]>> {
+export class AppsSeeds
+  extends BaseSeeds
+  implements IBaseService<any, Promise<void>>
+{
   constructor(
     private readonly createAppService: CreateAppService,
     private readonly findAllAppsService: FindAllAppsService
-  ) {}
+  ) {
+    super();
+  }
 
-  async execute(): Promise<AppModel[]> {
+  async execute(): Promise<void> {
     const appsData = this.createData();
     const appsFounded = await this.findAllAppsService.execute({
       where: {
@@ -38,15 +43,11 @@ export class AppsSeeds implements IBaseService<any, Promise<AppModel[]>> {
         return !existsLanguage;
       });
     }
-    const prismaClient = new PrismaClient();
-    const appsCreated = await Promise.all(
-      appsToCreate?.map(async (appData) => {
-        const app = await this.createAppService.execute(appData);
-        return app;
-      })
-    );
-    prismaClient.$disconnect();
-    return [...appsFounded?.items, ...appsCreated];
+
+    appsToCreate?.forEach(async (appData) => {
+      const app = await this.createAppService.execute(appData);
+      return app;
+    });
   }
 
   private createData(): AppDataDTO[] {

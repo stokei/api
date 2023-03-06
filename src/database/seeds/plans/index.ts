@@ -14,12 +14,13 @@ import { PlanType } from '@/enums/plan-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
 import { TiersMode } from '@/enums/tiers-mode.enum';
 import { UsageType } from '@/enums/usage-type.enum';
-import { PlanModel } from '@/models/plan.model';
 import { CreatePlanService } from '@/services/plans/create-plan';
 import { FindAllPlansService } from '@/services/plans/find-all-plans';
 import { CreatePriceService } from '@/services/prices/create-price';
 import { CreateProductService } from '@/services/products/create-product';
 import { sleep } from '@/utils/sleep';
+
+import { BaseSeeds } from '../base-seeds';
 
 interface PlanDataDTO {
   plan: CreatePlanDTO;
@@ -33,16 +34,19 @@ interface PlansSeedsDTO {
 
 @Injectable()
 export class PlansSeeds
-  implements IBaseService<PlansSeedsDTO, Promise<PlanModel[]>>
+  extends BaseSeeds
+  implements IBaseService<PlansSeedsDTO, Promise<void>>
 {
   constructor(
     private readonly createProductService: CreateProductService,
     private readonly createPriceService: CreatePriceService,
     private readonly createPlanService: CreatePlanService,
     private readonly findAllPlansService: FindAllPlansService
-  ) {}
+  ) {
+    super();
+  }
 
-  async execute(): Promise<PlanModel[]> {
+  async execute(): Promise<void> {
     const planData = this.createData();
     const plansFounded = await this.findAllPlansService.execute({
       where: {
@@ -62,29 +66,27 @@ export class PlansSeeds
         return !existsLanguage;
       });
     }
-    const plansCreated = await Promise.all(
-      plansToCreate?.map(async (planData) => {
-        const plan = await this.createPlanService.execute(planData.plan);
-        await sleep(5000);
-        const product = await this.createProductService.execute({
-          app: plan.app,
-          parent: plan.id,
-          name: plan.name,
-          description: plan.description,
-          checkoutVisible: true,
-          createdBy: plan.createdBy
-        });
-        await sleep(5000);
-        await this.createPriceService.execute({
-          ...planData.price,
-          nickname: product.name,
-          parent: product.id
-        });
-        await sleep(5000);
-        return plan;
-      })
-    );
-    return [...plansFounded?.items, ...plansCreated];
+
+    plansToCreate?.forEach(async (planData) => {
+      const plan = await this.createPlanService.execute(planData.plan);
+      await sleep(500);
+      const product = await this.createProductService.execute({
+        app: plan.app,
+        parent: plan.id,
+        name: plan.name,
+        description: plan.description,
+        checkoutVisible: true,
+        createdBy: plan.createdBy
+      });
+      await sleep(500);
+      await this.createPriceService.execute({
+        ...planData.price,
+        nickname: product.name,
+        parent: product.id
+      });
+      await sleep(500);
+      return plan;
+    });
   }
 
   private createData(): PlanDataDTO[] {

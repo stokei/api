@@ -28,7 +28,8 @@ export enum ServerStokeiApiIdPrefix {
   SUBSCRIPTION_CONTRACTS = 'sub',
   SUBSCRIPTION_CONTRACT_ITEMS = 'sub_item',
   ADDRESSES = 'address',
-  CATALOG = 'catalog',
-  CATALOG_ITEM = 'catalog_item',
+  CATALOGS = 'catalog',
+  HEROS = 'hero',
+  CATALOG_ITEMS = 'catalog_item',
   PHONES = 'phone'
 }

@@ -19,7 +19,7 @@ services:
     ports:
       - '4010:3000'
     environment:
-      - DB_URL=mysql://dev:dev@mysql:3306/stokei-api
+      - DB_URL=mysql://dev:dev@mysql:3310/stokei-api
       - SERVER_HOST=api
       - SERVER_PORT=3000
       - SERVER_URL=http://api:3000
@@ -39,7 +39,7 @@ services:
       MYSQL_ROOT_PASSWORD: dev
       MYSQL_DATABASE: stokei-api
     ports:
-      - '3306:3306'
+      - '3310:3306'
     volumes:
       - mysql-data:/bitnami/mysql/data
     networks:

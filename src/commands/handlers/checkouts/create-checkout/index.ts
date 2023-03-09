@@ -114,6 +114,7 @@ export class CreateCheckoutCommandHandler
         currency: customerApp.currency,
         paymentMethod: paymentMethod?.stripePaymentMethod,
         startPaymentWhenSubscriptionIsCreated: true,
+        automaticRenew: true,
         prices: [{ price: price.stripePrice, quantity: 1 }],
         customer: stripeCustomer,
         stripeAccount: customerApp.stripeAccount

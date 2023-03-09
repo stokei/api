@@ -105,6 +105,7 @@ export class CreatePriceCommandHandler
 
     const priceCreated = await this.createPriceRepository.execute({
       ...dataCreated,
+      unit: data.unit,
       recurring: recurring?.id,
       stripePrice: stripePrice.id
     });

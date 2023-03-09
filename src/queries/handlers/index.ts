@@ -12,6 +12,7 @@ import { CurrencyQueriesHandlers } from './currencies';
 import { DomainQueriesHandlers } from './domains';
 import { FeatureQueriesHandlers } from './features';
 import { FileQueriesHandlers } from './files';
+import { HeroQueriesHandlers } from './heros';
 import { ImageQueriesHandlers } from './images';
 import { InvoiceQueriesHandlers } from './invoices';
 import { LanguageQueriesHandlers } from './languages';
@@ -61,5 +62,6 @@ export const QueriesHandlers = [
   ...UsageRecordQueriesHandlers,
   ...CatalogQueriesHandlers,
   ...CatalogItemQueriesHandlers,
-  ...RoleQueriesHandlers
+  ...RoleQueriesHandlers,
+  ...HeroQueriesHandlers
 ];

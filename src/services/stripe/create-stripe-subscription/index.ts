@@ -28,6 +28,7 @@ export class CreateStripeSubscriptionService
           quantity: price.quantity
         })),
         default_payment_method: data?.paymentMethod,
+        cancel_at_period_end: !data?.automaticRenew,
         payment_settings: {
           save_default_payment_method: 'on_subscription'
         },

@@ -30,7 +30,7 @@ export class CatalogItemModel extends AggregateRoot {
     super();
 
     this.id = createServiceId({
-      service: ServerStokeiApiIdPrefix.COURSE_INSTRUCTORS,
+      service: ServerStokeiApiIdPrefix.CATALOG_ITEMS,
       id: data._id?.toString() || data.id
     });
     this.catalog = data.catalog;

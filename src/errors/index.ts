@@ -44,6 +44,8 @@ export * from './feature-not-found';
 export * from './features-not-found';
 export * from './file-not-found';
 export * from './files-not-found';
+export * from './hero-not-found';
+export * from './heros-not-found';
 export * from './image-not-found';
 export * from './images-not-found';
 export * from './invalid-email-or-password';

@@ -12,6 +12,7 @@ import { CurrenciesRepositories } from './currencies';
 import { DomainsRepositories } from './domains';
 import { FeaturesRepositories } from './features';
 import { FilesRepositories } from './files';
+import { HerosRepositories } from './heros';
 import { ImagesRepositories } from './images';
 import { InvoicesRepositories } from './invoices';
 import { LanguagesRepositories } from './languages';
@@ -61,5 +62,6 @@ export const Repositories = [
   ...UsageRecordsRepositories,
   ...CatalogsRepositories,
   ...CatalogItemsRepositories,
-  ...RolesRepositories
+  ...RolesRepositories,
+  ...HerosRepositories
 ];

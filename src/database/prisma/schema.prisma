@@ -550,7 +550,7 @@ model SubscriptionContract {
   stripeSubscription String?                    @map("stripe_subscription") @db.VarChar(255)
   status             SubscriptionContractStatus
   type               SubscriptionContractType
-  automaticRenew     Boolean                    @default(false)
+  automaticRenew     Boolean                    @default(false) @map("automatic_renew")
   active             Boolean                    @default(false)
   startAt            DateTime?                  @map("start_at")
   endAt              DateTime?                  @map("end_at")
@@ -644,4 +644,21 @@ model CatalogItem {
   createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("catalog_items")
+}
+
+model Hero {
+  id             String    @id @default(cuid())
+  app            String    @db.VarChar(255)
+  parent         String    @db.VarChar(255)
+  title          String?   @db.VarChar(255)
+  titleHighlight String?   @map("title_highlight") @db.VarChar(255)
+  subtitle       String?   @db.VarChar(255)
+  image          String?   @db.VarChar(255)
+  video          String?   @db.VarChar(255)
+  updatedAt      DateTime? @updatedAt @map("updated_at")
+  createdAt      DateTime? @default(now()) @map("created_at")
+  updatedBy      String?   @map("updated_by") @db.VarChar(255)
+  createdBy      String?   @map("created_by") @db.VarChar(255)
+
+  @@map("heros")
 }

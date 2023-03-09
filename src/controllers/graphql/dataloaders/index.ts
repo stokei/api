@@ -12,6 +12,7 @@ import { CurrenciesLoader } from './currencies.loader';
 import { DomainsLoader } from './domains.loader';
 import { FeaturesLoader } from './features.loader';
 import { FilesLoader } from './files.loader';
+import { HerosLoader } from './heros.loader';
 import { ImagesLoader } from './images.loader';
 import { InvoicesLoader } from './invoices.loader';
 import { LanguagesLoader } from './languages.loader';
@@ -55,5 +56,6 @@ export const Loaders = [
   RecurringsLoader,
   CatalogsLoader,
   CatalogItemsLoader,
-  RolesLoader
+  RolesLoader,
+  HerosLoader
 ];

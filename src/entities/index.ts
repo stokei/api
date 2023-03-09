@@ -12,6 +12,7 @@ export * from './currency.entity';
 export * from './domain.entity';
 export * from './feature.entity';
 export * from './file.entity';
+export * from './hero.entity';
 export * from './image.entity';
 export * from './invoice.entity';
 export * from './language.entity';

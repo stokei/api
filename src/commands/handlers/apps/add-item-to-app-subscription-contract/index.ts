@@ -97,6 +97,9 @@ export class AddItemToAppSubscriptionContractCommandHandler
       if (!app.isAllowedToUsePlan) {
         throw new AppUnauthorizedException();
       }
+      if (app.isStokei) {
+        return;
+      }
       const price = await this.findPriceByIdService.execute(data.price);
       if (!price) {
         throw new PriceNotFoundException();
@@ -214,6 +217,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
           paymentMethod: appPaymentMethod?.stripePaymentMethod,
           stripeAccount: app.stripeAccount,
           startPaymentWhenSubscriptionIsCreated: false,
+          automaticRenew: true,
           prices: [
             {
               price: price.stripePrice,

@@ -11,6 +11,7 @@ import { CoursesFieldsResolvers } from './courses';
 import { CurrenciesFieldsResolvers } from './currencies';
 import { DomainsFieldsResolvers } from './domains';
 import { FeaturesFieldsResolvers } from './features';
+import { HerosFieldsResolvers } from './heros';
 import { ImagesFieldsResolvers } from './images';
 import { InvoicesFieldsResolvers } from './invoices';
 import { LanguagesFieldsResolvers } from './languages';
@@ -51,5 +52,6 @@ export const FieldsResolvers = [
   ...FeaturesFieldsResolvers,
   ...CatalogsFieldsResolvers,
   ...CatalogItemsFieldsResolvers,
-  ...RolesFieldsResolvers
+  ...RolesFieldsResolvers,
+  ...HerosFieldsResolvers
 ];

@@ -16,6 +16,7 @@ import { CustomerPortalSessionServices } from './customer-portal-sessions';
 import { DomainServices } from './domains';
 import { FeatureServices } from './features';
 import { FileServices } from './files';
+import { HeroServices } from './heros';
 import { ImageServices } from './images';
 import { InvoiceServices } from './invoices';
 import { LanguageServices } from './languages';
@@ -75,5 +76,6 @@ export const Services = [
   ...TusServices,
   ...CatalogServices,
   ...CatalogItemServices,
-  ...RoleServices
+  ...RoleServices,
+  ...HeroServices
 ];

@@ -42,7 +42,9 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
   let findAllSubscriptionContractItemsService: FindAllSubscriptionContractItemsService;
   let updateSubscriptionContractItemService: UpdateSubscriptionContractItemService;
 
-  const app = new AppModelMock();
+  const app = new AppModelMock({
+    _id: 'app_any'
+  });
   const account = new AccountModelMock({
     app: app.id
   });

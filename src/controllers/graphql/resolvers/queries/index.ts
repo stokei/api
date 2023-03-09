@@ -11,6 +11,7 @@ import { CoursesQueries } from './courses';
 import { CurrenciesQueries } from './currencies';
 import { DomainsQueries } from './domains';
 import { FeaturesQueries } from './features';
+import { HerosQueries } from './heros';
 import { ImagesQueries } from './images';
 import { InvoicesQueries } from './invoices';
 import { LanguagesQueries } from './languages';
@@ -49,5 +50,6 @@ export const Queries = [
   ...InvoicesQueries,
   ...FeaturesQueries,
   ...CatalogsQueries,
-  ...CatalogItemsQueries
+  ...CatalogItemsQueries,
+  ...HerosQueries
 ];

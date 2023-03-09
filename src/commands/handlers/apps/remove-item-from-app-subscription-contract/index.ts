@@ -61,6 +61,9 @@ export class RemoveItemFromAppSubscriptionContractCommandHandler
       if (!app) {
         throw new AppNotFoundException();
       }
+      if (app.isStokei) {
+        return;
+      }
       const price = await this.findPriceByIdService.execute(data.price);
       if (!price) {
         throw new PriceNotFoundException();

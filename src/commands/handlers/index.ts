@@ -14,6 +14,7 @@ import { CustomerPortalSessionCommandHandlers } from './customer-portal-sessions
 import { DomainCommandHandlers } from './domains';
 import { FeatureCommandHandlers } from './features';
 import { FileCommandHandlers } from './files';
+import { HeroCommandHandlers } from './heros';
 import { ImageCommandHandlers } from './images';
 import { InvoiceCommandHandlers } from './invoices';
 import { LanguageCommandHandlers } from './languages';
@@ -65,5 +66,6 @@ export const CommandHandlers = [
   ...UsageRecordCommandHandlers,
   ...CatalogItemCommandHandlers,
   ...CatalogCommandHandlers,
-  ...RoleCommandHandlers
+  ...RoleCommandHandlers,
+  ...HeroCommandHandlers
 ];

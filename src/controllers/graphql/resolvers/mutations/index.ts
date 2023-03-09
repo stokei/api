@@ -14,6 +14,7 @@ import { CustomerPortalSessionsMutations } from './customer-portal-sessions';
 import { DomainsMutations } from './domains';
 import { FeaturesMutations } from './features';
 import { FilesMutations } from './files';
+import { HerosMutations } from './heros';
 import { ImagesMutations } from './images';
 import { InvoicesMutations } from './invoices';
 import { LanguagesMutations } from './languages';
@@ -55,5 +56,6 @@ export const Mutations = [
   ...FilesMutations,
   ...FeaturesMutations,
   ...CatalogsMutations,
-  ...CatalogItemsMutations
+  ...CatalogItemsMutations,
+  ...HerosMutations
 ];

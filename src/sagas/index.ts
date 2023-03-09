@@ -12,6 +12,7 @@ import { CurrenciesSagas } from './currencies.saga';
 import { DomainsSagas } from './domains.saga';
 import { FeaturesSagas } from './features.saga';
 import { FilesSagas } from './files.saga';
+import { HerosSagas } from './heros.saga';
 import { ImagesSagas } from './images.saga';
 import { InvoicesSagas } from './invoices.saga';
 import { LanguagesSagas } from './languages.saga';
@@ -61,5 +62,6 @@ export const Sagas = [
   UsageRecordsSagas,
   CatalogsSagas,
   CatalogItemsSagas,
-  RolesSagas
+  RolesSagas,
+  HerosSagas
 ];

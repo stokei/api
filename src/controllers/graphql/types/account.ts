@@ -47,7 +47,7 @@ export class Account {
   @Field(() => AccountStatus)
   status: AccountStatus;
 
-  @Field(() => Roles)
+  @Field(() => Roles, { nullable: true })
   roles: Roles;
 
   @Field(() => Boolean)

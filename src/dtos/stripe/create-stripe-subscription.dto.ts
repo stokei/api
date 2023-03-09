@@ -10,5 +10,6 @@ export interface CreateStripeSubscriptionDTO {
   customer: string;
   startPaymentWhenSubscriptionIsCreated: boolean;
   paymentMethod?: string;
+  automaticRenew?: boolean;
   stripeAccount?: string;
 }

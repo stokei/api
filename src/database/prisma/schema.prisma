@@ -185,6 +185,7 @@ model App {
   language          String    @db.VarChar(255)
   icon              String?   @db.VarChar(255)
   logo              String?   @db.VarChar(255)
+  hero              String?   @db.VarChar(255)
   active            Boolean   @default(true)
   stripeBankAccount String?   @map("stripe_bank_account") @db.VarChar(255)
   stripeCustomer    String?   @map("stripe_customer") @db.VarChar(255)

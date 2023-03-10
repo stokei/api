@@ -12,7 +12,7 @@ export class UpdateDataAppInput {
   avatar?: string;
 
   @Field({ nullable: true })
-  plan?: string;
+  hero?: string;
 
   @Field({ nullable: true })
   icon?: string;

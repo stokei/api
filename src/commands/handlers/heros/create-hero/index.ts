@@ -50,6 +50,7 @@ export class CreateHeroCommandHandler
       titleHighlight: cleanValue(command?.titleHighlight),
       subtitle: cleanValue(command?.subtitle),
       image: cleanValue(command?.image),
+      backgroundImage: cleanValue(command?.backgroundImage),
       video: cleanValue(command?.video),
       createdBy: cleanValue(command?.createdBy)
     });

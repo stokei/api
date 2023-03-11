@@ -15,6 +15,7 @@ export interface IHeroModelData {
   readonly titleHighlight?: string;
   readonly subtitle?: string;
   readonly image?: string;
+  readonly backgroundImage?: string;
   readonly video?: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
@@ -30,6 +31,7 @@ export class HeroModel extends AggregateRoot {
   readonly titleHighlight?: string;
   readonly subtitle?: string;
   readonly image?: string;
+  readonly backgroundImage?: string;
   readonly video?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
@@ -48,6 +50,7 @@ export class HeroModel extends AggregateRoot {
     this.titleHighlight = data.titleHighlight;
     this.subtitle = data.subtitle;
     this.image = data.image;
+    this.backgroundImage = data.backgroundImage;
     this.video = data.video;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);

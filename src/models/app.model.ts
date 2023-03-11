@@ -14,6 +14,7 @@ export interface IAppModelData {
   readonly name: string;
   readonly email: string;
   readonly description?: string;
+  readonly hero?: string;
   readonly status: AppStatus;
   readonly avatar?: string;
   readonly currency: string;
@@ -40,6 +41,7 @@ export class AppModel extends AggregateRoot {
   readonly email: string;
   readonly slug: string;
   readonly description?: string;
+  readonly hero?: string;
   readonly status: AppStatus;
   readonly avatar?: string;
   readonly currency: string;
@@ -73,6 +75,7 @@ export class AppModel extends AggregateRoot {
     this.email = data.email;
     this.name = data.name;
     this.description = data.description;
+    this.hero = data.hero;
     this.status = data.status;
     this.avatar = data.avatar;
     this.currency = data.currency;

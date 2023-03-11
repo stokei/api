@@ -18,5 +18,8 @@ export class CreateHeroInput {
   image?: string;
 
   @Field({ nullable: true })
+  backgroundImage?: string;
+
+  @Field({ nullable: true })
   video?: string;
 }

@@ -24,6 +24,9 @@ export class Hero {
   @Field(() => Image, { nullable: true })
   image?: Image;
 
+  @Field(() => Image, { nullable: true })
+  backgroundImage?: Image;
+
   @Field(() => Video, { nullable: true })
   video?: Video;
 

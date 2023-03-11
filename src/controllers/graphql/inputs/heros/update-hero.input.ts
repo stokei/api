@@ -15,6 +15,9 @@ export class UpdateDataHeroInput {
   image?: string;
 
   @Field({ nullable: true })
+  backgroundImage?: string;
+
+  @Field({ nullable: true })
   video?: string;
 }
 

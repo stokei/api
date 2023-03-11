@@ -3,6 +3,7 @@ import { AppColorsResolver } from './colors';
 import { AppCreatedByResolver } from './created-by';
 import { AppCurrencyResolver } from './currency';
 import { AppCurrentSubscriptionContractResolver } from './current-subscription-contract';
+import { AppHeroResolver } from './hero';
 import { AppIconResolver } from './icon';
 import { AppLogoResolver } from './logo';
 import { AppPhonesResolver } from './phones';
@@ -19,5 +20,6 @@ export const AppsFieldsResolvers = [
   AppLogoResolver,
   AppIconResolver,
   AppColorsResolver,
-  AppUpdatedByResolver
+  AppUpdatedByResolver,
+  AppHeroResolver
 ];

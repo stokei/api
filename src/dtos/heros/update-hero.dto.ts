@@ -4,6 +4,7 @@ export interface UpdateHeroDataDTO {
   titleHighlight?: string;
   subtitle?: string;
   image?: string;
+  backgroundImage?: string;
   video?: string;
 }
 

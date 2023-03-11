@@ -1,4 +1,5 @@
 import { HeroAppResolver } from './app';
+import { HeroBackgroundImageResolver } from './background-image';
 import { HeroCreatedByResolver } from './created-by';
 import { HeroImageResolver } from './image';
 import { HeroReferenceResolver } from './reference';
@@ -11,5 +12,6 @@ export const HerosFieldsResolvers = [
   HeroCreatedByResolver,
   HeroUpdatedByResolver,
   HeroImageResolver,
-  HeroVideoResolver
+  HeroVideoResolver,
+  HeroBackgroundImageResolver
 ];

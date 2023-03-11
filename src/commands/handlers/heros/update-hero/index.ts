@@ -70,6 +70,7 @@ export class UpdateHeroCommandHandler
         titleHighlight: cleanValue(command?.data?.titleHighlight),
         subtitle: cleanValue(command?.data?.subtitle),
         image: cleanValue(command?.data?.image),
+        backgroundImage: cleanValue(command?.data?.backgroundImage),
         video: cleanValue(command?.data?.video),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })

@@ -9,6 +9,7 @@ export class CreateHeroCommand implements ICommand, CreateHeroDTO {
   titleHighlight?: string;
   subtitle?: string;
   image?: string;
+  backgroundImage?: string;
   video?: string;
   createdBy: string;
 
@@ -19,6 +20,7 @@ export class CreateHeroCommand implements ICommand, CreateHeroDTO {
     this.titleHighlight = data.titleHighlight;
     this.subtitle = data.subtitle;
     this.image = data.image;
+    this.backgroundImage = data.backgroundImage;
     this.video = data.video;
     this.createdBy = data.createdBy;
   }

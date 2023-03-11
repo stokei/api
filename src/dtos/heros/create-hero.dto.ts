@@ -5,6 +5,7 @@ export interface CreateHeroDTO {
   titleHighlight?: string;
   subtitle?: string;
   image?: string;
+  backgroundImage?: string;
   video?: string;
   createdBy: string;
 }

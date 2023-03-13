@@ -25,6 +25,7 @@ import { PricesSagas } from './prices.saga';
 import { ProductsSagas } from './products.saga';
 import { RecurringsSagas } from './recurrings.saga';
 import { RolesSagas } from './roles.saga';
+import { SortedItemsSagas } from './sorted-items.saga';
 import { SubscriptionContractItemsSagas } from './subscription-contract-items.saga';
 import { SubscriptionContractsSagas } from './subscription-contracts.saga';
 import { UsageRecordsSagas } from './usage-records.saga';
@@ -63,5 +64,6 @@ export const Sagas = [
   CatalogsSagas,
   CatalogItemsSagas,
   RolesSagas,
-  HerosSagas
+  HerosSagas,
+  SortedItemsSagas
 ];

@@ -25,6 +25,7 @@ import { PriceQueriesHandlers } from './prices';
 import { ProductQueriesHandlers } from './products';
 import { RecurringQueriesHandlers } from './recurrings';
 import { RoleQueriesHandlers } from './roles';
+import { SortedItemQueriesHandlers } from './sorted-items';
 import { SubscriptionContractItemQueriesHandlers } from './subscription-contract-items';
 import { SubscriptionContractQueriesHandlers } from './subscription-contracts';
 import { UsageRecordQueriesHandlers } from './usage-records';
@@ -63,5 +64,6 @@ export const QueriesHandlers = [
   ...CatalogQueriesHandlers,
   ...CatalogItemQueriesHandlers,
   ...RoleQueriesHandlers,
-  ...HeroQueriesHandlers
+  ...HeroQueriesHandlers,
+  ...SortedItemQueriesHandlers
 ];

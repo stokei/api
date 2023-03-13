@@ -30,6 +30,7 @@ export enum ServerStokeiApiIdPrefix {
   ADDRESSES = 'address',
   CATALOGS = 'catalog',
   HEROS = 'hero',
+  SORTED_ITEM = 'sorted_item',
   CATALOG_ITEMS = 'catalog_item',
   PHONES = 'phone'
 }

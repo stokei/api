@@ -25,6 +25,7 @@ import { PricesRepositories } from './prices';
 import { ProductsRepositories } from './products';
 import { RecurringsRepositories } from './recurrings';
 import { RolesRepositories } from './roles';
+import { SortedItemsRepositories } from './sorted-items';
 import { SubscriptionContractItemsRepositories } from './subscription-contract-items';
 import { SubscriptionContractsRepositories } from './subscription-contracts';
 import { UsageRecordsRepositories } from './usage-records';
@@ -63,5 +64,6 @@ export const Repositories = [
   ...CatalogsRepositories,
   ...CatalogItemsRepositories,
   ...RolesRepositories,
-  ...HerosRepositories
+  ...HerosRepositories,
+  ...SortedItemsRepositories
 ];

@@ -25,6 +25,7 @@ import { PriceEventsHandlers } from './prices';
 import { ProductEventsHandlers } from './products';
 import { RecurringEventsHandlers } from './recurrings';
 import { RoleEventsHandlers } from './roles';
+import { SortedItemEventsHandlers } from './sorted-items';
 import { SubscriptionContractItemEventsHandlers } from './subscription-contract-items';
 import { SubscriptionContractEventsHandlers } from './subscription-contracts';
 import { UsageRecordEventsHandlers } from './usage-records';
@@ -63,5 +64,6 @@ export const EventsHandlers = [
   ...CatalogEventsHandlers,
   ...CatalogItemEventsHandlers,
   ...RoleEventsHandlers,
-  ...HeroEventsHandlers
+  ...HeroEventsHandlers,
+  ...SortedItemEventsHandlers
 ];

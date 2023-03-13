@@ -25,6 +25,7 @@ export * from './price-tier.entity';
 export * from './product.entity';
 export * from './recurring.entity';
 export * from './role.entity';
+export * from './sorted-item.entity';
 export * from './subscription-contract.entity';
 export * from './subscription-contract-item.entity';
 export * from './usage-record.entity';

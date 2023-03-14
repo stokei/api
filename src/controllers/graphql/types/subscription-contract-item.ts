@@ -1,4 +1,7 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { createUnionType, Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { splitServiceId } from '@stokei/nestjs';
+
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 
 import { Account } from './account';
 import { App } from './app';
@@ -6,6 +9,19 @@ import { Course } from './course';
 import { Plan } from './plan';
 import { Price } from './price';
 import { Recurring } from './recurring';
+
+export const SubscriptionContractItemProductUnion = createUnionType({
+  name: 'SubscriptionContractItemProductUnion',
+  types: () => [Plan, Course] as const,
+  async resolveType(value) {
+    const type = splitServiceId(value?.id)?.service;
+    const types = {
+      [ServerStokeiApiIdPrefix.COURSES]: Course.name,
+      [ServerStokeiApiIdPrefix.PLANS]: Plan.name
+    };
+    return types[type];
+  }
+});
 
 @ObjectType()
 export class SubscriptionContractItem {
@@ -15,11 +31,8 @@ export class SubscriptionContractItem {
   @Field(() => String)
   parent: string;
 
-  @Field(() => Plan, { nullable: true })
-  plan?: Plan;
-
-  @Field(() => Course, { nullable: true })
-  course?: Course;
+  @Field(() => SubscriptionContractItemProductUnion, { nullable: true })
+  product?: typeof SubscriptionContractItemProductUnion;
 
   @Field(() => Recurring, { nullable: true })
   recurring?: Recurring;

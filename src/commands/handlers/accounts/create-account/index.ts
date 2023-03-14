@@ -3,8 +3,7 @@ import {
   cleanObject,
   cleanUsername,
   cleanValue,
-  encryptPassword,
-  generateSalt
+  encryptPassword
 } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
@@ -54,8 +53,10 @@ export class CreateAccountCommandHandler
       throw new ParamNotFoundException<CreateAccountCommandKeys>('password');
     }
 
-    const salt = await generateSalt(PASSWORD_SECRET_KEY);
-    data.password = encryptPassword(data.password, salt, PASSWORD_SECRET_KEY);
+    data.password = encryptPassword({
+      password: data.password,
+      secretKey: PASSWORD_SECRET_KEY
+    });
 
     let accountExists = await this.existsAccountsRepository.execute({
       where: {
@@ -79,7 +80,6 @@ export class CreateAccountCommandHandler
     const accountCreated = await this.createAccountRepository.execute({
       ...data,
       username,
-      salt,
       status: AccountStatus.ACTIVE
     });
     if (!accountCreated) {

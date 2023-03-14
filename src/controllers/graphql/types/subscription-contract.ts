@@ -7,6 +7,7 @@ import { Account } from './account';
 import { App } from './app';
 import { Invoice } from './invoice';
 import { PaymentMethod } from './payment-method';
+import { SubscriptionContractItems } from './subscription-contract-items';
 
 @ObjectType()
 export class SubscriptionContract {
@@ -24,6 +25,9 @@ export class SubscriptionContract {
 
   @Field(() => Invoice, { nullable: true })
   lastInvoice: Invoice;
+
+  @Field(() => SubscriptionContractItems, { nullable: true })
+  items: SubscriptionContractItems;
 
   @Field(() => Boolean)
   active: boolean;

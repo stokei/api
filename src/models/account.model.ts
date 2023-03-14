@@ -23,7 +23,6 @@ export interface IAccountModelData {
   readonly username: string;
   readonly password: string;
   readonly lastPassword?: string;
-  readonly salt: string;
   readonly avatar?: string;
   readonly active: boolean;
   readonly forgotPasswordCode?: string;
@@ -49,8 +48,6 @@ export class AccountModel extends AggregateRoot {
   readonly password: string;
   @Exclude()
   readonly lastPassword?: string;
-  @Exclude()
-  readonly salt: string;
 
   readonly avatar?: string;
   @Exclude()
@@ -81,7 +78,6 @@ export class AccountModel extends AggregateRoot {
     this.username = data.username;
     this.password = data.password;
     this.lastPassword = data.lastPassword;
-    this.salt = data.salt;
     this.avatar = data.avatar;
     this.forgotPasswordCode = data.forgotPasswordCode;
     this.dateBirthday = convertToISODateString(data.dateBirthday);

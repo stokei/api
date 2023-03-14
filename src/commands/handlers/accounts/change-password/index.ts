@@ -55,12 +55,10 @@ export class ChangePasswordCommandHandler
       throw new ErrorUpdatingPasswordException();
     }
 
-    const newPassword = await encryptPassword(
-      data.password,
-      account.salt,
-      PASSWORD_SECRET_KEY
-    );
-
+    const newPassword = encryptPassword({
+      password: data.password,
+      secretKey: PASSWORD_SECRET_KEY
+    });
     const accountId = splitServiceId(account.id)?.id;
     const updated = await this.updatePasswordRepository.execute({
       account: accountId,

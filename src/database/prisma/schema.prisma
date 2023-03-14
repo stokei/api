@@ -135,7 +135,6 @@ model Account {
   username           String        @unique @db.VarChar(255)
   password           String        @db.VarChar(255)
   lastPassword       String?       @map("last_password") @db.VarChar(255)
-  salt               String        @unique @db.VarChar(255)
   avatar             String?       @db.VarChar(255)
   forgotPasswordCode String?       @map("forgot_password_code") @db.VarChar(255)
   stripeCustomer     String?       @map("stripe_customer") @db.VarChar(255)

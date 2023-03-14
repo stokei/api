@@ -1,8 +1,7 @@
 import {
   cleanEmail,
   convertToISODateString,
-  encryptPassword,
-  generateSalt
+  encryptPassword
 } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
@@ -12,19 +11,16 @@ import { AccountModel, IAccountModelData } from '@/models/account.model';
 
 export class AccountModelMock extends AccountModel {
   constructor(data?: Partial<IAccountModelData>) {
-    const salt = data?.salt ?? generateSalt(PASSWORD_SECRET_KEY);
     super({
       _id: data?.id ?? nanoid(),
       firstname: data?.firstname ?? 'Joao',
       lastname: data?.lastname ?? 'Sinners',
       username: data?.username ?? 'joaosinners',
       email: cleanEmail(data?.email ?? nanoid() + '@email.com'),
-      password: encryptPassword(
-        data?.password ?? '123456',
-        salt,
-        PASSWORD_SECRET_KEY
-      ),
-      salt,
+      password: encryptPassword({
+        password: data?.password ?? '123456',
+        secretKey: PASSWORD_SECRET_KEY
+      }),
       status: data?.status ?? AccountStatus.ACTIVE,
       app: data?.app ?? 'anyParent',
       avatar: data?.avatar ?? 'anyavatar',

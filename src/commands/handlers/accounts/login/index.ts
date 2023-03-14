@@ -44,12 +44,11 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
     if (!account || !account?.active) {
       throw new InvalidEmailOrPasswordException();
     }
-    const isValidPassword = comparePassword(
-      data.password,
-      account.password,
-      account.salt,
-      PASSWORD_SECRET_KEY
-    );
+    const isValidPassword = comparePassword({
+      textPassword: data.password,
+      encryptedPassword: account.password,
+      secretKey: PASSWORD_SECRET_KEY
+    });
     if (!isValidPassword) {
       throw new InvalidEmailOrPasswordException();
     }

@@ -91,8 +91,8 @@ export class ChangeFromSortedItemToSortedItemCommandHandler
       throw new SortedItemNotFoundException();
     }
     return {
-      fromItem,
-      toItem
+      fromItem: fromSortedItem,
+      toItem: toSortedItem
     };
   }
 

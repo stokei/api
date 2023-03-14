@@ -1577,10 +1577,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@stokei/nestjs@^1.3.5":
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/@stokei/nestjs/-/nestjs-1.3.5.tgz#bedb45e831219f55ac12831b7461fb9475c500e2"
-  integrity sha512-DtM3dk2BqY8L1qBaV6w5liRy+SdRHSUm+YNDGu0NZgTzZlX6FfaeLeHDoWz5WhJliDfMJyq2v51I0lFEIrvIBg==
+"@stokei/nestjs@^1.3.6":
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/@stokei/nestjs/-/nestjs-1.3.6.tgz#7aebbb5165bc04efbdde70f617a56fc7cb93c3ed"
+  integrity sha512-DX71jTntqMmSyhSHK2hxEK/B5teIPe7F5uBLloB6OFgNHfc8++B+QLE2sE2Fsckm+8iyjsqzgUd0Tjb+EwTNgA==
   dependencies:
     "@apollo/gateway" "^2.3.2"
     "@nestjs/common" "^9.1.2"

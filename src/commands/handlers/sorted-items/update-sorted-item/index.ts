@@ -1,10 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import {
-  cleanObject,
-  cleanValue,
-  cleanValueNumber,
-  splitServiceId
-} from '@stokei/nestjs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import { UpdateSortedItemCommand } from '@/commands/implements/sorted-items/update-sorted-item.command';
 import {
@@ -79,7 +74,7 @@ export class UpdateSortedItemCommandHandler
         sortedItem: cleanValue(command?.where?.sortedItem)
       }),
       data: cleanObject({
-        index: cleanValueNumber(command?.data?.index),
+        item: cleanValue(command?.data?.item),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

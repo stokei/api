@@ -24,6 +24,7 @@ import { PricesLoader } from './prices.loader';
 import { ProductsLoader } from './products.loader';
 import { RecurringsLoader } from './recurrings.loader';
 import { RolesLoader } from './roles.loader';
+import { SortedItemsLoader } from './sorted-items.loader';
 import { SubscriptionContractsLoader } from './subscription-contracts.loader';
 import { VideoAuthorsLoader } from './video-authors.loader';
 import { VideosLoader } from './videos.loader';
@@ -57,5 +58,6 @@ export const Loaders = [
   CatalogsLoader,
   CatalogItemsLoader,
   RolesLoader,
-  HerosLoader
+  HerosLoader,
+  SortedItemsLoader
 ];

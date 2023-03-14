@@ -1,4 +1,4 @@
-import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { ChangeFromSortedItemToSortedItemCommand } from '@/commands/implements/sorted-items/change-from-sorted-item-to-sorted-item.command';
@@ -7,6 +7,7 @@ import {
   ParamNotFoundException,
   SortedItemNotFoundException
 } from '@/errors';
+import { SortedItemModel } from '@/models/sorted-item.model';
 import { FindSortedItemByIdService } from '@/services/sorted-items/find-sorted-item-by-id';
 import { UpdateSortedItemService } from '@/services/sorted-items/update-sorted-item';
 
@@ -19,8 +20,7 @@ export class ChangeFromSortedItemToSortedItemCommandHandler
 {
   constructor(
     private readonly findSortedItemByIdService: FindSortedItemByIdService,
-    private readonly updateSortedItemService: UpdateSortedItemService,
-    private readonly publisher: EventPublisher
+    private readonly updateSortedItemService: UpdateSortedItemService
   ) {}
 
   async execute(command: ChangeFromSortedItemToSortedItemCommand) {
@@ -52,9 +52,9 @@ export class ChangeFromSortedItemToSortedItemCommandHandler
       throw new SortedItemNotFoundException();
     }
 
-    await this.updateSortedItemService.execute({
+    const toItem = await this.updateSortedItemService.execute({
       data: {
-        index: toSortedItem.index,
+        item: toSortedItem.item,
         updatedBy: data.updatedBy
       },
       where: {
@@ -62,10 +62,11 @@ export class ChangeFromSortedItemToSortedItemCommandHandler
         sortedItem: fromSortedItem.id
       }
     });
+    let fromItem: SortedItemModel;
     try {
-      await this.updateSortedItemService.execute({
+      fromItem = await this.updateSortedItemService.execute({
         data: {
-          index: fromSortedItem.index,
+          item: fromSortedItem.item,
           updatedBy: data.updatedBy
         },
         where: {
@@ -74,9 +75,9 @@ export class ChangeFromSortedItemToSortedItemCommandHandler
         }
       });
     } catch (error) {
-      await this.updateSortedItemService.execute({
+      fromItem = await this.updateSortedItemService.execute({
         data: {
-          index: fromSortedItem.index,
+          item: fromSortedItem.item,
           updatedBy: data.updatedBy
         },
         where: {
@@ -84,10 +85,15 @@ export class ChangeFromSortedItemToSortedItemCommandHandler
           sortedItem: fromSortedItem.id
         }
       });
-      return false;
     }
 
-    return true;
+    if (!fromItem || !toItem) {
+      throw new SortedItemNotFoundException();
+    }
+    return {
+      fromItem,
+      toItem
+    };
   }
 
   private clearData(

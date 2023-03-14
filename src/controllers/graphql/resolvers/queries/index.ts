@@ -21,6 +21,7 @@ import { PhonesQueries } from './phones';
 import { PlansQueries } from './plans';
 import { PricesQueries } from './prices';
 import { ProductsQueries } from './products';
+import { SortedItemsQueries } from './sorted-items';
 import { SubscriptionContractsQueries } from './subscription-contracts';
 import { VideoAuthorsQueries } from './video-authors';
 import { VideosQueries } from './videos';
@@ -51,5 +52,6 @@ export const Queries = [
   ...FeaturesQueries,
   ...CatalogsQueries,
   ...CatalogItemsQueries,
-  ...HerosQueries
+  ...HerosQueries,
+  ...SortedItemsQueries
 ];

@@ -1,5 +1,5 @@
 export interface UpdateSortedItemDataDTO {
-  index?: number;
+  item?: string;
   updatedBy: string;
 }
 

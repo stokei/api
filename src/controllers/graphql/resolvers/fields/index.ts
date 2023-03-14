@@ -22,6 +22,7 @@ import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
 import { ProductsFieldsResolvers } from './products';
 import { RolesFieldsResolvers } from './roles';
+import { SortedItemsFieldsResolvers } from './sorted-items';
 import { SubscriptionContractsFieldsResolvers } from './subscription-contracts';
 import { VideoAuthorsFieldsResolvers } from './video-authors';
 import { VideosFieldsResolvers } from './videos';
@@ -53,5 +54,6 @@ export const FieldsResolvers = [
   ...CatalogsFieldsResolvers,
   ...CatalogItemsFieldsResolvers,
   ...RolesFieldsResolvers,
-  ...HerosFieldsResolvers
+  ...HerosFieldsResolvers,
+  ...SortedItemsFieldsResolvers
 ];

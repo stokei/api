@@ -34,7 +34,7 @@ export class CreateSortedItemCommandHandler
       throw new ParamNotFoundException<CreateSortedItemCommandKeys>('item');
     }
 
-    let maxIndex = 1;
+    let maxIndex = 0;
     try {
       const maxIndexSortedItem =
         await this.findMaxIndexSortedItemService.execute({

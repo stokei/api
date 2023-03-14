@@ -24,6 +24,7 @@ import { PhonesMutations } from './phones';
 import { PlansMutations } from './plans';
 import { PricesMutations } from './prices';
 import { ProductsMutations } from './products';
+import { SortedItemsMutations } from './sorted-items';
 import { SubscriptionContractsMutations } from './subscription-contracts';
 import { VideoAuthorsMutations } from './video-authors';
 import { VideosMutations } from './videos';
@@ -57,5 +58,6 @@ export const Mutations = [
   ...FeaturesMutations,
   ...CatalogsMutations,
   ...CatalogItemsMutations,
-  ...HerosMutations
+  ...HerosMutations,
+  ...SortedItemsMutations
 ];

@@ -38,6 +38,10 @@ export class CourseCourseInstructorsResolver {
       }
     });
 
+    if (!instructors?.totalCount) {
+      return instructors;
+    }
+
     const accountIds = instructors?.items
       ?.map((intructor) => intructor.instructor)
       .filter(Boolean);

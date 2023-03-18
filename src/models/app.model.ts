@@ -91,8 +91,8 @@ export class AppModel extends AggregateRoot {
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
     this.isStokei = !!this.id.match(/stokei/i);
-    this.stripeBankAccount = data.stripeBankAccount;
-    this.stripeAccount = data.stripeAccount;
+    this.stripeBankAccount = data.stripeBankAccount || undefined;
+    this.stripeAccount = data.stripeAccount || undefined;
     this.stripeCustomer = data.stripeCustomer;
     this.isAllowedToSell = this.isStokei || !!this.stripeAccount;
     this.isAllowedToUsePlan = this.isStokei || !!this.paymentMethod;

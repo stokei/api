@@ -57,9 +57,6 @@ export class PlanMapper {
       ...query,
       where: cleanWhere({
         data: query?.where,
-        allowIsEmptyValues: {
-          NOT: true
-        },
         operatorMapper(operatorData) {
           return {
             app: cleanWhereDataSearch(operatorData.app),

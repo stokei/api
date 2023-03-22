@@ -57,9 +57,6 @@ export class RecurringMapper {
       ...query,
       where: cleanWhere({
         data: query?.where,
-        allowIsEmptyValues: {
-          NOT: true
-        },
         operatorMapper(operatorData) {
           return {
             usageType: operatorData.usageType,

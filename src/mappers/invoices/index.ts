@@ -24,9 +24,6 @@ export class InvoiceMapper {
     const prismaMapper = new PrismaMapper();
     return prismaMapper.toWhere({
       data: where,
-      allowIsEmptyValues: {
-        NOT: true
-      },
       operatorMapper(operatorData) {
         return {
           id: prismaMapper.toWhereIds(operatorData.ids),
@@ -63,9 +60,6 @@ export class InvoiceMapper {
       ...query,
       where: cleanWhere({
         data: query?.where,
-        allowIsEmptyValues: {
-          NOT: true
-        },
         operatorMapper(operatorData) {
           return {
             app: cleanWhereDataString(operatorData.app),

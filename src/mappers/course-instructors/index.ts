@@ -58,9 +58,6 @@ export class CourseInstructorMapper {
       ...query,
       where: cleanWhere({
         data: query?.where,
-        allowIsEmptyValues: {
-          NOT: true
-        },
         operatorMapper(operatorData) {
           return {
             course: cleanWhereDataString(operatorData.course),

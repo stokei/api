@@ -58,9 +58,6 @@ export class CatalogItemMapper {
       ...query,
       where: cleanWhere({
         data: query?.where,
-        allowIsEmptyValues: {
-          NOT: true
-        },
         operatorMapper(operatorData) {
           return {
             catalog: cleanWhereDataString(operatorData.catalog),

@@ -57,9 +57,6 @@ export class AccessMapper {
       ...query,
       where: cleanWhere({
         data: query?.where,
-        allowIsEmptyValues: {
-          NOT: true
-        },
         operatorMapper(operatorData) {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),

@@ -61,9 +61,6 @@ export class SubscriptionContractItemMapper {
       ...query,
       where: cleanWhere({
         data: query?.where,
-        allowIsEmptyValues: {
-          NOT: true
-        },
         operatorMapper(operatorData) {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),

@@ -46,6 +46,7 @@ export class CreateHeroCommandHandler
     return cleanObject({
       parent: cleanValue(command?.parent),
       app: cleanValue(command?.app),
+      type: cleanValue(command?.type),
       title: cleanValue(command?.title),
       titleHighlight: cleanValue(command?.titleHighlight),
       subtitle: cleanValue(command?.subtitle),

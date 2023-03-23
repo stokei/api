@@ -119,11 +119,11 @@ enum FileStatus {
   PENDING
 }
 
-enum ComponentType {
-  CATALOG
-  HERO
-  HERO_WITH_IMAGE
-  HERO_WITH_VIDEO
+enum HeroType {
+  DEFAULT
+  WITH_VIDEO
+  WITH_IMAGE
+  WITH_IMAGE_BACKGROUND
 }
 
 model Account {
@@ -656,6 +656,7 @@ model Hero {
   id              String    @id @default(cuid())
   app             String    @db.VarChar(255)
   parent          String    @db.VarChar(255)
+  type            HeroType  @default(DEFAULT)
   title           String?   @db.VarChar(255)
   titleHighlight  String?   @map("title_highlight") @db.VarChar(255)
   subtitle        String?   @db.VarChar(255)

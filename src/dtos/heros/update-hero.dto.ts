@@ -1,5 +1,8 @@
+import { HeroType } from '@/enums/hero-type.enum';
+
 export interface UpdateHeroDataDTO {
   updatedBy: string;
+  type?: HeroType;
   title?: string;
   titleHighlight?: string;
   subtitle?: string;

@@ -1,5 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
+import { HeroType } from '@/controllers/graphql/enums/hero-type.enum';
+
 import { App } from './app';
 import { Image } from './image';
 import { Video } from './video';
@@ -11,6 +13,9 @@ export class Hero {
 
   @Field(() => String)
   parent: string;
+
+  @Field(() => HeroType, { defaultValue: HeroType.DEFAULT })
+  type: HeroType;
 
   @Field(() => String, { nullable: true })
   title?: string;

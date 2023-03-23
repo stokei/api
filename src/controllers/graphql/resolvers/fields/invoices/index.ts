@@ -1,8 +1,7 @@
 import { InvoiceAppResolver } from './app';
 import { InvoiceCreatedByResolver } from './created-by';
 import { InvoiceCurrencyResolver } from './currency';
-import { InvoiceCustomerAccountResolver } from './customer-account';
-import { InvoiceCustomerAppResolver } from './customer-app';
+import { InvoiceCustomerResolver } from './customer';
 import { InvoicePaymentMethodResolver } from './payment-method';
 import { InvoiceReferenceResolver } from './reference';
 import { InvoiceSubscriptionContractResolver } from './subscription-contract';
@@ -15,7 +14,6 @@ export const InvoicesFieldsResolvers = [
   InvoiceUpdatedByResolver,
   InvoiceCurrencyResolver,
   InvoiceSubscriptionContractResolver,
-  InvoiceCustomerAccountResolver,
-  InvoiceCustomerAppResolver,
+  InvoiceCustomerResolver,
   InvoicePaymentMethodResolver
 ];

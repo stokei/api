@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { HeroType } from '@/enums/hero-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { HeroCreatedEvent } from '@/events/implements/heros/hero-created.event';
 import { HeroRemovedEvent } from '@/events/implements/heros/hero-removed.event';
@@ -11,6 +12,7 @@ export interface IHeroModelData {
   readonly _id?: string;
   readonly app: string;
   readonly parent: string;
+  readonly type: HeroType;
   readonly title?: string;
   readonly titleHighlight?: string;
   readonly subtitle?: string;
@@ -27,6 +29,7 @@ export class HeroModel extends AggregateRoot {
   readonly id: string;
   readonly app: string;
   readonly parent: string;
+  readonly type: HeroType;
   readonly title?: string;
   readonly titleHighlight?: string;
   readonly subtitle?: string;
@@ -46,6 +49,7 @@ export class HeroModel extends AggregateRoot {
     });
     this.app = data.app;
     this.parent = data.parent;
+    this.type = data.type;
     this.title = data.title;
     this.titleHighlight = data.titleHighlight;
     this.subtitle = data.subtitle;

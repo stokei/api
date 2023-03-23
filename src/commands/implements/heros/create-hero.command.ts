@@ -1,10 +1,12 @@
 import { ICommand } from '@nestjs/cqrs';
 
 import { CreateHeroDTO } from '@/dtos/heros/create-hero.dto';
+import { HeroType } from '@/enums/hero-type.enum';
 
 export class CreateHeroCommand implements ICommand, CreateHeroDTO {
   app: string;
   parent: string;
+  type: HeroType;
   title?: string;
   titleHighlight?: string;
   subtitle?: string;

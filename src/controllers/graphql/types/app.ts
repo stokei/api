@@ -23,6 +23,9 @@ export class App {
   @Field(() => String, { nullable: true })
   description?: string;
 
+  @Field(() => String, { nullable: true })
+  email?: string;
+
   @Field(() => AppStatus)
   status: AppStatus;
 

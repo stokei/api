@@ -1,6 +1,8 @@
-import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import { createUnionType, Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import { splitServiceId } from '@stokei/nestjs';
 
 import { InvoiceStatus } from '@/controllers/graphql/enums/invoice-status.enum';
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 
 import { Account } from './account';
 import { App } from './app';
@@ -8,16 +10,26 @@ import { Currency } from './currency';
 import { PaymentMethod } from './payment-method';
 import { SubscriptionContract } from './subscription-contract';
 
+export const InvoiceCustomerUnion = createUnionType({
+  name: 'InvoiceCustomerUnion',
+  types: () => [Account, App] as const,
+  async resolveType(value) {
+    const type = splitServiceId(value?.id)?.service;
+    const types = {
+      [ServerStokeiApiIdPrefix.ACCOUNTS]: Account.name,
+      [ServerStokeiApiIdPrefix.APPS]: App.name
+    };
+    return types[type];
+  }
+});
+
 @ObjectType()
 export class Invoice {
   @Field(() => ID)
   id: string;
 
-  @Field(() => Account, { nullable: true })
-  customerAccount: Account;
-
-  @Field(() => App, { nullable: true })
-  customerApp: App;
+  @Field(() => InvoiceCustomerUnion, { nullable: true })
+  customer: typeof InvoiceCustomerUnion;
 
   @Field(() => SubscriptionContract)
   subscription: SubscriptionContract;

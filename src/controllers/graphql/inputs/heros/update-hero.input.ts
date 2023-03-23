@@ -1,9 +1,13 @@
 import { Field, InputType } from '@nestjs/graphql';
 
+import { HeroType } from '@/controllers/graphql/enums/hero-type.enum';
 @InputType()
 export class UpdateDataHeroInput {
   @Field({ nullable: true })
   title?: string;
+
+  @Field(() => HeroType, { nullable: true })
+  type?: HeroType;
 
   @Field({ nullable: true })
   subtitle?: string;

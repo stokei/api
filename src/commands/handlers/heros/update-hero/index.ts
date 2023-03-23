@@ -67,6 +67,7 @@ export class UpdateHeroCommandHandler
       }),
       data: cleanObject({
         title: cleanValue(command?.data?.title),
+        type: cleanValue(command?.data?.type),
         titleHighlight: cleanValue(command?.data?.titleHighlight),
         subtitle: cleanValue(command?.data?.subtitle),
         image: cleanValue(command?.data?.image),

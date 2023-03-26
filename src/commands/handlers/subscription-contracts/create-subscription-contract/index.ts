@@ -69,6 +69,8 @@ export class CreateSubscriptionContractCommandHandler
   ): CreateSubscriptionContractCommand {
     return cleanObject({
       app: cleanValue(command?.app),
+      startAt: cleanValue(command?.startAt),
+      endAt: cleanValue(command?.endAt),
       parent: cleanValue(command?.parent),
       paymentMethod: cleanValue(command?.paymentMethod),
       stripeSubscription: cleanValue(command?.stripeSubscription),

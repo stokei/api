@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  convertToISODateString,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { ActivateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/activate-subscription-contract.command';
 import { ActivateSubscriptionContractRepositoryDataDTO } from '@/dtos/subscription-contracts/activate-subscription-contract-repository.dto';
@@ -7,10 +12,13 @@ import { SubscriptionContractStatus } from '@/enums/subscription-contract-status
 import {
   DataNotFoundException,
   ParamNotFoundException,
+  RecurringNotFoundException,
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 import { ActivateSubscriptionContractRepository } from '@/repositories/subscription-contracts/activate-subscription-contract';
+import { FindRecurringByIdService } from '@/services/recurrings/find-recurring-by-id';
+import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
 import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 
 type ActivateSubscriptionContractCommandKeys =
@@ -23,6 +31,8 @@ export class ActivateSubscriptionContractCommandHandler
   constructor(
     private readonly activateSubscriptionContractRepository: ActivateSubscriptionContractRepository,
     private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
+    private readonly findRecurringByIdService: FindRecurringByIdService,
+    private readonly findAllSubscriptionContractItemsService: FindAllSubscriptionContractItemsService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -45,12 +55,42 @@ export class ActivateSubscriptionContractCommandHandler
       throw new SubscriptionContractNotFoundException();
     }
 
+    const startAt = convertToISODateString(data.startAt || Date.now());
+    let endAt = data.endAt;
+    if (!data.endAt && subscriptionContract.isRecurring) {
+      const subscriptionContractItems =
+        await this.findAllSubscriptionContractItemsService.execute({
+          where: {
+            AND: {
+              parent: {
+                equals: subscriptionContract?.id
+              }
+            }
+          },
+          page: {
+            limit: 1
+          }
+        });
+      const subscriptionContractItem = subscriptionContractItems?.items?.[0];
+
+      const recurring = await this.findRecurringByIdService.execute(
+        subscriptionContractItem.recurring
+      );
+      if (!recurring) {
+        throw new RecurringNotFoundException();
+      }
+
+      endAt = convertToISODateString(
+        SubscriptionContractModel.generateEndDate(startAt, recurring)
+      );
+    }
+
     const dataActivate: ActivateSubscriptionContractRepositoryDataDTO = {
       paymentMethod: data.paymentMethod,
       active: true,
       status: SubscriptionContractStatus.ACTIVE,
-      startAt: data.startAt,
-      endAt: data.endAt,
+      startAt,
+      endAt,
       updatedBy: data.updatedBy
     };
 

@@ -1,6 +1,15 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { convertToISODateString, createServiceId } from '@stokei/nestjs';
+import {
+  addDays,
+  addMonths,
+  addWeeks,
+  addYears,
+  convertToISODate,
+  convertToISODateString,
+  createServiceId
+} from '@stokei/nestjs';
 
+import { IntervalType } from '@/enums/interval-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
@@ -8,6 +17,8 @@ import { SubscriptionContractActivatedEvent } from '@/events/implements/subscrip
 import { SubscriptionContractCanceledEvent } from '@/events/implements/subscription-contracts/subscription-contract-canceled.event';
 import { SubscriptionContractCreatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-created.event';
 import { SubscriptionContractUpdatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-updated.event';
+
+import { RecurringModel } from './recurring.model';
 
 export interface ISubscriptionContractModelData {
   readonly id?: string;
@@ -74,6 +85,20 @@ export class SubscriptionContractModel extends AggregateRoot {
 
   get isCanceled() {
     return SubscriptionContractStatus.CANCELED === this.status;
+  }
+
+  static generateEndDate(startDate: string, recurring: RecurringModel) {
+    const startAt = convertToISODate(startDate);
+    const getDateHandler = {
+      [IntervalType.DAY]: addDays,
+      [IntervalType.WEEK]: addWeeks,
+      [IntervalType.MONTH]: addMonths,
+      [IntervalType.YEAR]: addYears
+    };
+    return getDateHandler[recurring.interval]?.(
+      recurring.intervalCount,
+      startAt
+    );
   }
 
   createdSubscriptionContract({ createdBy }: { createdBy: string }) {

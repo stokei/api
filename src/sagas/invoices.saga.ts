@@ -1,9 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
-import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
+import {
+  convertToISODateString,
+  hiddenPrivateDataFromObject
+} from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { ActivateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/activate-subscription-contract.command';
+import { CancelSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/cancel-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { InvoiceChangedToPaidEvent } from '@/events/implements/invoices/invoice-changed-to-paid.event';
 import { InvoiceChangedToPaymentErrorEvent } from '@/events/implements/invoices/invoice-changed-to-payment-error.event';
@@ -51,7 +56,13 @@ export class InvoicesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new CancelSubscriptionContractCommand({
+            subscriptionContract: event.invoice.subscription,
+            app: event.invoice.app,
+            updatedBy: event.updatedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)
@@ -70,7 +81,16 @@ export class InvoicesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new ActivateSubscriptionContractCommand({
+            endAt: null,
+            startAt: convertToISODateString(Date.now()),
+            subscriptionContract: event.invoice.subscription,
+            paymentMethod: event.invoice.paymentMethod,
+            app: event.invoice.app,
+            updatedBy: event.updatedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

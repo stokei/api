@@ -1,5 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  convertToISODateString,
+  splitServiceId
+} from '@stokei/nestjs';
 import Stripe from 'stripe';
 
 import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
@@ -129,6 +134,12 @@ export class CreateCheckoutCommandHandler
         parent: data.customer,
         paymentMethod: paymentMethod?.id,
         stripeSubscription: stripeSubscription.id,
+        startAt: stripeSubscription.start_date
+          ? convertToISODateString(stripeSubscription.start_date)
+          : null,
+        endAt: stripeSubscription.ended_at
+          ? convertToISODateString(stripeSubscription.ended_at)
+          : null,
         type: price.type,
         automaticRenew: true
       });

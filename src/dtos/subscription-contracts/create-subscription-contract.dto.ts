@@ -4,6 +4,8 @@ export interface CreateSubscriptionContractDTO {
   app: string;
   parent: string;
   stripeSubscription: string;
+  startAt?: string;
+  endAt?: string;
   paymentMethod?: string;
   type: SubscriptionContractType;
   automaticRenew: boolean;

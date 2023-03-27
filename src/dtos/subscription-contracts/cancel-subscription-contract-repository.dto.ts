@@ -3,6 +3,7 @@ import { SubscriptionContractStatus } from '@/enums/subscription-contract-status
 export interface CancelSubscriptionContractRepositoryDataDTO {
   status: SubscriptionContractStatus;
   active: boolean;
+  startAt: string;
   endAt: string;
   updatedBy: string;
 }

@@ -10,6 +10,7 @@ import { CancelSubscriptionContractCommand } from '@/commands/implements/subscri
 import { CancelSubscriptionContractRepositoryDataDTO } from '@/dtos/subscription-contracts/cancel-subscription-contract-repository.dto';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import {
+  AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
   SubscriptionContractAlreadyCanceledException,
@@ -17,6 +18,8 @@ import {
 } from '@/errors';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 import { CancelSubscriptionContractRepository } from '@/repositories/subscription-contracts/cancel-subscription-contract';
+import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { CancelStripeSubscriptionService } from '@/services/stripe/cancel-stripe-subscription';
 import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 
 type CancelSubscriptionContractCommandKeys =
@@ -29,6 +32,8 @@ export class CancelSubscriptionContractCommandHandler
   constructor(
     private readonly cancelSubscriptionContractRepository: CancelSubscriptionContractRepository,
     private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
+    private readonly findAppByIdService: FindAppByIdService,
+    private readonly cancelStripeSubscriptionService: CancelStripeSubscriptionService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -42,6 +47,10 @@ export class CancelSubscriptionContractCommandHandler
         'subscriptionContract'
       );
     }
+    const app = await this.findAppByIdService.execute(data.app);
+    if (!app) {
+      throw new AppNotFoundException();
+    }
 
     const subscriptionContract =
       await this.findSubscriptionContractByIdService.execute(
@@ -54,10 +63,22 @@ export class CancelSubscriptionContractCommandHandler
       throw new SubscriptionContractAlreadyCanceledException();
     }
 
+    const stripeSubscriptionCanceled =
+      await this.cancelStripeSubscriptionService.execute({
+        subscription: subscriptionContract?.stripeSubscription,
+        stripeAccount: app?.stripeAccount
+      });
+    if (!stripeSubscriptionCanceled) {
+      throw new SubscriptionContractNotFoundException();
+    }
+
+    const startAt =
+      subscriptionContract.startAt || subscriptionContract.createdAt;
     const endAt = convertToISODateString(Date.now());
     const dataCancel: CancelSubscriptionContractRepositoryDataDTO = {
       active: false,
       status: SubscriptionContractStatus.CANCELED,
+      startAt,
       endAt,
       updatedBy: data.updatedBy
     };
@@ -82,7 +103,7 @@ export class CancelSubscriptionContractCommandHandler
     subscriptionContractModel.canceledSubscriptionContract();
     subscriptionContractModel.commit();
 
-    return subscriptionContractCanceled;
+    return subscriptionContractActive;
   }
 
   private clearData(

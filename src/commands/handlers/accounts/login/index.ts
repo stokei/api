@@ -3,15 +3,19 @@ import { cleanObject, cleanValue, comparePassword } from '@stokei/nestjs';
 
 import { CreateAccessCommand } from '@/commands/implements/accesses/create-access.command';
 import { LoginCommand } from '@/commands/implements/accounts/login.command';
+import { defaultAppId } from '@/constants/default-app-id';
 import { PASSWORD_SECRET_KEY } from '@/environments';
 import {
   AccessNotFoundException,
+  AppNotFoundException,
   DataNotFoundException,
   InvalidEmailOrPasswordException,
   ParamNotFoundException
 } from '@/errors';
 import { AccessModel } from '@/models/access.model';
 import { FindAccountByEmailAndAppRepository } from '@/repositories/accounts/find-account-by-email-and-app';
+import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { FindAllRolesService } from '@/services/roles/find-all-roles';
 
 type LoginCommandKeys = keyof LoginCommand;
 
@@ -19,7 +23,9 @@ type LoginCommandKeys = keyof LoginCommand;
 export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly findAccountByEmailAndAppRepository: FindAccountByEmailAndAppRepository
+    private readonly findAccountByEmailAndAppRepository: FindAccountByEmailAndAppRepository,
+    private readonly findAppByIdService: FindAppByIdService,
+    private readonly findAllRolesService: FindAllRolesService
   ) {}
 
   async execute(command: LoginCommand) {
@@ -37,10 +43,45 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
       throw new ParamNotFoundException<LoginCommandKeys>('password');
     }
 
-    const account = await this.findAccountByEmailAndAppRepository.execute({
+    const app = await this.findAppByIdService.execute(data.app);
+    if (!app) {
+      throw new AppNotFoundException();
+    }
+
+    let account = await this.findAccountByEmailAndAppRepository.execute({
       email: data.email,
       app: data.app
     });
+    if (!account) {
+      account = await this.findAccountByEmailAndAppRepository.execute({
+        email: data.email,
+        app: defaultAppId
+      });
+      if (account) {
+        const isAppOwner = app.parent === account.id;
+        if (!isAppOwner) {
+          const accountRoles = await this.findAllRolesService.execute({
+            where: {
+              AND: {
+                parent: {
+                  equals: account.id
+                },
+                app: {
+                  equals: defaultAppId
+                },
+                name: {
+                  equals: 'ADMIN'
+                }
+              }
+            }
+          });
+          const isAppAdmin = !!accountRoles.totalCount;
+          if (!isAppAdmin) {
+            throw new InvalidEmailOrPasswordException();
+          }
+        }
+      }
+    }
     if (!account || !account?.active) {
       throw new InvalidEmailOrPasswordException();
     }

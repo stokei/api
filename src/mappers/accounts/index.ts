@@ -36,13 +36,7 @@ export class AccountMapper {
           firstname: prismaMapper.toWhereDataSearch(operatorData.firstname),
           lastname: prismaMapper.toWhereDataSearch(operatorData.lastname),
           email: prismaMapper.toWhereData(operatorData.email),
-          username: prismaMapper.toWhereData(operatorData.username),
-          roles:
-            operatorData.roles?.length > 0
-              ? {
-                  hasEvery: operatorData.roles
-                }
-              : undefined
+          username: prismaMapper.toWhereData(operatorData.username)
         };
       }
     });
@@ -73,10 +67,6 @@ export class AccountMapper {
             username: cleanWhereDataString(operatorData.username),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),
-            roles:
-              operatorData.roles?.length > 0
-                ? operatorData.roles.map((role) => cleanValue(role))
-                : undefined,
             ids:
               operatorData.ids?.length > 0
                 ? operatorData.ids.map(

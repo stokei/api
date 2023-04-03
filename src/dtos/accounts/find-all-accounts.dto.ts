@@ -5,8 +5,6 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
-import { AccountRole } from '@/enums/account-role.enum';
-
 export interface WhereDataFindAllAccountsDTO {
   ids?: string[];
   app?: IWhereData;
@@ -15,7 +13,6 @@ export interface WhereDataFindAllAccountsDTO {
   firstname?: IWhereDataSearch;
   lastname?: IWhereDataSearch;
   email?: IWhereData;
-  roles?: AccountRole[];
   username?: IWhereData;
 }
 export type IKeysWhereDataFindAllAccountsDTO =

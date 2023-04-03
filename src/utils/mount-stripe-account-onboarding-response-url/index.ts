@@ -4,7 +4,7 @@ import {
 } from '@/environments';
 import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 
-const stripeOnboardingBase = '/stripe/onboarding';
+const stripeOnboardingBase = '/onboardings/stripe';
 
 export const mountStripeAccountOnboardingReturnURL = ({
   domain

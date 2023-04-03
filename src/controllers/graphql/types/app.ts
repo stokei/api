@@ -56,6 +56,9 @@ export class App {
   @Field(() => Boolean)
   isStokei: boolean;
 
+  @Field(() => Boolean)
+  isIntegratedWithStripe: boolean;
+
   @Field(() => String, { nullable: true })
   blockedAt?: string;
 

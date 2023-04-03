@@ -3,7 +3,6 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { AddAppAdminToAppSubscriptionContractCommand } from '@/commands/implements/apps/add-app-admin-to-app-subscription-contract.command';
-import { AccountRole } from '@/enums/account-role.enum';
 import { PlanType } from '@/enums/plan-type.enum';
 import {
   AccountNotFoundException,
@@ -13,9 +12,9 @@ import {
 } from '@/errors';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
-import { FindAllAccountsService } from '@/services/accounts/find-all-accounts';
 import { AddItemToAppSubscriptionContractService } from '@/services/apps/add-item-to-app-subscription-contract';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
+import { FindAllRolesService } from '@/services/roles/find-all-roles';
 
 type AddAppAdminToAppSubscriptionContractCommandKeys =
   keyof AddAppAdminToAppSubscriptionContractCommand;
@@ -29,7 +28,7 @@ export class AddAppAdminToAppSubscriptionContractCommandHandler
   );
   constructor(
     private readonly findAccountByIdService: FindAccountByIdService,
-    private readonly findAllAccountsService: FindAllAccountsService,
+    private readonly findAllRolesService: FindAllRolesService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
     private readonly addItemToAppSubscriptionContractService: AddItemToAppSubscriptionContractService
   ) {}
@@ -57,13 +56,15 @@ export class AddAppAdminToAppSubscriptionContractCommandHandler
         throw new AccountNotFoundException();
       }
 
-      const appAdmins = await this.findAllAccountsService.execute({
+      const appAdmins = await this.findAllRolesService.execute({
         where: {
           AND: {
             app: {
-              equals: data.app
+              equals: data?.app
             },
-            roles: [AccountRole.ADMIN]
+            name: {
+              equals: 'ADMIN'
+            }
           }
         },
         page: {

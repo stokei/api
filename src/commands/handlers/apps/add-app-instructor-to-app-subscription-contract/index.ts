@@ -3,7 +3,6 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { AddAppInstructorToAppSubscriptionContractCommand } from '@/commands/implements/apps/add-app-instructor-to-app-subscription-contract.command';
-import { AccountRole } from '@/enums/account-role.enum';
 import { PlanType } from '@/enums/plan-type.enum';
 import {
   AccountNotFoundException,
@@ -13,9 +12,9 @@ import {
 } from '@/errors';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
-import { FindAllAccountsService } from '@/services/accounts/find-all-accounts';
 import { AddItemToAppSubscriptionContractService } from '@/services/apps/add-item-to-app-subscription-contract';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
+import { FindAllRolesService } from '@/services/roles/find-all-roles';
 
 type AddAppInstructorToAppSubscriptionContractCommandKeys =
   keyof AddAppInstructorToAppSubscriptionContractCommand;
@@ -29,7 +28,7 @@ export class AddAppInstructorToAppSubscriptionContractCommandHandler
   );
   constructor(
     private readonly findAccountByIdService: FindAccountByIdService,
-    private readonly findAllAccountsService: FindAllAccountsService,
+    private readonly findAllRolesService: FindAllRolesService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
     private readonly addItemToAppSubscriptionContractService: AddItemToAppSubscriptionContractService
   ) {}
@@ -59,13 +58,15 @@ export class AddAppInstructorToAppSubscriptionContractCommandHandler
         throw new AccountNotFoundException();
       }
 
-      const appInstructors = await this.findAllAccountsService.execute({
+      const appInstructors = await this.findAllRolesService.execute({
         where: {
           AND: {
             app: {
-              equals: data.app
+              equals: data?.app
             },
-            roles: [AccountRole.INSTRUCTOR]
+            name: {
+              equals: 'INSTRUCTOR'
+            }
           }
         },
         page: {

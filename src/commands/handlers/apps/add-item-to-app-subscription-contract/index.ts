@@ -181,8 +181,8 @@ export class AddItemToAppSubscriptionContractCommandHandler
 
       const stripeSubscription =
         await this.findStripeSubscriptionByIdService.execute(
-          subscriptionContract.stripeSubscription,
-          app.stripeAccount
+          subscriptionContract.stripeSubscription
+          // app.stripeAccount
         );
       const isInactiveSubscription =
         stripeSubscription?.status !== 'active' ||
@@ -215,7 +215,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
           currency: app.currency,
           customer: app.stripeCustomer,
           paymentMethod: appPaymentMethod?.stripePaymentMethod,
-          stripeAccount: app.stripeAccount,
+          // stripeAccount: app.stripeAccount,
           startPaymentWhenSubscriptionIsCreated: false,
           automaticRenew: true,
           prices: [
@@ -294,8 +294,8 @@ export class AddItemToAppSubscriptionContractCommandHandler
       if (!existsStripeSubscriptionItem) {
         const stripeSubscription =
           await this.findStripeSubscriptionByIdService.execute(
-            appCurrentSubscriptionContract.stripeSubscription,
-            app.stripeAccount
+            appCurrentSubscriptionContract.stripeSubscription
+            // app.stripeAccount
           );
         if (stripeSubscription) {
           const stripeSubscriptionContractItem =

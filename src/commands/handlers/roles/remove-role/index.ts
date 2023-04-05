@@ -31,9 +31,6 @@ export class RemoveRoleCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    if (!data.where?.role) {
-      throw new ParamNotFoundException('role');
-    }
     let role: RoleModel;
     try {
       role = await this.findRoleByIdService.execute(data.where?.role);

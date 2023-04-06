@@ -7,6 +7,7 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 import { CreateRoleCommand } from '@/commands/implements/roles/create-role.command';
 import { RemoveRoleCommand } from '@/commands/implements/roles/remove-role.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
+import { roleName } from '@/constants/role-name';
 import { CourseInstructorCreatedEvent } from '@/events/implements/course-instructors/course-instructor-created.event';
 import { CourseInstructorRemovedEvent } from '@/events/implements/course-instructors/course-instructor-removed.event';
 
@@ -36,7 +37,7 @@ export class CourseInstructorsSagas {
         const commands = [
           new CreateRoleCommand({
             parent: event.courseInstructor.instructor,
-            name: 'INSTRUCTOR',
+            name: roleName.INSTRUCTOR,
             app: event.courseInstructor.app,
             createdBy: event.createdBy
           })
@@ -67,7 +68,7 @@ export class CourseInstructorsSagas {
             new RemoveRoleCommand({
               where: {
                 parent: event.courseInstructor.instructor,
-                name: 'INSTRUCTOR',
+                name: roleName.INSTRUCTOR,
                 app: event.courseInstructor.app,
                 removedBy: event.removedBy
               }

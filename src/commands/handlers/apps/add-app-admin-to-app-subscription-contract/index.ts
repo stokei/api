@@ -3,6 +3,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { AddAppAdminToAppSubscriptionContractCommand } from '@/commands/implements/apps/add-app-admin-to-app-subscription-contract.command';
+import { roleName } from '@/constants/role-name';
 import { PlanType } from '@/enums/plan-type.enum';
 import {
   AccountNotFoundException,
@@ -63,7 +64,7 @@ export class AddAppAdminToAppSubscriptionContractCommandHandler
               equals: data?.app
             },
             name: {
-              equals: 'ADMIN'
+              equals: roleName.ADMIN
             }
           }
         },

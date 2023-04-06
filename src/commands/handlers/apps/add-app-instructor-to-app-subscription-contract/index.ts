@@ -3,6 +3,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { AddAppInstructorToAppSubscriptionContractCommand } from '@/commands/implements/apps/add-app-instructor-to-app-subscription-contract.command';
+import { roleName } from '@/constants/role-name';
 import { PlanType } from '@/enums/plan-type.enum';
 import {
   AccountNotFoundException,
@@ -65,7 +66,7 @@ export class AddAppInstructorToAppSubscriptionContractCommandHandler
               equals: data?.app
             },
             name: {
-              equals: 'INSTRUCTOR'
+              equals: roleName.INSTRUCTOR
             }
           }
         },

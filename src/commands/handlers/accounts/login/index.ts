@@ -4,6 +4,7 @@ import { cleanObject, cleanValue, comparePassword } from '@stokei/nestjs';
 import { CreateAccessCommand } from '@/commands/implements/accesses/create-access.command';
 import { LoginCommand } from '@/commands/implements/accounts/login.command';
 import { defaultAppId } from '@/constants/default-app-id';
+import { roleName } from '@/constants/role-name';
 import { PASSWORD_SECRET_KEY } from '@/environments';
 import {
   AccessNotFoundException,
@@ -70,7 +71,7 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
                   equals: defaultAppId
                 },
                 name: {
-                  equals: 'ADMIN'
+                  equals: roleName.ADMIN
                 }
               }
             }

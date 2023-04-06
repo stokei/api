@@ -73,8 +73,7 @@ export class UpdateAccountCommandHandler
         stripeCustomer: cleanValue(command?.data?.stripeCustomer),
         firstname: cleanValue(command?.data?.firstname),
         lastname: cleanValue(command?.data?.lastname),
-        updatedBy: cleanValue(command?.data?.updatedBy),
-        roles: command?.data?.roles || undefined
+        updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });
   }

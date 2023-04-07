@@ -81,19 +81,11 @@ export class CreateCustomerPortalSessionCommandHandler
     customer: string;
     app: AppModel;
   }): Promise<{ stripeCustomer: string }> {
-    const customerIsTheCurrentApp = data.customer === data.app.id;
-
     const handlers = {
       [ServerStokeiApiIdPrefix.ACCOUNTS]: async () => {
         const { stripeCustomer } = await this.findAccountByIdService.execute(
           data.customer
         );
-        return { stripeCustomer };
-      },
-      [ServerStokeiApiIdPrefix.APPS]: async () => {
-        const { stripeCustomer } = customerIsTheCurrentApp
-          ? data.app
-          : await this.findAppByIdService.execute(data.customer);
         return { stripeCustomer };
       }
     };

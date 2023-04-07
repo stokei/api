@@ -24,6 +24,7 @@ import { PaymentMethodModel } from '@/models/payment-method.model';
 import { PriceModel } from '@/models/price.model';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
+import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentSubscriptionContractService } from '@/services/apps/find-app-current-subscription-contract';
 import { FindPaymentMethodByIdService } from '@/services/payment-methods/find-payment-method-by-id';
@@ -55,6 +56,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
     private readonly createSubscriptionContractItemService: CreateSubscriptionContractItemService,
     private readonly createStripeSubscriptionService: CreateStripeSubscriptionService,
     private readonly createUsageRecordService: CreateUsageRecordService,
+    private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findPriceByIdService: FindPriceByIdService,
     private readonly findProductByIdService: FindProductByIdService,
     private readonly activateSubscriptionContractService: ActivateSubscriptionContractService,
@@ -209,11 +211,12 @@ export class AddItemToAppSubscriptionContractCommandHandler
           app.paymentMethod
         );
       } catch (error) {}
+      const appOwner = await this.findAccountByIdService.execute(app.parent);
       const stripeSubscription =
         await this.createStripeSubscriptionService.execute({
           app: app.id,
           currency: app.currency,
-          customer: app.stripeCustomer,
+          customer: appOwner.stripeCustomer,
           paymentMethod: appPaymentMethod?.stripePaymentMethod,
           // stripeAccount: app.stripeAccount,
           startPaymentWhenSubscriptionIsCreated: false,

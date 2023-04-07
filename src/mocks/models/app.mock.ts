@@ -18,7 +18,6 @@ export class AppModelMock extends AppModel {
       paymentMethod: data?.paymentMethod ?? 'pay_method_shaudhsaudhas',
       stripeBankAccount: data?.stripeBankAccount ?? 'bank_shaudhsaudhas',
       stripeAccount: data?.stripeAccount ?? 'acc_shaudhsaudhas',
-      stripeCustomer: data?.stripeCustomer ?? 'cus_shaudhsaudhas',
       currency: data?.currency ?? 'BRL',
       logo: data?.logo ?? null,
       icon: data?.icon ?? null,

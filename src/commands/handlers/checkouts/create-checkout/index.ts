@@ -192,20 +192,10 @@ export class CreateCheckoutCommandHandler
           app: customerApp
         } = await this.findAccountByIdService.execute(data.customer);
         return { stripeCustomer, email, customerApp };
-      },
-      [ServerStokeiApiIdPrefix.APPS]: async () => {
-        const {
-          stripeCustomer,
-          email,
-          id: customerApp
-        } = await this.findAppByIdService.execute(data.customer);
-        return { stripeCustomer, email, customerApp };
       }
     };
 
     const customerType = splitServiceId(data.customer)?.service;
-    return (
-      handlers[customerType]() || handlers[ServerStokeiApiIdPrefix.ACCOUNTS]()
-    );
+    return handlers[customerType || ServerStokeiApiIdPrefix.ACCOUNTS]();
   }
 }

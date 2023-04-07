@@ -193,7 +193,6 @@ model App {
   logo              String?   @db.VarChar(255)
   active            Boolean   @default(true)
   stripeBankAccount String?   @map("stripe_bank_account") @db.VarChar(255)
-  stripeCustomer    String?   @map("stripe_customer") @db.VarChar(255)
   stripeAccount     String?   @map("stripe_account") @db.VarChar(255)
   paymentMethod     String?   @map("payment_method") @db.VarChar(255)
   blockedAt         DateTime? @map("blocked_at")

@@ -38,7 +38,6 @@ export class FileUploadInterceptorModel {
   }
 
   get extension(): string {
-    console.log(this.file);
     const filenameExtension = path
       .extname(this.file?.filename || this.file?.originalname)
       ?.slice(1);

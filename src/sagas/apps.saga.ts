@@ -4,8 +4,6 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { CreateAppStripeCustomerCommand } from '@/commands/implements/apps/create-app-stripe-customer.command';
-import { UpdateAppStripeCustomerCommand } from '@/commands/implements/apps/update-app-stripe-customer.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AppCreatedEvent } from '@/events/implements/apps/app-created.event';
 import { AppUpdatedEvent } from '@/events/implements/apps/app-updated.event';
@@ -31,12 +29,7 @@ export class AppsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
-          new CreateAppStripeCustomerCommand({
-            app: event.app.id,
-            createdBy: event.createdBy
-          })
-        ];
+        const commands = [];
         return commands;
       }),
       mergeMap((c) => c)
@@ -55,15 +48,7 @@ export class AppsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const updateOrCreateStripeCustomerCommand = event.app.stripeCustomer
-          ? new UpdateAppStripeCustomerCommand({
-              app: event.app.id
-            })
-          : new CreateAppStripeCustomerCommand({
-              app: event.app.id,
-              createdBy: event.updatedBy
-            });
-        const commands = [updateOrCreateStripeCustomerCommand];
+        const commands = [];
         return commands;
       }),
       mergeMap((c) => c)

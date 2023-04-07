@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
@@ -16,6 +17,7 @@ type CreateRoleCommandKeys = keyof CreateRoleCommand;
 export class CreateRoleCommandHandler
   implements ICommandHandler<CreateRoleCommand>
 {
+  private readonly logger = new Logger(CreateRoleCommandHandler.name);
   constructor(
     private readonly createRoleRepository: CreateRoleRepository,
     private readonly findAllRolesService: FindAllRolesService,
@@ -24,46 +26,53 @@ export class CreateRoleCommandHandler
 
   async execute(command: CreateRoleCommand) {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreateRoleCommandKeys>('parent');
-    }
-    if (!data?.name) {
-      throw new ParamNotFoundException<CreateRoleCommandKeys>('name');
-    }
-
-    const roles = await this.findAllRolesService.execute({
-      where: {
-        AND: {
-          parent: {
-            equals: data.parent
-          },
-          name: {
-            equals: data.name
-          }
-        }
-      },
-      page: {
-        limit: 1
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
       }
-    });
-    if (roles?.totalCount > 0) {
-      return roles.items[0];
-    }
+      if (!data?.parent) {
+        throw new ParamNotFoundException<CreateRoleCommandKeys>('parent');
+      }
+      if (!data?.name) {
+        throw new ParamNotFoundException<CreateRoleCommandKeys>('name');
+      }
 
-    const roleCreated = await this.createRoleRepository.execute(data);
-    if (!roleCreated) {
-      throw new RoleNotFoundException();
-    }
-    const roleModel = this.publisher.mergeObjectContext(roleCreated);
-    roleModel.createdRole({
-      createdBy: data.createdBy
-    });
-    roleModel.commit();
+      const roles = await this.findAllRolesService.execute({
+        where: {
+          AND: {
+            parent: {
+              equals: data.parent
+            },
+            name: {
+              equals: data.name
+            }
+          }
+        },
+        page: {
+          limit: 1
+        }
+      });
+      if (roles?.totalCount > 0) {
+        return roles.items[0];
+      }
 
-    return roleCreated;
+      const roleCreated = await this.createRoleRepository.execute(data);
+      if (!roleCreated) {
+        throw new RoleNotFoundException();
+      }
+      const roleModel = this.publisher.mergeObjectContext(roleCreated);
+      roleModel.createdRole({
+        createdBy: data.createdBy
+      });
+      roleModel.commit();
+
+      return roleCreated;
+    } catch (error) {
+      this.logger.error(
+        `Parent(#${data?.parent} - ${data?.name}): ${error?.message}`
+      );
+      return;
+    }
   }
 
   private clearData(command: CreateRoleCommand): CreateRoleCommand {

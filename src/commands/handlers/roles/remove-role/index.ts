@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
@@ -16,6 +17,7 @@ import { FindRoleByIdService } from '@/services/roles/find-role-by-id';
 export class RemoveRoleCommandHandler
   implements ICommandHandler<RemoveRoleCommand>
 {
+  private readonly logger = new Logger(RemoveRoleCommandHandler.name);
   constructor(
     private readonly findRoleByIdService: FindRoleByIdService,
     private readonly findAllRolesService: FindAllRolesService,
@@ -25,58 +27,65 @@ export class RemoveRoleCommandHandler
 
   async execute(command: RemoveRoleCommand) {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data.where?.removedBy) {
-      throw new ParamNotFoundException('removedBy');
-    }
-    let role: RoleModel;
     try {
-      role = await this.findRoleByIdService.execute(data.where?.role);
-      if (!role) {
-        throw new RoleNotFoundException();
+      if (!data) {
+        throw new DataNotFoundException();
       }
-    } catch (error) {
-      const roles = await this.findAllRolesService.execute({
-        where: {
-          AND: {
-            name: {
-              equals: data.where?.name
-            },
-            parent: {
-              equals: data.where?.parent
+      if (!data.where?.removedBy) {
+        throw new ParamNotFoundException('removedBy');
+      }
+      let role: RoleModel;
+      try {
+        role = await this.findRoleByIdService.execute(data.where?.role);
+        if (!role) {
+          throw new RoleNotFoundException();
+        }
+      } catch (error) {
+        const roles = await this.findAllRolesService.execute({
+          where: {
+            AND: {
+              name: {
+                equals: data.where?.name
+              },
+              parent: {
+                equals: data.where?.parent
+              }
             }
+          },
+          page: {
+            limit: 1
           }
-        },
-        page: {
-          limit: 1
+        });
+        if (roles?.totalCount > 0) {
+          role = roles?.items[0];
+        }
+        if (!role) {
+          throw new RoleNotFoundException();
+        }
+      }
+
+      const removed = await this.removeRoleRepository.execute({
+        where: {
+          ...data.where,
+          role: splitServiceId(data.where?.role)?.id
         }
       });
-      if (roles?.totalCount > 0) {
-        role = roles?.items[0];
+      if (!removed) {
+        throw new DataNotFoundException();
       }
-      if (!role) {
-        throw new RoleNotFoundException();
-      }
-    }
+      const roleModel = this.publisher.mergeObjectContext(role);
+      roleModel.removedRole({
+        removedBy: data.where.removedBy
+      });
+      roleModel.commit();
 
-    const removed = await this.removeRoleRepository.execute({
-      where: {
-        ...data.where,
-        role: splitServiceId(data.where?.role)?.id
-      }
-    });
-    if (!removed) {
-      throw new DataNotFoundException();
+      return role;
+    } catch (error) {
+      this.logger.error(
+        `Parent(#${data?.where?.parent} - ${data?.where?.name}): ${error?.message}`
+      );
+      return;
     }
-    const roleModel = this.publisher.mergeObjectContext(role);
-    roleModel.removedRole({
-      removedBy: data.where.removedBy
-    });
-    roleModel.commit();
-
-    return role;
   }
 
   private clearData(command: RemoveRoleCommand): RemoveRoleCommand {

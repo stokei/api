@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueBoolean,
+  cleanValueNumber
+} from '@stokei/nestjs';
 
 import { CreateSubscriptionContractItemCommand } from '@/commands/implements/subscription-contract-items/create-subscription-contract-item.command';
 import {
@@ -67,8 +72,9 @@ export class CreateSubscriptionContractItemCommandHandler
       throw new AppNotFoundException();
     }
 
-    const existsStripeSubscriptionItem = !!data?.stripeSubscriptionItem;
+    const { isDefaultStripeAccount, ...dataSubscriptionItemCreated } = data;
 
+    const existsStripeSubscriptionItem = !!data?.stripeSubscriptionItem;
     let stripeSubscriptionItemId = data.stripeSubscriptionItem;
     if (!existsStripeSubscriptionItem) {
       const stripeSubscriptionItem =
@@ -76,7 +82,7 @@ export class CreateSubscriptionContractItemCommandHandler
           price: price.stripePrice,
           quantity: data.quantity,
           subscription: subscriptionContract.stripeSubscription,
-          stripeAccount: app.stripeAccount
+          stripeAccount: isDefaultStripeAccount ? undefined : app.stripeAccount
         });
       if (!stripeSubscriptionItem) {
         throw new SubscriptionContractItemNotFoundException();
@@ -86,7 +92,7 @@ export class CreateSubscriptionContractItemCommandHandler
 
     const subscriptionContractItemCreated =
       await this.createSubscriptionContractItemRepository.execute({
-        ...data,
+        ...dataSubscriptionItemCreated,
         stripeSubscriptionItem: stripeSubscriptionItemId
       });
     if (!subscriptionContractItemCreated) {
@@ -113,6 +119,9 @@ export class CreateSubscriptionContractItemCommandHandler
       product: cleanValue(command?.product),
       quantity: cleanValueNumber(command?.quantity),
       price: cleanValue(command?.price),
+      isDefaultStripeAccount: cleanValueBoolean(
+        command?.isDefaultStripeAccount
+      ),
       stripeSubscriptionItem: cleanValue(command?.stripeSubscriptionItem),
       recurring: cleanValue(command?.recurring)
     });

@@ -67,7 +67,7 @@ export class RemoveRoleCommandHandler
       const removed = await this.removeRoleRepository.execute({
         where: {
           ...data.where,
-          role: splitServiceId(data.where?.role)?.id
+          role: splitServiceId(role?.id)?.id
         }
       });
       if (!removed) {

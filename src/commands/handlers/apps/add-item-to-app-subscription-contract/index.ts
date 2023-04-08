@@ -184,7 +184,6 @@ export class AddItemToAppSubscriptionContractCommandHandler
       const stripeSubscription =
         await this.findStripeSubscriptionByIdService.execute(
           subscriptionContract.stripeSubscription
-          // app.stripeAccount
         );
       const isInactiveSubscription =
         stripeSubscription?.status !== 'active' ||
@@ -218,7 +217,6 @@ export class AddItemToAppSubscriptionContractCommandHandler
           currency: app.currency,
           customer: appOwner.stripeCustomer,
           paymentMethod: appPaymentMethod?.stripePaymentMethod,
-          // stripeAccount: app.stripeAccount,
           startPaymentWhenSubscriptionIsCreated: false,
           automaticRenew: true,
           prices: [
@@ -291,34 +289,33 @@ export class AddItemToAppSubscriptionContractCommandHandler
       });
     if (subscriptionContractItems?.totalCount > 0) {
       return subscriptionContractItems.items[0];
-    } else {
-      const product = await this.findProductByIdService.execute(price.parent);
-      const existsStripeSubscriptionItem = !!stripeSubscriptionContractItemId;
-      if (!existsStripeSubscriptionItem) {
-        const stripeSubscription =
-          await this.findStripeSubscriptionByIdService.execute(
-            appCurrentSubscriptionContract.stripeSubscription
-            // app.stripeAccount
-          );
-        if (stripeSubscription) {
-          const stripeSubscriptionContractItem =
-            stripeSubscription.items.data.find(
-              (subscriptionItem) =>
-                subscriptionItem.price?.id === price.stripePrice
-            );
-          stripeSubscriptionContractItemId = stripeSubscriptionContractItem?.id;
-        }
-      }
-      return await this.createSubscriptionContractItemService.execute({
-        app: app.id,
-        stripeSubscriptionItem: stripeSubscriptionContractItemId,
-        parent: appCurrentSubscriptionContract.id,
-        price: price.id,
-        product: product.parent,
-        quantity,
-        recurring: null,
-        createdBy
-      });
     }
+    const product = await this.findProductByIdService.execute(price.parent);
+    const existsStripeSubscriptionItem = !!stripeSubscriptionContractItemId;
+    if (!existsStripeSubscriptionItem) {
+      const stripeSubscription =
+        await this.findStripeSubscriptionByIdService.execute(
+          appCurrentSubscriptionContract.stripeSubscription
+        );
+      if (stripeSubscription) {
+        const stripeSubscriptionContractItem =
+          stripeSubscription.items.data.find(
+            (subscriptionItem) =>
+              subscriptionItem.price?.id === price.stripePrice
+          );
+        stripeSubscriptionContractItemId = stripeSubscriptionContractItem?.id;
+      }
+    }
+    return await this.createSubscriptionContractItemService.execute({
+      app: app.id,
+      stripeSubscriptionItem: stripeSubscriptionContractItemId,
+      parent: appCurrentSubscriptionContract.id,
+      price: price.id,
+      product: product.parent,
+      quantity,
+      recurring: null,
+      createdBy,
+      isDefaultStripeAccount: true
+    });
   }
 }

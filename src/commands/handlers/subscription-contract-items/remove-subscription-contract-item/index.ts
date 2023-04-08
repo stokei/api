@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueBoolean,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { RemoveSubscriptionContractItemCommand } from '@/commands/implements/subscription-contract-items/remove-subscription-contract-item.command';
 import {
@@ -79,6 +84,9 @@ export class RemoveSubscriptionContractItemCommandHandler
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
         app: cleanValue(command?.where?.app),
+        isDefaultStripeAccount: cleanValueBoolean(
+          command?.where?.isDefaultStripeAccount
+        ),
         subscriptionContractItem: cleanValue(
           command?.where?.subscriptionContractItem
         )

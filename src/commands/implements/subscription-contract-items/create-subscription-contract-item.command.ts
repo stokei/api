@@ -11,6 +11,7 @@ export class CreateSubscriptionContractItemCommand
   quantity: number;
   price: string;
   stripeSubscriptionItem?: string;
+  isDefaultStripeAccount?: boolean;
   recurring?: string;
   createdBy: string;
 
@@ -21,6 +22,7 @@ export class CreateSubscriptionContractItemCommand
     this.quantity = data.quantity;
     this.price = data.price;
     this.stripeSubscriptionItem = data.stripeSubscriptionItem;
+    this.isDefaultStripeAccount = data.isDefaultStripeAccount;
     this.recurring = data.recurring;
     this.createdBy = data.createdBy;
   }

@@ -104,6 +104,7 @@ export class RemoveItemFromAppSubscriptionContractCommandHandler
           where: {
             app: app.id,
             removedBy: data.removedBy,
+            isDefaultStripeAccount: true,
             subscriptionContractItem: subscriptionContractItem.id
           }
         });

@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { CreateVideoAuthorCommand } from '@/commands/implements/video-authors/create-video-author.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { VideoCreatedEvent } from '@/events/implements/videos/video-created.event';
 import { VideoRemovedEvent } from '@/events/implements/videos/video-removed.event';
@@ -30,7 +31,14 @@ export class VideosSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new CreateVideoAuthorCommand({
+            video: event.video.id,
+            app: event.video.app,
+            author: event.createdBy,
+            createdBy: event.createdBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

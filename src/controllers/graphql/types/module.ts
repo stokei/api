@@ -12,6 +12,9 @@ export class Module {
   @Field(() => String)
   name: string;
 
+  @Field(() => String)
+  parent: string;
+
   @Field(() => String, { nullable: true })
   description?: string;
 

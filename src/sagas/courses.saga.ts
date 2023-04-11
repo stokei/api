@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { CreateCourseInstructorCommand } from '@/commands/implements/course-instructors/create-course-instructor.command';
 import { AddCourseToAppSubscriptionContractCommand } from '@/commands/implements/courses/add-course-to-app-subscription-contract.command';
 import { RemoveCourseFromAppSubscriptionContractCommand } from '@/commands/implements/courses/remove-course-from-app-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
@@ -35,6 +36,12 @@ export class CoursesSagas {
         const commands = [
           new AddCourseToAppSubscriptionContractCommand({
             course: event.course.id,
+            createdBy: event.createdBy
+          }),
+          new CreateCourseInstructorCommand({
+            course: event.course.id,
+            app: event.course.app,
+            instructor: event.createdBy,
             createdBy: event.createdBy
           })
         ];

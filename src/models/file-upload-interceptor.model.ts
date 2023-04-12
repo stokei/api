@@ -12,11 +12,11 @@ export class FileUploadInterceptorModel {
   constructor(readonly file: any) {}
 
   get isImage() {
-    return FileModel.isImage(this?.mimetype);
+    return FileModel.isImage(this?.extension);
   }
 
   get isVideo() {
-    return FileModel.isVideo(this?.mimetype);
+    return FileModel.isVideo(this?.extension);
   }
 
   get filename(): string {

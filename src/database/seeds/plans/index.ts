@@ -252,6 +252,44 @@ export class PlansSeeds
             createdBy: defaultAccountId
           }
         }
+      },
+      {
+        plan: {
+          name: 'Videos',
+          app: defaultAppId,
+          type: PlanType.VIDEO,
+          createdBy: defaultAccountId
+        },
+        price: {
+          parent: undefined,
+          app: defaultAppId,
+          nickname: 'Videos',
+          unit: 'Min',
+          billingScheme: BillingScheme.TIERED,
+          currency: defaultCurrencyId,
+          inventoryType: InventoryType.INFINITE,
+          tiersMode: TiersMode.VOLUME,
+          type: PriceType.RECURRING,
+          amount: undefined,
+          fromAmount: undefined,
+          quantity: undefined,
+          tiers: [
+            {
+              app: defaultAppId,
+              createdBy: defaultAccountId,
+              infinite: true,
+              amount: getPlanPriceAmountByType(PlanType.VIDEO)
+            }
+          ],
+          createdBy: defaultAccountId,
+          recurring: {
+            app: defaultAppId,
+            interval: IntervalType.MONTH,
+            intervalCount: 1,
+            usageType: UsageType.METERED,
+            createdBy: defaultAccountId
+          }
+        }
       }
     ];
   }

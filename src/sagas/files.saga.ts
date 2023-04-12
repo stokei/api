@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { AddFileToAppSubscriptionContractCommand } from '@/commands/implements/files/add-file-to-app-subscription-contract.command';
+import { AddVideoFileToAppSubscriptionContractCommand } from '@/commands/implements/files/add-video-file-to-app-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { FileActivatedEvent } from '@/events/implements/files/file-activated.event';
 import { FileCreatedEvent } from '@/events/implements/files/file-created.event';
@@ -90,13 +91,22 @@ export class FilesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
-          event.file.isVideo &&
+        const commands = [];
+        if (!event.file.isVideo && !event.file.isImage) {
+          commands.push(
             new AddFileToAppSubscriptionContractCommand({
               file: event.file.id,
               createdBy: event.updatedBy
             })
-        ];
+          );
+        } else if (event.file.isVideo) {
+          commands.push(
+            new AddVideoFileToAppSubscriptionContractCommand({
+              file: event.file.id,
+              createdBy: event.updatedBy
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)

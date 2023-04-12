@@ -89,13 +89,13 @@ export class FileModel extends AggregateRoot {
       this.filename + (this.extension ? `.${this.extension}` : '');
     this.status = data.status;
     this.size = data.size;
-    this.isImage = FileModel.isImage(this.mimetype);
-    this.isVideo = FileModel.isVideo(this.mimetype);
+    this.isImage = FileModel.isImage(this.extension);
+    this.isVideo = FileModel.isVideo(this.extension);
     this.url = FileModel.createFileURL({
       fileId: this.id,
       url: data.url,
       filename: this.filename,
-      mimetype: this.mimetype
+      extension: this.extension
     });
     this.duration = data.duration;
     this.active = this.status === FileStatus.ACTIVE || data.active;
@@ -131,17 +131,18 @@ export class FileModel extends AggregateRoot {
     fileId,
     url,
     filename,
-    mimetype
+    extension
   }: {
     fileId?: string;
-    mimetype?: string;
+    extension?: string;
     filename?: string;
     url?: string;
   }) {
     if (url) {
       return url;
     }
-    const isImage = FileModel.isImage(mimetype);
+    const isImage = FileModel.isImage(extension);
+    const isVideo = FileModel.isVideo(extension);
     const createURLFunctions = {
       [Environment.PRODUCTION]: () => {
         if (isImage) {
@@ -150,10 +151,13 @@ export class FileModel extends AggregateRoot {
             filename + '/public'
           );
         }
-        return appendPathnameToURL(
-          CLOUDFLARE_VIDEO_URL,
-          filename + '/manifest/video.m3u8'
-        );
+        if (isVideo) {
+          return appendPathnameToURL(
+            CLOUDFLARE_VIDEO_URL,
+            filename + '/manifest/video.m3u8'
+          );
+        }
+        return appendPathnameToURL(CLOUDFLARE_IMAGE_URL, filename);
       },
       DEFAULT: () => {
         const baseURL = SERVER_URL;
@@ -168,11 +172,14 @@ export class FileModel extends AggregateRoot {
     return createURLFunctions[NODE_ENV]?.() || createURLFunctions.DEFAULT();
   }
 
-  static isImage(mimetype: string): boolean {
-    return !!mimetype?.includes('image');
+  static isImage(extension: string): boolean {
+    const imageExtensions = ['png', 'gif', 'jpg', 'jpeg'];
+    return !!imageExtensions?.includes(extension);
   }
-  static isVideo(mimetype: string): boolean {
-    return !!mimetype?.includes('video');
+
+  static isVideo(extension: string): boolean {
+    const videoExtensions = ['mp4', 'mpg', 'avi', 'm4v', 'mov'];
+    return !!videoExtensions?.includes(extension);
   }
 
   createdFile({ createdBy }: { createdBy: string }) {

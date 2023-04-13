@@ -3,6 +3,7 @@ export class CreateFileDTO {
   extension?: string;
   mimetype?: string;
   size?: number;
+  duration?: number;
   url?: string;
   app: string;
   createdBy: string;

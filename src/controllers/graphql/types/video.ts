@@ -11,6 +11,9 @@ export class Video {
   @Field(() => ID)
   id: string;
 
+  @Field(() => String, { nullable: true })
+  parent?: string;
+
   @Field(() => String)
   name: string;
 

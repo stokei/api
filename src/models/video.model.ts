@@ -15,6 +15,7 @@ export interface IVideoModelData {
   readonly private?: boolean;
   readonly file?: string;
   readonly name?: string;
+  readonly duration?: number;
   readonly description?: string;
   readonly poster?: string;
   readonly active: boolean;
@@ -32,6 +33,7 @@ export class VideoModel extends AggregateRoot {
   readonly private?: boolean;
   readonly file?: string;
   readonly name?: string;
+  readonly duration?: number;
   readonly description?: string;
   readonly poster?: string;
   readonly active: boolean;
@@ -53,6 +55,7 @@ export class VideoModel extends AggregateRoot {
     this.file = data.file;
     this.name = data.name;
     this.description = data.description;
+    this.duration = data.duration;
     this.poster = data.poster;
     this.active = data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);

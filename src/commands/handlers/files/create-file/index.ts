@@ -50,6 +50,7 @@ export class CreateFileCommandHandler
       extension: cleanValue(command?.extension),
       mimetype: cleanValue(command?.mimetype),
       size: cleanValueNumber(parseInt(command?.size as any)),
+      duration: cleanValueNumber(parseInt(command?.duration as any)),
       url: cleanValue(command?.url)
     });
   }

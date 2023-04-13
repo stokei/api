@@ -3,7 +3,8 @@ import {
   cleanObject,
   cleanSlug,
   cleanValue,
-  cleanValueBoolean
+  cleanValueBoolean,
+  cleanValueNumber
 } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
@@ -64,6 +65,7 @@ export class CreateVideoCommandHandler
       description: cleanValue(command?.description),
       file: cleanValue(command?.file),
       poster: cleanValue(command?.poster),
+      duration: cleanValueNumber(command?.duration),
       private: cleanValueBoolean(command?.private),
       parent: cleanValue(command?.parent)
     });

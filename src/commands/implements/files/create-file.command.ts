@@ -7,6 +7,7 @@ export class CreateFileCommand implements ICommand, CreateFileDTO {
   extension?: string;
   mimetype?: string;
   size?: number;
+  duration?: number;
   url?: string;
   app: string;
   createdBy: string;
@@ -16,6 +17,7 @@ export class CreateFileCommand implements ICommand, CreateFileDTO {
     this.extension = data.extension;
     this.mimetype = data.mimetype;
     this.size = data.size;
+    this.duration = data.duration;
     this.url = data.url;
     this.app = data.app;
     this.createdBy = data.createdBy;

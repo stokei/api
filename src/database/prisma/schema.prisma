@@ -412,7 +412,7 @@ model File {
   mimetype  String?    @db.VarChar(255)
   size      Int?
   url       String?    @db.VarChar(255)
-  duration  Int?
+  duration  Float?
   status    FileStatus
   active    Boolean    @default(false)
   updatedAt DateTime?  @updatedAt @map("updated_at")
@@ -442,6 +442,7 @@ model Video {
   slug        String?   @db.VarChar(255)
   file        String?   @db.VarChar(255)
   name        String?   @db.VarChar(255)
+  duration    Float?
   description String?
   poster      String?   @db.VarChar(255)
   private     Boolean?  @default(true)

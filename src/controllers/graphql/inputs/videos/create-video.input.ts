@@ -1,4 +1,4 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, Float, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateVideoInput {
@@ -13,6 +13,9 @@ export class CreateVideoInput {
 
   @Field({ nullable: true })
   file?: string;
+
+  @Field(() => Float, { nullable: true })
+  duration?: number;
 
   @Field({ nullable: true })
   poster?: string;

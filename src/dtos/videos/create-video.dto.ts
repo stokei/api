@@ -3,6 +3,7 @@ export class CreateVideoDTO {
   name: string;
   description?: string;
   file?: string;
+  duration?: number;
   poster?: string;
   private?: boolean;
   app: string;

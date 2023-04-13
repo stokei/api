@@ -8,6 +8,7 @@ export class CreateVideoCommand implements ICommand, CreateVideoDTO {
   description?: string;
   file?: string;
   poster?: string;
+  duration?: number;
   private?: boolean;
   app: string;
   createdBy: string;
@@ -16,6 +17,7 @@ export class CreateVideoCommand implements ICommand, CreateVideoDTO {
     this.parent = data.parent;
     this.file = data.file;
     this.name = data.name;
+    this.duration = data.duration;
     this.private = data.private;
     this.description = data.description;
     this.poster = data.poster;

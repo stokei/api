@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { UpdateFileCommand } from '@/commands/implements/files/update-file.command';
 import { CreateVideoAuthorCommand } from '@/commands/implements/video-authors/create-video-author.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { VideoCreatedEvent } from '@/events/implements/videos/video-created.event';
@@ -31,7 +32,7 @@ export class VideosSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
+        const commands: ICommand[] = [
           new CreateVideoAuthorCommand({
             video: event.video.id,
             app: event.video.app,
@@ -39,6 +40,20 @@ export class VideosSagas {
             createdBy: event.createdBy
           })
         ];
+        if (!!event.video.file) {
+          commands.push(
+            new UpdateFileCommand({
+              data: {
+                duration: event.video.duration,
+                updatedBy: event.createdBy
+              },
+              where: {
+                app: event.video.app,
+                file: event.video.file
+              }
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)
@@ -77,6 +92,20 @@ export class VideosSagas {
             )
         );
         const commands = [];
+        if (!!event.video.file) {
+          commands.push(
+            new UpdateFileCommand({
+              data: {
+                duration: event.video.duration,
+                updatedBy: event.updatedBy
+              },
+              where: {
+                app: event.video.app,
+                file: event.video.file
+              }
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)

@@ -48,25 +48,16 @@ export class PlansSeeds
 
   async execute(): Promise<void> {
     const planData = this.createData();
-    const plansFounded = await this.findAllPlansService.execute({
-      where: {
-        AND: {
-          app: {
-            equals: defaultAccountId
-          }
-        }
-      }
-    });
+    const plansFounded = await this.findAllPlansService.execute({});
     let plansToCreate = planData;
     if (plansFounded?.items?.length > 0) {
       plansToCreate = plansToCreate?.filter(({ plan }) => {
-        const existsLanguage = plansFounded?.items?.find(
+        const existsPlan = plansFounded?.items?.find(
           (planFounded) => planFounded.type === plan.type
         );
-        return !existsLanguage;
+        return !existsPlan;
       });
     }
-
     plansToCreate?.forEach(async (planData) => {
       const plan = await this.createPlanService.execute(planData.plan);
       await sleep(500);

@@ -67,11 +67,18 @@ export class ProductModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdProduct({ createdBy }: { createdBy: string }) {
+  createdProduct({
+    createdBy,
+    catalog
+  }: {
+    createdBy: string;
+    catalog?: string;
+  }) {
     if (this.id) {
       this.apply(
         new ProductCreatedEvent({
           createdBy,
+          catalog,
           product: this
         })
       );

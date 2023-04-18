@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { CreateAppCatalogCommand } from '@/commands/implements/apps/create-app-catalog.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AppCreatedEvent } from '@/events/implements/apps/app-created.event';
 import { AppUpdatedEvent } from '@/events/implements/apps/app-updated.event';
@@ -29,7 +30,12 @@ export class AppsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new CreateAppCatalogCommand({
+            app: event.app.id,
+            createdBy: event.createdBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

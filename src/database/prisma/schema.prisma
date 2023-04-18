@@ -188,6 +188,7 @@ model App {
   description       String?
   status            AppStatus
   avatar            String?   @db.VarChar(255)
+  catalog           String?   @db.VarChar(255)
   currency          String    @db.VarChar(255)
   language          String    @db.VarChar(255)
   icon              String?   @db.VarChar(255)

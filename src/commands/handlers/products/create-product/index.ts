@@ -61,6 +61,7 @@ export class CreateProductCommandHandler
     }
     const productModel = this.publisher.mergeObjectContext(productCreated);
     productModel.createdProduct({
+      catalog: app.catalog,
       createdBy: data.createdBy
     });
     productModel.commit();

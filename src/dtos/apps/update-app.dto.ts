@@ -2,7 +2,7 @@ export interface UpdateAppDataDTO {
   name?: string;
   description?: string;
   avatar?: string;
-  hero?: string;
+  catalog?: string;
   icon?: string;
   stripeBankAccount?: string;
   stripeAccount?: string;

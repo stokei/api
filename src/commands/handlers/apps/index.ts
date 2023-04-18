@@ -2,6 +2,7 @@ import { AddAppAdminToAppSubscriptionContractCommandHandler } from './add-app-ad
 import { AddAppInstructorToAppSubscriptionContractCommandHandler } from './add-app-instructor-to-app-subscription-contract';
 import { AddItemToAppSubscriptionContractCommandHandler } from './add-item-to-app-subscription-contract';
 import { CreateAppCommandHandler } from './create-app';
+import { CreateAppCatalogCommandHandler } from './create-app-catalog';
 import { CreateAppStripeAccountCommandHandler } from './create-app-stripe-account';
 import { CreateAppStripeAccountDashboardLinkCommandHandler } from './create-app-stripe-account-dashboard-link';
 import { CreateAppStripeAccountOnboardingLinkCommandHandler } from './create-app-stripe-account-onboarding-link';
@@ -23,5 +24,6 @@ export const AppCommandHandlers = [
   AddAppInstructorToAppSubscriptionContractCommandHandler,
   RemoveAppInstructorFromAppSubscriptionContractCommandHandler,
   AddAppAdminToAppSubscriptionContractCommandHandler,
-  RemoveAppAdminFromAppSubscriptionContractCommandHandler
+  RemoveAppAdminFromAppSubscriptionContractCommandHandler,
+  CreateAppCatalogCommandHandler
 ];

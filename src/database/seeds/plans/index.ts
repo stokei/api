@@ -66,7 +66,6 @@ export class PlansSeeds
         parent: plan.id,
         name: plan.name,
         description: plan.description,
-        checkoutVisible: true,
         createdBy: plan.createdBy
       });
       await sleep(500);

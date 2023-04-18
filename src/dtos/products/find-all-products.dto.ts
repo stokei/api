@@ -11,7 +11,6 @@ export interface WhereDataFindAllProductsDTO {
   parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
-  checkoutVisible?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -23,7 +22,6 @@ export interface OrderByDataFindAllProductsDTO {
   description?: IOrderBy;
   app?: IOrderBy;
   stripeProduct?: IOrderBy;
-  checkoutVisible?: IOrderBy;
   avatar?: IOrderBy;
   active?: IOrderBy;
   activatedAt?: IOrderBy;

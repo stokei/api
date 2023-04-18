@@ -18,6 +18,7 @@ export const ProductParentUnion = createUnionType({
   async resolveType(value) {
     const type = splitServiceId(value?.id)?.service;
     const types = {
+      [ServerStokeiApiIdPrefix.APPS]: App.name,
       [ServerStokeiApiIdPrefix.COURSES]: Course.name,
       [ServerStokeiApiIdPrefix.PLANS]: Plan.name
     };
@@ -38,9 +39,6 @@ export class Product {
 
   @Field(() => String, { nullable: true })
   description?: string;
-
-  @Field(() => Boolean)
-  checkoutVisible: boolean;
 
   @Field(() => Image, { nullable: true })
   avatar?: Image;

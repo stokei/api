@@ -4,7 +4,6 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhere,
-  cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IWhere,
@@ -34,9 +33,6 @@ export class ProductMapper {
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
           name: prismaMapper.toWhereDataSearch(operatorData.name),
           description: prismaMapper.toWhereDataSearch(operatorData.description),
-          checkoutVisible: prismaMapper.toWhereData(
-            operatorData.checkoutVisible
-          ),
           app: prismaMapper.toWhereData(operatorData.app),
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
           createdBy: prismaMapper.toWhereData(operatorData.createdBy)
@@ -66,9 +62,6 @@ export class ProductMapper {
             parent: cleanWhereDataSearch(operatorData.parent),
             name: cleanWhereDataSearch(operatorData.name),
             description: cleanWhereDataSearch(operatorData.description),
-            checkoutVisible: cleanWhereDataBoolean(
-              operatorData.checkoutVisible
-            ),
             app: cleanWhereDataString(operatorData.app),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -90,7 +83,6 @@ export class ProductMapper {
         description: cleanSortValue(query.orderBy?.description),
         app: cleanSortValue(query.orderBy?.app),
         stripeProduct: cleanSortValue(query.orderBy?.stripeProduct),
-        checkoutVisible: cleanSortValue(query.orderBy?.checkoutVisible),
         avatar: cleanSortValue(query.orderBy?.avatar),
         active: cleanSortValue(query.orderBy?.active),
         activatedAt: cleanSortValue(query.orderBy?.activatedAt),

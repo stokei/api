@@ -7,6 +7,7 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 import { CreateCatalogItemCommand } from '@/commands/implements/catalog-items/create-catalog-item.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { ProductCreatedEvent } from '@/events/implements/products/product-created.event';
+import { ProductUpdatedEvent } from '@/events/implements/products/product-updated.event';
 
 @Injectable()
 export class ProductsSagas {
@@ -40,6 +41,25 @@ export class ProductsSagas {
             })
           );
         }
+        return commands;
+      }),
+      mergeMap((c) => c)
+    );
+  };
+
+  @Saga()
+  productUpdated = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(ProductUpdatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [ProductUpdatedEvent] Saga event productUpdated: ' +
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
+        );
+        const commands = [];
         return commands;
       }),
       mergeMap((c) => c)

@@ -14,7 +14,6 @@ export interface IProductModelData {
   readonly defaultPrice?: string;
   readonly app: string;
   readonly stripeProduct: string;
-  readonly checkoutVisible: boolean;
   readonly avatar?: string;
   readonly active: boolean;
   readonly activatedAt?: Date | string;
@@ -33,7 +32,6 @@ export class ProductModel extends AggregateRoot {
   readonly description?: string;
   readonly defaultPrice?: string;
   readonly stripeProduct: string;
-  readonly checkoutVisible: boolean;
   readonly avatar?: string;
   readonly active: boolean;
   readonly activatedAt?: string;
@@ -55,7 +53,6 @@ export class ProductModel extends AggregateRoot {
     this.app = data.app;
     this.stripeProduct = data.stripeProduct;
     this.defaultPrice = data.defaultPrice;
-    this.checkoutVisible = data.checkoutVisible;
     this.avatar = data.avatar;
     this.active = data.active;
     this.activatedAt = convertToISODateString(data.activatedAt);

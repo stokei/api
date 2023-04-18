@@ -12,7 +12,6 @@ export class ProductModelMock extends ProductModel {
       description: data?.description ?? null,
       app: data?.app ?? 'apps.dsaudhuashd454',
       stripeProduct: data?.stripeProduct ?? 'anyExternalProductId',
-      checkoutVisible: data?.checkoutVisible ?? true,
       avatar: data?.avatar ?? null,
       active: data?.active ?? true,
       activatedAt: data?.activatedAt ?? null,

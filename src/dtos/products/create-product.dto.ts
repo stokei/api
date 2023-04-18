@@ -3,7 +3,6 @@ export interface CreateProductDTO {
   name: string;
   description?: string;
   app: string;
-  checkoutVisible: boolean;
   avatar?: string;
   createdBy: string;
 }

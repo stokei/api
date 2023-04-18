@@ -1,6 +1,7 @@
 export interface UpdateProductDataDTO {
   name?: string;
   defaultPrice?: string;
+  avatar?: string;
   description?: string;
   updatedBy: string;
 }

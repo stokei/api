@@ -1,7 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
-  WhereDataBooleanInput,
   WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
@@ -29,9 +28,6 @@ class WhereDataFindAllProductsDataInput implements WhereDataFindAllProductsDTO {
   @Field(() => WhereDataStringInput, { nullable: true })
   app?: WhereDataStringInput;
 
-  @Field(() => WhereDataBooleanInput, { nullable: true })
-  checkoutVisible?: WhereDataBooleanInput;
-
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
@@ -54,9 +50,6 @@ export class OrderByDataFindAllProductsInput
 
   @Field(() => OrderBy, { nullable: true })
   stripeProduct?: OrderBy;
-
-  @Field(() => OrderBy, { nullable: true })
-  checkoutVisible?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   avatar?: OrderBy;

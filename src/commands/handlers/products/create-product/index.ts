@@ -71,7 +71,6 @@ export class CreateProductCommandHandler
 
   private clearData(command: CreateProductCommand): CreateProductCommand {
     return {
-      checkoutVisible: cleanValueBoolean(command?.checkoutVisible),
       ...cleanObject({
         createdBy: cleanValue(command?.createdBy),
         app: cleanValue(command?.app),

@@ -10,7 +10,4 @@ export class CreateProductInput {
 
   @Field(() => String, { nullable: true })
   description?: string;
-
-  @Field(() => Boolean)
-  checkoutVisible: boolean;
 }

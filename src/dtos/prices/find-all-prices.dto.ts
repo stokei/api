@@ -15,6 +15,7 @@ export interface WhereDataFindAllPricesDTO {
   app?: IWhereData;
   currency?: IWhereData;
   unit?: IWhereData;
+  active?: IWhereData<boolean>;
   parent?: IWhereDataSearch;
   type?: PriceType;
   inventoryType?: InventoryType;
@@ -29,6 +30,7 @@ export interface OrderByDataFindAllPricesDTO {
   fromAmount?: IOrderBy;
   currency?: IOrderBy;
   unit?: IOrderBy;
+  active?: IOrderBy;
   amount?: IOrderBy;
   type?: IOrderBy;
   inventoryType?: IOrderBy;

@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
+  WhereDataBooleanInput,
   WhereDataIntInput,
   WhereDataStringInput,
   WherePaginated
@@ -37,6 +38,9 @@ class WhereDataFindAllPricesDataInput implements WhereDataFindAllPricesDTO {
   @Field(() => IntervalType, { nullable: true })
   recurringIntervalType?: IntervalType;
 
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  active?: WhereDataBooleanInput;
+
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
@@ -59,6 +63,9 @@ export class OrderByDataFindAllPricesInput
 
   @Field(() => OrderBy, { nullable: true })
   unit?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  active?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   type?: OrderBy;

@@ -5,11 +5,14 @@ import { DeactivatePriceCommand } from '@/commands/implements/prices/deactivate-
 import {
   DataNotFoundException,
   ParamNotFoundException,
-  PriceNotFoundException
+  PriceCannotBeDisabledBecauseItIsTheDefaultException,
+  PriceNotFoundException,
+  ProductNotFoundException
 } from '@/errors';
 import { PriceModel } from '@/models/price.model';
 import { DeactivatePriceRepository } from '@/repositories/prices/deactivate-price';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
+import { FindProductByIdService } from '@/services/products/find-product-by-id';
 
 type DeactivatePriceCommandKeys = keyof DeactivatePriceCommand;
 
@@ -19,6 +22,7 @@ export class DeactivatePriceCommandHandler
 {
   constructor(
     private readonly deactivatePriceRepository: DeactivatePriceRepository,
+    private readonly findProductByIdService: FindProductByIdService,
     private readonly findPriceByIdService: FindPriceByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -34,6 +38,13 @@ export class DeactivatePriceCommandHandler
     const price = await this.findPriceByIdService.execute(data.price);
     if (!price) {
       throw new PriceNotFoundException();
+    }
+    const product = await this.findProductByIdService.execute(price.parent);
+    if (!product) {
+      throw new ProductNotFoundException();
+    }
+    if (product.defaultPrice === price.id) {
+      throw new PriceCannotBeDisabledBecauseItIsTheDefaultException();
     }
 
     const priceDeactivated = await this.deactivatePriceRepository.execute({

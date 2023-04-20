@@ -20,6 +20,9 @@ class WhereDataFindAllCourseInstructorsDataInput
   instructor?: WhereDataStringInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
+  app?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })

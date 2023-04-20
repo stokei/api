@@ -23,6 +23,7 @@ import { RecurringModel } from '@/models/recurring.model';
 import { CreatePriceRepository } from '@/repositories/prices/create-price';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { CreatePriceTierService } from '@/services/price-tiers/create-price-tier';
+import { FindAllPricesService } from '@/services/prices/find-all-prices';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateRecurringService } from '@/services/recurrings/create-recurring';
 import { CreateStripePriceService } from '@/services/stripe/create-stripe-price';
@@ -40,6 +41,7 @@ export class CreatePriceCommandHandler
     private readonly findProductByIdService: FindProductByIdService,
     private readonly createRecurringService: CreateRecurringService,
     private readonly createPriceTierService: CreatePriceTierService,
+    private readonly findAllPricesService: FindAllPricesService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -103,6 +105,10 @@ export class CreatePriceCommandHandler
       stripeAccount: app.stripeAccount
     });
 
+    const priceIsDefault = await this.isDefaultPrice({
+      defaultPrice,
+      parent: data.parent
+    });
     const priceCreated = await this.createPriceRepository.execute({
       ...dataCreated,
       unit: data.unit,
@@ -133,11 +139,34 @@ export class CreatePriceCommandHandler
     const priceModel = this.publisher.mergeObjectContext(priceCreated);
     priceModel.createdPrice({
       createdBy: dataCreated.createdBy,
-      defaultPrice
+      defaultPrice: priceIsDefault
     });
     priceModel.commit();
 
     return priceCreated;
+  }
+
+  private async isDefaultPrice(data: {
+    defaultPrice?: boolean;
+    parent: string;
+  }): Promise<boolean> {
+    if (data.defaultPrice) {
+      return true;
+    }
+    const prices = await this.findAllPricesService.execute({
+      where: {
+        AND: {
+          parent: {
+            equals: data.parent
+          }
+        }
+      },
+      page: {
+        limit: 1
+      }
+    });
+    const isFirstPrice = prices.totalCount === 0;
+    return isFirstPrice;
   }
 
   private clearData(command: CreatePriceCommand): CreatePriceCommand {

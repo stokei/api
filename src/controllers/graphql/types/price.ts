@@ -16,6 +16,9 @@ export class Price {
   @Field(() => ID)
   id: string;
 
+  @Field(() => String)
+  parent: string;
+
   @Field(() => String, { nullable: true })
   nickname?: string;
 
@@ -60,6 +63,9 @@ export class Price {
 
   @Field(() => Boolean)
   active: boolean;
+
+  @Field(() => Boolean)
+  isDefault: boolean;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;

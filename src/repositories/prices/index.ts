@@ -1,5 +1,7 @@
+import { ActivatePriceRepository } from './activate-price';
 import { CountPricesRepository } from './count-prices';
 import { CreatePriceRepository } from './create-price';
+import { DeactivatePriceRepository } from './deactivate-price';
 import { ExistsPricesRepository } from './exists-prices';
 import { FindAllPricesRepository } from './find-all-prices';
 import { FindPriceByIdRepository } from './find-price-by-id';
@@ -15,5 +17,7 @@ export const PricesRepositories = [
   FindAllPricesRepository,
   RemovePriceRepository,
   UpdatePriceRepository,
-  FindPricesByStripePriceIdsRepository
+  FindPricesByStripePriceIdsRepository,
+  ActivatePriceRepository,
+  DeactivatePriceRepository
 ];

@@ -1,5 +1,7 @@
+import { ActivatePriceService } from './activate-price';
 import { CalculatePricesInformationService } from './calculate-prices-information';
 import { CreatePriceService } from './create-price';
+import { DeactivatePriceService } from './deactivate-price';
 import { FindAllPricesService } from './find-all-prices';
 import { FindPriceByIdService } from './find-price-by-id';
 import { FindPricesByStripePriceIdsService } from './find-prices-by-stripe-price-ids';
@@ -13,5 +15,7 @@ export const PriceServices = [
   UpdatePriceService,
   FindPriceByIdService,
   FindAllPricesService,
-  FindPricesByStripePriceIdsService
+  FindPricesByStripePriceIdsService,
+  ActivatePriceService,
+  DeactivatePriceService
 ];

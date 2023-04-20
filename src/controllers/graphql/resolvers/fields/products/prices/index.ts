@@ -29,6 +29,9 @@ export class ProductPricesResolver {
         AND: {
           parent: {
             equals: product.id
+          },
+          active: {
+            equals: true
           }
         }
       }

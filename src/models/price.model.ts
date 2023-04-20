@@ -6,7 +6,9 @@ import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { TiersMode } from '@/enums/tiers-mode.enum';
+import { PriceActivatedEvent } from '@/events/implements/prices/price-activated.event';
 import { PriceCreatedEvent } from '@/events/implements/prices/price-created.event';
+import { PriceDeactivatedEvent } from '@/events/implements/prices/price-deactivated.event';
 import { PriceRemovedEvent } from '@/events/implements/prices/price-removed.event';
 import { PriceUpdatedEvent } from '@/events/implements/prices/price-updated.event';
 
@@ -121,6 +123,28 @@ export class PriceModel extends AggregateRoot {
       this.apply(
         new PriceRemovedEvent({
           removedBy,
+          price: this
+        })
+      );
+    }
+  }
+
+  activatedPrice({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new PriceActivatedEvent({
+          updatedBy,
+          price: this
+        })
+      );
+    }
+  }
+
+  deactivatedPrice({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new PriceDeactivatedEvent({
+          updatedBy,
           price: this
         })
       );

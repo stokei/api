@@ -1,4 +1,8 @@
-node_modules
+# compiled output
+/dist
+/node_modules
+docker-images
+/tmp
 images/
 videos/
 
@@ -19,4 +23,10 @@ README-secret.md
 
 npm-debug.log
 LICENSE
-.vscode
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

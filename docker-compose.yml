@@ -8,29 +8,6 @@ volumes:
   mysql-data:
   postgresql-data:
 services:
-  api:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-      args:
-        NODE_ENV: development
-        DB_URL: postgresql://dev:dev@host.docker.internal:5432/stokei-api?schema=public
-    container_name: api
-    ports:
-      - '4010:3000'
-    environment:
-      - DB_URL=mysql://dev:dev@mysql:3310/stokei-api
-      - SERVER_HOST=api
-      - SERVER_PORT=3000
-      - SERVER_URL=http://api:3000
-    restart: on-failure
-    volumes:
-      - ./:/app/
-    depends_on:
-      - mysql
-    networks:
-      - stokei-network
-
   mysql:
     image: bitnami/mysql:5.7
     container_name: mysql

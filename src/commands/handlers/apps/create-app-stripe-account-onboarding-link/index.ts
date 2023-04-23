@@ -77,10 +77,10 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
 
     const link = await this.createStripeAccountOnboardingLinkService.execute({
       refreshUrl: mountStripeAccountOnboardingRefreshURL({
-        domain: appDomain?.url
+        domain: appDomain?.url || 'https://' + app.id + '.stokei.app/admins'
       }),
       returnUrl: mountStripeAccountOnboardingReturnURL({
-        domain: appDomain?.url
+        domain: appDomain?.url || 'https://' + app.id + '.stokei.app/admins'
       }),
       stripeAccount
     });

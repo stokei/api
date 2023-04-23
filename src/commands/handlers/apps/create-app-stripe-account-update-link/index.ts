@@ -53,10 +53,10 @@ export class CreateAppStripeAccountUpdateLinkCommandHandler
 
     const link = await this.createStripeAccountUpdateLinkService.execute({
       refreshUrl: mountStripeAccountOnboardingRefreshURL({
-        domain: appDomain?.url
+        domain: appDomain?.url || 'https://' + app.id + '.stokei.app/admins'
       }),
       returnUrl: mountStripeAccountOnboardingReturnURL({
-        domain: appDomain?.url
+        domain: appDomain?.url || 'https://' + app.id + '.stokei.app/admins'
       }),
       stripeAccount: app.stripeAccount
     });

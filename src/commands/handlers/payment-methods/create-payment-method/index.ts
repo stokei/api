@@ -60,7 +60,8 @@ export class CreatePaymentMethodCommandHandler
 
     const stripePaymentMethod =
       await this.findStripePaymentMethodByIdService.execute(
-        data.stripePaymentMethod
+        data.stripePaymentMethod,
+        app.stripeAccount
       );
     if (!stripePaymentMethod) {
       throw new PaymentMethodNotFoundException();

@@ -26,6 +26,9 @@ export class App {
   @Field(() => String, { nullable: true })
   email?: string;
 
+  @Field(() => String, { nullable: true })
+  stripeAccount?: string;
+
   @Field(() => AppStatus)
   status: AppStatus;
 

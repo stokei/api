@@ -41,10 +41,7 @@ export class CreateStripeSubscriptionService
             }),
         expand: ['latest_invoice.payment_intent'],
         ...(data.stripeAccount && {
-          application_fee_percent: APPLICATION_FEE_PERCENT,
-          transfer_data: {
-            destination: data.stripeAccount
-          }
+          application_fee_percent: APPLICATION_FEE_PERCENT
         })
       },
       { stripeAccount: data.stripeAccount }

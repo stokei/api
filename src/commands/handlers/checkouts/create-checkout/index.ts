@@ -2,14 +2,13 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import {
   cleanObject,
   cleanValue,
-  convertToISODateString,
-  splitServiceId
+  convertToISODateString
 } from '@stokei/nestjs';
 import Stripe from 'stripe';
 
 import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import {
+  AccountNotFoundException,
   AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
@@ -63,12 +62,12 @@ export class CreateCheckoutCommandHandler
       throw new ParamNotFoundException<CreateCheckoutCommandKeys>('price');
     }
 
-    const { stripeCustomer, customerApp: customerAppId } =
-      await this.getCustomer({
-        customer: data.customer
-      });
+    const customer = await this.findAccountByIdService.execute(data.customer);
+    if (!customer) {
+      throw new AccountNotFoundException();
+    }
 
-    const customerApp = await this.findAppByIdService.execute(customerAppId);
+    const customerApp = await this.findAppByIdService.execute(customer.app);
     if (!customerApp) {
       throw new AppNotFoundException();
     }
@@ -121,7 +120,7 @@ export class CreateCheckoutCommandHandler
         startPaymentWhenSubscriptionIsCreated: true,
         automaticRenew: true,
         prices: [{ price: price.stripePrice, quantity: 1 }],
-        customer: stripeCustomer,
+        customer: customer.stripeCustomer,
         stripeAccount: customerApp.stripeAccount
       });
     if (!stripeSubscription) {
@@ -177,25 +176,5 @@ export class CreateCheckoutCommandHandler
       customer: cleanValue(command?.customer),
       price: cleanValue(command?.price)
     });
-  }
-
-  private async getCustomer(data: { customer }): Promise<{
-    stripeCustomer: string;
-    customerEmail: string;
-    customerApp: string;
-  }> {
-    const handlers = {
-      [ServerStokeiApiIdPrefix.ACCOUNTS]: async () => {
-        const {
-          stripeCustomer,
-          email,
-          app: customerApp
-        } = await this.findAccountByIdService.execute(data.customer);
-        return { stripeCustomer, email, customerApp };
-      }
-    };
-
-    const customerType = splitServiceId(data.customer)?.service;
-    return handlers[customerType || ServerStokeiApiIdPrefix.ACCOUNTS]();
   }
 }

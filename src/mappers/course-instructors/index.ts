@@ -3,10 +3,9 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
-  IOperator,
   IWhere,
   PrismaMapper,
   splitServiceId
@@ -23,26 +22,21 @@ import { FindAllCourseInstructorsQuery } from '@/queries/implements/course-instr
 export class CourseInstructorMapper {
   toWhereFindAllPrisma(where: IWhere<WhereDataFindAllCourseInstructorsDTO>) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        course: prismaMapper.toWhereData(operatorData.course),
-        instructor: prismaMapper.toWhereData(operatorData.instructor),
-        app: prismaMapper.toWhereData(operatorData.app),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          course: prismaMapper.toWhereData(operatorData.course),
+          instructor: prismaMapper.toWhereData(operatorData.instructor),
+          app: prismaMapper.toWhereData(operatorData.app),
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllCourseInstructorsDTO) {
@@ -60,32 +54,26 @@ export class CourseInstructorMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          course: cleanWhereDataString(operatorData.course),
-          instructor: cleanWhereDataSearch(operatorData.instructor),
-          app: cleanWhereDataString(operatorData.app),
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        operatorMapper(operatorData) {
+          return {
+            course: cleanWhereDataString(operatorData.course),
+            instructor: cleanWhereDataSearch(operatorData.instructor),
+            app: cleanWhereDataString(operatorData.app),
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map(
+                    (id) => splitServiceId(cleanValue(id))?.id
+                  )
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)
@@ -99,14 +87,7 @@ export class CourseInstructorMapper {
     };
   }
   toModel(courseInstructor: CourseInstructorEntity) {
-    return (
-      courseInstructor &&
-      new CourseInstructorModel({
-        ...courseInstructor,
-        updatedAt: convertToISODateString(courseInstructor.updatedAt),
-        createdAt: convertToISODateString(courseInstructor.createdAt)
-      })
-    );
+    return courseInstructor && new CourseInstructorModel(courseInstructor);
   }
   toModels(courseInstructors: CourseInstructorEntity[]) {
     return courseInstructors?.length > 0

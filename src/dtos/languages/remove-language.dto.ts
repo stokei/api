@@ -1,6 +1,5 @@
 export interface RemoveLanguageWhereDTO {
   removedBy: string;
-  app: string;
   language: string;
 }
 

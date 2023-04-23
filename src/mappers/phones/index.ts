@@ -3,10 +3,10 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
   cleanWhereDataBoolean,
+  cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
-  IOperator,
   IWhere,
   PrismaMapper,
   splitServiceId
@@ -23,32 +23,26 @@ import { FindAllPhonesQuery } from '@/queries/implements/phones/find-all-phones.
 export class PhoneMapper {
   toWhereFindAllPrisma(where: IWhere<WhereDataFindAllPhonesDTO>) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
-        countryCode: prismaMapper.toWhereData(operatorData.countryCode),
-        areaCode: prismaMapper.toWhereData(operatorData.areaCode),
-        number: prismaMapper.toWhereData(operatorData.number),
-        validationCode: prismaMapper.toWhereData(operatorData.validationCode),
-        status: operatorData.status,
-        default: prismaMapper.toWhereData(operatorData.default),
-        active: prismaMapper.toWhereData(operatorData.active),
-        app: prismaMapper.toWhereData(operatorData.app),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          parent: prismaMapper.toWhereDataSearch(operatorData.parent),
+          countryCode: prismaMapper.toWhereData(operatorData.countryCode),
+          areaCode: prismaMapper.toWhereData(operatorData.areaCode),
+          number: prismaMapper.toWhereData(operatorData.number),
+          validationCode: prismaMapper.toWhereData(operatorData.validationCode),
+          status: operatorData.status,
+          active: prismaMapper.toWhereData(operatorData.active),
+          app: prismaMapper.toWhereData(operatorData.app),
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllPhonesDTO) {
@@ -64,38 +58,31 @@ export class PhoneMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
-          countryCode: cleanWhereDataString(operatorData.countryCode),
-          areaCode: cleanWhereDataString(operatorData.areaCode),
-          number: cleanWhereDataString(operatorData.number),
-          validationCode: cleanWhereDataString(operatorData.validationCode),
-          status: operatorData.status,
-          default: cleanWhereDataBoolean(operatorData.default),
-          active: cleanWhereDataBoolean(operatorData.active),
-          app: cleanWhereDataString(operatorData.app),
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        operatorMapper(operatorData) {
+          return {
+            parent: cleanWhereDataSearch(operatorData.parent),
+            countryCode: cleanWhereDataString(operatorData.countryCode),
+            areaCode: cleanWhereDataString(operatorData.areaCode),
+            number: cleanWhereDataString(operatorData.number),
+            validationCode: cleanWhereDataString(operatorData.validationCode),
+            status: operatorData.status,
+            active: cleanWhereDataBoolean(operatorData.active),
+            app: cleanWhereDataString(operatorData.app),
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map(
+                    (id) => splitServiceId(cleanValue(id))?.id
+                  )
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)
@@ -106,7 +93,6 @@ export class PhoneMapper {
         areaCode: cleanSortValue(query.orderBy?.areaCode),
         number: cleanSortValue(query.orderBy?.number),
         status: cleanSortValue(query.orderBy?.status),
-        default: cleanSortValue(query.orderBy?.default),
         active: cleanSortValue(query.orderBy?.active),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
@@ -116,14 +102,7 @@ export class PhoneMapper {
     };
   }
   toModel(phone: PhoneEntity) {
-    return (
-      phone &&
-      new PhoneModel({
-        ...phone,
-        updatedAt: convertToISODateString(phone.updatedAt),
-        createdAt: convertToISODateString(phone.createdAt)
-      })
-    );
+    return phone && new PhoneModel(phone);
   }
   toModels(phones: PhoneEntity[]) {
     return phones?.length > 0 ? phones.map(this.toModel).filter(Boolean) : [];

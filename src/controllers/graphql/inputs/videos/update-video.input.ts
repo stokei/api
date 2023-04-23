@@ -1,9 +1,24 @@
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, Float, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateDataVideoInput {
-  @Field()
-  name: string;
+  @Field(() => String, { nullable: true })
+  name?: string;
+
+  @Field(() => String, { nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  file?: string;
+
+  @Field(() => String, { nullable: true })
+  poster?: string;
+
+  @Field(() => Float, { nullable: true })
+  duration?: number;
+
+  @Field(() => Boolean, { nullable: true })
+  private?: boolean;
 }
 
 @InputType()

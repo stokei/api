@@ -4,6 +4,8 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { AddDomainToAppSubscriptionContractCommand } from '@/commands/implements/domains/add-domain-to-app-subscription-contract.command';
+import { RemoveDomainFromAppSubscriptionContractCommand } from '@/commands/implements/domains/remove-domain-from-app-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
 import { DomainRemovedEvent } from '@/events/implements/domains/domain-removed.event';
@@ -29,7 +31,12 @@ export class DomainsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new AddDomainToAppSubscriptionContractCommand({
+            createdBy: event.createdBy,
+            domain: event.domain.id
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)
@@ -48,7 +55,12 @@ export class DomainsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new RemoveDomainFromAppSubscriptionContractCommand({
+            removedBy: event.removedBy,
+            domain: event.domain.id
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

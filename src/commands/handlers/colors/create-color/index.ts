@@ -3,11 +3,13 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateColorCommand } from '@/commands/implements/colors/create-color.command';
 import {
+  ColorAlreadyExistsException,
   ColorNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateColorRepository } from '@/repositories/colors/create-color';
+import { FindAllColorsService } from '@/services/colors/find-all-colors';
 
 type CreateColorCommandKeys = keyof CreateColorCommand;
 
@@ -17,6 +19,7 @@ export class CreateColorCommandHandler
 {
   constructor(
     private readonly createColorRepository: CreateColorRepository,
+    private readonly findAllColorsService: FindAllColorsService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -27,6 +30,34 @@ export class CreateColorCommandHandler
     }
     if (!data?.parent) {
       throw new ParamNotFoundException<CreateColorCommandKeys>('parent');
+    }
+    if (!data?.color) {
+      throw new ParamNotFoundException<CreateColorCommandKeys>('color');
+    }
+
+    const colors = await this.findAllColorsService.execute({
+      where: {
+        AND: {
+          app: {
+            equals: data.app
+          },
+          parent: {
+            equals: data.parent
+          },
+          themeMode: data.themeMode,
+          type: data.type,
+          color: {
+            equals: data.color
+          }
+        }
+      },
+      page: {
+        limit: 1
+      }
+    });
+
+    if (colors?.totalCount > 0) {
+      throw new ColorAlreadyExistsException();
     }
 
     const colorCreated = await this.createColorRepository.execute(data);

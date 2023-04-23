@@ -3,9 +3,9 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
+  cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
-  IOperator,
   IWhere,
   PrismaMapper,
   splitServiceId
@@ -22,32 +22,20 @@ import { FindAllPaymentMethodsQuery } from '@/queries/implements/payment-methods
 export class PaymentMethodMapper {
   toWhereFindAllPrisma(where: IWhere<WhereDataFindAllPaymentMethodsDTO>) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
-        type: operatorData.type,
-        provider: operatorData.provider,
-        externalPaymentMethod: prismaMapper.toWhereData(
-          operatorData.externalPaymentMethod
-        ),
-        cardBrand: prismaMapper.toWhereData(operatorData.cardBrand),
-        active: prismaMapper.toWhereData(operatorData.active),
-        app: prismaMapper.toWhereData(operatorData.app),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          parent: prismaMapper.toWhereDataSearch(operatorData.parent),
+          app: prismaMapper.toWhereData(operatorData.app),
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllPaymentMethodsDTO) {
@@ -65,45 +53,32 @@ export class PaymentMethodMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
-          type: operatorData.type,
-          provider: operatorData.provider,
-          externalPaymentMethod: cleanWhereDataString(
-            operatorData.externalPaymentMethod
-          ),
-          cardBrand: cleanWhereDataString(operatorData.cardBrand),
-          active: operatorData.active,
-          app: cleanWhereDataString(operatorData.app),
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        operatorMapper(operatorData) {
+          return {
+            parent: cleanWhereDataSearch(operatorData.parent),
+            cardBrand: cleanWhereDataString(operatorData.cardBrand),
+            app: cleanWhereDataString(operatorData.app),
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map(
+                    (id) => splitServiceId(cleanValue(id))?.id
+                  )
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        type: cleanSortValue(query.orderBy?.type),
-        provider: cleanSortValue(query.orderBy?.provider),
+        cardBrand: cleanSortValue(query.orderBy?.cardBrand),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),
@@ -112,14 +87,7 @@ export class PaymentMethodMapper {
     };
   }
   toModel(paymentMethod: PaymentMethodEntity) {
-    return (
-      paymentMethod &&
-      new PaymentMethodModel({
-        ...paymentMethod,
-        updatedAt: convertToISODateString(paymentMethod.updatedAt),
-        createdAt: convertToISODateString(paymentMethod.createdAt)
-      })
-    );
+    return paymentMethod && new PaymentMethodModel(paymentMethod);
   }
   toModels(paymentMethods: PaymentMethodEntity[]) {
     return paymentMethods?.length > 0

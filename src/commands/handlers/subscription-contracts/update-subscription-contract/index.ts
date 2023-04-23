@@ -1,8 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import {
+  cleanDate,
   cleanObject,
   cleanValue,
   cleanValueBoolean,
+  convertToISODateString,
   splitServiceId
 } from '@stokei/nestjs';
 
@@ -46,7 +48,15 @@ export class UpdateSubscriptionContractCommandHandler
     }
 
     const updated = await this.updateSubscriptionContractRepository.execute({
-      ...data,
+      data: {
+        ...data.data,
+        ...(data.data.startAt && {
+          startAt: convertToISODateString(data.data.startAt)
+        }),
+        ...(data.data.endAt && {
+          endAt: convertToISODateString(data.data.endAt)
+        })
+      },
       where: {
         ...data.where,
         subscriptionContract: subscriptionContractId
@@ -84,7 +94,9 @@ export class UpdateSubscriptionContractCommandHandler
       }),
       data: cleanObject({
         automaticRenew: cleanValueBoolean(command?.data?.automaticRenew),
-        updatedBy: cleanValue(command?.data?.updatedBy)
+        updatedBy: cleanValue(command?.data?.updatedBy),
+        startAt: cleanDate(command?.data?.startAt),
+        endAt: cleanDate(command?.data?.endAt)
       })
     });
   }

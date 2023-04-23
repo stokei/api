@@ -2,9 +2,6 @@ import { Field, InputType, Int } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateDataPriceInput {
-  @Field(() => Boolean, { nullable: true })
-  default?: boolean;
-
   @Field(() => Int, { nullable: true })
   fromAmount?: number;
 

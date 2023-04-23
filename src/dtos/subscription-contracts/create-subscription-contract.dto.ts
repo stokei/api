@@ -1,12 +1,13 @@
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
 
 export interface CreateSubscriptionContractDTO {
+  app: string;
   parent: string;
-  product: string;
-  type: SubscriptionContractType;
-  automaticRenew?: boolean;
+  stripeSubscription: string;
   startAt?: string;
   endAt?: string;
-  app: string;
+  paymentMethod?: string;
+  type: SubscriptionContractType;
+  automaticRenew: boolean;
   createdBy: string;
 }

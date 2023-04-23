@@ -1,8 +1,14 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanSlug,
+  cleanValue,
+  cleanValueBoolean,
+  cleanValueNumber
+} from '@stokei/nestjs';
+import { nanoid } from 'nanoid';
 
 import { CreateVideoCommand } from '@/commands/implements/videos/create-video.command';
-import { VideoStatus } from '@/enums/video-status.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
@@ -26,13 +32,18 @@ export class CreateVideoCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.path) {
-      throw new ParamNotFoundException<CreateVideoCommandKeys>('path');
+    if (!data?.parent) {
+      throw new ParamNotFoundException<CreateVideoCommandKeys>('parent');
+    }
+    if (!data?.name) {
+      throw new ParamNotFoundException<CreateVideoCommandKeys>('name');
     }
 
+    const slug = cleanSlug(data.name + nanoid(8));
     const videoCreated = await this.createVideoRepository.execute({
       ...data,
-      status: VideoStatus.ACTIVE
+      active: false,
+      slug
     });
     if (!videoCreated) {
       throw new VideoNotFoundException();
@@ -52,8 +63,10 @@ export class CreateVideoCommandHandler
       app: cleanValue(command?.app),
       name: cleanValue(command?.name),
       description: cleanValue(command?.description),
-      path: cleanValue(command?.path),
+      file: cleanValue(command?.file),
       poster: cleanValue(command?.poster),
+      duration: cleanValueNumber(command?.duration),
+      private: cleanValueBoolean(command?.private),
       parent: cleanValue(command?.parent)
     });
   }

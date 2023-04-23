@@ -5,6 +5,7 @@ networks:
     driver: bridge
 
 volumes:
+  mysql-data:
   postgresql-data:
 services:
   api:
@@ -18,29 +19,28 @@ services:
     ports:
       - '4010:3000'
     environment:
-      - api_URL=amqp://admin:admin@rabbitmq:5672
-      - DB_URL=postgresql://dev:dev@postgresql:5432/stokei-api?schema=public
-      - HOST=api
-      - PORT=3000
-      - URL=http://api:3000
-      - GRAPHQL_URL=http://api:3000/graphql
+      - DB_URL=mysql://dev:dev@mysql:3310/stokei-api
+      - SERVER_HOST=api
+      - SERVER_PORT=3000
+      - SERVER_URL=http://api:3000
     restart: on-failure
     volumes:
       - ./:/app/
     depends_on:
-      - postgresql
+      - mysql
     networks:
       - stokei-network
 
-  postgresql:
-    image: bitnami/postgresql:latest
-    container_name: postgresql
+  mysql:
+    image: bitnami/mysql:5.7
+    container_name: mysql
     environment:
-      POSTGRESQL_USERNAME: dev
-      POSTGRESQL_PASSWORD: dev
+      MYSQL_ROOT_USER: dev
+      MYSQL_ROOT_PASSWORD: dev
+      MYSQL_DATABASE: stokei-api
     ports:
-      - '5432:5432'
+      - '3310:3306'
     volumes:
-      - postgresql-data:/bitnami/postgresql
+      - mysql-data:/bitnami/mysql/data
     networks:
       - stokei-network

@@ -6,13 +6,13 @@ export class CreatePaymentMethodCommand
   implements ICommand, CreatePaymentMethodDTO
 {
   parent: string;
-  creditCardHash: string;
+  stripePaymentMethod: string;
   app: string;
   createdBy: string;
 
   constructor(data: CreatePaymentMethodDTO) {
     this.parent = data.parent;
-    this.creditCardHash = data.creditCardHash;
+    this.stripePaymentMethod = data.stripePaymentMethod;
     this.app = data.app;
     this.createdBy = data.createdBy;
   }

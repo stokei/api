@@ -1,35 +1,50 @@
 import { Field, InputType, Int } from '@nestjs/graphql';
 
+import { BillingScheme } from '@/controllers/graphql/enums/billing-scheme.enum';
 import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
 import { PriceType } from '@/controllers/graphql/enums/price-type.enum';
-import { RecurringType } from '@/controllers/graphql/enums/recurring-type.enum';
+import { TiersMode } from '@/controllers/graphql/enums/tiers-mode.enum';
+import { CreatePriceTierInput } from '@/controllers/graphql/inputs/price-tiers/create-price-tier.input';
+import { CreateRecurringInput } from '@/controllers/graphql/inputs/recurrings/create-recurring.input';
 
 @InputType()
 export class CreatePriceInput {
-  @Field()
+  @Field(() => String)
   parent: string;
-
-  @Field(() => Boolean, { nullable: true })
-  default?: boolean;
 
   @Field(() => Int, { nullable: true })
   fromAmount?: number;
 
-  @Field(() => Int)
-  amount: number;
+  @Field(() => Int, { nullable: true })
+  amount?: number;
+
+  @Field(() => String, { nullable: true })
+  nickname?: string;
+
+  @Field(() => Boolean, { nullable: true })
+  defaultPrice?: boolean;
+
+  @Field(() => String, { nullable: true })
+  unit?: string;
 
   @Field(() => PriceType)
   type: PriceType;
 
+  @Field(() => BillingScheme)
+  billingScheme: BillingScheme;
+
+  @Field(() => TiersMode)
+  tiersMode: TiersMode;
+
   @Field(() => InventoryType)
   inventoryType: InventoryType;
 
-  @Field(() => Int)
-  recurringIntervalCount: number;
+  @Field(() => CreateRecurringInput, { nullable: true })
+  recurring?: CreateRecurringInput;
 
-  @Field(() => RecurringType)
-  recurringIntervalType: RecurringType;
+  @Field(() => [CreatePriceTierInput], { nullable: true })
+  tiers?: CreatePriceTierInput[];
 
-  @Field(() => Int)
-  quantity: number;
+  @Field(() => Int, { nullable: true })
+  quantity?: number;
 }

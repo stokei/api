@@ -1,31 +1,41 @@
-import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
+import {
+  IBaseFindManyDTO,
+  IOrderBy,
+  IWhereData,
+  IWhereDataSearch
+} from '@stokei/nestjs';
 
+import { BillingScheme } from '@/enums/billing-scheme.enum';
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
-import { RecurringType } from '@/enums/recurring-type.enum';
+import { TiersMode } from '@/enums/tiers-mode.enum';
 
 export interface WhereDataFindAllPricesDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
-  default?: IWhereData<boolean>;
+  currency?: IWhereData;
+  unit?: IWhereData;
+  active?: IWhereData<boolean>;
+  parent?: IWhereDataSearch;
   type?: PriceType;
   inventoryType?: InventoryType;
-  recurringIntervalCount?: IWhereData<number>;
-  recurringIntervalType?: RecurringType;
+  billingScheme?: BillingScheme;
+  tiersMode?: TiersMode;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
 export type IKeysWhereDataFindAllPricesDTO = keyof WhereDataFindAllPricesDTO;
 
 export interface OrderByDataFindAllPricesDTO {
-  default?: IOrderBy;
   fromAmount?: IOrderBy;
+  currency?: IOrderBy;
+  unit?: IOrderBy;
+  active?: IOrderBy;
   amount?: IOrderBy;
   type?: IOrderBy;
   inventoryType?: IOrderBy;
-  recurringIntervalCount?: IOrderBy;
-  recurringIntervalType?: IOrderBy;
+  billingScheme?: IOrderBy;
+  tiersMode?: IOrderBy;
   quantity?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;

@@ -2,29 +2,30 @@ import { AccessesLoader } from './accesses.loader';
 import { AccountsLoader } from './accounts.loader';
 import { AddressesLoader } from './addresses.loader';
 import { AppsLoader } from './apps.loader';
-import { CartItemsLoader } from './cart-items.loader';
-import { CartsLoader } from './carts.loader';
-import { ClassroomInstructorsLoader } from './classroom-instructors.loader';
-import { ClassroomModulesLoader } from './classroom-modules.loader';
-import { ClassroomStudentsLoader } from './classroom-students.loader';
-import { ClassroomsLoader } from './classrooms.loader';
+import { CatalogItemsLoader } from './catalog-items.loader';
+import { CatalogsLoader } from './catalogs.loader';
 import { ColorsLoader } from './colors.loader';
 import { CourseInstructorsLoader } from './course-instructors.loader';
 import { CourseStudentsLoader } from './course-students.loader';
 import { CoursesLoader } from './courses.loader';
 import { CurrenciesLoader } from './currencies.loader';
 import { DomainsLoader } from './domains.loader';
+import { FeaturesLoader } from './features.loader';
+import { FilesLoader } from './files.loader';
+import { HerosLoader } from './heros.loader';
 import { ImagesLoader } from './images.loader';
+import { InvoicesLoader } from './invoices.loader';
 import { LanguagesLoader } from './languages.loader';
 import { ModulesLoader } from './modules.loader';
-import { OrderItemsLoader } from './order-items.loader';
-import { OrdersLoader } from './orders.loader';
 import { PaymentMethodsLoader } from './payment-methods.loader';
-import { PaymentsLoader } from './payments.loader';
 import { PhonesLoader } from './phones.loader';
 import { PlansLoader } from './plans.loader';
 import { PricesLoader } from './prices.loader';
 import { ProductsLoader } from './products.loader';
+import { RecurringsLoader } from './recurrings.loader';
+import { RolesLoader } from './roles.loader';
+import { SortedItemsLoader } from './sorted-items.loader';
+import { SubscriptionContractItemsLoader } from './subscription-contract-items.loader';
 import { SubscriptionContractsLoader } from './subscription-contracts.loader';
 import { VideoAuthorsLoader } from './video-authors.loader';
 import { VideosLoader } from './videos.loader';
@@ -34,17 +35,12 @@ export const Loaders = [
   AccessesLoader,
   AppsLoader,
   DomainsLoader,
-  CartsLoader,
   CurrenciesLoader,
   LanguagesLoader,
   ColorsLoader,
   ProductsLoader,
   PricesLoader,
-  OrdersLoader,
-  OrderItemsLoader,
-  PaymentsLoader,
   PaymentMethodsLoader,
-  CartItemsLoader,
   PlansLoader,
   ImagesLoader,
   VideosLoader,
@@ -53,11 +49,17 @@ export const Loaders = [
   CoursesLoader,
   CourseInstructorsLoader,
   CourseStudentsLoader,
-  ClassroomsLoader,
-  ClassroomStudentsLoader,
   SubscriptionContractsLoader,
-  ClassroomInstructorsLoader,
-  ClassroomModulesLoader,
   AddressesLoader,
-  PhonesLoader
+  PhonesLoader,
+  InvoicesLoader,
+  FilesLoader,
+  FeaturesLoader,
+  RecurringsLoader,
+  CatalogsLoader,
+  CatalogItemsLoader,
+  RolesLoader,
+  HerosLoader,
+  SortedItemsLoader,
+  SubscriptionContractItemsLoader
 ];

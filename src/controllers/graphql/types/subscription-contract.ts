@@ -1,20 +1,39 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { createUnionType, Field, ID, ObjectType } from '@nestjs/graphql';
+import { splitServiceId } from '@stokei/nestjs';
 
 import { SubscriptionContractStatus } from '@/controllers/graphql/enums/subscription-contract-status.enum';
 import { SubscriptionContractType } from '@/controllers/graphql/enums/subscription-contract-type.enum';
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 
 import { Account } from './account';
 import { App } from './app';
+import { Invoice } from './invoice';
 import { PaymentMethod } from './payment-method';
-import { Product } from './product';
+import { SubscriptionContractItems } from './subscription-contract-items';
+
+export const SubscriptionContractParentUnion = createUnionType({
+  name: 'SubscriptionContractParentUnion',
+  types: () => [Account, App] as const,
+  async resolveType(value) {
+    const type = splitServiceId(value?.id)?.service;
+    const types = {
+      [ServerStokeiApiIdPrefix.ACCOUNTS]: Account.name,
+      [ServerStokeiApiIdPrefix.APPS]: App.name
+    };
+    return types[type];
+  }
+});
 
 @ObjectType()
 export class SubscriptionContract {
   @Field(() => ID)
   id: string;
 
-  @Field(() => Product)
-  product: Product;
+  @Field(() => SubscriptionContractParentUnion, { nullable: true })
+  parent?: typeof SubscriptionContractParentUnion;
+
+  @Field(() => PaymentMethod, { nullable: true })
+  paymentMethod?: PaymentMethod;
 
   @Field(() => SubscriptionContractStatus)
   status: SubscriptionContractStatus;
@@ -22,14 +41,17 @@ export class SubscriptionContract {
   @Field(() => SubscriptionContractType)
   type: SubscriptionContractType;
 
+  @Field(() => Invoice, { nullable: true })
+  lastInvoice: Invoice;
+
+  @Field(() => SubscriptionContractItems, { nullable: true })
+  items: SubscriptionContractItems;
+
   @Field(() => Boolean)
   active: boolean;
 
   @Field(() => Boolean)
   automaticRenew: boolean;
-
-  @Field(() => PaymentMethod, { nullable: true })
-  defaultPaymentMethod?: PaymentMethod;
 
   @Field(() => String, { nullable: true })
   startAt?: string;

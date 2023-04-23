@@ -5,17 +5,15 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
-import { VideoStatus } from '@/enums/video-status.enum';
-
 export interface WhereDataFindAllVideosDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   slug?: IWhereData<string>;
   description?: IWhereDataSearch;
-  status?: VideoStatus;
   active?: IWhereData<boolean>;
+  private?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -24,9 +22,8 @@ export type IKeysWhereDataFindAllVideosDTO = keyof WhereDataFindAllVideosDTO;
 export interface OrderByDataFindAllVideosDTO {
   name?: IOrderBy;
   slug?: IOrderBy;
-  duration?: IOrderBy;
-  status?: IOrderBy;
   active?: IOrderBy;
+  private?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

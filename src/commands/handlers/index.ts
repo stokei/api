@@ -2,30 +2,35 @@ import { AccessCommandHandlers } from './accesses';
 import { AccountCommandHandlers } from './accounts';
 import { AddressCommandHandlers } from './addresses';
 import { AppCommandHandlers } from './apps';
-import { CartItemCommandHandlers } from './cart-items';
-import { CartCommandHandlers } from './carts';
-import { ClassroomInstructorCommandHandlers } from './classroom-instructors';
-import { ClassroomModuleCommandHandlers } from './classroom-modules';
-import { ClassroomStudentCommandHandlers } from './classroom-students';
-import { ClassroomCommandHandlers } from './classrooms';
+import { CatalogItemCommandHandlers } from './catalog-items';
+import { CatalogCommandHandlers } from './catalogs';
+import { CheckoutCommandHandlers } from './checkouts';
 import { ColorCommandHandlers } from './colors';
 import { CourseInstructorCommandHandlers } from './course-instructors';
 import { CourseStudentCommandHandlers } from './course-students';
 import { CourseCommandHandlers } from './courses';
 import { CurrencyCommandHandlers } from './currencies';
+import { CustomerPortalSessionCommandHandlers } from './customer-portal-sessions';
 import { DomainCommandHandlers } from './domains';
+import { FeatureCommandHandlers } from './features';
+import { FileCommandHandlers } from './files';
+import { HeroCommandHandlers } from './heros';
 import { ImageCommandHandlers } from './images';
+import { InvoiceCommandHandlers } from './invoices';
 import { LanguageCommandHandlers } from './languages';
 import { ModuleCommandHandlers } from './modules';
-import { OrderItemCommandHandlers } from './order-items';
-import { OrderCommandHandlers } from './orders';
 import { PaymentMethodCommandHandlers } from './payment-methods';
-import { PaymentCommandHandlers } from './payments';
 import { PhoneCommandHandlers } from './phones';
 import { PlanCommandHandlers } from './plans';
+import { PriceTierCommandHandlers } from './price-tiers';
 import { PriceCommandHandlers } from './prices';
 import { ProductCommandHandlers } from './products';
+import { RecurringCommandHandlers } from './recurrings';
+import { RoleCommandHandlers } from './roles';
+import { SortedItemCommandHandlers } from './sorted-items';
+import { SubscriptionContractItemCommandHandlers } from './subscription-contract-items';
 import { SubscriptionContractCommandHandlers } from './subscription-contracts';
+import { UsageRecordCommandHandlers } from './usage-records';
 import { VideoAuthorCommandHandlers } from './video-authors';
 import { VideoCommandHandlers } from './videos';
 
@@ -39,12 +44,7 @@ export const CommandHandlers = [
   ...ColorCommandHandlers,
   ...ProductCommandHandlers,
   ...PriceCommandHandlers,
-  ...OrderCommandHandlers,
-  ...OrderItemCommandHandlers,
-  ...PaymentCommandHandlers,
   ...PaymentMethodCommandHandlers,
-  ...CartCommandHandlers,
-  ...CartItemCommandHandlers,
   ...PlanCommandHandlers,
   ...ImageCommandHandlers,
   ...VideoCommandHandlers,
@@ -53,11 +53,21 @@ export const CommandHandlers = [
   ...CourseCommandHandlers,
   ...CourseInstructorCommandHandlers,
   ...CourseStudentCommandHandlers,
-  ...ClassroomCommandHandlers,
-  ...ClassroomStudentCommandHandlers,
   ...SubscriptionContractCommandHandlers,
-  ...ClassroomInstructorCommandHandlers,
-  ...ClassroomModuleCommandHandlers,
   ...AddressCommandHandlers,
-  ...PhoneCommandHandlers
+  ...PhoneCommandHandlers,
+  ...CheckoutCommandHandlers,
+  ...CustomerPortalSessionCommandHandlers,
+  ...InvoiceCommandHandlers,
+  ...FileCommandHandlers,
+  ...RecurringCommandHandlers,
+  ...FeatureCommandHandlers,
+  ...PriceTierCommandHandlers,
+  ...SubscriptionContractItemCommandHandlers,
+  ...UsageRecordCommandHandlers,
+  ...CatalogItemCommandHandlers,
+  ...CatalogCommandHandlers,
+  ...RoleCommandHandlers,
+  ...HeroCommandHandlers,
+  ...SortedItemCommandHandlers
 ];

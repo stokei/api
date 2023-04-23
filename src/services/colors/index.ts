@@ -1,4 +1,5 @@
 import { CreateColorService } from './create-color';
+import { CreateOrUpdateColorService } from './create-or-update-color';
 import { FindAllColorsService } from './find-all-colors';
 import { FindColorByIdService } from './find-color-by-id';
 import { RemoveColorService } from './remove-color';
@@ -9,5 +10,6 @@ export const ColorServices = [
   RemoveColorService,
   UpdateColorService,
   FindColorByIdService,
-  FindAllColorsService
+  FindAllColorsService,
+  CreateOrUpdateColorService
 ];

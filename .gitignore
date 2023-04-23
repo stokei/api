@@ -2,6 +2,7 @@
 /dist
 /node_modules
 docker-images
+/tmp
 
 .env
 

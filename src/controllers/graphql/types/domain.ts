@@ -11,6 +11,9 @@ export class Domain {
   id: string;
 
   @Field(() => String)
+  parent: string;
+
+  @Field(() => String)
   name: string;
 
   @Field(() => Boolean)

@@ -1,7 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
-  WhereDataBooleanInput,
   WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
@@ -21,9 +20,6 @@ class WhereDataFindAllAddressesDataInput
 
   @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
-
-  @Field(() => WhereDataBooleanInput, { nullable: true })
-  default?: WhereDataBooleanInput;
 
   @Field(() => WhereDataSearchInput, { nullable: true })
   street?: WhereDataSearchInput;
@@ -54,9 +50,6 @@ class WhereDataFindAllAddressesDataInput
 export class OrderByDataFindAllAddressesInput
   implements OrderByDataFindAllAddressesDTO
 {
-  @Field(() => OrderBy, { nullable: true })
-  default?: OrderBy;
-
   @Field(() => OrderBy, { nullable: true })
   street?: OrderBy;
 

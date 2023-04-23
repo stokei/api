@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 import { Account } from './account';
 import { App } from './app';
+import { Videos } from './videos';
 
 @ObjectType()
 export class Module {
@@ -11,8 +12,14 @@ export class Module {
   @Field(() => String)
   name: string;
 
+  @Field(() => String)
+  parent: string;
+
   @Field(() => String, { nullable: true })
   description?: string;
+
+  @Field(() => Videos, { nullable: true })
+  videos?: Videos;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;

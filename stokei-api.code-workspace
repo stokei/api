@@ -12,6 +12,8 @@
     "[prisma]": {
       "editor.defaultFormatter": "Prisma.prisma"
     },
-    "jest.autoRun": { "watch": false }
+    "jest.autoRun": {
+      "watch": false
+    }
   }
 }

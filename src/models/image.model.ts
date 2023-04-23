@@ -1,5 +1,4 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { ApiProperty } from '@nestjs/swagger';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
@@ -9,7 +8,7 @@ import { ImageRemovedEvent } from '@/events/implements/images/image-removed.even
 export interface IImageModelData {
   readonly id?: string;
   readonly _id?: string;
-  readonly path: string;
+  readonly file: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly app: string;
@@ -18,20 +17,12 @@ export interface IImageModelData {
 }
 
 export class ImageModel extends AggregateRoot {
-  @ApiProperty()
   readonly id: string;
-  @ApiProperty()
-  readonly path: string;
-  @ApiProperty()
-  readonly url: string;
-  @ApiProperty({ nullable: true })
+  readonly file: string;
   readonly updatedAt?: string;
-  @ApiProperty({ nullable: true })
   readonly createdAt?: string;
-  @ApiProperty({ nullable: true })
   readonly app: string;
   readonly updatedBy?: string;
-  @ApiProperty({ nullable: true })
   readonly createdBy?: string;
 
   constructor(data: IImageModelData) {
@@ -39,11 +30,9 @@ export class ImageModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.IMAGES,
-      module: ServerStokeiApiIdPrefix.IMAGES,
       id: data._id?.toString() || data.id
     });
-    this.path = data.path;
-    this.url = data.path;
+    this.file = data.file;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;

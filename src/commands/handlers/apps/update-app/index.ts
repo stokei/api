@@ -68,9 +68,13 @@ export class UpdateAppCommandHandler
         name: cleanValue(command?.data?.name),
         description: cleanValue(command?.data?.description),
         avatar: cleanValue(command?.data?.avatar),
-        plan: cleanValue(command?.data?.plan),
-        favicon: cleanValue(command?.data?.favicon),
+        catalog: cleanValue(command?.data?.catalog),
+        icon: cleanValue(command?.data?.icon),
         logo: cleanValue(command?.data?.logo),
+        stripeBankAccount: cleanValue(command?.data?.stripeBankAccount),
+        stripeAccount: cleanValue(command?.data?.stripeAccount),
+        stripeCustomer: cleanValue(command?.data?.stripeCustomer),
+        paymentMethod: cleanValue(command?.data?.paymentMethod),
         updatedBy: cleanValue(command?.data?.name)
       })
     });

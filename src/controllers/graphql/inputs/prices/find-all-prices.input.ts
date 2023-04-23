@@ -7,9 +7,9 @@ import {
   WherePaginated
 } from '@stokei/nestjs';
 
+import { IntervalType } from '@/controllers/graphql/enums/interval-type.enum';
 import { InventoryType } from '@/controllers/graphql/enums/inventory-type.enum';
 import { PriceType } from '@/controllers/graphql/enums/price-type.enum';
-import { RecurringType } from '@/controllers/graphql/enums/recurring-type.enum';
 import {
   OrderByDataFindAllPricesDTO,
   WhereDataFindAllPricesDTO
@@ -23,8 +23,8 @@ class WhereDataFindAllPricesDataInput implements WhereDataFindAllPricesDTO {
   @Field(() => WhereDataStringInput, { nullable: true })
   parent?: WhereDataStringInput;
 
-  @Field(() => WhereDataBooleanInput, { nullable: true })
-  default?: WhereDataBooleanInput;
+  @Field(() => WhereDataStringInput, { nullable: true })
+  unit?: WhereDataStringInput;
 
   @Field(() => PriceType, { nullable: true })
   type?: PriceType;
@@ -35,8 +35,11 @@ class WhereDataFindAllPricesDataInput implements WhereDataFindAllPricesDTO {
   @Field(() => WhereDataIntInput, { nullable: true })
   recurringIntervalCount?: WhereDataIntInput;
 
-  @Field(() => RecurringType, { nullable: true })
-  recurringIntervalType?: RecurringType;
+  @Field(() => IntervalType, { nullable: true })
+  recurringIntervalType?: IntervalType;
+
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  active?: WhereDataBooleanInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
@@ -57,6 +60,12 @@ export class OrderByDataFindAllPricesInput
 
   @Field(() => OrderBy, { nullable: true })
   amount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  unit?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  active?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   type?: OrderBy;

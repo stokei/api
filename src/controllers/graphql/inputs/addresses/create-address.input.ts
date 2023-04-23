@@ -5,9 +5,6 @@ export class CreateAddressInput {
   @Field()
   parent: string;
 
-  @Field(() => Boolean, { nullable: true })
-  default?: boolean;
-
   @Field()
   street: string;
 

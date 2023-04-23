@@ -4,7 +4,6 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { ChangeFromOldDefaultAddressToNewDefaultAddressCommand } from '@/commands/implements/addresses/change-from-old-default-address-to-new-default-address.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AddressCreatedEvent } from '@/events/implements/addresses/address-created.event';
 import { AddressRemovedEvent } from '@/events/implements/addresses/address-removed.event';
@@ -26,7 +25,6 @@ export class AddressesSagas {
       delay(500),
       map((event) => {
         const address = event?.address;
-        const createdBy = event?.createdBy;
         if (!address) {
           return;
         }
@@ -36,13 +34,7 @@ export class AddressesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
-          new ChangeFromOldDefaultAddressToNewDefaultAddressCommand({
-            app: address.app,
-            newAddress: address.id,
-            updatedBy: createdBy
-          })
-        ];
+        const commands = [];
         return commands;
       }),
       mergeMap((c) => c)
@@ -75,7 +67,6 @@ export class AddressesSagas {
       delay(500),
       map((event) => {
         const address = event?.address;
-        const updatedBy = event?.updatedBy;
         if (!address) {
           return;
         }
@@ -85,13 +76,7 @@ export class AddressesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
-          new ChangeFromOldDefaultAddressToNewDefaultAddressCommand({
-            app: address.app,
-            newAddress: address.id,
-            updatedBy
-          })
-        ];
+        const commands = [];
         return commands;
       }),
       mergeMap((c) => c)

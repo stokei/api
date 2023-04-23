@@ -53,7 +53,6 @@ export class AccessModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.ACCOUNTS,
-      module: ServerStokeiApiIdPrefix.ACCESSES,
       id: data._id?.toString() || data.id
     });
     this.prefixToken = data.prefixToken;

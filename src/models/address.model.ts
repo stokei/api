@@ -10,7 +10,6 @@ export interface IAddressModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
-  readonly default: boolean;
   readonly street: string;
   readonly complement?: string;
   readonly number: string;
@@ -28,7 +27,6 @@ export interface IAddressModelData {
 export class AddressModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly default: boolean;
   readonly street: string;
   readonly complement?: string;
   readonly number: string;
@@ -46,11 +44,9 @@ export class AddressModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.ADDRESSES,
-      module: ServerStokeiApiIdPrefix.ADDRESSES,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
-    this.default = data.default;
     this.street = data.street;
     this.complement = data.complement;
     this.number = data.number;

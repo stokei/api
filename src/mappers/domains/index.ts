@@ -3,11 +3,10 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
   cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
-  IOperator,
   IWhere,
   PrismaMapper,
   splitServiceId
@@ -24,28 +23,23 @@ import { FindAllDomainsQuery } from '@/queries/implements/domains/find-all-domai
 export class DomainMapper {
   toWhereFindAllPrisma(where: IWhere<WhereDataFindAllDomainsDTO>) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        parent: prismaMapper.toWhereData(operatorData.parent),
-        app: prismaMapper.toWhereData(operatorData.app),
-        active: prismaMapper.toWhereData(operatorData.active),
-        status: operatorData.status,
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          name: prismaMapper.toWhereDataSearch(operatorData.name),
+          parent: prismaMapper.toWhereDataSearch(operatorData.parent),
+          app: prismaMapper.toWhereData(operatorData.app),
+          active: prismaMapper.toWhereData(operatorData.active),
+          status: operatorData.status,
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllDomainsDTO) {
@@ -61,34 +55,28 @@ export class DomainMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
-          name: cleanWhereDataSearch(operatorData.name),
-          app: cleanWhereDataString(operatorData.app),
-          active: cleanWhereDataBoolean(operatorData.active),
-          status: operatorData.status,
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        operatorMapper(operatorData) {
+          return {
+            parent: cleanWhereDataSearch(operatorData.parent),
+            name: cleanWhereDataSearch(operatorData.name),
+            app: cleanWhereDataString(operatorData.app),
+            active: cleanWhereDataBoolean(operatorData.active),
+            status: operatorData.status,
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map(
+                    (id) => splitServiceId(cleanValue(id))?.id
+                  )
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)
@@ -105,14 +93,7 @@ export class DomainMapper {
     };
   }
   toModel(domain: DomainEntity) {
-    return (
-      domain &&
-      new DomainModel({
-        ...domain,
-        updatedAt: convertToISODateString(domain.updatedAt),
-        createdAt: convertToISODateString(domain.createdAt)
-      })
-    );
+    return domain && new DomainModel(domain);
   }
   toModels(domains: DomainEntity[]) {
     return domains?.length > 0 ? domains.map(this.toModel).filter(Boolean) : [];

@@ -3,9 +3,9 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  IOperator,
   IWhere,
   PrismaMapper,
   splitServiceId
@@ -22,34 +22,23 @@ import { FindAllAccountsQuery } from '@/queries/implements/accounts/find-all-acc
 export class AccountMapper {
   toWhereFindAllPrisma(where: IWhere<WhereDataFindAllAccountsDTO>) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        app: prismaMapper.toWhereData(operatorData.app),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy),
-        firstname: prismaMapper.toWhereDataSearch(operatorData.firstname),
-        lastname: prismaMapper.toWhereDataSearch(operatorData.lastname),
-        email: prismaMapper.toWhereData(operatorData.email),
-        username: prismaMapper.toWhereData(operatorData.username),
-        ...(operatorData?.roles?.length > 0 && {
-          roles: {
-            hasEvery: operatorData?.roles
-          }
-        })
-      };
-    };
-
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          app: prismaMapper.toWhereData(operatorData.app),
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy),
+          firstname: prismaMapper.toWhereDataSearch(operatorData.firstname),
+          lastname: prismaMapper.toWhereDataSearch(operatorData.lastname),
+          email: prismaMapper.toWhereData(operatorData.email),
+          username: prismaMapper.toWhereData(operatorData.username)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllAccountsDTO) {
@@ -65,38 +54,28 @@ export class AccountMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          app: cleanWhereDataString(operatorData.app),
-          firstname: cleanWhereDataSearch(operatorData.firstname),
-          lastname: cleanWhereDataSearch(operatorData.lastname),
-          email: cleanWhereDataString(operatorData.email),
-          username: cleanWhereDataString(operatorData.username),
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          roles:
-            operatorData.roles?.length > 0
-              ? operatorData.roles.map((role) => cleanValue(role))
-              : undefined,
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        operatorMapper(operatorData) {
+          return {
+            app: cleanWhereDataString(operatorData.app),
+            firstname: cleanWhereDataSearch(operatorData.firstname),
+            lastname: cleanWhereDataSearch(operatorData.lastname),
+            email: cleanWhereDataString(operatorData.email),
+            username: cleanWhereDataString(operatorData.username),
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map(
+                    (id) => splitServiceId(cleanValue(id))?.id
+                  )
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)

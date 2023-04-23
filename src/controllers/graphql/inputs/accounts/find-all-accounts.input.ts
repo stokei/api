@@ -6,7 +6,6 @@ import {
   WherePaginated
 } from '@stokei/nestjs';
 
-import { AccountRole } from '@/controllers/graphql/enums/account-role.enum';
 import {
   OrderByDataFindAllAccountsDTO,
   WhereDataFindAllAccountsDTO
@@ -20,20 +19,17 @@ class WhereDataFindAllAccountsDataInput implements WhereDataFindAllAccountsDTO {
   @Field(() => WhereDataStringInput, { nullable: true })
   app?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataSearchInput, { nullable: true })
   firstname?: WhereDataSearchInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataSearchInput, { nullable: true })
   lastname?: WhereDataSearchInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   email?: WhereDataStringInput;
 
-  @Field({ nullable: true })
+  @Field(() => WhereDataStringInput, { nullable: true })
   username?: WhereDataStringInput;
-
-  @Field(() => [AccountRole], { nullable: true })
-  roles?: AccountRole[];
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;

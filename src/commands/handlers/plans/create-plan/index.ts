@@ -1,19 +1,15 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import {
-  cleanObject,
-  cleanValue,
-  cleanValueBoolean,
-  cleanValueNumber
-} from '@stokei/nestjs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreatePlanCommand } from '@/commands/implements/plans/create-plan.command';
-import { PlanStatus } from '@/enums/plan-status.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
+  PlanAlreadyExistsException,
   PlanNotFoundException
 } from '@/errors';
 import { CreatePlanRepository } from '@/repositories/plans/create-plan';
+import { FindAllPlansService } from '@/services/plans/find-all-plans';
 
 type CreatePlanCommandKeys = keyof CreatePlanCommand;
 
@@ -23,6 +19,7 @@ export class CreatePlanCommandHandler
 {
   constructor(
     private readonly createPlanRepository: CreatePlanRepository,
+    private readonly findAllPlansService: FindAllPlansService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -31,17 +28,41 @@ export class CreatePlanCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
+    if (!data?.app) {
+      throw new ParamNotFoundException<CreatePlanCommandKeys>('app');
+    }
+    if (!data?.name) {
+      throw new ParamNotFoundException<CreatePlanCommandKeys>('name');
+    }
     if (!data?.type) {
       throw new ParamNotFoundException<CreatePlanCommandKeys>('type');
     }
+    if (!data?.createdBy) {
+      throw new ParamNotFoundException<CreatePlanCommandKeys>('createdBy');
+    }
 
-    const planCreated = await this.createPlanRepository.execute({
-      ...data,
-      status: PlanStatus.ACTIVE
+    const plans = await this.findAllPlansService.execute({
+      where: {
+        AND: {
+          app: {
+            equals: data.app
+          },
+          type: data.type
+        }
+      },
+      page: {
+        limit: 1
+      }
     });
+    if (plans?.totalCount > 0) {
+      throw new PlanAlreadyExistsException();
+    }
+
+    const planCreated = await this.createPlanRepository.execute(data);
     if (!planCreated) {
       throw new PlanNotFoundException();
     }
+
     const planModel = this.publisher.mergeObjectContext(planCreated);
     planModel.createdPlan({
       createdBy: data.createdBy
@@ -54,27 +75,10 @@ export class CreatePlanCommandHandler
   private clearData(command: CreatePlanCommand): CreatePlanCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
-      type: cleanValue(command?.type),
-      checkoutVisible: cleanValueBoolean(command?.checkoutVisible),
-      hasCustomDomain: cleanValueBoolean(command?.hasCustomDomain),
-      hasCustomSite: cleanValueBoolean(command?.hasCustomSite),
-      quantityCourses: cleanValueNumber(command?.quantityCourses),
-      quantityInstructorPerCourses: cleanValueNumber(
-        command?.quantityInstructorPerCourses
-      ),
-      quantityClassroomsPerCourses: cleanValueNumber(
-        command?.quantityClassroomsPerCourses
-      ),
-      quantityModulesPerClassrooms: cleanValueNumber(
-        command?.quantityModulesPerClassrooms
-      ),
-      quantityVideosPerModules: cleanValueNumber(
-        command?.quantityVideosPerModules
-      ),
-      applicationFeePercentage: cleanValueNumber(
-        command?.applicationFeePercentage
-      )
+      description: cleanValue(command?.description),
+      type: cleanValue(command?.type)
     });
   }
 }

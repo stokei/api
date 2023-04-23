@@ -2,8 +2,12 @@ export interface UpdateAppDataDTO {
   name?: string;
   description?: string;
   avatar?: string;
-  plan?: string;
-  favicon?: string;
+  catalog?: string;
+  icon?: string;
+  stripeBankAccount?: string;
+  stripeAccount?: string;
+  stripeCustomer?: string;
+  paymentMethod?: string;
   logo?: string;
   updatedBy: string;
 }

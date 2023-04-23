@@ -2,30 +2,33 @@ import { AccessesRepositories } from './accesses';
 import { AccountsRepositories } from './accounts';
 import { AddressesRepositories } from './addresses';
 import { AppsRepositories } from './apps';
-import { CartItemsRepositories } from './cart-items';
-import { CartsRepositories } from './carts';
-import { ClassroomInstructorsRepositories } from './classroom-instructors';
-import { ClassroomModulesRepositories } from './classroom-modules';
-import { ClassroomStudentsRepositories } from './classroom-students';
-import { ClassroomsRepositories } from './classrooms';
+import { CatalogItemsRepositories } from './catalog-items';
+import { CatalogsRepositories } from './catalogs';
 import { ColorsRepositories } from './colors';
 import { CourseInstructorsRepositories } from './course-instructors';
 import { CourseStudentsRepositories } from './course-students';
 import { CoursesRepositories } from './courses';
 import { CurrenciesRepositories } from './currencies';
 import { DomainsRepositories } from './domains';
+import { FeaturesRepositories } from './features';
+import { FilesRepositories } from './files';
+import { HerosRepositories } from './heros';
 import { ImagesRepositories } from './images';
+import { InvoicesRepositories } from './invoices';
 import { LanguagesRepositories } from './languages';
 import { ModulesRepositories } from './modules';
-import { OrderItemsRepositories } from './order-items';
-import { OrdersRepositories } from './orders';
 import { PaymentMethodsRepositories } from './payment-methods';
-import { PaymentsRepositories } from './payments';
 import { PhonesRepositories } from './phones';
 import { PlansRepositories } from './plans';
+import { PriceTiersRepositories } from './price-tiers';
 import { PricesRepositories } from './prices';
 import { ProductsRepositories } from './products';
+import { RecurringsRepositories } from './recurrings';
+import { RolesRepositories } from './roles';
+import { SortedItemsRepositories } from './sorted-items';
+import { SubscriptionContractItemsRepositories } from './subscription-contract-items';
 import { SubscriptionContractsRepositories } from './subscription-contracts';
+import { UsageRecordsRepositories } from './usage-records';
 import { VideoAuthorsRepositories } from './video-authors';
 import { VideosRepositories } from './videos';
 
@@ -39,12 +42,7 @@ export const Repositories = [
   ...ColorsRepositories,
   ...ProductsRepositories,
   ...PricesRepositories,
-  ...OrdersRepositories,
-  ...OrderItemsRepositories,
-  ...PaymentsRepositories,
   ...PaymentMethodsRepositories,
-  ...CartsRepositories,
-  ...CartItemsRepositories,
   ...PlansRepositories,
   ...ImagesRepositories,
   ...VideosRepositories,
@@ -53,11 +51,19 @@ export const Repositories = [
   ...CoursesRepositories,
   ...CourseInstructorsRepositories,
   ...CourseStudentsRepositories,
-  ...ClassroomsRepositories,
-  ...ClassroomStudentsRepositories,
   ...SubscriptionContractsRepositories,
-  ...ClassroomInstructorsRepositories,
-  ...ClassroomModulesRepositories,
   ...AddressesRepositories,
-  ...PhonesRepositories
+  ...PhonesRepositories,
+  ...InvoicesRepositories,
+  ...FilesRepositories,
+  ...RecurringsRepositories,
+  ...FeaturesRepositories,
+  ...PriceTiersRepositories,
+  ...SubscriptionContractItemsRepositories,
+  ...UsageRecordsRepositories,
+  ...CatalogsRepositories,
+  ...CatalogItemsRepositories,
+  ...RolesRepositories,
+  ...HerosRepositories,
+  ...SortedItemsRepositories
 ];

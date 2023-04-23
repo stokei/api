@@ -6,7 +6,6 @@ import {
 } from '@stokei/nestjs';
 import { Exclude } from 'class-transformer';
 
-import { AccountRole } from '@/enums/account-role.enum';
 import { AccountStatus } from '@/enums/account-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
@@ -24,7 +23,6 @@ export interface IAccountModelData {
   readonly username: string;
   readonly password: string;
   readonly lastPassword?: string;
-  readonly salt: string;
   readonly avatar?: string;
   readonly active: boolean;
   readonly forgotPasswordCode?: string;
@@ -34,9 +32,9 @@ export interface IAccountModelData {
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly app: string;
+  readonly stripeCustomer?: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
-  readonly roles: AccountRole[];
 }
 
 export class AccountModel extends AggregateRoot {
@@ -50,8 +48,6 @@ export class AccountModel extends AggregateRoot {
   readonly password: string;
   @Exclude()
   readonly lastPassword?: string;
-  @Exclude()
-  readonly salt: string;
 
   readonly avatar?: string;
   @Exclude()
@@ -63,15 +59,16 @@ export class AccountModel extends AggregateRoot {
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly app: string;
+  readonly stripeCustomer?: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
-  readonly roles: AccountRole[];
+  readonly isStokei: boolean;
+
   constructor(data: IAccountModelData) {
     super();
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.ACCOUNTS,
-      module: ServerStokeiApiIdPrefix.ACCOUNTS,
       id: data._id?.toString() || data.id
     });
     this.firstname = data.firstname;
@@ -81,7 +78,6 @@ export class AccountModel extends AggregateRoot {
     this.username = data.username;
     this.password = data.password;
     this.lastPassword = data.lastPassword;
-    this.salt = data.salt;
     this.avatar = data.avatar;
     this.forgotPasswordCode = data.forgotPasswordCode;
     this.dateBirthday = convertToISODateString(data.dateBirthday);
@@ -91,9 +87,10 @@ export class AccountModel extends AggregateRoot {
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;
+    this.stripeCustomer = data.stripeCustomer;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
-    this.roles = data.roles;
+    this.isStokei = !!this.app.match(/stokei/i);
   }
 
   createdAccount({ createdBy }: { createdBy: string }) {

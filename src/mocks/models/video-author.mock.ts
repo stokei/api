@@ -9,7 +9,7 @@ import {
 export class VideoAuthorModelMock extends VideoAuthorModel {
   constructor(data?: Partial<IVideoAuthorModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       video: data?.video ?? 'videos.dsadhiad546asd',
       author: data?.author ?? 'VideoAuthor Name',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),

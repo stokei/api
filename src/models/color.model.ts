@@ -38,7 +38,6 @@ export class ColorModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.COLORS,
-      module: ServerStokeiApiIdPrefix.COLORS,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;

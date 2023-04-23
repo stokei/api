@@ -7,17 +7,20 @@ import { AppModel, IAppModelData } from '@/models/app.model';
 export class AppModelMock extends AppModel {
   constructor(data?: Partial<IAppModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       parent: data?.parent ?? 'anyParent',
       name: data?.name ?? 'App Name',
       slug: data?.slug ?? 'app-name',
+      email: data?.email ?? 'app@email.com',
       description: data?.description ?? null,
       status: data?.status ?? AppStatus.ACTIVE,
       avatar: data?.avatar ?? null,
-      plan: data?.plan ?? 'plans.sad451as1da',
+      paymentMethod: data?.paymentMethod ?? 'pay_method_shaudhsaudhas',
+      stripeBankAccount: data?.stripeBankAccount ?? 'bank_shaudhsaudhas',
+      stripeAccount: data?.stripeAccount ?? 'acc_shaudhsaudhas',
       currency: data?.currency ?? 'BRL',
       logo: data?.logo ?? null,
-      favicon: data?.favicon ?? null,
+      icon: data?.icon ?? null,
       active: data?.active ?? true,
       blockedAt: data?.blockedAt ?? null,
       activatedAt: data?.activatedAt ?? null,

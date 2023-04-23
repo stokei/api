@@ -1,49 +1,61 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { BillingScheme } from '@/enums/billing-scheme.enum';
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
-import { RecurringType } from '@/enums/recurring-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { TiersMode } from '@/enums/tiers-mode.enum';
+import { PriceActivatedEvent } from '@/events/implements/prices/price-activated.event';
 import { PriceCreatedEvent } from '@/events/implements/prices/price-created.event';
+import { PriceDeactivatedEvent } from '@/events/implements/prices/price-deactivated.event';
 import { PriceRemovedEvent } from '@/events/implements/prices/price-removed.event';
 import { PriceUpdatedEvent } from '@/events/implements/prices/price-updated.event';
 
 export interface IPriceModelData {
   readonly id?: string;
   readonly _id?: string;
+  readonly app: string;
   readonly parent: string;
-  readonly default: boolean;
+  readonly unit?: string;
+  readonly nickname?: string;
+  readonly currency: string;
+  readonly stripePrice?: string;
   readonly fromAmount?: number;
   readonly amount: number;
   readonly type: PriceType;
+  readonly billingScheme: BillingScheme;
+  readonly tiersMode: TiersMode;
   readonly inventoryType: InventoryType;
-  readonly recurringIntervalCount: number;
-  readonly recurringIntervalType: RecurringType;
+  readonly recurring?: string;
   readonly quantity: number;
   readonly active: boolean;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
-  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
 }
 
 export class PriceModel extends AggregateRoot {
   readonly id: string;
+  readonly app: string;
   readonly parent: string;
-  readonly default: boolean;
+  readonly nickname?: string;
+  readonly unit?: string;
+  readonly currency: string;
+  readonly stripePrice?: string;
   readonly fromAmount?: number;
   readonly amount: number;
+  readonly isUsageBilling: boolean;
   readonly type: PriceType;
+  readonly billingScheme: BillingScheme;
+  readonly tiersMode: TiersMode;
   readonly inventoryType: InventoryType;
-  readonly recurringIntervalCount: number;
-  readonly recurringIntervalType: RecurringType;
+  readonly recurring?: string;
   readonly quantity: number;
   readonly active: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
-  readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
   constructor(data: IPriceModelData) {
@@ -51,32 +63,44 @@ export class PriceModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.PRICES,
-      module: ServerStokeiApiIdPrefix.PRICES,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
-    this.default = data.default;
-    this.fromAmount = data.fromAmount || 0;
+    this.nickname = data.nickname;
+    this.app = data.app;
+    this.parent = data.parent;
+    this.currency = data.currency;
+    this.unit = data.unit;
+    this.stripePrice = data.stripePrice;
+    this.fromAmount = data.fromAmount;
     this.amount = data.amount;
     this.type = data.type;
+    this.billingScheme = data.billingScheme;
+    this.tiersMode = data.tiersMode;
+    this.isUsageBilling = data.billingScheme === BillingScheme.TIERED;
     this.inventoryType = data.inventoryType;
-    this.recurringIntervalCount = data.recurringIntervalCount;
-    this.recurringIntervalType = data.recurringIntervalType;
+    this.recurring = data.recurring;
     this.quantity =
       this.inventoryType === InventoryType.INFINITE ? null : data.quantity;
     this.active = data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
-    this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
   }
 
-  createdPrice({ createdBy }: { createdBy: string }) {
+  createdPrice({
+    createdBy,
+    defaultPrice
+  }: {
+    createdBy: string;
+    defaultPrice?: boolean;
+  }) {
     if (this.id) {
       this.apply(
         new PriceCreatedEvent({
           createdBy,
+          defaultPrice,
           price: this
         })
       );
@@ -99,6 +123,28 @@ export class PriceModel extends AggregateRoot {
       this.apply(
         new PriceRemovedEvent({
           removedBy,
+          price: this
+        })
+      );
+    }
+  }
+
+  activatedPrice({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new PriceActivatedEvent({
+          updatedBy,
+          price: this
+        })
+      );
+    }
+  }
+
+  deactivatedPrice({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new PriceDeactivatedEvent({
+          updatedBy,
           price: this
         })
       );

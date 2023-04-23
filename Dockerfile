@@ -1,5 +1,5 @@
 # Builder stage
-FROM node:lts-alpine AS builder
+FROM node:18.12.1-alpine AS builder
 
 # Use /app as the CWD
 WORKDIR /app            
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./   
 
 # Install all dependencies
-RUN npm i 
+RUN npm i
 
 # Copy the rest of the code
 COPY . . 
@@ -21,13 +21,10 @@ RUN npm run build
 
 
 # Final stage
-FROM node:lts-alpine AS service
+FROM node:18.12.1-alpine AS service
 
 # Set node environment to production
 ENV NODE_ENV production
-
-# Update the system
-RUN apk --no-cache -U upgrade
 
 # Prepare destination directory and ensure user node owns it
 RUN mkdir -p /home/node/app/dist && chown -R node:node /home/node/app
@@ -46,7 +43,7 @@ COPY package*.json ./
 USER node
 
 # Install libraries as user node
-RUN npm i --only=production
+RUN npm i --omit=dev
 
 # Copy js files and change ownership to user node
 COPY --chown=node:node --from=builder /app/dist ./dist

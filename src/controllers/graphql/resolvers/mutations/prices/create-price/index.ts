@@ -17,10 +17,22 @@ export class CreatePriceResolver {
   async createPrice(
     @CurrentAccount('id') currentAccountId: string,
     @CurrentApp('id') appId: string,
+    @CurrentApp('currency') appCurrency: string,
     @Args('input') data: CreatePriceInput
   ) {
     const response = await this.createPriceService.execute({
       ...data,
+      tiers: data.tiers?.map((tier) => ({
+        ...tier,
+        app: appId,
+        createdBy: currentAccountId
+      })),
+      recurring: data?.recurring && {
+        ...data?.recurring,
+        app: appId,
+        createdBy: currentAccountId
+      },
+      currency: appCurrency,
       app: appId,
       createdBy: currentAccountId
     });

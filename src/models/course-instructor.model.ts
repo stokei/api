@@ -31,7 +31,6 @@ export class CourseInstructorModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.COURSE_INSTRUCTORS,
-      module: ServerStokeiApiIdPrefix.COURSE_INSTRUCTORS,
       id: data._id?.toString() || data.id
     });
     this.course = data.course;
@@ -54,11 +53,18 @@ export class CourseInstructorModel extends AggregateRoot {
     }
   }
 
-  removedCourseInstructor({ removedBy }: { removedBy: string }) {
+  removedCourseInstructor({
+    removedBy,
+    isLastCourseInstructor
+  }: {
+    removedBy: string;
+    isLastCourseInstructor: boolean;
+  }) {
     if (this.id) {
       this.apply(
         new CourseInstructorRemovedEvent({
           removedBy,
+          isLastCourseInstructor,
           courseInstructor: this
         })
       );

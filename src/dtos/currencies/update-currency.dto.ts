@@ -6,7 +6,6 @@ export interface UpdateCurrencyDataDTO {
 }
 
 export interface UpdateCurrencyWhereDTO {
-  app: string;
   currency: string;
 }
 

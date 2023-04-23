@@ -1,17 +1,21 @@
-import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
+import {
+  IBaseFindManyDTO,
+  IOrderBy,
+  IWhereData,
+  IWhereDataSearch
+} from '@stokei/nestjs';
 
 import { PhoneStatus } from '@/enums/phone-status.enum';
 
 export interface WhereDataFindAllPhonesDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   countryCode?: IWhereData<string>;
   areaCode?: IWhereData<string>;
   number?: IWhereData<string>;
   validationCode?: IWhereData<string>;
   status?: PhoneStatus;
-  default?: IWhereData<boolean>;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
@@ -24,7 +28,6 @@ export interface OrderByDataFindAllPhonesDTO {
   areaCode?: IOrderBy;
   number?: IOrderBy;
   status?: IOrderBy;
-  default?: IOrderBy;
   active?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;

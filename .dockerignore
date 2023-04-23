@@ -1,4 +1,6 @@
 node_modules
+images/
+videos/
 
 # ignore .git and .cache folders
 .git

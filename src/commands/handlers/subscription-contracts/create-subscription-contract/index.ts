@@ -32,11 +32,23 @@ export class CreateSubscriptionContractCommandHandler
         'parent'
       );
     }
+    if (!data?.app) {
+      throw new ParamNotFoundException<CreateSubscriptionContractCommandKeys>(
+        'app'
+      );
+    }
 
     const subscriptionContractCreated =
       await this.createSubscriptionContractRepository.execute({
-        ...data,
-        status: SubscriptionContractStatus.ACTIVE
+        app: data.app,
+        automaticRenew: data.automaticRenew,
+        createdBy: data.createdBy,
+        parent: data.parent,
+        paymentMethod: data.paymentMethod,
+        stripeSubscription: data.stripeSubscription,
+        type: data.type,
+        active: false,
+        status: SubscriptionContractStatus.PENDING
       });
     if (!subscriptionContractCreated) {
       throw new SubscriptionContractNotFoundException();
@@ -56,13 +68,15 @@ export class CreateSubscriptionContractCommandHandler
     command: CreateSubscriptionContractCommand
   ): CreateSubscriptionContractCommand {
     return cleanObject({
-      createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
-      product: cleanValue(command?.product),
-      automaticRenew: cleanValueBoolean(command?.automaticRenew),
       startAt: cleanValue(command?.startAt),
       endAt: cleanValue(command?.endAt),
-      parent: cleanValue(command?.parent)
+      parent: cleanValue(command?.parent),
+      paymentMethod: cleanValue(command?.paymentMethod),
+      stripeSubscription: cleanValue(command?.stripeSubscription),
+      type: cleanValue(command?.type),
+      automaticRenew: cleanValueBoolean(command?.automaticRenew),
+      createdBy: cleanValue(command?.createdBy)
     });
   }
 }

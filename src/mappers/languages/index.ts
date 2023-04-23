@@ -3,14 +3,12 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
   cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
-  IOperator,
   IWhere,
-  PrismaMapper,
-  splitServiceId
+  PrismaMapper
 } from '@stokei/nestjs';
 
 import {
@@ -24,26 +22,20 @@ import { FindAllLanguagesQuery } from '@/queries/implements/languages/find-all-l
 export class LanguageMapper {
   toWhereFindAllPrisma(where: IWhere<WhereDataFindAllLanguagesDTO>) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        name: prismaMapper.toWhereDataSearch(operatorData.name),
-        active: prismaMapper.toWhereData(operatorData.active),
-        app: prismaMapper.toWhereData(operatorData.app),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          name: prismaMapper.toWhereDataSearch(operatorData.name),
+          active: prismaMapper.toWhereData(operatorData.active),
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllLanguagesDTO) {
@@ -59,32 +51,23 @@ export class LanguageMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          active: cleanWhereDataBoolean(operatorData.active),
-          name: cleanWhereDataSearch(operatorData.name),
-          app: cleanWhereDataString(operatorData.app),
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        operatorMapper(operatorData) {
+          return {
+            active: cleanWhereDataBoolean(operatorData.active),
+            name: cleanWhereDataSearch(operatorData.name),
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map((id) => cleanValue(id))
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)
@@ -100,14 +83,7 @@ export class LanguageMapper {
     };
   }
   toModel(language: LanguageEntity) {
-    return (
-      language &&
-      new LanguageModel({
-        ...language,
-        updatedAt: convertToISODateString(language.updatedAt),
-        createdAt: convertToISODateString(language.createdAt)
-      })
-    );
+    return language && new LanguageModel(language);
   }
   toModels(languages: LanguageEntity[]) {
     return languages?.length > 0

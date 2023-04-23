@@ -2,15 +2,11 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 import { Account } from './account';
 import { App } from './app';
-import { Course } from './course';
 
 @ObjectType()
 export class CourseStudent {
   @Field(() => ID)
   id: string;
-
-  @Field(() => Course)
-  course: Course;
 
   @Field(() => Account)
   student: Account;

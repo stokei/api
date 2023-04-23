@@ -3,8 +3,10 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DB_URL")
+  provider          = "mysql"
+  url               = env("DB_URL")
+  shadowDatabaseUrl = env("DB_SHADOW_URL")
+  relationMode      = "prisma"
 }
 
 enum AccountStatus {
@@ -14,9 +16,13 @@ enum AccountStatus {
   BLOCKED
 }
 
-enum AccountRole {
-  USER
+enum PlanType {
+  DOMAIN
   ADMIN
+  INSTRUCTOR
+  COURSE
+  STORAGE
+  VIDEO
 }
 
 enum ThemeMode {
@@ -38,41 +44,38 @@ enum ColorType {
 enum DomainStatus {
   ACTIVE
   PENDING
+  ERROR
 }
 
-enum PaymentMethodProvider {
-  STRIPE
-}
-
-enum PaymentMethodType {
-  CREDIT_CARD
-  BOLETO
-}
-
-enum PlanType {
-  FREE
-  BASIC
-  ADVANCED
-  CUSTOM
-}
-
-enum PlanStatus {
-  ACTIVE
-  PENDING
-  CANCELED
-  FINISHED
-}
-
-enum RecurringType {
+enum IntervalType {
   DAY
   WEEK
   MONTH
   YEAR
 }
 
+enum UsageType {
+  LICENSED
+  METERED
+}
+
+enum UsageRecordAction {
+  SET
+  INCREMENT
+}
+
 enum PriceType {
   RECURRING
   ONE_TIME
+}
+
+enum BillingScheme {
+  PER_UNIT
+  TIERED
+}
+
+enum TiersMode {
+  VOLUME
 }
 
 enum SubscriptionContractType {
@@ -91,32 +94,16 @@ enum AppStatus {
   BLOCKED
 }
 
-enum AppMemberRole {
-  OWNER
-  ADMIN
-}
-
-enum OrderStatus {
+enum InvoiceStatus {
   PAID
   PENDING
-  CANCELED
   PAYMENT_ERROR
-  TOTAL_REFUNDED
-  PARCIAL_REFUNDED
-}
-
-enum PaymentStatus {
-  PAID
-  PENDING
   CANCELED
-  PAYMENT_ERROR
-  TOTAL_REFUNDED
-  PARCIAL_REFUNDED
 }
 
 enum SubscriptionContractStatus {
   ACTIVE
-  FINISHED
+  PENDING
   CANCELED
 }
 
@@ -126,9 +113,18 @@ enum PhoneStatus {
   INVALID
 }
 
-enum VideoStatus {
+enum FileStatus {
   ACTIVE
+  ENCODING
+  ERROR
   PENDING
+}
+
+enum HeroType {
+  DEFAULT
+  WITH_VIDEO
+  WITH_IMAGE
+  WITH_IMAGE_BACKGROUND
 }
 
 model Account {
@@ -140,13 +136,12 @@ model Account {
   username           String        @unique @db.VarChar(255)
   password           String        @db.VarChar(255)
   lastPassword       String?       @map("last_password") @db.VarChar(255)
-  salt               String        @unique @db.VarChar(255)
   avatar             String?       @db.VarChar(255)
   forgotPasswordCode String?       @map("forgot_password_code") @db.VarChar(255)
+  stripeCustomer     String?       @map("stripe_customer") @db.VarChar(255)
   dateBirthday       DateTime?     @map("date_birthday")
   status             AccountStatus
   active             Boolean       @default(true)
-  roles              AccountRole[]
   canceledAt         DateTime?     @map("canceled_at")
   updatedAt          DateTime?     @updatedAt @map("updated_at")
   createdAt          DateTime?     @default(now()) @map("created_at")
@@ -154,6 +149,19 @@ model Account {
   createdBy          String?       @map("created_by") @db.VarChar(255)
 
   @@map("accounts")
+}
+
+model Role {
+  id        String    @id @default(cuid())
+  app       String    @db.VarChar(255)
+  parent    String    @db.VarChar(255)
+  name      String    @db.VarChar(255)
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
+
+  @@map("roles")
 }
 
 model Access {
@@ -172,41 +180,32 @@ model Access {
 }
 
 model App {
-  id            String    @id @default(cuid())
-  parent        String    @db.VarChar(255)
-  slug          String    @db.VarChar(255)
-  name          String    @db.VarChar(255)
-  description   String?
-  status        AppStatus
-  avatar        String?   @db.VarChar(255)
-  plan          String?   @db.VarChar(255)
-  currency      String    @db.VarChar(255)
-  language      String    @db.VarChar(255)
-  favicon       String?   @db.VarChar(255)
-  logo          String?   @db.VarChar(255)
-  active        Boolean   @default(true)
-  blockedAt     DateTime? @map("blocked_at")
-  activatedAt   DateTime? @default(now()) @map("activated_at")
-  deactivatedAt DateTime? @map("deactivated_at")
-  updatedAt     DateTime? @updatedAt @map("updated_at")
-  createdAt     DateTime? @default(now()) @map("created_at")
-  updatedBy     String?   @map("updated_by") @db.VarChar(255)
-  createdBy     String?   @map("created_by") @db.VarChar(255)
+  id                String    @id @default(cuid())
+  parent            String    @db.VarChar(255)
+  slug              String    @db.VarChar(255)
+  name              String    @db.VarChar(255)
+  email             String    @db.VarChar(255)
+  description       String?
+  status            AppStatus
+  avatar            String?   @db.VarChar(255)
+  catalog           String?   @db.VarChar(255)
+  currency          String    @db.VarChar(255)
+  language          String    @db.VarChar(255)
+  icon              String?   @db.VarChar(255)
+  logo              String?   @db.VarChar(255)
+  active            Boolean   @default(true)
+  stripeBankAccount String?   @map("stripe_bank_account") @db.VarChar(255)
+  stripeAccount     String?   @map("stripe_account") @db.VarChar(255)
+  paymentMethod     String?   @map("payment_method") @db.VarChar(255)
+  blockedAt         DateTime? @map("blocked_at")
+  activatedAt       DateTime? @default(now()) @map("activated_at")
+  deactivatedAt     DateTime? @map("deactivated_at")
+  updatedAt         DateTime? @updatedAt @map("updated_at")
+  createdAt         DateTime? @default(now()) @map("created_at")
+  updatedBy         String?   @map("updated_by") @db.VarChar(255)
+  createdBy         String?   @map("created_by") @db.VarChar(255)
 
   @@map("apps")
-}
-
-model AppsMember {
-  id        String          @id @default(cuid())
-  app       String          @db.VarChar(255)
-  member    String          @db.VarChar(255)
-  roles     AppMemberRole[]
-  updatedAt DateTime?       @updatedAt @map("updated_at")
-  createdAt DateTime?       @default(now()) @map("created_at")
-  updatedBy String?         @map("updated_by") @db.VarChar(255)
-  createdBy String?         @map("created_by") @db.VarChar(255)
-
-  @@map("apps_members")
 }
 
 model Domain {
@@ -272,195 +271,162 @@ model Color {
 }
 
 model Product {
-  id              String    @id @default(cuid())
-  app             String    @db.VarChar(255)
-  parent          String    @db.VarChar(255)
-  name            String    @db.VarChar(255)
-  description     String?
-  externalProduct String    @map("external_product") @db.VarChar(255)
-  checkoutVisible Boolean   @map("checkout_visible")
-  avatar          String?   @db.VarChar(255)
-  active          Boolean   @default(true)
-  activatedAt     DateTime? @default(now()) @map("activated_at")
-  deactivatedAt   DateTime? @map("deactivated_at")
-  updatedAt       DateTime? @updatedAt @map("updated_at")
-  createdAt       DateTime? @default(now()) @map("created_at")
-  updatedBy       String?   @map("updated_by") @db.VarChar(255)
-  createdBy       String?   @map("created_by") @db.VarChar(255)
+  id            String    @id @default(cuid())
+  app           String    @db.VarChar(255)
+  parent        String    @db.VarChar(255)
+  name          String    @db.VarChar(255)
+  description   String?
+  stripeProduct String    @map("stripe_product") @db.VarChar(255)
+  defaultPrice  String?   @map("default_price") @db.VarChar(255)
+  avatar        String?   @db.VarChar(255)
+  active        Boolean   @default(true)
+  activatedAt   DateTime? @default(now()) @map("activated_at")
+  deactivatedAt DateTime? @map("deactivated_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+  createdAt     DateTime? @default(now()) @map("created_at")
+  updatedBy     String?   @map("updated_by") @db.VarChar(255)
+  createdBy     String?   @map("created_by") @db.VarChar(255)
 
   @@map("products")
 }
 
+model UsageRecord {
+  id        String            @id @default(cuid())
+  app       String            @db.VarChar(255)
+  parent    String            @db.VarChar(255)
+  quantity  Int
+  action    UsageRecordAction
+  updatedAt DateTime?         @updatedAt @map("updated_at")
+  createdAt DateTime?         @default(now()) @map("created_at")
+  updatedBy String?           @map("updated_by") @db.VarChar(255)
+  createdBy String?           @map("created_by") @db.VarChar(255)
+
+  @@map("usage_records")
+}
+
+model Recurring {
+  id            String       @id @default(cuid())
+  app           String       @db.VarChar(255)
+  usageType     UsageType    @map("usage_type")
+  intervalCount Int          @map("interval_count")
+  interval      IntervalType
+  updatedAt     DateTime?    @updatedAt @map("updated_at")
+  createdAt     DateTime?    @default(now()) @map("created_at")
+  updatedBy     String?      @map("updated_by") @db.VarChar(255)
+  createdBy     String?      @map("created_by") @db.VarChar(255)
+
+  @@map("recurrings")
+}
+
 model Price {
-  id                     String        @id @default(cuid())
-  app                    String        @db.VarChar(255)
-  parent                 String        @db.VarChar(255)
-  default                Boolean       @default(false)
-  fromAmount             Int?          @map("from_amount")
-  amount                 Int           @map("amount")
-  type                   PriceType
-  recurringIntervalCount Int           @map("recurring_interval_count")
-  recurringIntervalType  RecurringType @map("recurring_interval_type")
-  inventoryType          InventoryType @map("inventory_type")
-  quantity               Int
-  active                 Boolean       @default(true)
-  updatedAt              DateTime?     @updatedAt @map("updated_at")
-  createdAt              DateTime?     @default(now()) @map("created_at")
-  updatedBy              String?       @map("updated_by") @db.VarChar(255)
-  createdBy              String?       @map("created_by") @db.VarChar(255)
+  id            String        @id @default(cuid())
+  app           String        @db.VarChar(255)
+  parent        String        @db.VarChar(255)
+  nickname      String?       @db.VarChar(255)
+  unit          String?       @default("un") @db.VarChar(10)
+  currency      String        @db.VarChar(255)
+  stripePrice   String?       @map("stripe_price")
+  fromAmount    Float?        @map("from_amount")
+  amount        Float?        @map("amount")
+  type          PriceType
+  billingScheme BillingScheme @map("billing_scheme")
+  tiersMode     TiersMode?    @map("tiers_mode")
+  recurring     String?
+  inventoryType InventoryType @map("inventory_type")
+  quantity      Int?
+  active        Boolean       @default(true)
+  updatedAt     DateTime?     @updatedAt @map("updated_at")
+  createdAt     DateTime?     @default(now()) @map("created_at")
+  updatedBy     String?       @map("updated_by") @db.VarChar(255)
+  createdBy     String?       @map("created_by") @db.VarChar(255)
 
   @@map("prices")
 }
 
-model Order {
-  id                       String       @id @default(cuid())
-  app                      String       @db.VarChar(255)
-  cart                     String       @db.VarChar(255)
-  customer                 String       @db.VarChar(255)
-  applicationFeePercentage Int          @map("application_fee_percentage")
-  applicationFeeAmount     Int          @map("application_fee_amount")
-  currency                 String       @db.VarChar(255)
-  amount                   Int
-  discountAmount           Int          @map("discount_amount")
-  subtotalAmount           Int          @map("subtotal_amount")
-  totalAmount              Int          @map("total_amount")
-  status                   OrderStatus
-  oldStatus                OrderStatus?
-  active                   Boolean      @default(false)
-  paidAt                   DateTime?    @map("paid_at")
-  canceledAt               DateTime?    @map("canceled_at")
-  paymentErrorAt           DateTime?    @map("payment_error_at")
-  totalRefundedAt          DateTime?    @map("total_refunded_at")
-  parcialRefundedAt        DateTime?    @map("parcial_refunded_at")
-  updatedAt                DateTime?    @updatedAt @map("updated_at")
-  createdAt                DateTime?    @default(now()) @map("created_at")
-  updatedBy                String?      @map("updated_by") @db.VarChar(255)
-  createdBy                String?      @map("created_by") @db.VarChar(255)
+model PriceTier {
+  id        String    @id @default(cuid())
+  app       String    @db.VarChar(255)
+  parent    String    @db.VarChar(255)
+  amount    Float
+  upTo      Float?
+  infinite  Boolean   @default(true)
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
 
-  @@map("orders")
-}
-
-model OrderItem {
-  id                     String        @id @default(cuid())
-  app                    String        @db.VarChar(255)
-  order                  String        @db.VarChar(255)
-  product                String        @db.VarChar(255)
-  currency               String        @db.VarChar(255)
-  name                   String        @db.VarChar(255)
-  description            String?
-  amount                 Int
-  fromAmount             Int?          @map("from_amount")
-  avatar                 String?       @db.VarChar(255)
-  quantity               Int
-  type                   PriceType
-  recurringIntervalCount Int           @map("recurring_interval_count")
-  recurringIntervalType  RecurringType @map("recurring_interval_type")
-  updatedAt              DateTime?     @updatedAt @map("updated_at")
-  createdAt              DateTime?     @default(now()) @map("created_at")
-  updatedBy              String?       @map("updated_by") @db.VarChar(255)
-  createdBy              String?       @map("created_by") @db.VarChar(255)
-
-  @@map("orders_items")
-}
-
-model Payment {
-  id                String         @id @default(cuid())
-  app               String         @db.VarChar(255)
-  customer          String         @db.VarChar(255)
-  order             String         @db.VarChar(255)
-  amount            Int
-  externalPayment   String         @map("external_payment") @db.VarChar(255)
-  paymentMethod     String         @map("payment_method") @db.VarChar(255)
-  status            PaymentStatus
-  oldStatus         PaymentStatus?
-  active            Boolean        @default(false)
-  paidAt            DateTime?      @map("paid_at")
-  canceledAt        DateTime?      @map("canceled_at")
-  paymentErrorAt    DateTime?      @map("payment_error_at")
-  totalRefundedAt   DateTime?      @map("total_refunded_at")
-  parcialRefundedAt DateTime?      @map("parcial_refunded_at")
-  updatedAt         DateTime?      @updatedAt @map("updated_at")
-  createdAt         DateTime?      @default(now()) @map("created_at")
-  updatedBy         String?        @map("updated_by") @db.VarChar(255)
-  createdBy         String?        @map("created_by") @db.VarChar(255)
-
-  @@map("payments")
+  @@map("price_tiers")
 }
 
 model PaymentMethod {
-  id                    String                @id @default(cuid())
-  app                   String                @db.VarChar(255)
-  parent                String                @db.VarChar(255)
-  type                  PaymentMethodType
-  provider              PaymentMethodProvider
-  externalPaymentMethod String                @map("external_payment_method") @db.VarChar(255)
-  lastFourCardNumber    String?               @map("last_four_card_number") @db.VarChar(4)
-  cardBrand             String?               @map("card_brand") @db.VarChar(50)
-  active                Boolean               @default(true)
-  activatedAt           DateTime?             @default(now()) @map("activated_at")
-  deactivatedAt         DateTime?             @map("deactivated_at")
-  updatedAt             DateTime?             @updatedAt @map("updated_at")
-  createdAt             DateTime?             @default(now()) @map("created_at")
-  updatedBy             String?               @map("updated_by") @db.VarChar(255)
-  createdBy             String?               @map("created_by") @db.VarChar(255)
+  id                  String    @id @default(cuid())
+  app                 String    @db.VarChar(255)
+  parent              String    @db.VarChar(255)
+  stripePaymentMethod String    @map("stripe_payment_method") @db.VarChar(255)
+  lastFourCardNumber  String?   @map("last_four_card_number") @db.VarChar(4)
+  cardExpiryMonth     String?   @map("card_expiry_month") @db.VarChar(4)
+  cardExpiryYear      String?   @map("card_expiry_year") @db.VarChar(4)
+  cardBrand           String?   @map("card_brand") @db.VarChar(50)
+  updatedAt           DateTime? @updatedAt @map("updated_at")
+  createdAt           DateTime? @default(now()) @map("created_at")
+  updatedBy           String?   @map("updated_by") @db.VarChar(255)
+  createdBy           String?   @map("created_by") @db.VarChar(255)
 
   @@map("payments_methods")
 }
 
-model Cart {
-  id        String    @id @default(cuid())
-  app       String    @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-
-  @@map("carts")
-}
-
-model CartItem {
-  id        String    @id @default(cuid())
-  app       String    @db.VarChar(255)
-  parent    String    @db.VarChar(255)
-  product   String    @db.VarChar(255)
-  price     String    @db.VarChar(255)
-  quantity  Int       @default(1)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-
-  @@map("carts_items")
-}
-
 model Plan {
-  id                           String     @id @default(cuid())
-  name                         String     @db.VarChar(255)
-  type                         PlanType
-  checkoutVisible              Boolean    @default(false) @map("checkout_visible")
-  status                       PlanStatus
-  hasCustomDomain              Boolean    @default(false) @map("has_custom_domain")
-  hasCustomSite                Boolean    @default(false) @map("has_custom_site")
-  quantityCourses              Int        @map("quantity_courses")
-  quantityInstructorPerCourses Int        @map("quantity_instructor_per_courses")
-  quantityClassroomsPerCourses Int        @map("quantity_classrooms_per_courses")
-  quantityModulesPerClassrooms Int        @map("quantity_modules_per_classrooms")
-  quantityVideosPerModules     Int        @map("quantity_videos_per_modules")
-  applicationFeePercentage     Int        @map("application_fee_percentage")
-  active                       Boolean    @default(true)
-  canceledAt                   DateTime?  @map("canceled_at")
-  updatedAt                    DateTime?  @updatedAt @map("updated_at")
-  createdAt                    DateTime?  @default(now()) @map("created_at")
-  updatedBy                    String?    @map("updated_by") @db.VarChar(255)
-  createdBy                    String?    @map("created_by") @db.VarChar(255)
+  id          String    @id @default(cuid())
+  app         String    @db.VarChar(255)
+  name        String    @db.VarChar(255)
+  description String?   @db.VarChar(255)
+  type        PlanType
+  active      Boolean   @default(true)
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  createdAt   DateTime? @default(now()) @map("created_at")
+  updatedBy   String?   @map("updated_by") @db.VarChar(255)
+  createdBy   String?   @map("created_by") @db.VarChar(255)
 
   @@map("plans")
+}
+
+model Feature {
+  id          String    @id @default(cuid())
+  app         String    @db.VarChar(255)
+  parent      String    @db.VarChar(255)
+  name        String    @db.VarChar(255)
+  description String?   @db.VarChar(255)
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  createdAt   DateTime? @default(now()) @map("created_at")
+  updatedBy   String?   @map("updated_by") @db.VarChar(255)
+  createdBy   String?   @map("created_by") @db.VarChar(255)
+
+  @@map("features")
+}
+
+model File {
+  id        String     @id @default(cuid())
+  app       String     @db.VarChar(255)
+  filename  String?    @db.VarChar(255)
+  extension String?    @db.VarChar(255)
+  mimetype  String?    @db.VarChar(255)
+  size      Int?
+  url       String?    @db.VarChar(255)
+  duration  Float?
+  status    FileStatus
+  active    Boolean    @default(false)
+  updatedAt DateTime?  @updatedAt @map("updated_at")
+  createdAt DateTime?  @default(now()) @map("created_at")
+  updatedBy String?    @map("updated_by") @db.VarChar(255)
+  createdBy String?    @map("created_by") @db.VarChar(255)
+
+  @@map("files")
 }
 
 model Image {
   id        String    @id @default(cuid())
   app       String    @db.VarChar(255)
-  path      String    @db.VarChar(255)
+  file      String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
   updatedBy String?   @map("updated_by") @db.VarChar(255)
@@ -470,21 +436,21 @@ model Image {
 }
 
 model Video {
-  id          String      @id @default(cuid())
-  app         String      @db.VarChar(255)
-  parent      String      @db.VarChar(255)
-  slug        String?     @db.VarChar(255)
-  path        String      @db.VarChar(255)
-  name        String?     @db.VarChar(255)
+  id          String    @id @default(cuid())
+  app         String    @db.VarChar(255)
+  parent      String    @db.VarChar(255)
+  slug        String?   @db.VarChar(255)
+  file        String?   @db.VarChar(255)
+  name        String?   @db.VarChar(255)
+  duration    Float?
   description String?
-  poster      String?     @db.VarChar(255)
-  duration    Int?
-  status      VideoStatus
-  active      Boolean     @default(false)
-  updatedAt   DateTime?   @updatedAt @map("updated_at")
-  createdAt   DateTime?   @default(now()) @map("created_at")
-  updatedBy   String?     @map("updated_by") @db.VarChar(255)
-  createdBy   String?     @map("created_by") @db.VarChar(255)
+  poster      String?   @db.VarChar(255)
+  private     Boolean?  @default(true)
+  active      Boolean   @default(false)
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  createdAt   DateTime? @default(now()) @map("created_at")
+  updatedBy   String?   @map("updated_by") @db.VarChar(255)
+  createdBy   String?   @map("created_by") @db.VarChar(255)
 
   @@map("videos")
 }
@@ -543,7 +509,7 @@ model CourseInstructor {
   updatedBy  String?   @map("updated_by") @db.VarChar(255)
   createdBy  String?   @map("created_by") @db.VarChar(255)
 
-  @@map("courses_instructors")
+  @@map("course_instructors")
 }
 
 model CourseStudent {
@@ -556,90 +522,74 @@ model CourseStudent {
   updatedBy String?   @map("updated_by") @db.VarChar(255)
   createdBy String?   @map("created_by") @db.VarChar(255)
 
-  @@map("courses_students")
+  @@map("course_students")
 }
 
-model Classroom {
-  id                    String    @id @default(cuid())
-  app                   String    @db.VarChar(255)
-  parent                String    @db.VarChar(255)
-  name                  String    @db.VarChar(255)
-  description           String?
-  hasAccessToAllModules Boolean   @default(true) @map("has_access_to_all_modules")
-  active                Boolean   @default(true)
-  updatedAt             DateTime? @updatedAt @map("updated_at")
-  createdAt             DateTime? @default(now()) @map("created_at")
-  updatedBy             String?   @map("updated_by") @db.VarChar(255)
-  createdBy             String?   @map("created_by") @db.VarChar(255)
+model Invoice {
+  id             String        @id @default(cuid())
+  app            String        @db.VarChar(255)
+  customer       String        @db.VarChar(255)
+  subscription   String        @db.VarChar(255)
+  url            String?       @db.VarChar(255)
+  paymentMethod  String?       @map("payment_method") @db.VarChar(255)
+  currency       String        @db.VarChar(255)
+  status         InvoiceStatus
+  totalAmount    Float         @map("total_amount")
+  subtotalAmount Float         @map("subtotal_amount")
+  active         Boolean       @default(false)
+  paidAt         DateTime?     @map("paid_at")
+  canceledAt     DateTime?     @map("canceled_at")
+  paymentErrorAt DateTime?     @map("payment_error_at")
+  stripeInvoice  String?       @map("stripe_invoice")
+  updatedAt      DateTime?     @updatedAt @map("updated_at")
+  createdAt      DateTime?     @default(now()) @map("created_at")
+  updatedBy      String?       @map("updated_by") @db.VarChar(255)
+  createdBy      String?
 
-  @@map("classrooms")
-}
-
-model ClassroomStudent {
-  id        String    @id @default(cuid())
-  app       String    @db.VarChar(255)
-  classroom String    @db.VarChar(255)
-  student   String    @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-
-  @@map("classrooms_students")
+  @@map("invoices")
 }
 
 model SubscriptionContract {
-  id                   String                     @id @default(cuid())
-  app                  String                     @db.VarChar(255)
-  product              String                     @db.VarChar(255)
-  parent               String                     @db.VarChar(255)
-  defaultPaymentMethod String?                    @map("default_payment_method") @db.VarChar(255)
-  status               SubscriptionContractStatus
-  type                 SubscriptionContractType
-  startAt              DateTime?                  @map("start_at")
-  endAt                DateTime?                  @map("end_at")
-  canceledAt           DateTime?                  @map("canceled_at")
-  automaticRenew       Boolean                    @default(false)
-  active               Boolean                    @default(true)
-  updatedAt            DateTime?                  @updatedAt @map("updated_at")
-  createdAt            DateTime?                  @default(now()) @map("created_at")
-  updatedBy            String?                    @map("updated_by") @db.VarChar(255)
-  createdBy            String?                    @map("created_by") @db.VarChar(255)
+  id                 String                     @id @default(cuid())
+  app                String                     @db.VarChar(255)
+  parent             String                     @db.VarChar(255)
+  paymentMethod      String?                    @map("payment_method") @db.VarChar(255)
+  stripeSubscription String?                    @map("stripe_subscription") @db.VarChar(255)
+  status             SubscriptionContractStatus
+  type               SubscriptionContractType
+  automaticRenew     Boolean                    @default(false) @map("automatic_renew")
+  active             Boolean                    @default(false)
+  startAt            DateTime?                  @map("start_at")
+  endAt              DateTime?                  @map("end_at")
+  updatedAt          DateTime?                  @updatedAt @map("updated_at")
+  createdAt          DateTime?                  @default(now()) @map("created_at")
+  updatedBy          String?                    @map("updated_by") @db.VarChar(255)
+  createdBy          String?                    @map("created_by") @db.VarChar(255)
 
   @@map("subscription_contracts")
 }
 
-model ClassroomInstructor {
-  id         String    @id @default(cuid())
-  app        String    @db.VarChar(255)
-  classroom  String    @db.VarChar(255)
-  instructor String    @db.VarChar(255)
-  updatedAt  DateTime? @updatedAt @map("updated_at")
-  createdAt  DateTime? @default(now()) @map("created_at")
-  updatedBy  String?   @map("updated_by") @db.VarChar(255)
-  createdBy  String?   @map("created_by") @db.VarChar(255)
+model SubscriptionContractItem {
+  id                     String    @id @default(cuid())
+  app                    String    @db.VarChar(255)
+  parent                 String    @db.VarChar(255)
+  product                String    @db.VarChar(255)
+  quantity               Int
+  price                  String    @db.VarChar(255)
+  stripeSubscriptionItem String?   @map("stripe_subscription_item") @db.VarChar(255)
+  recurring              String?
+  updatedAt              DateTime? @updatedAt @map("updated_at")
+  createdAt              DateTime? @default(now()) @map("created_at")
+  updatedBy              String?   @map("updated_by") @db.VarChar(255)
+  createdBy              String?   @map("created_by") @db.VarChar(255)
 
-  @@map("classrooms_instructors")
-}
-
-model ClassroomModule {
-  id        String    @id @default(cuid())
-  app       String    @db.VarChar(255)
-  classroom String    @db.VarChar(255)
-  module    String    @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
-
-  @@map("classrooms_modules")
+  @@map("subscription_contract_items")
 }
 
 model Address {
   id         String    @id @default(cuid())
   app        String    @db.VarChar(255)
   parent     String    @db.VarChar(255)
-  default    Boolean   @default(false)
   street     String    @db.VarChar(255)
   complement String?   @db.VarChar(255)
   number     String    @db.VarChar(255)
@@ -665,7 +615,6 @@ model Phone {
   number         String      @db.VarChar(255)
   validationCode String      @map("validation_code") @db.VarChar(255)
   status         PhoneStatus
-  default        Boolean     @default(false)
   active         Boolean     @default(false)
   activatedAt    DateTime?   @map("activated_at")
   validatedAt    DateTime?   @map("validated_at")
@@ -675,4 +624,64 @@ model Phone {
   createdBy      String?     @map("created_by") @db.VarChar(255)
 
   @@map("phones")
+}
+
+model Catalog {
+  id        String    @id @default(cuid())
+  app       String    @db.VarChar(255)
+  parent    String    @db.VarChar(255)
+  title     String    @db.VarChar(255)
+  subtitle  String?   @db.VarChar(255)
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
+
+  @@map("catalogs")
+}
+
+model CatalogItem {
+  id        String    @id @default(cuid())
+  app       String    @db.VarChar(255)
+  product   String    @db.VarChar(255)
+  catalog   String    @db.VarChar(255)
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
+
+  @@map("catalog_items")
+}
+
+model Hero {
+  id              String    @id @default(cuid())
+  app             String    @db.VarChar(255)
+  parent          String    @db.VarChar(255)
+  type            HeroType  @default(DEFAULT)
+  title           String?   @db.VarChar(255)
+  titleHighlight  String?   @map("title_highlight") @db.VarChar(255)
+  subtitle        String?   @db.VarChar(255)
+  image           String?   @db.VarChar(255)
+  backgroundImage String?   @map("background_image") @db.VarChar(255)
+  video           String?   @db.VarChar(255)
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+  createdAt       DateTime? @default(now()) @map("created_at")
+  updatedBy       String?   @map("updated_by") @db.VarChar(255)
+  createdBy       String?   @map("created_by") @db.VarChar(255)
+
+  @@map("heros")
+}
+
+model SortedItem {
+  id        String    @id @default(cuid())
+  app       String    @db.VarChar(255)
+  parent    String    @db.VarChar(255)
+  item      String    @db.VarChar(255)
+  index     Int       @default(1)
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
+
+  @@map("sorted_items")
 }

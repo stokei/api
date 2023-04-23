@@ -3,7 +3,6 @@ export interface CreatePhoneDTO {
   countryCode: string;
   areaCode: string;
   number: string;
-  default?: boolean;
   app: string;
   createdBy: string;
 }

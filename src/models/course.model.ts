@@ -15,8 +15,8 @@ export interface ICourseModelData {
   readonly avatar?: string;
   readonly active: boolean;
   readonly canceledAt?: Date | string;
-  readonly updatedAt?: string;
-  readonly createdAt?: string;
+  readonly updatedAt?: Date | string;
+  readonly createdAt?: Date | string;
   readonly app: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
@@ -40,7 +40,6 @@ export class CourseModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.COURSES,
-      module: ServerStokeiApiIdPrefix.COURSES,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;

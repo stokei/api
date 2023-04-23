@@ -16,7 +16,6 @@ export interface IPhoneModelData {
   readonly number: string;
   readonly validationCode: string;
   readonly status: PhoneStatus;
-  readonly default: boolean;
   readonly active: boolean;
   readonly activatedAt?: Date | string;
   readonly validatedAt?: Date | string;
@@ -36,7 +35,6 @@ export class PhoneModel extends AggregateRoot {
   readonly number: string;
   readonly validationCode: string;
   readonly status: PhoneStatus;
-  readonly default: boolean;
   readonly active: boolean;
   readonly activatedAt?: string;
   readonly validatedAt?: string;
@@ -50,7 +48,6 @@ export class PhoneModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.PHONES,
-      module: ServerStokeiApiIdPrefix.PHONES,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
@@ -60,7 +57,6 @@ export class PhoneModel extends AggregateRoot {
     this.number = data.number;
     this.validationCode = data.validationCode;
     this.status = data.status;
-    this.default = data.default;
     this.active = data.active;
     this.activatedAt = convertToISODateString(data.activatedAt);
     this.validatedAt = convertToISODateString(data.validatedAt);

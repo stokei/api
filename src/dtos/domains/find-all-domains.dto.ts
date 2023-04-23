@@ -10,7 +10,7 @@ import { DomainStatus } from '@/enums/domain-status.enum';
 export interface WhereDataFindAllDomainsDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   active?: IWhereData<boolean>;
   status?: DomainStatus;

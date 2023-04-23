@@ -1,6 +1,6 @@
 export interface CreatePaymentMethodDTO {
   parent: string;
-  creditCardHash: string;
+  stripePaymentMethod: string;
   app: string;
   createdBy: string;
 }

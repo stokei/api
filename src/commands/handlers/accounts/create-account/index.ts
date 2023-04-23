@@ -3,13 +3,11 @@ import {
   cleanObject,
   cleanUsername,
   cleanValue,
-  encryptPassword,
-  generateSalt
+  encryptPassword
 } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
 import { CreateAccountCommand } from '@/commands/implements/accounts/create-account.command';
-import { AccountRole } from '@/enums/account-role.enum';
 import { AccountStatus } from '@/enums/account-status.enum';
 import { PASSWORD_SECRET_KEY } from '@/environments';
 import {
@@ -55,8 +53,10 @@ export class CreateAccountCommandHandler
       throw new ParamNotFoundException<CreateAccountCommandKeys>('password');
     }
 
-    const salt = await generateSalt(PASSWORD_SECRET_KEY);
-    data.password = encryptPassword(data.password, salt, PASSWORD_SECRET_KEY);
+    data.password = encryptPassword({
+      password: data.password,
+      secretKey: PASSWORD_SECRET_KEY
+    });
 
     let accountExists = await this.existsAccountsRepository.execute({
       where: {
@@ -80,9 +80,7 @@ export class CreateAccountCommandHandler
     const accountCreated = await this.createAccountRepository.execute({
       ...data,
       username,
-      salt,
-      status: AccountStatus.ACTIVE,
-      roles: [AccountRole.USER]
+      status: AccountStatus.ACTIVE
     });
     if (!accountCreated) {
       throw new AccountNotFoundException();
@@ -100,6 +98,7 @@ export class CreateAccountCommandHandler
   private clearData(command: CreateAccountCommand): CreateAccountCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
+      id: cleanValue(command?.id),
       app: cleanValue(command?.app),
       firstname: cleanValue(command?.firstname),
       lastname: cleanValue(command?.lastname),

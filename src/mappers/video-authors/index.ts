@@ -3,9 +3,8 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
   cleanWhereDataString,
-  convertToISODateString,
-  IOperator,
   IWhere,
   PrismaMapper,
   splitServiceId
@@ -22,26 +21,21 @@ import { FindAllVideoAuthorsQuery } from '@/queries/implements/video-authors/fin
 export class VideoAuthorMapper {
   toWhereFindAllPrisma(where: IWhere<WhereDataFindAllVideoAuthorsDTO>) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        video: prismaMapper.toWhereData(operatorData.video),
-        author: prismaMapper.toWhereData(operatorData.author),
-        app: prismaMapper.toWhereData(operatorData.app),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          video: prismaMapper.toWhereData(operatorData.video),
+          author: prismaMapper.toWhereData(operatorData.author),
+          app: prismaMapper.toWhereData(operatorData.app),
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllVideoAuthorsDTO) {
@@ -59,32 +53,26 @@ export class VideoAuthorMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          video: cleanWhereDataString(operatorData.video),
-          author: cleanWhereDataString(operatorData.author),
-          app: cleanWhereDataString(operatorData.app),
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        operatorMapper(operatorData) {
+          return {
+            video: cleanWhereDataString(operatorData.video),
+            author: cleanWhereDataString(operatorData.author),
+            app: cleanWhereDataString(operatorData.app),
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map(
+                    (id) => splitServiceId(cleanValue(id))?.id
+                  )
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)
@@ -98,14 +86,7 @@ export class VideoAuthorMapper {
     };
   }
   toModel(videoAuthor: VideoAuthorEntity) {
-    return (
-      videoAuthor &&
-      new VideoAuthorModel({
-        ...videoAuthor,
-        updatedAt: convertToISODateString(videoAuthor.updatedAt),
-        createdAt: convertToISODateString(videoAuthor.createdAt)
-      })
-    );
+    return videoAuthor && new VideoAuthorModel(videoAuthor);
   }
   toModels(videoAuthors: VideoAuthorEntity[]) {
     return videoAuthors?.length > 0

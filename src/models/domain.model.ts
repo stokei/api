@@ -25,6 +25,7 @@ export class DomainModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
   readonly name: string;
+  readonly url: string;
   readonly active: boolean;
   readonly status: DomainStatus;
   readonly activatedAt?: string;
@@ -38,11 +39,11 @@ export class DomainModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.DOMAINS,
-      module: ServerStokeiApiIdPrefix.DOMAINS,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
     this.name = data.name;
+    this.url = 'https://' + this.name;
     this.status = data.status;
     this.active = this.status === DomainStatus.ACTIVE || data.active;
     this.activatedAt = convertToISODateString(data.activatedAt);

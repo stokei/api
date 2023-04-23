@@ -4,31 +4,17 @@ import { CreatePlanDTO } from '@/dtos/plans/create-plan.dto';
 import { PlanType } from '@/enums/plan-type.enum';
 
 export class CreatePlanCommand implements ICommand, CreatePlanDTO {
+  app: string;
   name: string;
+  description?: string;
   type: PlanType;
-  checkoutVisible: boolean;
-  hasCustomDomain: boolean;
-  hasCustomSite: boolean;
-  quantityCourses: number;
-  quantityInstructorPerCourses: number;
-  quantityClassroomsPerCourses: number;
-  quantityModulesPerClassrooms: number;
-  quantityVideosPerModules: number;
-  applicationFeePercentage: number;
   createdBy: string;
 
   constructor(data: CreatePlanDTO) {
+    this.app = data.app;
     this.name = data.name;
+    this.description = data.description;
     this.type = data.type;
-    this.checkoutVisible = data.checkoutVisible;
-    this.hasCustomDomain = data.hasCustomDomain;
-    this.hasCustomSite = data.hasCustomSite;
-    this.quantityCourses = data.quantityCourses;
-    this.quantityInstructorPerCourses = data.quantityInstructorPerCourses;
-    this.quantityClassroomsPerCourses = data.quantityClassroomsPerCourses;
-    this.quantityModulesPerClassrooms = data.quantityModulesPerClassrooms;
-    this.quantityVideosPerModules = data.quantityVideosPerModules;
-    this.applicationFeePercentage = data.applicationFeePercentage;
     this.createdBy = data.createdBy;
   }
 }

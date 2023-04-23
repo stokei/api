@@ -2,30 +2,33 @@ import { AccessQueriesHandlers } from './accesses';
 import { AccountQueriesHandlers } from './accounts';
 import { AddressQueriesHandlers } from './addresses';
 import { AppQueriesHandlers } from './apps';
-import { CartItemQueriesHandlers } from './cart-items';
-import { CartQueriesHandlers } from './carts';
-import { ClassroomInstructorQueriesHandlers } from './classroom-instructors';
-import { ClassroomModuleQueriesHandlers } from './classroom-modules';
-import { ClassroomStudentQueriesHandlers } from './classroom-students';
-import { ClassroomQueriesHandlers } from './classrooms';
+import { CatalogItemQueriesHandlers } from './catalog-items';
+import { CatalogQueriesHandlers } from './catalogs';
 import { ColorQueriesHandlers } from './colors';
 import { CourseInstructorQueriesHandlers } from './course-instructors';
 import { CourseStudentQueriesHandlers } from './course-students';
 import { CourseQueriesHandlers } from './courses';
 import { CurrencyQueriesHandlers } from './currencies';
 import { DomainQueriesHandlers } from './domains';
+import { FeatureQueriesHandlers } from './features';
+import { FileQueriesHandlers } from './files';
+import { HeroQueriesHandlers } from './heros';
 import { ImageQueriesHandlers } from './images';
+import { InvoiceQueriesHandlers } from './invoices';
 import { LanguageQueriesHandlers } from './languages';
 import { ModuleQueriesHandlers } from './modules';
-import { OrderItemQueriesHandlers } from './order-items';
-import { OrderQueriesHandlers } from './orders';
 import { PaymentMethodQueriesHandlers } from './payment-methods';
-import { PaymentQueriesHandlers } from './payments';
 import { PhoneQueriesHandlers } from './phones';
 import { PlanQueriesHandlers } from './plans';
+import { PriceTierQueriesHandlers } from './price-tiers';
 import { PriceQueriesHandlers } from './prices';
 import { ProductQueriesHandlers } from './products';
+import { RecurringQueriesHandlers } from './recurrings';
+import { RoleQueriesHandlers } from './roles';
+import { SortedItemQueriesHandlers } from './sorted-items';
+import { SubscriptionContractItemQueriesHandlers } from './subscription-contract-items';
 import { SubscriptionContractQueriesHandlers } from './subscription-contracts';
+import { UsageRecordQueriesHandlers } from './usage-records';
 import { VideoAuthorQueriesHandlers } from './video-authors';
 import { VideoQueriesHandlers } from './videos';
 
@@ -39,12 +42,7 @@ export const QueriesHandlers = [
   ...ColorQueriesHandlers,
   ...ProductQueriesHandlers,
   ...PriceQueriesHandlers,
-  ...OrderQueriesHandlers,
-  ...OrderItemQueriesHandlers,
-  ...PaymentQueriesHandlers,
   ...PaymentMethodQueriesHandlers,
-  ...CartQueriesHandlers,
-  ...CartItemQueriesHandlers,
   ...PlanQueriesHandlers,
   ...ImageQueriesHandlers,
   ...VideoQueriesHandlers,
@@ -53,11 +51,19 @@ export const QueriesHandlers = [
   ...CourseQueriesHandlers,
   ...CourseInstructorQueriesHandlers,
   ...CourseStudentQueriesHandlers,
-  ...ClassroomQueriesHandlers,
-  ...ClassroomStudentQueriesHandlers,
   ...SubscriptionContractQueriesHandlers,
-  ...ClassroomInstructorQueriesHandlers,
-  ...ClassroomModuleQueriesHandlers,
   ...AddressQueriesHandlers,
-  ...PhoneQueriesHandlers
+  ...PhoneQueriesHandlers,
+  ...InvoiceQueriesHandlers,
+  ...FileQueriesHandlers,
+  ...RecurringQueriesHandlers,
+  ...FeatureQueriesHandlers,
+  ...PriceTierQueriesHandlers,
+  ...SubscriptionContractItemQueriesHandlers,
+  ...UsageRecordQueriesHandlers,
+  ...CatalogQueriesHandlers,
+  ...CatalogItemQueriesHandlers,
+  ...RoleQueriesHandlers,
+  ...HeroQueriesHandlers,
+  ...SortedItemQueriesHandlers
 ];

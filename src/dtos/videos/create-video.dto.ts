@@ -1,19 +1,11 @@
-import { ApiProperty } from '@nestjs/swagger';
-
 export class CreateVideoDTO {
-  @ApiProperty()
   parent: string;
-
-  @ApiProperty({ nullable: true })
-  name?: string;
-
-  @ApiProperty({ nullable: true })
+  name: string;
   description?: string;
-
-  @ApiProperty({ nullable: true })
+  file?: string;
+  duration?: number;
   poster?: string;
-
+  private?: boolean;
   app: string;
-  path: string;
   createdBy: string;
 }

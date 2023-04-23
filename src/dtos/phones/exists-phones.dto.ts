@@ -7,7 +7,6 @@ export interface ExistsPhonesWhereDTO {
   number?: string;
   validationCode?: string;
   status?: PhoneStatus;
-  default?: boolean;
 }
 
 export interface ExistsPhonesDTO {

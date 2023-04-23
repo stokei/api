@@ -25,8 +25,8 @@ export class CreateImageCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.path) {
-      throw new ParamNotFoundException<CreateImageCommandKeys>('path');
+    if (!data?.file) {
+      throw new ParamNotFoundException<CreateImageCommandKeys>('file');
     }
 
     const imageCreated = await this.createImageRepository.execute(data);
@@ -46,7 +46,7 @@ export class CreateImageCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
-      path: cleanValue(command?.path)
+      file: cleanValue(command?.file)
     });
   }
 }

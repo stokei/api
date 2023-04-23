@@ -6,23 +6,25 @@ import { SubscriptionContractType } from '@/enums/subscription-contract-type.enu
 export class CreateSubscriptionContractCommand
   implements ICommand, CreateSubscriptionContractDTO
 {
+  app: string;
   parent: string;
-  product: string;
-  type: SubscriptionContractType;
-  automaticRenew?: boolean;
+  stripeSubscription: string;
   startAt?: string;
   endAt?: string;
-  app: string;
+  paymentMethod?: string;
+  type: SubscriptionContractType;
+  automaticRenew: boolean;
   createdBy: string;
 
   constructor(data: CreateSubscriptionContractDTO) {
+    this.app = data.app;
     this.parent = data.parent;
+    this.stripeSubscription = data.stripeSubscription;
     this.type = data.type;
-    this.product = data.product;
-    this.automaticRenew = data.automaticRenew;
     this.startAt = data.startAt;
     this.endAt = data.endAt;
-    this.app = data.app;
+    this.paymentMethod = data.paymentMethod;
+    this.automaticRenew = data.automaticRenew;
     this.createdBy = data.createdBy;
   }
 }

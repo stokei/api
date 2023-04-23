@@ -7,7 +7,7 @@ import { DomainModel, IDomainModelData } from '@/models/domain.model';
 export class DomainModelMock extends DomainModel {
   constructor(data?: Partial<IDomainModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       parent: data?.parent ?? 'anyParent',
       active: data?.active ?? true,
       name: data?.name ?? 'stokei.com',

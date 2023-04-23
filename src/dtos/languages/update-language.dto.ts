@@ -5,7 +5,6 @@ export interface UpdateLanguageDataDTO {
 }
 
 export interface UpdateLanguageWhereDTO {
-  app: string;
   language: string;
 }
 

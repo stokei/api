@@ -45,7 +45,6 @@ export class CreateLanguageCommandHandler
   private clearData(command: CreateLanguageCommand): CreateLanguageCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
-      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
       icon: cleanValue(command?.icon),
       id: cleanValue(command?.id)

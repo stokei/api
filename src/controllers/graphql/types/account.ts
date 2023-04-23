@@ -1,11 +1,10 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
-import { AccountRole } from '@/controllers/graphql/enums/account-role.enum';
 import { AccountStatus } from '@/controllers/graphql/enums/account-status.enum';
 
+import { App } from './app';
 import { Image } from './image';
-import { Language } from './language';
-import { Phones } from './phones';
+import { Roles } from './roles';
 
 @ObjectType()
 export class Account {
@@ -21,8 +20,8 @@ export class Account {
   @Field(() => String)
   fullname: string;
 
-  @Field(() => String)
-  app: string;
+  @Field(() => App)
+  app: App;
 
   @Field(() => String)
   email: string;
@@ -30,20 +29,29 @@ export class Account {
   @Field(() => String)
   username: string;
 
+  @Field(() => Boolean, { nullable: true })
+  isAdmin?: boolean;
+
+  @Field(() => Boolean, { nullable: true })
+  isOwner?: boolean;
+
+  @Field(() => Boolean, { nullable: true })
+  isInstructor?: boolean;
+
   @Field(() => Image, { nullable: true })
   avatar?: Image;
 
   @Field(() => String, { nullable: true })
   country?: string;
 
-  @Field(() => Language, { nullable: true })
-  language?: Language;
-
   @Field(() => AccountStatus)
   status: AccountStatus;
 
-  @Field(() => Phones, { nullable: true })
-  phones?: Phones;
+  @Field(() => Roles, { nullable: true })
+  roles: Roles;
+
+  @Field(() => Boolean)
+  isStokei: boolean;
 
   @Field(() => String, { nullable: true })
   canceledAt?: string;
@@ -54,6 +62,9 @@ export class Account {
   @Field(() => String, { nullable: true })
   createdAt?: string;
 
-  @Field(() => [AccountRole])
-  roles: AccountRole[];
+  @Field(() => Account, { nullable: true })
+  updatedBy?: Account;
+
+  @Field(() => Account, { nullable: true })
+  createdBy?: Account;
 }

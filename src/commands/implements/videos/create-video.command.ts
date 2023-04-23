@@ -3,18 +3,23 @@ import { ICommand } from '@nestjs/cqrs';
 import { CreateVideoDTO } from '@/dtos/videos/create-video.dto';
 
 export class CreateVideoCommand implements ICommand, CreateVideoDTO {
-  name: string;
   parent: string;
+  name: string;
   description?: string;
-  path: string;
+  file?: string;
   poster?: string;
+  duration?: number;
+  private?: boolean;
   app: string;
   createdBy: string;
 
   constructor(data: CreateVideoDTO) {
+    this.parent = data.parent;
+    this.file = data.file;
     this.name = data.name;
+    this.duration = data.duration;
+    this.private = data.private;
     this.description = data.description;
-    this.path = data.path;
     this.poster = data.poster;
     this.app = data.app;
     this.createdBy = data.createdBy;

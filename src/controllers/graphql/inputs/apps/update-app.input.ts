@@ -12,10 +12,10 @@ export class UpdateDataAppInput {
   avatar?: string;
 
   @Field({ nullable: true })
-  plan?: string;
+  hero?: string;
 
   @Field({ nullable: true })
-  favicon?: string;
+  icon?: string;
 
   @Field({ nullable: true })
   logo?: string;

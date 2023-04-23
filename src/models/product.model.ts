@@ -3,6 +3,7 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { ProductCreatedEvent } from '@/events/implements/products/product-created.event';
+import { ProductUpdatedEvent } from '@/events/implements/products/product-updated.event';
 
 export interface IProductModelData {
   readonly id?: string;
@@ -10,9 +11,9 @@ export interface IProductModelData {
   readonly parent: string;
   readonly name: string;
   readonly description?: string;
+  readonly defaultPrice?: string;
   readonly app: string;
-  readonly externalProduct: string;
-  readonly checkoutVisible: boolean;
+  readonly stripeProduct: string;
   readonly avatar?: string;
   readonly active: boolean;
   readonly activatedAt?: Date | string;
@@ -29,8 +30,8 @@ export class ProductModel extends AggregateRoot {
   readonly parent: string;
   readonly name: string;
   readonly description?: string;
-  readonly externalProduct: string;
-  readonly checkoutVisible: boolean;
+  readonly defaultPrice?: string;
+  readonly stripeProduct: string;
   readonly avatar?: string;
   readonly active: boolean;
   readonly activatedAt?: string;
@@ -44,15 +45,14 @@ export class ProductModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.PRODUCTS,
-      module: ServerStokeiApiIdPrefix.PRODUCTS,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
     this.name = data.name;
     this.description = data.description;
     this.app = data.app;
-    this.externalProduct = data.externalProduct;
-    this.checkoutVisible = data.checkoutVisible;
+    this.stripeProduct = data.stripeProduct;
+    this.defaultPrice = data.defaultPrice;
     this.avatar = data.avatar;
     this.active = data.active;
     this.activatedAt = convertToISODateString(data.activatedAt);
@@ -64,11 +64,29 @@ export class ProductModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdProduct({ createdBy }: { createdBy: string }) {
+  createdProduct({
+    createdBy,
+    catalog
+  }: {
+    createdBy: string;
+    catalog?: string;
+  }) {
     if (this.id) {
       this.apply(
         new ProductCreatedEvent({
           createdBy,
+          catalog,
+          product: this
+        })
+      );
+    }
+  }
+
+  updatedProduct({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new ProductUpdatedEvent({
+          updatedBy,
           product: this
         })
       );

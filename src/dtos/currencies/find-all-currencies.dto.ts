@@ -7,7 +7,6 @@ import {
 
 export interface WhereDataFindAllCurrenciesDTO {
   ids?: string[];
-  app?: IWhereData;
   name?: IWhereDataSearch;
   minorUnit?: IWhereData<number>;
   updatedBy?: IWhereData;

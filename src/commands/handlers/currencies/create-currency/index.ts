@@ -45,7 +45,6 @@ export class CreateCurrencyCommandHandler
   private clearData(command: CreateCurrencyCommand): CreateCurrencyCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
-      app: cleanValue(command?.app),
       name: cleanValue(command?.name),
       symbol: cleanValue(command?.symbol),
       minorUnit: cleanValueNumber(command?.minorUnit),

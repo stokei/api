@@ -8,10 +8,9 @@ import {
 export interface WhereDataFindAllProductsDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
-  checkoutVisible?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -22,8 +21,7 @@ export interface OrderByDataFindAllProductsDTO {
   name?: IOrderBy;
   description?: IOrderBy;
   app?: IOrderBy;
-  externalProduct?: IOrderBy;
-  checkoutVisible?: IOrderBy;
+  stripeProduct?: IOrderBy;
   avatar?: IOrderBy;
   active?: IOrderBy;
   activatedAt?: IOrderBy;

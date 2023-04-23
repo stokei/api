@@ -24,6 +24,9 @@ class WhereDataFindAllSubscriptionContractsDataInput
   parent?: WhereDataStringInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
+  app?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
   product?: WhereDataStringInput;
 
   @Field(() => SubscriptionContractStatus, { nullable: true })

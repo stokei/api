@@ -9,7 +9,7 @@ import {
 export class CourseStudentModelMock extends CourseStudentModel {
   constructor(data?: Partial<ICourseStudentModelData>) {
     super({
-      _id: nanoid(),
+      _id: data?.id ?? nanoid(),
       course: data?.course ?? 'courses.anyCourse',
       student: data?.student ?? 'students.anyStudent',
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),

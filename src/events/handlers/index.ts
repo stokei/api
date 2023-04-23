@@ -2,30 +2,33 @@ import { AccessEventsHandlers } from './accesses';
 import { AccountEventsHandlers } from './accounts';
 import { AddressEventsHandlers } from './addresses';
 import { AppEventsHandlers } from './apps';
-import { CartItemEventsHandlers } from './cart-items';
-import { CartEventsHandlers } from './carts';
-import { ClassroomInstructorEventsHandlers } from './classroom-instructors';
-import { ClassroomModuleEventsHandlers } from './classroom-modules';
-import { ClassroomStudentEventsHandlers } from './classroom-students';
-import { ClassroomEventsHandlers } from './classrooms';
+import { CatalogItemEventsHandlers } from './catalog-items';
+import { CatalogEventsHandlers } from './catalogs';
 import { ColorEventsHandlers } from './colors';
 import { CourseInstructorEventsHandlers } from './course-instructors';
 import { CourseStudentEventsHandlers } from './course-students';
 import { CourseEventsHandlers } from './courses';
 import { CurrencyEventsHandlers } from './currencies';
 import { DomainEventsHandlers } from './domains';
+import { FeatureEventsHandlers } from './features';
+import { FileEventsHandlers } from './files';
+import { HeroEventsHandlers } from './heros';
 import { ImageEventsHandlers } from './images';
+import { InvoiceEventsHandlers } from './invoices';
 import { LanguageEventsHandlers } from './languages';
 import { ModuleEventsHandlers } from './modules';
-import { OrderItemEventsHandlers } from './order-items';
-import { OrderEventsHandlers } from './orders';
 import { PaymentMethodEventsHandlers } from './payment-methods';
-import { PaymentEventsHandlers } from './payments';
 import { PhoneEventsHandlers } from './phones';
 import { PlanEventsHandlers } from './plans';
+import { PriceTierEventsHandlers } from './price-tiers';
 import { PriceEventsHandlers } from './prices';
 import { ProductEventsHandlers } from './products';
+import { RecurringEventsHandlers } from './recurrings';
+import { RoleEventsHandlers } from './roles';
+import { SortedItemEventsHandlers } from './sorted-items';
+import { SubscriptionContractItemEventsHandlers } from './subscription-contract-items';
 import { SubscriptionContractEventsHandlers } from './subscription-contracts';
+import { UsageRecordEventsHandlers } from './usage-records';
 import { VideoAuthorEventsHandlers } from './video-authors';
 import { VideoEventsHandlers } from './videos';
 
@@ -39,13 +42,10 @@ export const EventsHandlers = [
   ...ColorEventsHandlers,
   ...ProductEventsHandlers,
   ...PriceEventsHandlers,
-  ...OrderEventsHandlers,
-  ...OrderItemEventsHandlers,
-  ...PaymentEventsHandlers,
   ...PaymentMethodEventsHandlers,
-  ...CartEventsHandlers,
-  ...CartItemEventsHandlers,
+  ...FileEventsHandlers,
   ...PlanEventsHandlers,
+  ...InvoiceEventsHandlers,
   ...ImageEventsHandlers,
   ...VideoEventsHandlers,
   ...VideoAuthorEventsHandlers,
@@ -53,11 +53,17 @@ export const EventsHandlers = [
   ...CourseEventsHandlers,
   ...CourseInstructorEventsHandlers,
   ...CourseStudentEventsHandlers,
-  ...ClassroomEventsHandlers,
-  ...ClassroomStudentEventsHandlers,
   ...SubscriptionContractEventsHandlers,
-  ...ClassroomInstructorEventsHandlers,
-  ...ClassroomModuleEventsHandlers,
   ...AddressEventsHandlers,
-  ...PhoneEventsHandlers
+  ...PhoneEventsHandlers,
+  ...RecurringEventsHandlers,
+  ...FeatureEventsHandlers,
+  ...PriceTierEventsHandlers,
+  ...SubscriptionContractItemEventsHandlers,
+  ...UsageRecordEventsHandlers,
+  ...CatalogEventsHandlers,
+  ...CatalogItemEventsHandlers,
+  ...RoleEventsHandlers,
+  ...HeroEventsHandlers,
+  ...SortedItemEventsHandlers
 ];

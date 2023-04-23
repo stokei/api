@@ -1,9 +1,8 @@
-import { Field, ID, Int, ObjectType } from '@nestjs/graphql';
-
-import { VideoStatus } from '@/controllers/graphql/enums/video-status.enum';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 import { Account } from './account';
 import { App } from './app';
+import { File } from './file';
 import { Image } from './image';
 import { VideoAuthors } from './video-authors';
 
@@ -12,17 +11,17 @@ export class Video {
   @Field(() => ID)
   id: string;
 
+  @Field(() => String, { nullable: true })
+  parent?: string;
+
   @Field(() => String)
   name: string;
 
   @Field(() => String)
   slug: string;
 
-  @Field(() => String)
-  path: string;
-
-  @Field(() => String)
-  url: string;
+  @Field(() => File, { nullable: true })
+  file: File;
 
   @Field(() => String, { nullable: true })
   description?: string;
@@ -30,14 +29,11 @@ export class Video {
   @Field(() => Image, { nullable: true })
   poster?: Image;
 
-  @Field(() => Int)
-  duration?: number;
-
-  @Field(() => VideoStatus)
-  status: VideoStatus;
-
   @Field(() => Boolean)
   active: boolean;
+
+  @Field(() => Boolean)
+  private: boolean;
 
   @Field(() => VideoAuthors)
   authors: VideoAuthors;

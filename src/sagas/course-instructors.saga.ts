@@ -4,7 +4,10 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { CreateRoleCommand } from '@/commands/implements/roles/create-role.command';
+import { RemoveRoleCommand } from '@/commands/implements/roles/remove-role.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
+import { roleName } from '@/constants/role-name';
 import { CourseInstructorCreatedEvent } from '@/events/implements/course-instructors/course-instructor-created.event';
 import { CourseInstructorRemovedEvent } from '@/events/implements/course-instructors/course-instructor-removed.event';
 
@@ -31,7 +34,14 @@ export class CourseInstructorsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new CreateRoleCommand({
+            parent: event.courseInstructor.instructor,
+            name: roleName.INSTRUCTOR,
+            app: event.courseInstructor.app,
+            createdBy: event.createdBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)
@@ -53,6 +63,18 @@ export class CourseInstructorsSagas {
             )
         );
         const commands = [];
+        if (event.isLastCourseInstructor) {
+          commands.push(
+            new RemoveRoleCommand({
+              where: {
+                parent: event.courseInstructor.instructor,
+                name: roleName.INSTRUCTOR,
+                app: event.courseInstructor.app,
+                removedBy: event.removedBy
+              }
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)

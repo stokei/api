@@ -1,3 +1,4 @@
 export interface IAppConfigDecorator {
-  readonly isRequired?: boolean;
+  isRequired?: boolean;
+  isAllowedToUsePlan?: boolean;
 }

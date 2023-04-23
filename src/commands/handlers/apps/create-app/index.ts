@@ -3,12 +3,12 @@ import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
 import { v4 as uuid } from 'uuid';
 
 import { CreateAppCommand } from '@/commands/implements/apps/create-app.command';
-import { defaultLanguageId } from '@/constants/default-language-id';
 import { AppStatus } from '@/enums/app-status.enum';
 import {
   AppNotFoundException,
   CurrencyNotFoundException,
   DataNotFoundException,
+  LanguageNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateAppRepository } from '@/repositories/apps/create-app';
@@ -43,17 +43,15 @@ export class CreateAppCommandHandler
       throw new ParamNotFoundException<CreateAppCommandKeys>('currency');
     }
 
-    const slug = cleanSlug(data.name + uuid());
+    const slug = data.slug || cleanSlug(data.name + uuid());
 
     const currency = await this.findCurrencyByIdService.execute(data?.currency);
     if (!currency) {
       throw new CurrencyNotFoundException();
     }
-    const language = await this.findLanguageByIdService.execute(
-      defaultLanguageId
-    );
+    const language = await this.findLanguageByIdService.execute(data?.language);
     if (!language) {
-      throw new CurrencyNotFoundException();
+      throw new LanguageNotFoundException();
     }
 
     const appCreated = await this.createAppRepository.execute({
@@ -78,9 +76,13 @@ export class CreateAppCommandHandler
   private clearData(command: CreateAppCommand): CreateAppCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
+      id: cleanValue(command?.id),
+      slug: cleanValue(command?.slug),
       parent: cleanValue(command?.parent),
       app: cleanValue(command?.app),
+      email: cleanValue(command?.email),
       name: cleanValue(command?.name),
+      language: cleanValue(command?.language),
       currency: cleanValue(command?.currency)
     });
   }

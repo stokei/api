@@ -7,15 +7,15 @@ import {
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
-import { FindAllCourseInstructorsRepository } from '@/repositories/course-instructors/find-all-course-instructors';
 import { RemoveCourseInstructorRepository } from '@/repositories/course-instructors/remove-course-instructor';
+import { FindAllCourseInstructorsService } from '@/services/course-instructors/find-all-course-instructors';
 
 @CommandHandler(RemoveCourseInstructorCommand)
 export class RemoveCourseInstructorCommandHandler
   implements ICommandHandler<RemoveCourseInstructorCommand>
 {
   constructor(
-    private readonly findAllCourseInstructorsRepository: FindAllCourseInstructorsRepository,
+    private readonly findAllCourseInstructorsService: FindAllCourseInstructorsService,
     private readonly removeCourseInstructorRepository: RemoveCourseInstructorRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -37,7 +37,7 @@ export class RemoveCourseInstructorCommandHandler
     }
 
     const courseInstructors =
-      await this.findAllCourseInstructorsRepository.execute({
+      await this.findAllCourseInstructorsService.execute({
         where: {
           AND: {
             app: {
@@ -52,10 +52,28 @@ export class RemoveCourseInstructorCommandHandler
           }
         }
       });
-    if (!courseInstructors?.length) {
+    if (!courseInstructors?.totalCount) {
       throw new CourseInstructorNotFoundException();
     }
-    const courseInstructor = courseInstructors[0];
+
+    const allCourseInstructors =
+      await this.findAllCourseInstructorsService.execute({
+        where: {
+          AND: {
+            app: {
+              equals: app
+            },
+            instructor: {
+              equals: instructor
+            }
+          }
+        },
+        page: {
+          limit: 1
+        }
+      });
+
+    const courseInstructor = courseInstructors?.items?.[0];
     const removed = await this.removeCourseInstructorRepository.execute({
       where: {
         ...data.where,
@@ -66,9 +84,11 @@ export class RemoveCourseInstructorCommandHandler
     if (!removed) {
       throw new DataNotFoundException();
     }
+    const isLastCourseInstructor = allCourseInstructors?.totalCount === 1;
     const courseInstructorModel =
       this.publisher.mergeObjectContext(courseInstructor);
     courseInstructorModel.removedCourseInstructor({
+      isLastCourseInstructor,
       removedBy: data.where.removedBy
     });
     courseInstructorModel.commit();

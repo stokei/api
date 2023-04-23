@@ -3,11 +3,13 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateCourseInstructorCommand } from '@/commands/implements/course-instructors/create-course-instructor.command';
 import {
+  CourseInstructorAlreadyExistsException,
   CourseInstructorNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateCourseInstructorRepository } from '@/repositories/course-instructors/create-course-instructor';
+import { ExistsCourseInstructorsRepository } from '@/repositories/course-instructors/exists-course-instructors';
 
 type CreateCourseInstructorCommandKeys = keyof CreateCourseInstructorCommand;
 
@@ -17,6 +19,7 @@ export class CreateCourseInstructorCommandHandler
 {
   constructor(
     private readonly createCourseInstructorRepository: CreateCourseInstructorRepository,
+    private readonly existsCourseInstructorsRepository: ExistsCourseInstructorsRepository,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -34,6 +37,17 @@ export class CreateCourseInstructorCommandHandler
       throw new ParamNotFoundException<CreateCourseInstructorCommandKeys>(
         'instructor'
       );
+    }
+
+    const existsCourseInstructor =
+      await this.existsCourseInstructorsRepository.execute({
+        where: {
+          course: data.course,
+          instructor: data.instructor
+        }
+      });
+    if (existsCourseInstructor) {
+      throw new CourseInstructorAlreadyExistsException();
     }
 
     const courseInstructorCreated =

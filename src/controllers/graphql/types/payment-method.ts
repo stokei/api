@@ -1,8 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
-import { PaymentMethodProvider } from '@/controllers/graphql/enums/payment-method-provider.enum';
-import { PaymentMethodType } from '@/controllers/graphql/enums/payment-method-type.enum';
-
 import { Account } from './account';
 import { App } from './app';
 
@@ -11,14 +8,11 @@ export class PaymentMethod {
   @Field(() => ID)
   id: string;
 
-  @Field(() => Account)
-  parent: Account;
+  @Field(() => String)
+  parent: string;
 
-  @Field(() => PaymentMethodType)
-  type: PaymentMethodType;
-
-  @Field(() => PaymentMethodProvider)
-  provider: PaymentMethodProvider;
+  @Field(() => String, { nullable: true })
+  stripePaymentMethod?: string;
 
   @Field(() => String, { nullable: true })
   lastFourCardNumber?: string;
@@ -26,14 +20,11 @@ export class PaymentMethod {
   @Field(() => String, { nullable: true })
   cardBrand?: string;
 
-  @Field(() => Boolean)
-  active: boolean;
+  @Field(() => String, { nullable: true })
+  cardExpiryMonth?: string;
 
   @Field(() => String, { nullable: true })
-  activatedAt?: string;
-
-  @Field(() => String, { nullable: true })
-  deactivatedAt?: string;
+  cardExpiryYear?: string;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;

@@ -2,28 +2,28 @@ import { AccessesFieldsResolvers } from './accesses';
 import { AccountsFieldsResolvers } from './accounts';
 import { AddressesFieldsResolvers } from './addresses';
 import { AppsFieldsResolvers } from './apps';
-import { CartItemsFieldsResolvers } from './cart-items';
-import { CartsFieldsResolvers } from './carts';
-import { ClassroomInstructorsFieldsResolvers } from './classroom-instructors';
-import { ClassroomModulesFieldsResolvers } from './classroom-modules';
-import { ClassroomStudentsFieldsResolvers } from './classroom-students';
-import { ClassroomsFieldsResolvers } from './classrooms';
+import { CatalogItemsFieldsResolvers } from './catalog-items';
+import { CatalogsFieldsResolvers } from './catalogs';
 import { ColorsFieldsResolvers } from './colors';
 import { CourseInstructorsFieldsResolvers } from './course-instructors';
 import { CourseStudentsFieldsResolvers } from './course-students';
 import { CoursesFieldsResolvers } from './courses';
 import { CurrenciesFieldsResolvers } from './currencies';
 import { DomainsFieldsResolvers } from './domains';
+import { FeaturesFieldsResolvers } from './features';
+import { HerosFieldsResolvers } from './heros';
 import { ImagesFieldsResolvers } from './images';
+import { InvoicesFieldsResolvers } from './invoices';
 import { LanguagesFieldsResolvers } from './languages';
 import { ModulesFieldsResolvers } from './modules';
-import { OrdersFieldsResolvers } from './orders';
 import { PaymentMethodsFieldsResolvers } from './payment-methods';
-import { PaymentsFieldsResolvers } from './payments';
 import { PhonesFieldsResolvers } from './phones';
 import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
 import { ProductsFieldsResolvers } from './products';
+import { RolesFieldsResolvers } from './roles';
+import { SortedItemsFieldsResolvers } from './sorted-items';
+import { SubscriptionContractItemsFieldsResolvers } from './subscription-contract-items';
 import { SubscriptionContractsFieldsResolvers } from './subscription-contracts';
 import { VideoAuthorsFieldsResolvers } from './video-authors';
 import { VideosFieldsResolvers } from './videos';
@@ -38,11 +38,7 @@ export const FieldsResolvers = [
   ...ColorsFieldsResolvers,
   ...ProductsFieldsResolvers,
   ...PricesFieldsResolvers,
-  ...OrdersFieldsResolvers,
-  ...PaymentsFieldsResolvers,
   ...PaymentMethodsFieldsResolvers,
-  ...CartsFieldsResolvers,
-  ...CartItemsFieldsResolvers,
   ...PlansFieldsResolvers,
   ...ImagesFieldsResolvers,
   ...VideosFieldsResolvers,
@@ -51,11 +47,15 @@ export const FieldsResolvers = [
   ...CoursesFieldsResolvers,
   ...CourseInstructorsFieldsResolvers,
   ...CourseStudentsFieldsResolvers,
-  ...ClassroomsFieldsResolvers,
-  ...ClassroomStudentsFieldsResolvers,
   ...SubscriptionContractsFieldsResolvers,
-  ...ClassroomInstructorsFieldsResolvers,
-  ...ClassroomModulesFieldsResolvers,
   ...AddressesFieldsResolvers,
-  ...PhonesFieldsResolvers
+  ...PhonesFieldsResolvers,
+  ...InvoicesFieldsResolvers,
+  ...FeaturesFieldsResolvers,
+  ...CatalogsFieldsResolvers,
+  ...CatalogItemsFieldsResolvers,
+  ...RolesFieldsResolvers,
+  ...HerosFieldsResolvers,
+  ...SortedItemsFieldsResolvers,
+  ...SubscriptionContractItemsFieldsResolvers
 ];

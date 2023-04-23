@@ -5,4 +5,5 @@ import { CreateSubscriptionContractDTO } from './create-subscription-contract.dt
 export interface CreateSubscriptionContractRepositoryDTO
   extends CreateSubscriptionContractDTO {
   status: SubscriptionContractStatus;
+  active: boolean;
 }

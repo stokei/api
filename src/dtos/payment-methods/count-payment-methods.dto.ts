@@ -1,16 +1,11 @@
-import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
-
-import { PaymentMethodProvider } from '@/enums/payment-method-provider.enum';
-import { PaymentMethodType } from '@/enums/payment-method-type.enum';
+import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
 export interface CountPaymentMethodsWhereDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereData;
+  parent?: IWhereDataSearch;
   cardBrand?: IWhereData<string>;
-  type?: PaymentMethodType;
-  provider?: PaymentMethodProvider;
-  externalPaymentMethod?: IWhereData<string>;
+  stripePaymentMethod?: IWhereData<string>;
   active?: IWhereData<boolean>;
 }
 export type IKeysCountPaymentMethodsWhereDTO =

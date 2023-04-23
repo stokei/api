@@ -3,10 +3,10 @@ import {
   cleanSortValue,
   cleanValue,
   cleanValueNumber,
+  cleanWhere,
   cleanWhereDataBoolean,
+  cleanWhereDataSearch,
   cleanWhereDataString,
-  convertToISODateString,
-  IOperator,
   IWhere,
   PrismaMapper,
   splitServiceId
@@ -25,30 +25,25 @@ export class SubscriptionContractMapper {
     where: IWhere<WhereDataFindAllSubscriptionContractsDTO>
   ) {
     const prismaMapper = new PrismaMapper();
-    const mapFromDTOOperatorDataToPrismaOperatorData = (
-      operator: IOperator
-    ) => {
-      const operatorData = where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        id: prismaMapper.toWhereIds(operatorData.ids),
-        parent: prismaMapper.toWhereData(operatorData.parent),
-        app: prismaMapper.toWhereData(operatorData.app),
-        product: prismaMapper.toWhereData(operatorData.product),
-        status: operatorData.status,
-        type: operatorData.type,
-        active: prismaMapper.toWhereData(operatorData.active),
-        automaticRenew: prismaMapper.toWhereData(operatorData.automaticRenew),
-        updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
-        createdBy: prismaMapper.toWhereData(operatorData.createdBy)
-      };
-    };
     return prismaMapper.toWhere({
-      AND: mapFromDTOOperatorDataToPrismaOperatorData('AND'),
-      OR: mapFromDTOOperatorDataToPrismaOperatorData('OR'),
-      NOT: mapFromDTOOperatorDataToPrismaOperatorData('NOT')
+      data: where,
+      allowIsEmptyValues: {
+        NOT: true
+      },
+      operatorMapper(operatorData) {
+        return {
+          id: prismaMapper.toWhereIds(operatorData.ids),
+          parent: prismaMapper.toWhereDataSearch(operatorData.parent),
+          app: prismaMapper.toWhereData(operatorData.app),
+          paymentMethod: prismaMapper.toWhereData(operatorData.paymentMethod),
+          status: operatorData.status,
+          type: operatorData.type,
+          active: prismaMapper.toWhereData(operatorData.active),
+          automaticRenew: prismaMapper.toWhereData(operatorData.automaticRenew),
+          updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
+          createdBy: prismaMapper.toWhereData(operatorData.createdBy)
+        };
+      }
     });
   }
   toFindAllPrisma(data: FindAllSubscriptionContractsDTO) {
@@ -66,36 +61,29 @@ export class SubscriptionContractMapper {
     if (!query) {
       return null;
     }
-    const clearWhereOperatorData = (operator: IOperator) => {
-      const operatorData = query?.where?.[operator];
-      if (!operatorData) {
-        return null;
-      }
-      return {
-        [operator]: {
-          parent: cleanWhereDataString(operatorData.parent),
-          product: cleanWhereDataString(operatorData.product),
-          status: operatorData.status,
-          type: operatorData.type,
-          active: cleanWhereDataBoolean(operatorData.active),
-          automaticRenew: cleanWhereDataBoolean(operatorData.automaticRenew),
-          app: cleanWhereDataString(operatorData.app),
-          updatedBy: cleanWhereDataString(operatorData.updatedBy),
-          createdBy: cleanWhereDataString(operatorData.createdBy),
-          ids:
-            operatorData.ids?.length > 0
-              ? operatorData.ids.map((id) => splitServiceId(cleanValue(id))?.id)
-              : undefined
-        }
-      };
-    };
     return {
       ...query,
-      where: {
-        ...cleanObject(clearWhereOperatorData('AND')),
-        ...cleanObject(clearWhereOperatorData('OR')),
-        ...cleanObject(clearWhereOperatorData('NOT'), true)
-      },
+      where: cleanWhere({
+        data: query?.where,
+        operatorMapper(operatorData) {
+          return {
+            parent: cleanWhereDataSearch(operatorData.parent),
+            status: operatorData.status,
+            type: operatorData.type,
+            active: cleanWhereDataBoolean(operatorData.active),
+            automaticRenew: cleanWhereDataBoolean(operatorData.automaticRenew),
+            app: cleanWhereDataString(operatorData.app),
+            updatedBy: cleanWhereDataString(operatorData.updatedBy),
+            createdBy: cleanWhereDataString(operatorData.createdBy),
+            ids:
+              operatorData.ids?.length > 0
+                ? operatorData.ids.map(
+                    (id) => splitServiceId(cleanValue(id))?.id
+                  )
+                : undefined
+          };
+        }
+      }),
       page: cleanObject({
         limit: cleanValueNumber(query.page?.limit),
         number: cleanValueNumber(query.page?.number)
@@ -107,7 +95,6 @@ export class SubscriptionContractMapper {
         automaticRenew: cleanSortValue(query.orderBy?.automaticRenew),
         startAt: cleanSortValue(query.orderBy?.startAt),
         endAt: cleanSortValue(query.orderBy?.endAt),
-        canceledAt: cleanSortValue(query.orderBy?.canceledAt),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),
@@ -118,11 +105,7 @@ export class SubscriptionContractMapper {
   toModel(subscriptionContract: SubscriptionContractEntity) {
     return (
       subscriptionContract &&
-      new SubscriptionContractModel({
-        ...subscriptionContract,
-        updatedAt: convertToISODateString(subscriptionContract.updatedAt),
-        createdAt: convertToISODateString(subscriptionContract.createdAt)
-      })
+      new SubscriptionContractModel(subscriptionContract)
     );
   }
   toModels(subscriptionContracts: SubscriptionContractEntity[]) {

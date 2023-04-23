@@ -1,7 +1,6 @@
 import { AggregateRoot } from '@nestjs/cqrs';
-import { convertToISODateString, createServiceId } from '@stokei/nestjs';
+import { convertToISODateString } from '@stokei/nestjs';
 
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { CurrencyCreatedEvent } from '@/events/implements/currencies/currency-created.event';
 import { CurrencyRemovedEvent } from '@/events/implements/currencies/currency-removed.event';
 import { CurrencyUpdatedEvent } from '@/events/implements/currencies/currency-updated.event';
@@ -36,11 +35,7 @@ export class CurrencyModel extends AggregateRoot {
   constructor(data: ICurrencyModelData) {
     super();
 
-    this.id = createServiceId({
-      service: ServerStokeiApiIdPrefix.CURRENCIES,
-      module: ServerStokeiApiIdPrefix.CURRENCIES,
-      id: data._id?.toString() || data.id
-    });
+    this.id = (data._id?.toString() || data.id).toUpperCase();
     this.name = data.name;
     this.symbol = data.symbol;
     this.minorUnit = data.minorUnit;

@@ -12,14 +12,18 @@ export interface IAppModelData {
   readonly parent: string;
   readonly slug: string;
   readonly name: string;
+  readonly email: string;
   readonly description?: string;
+  readonly catalog?: string;
   readonly status: AppStatus;
   readonly avatar?: string;
-  readonly plan?: string;
   readonly currency: string;
-  readonly favicon?: string;
+  readonly icon?: string;
   readonly logo?: string;
   readonly active: boolean;
+  readonly stripeBankAccount?: string;
+  readonly stripeAccount?: string;
+  readonly paymentMethod?: string;
   readonly blockedAt?: Date | string;
   readonly activatedAt?: Date | string;
   readonly deactivatedAt?: Date | string;
@@ -33,16 +37,23 @@ export class AppModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
   readonly name: string;
+  readonly email: string;
   readonly slug: string;
   readonly description?: string;
+  readonly catalog?: string;
   readonly status: AppStatus;
   readonly avatar?: string;
-  readonly plan?: string;
   readonly currency: string;
-  readonly favicon?: string;
+  readonly icon?: string;
   readonly logo?: string;
   readonly active: boolean;
+  readonly isIntegratedWithStripe: boolean;
+  readonly stripeBankAccount?: string;
+  readonly stripeAccount?: string;
+  readonly paymentMethod?: string;
   readonly isStokei: boolean;
+  readonly isAllowedToSell: boolean;
+  readonly isAllowedToUsePlan: boolean;
   readonly blockedAt?: string;
   readonly activatedAt?: string;
   readonly deactivatedAt?: string;
@@ -56,20 +67,21 @@ export class AppModel extends AggregateRoot {
 
     this.id = createServiceId({
       service: ServerStokeiApiIdPrefix.APPS,
-      module: ServerStokeiApiIdPrefix.APPS,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
     this.slug = data.slug;
+    this.email = data.email;
     this.name = data.name;
     this.description = data.description;
+    this.catalog = data.catalog;
     this.status = data.status;
     this.avatar = data.avatar;
-    this.plan = data.plan;
     this.currency = data.currency;
-    this.favicon = data.favicon;
+    this.icon = data.icon;
     this.logo = data.logo;
     this.active = data.active;
+    this.paymentMethod = data.paymentMethod;
     this.blockedAt = convertToISODateString(data.blockedAt);
     this.activatedAt = convertToISODateString(data.activatedAt);
     this.deactivatedAt = convertToISODateString(data.deactivatedAt);
@@ -78,6 +90,11 @@ export class AppModel extends AggregateRoot {
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
     this.isStokei = !!this.id.match(/stokei/i);
+    this.stripeBankAccount = data.stripeBankAccount || undefined;
+    this.stripeAccount = data.stripeAccount || undefined;
+    this.isAllowedToSell = this.isStokei || !!this.stripeAccount;
+    this.isAllowedToUsePlan = this.isStokei || !!this.paymentMethod;
+    this.isIntegratedWithStripe = !!this.stripeAccount;
   }
 
   createdApp({ createdBy }: { createdBy: string }) {

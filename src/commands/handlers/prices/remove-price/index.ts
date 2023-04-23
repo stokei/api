@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { RemovePriceCommand } from '@/commands/implements/prices/remove-price.command';
 import {
@@ -7,15 +7,17 @@ import {
   ParamNotFoundException,
   PriceNotFoundException
 } from '@/errors';
-import { FindPriceByIdRepository } from '@/repositories/prices/find-price-by-id';
 import { RemovePriceRepository } from '@/repositories/prices/remove-price';
+import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
+import { DeleteStripePriceService } from '@/services/stripe/delete-stripe-price';
 
 @CommandHandler(RemovePriceCommand)
 export class RemovePriceCommandHandler
   implements ICommandHandler<RemovePriceCommand>
 {
   constructor(
-    private readonly findPriceByIdRepository: FindPriceByIdRepository,
+    private readonly findPriceByIdService: FindPriceByIdService,
+    private readonly deleteStripePriceService: DeleteStripePriceService,
     private readonly removePriceRepository: RemovePriceRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -28,12 +30,12 @@ export class RemovePriceCommandHandler
     if (!data.where?.removedBy) {
       throw new ParamNotFoundException('removedBy');
     }
-    const priceId = splitServiceId(data.where?.price)?.id;
+    const priceId = data.where?.price;
     if (!priceId) {
       throw new ParamNotFoundException('priceId');
     }
 
-    const price = await this.findPriceByIdRepository.execute(priceId);
+    const price = await this.findPriceByIdService.execute(priceId);
     if (!price) {
       throw new PriceNotFoundException();
     }
@@ -47,6 +49,9 @@ export class RemovePriceCommandHandler
     if (!removed) {
       throw new DataNotFoundException();
     }
+
+    await this.deleteStripePriceService.execute(price.stripePrice);
+
     const priceModel = this.publisher.mergeObjectContext(price);
     priceModel.removedPrice({
       removedBy: data.where.removedBy

@@ -3,10 +3,11 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { AppStatus } from '@/controllers/graphql/enums/app-status.enum';
 
 import { Account } from './account';
+import { Colors } from './colors';
 import { Currency } from './currency';
 import { Image } from './image';
 import { Phones } from './phones';
-import { Plan } from './plan';
+import { SubscriptionContract } from './subscription-contract';
 
 @ObjectType()
 export class App {
@@ -22,23 +23,32 @@ export class App {
   @Field(() => String, { nullable: true })
   description?: string;
 
+  @Field(() => String, { nullable: true })
+  email?: string;
+
+  @Field(() => String, { nullable: true })
+  stripeAccount?: string;
+
   @Field(() => AppStatus)
   status: AppStatus;
 
   @Field(() => Image, { nullable: true })
   avatar?: Image;
 
-  @Field(() => Plan, { nullable: true })
-  plan?: Plan;
+  @Field(() => SubscriptionContract, { nullable: true })
+  currentSubscriptionContract?: SubscriptionContract;
 
   @Field(() => Phones, { nullable: true })
   phones?: Phones;
+
+  @Field(() => Colors, { nullable: true })
+  colors?: Colors;
 
   @Field(() => Currency)
   currency: Currency;
 
   @Field(() => Image, { nullable: true })
-  favicon?: Image;
+  icon?: Image;
 
   @Field(() => Image, { nullable: true })
   logo?: Image;
@@ -48,6 +58,9 @@ export class App {
 
   @Field(() => Boolean)
   isStokei: boolean;
+
+  @Field(() => Boolean)
+  isIntegratedWithStripe: boolean;
 
   @Field(() => String, { nullable: true })
   blockedAt?: string;

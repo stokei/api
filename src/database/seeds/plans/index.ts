@@ -200,7 +200,7 @@ export class PlansSeeds
             app: defaultAppId,
             interval: IntervalType.MONTH,
             intervalCount: 1,
-            usageType: UsageType.METERED,
+            usageType: UsageType.LICENSED,
             createdBy: defaultAccountId
           }
         }
@@ -231,7 +231,7 @@ export class PlansSeeds
             app: defaultAppId,
             interval: IntervalType.MONTH,
             intervalCount: 1,
-            usageType: UsageType.METERED,
+            usageType: UsageType.LICENSED,
             createdBy: defaultAccountId
           }
         }

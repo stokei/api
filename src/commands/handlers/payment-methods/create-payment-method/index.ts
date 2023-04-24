@@ -15,6 +15,7 @@ import { ExistsPaymentMethodsRepository } from '@/repositories/payment-methods/e
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { AttachStripePaymentMethodToCustomerService } from '@/services/stripe/attach-stripe-payment-method-to-customer';
+import { FindStripeCustomerByIdService } from '@/services/stripe/find-customer-by-id';
 import { FindStripePaymentMethodByIdService } from '@/services/stripe/find-payment-method-by-id';
 
 type CreatePaymentMethodCommandKeys = keyof CreatePaymentMethodCommand;
@@ -29,6 +30,7 @@ export class CreatePaymentMethodCommandHandler
     private readonly createPaymentMethodRepository: CreatePaymentMethodRepository,
     private readonly existsPaymentMethodsRepository: ExistsPaymentMethodsRepository,
     private readonly findStripePaymentMethodByIdService: FindStripePaymentMethodByIdService,
+    private readonly findStripeCustomerByIdService: FindStripeCustomerByIdService,
     private readonly attachStripePaymentMethodToCustomerService: AttachStripePaymentMethodToCustomerService,
     private readonly publisher: EventPublisher
   ) {}
@@ -57,6 +59,10 @@ export class CreatePaymentMethodCommandHandler
     if (!app) {
       throw new AppNotFoundException();
     }
+    console.log({
+      acc: account.stripeCustomer,
+      app: app.stripeAccount
+    });
 
     const stripePaymentMethod =
       await this.findStripePaymentMethodByIdService.execute(
@@ -64,6 +70,24 @@ export class CreatePaymentMethodCommandHandler
         app.stripeAccount
       );
     if (!stripePaymentMethod) {
+      throw new PaymentMethodNotFoundException();
+    }
+    // const stripeCustomer = await this.findStripeCustomerByIdService.execute(
+    //   account.stripeCustomer,
+    //   app.stripeAccount
+    // );
+    // if (!stripeCustomer) {
+    //   throw new AccountNotFoundException();
+    // }
+    console.log({
+      acc: account.stripeCustomer,
+      app: app.stripeAccount,
+      stripe: stripePaymentMethod?.customer
+    });
+    if (
+      !!stripePaymentMethod?.customer &&
+      stripePaymentMethod?.customer !== account.stripeCustomer
+    ) {
       throw new PaymentMethodNotFoundException();
     }
 

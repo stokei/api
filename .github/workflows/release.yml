@@ -1,4 +1,4 @@
-name: CI
+name: CI_CD
 
 on:
   release:
@@ -10,41 +10,15 @@ env:
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
-  CI:
-    name: CI
+  CI_CD:
+    name: CI_CD
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
 
-      - name: Prettify code
-        uses: creyD/prettier_action@v3.3
-        with:
-          # This part is also where you can pass other options, for example:
-          prettier_options: --write **/*.{js,ts,md}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Unit tests
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: npm install
-      - run: npm run test
-        env:
-          CI: true
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  CD:
-    name: CD
-    needs: [CI]
-    runs-on: ubuntu-latest
-    steps:
       - name: Getting version
         id: versions-variables
         run: |

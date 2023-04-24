@@ -2,7 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - '**'
+      - '!release/*'
 
   workflow_dispatch:
 
@@ -19,7 +21,7 @@ jobs:
 
       # ESLint and Prettier must be in `package.json`
       - name: Install Node.js dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Prettify code
         uses: creyD/prettier_action@v3.3
@@ -33,7 +35,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm run lint
+      - run: yarn lint
         env:
           CI: true
 
@@ -41,6 +43,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm run test
+      - run: yarn test
         env:
           CI: true

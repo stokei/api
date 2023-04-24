@@ -1,7 +1,8 @@
 FROM node:18.12.1-alpine as base
 FROM base as builder
 WORKDIR /app
-ENV DB_URL=
+ARG DB_URL
+ENV DB_URL=${DB_URL}
 COPY package.json yarn.lock ./
 RUN npm install -g npm@9.6.5
 RUN yarn install --frozen-lockfile

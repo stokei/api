@@ -59,10 +59,6 @@ export class CreatePaymentMethodCommandHandler
     if (!app) {
       throw new AppNotFoundException();
     }
-    console.log({
-      acc: account.stripeCustomer,
-      app: app.stripeAccount
-    });
 
     const stripePaymentMethod =
       await this.findStripePaymentMethodByIdService.execute(
@@ -72,18 +68,13 @@ export class CreatePaymentMethodCommandHandler
     if (!stripePaymentMethod) {
       throw new PaymentMethodNotFoundException();
     }
-    // const stripeCustomer = await this.findStripeCustomerByIdService.execute(
-    //   account.stripeCustomer,
-    //   app.stripeAccount
-    // );
-    // if (!stripeCustomer) {
-    //   throw new AccountNotFoundException();
-    // }
-    console.log({
-      acc: account.stripeCustomer,
-      app: app.stripeAccount,
-      stripe: stripePaymentMethod?.customer
-    });
+    const stripeCustomer = await this.findStripeCustomerByIdService.execute(
+      account.stripeCustomer,
+      app.stripeAccount
+    );
+    if (!stripeCustomer) {
+      throw new AccountNotFoundException();
+    }
     if (
       !!stripePaymentMethod?.customer &&
       stripePaymentMethod?.customer !== account.stripeCustomer

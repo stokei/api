@@ -12,8 +12,10 @@ import { PriceModelMock } from '@/mocks/models/price.mock';
 import { ProductModelMock } from '@/mocks/models/product.mock';
 import { SubscriptionContractModelMock } from '@/mocks/models/subscription-contract.mock';
 import { SubscriptionContractItemModelMock } from '@/mocks/models/subscription-contract-item.mock';
+import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentSubscriptionContractService } from '@/services/apps/find-app-current-subscription-contract';
+import { FindPaymentMethodByIdService } from '@/services/payment-methods/find-payment-method-by-id';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateStripeSubscriptionService } from '@/services/stripe/create-stripe-subscription';
@@ -22,6 +24,7 @@ import { CreateSubscriptionContractItemService } from '@/services/subscription-c
 import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
 import { UpdateSubscriptionContractItemService } from '@/services/subscription-contract-items/update-subscription-contract-item';
 import { ActivateSubscriptionContractService } from '@/services/subscription-contracts/activate-subscription-contract';
+import { CancelSubscriptionContractService } from '@/services/subscription-contracts/cancel-subscription-contract';
 import { CreateSubscriptionContractService } from '@/services/subscription-contracts/create-subscription-contract';
 import { CreateUsageRecordService } from '@/services/usage-records/create-usage-record';
 
@@ -31,6 +34,7 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
   let addItemToAppSubscriptionContractCommandHandler: AddItemToAppSubscriptionContractCommandHandler;
   let activateSubscriptionContractService: ActivateSubscriptionContractService;
   let findAppByIdService: FindAppByIdService;
+  let findAccountByIdService: FindAccountByIdService;
   let findStripeSubscriptionByIdService: FindStripeSubscriptionByIdService;
   let createSubscriptionContractService: CreateSubscriptionContractService;
   let createSubscriptionContractItemService: CreateSubscriptionContractItemService;
@@ -60,6 +64,24 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
         AddItemToAppSubscriptionContractCommandHandler,
         {
           provide: FindAppByIdService,
+          useValue: {
+            execute: jest.fn()
+          }
+        },
+        {
+          provide: FindAccountByIdService,
+          useValue: {
+            execute: jest.fn()
+          }
+        },
+        {
+          provide: FindPaymentMethodByIdService,
+          useValue: {
+            execute: jest.fn()
+          }
+        },
+        {
+          provide: CancelSubscriptionContractService,
           useValue: {
             execute: jest.fn()
           }
@@ -163,6 +185,9 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
     );
     findPriceByIdService =
       moduleRef.get<FindPriceByIdService>(FindPriceByIdService);
+    findAccountByIdService = moduleRef.get<FindAccountByIdService>(
+      FindAccountByIdService
+    );
     findProductByIdService = moduleRef.get<FindProductByIdService>(
       FindProductByIdService
     );
@@ -180,11 +205,13 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
       );
 
     jest.spyOn(findAppByIdService, 'execute').mockResolvedValue(app);
+    jest.spyOn(findAccountByIdService, 'execute').mockResolvedValue(account);
   });
 
   it('should be defined', () => {
     expect(addItemToAppSubscriptionContractCommandHandler).toBeDefined();
     expect(findAppByIdService).toBeDefined();
+    expect(findAccountByIdService).toBeDefined();
     expect(findStripeSubscriptionByIdService).toBeDefined();
     expect(activateSubscriptionContractService).toBeDefined();
     expect(createSubscriptionContractService).toBeDefined();
@@ -307,6 +334,7 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
 
   describe('findOrCreateSubscription', () => {
     it('should return app current subscription contract when app has a valid subscription', async () => {
+      const stripeSubscription = 'stripeSubscriptionId';
       const price = new PriceModelMock({
         parent: product.id,
         app: app.id,
@@ -315,11 +343,19 @@ describe('AddItemToAppSubscriptionContractCommandHandler', () => {
       const expectSubscriptionContractResponse =
         new SubscriptionContractModelMock({
           parent: account.id,
-          app: app.id
+          app: app.id,
+          status: SubscriptionContractStatus.ACTIVE,
+          stripeSubscription
         });
       jest
         .spyOn(findAppCurrentSubscriptionContractService, 'execute')
         .mockResolvedValue(expectSubscriptionContractResponse);
+      jest
+        .spyOn(findStripeSubscriptionByIdService, 'execute')
+        .mockResolvedValue({
+          id: expectSubscriptionContractResponse.stripeSubscription,
+          status: 'active'
+        } as any);
       expect(
         await addItemToAppSubscriptionContractCommandHandler.findOrCreateSubscription(
           {

@@ -204,6 +204,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
       }
       return { subscriptionContract };
     } catch (error) {
+      console.log(error);
       let appPaymentMethod: PaymentMethodModel;
       try {
         appPaymentMethod = await this.findPaymentMethodByIdService.execute(

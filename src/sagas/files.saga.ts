@@ -6,6 +6,8 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { AddFileToAppSubscriptionContractCommand } from '@/commands/implements/files/add-file-to-app-subscription-contract.command';
 import { AddVideoFileToAppSubscriptionContractCommand } from '@/commands/implements/files/add-video-file-to-app-subscription-contract.command';
+import { RemoveFileFromAppSubscriptionContractCommand } from '@/commands/implements/files/remove-file-from-app-subscription-contract.command';
+import { RemoveVideoFromAppSubscriptionContractCommand } from '@/commands/implements/files/remove-video-from-app-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { FileActivatedEvent } from '@/events/implements/files/file-activated.event';
 import { FileCreatedEvent } from '@/events/implements/files/file-created.event';
@@ -54,6 +56,21 @@ export class FilesSagas {
             )
         );
         const commands = [];
+        if (!event.file.isVideo && !event.file.isImage) {
+          commands.push(
+            new RemoveFileFromAppSubscriptionContractCommand({
+              file: event.file.id,
+              removedBy: event.removedBy
+            })
+          );
+        } else if (event.file.isVideo) {
+          commands.push(
+            new RemoveVideoFromAppSubscriptionContractCommand({
+              file: event.file.id,
+              removedBy: event.removedBy
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)

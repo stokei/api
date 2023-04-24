@@ -114,37 +114,6 @@ export class PlansSeeds
       },
       {
         plan: {
-          name: 'Cursos',
-          app: defaultAppId,
-          type: PlanType.COURSE,
-          createdBy: defaultAccountId
-        },
-        price: {
-          parent: undefined,
-          app: defaultAppId,
-          nickname: 'Cursos',
-          unit: 'un',
-          billingScheme: BillingScheme.PER_UNIT,
-          currency: defaultCurrencyId,
-          inventoryType: InventoryType.INFINITE,
-          tiersMode: undefined,
-          type: PriceType.RECURRING,
-          amount: getPlanPriceAmountByType(PlanType.COURSE),
-          fromAmount: undefined,
-          quantity: undefined,
-          tiers: undefined,
-          createdBy: defaultAccountId,
-          recurring: {
-            app: defaultAppId,
-            interval: IntervalType.MONTH,
-            intervalCount: 1,
-            usageType: UsageType.LICENSED,
-            createdBy: defaultAccountId
-          }
-        }
-      },
-      {
-        plan: {
           name: 'Domínios',
           app: defaultAppId,
           type: PlanType.DOMAIN,
@@ -217,22 +186,15 @@ export class PlansSeeds
           app: defaultAppId,
           nickname: 'Storage',
           unit: 'Kb',
-          billingScheme: BillingScheme.TIERED,
+          billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
           tiersMode: TiersMode.VOLUME,
           type: PriceType.RECURRING,
-          amount: undefined,
+          amount: getPlanPriceAmountByType(PlanType.STORAGE),
           fromAmount: undefined,
           quantity: undefined,
-          tiers: [
-            {
-              app: defaultAppId,
-              createdBy: defaultAccountId,
-              infinite: true,
-              amount: getPlanPriceAmountByType(PlanType.STORAGE)
-            }
-          ],
+          tiers: undefined,
           createdBy: defaultAccountId,
           recurring: {
             app: defaultAppId,
@@ -255,22 +217,15 @@ export class PlansSeeds
           app: defaultAppId,
           nickname: 'Videos',
           unit: 'Min',
-          billingScheme: BillingScheme.TIERED,
+          billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
           tiersMode: TiersMode.VOLUME,
           type: PriceType.RECURRING,
-          amount: undefined,
+          amount: getPlanPriceAmountByType(PlanType.VIDEO),
           fromAmount: undefined,
           quantity: undefined,
-          tiers: [
-            {
-              app: defaultAppId,
-              createdBy: defaultAccountId,
-              infinite: true,
-              amount: getPlanPriceAmountByType(PlanType.VIDEO)
-            }
-          ],
+          tiers: undefined,
           createdBy: defaultAccountId,
           recurring: {
             app: defaultAppId,

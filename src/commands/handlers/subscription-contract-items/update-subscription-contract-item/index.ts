@@ -68,6 +68,10 @@ export class UpdateSubscriptionContractItemCommandHandler
     if (price.billingScheme === BillingScheme.TIERED) {
       throw new SubscriptionContractItemPriceUnauthorizedUpdateException();
     }
+    const priceApp = await this.findAppByIdService.execute(price.app);
+    if (!priceApp) {
+      throw new AppNotFoundException();
+    }
     const dataUpdated = data.data;
 
     const stripeSubscriptionItemUpdated =
@@ -76,7 +80,7 @@ export class UpdateSubscriptionContractItemCommandHandler
           quantity: dataUpdated.quantity
         },
         where: {
-          stripeAccount: app.stripeAccount,
+          stripeAccount: !priceApp.isStokei ? app.stripeAccount : undefined,
           stripeSubscriptionItem:
             subscriptionContractItem.stripeSubscriptionItem
         }

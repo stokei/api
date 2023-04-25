@@ -1,6 +1,6 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { CacheModule } from '@nestjs/cache-manager';
 import {
-  CacheModule,
   MiddlewareConsumer,
   Module,
   NestModule,
@@ -9,6 +9,7 @@ import {
 import { APP_FILTER } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
+import { TerminusModule } from '@nestjs/terminus';
 import { AuthModule } from '@stokei/nestjs';
 
 import { CommandHandlers } from './commands/handlers';
@@ -30,6 +31,7 @@ import { Services } from './services';
 
 @Module({
   imports: [
+    TerminusModule,
     CacheModule.register(),
     CqrsModule,
     DatabaseModule,
@@ -40,7 +42,7 @@ import { Services } from './services';
       fieldResolverEnhancers: ['guards', 'interceptors'],
       playground: !IS_PRODUCTION,
       debug: !IS_PRODUCTION,
-      introspection: !IS_PRODUCTION,
+      introspection: true,
       autoSchemaFile: true
     })
   ],

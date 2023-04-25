@@ -116,7 +116,6 @@ export class AddItemToAppSubscriptionContractCommandHandler
         quantity: data?.quantity,
         createdBy: data.createdBy
       });
-
       const subscriptionContractItem = await this.findOrCreateSubscriptionItem({
         app,
         price,
@@ -204,7 +203,6 @@ export class AddItemToAppSubscriptionContractCommandHandler
       }
       return { subscriptionContract };
     } catch (error) {
-      console.log(error);
       let appPaymentMethod: PaymentMethodModel;
       try {
         appPaymentMethod = await this.findPaymentMethodByIdService.execute(
@@ -246,7 +244,6 @@ export class AddItemToAppSubscriptionContractCommandHandler
           endAt: convertToISODateString(addMonths(1, startAt)),
           updatedBy: createdBy
         });
-
       return {
         subscriptionContract,
         stripeSubscriptionContractItemId: stripeSubscription.items.data[0].id

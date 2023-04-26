@@ -2,6 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
   WhereDataBooleanInput,
+  WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
@@ -20,8 +21,8 @@ class WhereDataFindAllSubscriptionContractsDataInput
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field(() => WhereDataStringInput, { nullable: true })
-  parent?: WhereDataStringInput;
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  parent?: WhereDataSearchInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   app?: WhereDataStringInput;

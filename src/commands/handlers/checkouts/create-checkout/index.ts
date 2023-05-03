@@ -133,6 +133,7 @@ export class CreateCheckoutCommandHandler
         parent: data.customer,
         paymentMethod: paymentMethod?.id,
         stripeSubscription: stripeSubscription.id,
+        createdByAdmin: false,
         startAt: stripeSubscription.start_date
           ? convertToISODateString(stripeSubscription.start_date)
           : null,
@@ -154,6 +155,7 @@ export class CreateCheckoutCommandHandler
         parent: subscriptionContract.id,
         quantity: 1,
         createdBy: data.createdBy,
+        createdByAdmin: false,
         stripeSubscriptionItem: stripeSubscription.items.data[0].id
       });
     if (!subscriptionContractItem) {

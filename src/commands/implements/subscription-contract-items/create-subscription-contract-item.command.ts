@@ -13,6 +13,7 @@ export class CreateSubscriptionContractItemCommand
   stripeSubscriptionItem?: string;
   isDefaultStripeAccount?: boolean;
   recurring?: string;
+  createdByAdmin: boolean;
   createdBy: string;
 
   constructor(data: CreateSubscriptionContractItemDTO) {
@@ -23,6 +24,7 @@ export class CreateSubscriptionContractItemCommand
     this.price = data.price;
     this.stripeSubscriptionItem = data.stripeSubscriptionItem;
     this.isDefaultStripeAccount = data.isDefaultStripeAccount;
+    this.createdByAdmin = data.createdByAdmin;
     this.recurring = data.recurring;
     this.createdBy = data.createdBy;
   }

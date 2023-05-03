@@ -232,7 +232,8 @@ export class AddItemToAppSubscriptionContractCommandHandler
           createdBy,
           parent: app.id,
           stripeSubscription: stripeSubscription.id,
-          type: price.type
+          type: price.type,
+          createdByAdmin: false
         });
       const startAt = convertToISODateString(Date.now());
       const subscriptionContract =
@@ -313,6 +314,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
       quantity,
       recurring: null,
       createdBy,
+      createdByAdmin: false,
       isDefaultStripeAccount: true
     });
   }

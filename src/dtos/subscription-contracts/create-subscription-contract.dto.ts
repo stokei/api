@@ -9,5 +9,6 @@ export interface CreateSubscriptionContractDTO {
   paymentMethod?: string;
   type: SubscriptionContractType;
   automaticRenew: boolean;
+  createdByAdmin: boolean;
   createdBy: string;
 }

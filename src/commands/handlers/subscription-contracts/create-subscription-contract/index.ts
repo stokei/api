@@ -43,6 +43,7 @@ export class CreateSubscriptionContractCommandHandler
         app: data.app,
         automaticRenew: data.automaticRenew,
         createdBy: data.createdBy,
+        createdByAdmin: !!data.createdByAdmin,
         parent: data.parent,
         paymentMethod: data.paymentMethod,
         stripeSubscription: data.stripeSubscription,
@@ -75,6 +76,7 @@ export class CreateSubscriptionContractCommandHandler
       paymentMethod: cleanValue(command?.paymentMethod),
       stripeSubscription: cleanValue(command?.stripeSubscription),
       type: cleanValue(command?.type),
+      createdByAdmin: cleanValueBoolean(command?.createdByAdmin),
       automaticRenew: cleanValueBoolean(command?.automaticRenew),
       createdBy: cleanValue(command?.createdBy)
     });

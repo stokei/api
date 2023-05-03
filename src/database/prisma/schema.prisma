@@ -82,6 +82,11 @@ enum SubscriptionContractType {
   ONE_TIME
 }
 
+enum SubscriptionContractCreatedByType {
+  CUSTOMER
+  ADMIN
+}
+
 enum InventoryType {
   INFINITE
   FINITE
@@ -557,6 +562,7 @@ model SubscriptionContract {
   status             SubscriptionContractStatus
   type               SubscriptionContractType
   automaticRenew     Boolean                    @default(false) @map("automatic_renew")
+  createdByAdmin     Boolean                    @default(false) @map("created_by_admin")
   active             Boolean                    @default(false)
   startAt            DateTime?                  @map("start_at")
   endAt              DateTime?                  @map("end_at")
@@ -574,7 +580,7 @@ model SubscriptionContractItem {
   parent                 String    @db.VarChar(255)
   product                String    @db.VarChar(255)
   quantity               Int
-  price                  String    @db.VarChar(255)
+  price                  String?   @db.VarChar(255)
   stripeSubscriptionItem String?   @map("stripe_subscription_item") @db.VarChar(255)
   recurring              String?
   updatedAt              DateTime? @updatedAt @map("updated_at")

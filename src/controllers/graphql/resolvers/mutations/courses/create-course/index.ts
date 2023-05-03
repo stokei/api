@@ -2,7 +2,6 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
-import { AppConfig } from '@/common/decorators/app-config.decorator';
 import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
 import { CreateCourseInput } from '@/controllers/graphql/inputs/courses/create-course.input';
@@ -13,10 +12,6 @@ import { CreateCourseService } from '@/services/courses/create-course';
 export class CreateCourseResolver {
   constructor(private readonly createCourseService: CreateCourseService) {}
 
-  @AppConfig({
-    isAllowedToUsePlan: true,
-    isRequired: true
-  })
   @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Course)
   async createCourse(

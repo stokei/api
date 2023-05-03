@@ -14,6 +14,7 @@ export class CreateSubscriptionContractCommand
   paymentMethod?: string;
   type: SubscriptionContractType;
   automaticRenew: boolean;
+  createdByAdmin: boolean;
   createdBy: string;
 
   constructor(data: CreateSubscriptionContractDTO) {
@@ -25,6 +26,7 @@ export class CreateSubscriptionContractCommand
     this.endAt = data.endAt;
     this.paymentMethod = data.paymentMethod;
     this.automaticRenew = data.automaticRenew;
+    this.createdByAdmin = data.createdByAdmin;
     this.createdBy = data.createdBy;
   }
 }

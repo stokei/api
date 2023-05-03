@@ -4,6 +4,7 @@ export class CreateSubscriptionContractItemDTO {
   product: string;
   quantity: number;
   price: string;
+  createdByAdmin?: boolean;
   isDefaultStripeAccount?: boolean;
   stripeSubscriptionItem?: string;
   recurring?: string;

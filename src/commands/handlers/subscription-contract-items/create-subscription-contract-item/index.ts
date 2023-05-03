@@ -15,6 +15,7 @@ import {
   SubscriptionContractItemNotFoundException,
   SubscriptionContractNotFoundException
 } from '@/errors';
+import { PriceModel } from '@/models/price.model';
 import { CreateSubscriptionContractItemRepository } from '@/repositories/subscription-contract-items/create-subscription-contract-item';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
@@ -47,21 +48,31 @@ export class CreateSubscriptionContractItemCommandHandler
         'parent'
       );
     }
-    if (!data?.price) {
-      throw new ParamNotFoundException<CreateSubscriptionContractItemCommandKeys>(
-        'price'
-      );
-    }
     if (!data?.product) {
       throw new ParamNotFoundException<CreateSubscriptionContractItemCommandKeys>(
         'product'
       );
     }
+    const {
+      isDefaultStripeAccount,
+      createdByAdmin,
+      ...dataSubscriptionItemCreated
+    } = data;
 
-    const price = await this.findPriceByIdService.execute(data.price);
-    if (!price) {
-      throw new PriceNotFoundException();
+    let price: PriceModel;
+    const priceIsRequired = !createdByAdmin;
+    if (!!priceIsRequired) {
+      if (!data?.price) {
+        throw new ParamNotFoundException<CreateSubscriptionContractItemCommandKeys>(
+          'price'
+        );
+      }
+      price = await this.findPriceByIdService.execute(data.price);
+      if (!price) {
+        throw new PriceNotFoundException();
+      }
     }
+
     const subscriptionContract =
       await this.findSubscriptionContractByIdService.execute(data.parent);
     if (!subscriptionContract) {
@@ -72,11 +83,11 @@ export class CreateSubscriptionContractItemCommandHandler
       throw new AppNotFoundException();
     }
 
-    const { isDefaultStripeAccount, ...dataSubscriptionItemCreated } = data;
-
     const existsStripeSubscriptionItem = !!data?.stripeSubscriptionItem;
     let stripeSubscriptionItemId = data.stripeSubscriptionItem;
-    if (!existsStripeSubscriptionItem) {
+    const canCreateNewStripeSubscriptionItem =
+      !createdByAdmin && !existsStripeSubscriptionItem;
+    if (!!canCreateNewStripeSubscriptionItem) {
       const stripeSubscriptionItem =
         await this.createStripeSubscriptionItemService.execute({
           price: price.stripePrice,
@@ -119,6 +130,7 @@ export class CreateSubscriptionContractItemCommandHandler
       product: cleanValue(command?.product),
       quantity: cleanValueNumber(command?.quantity),
       price: cleanValue(command?.price),
+      createdByAdmin: cleanValueBoolean(command?.createdByAdmin),
       isDefaultStripeAccount: cleanValueBoolean(
         command?.isDefaultStripeAccount
       ),

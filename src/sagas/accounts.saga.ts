@@ -6,6 +6,7 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { CreateAccountStripeCustomerCommand } from '@/commands/implements/accounts/create-account-stripe-customer.command';
 import { UpdateAccountStripeCustomerCommand } from '@/commands/implements/accounts/update-account-stripe-customer.command';
+import { SendForgotPasswordEmailCommand } from '@/commands/implements/emails/send-forgot-password-email.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
 import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
@@ -126,7 +127,13 @@ export class AccountsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new SendForgotPasswordEmailCommand({
+            app: event.account.app,
+            toAccount: event.account.id,
+            createdBy: event.account.createdBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

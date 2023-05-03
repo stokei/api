@@ -8,6 +8,7 @@ import { FindAllAppsService } from './find-all-apps';
 import { FindAppByIdService } from './find-app-by-id';
 import { FindAppCurrentDomainService } from './find-app-current-domain';
 import { FindAppCurrentSubscriptionContractService } from './find-app-current-subscription-contract';
+import { FindAppEmailInformationsService } from './find-app-email-informations';
 import { RemoveItemFromAppSubscriptionContractService } from './remove-item-from-app-subscription-contract';
 import { UpdateAppService } from './update-app';
 
@@ -23,5 +24,6 @@ export const AppServices = [
   AddItemToAppSubscriptionContractService,
   RemoveItemFromAppSubscriptionContractService,
   FindAppByIdService,
-  FindAllAppsService
+  FindAllAppsService,
+  FindAppEmailInformationsService
 ];

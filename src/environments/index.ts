@@ -42,3 +42,5 @@ export const CLOUDFLARE_ACCOUNT_HASH: string =
 export const CLOUDFLARE_TOKEN: string = process.env.CLOUDFLARE_TOKEN;
 export const CLOUDFLARE_STREAM_CUSTOMER_CODE: string =
   process.env.CLOUDFLARE_STREAM_CUSTOMER_CODE;
+
+export const SENDGRID_KEY: string = process.env.SENDGRID_KEY;

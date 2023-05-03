@@ -12,6 +12,7 @@ import { CourseCommandHandlers } from './courses';
 import { CurrencyCommandHandlers } from './currencies';
 import { CustomerPortalSessionCommandHandlers } from './customer-portal-sessions';
 import { DomainCommandHandlers } from './domains';
+import { EmailCommandHandlers } from './emails';
 import { FeatureCommandHandlers } from './features';
 import { FileCommandHandlers } from './files';
 import { HeroCommandHandlers } from './heros';
@@ -69,5 +70,6 @@ export const CommandHandlers = [
   ...CatalogCommandHandlers,
   ...RoleCommandHandlers,
   ...HeroCommandHandlers,
-  ...SortedItemCommandHandlers
+  ...SortedItemCommandHandlers,
+  ...EmailCommandHandlers
 ];

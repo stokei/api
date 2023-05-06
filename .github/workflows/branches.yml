@@ -1,4 +1,4 @@
-name: CI
+name: BRANCHES
 
 on:
   push:
@@ -9,15 +9,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  CI:
-    name: CI
+  BRANCHES:
+    name: BRANCHES
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
+
+      - name: Use Node.js v18.15.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.15.0'
+          cache: 'npm'
 
       - name: Install Node.js dependencies
         run: yarn install --frozen-lockfile
@@ -26,7 +32,7 @@ jobs:
         run: yarn db:generate && yarn build
 
       - name: Prettify code
-        uses: creyD/prettier_action@v3.3
+        uses: creyD/prettier_action@v4.3
         with:
           # This part is also where you can pass other options, for example:
           prettier_options: --write **/*.{js,ts,md}
@@ -34,17 +40,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Eslint
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: yarn lint
-        env:
-          CI: true
+        run: yarn lint
 
       - name: Unit tests
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: yarn test
+        run: yarn test
         env:
-          CI: true
+          PASSWORD_SECRET_KEY: ${{ env.PASSWORD_SECRET_KEY }}

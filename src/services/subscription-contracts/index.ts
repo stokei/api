@@ -1,6 +1,7 @@
 import { ActivateSubscriptionContractService } from './activate-subscription-contract';
 import { CancelSubscriptionContractService } from './cancel-subscription-contract';
 import { CreateSubscriptionContractService } from './create-subscription-contract';
+import { CreateSubscriptionContractByAdminService } from './create-subscription-contract-by-admin';
 import { FindAllSubscriptionContractsService } from './find-all-subscription-contracts';
 import { FindSubscriptionContractByIdService } from './find-subscription-contract-by-id';
 import { FindSubscriptionContractByStripeSubscriptionService } from './find-subscription-contract-by-stripe-subscription';
@@ -15,5 +16,6 @@ export const SubscriptionContractServices = [
   FindSubscriptionContractLastInvoiceService,
   FindSubscriptionContractByStripeSubscriptionService,
   ActivateSubscriptionContractService,
-  CancelSubscriptionContractService
+  CancelSubscriptionContractService,
+  CreateSubscriptionContractByAdminService
 ];

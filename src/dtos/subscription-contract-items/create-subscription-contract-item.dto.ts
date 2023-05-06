@@ -3,7 +3,7 @@ export class CreateSubscriptionContractItemDTO {
   parent: string;
   product: string;
   quantity: number;
-  price: string;
+  price?: string;
   createdByAdmin?: boolean;
   isDefaultStripeAccount?: boolean;
   stripeSubscriptionItem?: string;

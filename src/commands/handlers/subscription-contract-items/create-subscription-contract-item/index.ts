@@ -104,6 +104,7 @@ export class CreateSubscriptionContractItemCommandHandler
     const subscriptionContractItemCreated =
       await this.createSubscriptionContractItemRepository.execute({
         ...dataSubscriptionItemCreated,
+        recurring: data.recurring || price.recurring,
         stripeSubscriptionItem: stripeSubscriptionItemId
       });
     if (!subscriptionContractItemCreated) {

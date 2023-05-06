@@ -6,12 +6,12 @@ import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
 import { CreateSubscriptionContractInput } from '@/controllers/graphql/inputs/subscription-contracts/create-subscription-contract.input';
 import { SubscriptionContract } from '@/controllers/graphql/types/subscription-contract';
-import { CreateSubscriptionContractService } from '@/services/subscription-contracts/create-subscription-contract';
+import { CreateSubscriptionContractByAdminService } from '@/services/subscription-contracts/create-subscription-contract-by-admin';
 
 @Resolver(() => SubscriptionContract)
 export class CreateSubscriptionContractResolver {
   constructor(
-    private readonly createSubscriptionContractService: CreateSubscriptionContractService
+    private readonly createSubscriptionContractByAdminService: CreateSubscriptionContractByAdminService
   ) {}
 
   @UseGuards(AuthenticatedGuard, AppGuard)
@@ -21,14 +21,12 @@ export class CreateSubscriptionContractResolver {
     @CurrentApp('id') appId: string,
     @Args('input') data: CreateSubscriptionContractInput
   ) {
-    const response = await this.createSubscriptionContractService.execute({
-      ...data,
-      stripeSubscription: null,
-      createdByAdmin: true,
-      automaticRenew: true,
-      app: appId,
-      createdBy: currentAccountId
-    });
+    const response =
+      await this.createSubscriptionContractByAdminService.execute({
+        ...data,
+        app: appId,
+        createdBy: currentAccountId
+      });
     return response;
   }
 }

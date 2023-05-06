@@ -16,6 +16,7 @@ import { SubscriptionContractType } from '@/enums/subscription-contract-type.enu
 import { SubscriptionContractActivatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-activated.event';
 import { SubscriptionContractCanceledEvent } from '@/events/implements/subscription-contracts/subscription-contract-canceled.event';
 import { SubscriptionContractCreatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-created.event';
+import { SubscriptionContractCreatedByAdminEvent } from '@/events/implements/subscription-contracts/subscription-contract-created-by-admin.event';
 import { SubscriptionContractUpdatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-updated.event';
 
 import { RecurringModel } from './recurring.model';
@@ -105,6 +106,17 @@ export class SubscriptionContractModel extends AggregateRoot {
     if (this.id) {
       this.apply(
         new SubscriptionContractCreatedEvent({
+          createdBy,
+          subscriptionContract: this
+        })
+      );
+    }
+  }
+
+  createdSubscriptionContractByAdmin({ createdBy }: { createdBy: string }) {
+    if (this.id) {
+      this.apply(
+        new SubscriptionContractCreatedByAdminEvent({
           createdBy,
           subscriptionContract: this
         })

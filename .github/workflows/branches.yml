@@ -22,7 +22,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'yarn'
 
       - name: Install Node.js dependencies
         run: yarn install --frozen-lockfile
@@ -36,7 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Eslint
-        run: yarn lint
+        run: npx eslint "{src,test}/**/*.ts"
 
       - name: Unit tests
         run: yarn test

@@ -14,13 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           # Make sure the actual branch is checked out when running on pull requests
           ref: ${{ github.head_ref }}
 
       - name: Use Node.js v18.15.0
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v1
         with:
           node-version: '18.15.0'
 
@@ -37,7 +37,7 @@ jobs:
           CI: true
 
       - name: Eslint
-        run: ./node_modules/.bin/eslint "{src,test}/**/*.ts"
+        run: yarn lint
         env:
           CI: true
 

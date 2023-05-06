@@ -28,9 +28,6 @@ jobs:
       - name: Install Node.js dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build
-        run: yarn db:generate && yarn build
-
       - name: Prettify code
         uses: creyD/prettier_action@v4.3
         with:
@@ -38,11 +35,15 @@ jobs:
           prettier_options: --write **/*.{js,ts,md}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI: true
 
       - name: Eslint
         run: yarn lint
+        env:
+          CI: true
 
       - name: Unit tests
         run: yarn test
         env:
           PASSWORD_SECRET_KEY: ${{ env.PASSWORD_SECRET_KEY }}
+          CI: true

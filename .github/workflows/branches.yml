@@ -23,7 +23,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.15.0'
-          cache: 'npm'
 
       - name: Install Node.js dependencies
         run: yarn install --frozen-lockfile
@@ -38,7 +37,7 @@ jobs:
           CI: true
 
       - name: Eslint
-        run: yarn lint
+        run: yarn run eslint "{src,test}/**/*.ts"
         env:
           CI: true
 

@@ -37,7 +37,7 @@ jobs:
           CI: true
 
       - name: Eslint
-        run: yarn run eslint "{src,test}/**/*.ts"
+        run: ./node_modules/.bin/eslint "{src,test}/**/*.ts"
         env:
           CI: true
 

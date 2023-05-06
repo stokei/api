@@ -16,16 +16,13 @@ jobs:
     name: BRANCHES
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          # Make sure the actual branch is checked out when running on pull requests
-          ref: ${{ github.head_ref }}
+      - uses: actions/checkout@v3
 
       - name: Use Node.js v18.15.0
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
 
       - name: Install Node.js dependencies
         run: yarn install --frozen-lockfile
@@ -37,25 +34,11 @@ jobs:
           prettier_options: --write **/*.{js,ts,md}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CI: true
-
-      - name: Use Node.js v18.15.0
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ env.NODE_VERSION }}
 
       - name: Eslint
         run: yarn lint
-        env:
-          CI: true
-
-      - name: Use Node.js v18.15.0
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ env.NODE_VERSION }}
 
       - name: Unit tests
         run: yarn test
         env:
           PASSWORD_SECRET_KEY: ${{ env.PASSWORD_SECRET_KEY }}
-          CI: true

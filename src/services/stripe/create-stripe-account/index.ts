@@ -18,7 +18,7 @@ export class CreateStripeAccountService
   ): Promise<Stripe.Response<Stripe.Account>> {
     const currentApp = data.app;
     const account = await stripeClient.accounts.create({
-      type: 'express',
+      type: 'standard',
       email: currentApp.email,
       default_currency: currentApp.currency,
       business_profile: {

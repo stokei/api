@@ -4,7 +4,6 @@ import { cleanValue } from '@stokei/nestjs';
 import {
   AppNotFoundException,
   DataNotFoundException,
-  DomainNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { DomainModel } from '@/models/domain.model';
@@ -53,7 +52,7 @@ export class FindAppCurrentDomainQueryHandler
     });
     const currentAppDomain = domains?.items?.length > 0 && domains?.items[0];
     if (!currentAppDomain) {
-      throw new DomainNotFoundException();
+      return null;
     }
     return currentAppDomain;
   }

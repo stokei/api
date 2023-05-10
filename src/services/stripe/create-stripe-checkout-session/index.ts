@@ -24,6 +24,7 @@ export class CreateStripeCheckoutSessionService
         client_reference_id: data.customerReference,
         customer: data.customer,
         mode: 'subscription',
+        expand: ['subscription'],
         line_items: data.prices.map((currentPrice) => ({
           price: currentPrice.price,
           quantity: currentPrice.quantity,
@@ -33,10 +34,7 @@ export class CreateStripeCheckoutSessionService
         })),
         ...(data.stripeAccount && {
           subscription_data: {
-            application_fee_percent: data.applicationFeePercentage,
-            transfer_data: {
-              destination: data.stripeAccount
-            }
+            application_fee_percent: data.applicationFeePercentage
           }
         })
       },

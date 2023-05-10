@@ -7,6 +7,7 @@ import {
 import Stripe from 'stripe';
 
 import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
+import { APPLICATION_FEE_PERCENT } from '@/environments';
 import {
   AccountNotFoundException,
   AppNotFoundException,
@@ -21,13 +22,16 @@ import {
 import { CheckoutMapper } from '@/mappers/checkouts';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { FindPaymentMethodByIdService } from '@/services/payment-methods/find-payment-method-by-id';
+import { FindAppCurrentDomainService } from '@/services/apps/find-app-current-domain';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
-import { CreateStripeSubscriptionService } from '@/services/stripe/create-stripe-subscription';
+import { CreateStripeCheckoutSessionService } from '@/services/stripe/create-stripe-checkout-session';
 import { CreateSubscriptionContractItemService } from '@/services/subscription-contract-items/create-subscription-contract-item';
+import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
 import { CreateSubscriptionContractService } from '@/services/subscription-contracts/create-subscription-contract';
-import { FindAllSubscriptionContractsService } from '@/services/subscription-contracts/find-all-subscription-contracts';
+import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
+import { getDefaultAppDomain } from '@/utils/get-default-app-domain';
+import { mountCheckoutCallbackURL } from '@/utils/mount-checkout-callback-url';
 
 type CreateCheckoutCommandKeys = keyof CreateCheckoutCommand;
 
@@ -36,13 +40,14 @@ export class CreateCheckoutCommandHandler
   implements ICommandHandler<CreateCheckoutCommand>
 {
   constructor(
-    private readonly createStripeSubscriptionService: CreateStripeSubscriptionService,
+    private readonly findAppCurrentDomainService: FindAppCurrentDomainService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findProductByIdService: FindProductByIdService,
-    private readonly findAllSubscriptionContractsService: FindAllSubscriptionContractsService,
+    private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
+    private readonly findAllSubscriptionContractItemsService: FindAllSubscriptionContractItemsService,
     private readonly createSubscriptionContractItemService: CreateSubscriptionContractItemService,
     private readonly findPriceByIdService: FindPriceByIdService,
-    private readonly findPaymentMethodByIdService: FindPaymentMethodByIdService,
+    private readonly createStripeCheckoutSessionService: CreateStripeCheckoutSessionService,
     private readonly createSubscriptionContractService: CreateSubscriptionContractService,
     private readonly findAccountByIdService: FindAccountByIdService
   ) {}
@@ -71,16 +76,17 @@ export class CreateCheckoutCommandHandler
     if (!customerApp) {
       throw new AppNotFoundException();
     }
-
+    let appDomainURL = '';
+    const appDomain = await this.findAppCurrentDomainService.execute(
+      customerApp.id
+    );
+    if (appDomain) {
+      appDomainURL = appDomain.name;
+    } else {
+      appDomainURL = getDefaultAppDomain({ appId: customerApp.id });
+    }
     const price = await this.findPriceByIdService.execute(data?.price);
     if (!price) {
-      throw new PriceNotFoundException();
-    }
-
-    const paymentMethod = await this.findPaymentMethodByIdService.execute(
-      data?.paymentMethod
-    );
-    if (!paymentMethod) {
       throw new PriceNotFoundException();
     }
 
@@ -89,56 +95,86 @@ export class CreateCheckoutCommandHandler
       throw new ProductNotFoundException();
     }
 
-    const customerSubscriptionContracts =
-      await this.findAllSubscriptionContractsService.execute({
+    const customerSubscriptionContractItems =
+      await this.findAllSubscriptionContractItemsService.execute({
         where: {
           AND: {
-            parent: {
-              equals: data.customer
+            product: {
+              equals: product.parent
             },
-            active: {
-              equals: true
+            price: {
+              equals: price.id
             }
           }
         },
         page: {
           limit: 1
+        },
+        orderBy: {
+          createdAt: 'desc'
         }
       });
 
-    const existsActiveSubscriptionContracts =
-      customerSubscriptionContracts?.totalCount > 0;
-    if (existsActiveSubscriptionContracts) {
-      throw new SubscriptionContractAlreadyActiveException();
+    const customerCurrentSubscriptionContractItem =
+      customerSubscriptionContractItems?.items?.[0];
+    if (!!customerCurrentSubscriptionContractItem) {
+      try {
+        const customerSubscriptionContract =
+          await this.findSubscriptionContractByIdService.execute(
+            customerCurrentSubscriptionContractItem?.parent
+          );
+        if (!!customerSubscriptionContract.active) {
+          throw new SubscriptionContractAlreadyActiveException();
+        }
+      } catch (e) {}
     }
 
-    const stripeSubscription =
-      await this.createStripeSubscriptionService.execute({
+    const cancelUrl = mountCheckoutCallbackURL({
+      success: false,
+      domain: appDomainURL,
+      product: product.id
+    });
+    const successUrl = mountCheckoutCallbackURL({
+      success: true,
+      domain: appDomainURL,
+      product: product.id
+    });
+
+    const checkoutSession =
+      await this.createStripeCheckoutSessionService.execute({
         app: customerApp.id,
         currency: customerApp.currency,
-        paymentMethod: paymentMethod?.stripePaymentMethod,
-        startPaymentWhenSubscriptionIsCreated: true,
-        automaticRenew: true,
-        prices: [{ price: price.stripePrice, quantity: 1 }],
+        applicationFeePercentage: APPLICATION_FEE_PERCENT,
+        cancelUrl,
+        successUrl,
         customer: customer.stripeCustomer,
-        stripeAccount: customerApp.stripeAccount
+        stripeAccount: customerApp.stripeAccount,
+        customerEmail: customer.email,
+        customerReference: customer.id,
+        prices: [{ price: price.stripePrice, quantity: 1 }]
       });
+    if (!checkoutSession) {
+      throw new SubscriptionContractNotFoundException();
+    }
+
+    const stripeSubscription: Stripe.Subscription =
+      checkoutSession?.subscription as Stripe.Subscription;
     if (!stripeSubscription) {
       throw new SubscriptionContractNotFoundException();
     }
+
     const subscriptionContract =
       await this.createSubscriptionContractService.execute({
         app: customerApp.id,
         createdBy: data.createdBy,
         parent: data.customer,
-        paymentMethod: paymentMethod?.id,
-        stripeSubscription: stripeSubscription.id,
+        stripeSubscription: stripeSubscription?.id,
         createdByAdmin: false,
-        startAt: stripeSubscription.start_date
-          ? convertToISODateString(stripeSubscription.start_date)
+        startAt: stripeSubscription?.start_date
+          ? convertToISODateString(stripeSubscription?.start_date)
           : null,
-        endAt: stripeSubscription.ended_at
-          ? convertToISODateString(stripeSubscription.ended_at)
+        endAt: stripeSubscription?.ended_at
+          ? convertToISODateString(stripeSubscription?.ended_at)
           : null,
         type: price.type,
         automaticRenew: true
@@ -146,6 +182,7 @@ export class CreateCheckoutCommandHandler
     if (!subscriptionContract) {
       throw new SubscriptionContractNotFoundException();
     }
+
     const subscriptionContractItem =
       await this.createSubscriptionContractItemService.execute({
         app: customerApp.id,
@@ -161,12 +198,9 @@ export class CreateCheckoutCommandHandler
     if (!subscriptionContractItem) {
       throw new SubscriptionContractItemNotFoundException();
     }
+
     return new CheckoutMapper().toModel({
-      subscriptionContract,
-      clientSecret: (
-        (stripeSubscription.latest_invoice as Stripe.Invoice)
-          .payment_intent as Stripe.PaymentIntent
-      ).client_secret
+      url: checkoutSession.url
     });
   }
 
@@ -174,7 +208,6 @@ export class CreateCheckoutCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
-      paymentMethod: cleanValue(command?.paymentMethod),
       customer: cleanValue(command?.customer),
       price: cleanValue(command?.price)
     });

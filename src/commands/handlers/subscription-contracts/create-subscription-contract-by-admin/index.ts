@@ -1,5 +1,9 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  convertToISODateString
+} from '@stokei/nestjs';
 
 import { CreateSubscriptionContractByAdminCommand } from '@/commands/implements/subscription-contracts/create-subscription-contract-by-admin.command';
 import { CreateSubscriptionContractByAdminItemDTO } from '@/dtos/subscription-contracts/create-subscription-contract-by-admin.dto';
@@ -57,8 +61,8 @@ export class CreateSubscriptionContractByAdminCommandHandler
         app: data.app,
         type: data.type,
         createdByAdmin: true,
-        startAt: data.startAt,
-        endAt: data.endAt,
+        startAt: data.startAt && convertToISODateString(data.startAt),
+        endAt: data.endAt && convertToISODateString(data.endAt),
         automaticRenew: false,
         createdBy: data.createdBy
       });

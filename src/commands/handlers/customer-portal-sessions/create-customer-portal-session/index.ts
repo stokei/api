@@ -1,15 +1,13 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateCustomerPortalSessionCommand } from '@/commands/implements/customer-portal-sessions/create-customer-portal-session.command';
-import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import {
   AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CustomerPortalSessionMapper } from '@/mappers/customer-portal-sessions';
-import { AppModel } from '@/models/app.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { CreateStripeCustomerPortalSessionService } from '@/services/stripe/create-stripe-customer-portal-session';
@@ -53,10 +51,9 @@ export class CreateCustomerPortalSessionCommandHandler
       throw new AppNotFoundException();
     }
 
-    const { stripeCustomer } = await this.getCustomer({
-      customer: data.customer,
-      app
-    });
+    const { stripeCustomer } = await this.findAccountByIdService.execute(
+      data.customer
+    );
 
     const customerPortalSession =
       await this.createStripeCustomerPortalSessionService.execute({
@@ -75,24 +72,5 @@ export class CreateCustomerPortalSessionCommandHandler
       customer: cleanValue(command?.customer),
       app: cleanValue(command?.app)
     });
-  }
-
-  private async getCustomer(data: {
-    customer: string;
-    app: AppModel;
-  }): Promise<{ stripeCustomer: string }> {
-    const handlers = {
-      [ServerStokeiApiIdPrefix.ACCOUNTS]: async () => {
-        const { stripeCustomer } = await this.findAccountByIdService.execute(
-          data.customer
-        );
-        return { stripeCustomer };
-      }
-    };
-
-    const customerType = splitServiceId(data.customer)?.service;
-    return (
-      handlers[customerType]() || handlers[ServerStokeiApiIdPrefix.ACCOUNTS]()
-    );
   }
 }

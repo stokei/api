@@ -1,9 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
-import {
-  convertToISODateString,
-  hiddenPrivateDataFromObject
-} from '@stokei/nestjs';
+import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
@@ -83,8 +80,6 @@ export class InvoicesSagas {
         );
         const commands = [
           new ActivateSubscriptionContractCommand({
-            endAt: null,
-            startAt: convertToISODateString(Date.now()),
             subscriptionContract: event.invoice.subscription,
             paymentMethod: event.invoice.paymentMethod,
             app: event.invoice.app,

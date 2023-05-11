@@ -3,6 +3,8 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { DomainStatus } from '@/enums/domain-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { IS_DEVELOPMENT } from '@/environments';
+import { DomainActivatedEvent } from '@/events/implements/domains/domain-activated.event';
 import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
 import { DomainRemovedEvent } from '@/events/implements/domains/domain-removed.event';
 
@@ -43,7 +45,7 @@ export class DomainModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.name = data.name;
-    this.url = 'https://' + this.name;
+    this.url = this.getDomainURL();
     this.status = data.status;
     this.active = this.status === DomainStatus.ACTIVE || data.active;
     this.activatedAt = convertToISODateString(data.activatedAt);
@@ -54,11 +56,25 @@ export class DomainModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
-  createdDomain({ createdBy }: { createdBy: string }) {
+  private getDomainURL() {
+    if (IS_DEVELOPMENT) {
+      return 'http://' + this.name + ':3001';
+    }
+    return 'https://' + this.name;
+  }
+
+  createdDomain({
+    createdBy,
+    isDefault
+  }: {
+    createdBy: string;
+    isDefault: boolean;
+  }) {
     if (this.id) {
       this.apply(
         new DomainCreatedEvent({
           createdBy,
+          isDefault,
           domain: this
         })
       );
@@ -70,6 +86,17 @@ export class DomainModel extends AggregateRoot {
       this.apply(
         new DomainRemovedEvent({
           removedBy,
+          domain: this
+        })
+      );
+    }
+  }
+
+  activatedDomain({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new DomainActivatedEvent({
+          updatedBy,
           domain: this
         })
       );

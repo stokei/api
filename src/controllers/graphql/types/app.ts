@@ -5,6 +5,7 @@ import { AppStatus } from '@/controllers/graphql/enums/app-status.enum';
 import { Account } from './account';
 import { Colors } from './colors';
 import { Currency } from './currency';
+import { Domain } from './domain';
 import { Image } from './image';
 import { Phones } from './phones';
 import { SubscriptionContract } from './subscription-contract';
@@ -37,6 +38,9 @@ export class App {
 
   @Field(() => SubscriptionContract, { nullable: true })
   currentSubscriptionContract?: SubscriptionContract;
+
+  @Field(() => Domain, { nullable: true })
+  defaultDomain?: Domain;
 
   @Field(() => Phones, { nullable: true })
   phones?: Phones;

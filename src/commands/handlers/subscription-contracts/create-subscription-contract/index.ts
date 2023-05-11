@@ -40,13 +40,8 @@ export class CreateSubscriptionContractCommandHandler
 
     const subscriptionContractCreated =
       await this.createSubscriptionContractRepository.execute({
-        app: data.app,
-        automaticRenew: data.automaticRenew,
-        createdBy: data.createdBy,
+        ...data,
         createdByAdmin: !!data.createdByAdmin,
-        parent: data.parent,
-        paymentMethod: data.paymentMethod,
-        stripeSubscription: data.stripeSubscription,
         type: data.type,
         active: false,
         status: SubscriptionContractStatus.PENDING
@@ -74,6 +69,7 @@ export class CreateSubscriptionContractCommandHandler
       endAt: cleanValue(command?.endAt),
       parent: cleanValue(command?.parent),
       paymentMethod: cleanValue(command?.paymentMethod),
+      stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),
       stripeSubscription: cleanValue(command?.stripeSubscription),
       type: cleanValue(command?.type),
       createdByAdmin: cleanValueBoolean(command?.createdByAdmin),

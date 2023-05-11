@@ -67,6 +67,7 @@ export class UpdateAppCommandHandler
       data: cleanObject({
         name: cleanValue(command?.data?.name),
         description: cleanValue(command?.data?.description),
+        defaultDomain: cleanValue(command?.data?.defaultDomain),
         avatar: cleanValue(command?.data?.avatar),
         catalog: cleanValue(command?.data?.catalog),
         icon: cleanValue(command?.data?.icon),

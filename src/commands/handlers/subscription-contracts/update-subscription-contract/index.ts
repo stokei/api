@@ -94,6 +94,7 @@ export class UpdateSubscriptionContractCommandHandler
       }),
       data: cleanObject({
         automaticRenew: cleanValueBoolean(command?.data?.automaticRenew),
+        stripeSubscription: cleanValue(command?.data?.stripeSubscription),
         updatedBy: cleanValue(command?.data?.updatedBy),
         startAt: cleanDate(command?.data?.startAt),
         endAt: cleanDate(command?.data?.endAt)

@@ -99,7 +99,10 @@ export class CreatePaymentMethodCommandHandler
           lastFourCardNumber,
           cardBrand,
           cardExpiryMonth,
-          cardExpiryYear
+          cardExpiryYear,
+          ...(data.stripePaymentMethod && {
+            stripePaymentMethod: data.stripePaymentMethod
+          })
         }
       });
     if (paymentMethodExists) {

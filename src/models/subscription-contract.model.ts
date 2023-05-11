@@ -27,7 +27,8 @@ export interface ISubscriptionContractModelData {
   readonly app: string;
   readonly parent: string;
   readonly paymentMethod: string;
-  readonly stripeSubscription: string;
+  readonly stripeSubscription?: string;
+  readonly stripeCheckoutSession?: string;
   readonly status: SubscriptionContractStatus;
   readonly type: SubscriptionContractType;
   readonly automaticRenew: boolean;
@@ -45,7 +46,8 @@ export class SubscriptionContractModel extends AggregateRoot {
   readonly app: string;
   readonly parent: string;
   readonly paymentMethod: string;
-  readonly stripeSubscription: string;
+  readonly stripeSubscription?: string;
+  readonly stripeCheckoutSession?: string;
   readonly status: SubscriptionContractStatus;
   readonly type: SubscriptionContractType;
   readonly automaticRenew: boolean;
@@ -68,6 +70,7 @@ export class SubscriptionContractModel extends AggregateRoot {
     this.parent = data.parent;
     this.paymentMethod = data.paymentMethod;
     this.stripeSubscription = data.stripeSubscription;
+    this.stripeCheckoutSession = data.stripeCheckoutSession;
     this.status = data.status;
     this.type = data.type;
     this.automaticRenew = data.automaticRenew;

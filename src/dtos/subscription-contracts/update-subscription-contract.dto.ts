@@ -1,5 +1,6 @@
 export interface UpdateSubscriptionContractDataDTO {
   updatedBy: string;
+  stripeSubscription?: string;
   automaticRenew?: boolean;
   startAt?: number | string;
   endAt?: number | string;

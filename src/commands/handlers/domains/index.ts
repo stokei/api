@@ -1,3 +1,4 @@
+import { ActivateDomainCommandHandler } from './activate-domain';
 import { AddDomainToAppSubscriptionContractCommandHandler } from './add-domain-to-app-subscription-contract';
 import { CreateDomainCommandHandler } from './create-domain';
 import { RemoveDomainCommandHandler } from './remove-domain';
@@ -7,5 +8,6 @@ export const DomainCommandHandlers = [
   CreateDomainCommandHandler,
   RemoveDomainCommandHandler,
   AddDomainToAppSubscriptionContractCommandHandler,
-  RemoveDomainFromAppSubscriptionContractCommandHandler
+  RemoveDomainFromAppSubscriptionContractCommandHandler,
+  ActivateDomainCommandHandler
 ];

@@ -1,6 +1,7 @@
 export interface UpdateAppDataDTO {
   name?: string;
   description?: string;
+  defaultDomain?: string;
   avatar?: string;
   catalog?: string;
   icon?: string;

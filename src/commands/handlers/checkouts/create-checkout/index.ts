@@ -81,7 +81,7 @@ export class CreateCheckoutCommandHandler
       customerApp.id
     );
     if (appDomain) {
-      appDomainURL = appDomain.name;
+      appDomainURL = appDomain.url;
     } else {
       appDomainURL = getDefaultAppDomain({ appId: customerApp.id });
     }
@@ -156,18 +156,15 @@ export class CreateCheckoutCommandHandler
     if (!checkoutSession) {
       throw new SubscriptionContractNotFoundException();
     }
-
-    const stripeSubscription: Stripe.Subscription =
+    const stripeSubscription: Stripe.Subscription | undefined =
       checkoutSession?.subscription as Stripe.Subscription;
-    if (!stripeSubscription) {
-      throw new SubscriptionContractNotFoundException();
-    }
 
     const subscriptionContract =
       await this.createSubscriptionContractService.execute({
         app: customerApp.id,
         createdBy: data.createdBy,
         parent: data.customer,
+        stripeCheckoutSession: checkoutSession?.id,
         stripeSubscription: stripeSubscription?.id,
         createdByAdmin: false,
         startAt: stripeSubscription?.start_date
@@ -192,8 +189,8 @@ export class CreateCheckoutCommandHandler
         parent: subscriptionContract.id,
         quantity: 1,
         createdBy: data.createdBy,
-        createdByAdmin: false,
-        stripeSubscriptionItem: stripeSubscription.items.data[0].id
+        createdByAdmin: true,
+        stripeSubscriptionItem: stripeSubscription?.items?.data?.[0]?.id
       });
     if (!subscriptionContractItem) {
       throw new SubscriptionContractItemNotFoundException();

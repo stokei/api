@@ -12,14 +12,21 @@ import { WebhookStripeInvoiceWithPaymentErrorService } from '@/services/webhooks
 import { WebhookStripeSubscriptionContractCanceledService } from '@/services/webhooks/stripe-subscription-contract-canceled';
 import { WebhookStripeSubscriptionUpdateService } from '@/services/webhooks/stripe-subscription-contract-update';
 
+import { WebhookStripeCheckoutSessionAsyncPaymentFailedService } from '../stripe-checkout-session-async-payment-failed';
+import { WebhookStripeCheckoutSessionAsyncPaymentSucceededService } from '../stripe-checkout-session-async-payment-succeeded';
+import { WebhookStripeCheckoutSessionService } from '../stripe-checkout-session-completed';
+
 @Injectable()
 export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
   constructor(
     private readonly webhookStripeInvoiceCreatedService: WebhookStripeInvoiceCreatedService,
     private readonly webhookStripeInvoiceWithPaymentErrorService: WebhookStripeInvoiceWithPaymentErrorService,
     private readonly webhookStripeInvoicePaidService: WebhookStripeInvoicePaidService,
+    private readonly webhookStripeCheckoutSessionService: WebhookStripeCheckoutSessionService,
     private readonly webhookStripeSubscriptionUpdateService: WebhookStripeSubscriptionUpdateService,
-    private readonly webhookStripeSubscriptionContractCanceledService: WebhookStripeSubscriptionContractCanceledService
+    private readonly webhookStripeSubscriptionContractCanceledService: WebhookStripeSubscriptionContractCanceledService,
+    private readonly webhookStripeCheckoutSessionAsyncPaymentSucceededService: WebhookStripeCheckoutSessionAsyncPaymentSucceededService,
+    private readonly webhookStripeCheckoutSessionAsyncPaymentFailedService: WebhookStripeCheckoutSessionAsyncPaymentFailedService
   ) {}
 
   async execute({ body, signature }: WebhookStripeDTO) {
@@ -62,6 +69,31 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
             invoice: eventObject.id,
             stripeAccount: connectAccount
           });
+        case 'checkout.session.completed':
+          const stripeCheckoutSessionCompleted: Stripe.Checkout.Session =
+            eventObject;
+          return await this.webhookStripeCheckoutSessionService.execute({
+            stripeCheckoutSession: stripeCheckoutSessionCompleted?.id,
+            stripeAccount: connectAccount
+          });
+        case 'checkout.session.async_payment_succeeded':
+          const stripeCheckoutSessionPaymentSucceeded: Stripe.Checkout.Session =
+            eventObject;
+          return await this.webhookStripeCheckoutSessionAsyncPaymentSucceededService.execute(
+            {
+              stripeCheckoutSession: stripeCheckoutSessionPaymentSucceeded?.id,
+              stripeAccount: connectAccount
+            }
+          );
+        case 'checkout.session.async_payment_failed':
+          const stripeCheckoutSessionPaymentFailed: Stripe.Checkout.Session =
+            eventObject;
+          return await this.webhookStripeCheckoutSessionAsyncPaymentFailedService.execute(
+            {
+              stripeCheckoutSession: stripeCheckoutSessionPaymentFailed?.id,
+              stripeAccount: connectAccount
+            }
+          );
         case 'invoice.paid':
           return await this.webhookStripeInvoicePaidService.execute({
             invoice: eventObject.id,
@@ -79,6 +111,7 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
           return { status: HttpStatus.OK };
       }
     } catch (error) {
+      console.log({ error, eventType });
       return { status: HttpStatus.INTERNAL_SERVER_ERROR };
     }
   }

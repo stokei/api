@@ -1,3 +1,4 @@
+import { ActivateDomainService } from './activate-domain';
 import { CreateDomainService } from './create-domain';
 import { FindAllDomainsService } from './find-all-domains';
 import { FindDomainByIdService } from './find-domain-by-id';
@@ -9,5 +10,6 @@ export const DomainServices = [
   RemoveDomainService,
   FindDomainByIdService,
   FindAllDomainsService,
-  FindDomainByNameService
+  FindDomainByNameService,
+  ActivateDomainService
 ];

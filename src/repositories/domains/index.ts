@@ -1,3 +1,4 @@
+import { ActivateDomainRepository } from './activate-domain';
 import { CountDomainsRepository } from './count-domains';
 import { CreateDomainRepository } from './create-domain';
 import { ExistsDomainsRepository } from './exists-domains';
@@ -13,5 +14,6 @@ export const DomainsRepositories = [
   FindDomainByIdRepository,
   FindAllDomainsRepository,
   RemoveDomainRepository,
-  FindDomainByNameRepository
+  FindDomainByNameRepository,
+  ActivateDomainRepository
 ];

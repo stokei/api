@@ -1,7 +1,9 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import {
   cleanObject,
   cleanValue,
+  cleanValueNumber,
   convertToISODateString,
   splitServiceId
 } from '@stokei/nestjs';
@@ -28,6 +30,9 @@ type ActivateSubscriptionContractCommandKeys =
 export class ActivateSubscriptionContractCommandHandler
   implements ICommandHandler<ActivateSubscriptionContractCommand>
 {
+  private readonly logger = new Logger(
+    ActivateSubscriptionContractCommandHandler.name
+  );
   constructor(
     private readonly activateSubscriptionContractRepository: ActivateSubscriptionContractRepository,
     private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
@@ -38,84 +43,90 @@ export class ActivateSubscriptionContractCommandHandler
 
   async execute(command: ActivateSubscriptionContractCommand) {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.subscriptionContract) {
-      throw new ParamNotFoundException<ActivateSubscriptionContractCommandKeys>(
-        'subscriptionContract'
-      );
-    }
-
-    const subscriptionContract =
-      await this.findSubscriptionContractByIdService.execute(
-        data.subscriptionContract
-      );
-    if (!subscriptionContract) {
-      throw new SubscriptionContractNotFoundException();
-    }
-
-    const startAt = convertToISODateString(data.startAt || Date.now());
-    let endAt = data.endAt;
-    if (!data.endAt && subscriptionContract.isRecurring) {
-      const subscriptionContractItems =
-        await this.findAllSubscriptionContractItemsService.execute({
-          where: {
-            AND: {
-              parent: {
-                equals: subscriptionContract?.id
-              }
-            }
-          },
-          page: {
-            limit: 1
-          }
-        });
-      const subscriptionContractItem = subscriptionContractItems?.items?.[0];
-
-      const recurring = await this.findRecurringByIdService.execute(
-        subscriptionContractItem.recurring
-      );
-      if (!recurring) {
-        throw new RecurringNotFoundException();
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
+      }
+      if (!data?.subscriptionContract) {
+        throw new ParamNotFoundException<ActivateSubscriptionContractCommandKeys>(
+          'subscriptionContract'
+        );
       }
 
-      endAt = convertToISODateString(
-        SubscriptionContractModel.generateEndDate(startAt, recurring)
-      );
-    }
+      const subscriptionContract =
+        await this.findSubscriptionContractByIdService.execute(
+          data.subscriptionContract
+        );
+      if (!subscriptionContract) {
+        throw new SubscriptionContractNotFoundException();
+      }
+      const startAt = convertToISODateString(data.startAt || Date.now());
+      let endAt = data.endAt && convertToISODateString(data.endAt);
+      if (!data.endAt && subscriptionContract.isRecurring) {
+        const subscriptionContractItems =
+          await this.findAllSubscriptionContractItemsService.execute({
+            where: {
+              AND: {
+                parent: {
+                  equals: subscriptionContract?.id
+                }
+              }
+            },
+            page: {
+              limit: 1
+            }
+          });
+        const subscriptionContractItem = subscriptionContractItems?.items?.[0];
 
-    const dataActivate: ActivateSubscriptionContractRepositoryDataDTO = {
-      paymentMethod: data.paymentMethod,
-      active: true,
-      status: SubscriptionContractStatus.ACTIVE,
-      startAt,
-      endAt,
-      updatedBy: data.updatedBy
-    };
-
-    const subscriptionContractActivated =
-      await this.activateSubscriptionContractRepository.execute({
-        data: dataActivate,
-        where: {
-          app: data.app,
-          subscriptionContract: splitServiceId(subscriptionContract.id)?.id
+        const recurring = await this.findRecurringByIdService.execute(
+          subscriptionContractItem.recurring
+        );
+        if (!recurring) {
+          throw new RecurringNotFoundException();
         }
-      });
-    if (!subscriptionContractActivated) {
-      throw new SubscriptionContractNotFoundException();
-    }
-    const subscriptionContractActive = new SubscriptionContractModel({
-      ...subscriptionContract,
-      ...dataActivate
-    });
-    const subscriptionContractModel = this.publisher.mergeObjectContext(
-      subscriptionContractActive
-    );
-    subscriptionContractModel.activatedSubscriptionContract();
-    subscriptionContractModel.commit();
 
-    return subscriptionContractActive;
+        endAt = convertToISODateString(
+          SubscriptionContractModel.generateEndDate(startAt, recurring)
+        );
+      }
+
+      const dataActivate: ActivateSubscriptionContractRepositoryDataDTO = {
+        paymentMethod: data.paymentMethod,
+        active: true,
+        status: SubscriptionContractStatus.ACTIVE,
+        startAt,
+        endAt,
+        updatedBy: data.updatedBy
+      };
+
+      const subscriptionContractActivated =
+        await this.activateSubscriptionContractRepository.execute({
+          data: dataActivate,
+          where: {
+            app: data.app,
+            subscriptionContract: splitServiceId(subscriptionContract.id)?.id
+          }
+        });
+      if (!subscriptionContractActivated) {
+        throw new SubscriptionContractNotFoundException();
+      }
+      const subscriptionContractActive = new SubscriptionContractModel({
+        ...subscriptionContract,
+        ...dataActivate
+      });
+      const subscriptionContractModel = this.publisher.mergeObjectContext(
+        subscriptionContractActive
+      );
+      subscriptionContractModel.activatedSubscriptionContract();
+      subscriptionContractModel.commit();
+
+      return subscriptionContractActive;
+    } catch (error) {
+      this.logger.error(
+        `Subscription(#${data?.subscriptionContract}): ${error?.message}`
+      );
+      return;
+    }
   }
 
   private clearData(
@@ -125,8 +136,14 @@ export class ActivateSubscriptionContractCommandHandler
       subscriptionContract: cleanValue(command?.subscriptionContract),
       paymentMethod: cleanValue(command?.paymentMethod),
       app: cleanValue(command?.app),
-      startAt: cleanValue(command?.startAt),
-      endAt: cleanValue(command?.endAt),
+      startAt:
+        typeof command?.startAt === 'number'
+          ? cleanValueNumber(command?.startAt)
+          : cleanValue(command?.startAt),
+      endAt:
+        typeof command?.endAt === 'number'
+          ? cleanValueNumber(command?.endAt)
+          : cleanValue(command?.endAt),
       updatedBy: cleanValue(command?.updatedBy)
     });
   }

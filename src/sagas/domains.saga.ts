@@ -4,9 +4,13 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { UpdateAppCommand } from '@/commands/implements/apps/update-app.command';
+import { ActivateDomainCommand } from '@/commands/implements/domains/activate-domain.command';
 import { AddDomainToAppSubscriptionContractCommand } from '@/commands/implements/domains/add-domain-to-app-subscription-contract.command';
 import { RemoveDomainFromAppSubscriptionContractCommand } from '@/commands/implements/domains/remove-domain-from-app-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
+import { IS_PRODUCTION } from '@/environments';
+import { DomainActivatedEvent } from '@/events/implements/domains/domain-activated.event';
 import { DomainCreatedEvent } from '@/events/implements/domains/domain-created.event';
 import { DomainRemovedEvent } from '@/events/implements/domains/domain-removed.event';
 
@@ -31,12 +35,29 @@ export class DomainsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
-          new AddDomainToAppSubscriptionContractCommand({
-            createdBy: event.createdBy,
-            domain: event.domain.id
-          })
-        ];
+        const commands: ICommand[] = [];
+        if (!IS_PRODUCTION) {
+          commands.push(
+            new ActivateDomainCommand({
+              domain: event.domain.id,
+              app: event.domain.app,
+              updatedBy: event.createdBy
+            })
+          );
+        }
+        if (event.isDefault) {
+          commands.push(
+            new UpdateAppCommand({
+              data: {
+                defaultDomain: event.domain.id,
+                updatedBy: event.createdBy
+              },
+              where: {
+                app: event.domain.app
+              }
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)
@@ -58,6 +79,30 @@ export class DomainsSagas {
         const commands = [
           new RemoveDomainFromAppSubscriptionContractCommand({
             removedBy: event.removedBy,
+            domain: event.domain.id
+          })
+        ];
+        return commands;
+      }),
+      mergeMap((c) => c)
+    );
+  };
+
+  @Saga()
+  domainActivated = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(DomainActivatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [DomainActivatedEvent] Saga event domainActivated:' +
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
+        );
+        const commands = [
+          new AddDomainToAppSubscriptionContractCommand({
+            createdBy: event.updatedBy,
             domain: event.domain.id
           })
         ];

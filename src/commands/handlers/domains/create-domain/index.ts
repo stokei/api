@@ -36,24 +36,15 @@ export class CreateDomainCommandHandler
       throw new ParamNotFoundException<CreateDomainCommandKeys>('name');
     }
 
-    const domains = await this.findAllDomainsService.execute({
-      where: {
-        AND: {
-          name: {
-            equals: data.name
-          }
-        }
-      },
-      page: {
-        limit: 1
-      }
-    });
-    if (domains?.totalCount > 0) {
+    const isFirst = await this.isFirstDomain(data.app);
+    const domainExists = await this.domainAlreadyExists(data.name);
+    if (!!domainExists) {
       throw new DomainAlreadyExistsException();
     }
 
+    const { default: isDefault, ...dataCreate } = data;
     const domainCreated = await this.createDomainRepository.execute({
-      ...data,
+      ...dataCreate,
       status: DomainStatus.PENDING
     });
     if (!domainCreated) {
@@ -61,11 +52,46 @@ export class CreateDomainCommandHandler
     }
     const domainModel = this.publisher.mergeObjectContext(domainCreated);
     domainModel.createdDomain({
+      isDefault: isFirst || isDefault,
       createdBy: data.createdBy
     });
     domainModel.commit();
 
     return domainCreated;
+  }
+
+  private async domainAlreadyExists(domainName: string): Promise<boolean> {
+    const domains = await this.findAllDomainsService.execute({
+      where: {
+        AND: {
+          name: {
+            equals: domainName
+          }
+        }
+      },
+      page: {
+        limit: 1
+      }
+    });
+
+    return domains?.totalCount > 0;
+  }
+
+  private async isFirstDomain(app: string): Promise<boolean> {
+    const domains = await this.findAllDomainsService.execute({
+      where: {
+        AND: {
+          parent: {
+            equals: app
+          }
+        }
+      },
+      page: {
+        limit: 1
+      }
+    });
+
+    return domains?.totalCount === 0;
   }
 
   private clearData(command: CreateDomainCommand): CreateDomainCommand {

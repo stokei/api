@@ -1,10 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import {
-  cleanObject,
-  cleanValue,
-  convertToISODateString
-} from '@stokei/nestjs';
-import Stripe from 'stripe';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
 import { APPLICATION_FEE_PERCENT } from '@/environments';
@@ -16,19 +11,18 @@ import {
   PriceNotFoundException,
   ProductNotFoundException,
   SubscriptionContractAlreadyActiveException,
-  SubscriptionContractItemNotFoundException,
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { CheckoutMapper } from '@/mappers/checkouts';
+import { PriceModel } from '@/models/price.model';
+import { ProductModel } from '@/models/product.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentDomainService } from '@/services/apps/find-app-current-domain';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateStripeCheckoutSessionService } from '@/services/stripe/create-stripe-checkout-session';
-import { CreateSubscriptionContractItemService } from '@/services/subscription-contract-items/create-subscription-contract-item';
 import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
-import { CreateSubscriptionContractService } from '@/services/subscription-contracts/create-subscription-contract';
 import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 import { getDefaultAppDomain } from '@/utils/get-default-app-domain';
 import { mountCheckoutCallbackURL } from '@/utils/mount-checkout-callback-url';
@@ -45,10 +39,8 @@ export class CreateCheckoutCommandHandler
     private readonly findProductByIdService: FindProductByIdService,
     private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
     private readonly findAllSubscriptionContractItemsService: FindAllSubscriptionContractItemsService,
-    private readonly createSubscriptionContractItemService: CreateSubscriptionContractItemService,
     private readonly findPriceByIdService: FindPriceByIdService,
     private readonly createStripeCheckoutSessionService: CreateStripeCheckoutSessionService,
-    private readonly createSubscriptionContractService: CreateSubscriptionContractService,
     private readonly findAccountByIdService: FindAccountByIdService
   ) {}
 
@@ -95,38 +87,13 @@ export class CreateCheckoutCommandHandler
       throw new ProductNotFoundException();
     }
 
-    const customerSubscriptionContractItems =
-      await this.findAllSubscriptionContractItemsService.execute({
-        where: {
-          AND: {
-            product: {
-              equals: product.parent
-            },
-            price: {
-              equals: price.id
-            }
-          }
-        },
-        page: {
-          limit: 1
-        },
-        orderBy: {
-          createdAt: 'desc'
-        }
-      });
-
-    const customerCurrentSubscriptionContractItem =
-      customerSubscriptionContractItems?.items?.[0];
-    if (!!customerCurrentSubscriptionContractItem) {
-      try {
-        const customerSubscriptionContract =
-          await this.findSubscriptionContractByIdService.execute(
-            customerCurrentSubscriptionContractItem?.parent
-          );
-        if (!!customerSubscriptionContract.active) {
-          throw new SubscriptionContractAlreadyActiveException();
-        }
-      } catch (e) {}
+    const hasActivePrice = await this.hasSubscriptionActive({
+      price,
+      product,
+      customer: customer?.id
+    });
+    if (hasActivePrice) {
+      throw new SubscriptionContractAlreadyActiveException();
     }
 
     const cancelUrl = mountCheckoutCallbackURL({
@@ -156,49 +123,62 @@ export class CreateCheckoutCommandHandler
     if (!checkoutSession) {
       throw new SubscriptionContractNotFoundException();
     }
-    const stripeSubscription: Stripe.Subscription | undefined =
-      checkoutSession?.subscription as Stripe.Subscription;
-
-    const subscriptionContract =
-      await this.createSubscriptionContractService.execute({
-        app: customerApp.id,
-        createdBy: data.createdBy,
-        parent: data.customer,
-        stripeCheckoutSession: checkoutSession?.id,
-        stripeSubscription: stripeSubscription?.id,
-        createdByAdmin: false,
-        startAt: stripeSubscription?.start_date
-          ? convertToISODateString(stripeSubscription?.start_date)
-          : null,
-        endAt: stripeSubscription?.ended_at
-          ? convertToISODateString(stripeSubscription?.ended_at)
-          : null,
-        type: price.type,
-        automaticRenew: true
-      });
-    if (!subscriptionContract) {
-      throw new SubscriptionContractNotFoundException();
-    }
-
-    const subscriptionContractItem =
-      await this.createSubscriptionContractItemService.execute({
-        app: customerApp.id,
-        product: product.parent,
-        price: price.id,
-        recurring: price.recurring,
-        parent: subscriptionContract.id,
-        quantity: 1,
-        createdBy: data.createdBy,
-        createdByAdmin: true,
-        stripeSubscriptionItem: stripeSubscription?.items?.data?.[0]?.id
-      });
-    if (!subscriptionContractItem) {
-      throw new SubscriptionContractItemNotFoundException();
-    }
 
     return new CheckoutMapper().toModel({
       url: checkoutSession.url
     });
+  }
+
+  private async hasSubscriptionActive({
+    customer,
+    product,
+    price
+  }: {
+    customer: string;
+    product: ProductModel;
+    price: PriceModel;
+  }): Promise<boolean> {
+    const customerSubscriptionContractItems =
+      await this.findAllSubscriptionContractItemsService.execute({
+        where: {
+          AND: {
+            createdBy: {
+              equals: customer
+            },
+            product: {
+              equals: product.parent
+            },
+            price: {
+              equals: price.id
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+
+    if (customerSubscriptionContractItems?.totalCount > 0) {
+      const subscriptionContracts = await Promise.all(
+        customerSubscriptionContractItems?.items?.map(
+          async (customerSubscriptionContractItem) => {
+            try {
+              const customerSubscriptionContract =
+                await this.findSubscriptionContractByIdService.execute(
+                  customerSubscriptionContractItem?.parent
+                );
+              return customerSubscriptionContract;
+            } catch (error) {
+              return null;
+            }
+          }
+        )
+      );
+      return subscriptionContracts
+        ?.filter(Boolean)
+        ?.some((subscriptionContract) => !!subscriptionContract.active);
+    }
+    return false;
   }
 
   private clearData(command: CreateCheckoutCommand): CreateCheckoutCommand {

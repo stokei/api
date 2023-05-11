@@ -12,6 +12,15 @@ export const mountCheckoutCallbackURL = ({
   product: string;
   domain?: string;
 }) => {
+  if (!success) {
+    const url = new URL(
+      appendPathnameToURL(
+        domain || CHECKOUT_RESPONSE_URL,
+        '/checkout/' + product
+      )
+    );
+    return decodeURI(url.toString());
+  }
   const url = new URL(
     appendPathnameToURL(
       domain || CHECKOUT_RESPONSE_URL,

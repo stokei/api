@@ -111,7 +111,6 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
           return { status: HttpStatus.OK };
       }
     } catch (error) {
-      console.log({ error, eventType });
       return { status: HttpStatus.INTERNAL_SERVER_ERROR };
     }
   }

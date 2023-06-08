@@ -3,16 +3,16 @@ import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
 
 import { LoginCommand } from '@/commands/implements/accounts/login.command';
+import { AuthResponse } from '@/controllers/graphql/types/auth-response';
 import { LoginDTO } from '@/dtos/accounts/login.dto';
-import { AccountModel } from '@/models/account.model';
 
 @Injectable()
 export class LoginService
-  implements IBaseService<LoginDTO, Promise<AccountModel>>
+  implements IBaseService<LoginDTO, Promise<AuthResponse>>
 {
   constructor(private readonly commandBus: CommandBus) {}
 
-  async execute(data: LoginDTO): Promise<AccountModel> {
+  async execute(data: LoginDTO): Promise<AuthResponse> {
     return await this.commandBus.execute(new LoginCommand(data));
   }
 }

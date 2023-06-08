@@ -3,12 +3,14 @@ import {
   cleanObject,
   cleanUsername,
   cleanValue,
-  encryptPassword
+  encryptPassword,
+  splitServiceId
 } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
 import { CreateAccountCommand } from '@/commands/implements/accounts/create-account.command';
 import { AccountStatus } from '@/enums/account-status.enum';
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PASSWORD_SECRET_KEY } from '@/environments';
 import {
   AccountAlreadyExistsException,
@@ -77,10 +79,16 @@ export class CreateAccountCommandHandler
       throw new AccountUsernameAlreadyExistsException();
     }
 
+    const isCreatedByOtherAccount =
+      splitServiceId(data?.createdBy)?.service ===
+      ServerStokeiApiIdPrefix.ACCOUNTS;
+
     const accountCreated = await this.createAccountRepository.execute({
       ...data,
       username,
-      status: AccountStatus.ACTIVE
+      status: isCreatedByOtherAccount
+        ? AccountStatus.CONFIGURATION_PENDING
+        : AccountStatus.ACTIVE
     });
     if (!accountCreated) {
       throw new AccountNotFoundException();

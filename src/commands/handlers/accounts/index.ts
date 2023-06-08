@@ -1,4 +1,5 @@
 import { ChangePasswordCommandHandler } from './change-password';
+import { CompleteAccountConfigurationCommandHandler } from './complete-account-configuration';
 import { CreateAccountCommandHandler } from './create-account';
 import { CreateAccountStripeCustomerCommandHandler } from './create-account-stripe-customer';
 import { ForgotPasswordCommandHandler } from './forgot-password';
@@ -17,5 +18,6 @@ export const AccountCommandHandlers = [
   RemoveAccountCommandHandler,
   UpdateAccountCommandHandler,
   CreateAccountStripeCustomerCommandHandler,
-  UpdateAccountStripeCustomerCommandHandler
+  UpdateAccountStripeCustomerCommandHandler,
+  CompleteAccountConfigurationCommandHandler
 ];

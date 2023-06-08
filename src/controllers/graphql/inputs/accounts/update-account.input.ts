@@ -1,6 +1,11 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
+export class UpdateWhereAccountInput {
+  @Field(() => String, { nullable: true })
+  account?: string;
+}
+@InputType()
 export class UpdateDataAccountInput {
   @Field(() => String, { nullable: true })
   firstname?: string;
@@ -19,4 +24,7 @@ export class UpdateDataAccountInput {
 export class UpdateAccountInput {
   @Field(() => UpdateDataAccountInput)
   data: UpdateDataAccountInput;
+
+  @Field(() => UpdateWhereAccountInput, { nullable: true })
+  where: UpdateWhereAccountInput;
 }

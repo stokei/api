@@ -1,5 +1,7 @@
 import { ChangePasswordService } from './change-password';
+import { CompleteAccountConfigurationService } from './complete-account-configuration';
 import { CreateAccountService } from './create-account';
+import { FindAccountByEmailAndAppService } from './find-account-by-email-and-app';
 import { FindAccountByIdService } from './find-account-by-id';
 import { FindAllAccountsService } from './find-all-accounts';
 import { ForgotPasswordService } from './forgot-password';
@@ -17,5 +19,7 @@ export const AccountServices = [
   FindAccountByIdService,
   SignUpService,
   LoginService,
-  FindAllAccountsService
+  FindAllAccountsService,
+  FindAccountByEmailAndAppService,
+  CompleteAccountConfigurationService
 ];

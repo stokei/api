@@ -21,7 +21,7 @@ export class UpdateAccountResolver {
   ) {
     const response = await this.updateAccountService.execute({
       where: {
-        account: currentAccountId,
+        account: data?.where?.account || currentAccountId,
         app: appId
       },
       data: {

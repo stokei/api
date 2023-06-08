@@ -1,3 +1,4 @@
+import { CompleteAccountConfigurationRepository } from './complete-account-configuration';
 import { CountAccountsRepository } from './count-accounts';
 import { CreateAccountRepository } from './create-account';
 import { ExistsAccountsRepository } from './exists-accounts';
@@ -23,5 +24,6 @@ export const AccountsRepositories = [
   RemoveAccountRepository,
   UpdateAccountRepository,
   UpdatePasswordRepository,
-  UpdateCodeForgotPasswordRepository
+  UpdateCodeForgotPasswordRepository,
+  CompleteAccountConfigurationRepository
 ];

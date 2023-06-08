@@ -1,4 +1,5 @@
 import { ChangePasswordResolver } from './change-password';
+import { CompleteAccountConfigurationResolver } from './complete-account-configuration';
 import { CreateAccountResolver } from './create-account';
 import { ForgotPasswordResolver } from './forgot-password';
 import { LoginResolver } from './login';
@@ -13,5 +14,6 @@ export const AccountsMutations = [
   RemoveAccountResolver,
   SignUpResolver,
   UpdateAccountResolver,
-  CreateAccountResolver
+  CreateAccountResolver,
+  CompleteAccountConfigurationResolver
 ];

@@ -4,8 +4,9 @@ import { Request, Response } from 'express';
 
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
-import { ErrorUploadingFileException } from '@/errors';
-import { CreateVideoUploadURLService } from '@/services/files/create-video-upload-url';
+import { ErrorUploadingFileException, FileNotFoundException } from '@/errors';
+import { CreateCloudflareVideoUploadURLService } from '@/services/cloudflare/create-video-upload-url';
+import { FindFileByIdService } from '@/services/files/find-file-by-id';
 
 @ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS_VIDEOS)
 @Controller({
@@ -14,20 +15,26 @@ import { CreateVideoUploadURLService } from '@/services/files/create-video-uploa
 })
 export class CreateVideoUploadController {
   constructor(
-    private readonly createVideoUploadURLService: CreateVideoUploadURLService
+    private readonly findFileByIdService: FindFileByIdService,
+    private readonly createCloudflareVideoUploadURLService: CreateCloudflareVideoUploadURLService
   ) {}
 
   @Post()
   async createVideoUpload(@Req() request: Request, @Res() response: Response) {
     try {
-      const result = await this.createVideoUploadURLService.execute({
-        tusResumable: request.headers['tus-resumable'] as string,
-        uploadLength: request.headers['upload-length'] as string,
-        uploadMetadata: request.headers['upload-metadata'] as string,
-        app: null,
-        createdBy: null
-      });
-      const destination = result.uploadURL;
+      const fileId = request.query?.file;
+      if (!fileId) {
+        throw new FileNotFoundException();
+      }
+      const file = await this.findFileByIdService.execute(fileId + '');
+      const cloudflareVideoUploadURL =
+        await this.createCloudflareVideoUploadURLService.execute({
+          createdBy: file.createdBy,
+          tusResumable: request.headers['tus-resumable'] as string,
+          uploadLength: request.headers['upload-length'] as string,
+          uploadMetadata: request.headers['upload-metadata'] as string
+        });
+      const destination = cloudflareVideoUploadURL.uploadURL;
       return response
         .set({
           'Access-Control-Allow-Headers': '*',
@@ -36,7 +43,7 @@ export class CreateVideoUploadController {
           'Access-Control-Allow-Origin': '*',
           Location: destination
         })
-        .json({ file: result.file });
+        .json({ filename: cloudflareVideoUploadURL.filename });
     } catch (error) {
       throw new ErrorUploadingFileException();
     }

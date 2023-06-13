@@ -5,7 +5,7 @@ import { REST_VERSIONS } from '@/constants/rest-versions';
 import { TusService } from '@/services/tus/tus-service';
 
 @Controller({
-  path: REST_CONTROLLERS_URL_NAMES.UPLOADS_VIDEOS_DEVELOPMENT,
+  path: REST_CONTROLLERS_URL_NAMES.UPLOADS_VIDEOS,
   version: REST_VERSIONS.V1
 })
 export class CreateVideoUploadDevelopmentController {

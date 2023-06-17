@@ -190,7 +190,7 @@ model App {
   slug              String    @db.VarChar(255)
   name              String    @db.VarChar(255)
   email             String    @db.VarChar(255)
-  description       String?
+  description       String?   @db.MediumText
   status            AppStatus
   avatar            String?   @db.VarChar(255)
   catalog           String?   @db.VarChar(255)
@@ -281,7 +281,7 @@ model Product {
   app           String    @db.VarChar(255)
   parent        String    @db.VarChar(255)
   name          String    @db.VarChar(255)
-  description   String?
+  description   String?   @db.MediumText
   stripeProduct String    @map("stripe_product") @db.VarChar(255)
   defaultPrice  String?   @map("default_price") @db.VarChar(255)
   avatar        String?   @db.VarChar(255)
@@ -385,7 +385,7 @@ model Plan {
   id          String    @id @default(cuid())
   app         String    @db.VarChar(255)
   name        String    @db.VarChar(255)
-  description String?   @db.VarChar(255)
+  description String?   @db.MediumText
   type        PlanType
   active      Boolean   @default(true)
   updatedAt   DateTime? @updatedAt @map("updated_at")
@@ -401,7 +401,7 @@ model Feature {
   app         String    @db.VarChar(255)
   parent      String    @db.VarChar(255)
   name        String    @db.VarChar(255)
-  description String?   @db.VarChar(255)
+  description String?   @db.MediumText
   updatedAt   DateTime? @updatedAt @map("updated_at")
   createdAt   DateTime? @default(now()) @map("created_at")
   updatedBy   String?   @map("updated_by") @db.VarChar(255)
@@ -449,7 +449,7 @@ model Video {
   file        String?   @db.VarChar(255)
   name        String?   @db.VarChar(255)
   duration    Float?
-  description String?
+  description String?   @db.MediumText
   poster      String?   @db.VarChar(255)
   private     Boolean?  @default(true)
   active      Boolean   @default(false)
@@ -479,7 +479,7 @@ model Module {
   app         String    @db.VarChar(255)
   parent      String    @db.VarChar(255)
   name        String    @db.VarChar(255)
-  description String?
+  description String?   @db.MediumText
   updatedAt   DateTime? @updatedAt @map("updated_at")
   createdAt   DateTime? @default(now()) @map("created_at")
   updatedBy   String?   @map("updated_by") @db.VarChar(255)
@@ -493,7 +493,7 @@ model Course {
   app         String    @db.VarChar(255)
   parent      String    @db.VarChar(255)
   name        String    @db.VarChar(255)
-  description String?
+  description String?   @db.MediumText
   avatar      String?   @db.VarChar(255)
   active      Boolean   @default(true)
   canceledAt  DateTime? @map("canceled_at")

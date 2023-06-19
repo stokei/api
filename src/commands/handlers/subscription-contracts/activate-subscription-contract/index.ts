@@ -15,6 +15,7 @@ import {
   DataNotFoundException,
   ParamNotFoundException,
   RecurringNotFoundException,
+  SubscriptionContractItemNotFoundException,
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
@@ -77,6 +78,9 @@ export class ActivateSubscriptionContractCommandHandler
             }
           });
         const subscriptionContractItem = subscriptionContractItems?.items?.[0];
+        if (!subscriptionContractItem) {
+          throw new SubscriptionContractItemNotFoundException();
+        }
 
         const recurring = await this.findRecurringByIdService.execute(
           subscriptionContractItem.recurring

@@ -1,13 +1,19 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
-import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
+import {
+  convertToISOTimestamp,
+  hiddenPrivateDataFromObject
+} from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { ActivateSubscriptionContractItemsCommand } from '@/commands/implements/subscription-contract-items/activate-subscription-contract-items.command';
 import { CancelSubscriptionContractItemsCommand } from '@/commands/implements/subscription-contract-items/cancel-subscription-contract-items.command';
 import { ActivateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/activate-subscription-contract.command';
+import { CancelSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/cancel-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
+import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
+import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
 import { SubscriptionContractActivatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-activated.event';
 import { SubscriptionContractCanceledEvent } from '@/events/implements/subscription-contracts/subscription-contract-canceled.event';
 import { SubscriptionContractCreatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-created.event';
@@ -58,16 +64,53 @@ export class SubscriptionContractsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
-          new ActivateSubscriptionContractCommand({
-            paymentMethod: event.subscriptionContract.paymentMethod,
-            endAt: event.subscriptionContract.endAt,
-            startAt: event.subscriptionContract.startAt,
-            app: event.subscriptionContract.app,
-            subscriptionContract: event.subscriptionContract.id,
-            updatedBy: event.createdBy
-          })
-        ];
+        const commands = [];
+        let actionStatus: SubscriptionContractStatus =
+          SubscriptionContractStatus.PENDING;
+
+        if (
+          event.subscriptionContract.type === SubscriptionContractType.RECURRING
+        ) {
+          if (!event.subscriptionContract.endAt) {
+            actionStatus = SubscriptionContractStatus.PENDING;
+          } else {
+            const now = convertToISOTimestamp(Date.now());
+            const endAt = convertToISOTimestamp(
+              event.subscriptionContract.endAt
+            );
+            const isExpired = now > endAt;
+            if (isExpired) {
+              actionStatus = SubscriptionContractStatus.CANCELED;
+            } else {
+              actionStatus = SubscriptionContractStatus.ACTIVE;
+            }
+          }
+        } else {
+          actionStatus = SubscriptionContractStatus.ACTIVE;
+        }
+
+        const actionCommands: Record<SubscriptionContractStatus, ICommand> = {
+          [SubscriptionContractStatus.PENDING]: undefined,
+          [SubscriptionContractStatus.CANCELED]:
+            new CancelSubscriptionContractCommand({
+              subscriptionContract: event.subscriptionContract.id,
+              app: event.subscriptionContract.app,
+              updatedBy: event.createdBy
+            }),
+          [SubscriptionContractStatus.ACTIVE]:
+            new ActivateSubscriptionContractCommand({
+              paymentMethod: event.subscriptionContract.paymentMethod,
+              endAt: event.subscriptionContract.endAt,
+              startAt: event.subscriptionContract.startAt,
+              app: event.subscriptionContract.app,
+              subscriptionContract: event.subscriptionContract.id,
+              updatedBy: event.createdBy
+            })
+        };
+        const actionCommand = actionCommands[actionStatus];
+        if (actionCommand) {
+          commands.push(actionCommand);
+        }
         return commands;
       }),
       mergeMap((c) => c)

@@ -39,6 +39,7 @@ export interface ISubscriptionContractModelData {
   readonly createdAt?: Date | string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
+  readonly createdByAdmin: boolean;
 }
 
 export class SubscriptionContractModel extends AggregateRoot {
@@ -58,6 +59,7 @@ export class SubscriptionContractModel extends AggregateRoot {
   readonly createdAt?: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
+  readonly createdByAdmin: boolean;
 
   constructor(data: ISubscriptionContractModelData) {
     super();
@@ -81,6 +83,7 @@ export class SubscriptionContractModel extends AggregateRoot {
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+    this.createdByAdmin = data.createdByAdmin;
   }
 
   get isRecurring() {

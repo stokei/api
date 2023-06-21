@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import {
   cleanObject,
@@ -29,6 +30,9 @@ type CancelSubscriptionContractCommandKeys =
 export class CancelSubscriptionContractCommandHandler
   implements ICommandHandler<CancelSubscriptionContractCommand>
 {
+  private readonly logger = new Logger(
+    CancelSubscriptionContractCommandHandler.name
+  );
   constructor(
     private readonly cancelSubscriptionContractRepository: CancelSubscriptionContractRepository,
     private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
@@ -39,71 +43,79 @@ export class CancelSubscriptionContractCommandHandler
 
   async execute(command: CancelSubscriptionContractCommand) {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data?.subscriptionContract) {
-      throw new ParamNotFoundException<CancelSubscriptionContractCommandKeys>(
-        'subscriptionContract'
-      );
-    }
-    const app = await this.findAppByIdService.execute(data.app);
-    if (!app) {
-      throw new AppNotFoundException();
-    }
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
+      }
+      if (!data?.subscriptionContract) {
+        throw new ParamNotFoundException<CancelSubscriptionContractCommandKeys>(
+          'subscriptionContract'
+        );
+      }
+      const app = await this.findAppByIdService.execute(data.app);
+      if (!app) {
+        throw new AppNotFoundException();
+      }
 
-    const subscriptionContract =
-      await this.findSubscriptionContractByIdService.execute(
-        data.subscriptionContract
-      );
-    if (!subscriptionContract) {
-      throw new SubscriptionContractNotFoundException();
-    }
-    if (subscriptionContract.isCanceled) {
-      throw new SubscriptionContractAlreadyCanceledException();
-    }
+      const subscriptionContract =
+        await this.findSubscriptionContractByIdService.execute(
+          data.subscriptionContract
+        );
+      if (!subscriptionContract) {
+        throw new SubscriptionContractNotFoundException();
+      }
+      if (subscriptionContract.isCanceled) {
+        throw new SubscriptionContractAlreadyCanceledException();
+      }
 
-    const stripeSubscriptionCanceled =
-      await this.cancelStripeSubscriptionService.execute({
-        subscription: subscriptionContract?.stripeSubscription,
-        stripeAccount: app?.stripeAccount
-      });
-    if (!stripeSubscriptionCanceled) {
-      throw new SubscriptionContractNotFoundException();
-    }
-
-    const startAt =
-      subscriptionContract.startAt || subscriptionContract.createdAt;
-    const endAt = convertToISODateString(Date.now());
-    const dataCancel: CancelSubscriptionContractRepositoryDataDTO = {
-      active: false,
-      status: SubscriptionContractStatus.CANCELED,
-      startAt,
-      endAt,
-      updatedBy: data.updatedBy
-    };
-    const subscriptionContractCanceled =
-      await this.cancelSubscriptionContractRepository.execute({
-        data: dataCancel,
-        where: {
-          app: data.app,
-          subscriptionContract: splitServiceId(subscriptionContract.id)?.id
+      if (!subscriptionContract.createdByAdmin) {
+        const stripeSubscriptionCanceled =
+          await this.cancelStripeSubscriptionService.execute({
+            subscription: subscriptionContract?.stripeSubscription,
+            stripeAccount: app?.stripeAccount
+          });
+        if (!stripeSubscriptionCanceled) {
+          throw new SubscriptionContractNotFoundException();
         }
+      }
+      const startAt =
+        subscriptionContract.startAt || subscriptionContract.createdAt;
+      const endAt = convertToISODateString(Date.now());
+      const dataCancel: CancelSubscriptionContractRepositoryDataDTO = {
+        active: false,
+        status: SubscriptionContractStatus.CANCELED,
+        startAt,
+        endAt,
+        updatedBy: data.updatedBy
+      };
+      const subscriptionContractCanceled =
+        await this.cancelSubscriptionContractRepository.execute({
+          data: dataCancel,
+          where: {
+            app: data.app,
+            subscriptionContract: splitServiceId(subscriptionContract.id)?.id
+          }
+        });
+      if (!subscriptionContractCanceled) {
+        throw new SubscriptionContractNotFoundException();
+      }
+      const subscriptionContractActive = new SubscriptionContractModel({
+        ...subscriptionContract,
+        ...dataCancel
       });
-    if (!subscriptionContractCanceled) {
-      throw new SubscriptionContractNotFoundException();
-    }
-    const subscriptionContractActive = new SubscriptionContractModel({
-      ...subscriptionContract,
-      ...dataCancel
-    });
-    const subscriptionContractModel = this.publisher.mergeObjectContext(
-      subscriptionContractActive
-    );
-    subscriptionContractModel.canceledSubscriptionContract();
-    subscriptionContractModel.commit();
+      const subscriptionContractModel = this.publisher.mergeObjectContext(
+        subscriptionContractActive
+      );
+      subscriptionContractModel.canceledSubscriptionContract();
+      subscriptionContractModel.commit();
 
-    return subscriptionContractActive;
+      return subscriptionContractActive;
+    } catch (error) {
+      this.logger.error(
+        `SubscriptionContract(#${data?.subscriptionContract}): ${error?.message}`
+      );
+      return;
+    }
   }
 
   private clearData(

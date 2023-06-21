@@ -7,6 +7,7 @@ import {
 
 import { CreateSubscriptionContractByAdminCommand } from '@/commands/implements/subscription-contracts/create-subscription-contract-by-admin.command';
 import { CreateSubscriptionContractByAdminItemDTO } from '@/dtos/subscription-contracts/create-subscription-contract-by-admin.dto';
+import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
@@ -55,6 +56,10 @@ export class CreateSubscriptionContractByAdminCommandHandler
     if (!app) {
       throw new SubscriptionContractNotFoundException();
     }
+    const endAt =
+      data.type === SubscriptionContractType.RECURRING &&
+      data.endAt &&
+      convertToISODateString(data.endAt);
     const subscriptionContract =
       await this.createSubscriptionContractService.execute({
         parent: data.parent,
@@ -62,7 +67,7 @@ export class CreateSubscriptionContractByAdminCommandHandler
         type: data.type,
         createdByAdmin: true,
         startAt: data.startAt && convertToISODateString(data.startAt),
-        endAt: data.endAt && convertToISODateString(data.endAt),
+        endAt,
         automaticRenew: false,
         createdBy: data.createdBy
       });

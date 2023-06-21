@@ -25,6 +25,7 @@ export class SubscriptionContractModelMock extends SubscriptionContractModel {
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
+      createdByAdmin: data?.createdByAdmin ?? false,
       updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
     });
   }

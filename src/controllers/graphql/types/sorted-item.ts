@@ -7,7 +7,10 @@ import { Account } from './account';
 import { App } from './app';
 import { Catalog } from './catalog';
 import { CatalogItem } from './catalog-item';
+import { File } from './file';
 import { Hero } from './hero';
+import { Image } from './image';
+import { Video } from './video';
 
 export const SortedItemUnion = createUnionType({
   name: 'SortedItemUnion',
@@ -17,6 +20,9 @@ export const SortedItemUnion = createUnionType({
     const types = {
       [ServerStokeiApiIdPrefix.CATALOGS]: Catalog.name,
       [ServerStokeiApiIdPrefix.CATALOG_ITEMS]: CatalogItem.name,
+      [ServerStokeiApiIdPrefix.FILES]: File.name,
+      [ServerStokeiApiIdPrefix.IMAGES]: Image.name,
+      [ServerStokeiApiIdPrefix.VIDEOS]: Video.name,
       [ServerStokeiApiIdPrefix.HEROS]: Hero.name
     };
     return types[type];

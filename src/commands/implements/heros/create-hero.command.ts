@@ -21,6 +21,7 @@ export class CreateHeroCommand implements ICommand, CreateHeroDTO {
     this.title = data.title;
     this.titleHighlight = data.titleHighlight;
     this.subtitle = data.subtitle;
+    this.type = data.type;
     this.image = data.image;
     this.backgroundImage = data.backgroundImage;
     this.video = data.video;

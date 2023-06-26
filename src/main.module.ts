@@ -41,7 +41,6 @@ import { Services } from './services';
       driver: ApolloDriver,
       fieldResolverEnhancers: ['guards', 'interceptors'],
       playground: !IS_PRODUCTION,
-      debug: !IS_PRODUCTION,
       introspection: true,
       autoSchemaFile: true
     })

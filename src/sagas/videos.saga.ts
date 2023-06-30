@@ -1,12 +1,14 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ICommand, ofType, Saga } from '@nestjs/cqrs';
-import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
+import { hiddenPrivateDataFromObject, splitServiceId } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { UpdateFileCommand } from '@/commands/implements/files/update-file.command';
+import { CreateSortedItemCommand } from '@/commands/implements/sorted-items/create-sorted-item.command';
 import { CreateVideoAuthorCommand } from '@/commands/implements/video-authors/create-video-author.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { VideoCreatedEvent } from '@/events/implements/videos/video-created.event';
 import { VideoRemovedEvent } from '@/events/implements/videos/video-removed.event';
 import { VideoUpdatedEvent } from '@/events/implements/videos/video-updated.event';
@@ -51,6 +53,19 @@ export class VideosSagas {
                 app: event.video.app,
                 file: event.video.file
               }
+            })
+          );
+        }
+        if (
+          splitServiceId(event.video.parent)?.service ===
+          ServerStokeiApiIdPrefix.MODULES
+        ) {
+          commands.push(
+            new CreateSortedItemCommand({
+              parent: event.video.parent,
+              item: event.video.id,
+              app: event.video.app,
+              createdBy: event.createdBy
             })
           );
         }

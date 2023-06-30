@@ -207,7 +207,7 @@ export class PlansSeeds
       },
       {
         plan: {
-          name: 'Videos',
+          name: 'Videos - Minutos Armazenados',
           app: defaultAppId,
           type: PlanType.VIDEO,
           createdBy: defaultAccountId
@@ -215,7 +215,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
-          nickname: 'Videos',
+          nickname: 'Videos - Minutos Armazenados',
           unit: 'Min',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
@@ -236,6 +236,37 @@ export class PlansSeeds
           }
         }
       }
+      // {
+      //   plan: {
+      //     name: 'Videos - Minutos Vizualizados',
+      //     app: defaultAppId,
+      //     type: PlanType.VIDEO_VIEW,
+      //     createdBy: defaultAccountId
+      //   },
+      //   price: {
+      //     parent: undefined,
+      //     app: defaultAppId,
+      //     nickname: 'Videos - Minutos Vizualizados',
+      //     unit: 'Min',
+      //     billingScheme: BillingScheme.PER_UNIT,
+      //     currency: defaultCurrencyId,
+      //     inventoryType: InventoryType.INFINITE,
+      //     tiersMode: TiersMode.VOLUME,
+      //     type: PriceType.RECURRING,
+      //     amount: getPlanPriceAmountByType(PlanType.VIDEO_VIEW),
+      //     fromAmount: undefined,
+      //     quantity: undefined,
+      //     tiers: undefined,
+      //     createdBy: defaultAccountId,
+      //     recurring: {
+      //       app: defaultAppId,
+      //       interval: IntervalType.MONTH,
+      //       intervalCount: 1,
+      //       usageType: UsageType.LICENSED,
+      //       createdBy: defaultAccountId
+      //     }
+      //   }
+      // }
     ];
   }
 }

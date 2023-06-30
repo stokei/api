@@ -8,7 +8,7 @@ export class CourseStudent {
   @Field(() => ID)
   id: string;
 
-  @Field(() => Account)
+  @Field(() => Account, { nullable: true })
   student: Account;
 
   @Field(() => String, { nullable: true })

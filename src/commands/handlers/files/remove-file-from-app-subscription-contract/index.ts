@@ -6,13 +6,11 @@ import { RemoveFileFromAppSubscriptionContractCommand } from '@/commands/impleme
 import { PlanType } from '@/enums/plan-type.enum';
 import {
   DataNotFoundException,
-  FileNotFoundException,
   ParamNotFoundException,
   PriceNotFoundException
 } from '@/errors';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
 import { RemoveItemFromAppSubscriptionContractService } from '@/services/apps/remove-item-from-app-subscription-contract';
-import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
 import { convertBytesToKilobytes } from '@/utils/convert-bytes-to-kilobytes';
 
@@ -27,7 +25,6 @@ export class RemoveFileFromAppSubscriptionContractCommandHandler
     RemoveFileFromAppSubscriptionContractCommandHandler.name
   );
   constructor(
-    private readonly findFileByIdService: FindFileByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
     private readonly removeItemFromAppSubscriptionContractService: RemoveItemFromAppSubscriptionContractService
   ) {}
@@ -46,10 +43,6 @@ export class RemoveFileFromAppSubscriptionContractCommandHandler
           'file'
         );
       }
-      const file = await this.findFileByIdService.execute(data.file);
-      if (!file) {
-        throw new FileNotFoundException();
-      }
 
       const filePrice = await this.findPlanPriceByTypeService.execute(
         PlanType.STORAGE
@@ -60,8 +53,8 @@ export class RemoveFileFromAppSubscriptionContractCommandHandler
 
       const subscriptionContractItem =
         await this.removeItemFromAppSubscriptionContractService.execute({
-          quantity: convertBytesToKilobytes(file.size),
-          app: file.app,
+          quantity: convertBytesToKilobytes(data.file.size),
+          app: data.file.app,
           price: filePrice.id,
           removedBy: data.removedBy
         });
@@ -77,7 +70,7 @@ export class RemoveFileFromAppSubscriptionContractCommandHandler
   ): RemoveFileFromAppSubscriptionContractCommand {
     return cleanObject({
       removedBy: cleanValue(command?.removedBy),
-      file: cleanValue(command?.file)
+      file: command?.file
     });
   }
 }

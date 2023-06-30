@@ -59,14 +59,14 @@ export class FilesSagas {
         if (!event.file.isVideo && !event.file.isImage) {
           commands.push(
             new RemoveFileFromAppSubscriptionContractCommand({
-              file: event.file.id,
+              file: event.file,
               removedBy: event.removedBy
             })
           );
         } else if (event.file.isVideo) {
           commands.push(
             new RemoveVideoFromAppSubscriptionContractCommand({
-              file: event.file.id,
+              file: event.file,
               removedBy: event.removedBy
             })
           );

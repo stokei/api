@@ -2,6 +2,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import { RemoveDomainCommand } from '@/commands/implements/domains/remove-domain.command';
+import { IS_PRODUCTION } from '@/environments';
 import {
   DataNotFoundException,
   DomainNotFoundException,
@@ -9,6 +10,7 @@ import {
 } from '@/errors';
 import { FindDomainByIdRepository } from '@/repositories/domains/find-domain-by-id';
 import { RemoveDomainRepository } from '@/repositories/domains/remove-domain';
+import { DeleteVercelDomainService } from '@/services/vercel/delete-vercel-domain';
 
 @CommandHandler(RemoveDomainCommand)
 export class RemoveDomainCommandHandler
@@ -17,6 +19,7 @@ export class RemoveDomainCommandHandler
   constructor(
     private readonly findDomainByIdRepository: FindDomainByIdRepository,
     private readonly removeDomainRepository: RemoveDomainRepository,
+    private readonly deleteVercelDomainService: DeleteVercelDomainService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -46,6 +49,15 @@ export class RemoveDomainCommandHandler
     });
     if (!removed) {
       throw new DataNotFoundException();
+    }
+
+    if (IS_PRODUCTION) {
+      const vercelDomain = await this.deleteVercelDomainService.execute({
+        name: domain.name
+      });
+      if (!vercelDomain) {
+        throw new DomainNotFoundException();
+      }
     }
     const domainModel = this.publisher.mergeObjectContext(domain);
     domainModel.removedDomain({

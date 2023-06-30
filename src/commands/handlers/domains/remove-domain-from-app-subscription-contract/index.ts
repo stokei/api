@@ -6,13 +6,11 @@ import { RemoveDomainFromAppSubscriptionContractCommand } from '@/commands/imple
 import { PlanType } from '@/enums/plan-type.enum';
 import {
   DataNotFoundException,
-  DomainNotFoundException,
   ParamNotFoundException,
   PriceNotFoundException
 } from '@/errors';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
 import { RemoveItemFromAppSubscriptionContractService } from '@/services/apps/remove-item-from-app-subscription-contract';
-import { FindDomainByIdService } from '@/services/domains/find-domain-by-id';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
 
 type RemoveDomainFromAppSubscriptionContractCommandKeys =
@@ -26,7 +24,6 @@ export class RemoveDomainFromAppSubscriptionContractCommandHandler
     RemoveDomainFromAppSubscriptionContractCommandHandler.name
   );
   constructor(
-    private readonly findDomainByIdService: FindDomainByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
     private readonly removeItemFromAppSubscriptionContractService: RemoveItemFromAppSubscriptionContractService
   ) {}
@@ -45,11 +42,6 @@ export class RemoveDomainFromAppSubscriptionContractCommandHandler
         );
       }
 
-      const domain = await this.findDomainByIdService.execute(data.domain);
-      if (!domain) {
-        throw new DomainNotFoundException();
-      }
-
       const domainPrice = await this.findPlanPriceByTypeService.execute(
         PlanType.DOMAIN
       );
@@ -60,7 +52,7 @@ export class RemoveDomainFromAppSubscriptionContractCommandHandler
       const subscriptionContractItem =
         await this.removeItemFromAppSubscriptionContractService.execute({
           quantity: 1,
-          app: domain.app,
+          app: data.domain.app,
           price: domainPrice.id,
           removedBy: data.removedBy
         });
@@ -76,7 +68,7 @@ export class RemoveDomainFromAppSubscriptionContractCommandHandler
   ): RemoveDomainFromAppSubscriptionContractCommand {
     return cleanObject({
       removedBy: cleanValue(command?.removedBy),
-      domain: cleanValue(command?.domain)
+      domain: command?.domain
     });
   }
 }

@@ -37,6 +37,7 @@ import { SubscriptionContractItemServices } from './subscription-contract-items'
 import { SubscriptionContractServices } from './subscription-contracts';
 import { TusServices } from './tus';
 import { UsageRecordServices } from './usage-records';
+import { VercelServices } from './vercel';
 import { VideoAuthorServices } from './video-authors';
 import { VideoServices } from './videos';
 import { WebhookServices } from './webhooks';
@@ -83,5 +84,6 @@ export const Services = [
   ...HeroServices,
   ...SortedItemServices,
   ...SendgridServices,
-  ...EmailServices
+  ...EmailServices,
+  ...VercelServices
 ];

@@ -44,3 +44,6 @@ export const CLOUDFLARE_STREAM_CUSTOMER_CODE: string =
   process.env.CLOUDFLARE_STREAM_CUSTOMER_CODE;
 
 export const SENDGRID_KEY: string = process.env.SENDGRID_KEY;
+
+export const VERCEL_PROJECT_ID: string = process.env.VERCEL_PROJECT_ID;
+export const VERCEL_TOKEN: string = process.env.VERCEL_TOKEN;

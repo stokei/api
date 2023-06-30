@@ -6,13 +6,11 @@ import { RemoveVideoFromAppSubscriptionContractCommand } from '@/commands/implem
 import { PlanType } from '@/enums/plan-type.enum';
 import {
   DataNotFoundException,
-  FileNotFoundException,
   ParamNotFoundException,
   PriceNotFoundException
 } from '@/errors';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
 import { RemoveItemFromAppSubscriptionContractService } from '@/services/apps/remove-item-from-app-subscription-contract';
-import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
 
 type RemoveVideoFromAppSubscriptionContractCommandKeys =
@@ -26,7 +24,6 @@ export class RemoveVideoFromAppSubscriptionContractCommandHandler
     RemoveVideoFromAppSubscriptionContractCommandHandler.name
   );
   constructor(
-    private readonly findFileByIdService: FindFileByIdService,
     private readonly findPlanPriceByTypeService: FindPlanPriceByTypeService,
     private readonly removeItemFromAppSubscriptionContractService: RemoveItemFromAppSubscriptionContractService
   ) {}
@@ -45,10 +42,6 @@ export class RemoveVideoFromAppSubscriptionContractCommandHandler
           'file'
         );
       }
-      const file = await this.findFileByIdService.execute(data.file);
-      if (!file) {
-        throw new FileNotFoundException();
-      }
 
       const filePrice = await this.findPlanPriceByTypeService.execute(
         PlanType.VIDEO
@@ -59,8 +52,8 @@ export class RemoveVideoFromAppSubscriptionContractCommandHandler
 
       const subscriptionContractItem =
         await this.removeItemFromAppSubscriptionContractService.execute({
-          quantity: file.duration || 1,
-          app: file.app,
+          quantity: data.file.duration || 1,
+          app: data.file.app,
           price: filePrice.id,
           removedBy: data.removedBy
         });
@@ -76,7 +69,7 @@ export class RemoveVideoFromAppSubscriptionContractCommandHandler
   ): RemoveVideoFromAppSubscriptionContractCommand {
     return cleanObject({
       removedBy: cleanValue(command?.removedBy),
-      file: cleanValue(command?.file)
+      file: command?.file
     });
   }
 }

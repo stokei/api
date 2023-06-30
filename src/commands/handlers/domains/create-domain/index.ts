@@ -3,6 +3,7 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateDomainCommand } from '@/commands/implements/domains/create-domain.command';
 import { DomainStatus } from '@/enums/domain-status.enum';
+import { IS_PRODUCTION } from '@/environments';
 import {
   DataNotFoundException,
   DomainAlreadyExistsException,
@@ -11,6 +12,7 @@ import {
 } from '@/errors';
 import { CreateDomainRepository } from '@/repositories/domains/create-domain';
 import { FindAllDomainsService } from '@/services/domains/find-all-domains';
+import { CreateVercelDomainService } from '@/services/vercel/create-vercel-domain';
 
 type CreateDomainCommandKeys = keyof CreateDomainCommand;
 
@@ -21,6 +23,7 @@ export class CreateDomainCommandHandler
   constructor(
     private readonly createDomainRepository: CreateDomainRepository,
     private readonly findAllDomainsService: FindAllDomainsService,
+    private readonly createVercelDomainService: CreateVercelDomainService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -40,6 +43,15 @@ export class CreateDomainCommandHandler
     const domainExists = await this.domainAlreadyExists(data.name);
     if (!!domainExists) {
       throw new DomainAlreadyExistsException();
+    }
+
+    if (IS_PRODUCTION) {
+      const vercelDomain = await this.createVercelDomainService.execute({
+        name: data.name
+      });
+      if (!vercelDomain) {
+        throw new DomainNotFoundException();
+      }
     }
 
     const { default: isDefault, ...dataCreate } = data;

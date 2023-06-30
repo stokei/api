@@ -78,8 +78,8 @@ export class DomainsSagas {
         );
         const commands = [
           new RemoveDomainFromAppSubscriptionContractCommand({
-            removedBy: event.removedBy,
-            domain: event.domain.id
+            domain: event.domain,
+            removedBy: event.removedBy
           })
         ];
         return commands;

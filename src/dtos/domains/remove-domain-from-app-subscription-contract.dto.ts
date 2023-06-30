@@ -1,4 +1,6 @@
+import { DomainModel } from '@/models/domain.model';
+
 export interface RemoveDomainFromAppSubscriptionContractDTO {
-  domain: string;
+  domain: DomainModel;
   removedBy: string;
 }

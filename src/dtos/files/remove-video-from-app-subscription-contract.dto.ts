@@ -1,4 +1,6 @@
+import { FileModel } from '@/models/file.model';
+
 export interface RemoveVideoFromAppSubscriptionContractDTO {
-  file: string;
+  file: FileModel;
   removedBy: string;
 }

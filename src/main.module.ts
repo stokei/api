@@ -9,6 +9,7 @@ import {
 import { APP_FILTER } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TerminusModule } from '@nestjs/terminus';
 import { AuthModule } from '@stokei/nestjs';
 
@@ -17,6 +18,7 @@ import { REST_CONTROLLERS_URL_NAMES } from './constants/rest-controllers';
 import { Controllers } from './controllers';
 import { Loaders } from './controllers/graphql/dataloaders';
 import { Resolvers } from './controllers/graphql/resolvers';
+import { CronJobs } from './crons';
 import { DatabaseModule } from './database/database.module';
 import { Entities } from './entities';
 import { IS_PRODUCTION, TOKEN_SECRET_KEY } from './environments';
@@ -32,6 +34,7 @@ import { Services } from './services';
 @Module({
   imports: [
     TerminusModule,
+    ScheduleModule.forRoot(),
     CacheModule.register(),
     CqrsModule,
     DatabaseModule,
@@ -55,7 +58,8 @@ import { Services } from './services';
     ...CommandHandlers,
     ...Sagas,
     ...Services,
-    ...Loaders
+    ...Loaders,
+    ...CronJobs
   ],
   exports: [...Services]
 })

@@ -30,6 +30,7 @@ import { SubscriptionContractItemQueriesHandlers } from './subscription-contract
 import { SubscriptionContractQueriesHandlers } from './subscription-contracts';
 import { UsageRecordQueriesHandlers } from './usage-records';
 import { VideoAuthorQueriesHandlers } from './video-authors';
+import { VideoViewQueriesHandlers } from './video-views';
 import { VideoQueriesHandlers } from './videos';
 
 export const QueriesHandlers = [
@@ -65,5 +66,6 @@ export const QueriesHandlers = [
   ...CatalogItemQueriesHandlers,
   ...RoleQueriesHandlers,
   ...HeroQueriesHandlers,
-  ...SortedItemQueriesHandlers
+  ...SortedItemQueriesHandlers,
+  ...VideoViewQueriesHandlers
 ];

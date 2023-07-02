@@ -27,6 +27,7 @@ import { ProductsMutations } from './products';
 import { SortedItemsMutations } from './sorted-items';
 import { SubscriptionContractsMutations } from './subscription-contracts';
 import { VideoAuthorsMutations } from './video-authors';
+import { VideoViewsMutations } from './video-views';
 import { VideosMutations } from './videos';
 
 export const Mutations = [
@@ -59,5 +60,6 @@ export const Mutations = [
   ...CatalogsMutations,
   ...CatalogItemsMutations,
   ...HerosMutations,
-  ...SortedItemsMutations
+  ...SortedItemsMutations,
+  ...VideoViewsMutations
 ];

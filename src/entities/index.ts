@@ -31,5 +31,6 @@ export * from './subscription-contract-item.entity';
 export * from './usage-record.entity';
 export * from './video.entity';
 export * from './video-author.entity';
+export * from './video-view.entity';
 
 export const Entities = [];

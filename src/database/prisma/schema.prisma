@@ -479,7 +479,7 @@ model VideoView {
   id             String    @id @default(cuid())
   app            String    @db.VarChar(255)
   video          String    @db.VarChar(255)
-  viewer         String    @db.VarChar(255)
+  viewer         String?   @db.VarChar(255)
   viewedDuration Float     @map("viewed_duration")
   videoDuration  Float     @map("video_duration")
   updatedAt      DateTime? @updatedAt @map("updated_at")

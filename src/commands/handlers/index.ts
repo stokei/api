@@ -33,6 +33,7 @@ import { SubscriptionContractItemCommandHandlers } from './subscription-contract
 import { SubscriptionContractCommandHandlers } from './subscription-contracts';
 import { UsageRecordCommandHandlers } from './usage-records';
 import { VideoAuthorCommandHandlers } from './video-authors';
+import { VideoViewCommandHandlers } from './video-views';
 import { VideoCommandHandlers } from './videos';
 
 export const CommandHandlers = [
@@ -71,5 +72,6 @@ export const CommandHandlers = [
   ...RoleCommandHandlers,
   ...HeroCommandHandlers,
   ...SortedItemCommandHandlers,
-  ...EmailCommandHandlers
+  ...EmailCommandHandlers,
+  ...VideoViewCommandHandlers
 ];

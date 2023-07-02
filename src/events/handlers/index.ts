@@ -30,6 +30,7 @@ import { SubscriptionContractItemEventsHandlers } from './subscription-contract-
 import { SubscriptionContractEventsHandlers } from './subscription-contracts';
 import { UsageRecordEventsHandlers } from './usage-records';
 import { VideoAuthorEventsHandlers } from './video-authors';
+import { VideoViewEventsHandlers } from './video-views';
 import { VideoEventsHandlers } from './videos';
 
 export const EventsHandlers = [
@@ -65,5 +66,6 @@ export const EventsHandlers = [
   ...CatalogItemEventsHandlers,
   ...RoleEventsHandlers,
   ...HeroEventsHandlers,
-  ...SortedItemEventsHandlers
+  ...SortedItemEventsHandlers,
+  ...VideoViewEventsHandlers
 ];

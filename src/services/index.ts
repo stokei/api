@@ -39,6 +39,7 @@ import { TusServices } from './tus';
 import { UsageRecordServices } from './usage-records';
 import { VercelServices } from './vercel';
 import { VideoAuthorServices } from './video-authors';
+import { VideoViewServices } from './video-views';
 import { VideoServices } from './videos';
 import { WebhookServices } from './webhooks';
 
@@ -85,5 +86,6 @@ export const Services = [
   ...SortedItemServices,
   ...SendgridServices,
   ...EmailServices,
-  ...VercelServices
+  ...VercelServices,
+  ...VideoViewServices
 ];

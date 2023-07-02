@@ -30,6 +30,7 @@ import { SubscriptionContractItemsSagas } from './subscription-contract-items.sa
 import { SubscriptionContractsSagas } from './subscription-contracts.saga';
 import { UsageRecordsSagas } from './usage-records.saga';
 import { VideoAuthorsSagas } from './video-authors.saga';
+import { VideoViewsSagas } from './video-views.saga';
 import { VideosSagas } from './videos.saga';
 
 export const Sagas = [
@@ -65,5 +66,6 @@ export const Sagas = [
   CatalogItemsSagas,
   RolesSagas,
   HerosSagas,
-  SortedItemsSagas
+  SortedItemsSagas,
+  VideoViewsSagas
 ];

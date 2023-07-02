@@ -104,4 +104,6 @@ export * from './user-unauthorized';
 export * from './video-author-not-found';
 export * from './video-authors-not-found';
 export * from './video-not-found';
+export * from './video-view-not-found';
+export * from './video-views-not-found';
 export * from './videos-not-found';

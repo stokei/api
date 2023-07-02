@@ -26,6 +26,7 @@ import { SortedItemsFieldsResolvers } from './sorted-items';
 import { SubscriptionContractItemsFieldsResolvers } from './subscription-contract-items';
 import { SubscriptionContractsFieldsResolvers } from './subscription-contracts';
 import { VideoAuthorsFieldsResolvers } from './video-authors';
+import { VideoViewsFieldsResolvers } from './video-views';
 import { VideosFieldsResolvers } from './videos';
 
 export const FieldsResolvers = [
@@ -57,5 +58,6 @@ export const FieldsResolvers = [
   ...RolesFieldsResolvers,
   ...HerosFieldsResolvers,
   ...SortedItemsFieldsResolvers,
-  ...SubscriptionContractItemsFieldsResolvers
+  ...SubscriptionContractItemsFieldsResolvers,
+  ...VideoViewsFieldsResolvers
 ];

@@ -30,6 +30,7 @@ import { SubscriptionContractItemsRepositories } from './subscription-contract-i
 import { SubscriptionContractsRepositories } from './subscription-contracts';
 import { UsageRecordsRepositories } from './usage-records';
 import { VideoAuthorsRepositories } from './video-authors';
+import { VideoViewsRepositories } from './video-views';
 import { VideosRepositories } from './videos';
 
 export const Repositories = [
@@ -65,5 +66,6 @@ export const Repositories = [
   ...CatalogItemsRepositories,
   ...RolesRepositories,
   ...HerosRepositories,
-  ...SortedItemsRepositories
+  ...SortedItemsRepositories,
+  ...VideoViewsRepositories
 ];

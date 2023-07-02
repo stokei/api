@@ -10,11 +10,8 @@ import {
   StripeAccountNotFoundException
 } from '@/errors';
 import { LinkMapper } from '@/mappers/links';
-import { DomainModel } from '@/models/domain.model';
 import { CreateAppStripeAccountService } from '@/services/apps/create-app-stripe-account';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { FindAppCurrentDomainService } from '@/services/apps/find-app-current-domain';
-import { FindAppCurrentSubscriptionContractService } from '@/services/apps/find-app-current-subscription-contract';
 import { CreateStripeAccountOnboardingLinkService } from '@/services/stripe/create-stripe-account-onboarding-link';
 import {
   mountStripeAccountOnboardingRefreshURL,
@@ -30,8 +27,6 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
 {
   constructor(
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findAppCurrentSubscriptionContractService: FindAppCurrentSubscriptionContractService,
-    private readonly findAppCurrentDomainService: FindAppCurrentDomainService,
     private readonly createAppStripeAccountService: CreateAppStripeAccountService,
     private readonly createStripeAccountOnboardingLinkService: CreateStripeAccountOnboardingLinkService
   ) {}
@@ -68,19 +63,13 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
       stripeAccount = appWithStripeAccount.stripeAccount;
     }
 
-    let appDomain: DomainModel;
-    try {
-      appDomain = await this.findAppCurrentDomainService.execute(app.id);
-    } catch (error) {
-      appDomain = null;
-    }
-
+    const defaultURL = `https://stokei.com/apps/${app.id}`;
     const link = await this.createStripeAccountOnboardingLinkService.execute({
       refreshUrl: mountStripeAccountOnboardingRefreshURL({
-        domain: appDomain?.url || 'https://' + app.id + '.stokei.app/admins'
+        domain: defaultURL
       }),
       returnUrl: mountStripeAccountOnboardingReturnURL({
-        domain: appDomain?.url || 'https://' + app.id + '.stokei.app/admins'
+        domain: defaultURL
       }),
       stripeAccount
     });

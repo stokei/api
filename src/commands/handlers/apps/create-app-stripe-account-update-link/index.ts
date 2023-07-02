@@ -10,7 +10,6 @@ import {
 } from '@/errors';
 import { LinkMapper } from '@/mappers/links';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { FindAppCurrentDomainService } from '@/services/apps/find-app-current-domain';
 import { CreateStripeAccountUpdateLinkService } from '@/services/stripe/create-stripe-account-update-link';
 import {
   mountStripeAccountOnboardingRefreshURL,
@@ -26,7 +25,6 @@ export class CreateAppStripeAccountUpdateLinkCommandHandler
 {
   constructor(
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findAppCurrentDomainService: FindAppCurrentDomainService,
     private readonly createStripeAccountUpdateLinkService: CreateStripeAccountUpdateLinkService
   ) {}
 
@@ -49,14 +47,13 @@ export class CreateAppStripeAccountUpdateLinkCommandHandler
       throw new StripeAccountNotFoundException();
     }
 
-    const appDomain = await this.findAppCurrentDomainService.execute(app.id);
-
+    const defaultURL = `https://stokei.com/apps/${app.id}`;
     const link = await this.createStripeAccountUpdateLinkService.execute({
       refreshUrl: mountStripeAccountOnboardingRefreshURL({
-        domain: appDomain?.url || 'https://' + app.id + '.stokei.app/admins'
+        domain: defaultURL
       }),
       returnUrl: mountStripeAccountOnboardingReturnURL({
-        domain: appDomain?.url || 'https://' + app.id + '.stokei.app/admins'
+        domain: defaultURL
       }),
       stripeAccount: app.stripeAccount
     });

@@ -7,23 +7,21 @@ import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 const stripeOnboardingBase = '/onboardings/stripe';
 
 export const mountStripeAccountOnboardingReturnURL = ({
-  domain
+  appId
 }: {
-  domain?: string;
+  appId?: string;
 }) => {
-  return appendPathnameToURL(
-    domain || STRIPE_ONBOARDING_RETURN_URL,
-    stripeOnboardingBase + '/callback'
-  );
+  const baseURL = STRIPE_ONBOARDING_RETURN_URL || 'https://stokei.com';
+  const defaultURL = `${baseURL}/apps/${appId}`;
+  return appendPathnameToURL(defaultURL, stripeOnboardingBase + '/callback');
 };
 
 export const mountStripeAccountOnboardingRefreshURL = ({
-  domain
+  appId
 }: {
-  domain?: string;
+  appId?: string;
 }) => {
-  return appendPathnameToURL(
-    domain || STRIPE_ONBOARDING_REFRESH_URL,
-    stripeOnboardingBase + '/refresh'
-  );
+  const baseURL = STRIPE_ONBOARDING_REFRESH_URL || 'https://stokei.com';
+  const defaultURL = `${baseURL}/apps/${appId}`;
+  return appendPathnameToURL(defaultURL, stripeOnboardingBase + '/refresh');
 };

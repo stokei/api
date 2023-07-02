@@ -57,6 +57,7 @@ export class AppsSeeds
         name: 'Stokei',
         slug: 'stokei',
         parent: defaultAccountId,
+        paymentMethod: null,
         email: 'contato@stokei.com',
         currency: defaultCurrencyId,
         language: defaultLanguageId,

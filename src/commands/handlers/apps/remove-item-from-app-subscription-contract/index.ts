@@ -56,6 +56,7 @@ export class RemoveItemFromAppSubscriptionContractCommandHandler
           'price'
         );
       }
+      data.quantity = data.quantity && Math.round(data.quantity);
 
       const app = await this.findAppByIdService.execute(data.app);
       if (!app) {

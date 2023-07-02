@@ -63,13 +63,12 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
       stripeAccount = appWithStripeAccount.stripeAccount;
     }
 
-    const defaultURL = `https://stokei.com/apps/${app.id}`;
     const link = await this.createStripeAccountOnboardingLinkService.execute({
       refreshUrl: mountStripeAccountOnboardingRefreshURL({
-        domain: defaultURL
+        appId: app.id
       }),
       returnUrl: mountStripeAccountOnboardingReturnURL({
-        domain: defaultURL
+        appId: app.id
       }),
       stripeAccount
     });

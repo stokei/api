@@ -13,4 +13,7 @@ export class CreateAppInput {
 
   @Field()
   language: string;
+
+  @Field()
+  paymentMethod: string;
 }

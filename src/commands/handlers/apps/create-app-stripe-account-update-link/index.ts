@@ -47,13 +47,12 @@ export class CreateAppStripeAccountUpdateLinkCommandHandler
       throw new StripeAccountNotFoundException();
     }
 
-    const defaultURL = `https://stokei.com/apps/${app.id}`;
     const link = await this.createStripeAccountUpdateLinkService.execute({
       refreshUrl: mountStripeAccountOnboardingRefreshURL({
-        domain: defaultURL
+        appId: app.id
       }),
       returnUrl: mountStripeAccountOnboardingReturnURL({
-        domain: defaultURL
+        appId: app.id
       }),
       stripeAccount: app.stripeAccount
     });

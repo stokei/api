@@ -11,11 +11,9 @@ import {
   LanguageNotFoundException,
   ParamNotFoundException
 } from '@/errors';
-import { PaymentMethodModel } from '@/models/payment-method.model';
 import { CreateAppRepository } from '@/repositories/apps/create-app';
 import { FindCurrencyByIdService } from '@/services/currencies/find-currency-by-id';
 import { FindLanguageByIdService } from '@/services/languages/find-language-by-id';
-import { FindPaymentMethodByIdService } from '@/services/payment-methods/find-payment-method-by-id';
 
 type CreateAppCommandKeys = keyof CreateAppCommand;
 
@@ -27,7 +25,6 @@ export class CreateAppCommandHandler
     private readonly createAppRepository: CreateAppRepository,
     private readonly findCurrencyByIdService: FindCurrencyByIdService,
     private readonly findLanguageByIdService: FindLanguageByIdService,
-    private readonly findPaymentMethodByIdService: FindPaymentMethodByIdService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -56,21 +53,10 @@ export class CreateAppCommandHandler
     if (!language) {
       throw new LanguageNotFoundException();
     }
-    let paymentMethod: PaymentMethodModel;
-    const isStokeiApp = data.slug === 'stokei';
-    if (!isStokeiApp) {
-      paymentMethod = await this.findPaymentMethodByIdService.execute(
-        data?.paymentMethod
-      );
-      if (!paymentMethod) {
-        throw new LanguageNotFoundException();
-      }
-    }
 
     const appCreated = await this.createAppRepository.execute({
       ...data,
       slug,
-      paymentMethod: paymentMethod?.id,
       currency: currency.id,
       language: language.id,
       status: AppStatus.ACTIVE
@@ -97,7 +83,6 @@ export class CreateAppCommandHandler
       email: cleanValue(command?.email),
       name: cleanValue(command?.name),
       language: cleanValue(command?.language),
-      paymentMethod: cleanValue(command?.paymentMethod),
       currency: cleanValue(command?.currency)
     });
   }

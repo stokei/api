@@ -6,6 +6,5 @@ export interface CreateAppDTO {
   email: string;
   language: string;
   currency: string;
-  paymentMethod: string;
   createdBy: string;
 }

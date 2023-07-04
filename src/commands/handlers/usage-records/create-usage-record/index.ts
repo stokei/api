@@ -53,13 +53,14 @@ export class CreateUsageRecordCommandHandler
     if (!subscriptionContractItem) {
       throw new SubscriptionContractItemNotFoundException();
     }
-
-    await this.createStripeUsageRecordService.execute({
-      quantity: data.quantity,
-      action: new UsageRecordMapper().actionToStripeAction(data.action),
-      subscriptionItem: subscriptionContractItem.stripeSubscriptionItem,
-      stripeAccount: app.stripeAccount
-    });
+    if (subscriptionContractItem.stripeSubscriptionItem) {
+      await this.createStripeUsageRecordService.execute({
+        quantity: data.quantity,
+        action: new UsageRecordMapper().actionToStripeAction(data.action),
+        subscriptionItem: subscriptionContractItem.stripeSubscriptionItem,
+        stripeAccount: app.stripeAccount
+      });
+    }
 
     const usageRecordCreated = await this.createUsageRecordRepository.execute(
       data

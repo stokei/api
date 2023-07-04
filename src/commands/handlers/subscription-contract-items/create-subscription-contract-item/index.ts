@@ -19,7 +19,6 @@ import { PriceModel } from '@/models/price.model';
 import { CreateSubscriptionContractItemRepository } from '@/repositories/subscription-contract-items/create-subscription-contract-item';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
-import { CreateStripeSubscriptionItemService } from '@/services/stripe/create-stripe-subscription-item';
 import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 
 type CreateSubscriptionContractItemCommandKeys =
@@ -31,7 +30,6 @@ export class CreateSubscriptionContractItemCommandHandler
 {
   constructor(
     private readonly createSubscriptionContractItemRepository: CreateSubscriptionContractItemRepository,
-    private readonly createStripeSubscriptionItemService: CreateStripeSubscriptionItemService,
     private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
     private readonly findPriceByIdService: FindPriceByIdService,
     private readonly findAppByIdService: FindAppByIdService,
@@ -53,11 +51,7 @@ export class CreateSubscriptionContractItemCommandHandler
         'product'
       );
     }
-    const {
-      isDefaultStripeAccount,
-      createdByAdmin,
-      ...dataSubscriptionItemCreated
-    } = data;
+    const { createdByAdmin, ...dataSubscriptionItemCreated } = data;
 
     let price: PriceModel;
     const priceIsRequired = !createdByAdmin;
@@ -72,6 +66,9 @@ export class CreateSubscriptionContractItemCommandHandler
         throw new PriceNotFoundException();
       }
     }
+    dataSubscriptionItemCreated.quantity = dataSubscriptionItemCreated.quantity
+      ? Math.round(dataSubscriptionItemCreated.quantity)
+      : 0;
 
     const subscriptionContract =
       await this.findSubscriptionContractByIdService.execute(data.parent);
@@ -83,29 +80,11 @@ export class CreateSubscriptionContractItemCommandHandler
       throw new AppNotFoundException();
     }
 
-    const existsStripeSubscriptionItem = !!data?.stripeSubscriptionItem;
-    let stripeSubscriptionItemId = data.stripeSubscriptionItem;
-    const canCreateNewStripeSubscriptionItem =
-      !createdByAdmin && !existsStripeSubscriptionItem;
-    if (!!canCreateNewStripeSubscriptionItem) {
-      const stripeSubscriptionItem =
-        await this.createStripeSubscriptionItemService.execute({
-          price: price.stripePrice,
-          quantity: data.quantity,
-          subscription: subscriptionContract.stripeSubscription,
-          stripeAccount: isDefaultStripeAccount ? undefined : app.stripeAccount
-        });
-      if (!stripeSubscriptionItem) {
-        throw new SubscriptionContractItemNotFoundException();
-      }
-      stripeSubscriptionItemId = stripeSubscriptionItem.id;
-    }
-
     const subscriptionContractItemCreated =
       await this.createSubscriptionContractItemRepository.execute({
         ...dataSubscriptionItemCreated,
         recurring: data.recurring || price?.recurring,
-        stripeSubscriptionItem: stripeSubscriptionItemId
+        stripeSubscriptionItem: data.stripeSubscriptionItem
       });
     if (!subscriptionContractItemCreated) {
       throw new SubscriptionContractItemNotFoundException();
@@ -132,9 +111,6 @@ export class CreateSubscriptionContractItemCommandHandler
       quantity: cleanValueNumber(command?.quantity),
       price: cleanValue(command?.price),
       createdByAdmin: cleanValueBoolean(command?.createdByAdmin),
-      isDefaultStripeAccount: cleanValueBoolean(
-        command?.isDefaultStripeAccount
-      ),
       stripeSubscriptionItem: cleanValue(command?.stripeSubscriptionItem),
       recurring: cleanValue(command?.recurring)
     });

@@ -84,7 +84,6 @@ export class AppModel extends AggregateRoot {
     this.icon = data.icon;
     this.logo = data.logo;
     this.active = data.active;
-    this.paymentMethod = data.paymentMethod;
     this.blockedAt = convertToISODateString(data.blockedAt);
     this.activatedAt = convertToISODateString(data.activatedAt);
     this.deactivatedAt = convertToISODateString(data.deactivatedAt);
@@ -96,7 +95,7 @@ export class AppModel extends AggregateRoot {
     this.stripeBankAccount = data.stripeBankAccount || undefined;
     this.stripeAccount = data.stripeAccount || undefined;
     this.isAllowedToSell = this.isStokei || !!this.stripeAccount;
-    this.isAllowedToUsePlan = this.isStokei || !!this.paymentMethod;
+    this.isAllowedToUsePlan = !!this.isAllowedToSell;
     this.isIntegratedWithStripe = !!this.stripeAccount;
   }
 

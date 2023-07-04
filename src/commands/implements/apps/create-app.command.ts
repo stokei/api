@@ -10,7 +10,6 @@ export class CreateAppCommand implements ICommand, CreateAppDTO {
   email: string;
   currency: string;
   language: string;
-  paymentMethod: string;
   app: string;
   createdBy: string;
 
@@ -22,7 +21,6 @@ export class CreateAppCommand implements ICommand, CreateAppDTO {
     this.parent = data.parent;
     this.language = data.language;
     this.currency = data.currency;
-    this.paymentMethod = data.paymentMethod;
     this.createdBy = data.createdBy;
   }
 }

@@ -73,20 +73,25 @@ export class UpdateSubscriptionContractItemCommandHandler
       throw new AppNotFoundException();
     }
     const dataUpdated = data.data;
+    dataUpdated.quantity = dataUpdated.quantity
+      ? Math.round(dataUpdated.quantity)
+      : 0;
 
-    const stripeSubscriptionItemUpdated =
-      await this.updateStripeSubscriptionItemService.execute({
-        data: {
-          quantity: dataUpdated.quantity
-        },
-        where: {
-          stripeAccount: !priceApp.isStokei ? app.stripeAccount : undefined,
-          stripeSubscriptionItem:
-            subscriptionContractItem.stripeSubscriptionItem
-        }
-      });
-    if (!stripeSubscriptionItemUpdated) {
-      throw new DataNotFoundException();
+    if (subscriptionContractItem.stripeSubscriptionItem) {
+      const stripeSubscriptionItemUpdated =
+        await this.updateStripeSubscriptionItemService.execute({
+          data: {
+            quantity: dataUpdated.quantity
+          },
+          where: {
+            stripeAccount: !priceApp.isStokei ? app.stripeAccount : undefined,
+            stripeSubscriptionItem:
+              subscriptionContractItem.stripeSubscriptionItem
+          }
+        });
+      if (!stripeSubscriptionItemUpdated) {
+        throw new DataNotFoundException();
+      }
     }
 
     const updated = await this.updateSubscriptionContractItemRepository.execute(

@@ -20,18 +20,13 @@ import {
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { AppModel } from '@/models/app.model';
-import { PaymentMethodModel } from '@/models/payment-method.model';
 import { PriceModel } from '@/models/price.model';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
-import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentSubscriptionContractService } from '@/services/apps/find-app-current-subscription-contract';
-import { FindPaymentMethodByIdService } from '@/services/payment-methods/find-payment-method-by-id';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
-import { CreateStripeSubscriptionService } from '@/services/stripe/create-stripe-subscription';
-import { FindStripeSubscriptionByIdService } from '@/services/stripe/find-subscription-by-id';
 import { CreateSubscriptionContractItemService } from '@/services/subscription-contract-items/create-subscription-contract-item';
 import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
 import { UpdateSubscriptionContractItemService } from '@/services/subscription-contract-items/update-subscription-contract-item';
@@ -54,17 +49,13 @@ export class AddItemToAppSubscriptionContractCommandHandler
     private readonly findAppByIdService: FindAppByIdService,
     private readonly createSubscriptionContractService: CreateSubscriptionContractService,
     private readonly createSubscriptionContractItemService: CreateSubscriptionContractItemService,
-    private readonly createStripeSubscriptionService: CreateStripeSubscriptionService,
     private readonly createUsageRecordService: CreateUsageRecordService,
-    private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findPriceByIdService: FindPriceByIdService,
     private readonly findProductByIdService: FindProductByIdService,
     private readonly activateSubscriptionContractService: ActivateSubscriptionContractService,
     private readonly cancelSubscriptionContractService: CancelSubscriptionContractService,
     private readonly findAppCurrentSubscriptionContractService: FindAppCurrentSubscriptionContractService,
     private readonly findAllSubscriptionContractItemsService: FindAllSubscriptionContractItemsService,
-    private readonly findPaymentMethodByIdService: FindPaymentMethodByIdService,
-    private readonly findStripeSubscriptionByIdService: FindStripeSubscriptionByIdService,
     private readonly updateSubscriptionContractItemService: UpdateSubscriptionContractItemService
   ) {}
 
@@ -106,20 +97,16 @@ export class AddItemToAppSubscriptionContractCommandHandler
       if (!price) {
         throw new PriceNotFoundException();
       }
-
-      const {
-        subscriptionContract: appCurrentSubscriptionContract,
-        stripeSubscriptionContractItemId
-      } = await this.findOrCreateSubscription({
-        app,
-        price,
-        quantity: data?.quantity,
-        createdBy: data.createdBy
-      });
+      const { subscriptionContract: appCurrentSubscriptionContract } =
+        await this.findOrCreateSubscription({
+          app,
+          price,
+          quantity: data?.quantity,
+          createdBy: data.createdBy
+        });
       const subscriptionContractItem = await this.findOrCreateSubscriptionItem({
         app,
         price,
-        stripeSubscriptionContractItemId,
         appCurrentSubscriptionContract,
         quantity: data?.quantity,
         createdBy: data.createdBy
@@ -168,8 +155,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
   async findOrCreateSubscription({
     createdBy,
     app,
-    price,
-    quantity
+    price
   }: {
     createdBy: string;
     quantity: number;
@@ -180,14 +166,8 @@ export class AddItemToAppSubscriptionContractCommandHandler
       const subscriptionContract =
         await this.findAppCurrentSubscriptionContractService.execute(app.id);
 
-      const stripeSubscription =
-        await this.findStripeSubscriptionByIdService.execute(
-          subscriptionContract.stripeSubscription
-        );
       const isInactiveSubscription =
-        stripeSubscription?.status !== 'active' ||
         subscriptionContract.status !== SubscriptionContractStatus.ACTIVE;
-
       if (isInactiveSubscription) {
         const isCanceledSubscription =
           subscriptionContract.status === SubscriptionContractStatus.CANCELED;
@@ -203,35 +183,12 @@ export class AddItemToAppSubscriptionContractCommandHandler
       }
       return { subscriptionContract };
     } catch (error) {
-      let appPaymentMethod: PaymentMethodModel;
-      try {
-        appPaymentMethod = await this.findPaymentMethodByIdService.execute(
-          app.paymentMethod
-        );
-      } catch (error) {}
-      const appOwner = await this.findAccountByIdService.execute(app.parent);
-      const stripeSubscription =
-        await this.createStripeSubscriptionService.execute({
-          app: app.id,
-          currency: app.currency,
-          customer: appOwner.stripeCustomer,
-          paymentMethod: appPaymentMethod?.stripePaymentMethod,
-          startPaymentWhenSubscriptionIsCreated: false,
-          automaticRenew: true,
-          prices: [
-            {
-              price: price.stripePrice,
-              ...(!price.isUsageBilling && { quantity })
-            }
-          ]
-        });
       const subscriptionCreated =
         await this.createSubscriptionContractService.execute({
           app: app.id,
           automaticRenew: true,
           createdBy,
           parent: app.id,
-          stripeSubscription: stripeSubscription.id,
           type: price.type,
           createdByAdmin: false
         });
@@ -239,29 +196,25 @@ export class AddItemToAppSubscriptionContractCommandHandler
       const subscriptionContract =
         await this.activateSubscriptionContractService.execute({
           app: app.id,
-          paymentMethod: app.paymentMethod,
           subscriptionContract: subscriptionCreated.id,
           startAt,
           endAt: convertToISODateString(addMonths(1, startAt)),
           updatedBy: createdBy
         });
       return {
-        subscriptionContract,
-        stripeSubscriptionContractItemId: stripeSubscription.items.data[0].id
+        subscriptionContract
       };
     }
   }
 
   async findOrCreateSubscriptionItem({
     appCurrentSubscriptionContract,
-    stripeSubscriptionContractItemId,
     createdBy,
     app,
     quantity,
     price
   }: {
     appCurrentSubscriptionContract: SubscriptionContractModel;
-    stripeSubscriptionContractItemId?: string;
     createdBy: string;
     quantity: number;
     app: AppModel;
@@ -290,32 +243,15 @@ export class AddItemToAppSubscriptionContractCommandHandler
       return subscriptionContractItems.items[0];
     }
     const product = await this.findProductByIdService.execute(price.parent);
-    const existsStripeSubscriptionItem = !!stripeSubscriptionContractItemId;
-    if (!existsStripeSubscriptionItem) {
-      const stripeSubscription =
-        await this.findStripeSubscriptionByIdService.execute(
-          appCurrentSubscriptionContract.stripeSubscription
-        );
-      if (stripeSubscription) {
-        const stripeSubscriptionContractItem =
-          stripeSubscription.items.data.find(
-            (subscriptionItem) =>
-              subscriptionItem.price?.id === price.stripePrice
-          );
-        stripeSubscriptionContractItemId = stripeSubscriptionContractItem?.id;
-      }
-    }
     return await this.createSubscriptionContractItemService.execute({
       app: app.id,
-      stripeSubscriptionItem: stripeSubscriptionContractItemId,
       parent: appCurrentSubscriptionContract.id,
       price: price.id,
       product: product.parent,
       quantity,
       recurring: null,
       createdBy,
-      createdByAdmin: false,
-      isDefaultStripeAccount: true
+      createdByAdmin: false
     });
   }
 }

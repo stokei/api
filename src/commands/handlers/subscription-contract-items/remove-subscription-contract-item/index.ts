@@ -1,10 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import {
-  cleanObject,
-  cleanValue,
-  cleanValueBoolean,
-  splitServiceId
-} from '@stokei/nestjs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import { RemoveSubscriptionContractItemCommand } from '@/commands/implements/subscription-contract-items/remove-subscription-contract-item.command';
 import {
@@ -62,10 +57,11 @@ export class RemoveSubscriptionContractItemCommandHandler
       throw new DataNotFoundException();
     }
 
-    await this.deleteStripeSubscriptionItemService.execute(
-      subscriptionContractItem.stripeSubscriptionItem
-    );
-
+    if (subscriptionContractItem.stripeSubscriptionItem) {
+      await this.deleteStripeSubscriptionItemService.execute(
+        subscriptionContractItem.stripeSubscriptionItem
+      );
+    }
     const subscriptionContractItemModel = this.publisher.mergeObjectContext(
       subscriptionContractItem
     );
@@ -84,9 +80,6 @@ export class RemoveSubscriptionContractItemCommandHandler
       where: cleanObject({
         removedBy: cleanValue(command?.where?.removedBy),
         app: cleanValue(command?.where?.app),
-        isDefaultStripeAccount: cleanValueBoolean(
-          command?.where?.isDefaultStripeAccount
-        ),
         subscriptionContractItem: cleanValue(
           command?.where?.subscriptionContractItem
         )

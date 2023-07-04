@@ -120,7 +120,6 @@ export class CreateSubscriptionContractByAdminCommandHandler
           quantity: item.quantity,
           createdByAdmin: true,
           recurring: recurring?.id,
-          isDefaultStripeAccount: app?.isStokei,
           createdBy: subscriptionContract?.createdBy
         });
       })

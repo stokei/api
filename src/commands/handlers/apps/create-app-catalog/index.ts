@@ -66,7 +66,7 @@ export class CreateAppCatalogCommandHandler
       if (!appUpdated) {
         throw new AppNotFoundException();
       }
-      return appUpdated;
+      return catalog;
     } catch (error) {
       this.logger.error(`App(#${data?.app}): ${error?.message}`);
       return;

@@ -1,5 +1,6 @@
 import { AddItemToAppSubscriptionContractService } from './add-item-to-app-subscription-contract';
 import { CreateAppService } from './create-app';
+import { CreateAppCatalogService } from './create-app-catalog';
 import { CreateAppStripeAccountService } from './create-app-stripe-account';
 import { CreateAppStripeAccountDashboardLinkService } from './create-app-stripe-account-dashboard-link';
 import { CreateAppStripeAccountOnboardingLinkService } from './create-app-stripe-account-onboarding-link';
@@ -13,8 +14,9 @@ import { RemoveItemFromAppSubscriptionContractService } from './remove-item-from
 import { UpdateAppService } from './update-app';
 
 export const AppServices = [
-  CreateAppService,
   UpdateAppService,
+  CreateAppService,
+  CreateAppCatalogService,
   CreateAppStripeAccountService,
   CreateAppStripeAccountDashboardLinkService,
   CreateAppStripeAccountOnboardingLinkService,

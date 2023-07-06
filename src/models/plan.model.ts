@@ -12,6 +12,7 @@ export interface IPlanModelData {
   readonly app: string;
   readonly name: string;
   readonly description?: string;
+  readonly icon?: string;
   readonly type: PlanType;
   readonly active: boolean;
   readonly updatedAt?: Date | string;
@@ -25,6 +26,7 @@ export class PlanModel extends AggregateRoot {
   readonly app: string;
   readonly name: string;
   readonly description?: string;
+  readonly icon?: string;
   readonly type: PlanType;
   readonly active: boolean;
   readonly updatedAt?: string;
@@ -41,6 +43,7 @@ export class PlanModel extends AggregateRoot {
     this.name = data.name;
     this.app = data.app;
     this.description = data.description;
+    this.icon = data.icon;
     this.type = data.type;
     this.active = data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);

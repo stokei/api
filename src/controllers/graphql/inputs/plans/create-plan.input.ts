@@ -6,6 +6,9 @@ export class CreatePlanInput {
   @Field(() => String)
   name: string;
 
+  @Field(() => String, { nullable: true })
+  icon?: string;
+
   @Field(() => PlanType)
   type: PlanType;
 }

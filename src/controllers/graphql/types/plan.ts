@@ -17,6 +17,9 @@ export class Plan {
   @Field(() => String, { nullable: true })
   description?: string;
 
+  @Field(() => String, { nullable: true })
+  icon?: string;
+
   @Field(() => PlanType)
   type: PlanType;
 

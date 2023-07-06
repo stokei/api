@@ -67,6 +67,7 @@ export class UpdatePlanCommandHandler
       data: cleanObject({
         name: cleanValue(command?.data?.name),
         description: cleanValue(command?.data?.description),
+        icon: cleanValue(command?.data?.icon),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

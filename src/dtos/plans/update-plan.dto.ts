@@ -1,6 +1,7 @@
 export interface UpdatePlanDataDTO {
   name?: string;
   description?: string;
+  icon?: string;
   updatedBy: string;
 }
 

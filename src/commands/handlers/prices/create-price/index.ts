@@ -177,6 +177,7 @@ export class CreatePriceCommandHandler
       fromAmount: cleanValueNumber(command?.fromAmount),
       amount: cleanValueNumber(command?.amount),
       currency: cleanValue(command?.currency),
+      unit: cleanValue(command?.unit),
       type: cleanValue(command?.type),
       tiers: command?.tiers,
       inventoryType: cleanValue(command?.inventoryType),

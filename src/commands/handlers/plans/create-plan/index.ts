@@ -78,6 +78,7 @@ export class CreatePlanCommandHandler
       app: cleanValue(command?.app),
       name: cleanValue(command?.name),
       description: cleanValue(command?.description),
+      icon: cleanValue(command?.icon),
       type: cleanValue(command?.type)
     });
   }

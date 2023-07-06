@@ -85,6 +85,7 @@ export class PlansSeeds
         plan: {
           name: 'Administradores',
           app: defaultAppId,
+          icon: 'admin',
           type: PlanType.ADMIN,
           createdBy: defaultAccountId
         },
@@ -116,6 +117,7 @@ export class PlansSeeds
         plan: {
           name: 'Domínios',
           app: defaultAppId,
+          icon: 'domain',
           type: PlanType.DOMAIN,
           createdBy: defaultAccountId
         },
@@ -147,6 +149,7 @@ export class PlansSeeds
         plan: {
           name: 'Professores',
           app: defaultAppId,
+          icon: 'instructor',
           type: PlanType.INSTRUCTOR,
           createdBy: defaultAccountId
         },
@@ -178,6 +181,7 @@ export class PlansSeeds
         plan: {
           name: 'Storage',
           app: defaultAppId,
+          icon: 'storage',
           type: PlanType.STORAGE,
           createdBy: defaultAccountId
         },
@@ -208,6 +212,7 @@ export class PlansSeeds
       {
         plan: {
           name: 'Videos - Minutos Armazenados',
+          icon: 'video',
           app: defaultAppId,
           type: PlanType.VIDEO,
           createdBy: defaultAccountId
@@ -239,6 +244,7 @@ export class PlansSeeds
       {
         plan: {
           name: 'Videos - Minutos Vizualizados',
+          icon: 'video',
           app: defaultAppId,
           type: PlanType.VIDEO_VIEW,
           createdBy: defaultAccountId

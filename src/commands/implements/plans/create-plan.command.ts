@@ -7,6 +7,7 @@ export class CreatePlanCommand implements ICommand, CreatePlanDTO {
   app: string;
   name: string;
   description?: string;
+  icon?: string;
   type: PlanType;
   createdBy: string;
 
@@ -14,6 +15,7 @@ export class CreatePlanCommand implements ICommand, CreatePlanDTO {
     this.app = data.app;
     this.name = data.name;
     this.description = data.description;
+    this.icon = data.icon;
     this.type = data.type;
     this.createdBy = data.createdBy;
   }

@@ -28,8 +28,9 @@ export class SubscriptionContractParentResolver {
         [ServerStokeiApiIdPrefix.ACCOUNTS]: () =>
           this.accountsLoader.findByIds.load(subscriptionContractParent.parent)
       };
-      const serviceName = splitServiceId(subscriptionContractParent.parent)
-        ?.service;
+      const serviceName = splitServiceId(
+        subscriptionContractParent.parent
+      )?.service;
       return handlers?.[serviceName];
     };
     const getParentHandler = await getParent();

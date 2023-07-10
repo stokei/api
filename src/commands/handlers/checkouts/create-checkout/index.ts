@@ -78,7 +78,7 @@ export class CreateCheckoutCommandHandler
       appDomainURL = getDefaultAppDomain({ appId: customerApp.id });
     }
     const price = await this.findPriceByIdService.execute(data?.price);
-    if (!price) {
+    if (!price || !price.active) {
       throw new PriceNotFoundException();
     }
 

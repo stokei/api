@@ -24,6 +24,9 @@ export class ProductDefaultPriceResolver {
           AND: {
             parent: {
               equals: product.id
+            },
+            active: {
+              equals: true
             }
           }
         }
@@ -32,7 +35,12 @@ export class ProductDefaultPriceResolver {
     };
     try {
       if (product.defaultPrice) {
-        return await this.pricesLoader.findByIds.load(product.defaultPrice);
+        const price = await this.pricesLoader.findByIds.load(
+          product.defaultPrice
+        );
+        if (price?.active) {
+          return price;
+        }
       }
       return await findFirstProductPrice();
     } catch (e) {

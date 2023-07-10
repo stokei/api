@@ -37,7 +37,7 @@ export class SubscriptionContractItem {
   @Field(() => Recurring, { nullable: true })
   recurring?: Recurring;
 
-  @Field(() => Price)
+  @Field(() => Price, { nullable: true })
   price: Price;
 
   @Field(() => Int)

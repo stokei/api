@@ -68,10 +68,7 @@ export class CancelSubscriptionContractCommandHandler
         throw new SubscriptionContractAlreadyCanceledException();
       }
 
-      if (
-        !subscriptionContract.createdByAdmin ||
-        !subscriptionContract.stripeSubscription
-      ) {
+      if (!!subscriptionContract.stripeSubscription) {
         const stripeSubscriptionCanceled =
           await this.cancelStripeSubscriptionService.execute({
             subscription: subscriptionContract?.stripeSubscription,

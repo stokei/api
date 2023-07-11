@@ -2,7 +2,6 @@ import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthenticatedGuard, CurrentAccount } from '@stokei/nestjs';
 
-import { AppConfig } from '@/common/decorators/app-config.decorator';
 import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
 import { RemoveDomainInput } from '@/controllers/graphql/inputs/domains/remove-domain.input';
@@ -13,10 +12,6 @@ import { RemoveDomainService } from '@/services/domains/remove-domain';
 export class RemoveDomainResolver {
   constructor(private readonly removeDomainService: RemoveDomainService) {}
 
-  @AppConfig({
-    isAllowedToUsePlan: true,
-    isRequired: true
-  })
   @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => Domain)
   async removeDomain(

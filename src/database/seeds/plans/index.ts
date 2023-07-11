@@ -179,38 +179,6 @@ export class PlansSeeds
       },
       {
         plan: {
-          name: 'Storage',
-          app: defaultAppId,
-          icon: 'storage',
-          type: PlanType.STORAGE,
-          createdBy: defaultAccountId
-        },
-        price: {
-          parent: undefined,
-          app: defaultAppId,
-          nickname: 'Storage',
-          unit: 'Kb',
-          billingScheme: BillingScheme.PER_UNIT,
-          currency: defaultCurrencyId,
-          inventoryType: InventoryType.INFINITE,
-          tiersMode: TiersMode.VOLUME,
-          type: PriceType.RECURRING,
-          amount: getPlanPriceAmountByType(PlanType.STORAGE),
-          fromAmount: undefined,
-          quantity: undefined,
-          tiers: undefined,
-          createdBy: defaultAccountId,
-          recurring: {
-            app: defaultAppId,
-            interval: IntervalType.MONTH,
-            intervalCount: 1,
-            usageType: UsageType.LICENSED,
-            createdBy: defaultAccountId
-          }
-        }
-      },
-      {
-        plan: {
           name: 'Videos - Minutos Armazenados',
           icon: 'video',
           app: defaultAppId,
@@ -279,6 +247,38 @@ export class PlansSeeds
           }
         }
       }
+      // {
+      //   plan: {
+      //     name: 'Storage',
+      //     app: defaultAppId,
+      //     icon: 'storage',
+      //     type: PlanType.STORAGE,
+      //     createdBy: defaultAccountId
+      //   },
+      //   price: {
+      //     parent: undefined,
+      //     app: defaultAppId,
+      //     nickname: 'Storage',
+      //     unit: 'Kb',
+      //     billingScheme: BillingScheme.PER_UNIT,
+      //     currency: defaultCurrencyId,
+      //     inventoryType: InventoryType.INFINITE,
+      //     tiersMode: TiersMode.VOLUME,
+      //     type: PriceType.RECURRING,
+      //     amount: getPlanPriceAmountByType(PlanType.STORAGE),
+      //     fromAmount: undefined,
+      //     quantity: undefined,
+      //     tiers: undefined,
+      //     createdBy: defaultAccountId,
+      //     recurring: {
+      //       app: defaultAppId,
+      //       interval: IntervalType.MONTH,
+      //       intervalCount: 1,
+      //       usageType: UsageType.LICENSED,
+      //       createdBy: defaultAccountId
+      //     }
+      //   }
+      // },
     ];
   }
 }

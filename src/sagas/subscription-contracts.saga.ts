@@ -72,7 +72,7 @@ export class SubscriptionContractsSagas {
           event.subscriptionContract.type === SubscriptionContractType.RECURRING
         ) {
           if (!event.subscriptionContract.endAt) {
-            actionStatus = SubscriptionContractStatus.PENDING;
+            actionStatus = SubscriptionContractStatus.ACTIVE;
           } else {
             const now = convertToISOTimestamp(Date.now());
             const endAt = convertToISOTimestamp(

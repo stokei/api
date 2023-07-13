@@ -13,6 +13,7 @@ export interface IDomainModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly active: boolean;
+  readonly free?: boolean;
   readonly name: string;
   readonly status: DomainStatus;
   readonly activatedAt?: Date | string;
@@ -29,6 +30,7 @@ export class DomainModel extends AggregateRoot {
   readonly name: string;
   readonly url: string;
   readonly active: boolean;
+  readonly free?: boolean;
   readonly status: DomainStatus;
   readonly activatedAt?: string;
   readonly updatedAt?: string;
@@ -46,6 +48,7 @@ export class DomainModel extends AggregateRoot {
     this.parent = data.parent;
     this.name = data.name;
     this.url = this.getDomainURL();
+    this.free = !!data.free;
     this.status = data.status;
     this.active = this.status === DomainStatus.ACTIVE || data.active;
     this.activatedAt = convertToISODateString(data.activatedAt);
@@ -58,7 +61,7 @@ export class DomainModel extends AggregateRoot {
 
   private getDomainURL() {
     if (IS_DEVELOPMENT) {
-      return 'http://' + this.name + ':3001';
+      return 'http://' + this.name;
     }
     return 'https://' + this.name;
   }

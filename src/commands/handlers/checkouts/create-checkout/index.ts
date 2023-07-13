@@ -24,7 +24,7 @@ import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateStripeCheckoutSessionService } from '@/services/stripe/create-stripe-checkout-session';
 import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
 import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
-import { getDefaultAppDomain } from '@/utils/get-default-app-domain';
+import { getAppStokeiDomain } from '@/utils/get-app-stokei-domain';
 import { mountCheckoutCallbackURL } from '@/utils/mount-checkout-callback-url';
 
 type CreateCheckoutCommandKeys = keyof CreateCheckoutCommand;
@@ -75,7 +75,7 @@ export class CreateCheckoutCommandHandler
     if (appDomain) {
       appDomainURL = appDomain.url;
     } else {
-      appDomainURL = getDefaultAppDomain({ appId: customerApp.id });
+      appDomainURL = getAppStokeiDomain({ app: customerApp }).url;
     }
     const price = await this.findPriceByIdService.execute(data?.price);
     if (!price || !price.active) {

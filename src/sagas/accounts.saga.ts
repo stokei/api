@@ -6,8 +6,10 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { CreateAccountStripeCustomerCommand } from '@/commands/implements/accounts/create-account-stripe-customer.command';
 import { UpdateAccountStripeCustomerCommand } from '@/commands/implements/accounts/update-account-stripe-customer.command';
+import { SendAccountConfigurationPendingEmailCommand } from '@/commands/implements/emails/send-account-configuration-pending-email.command';
 import { SendForgotPasswordEmailCommand } from '@/commands/implements/emails/send-forgot-password-email.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
+import { AccountStatus } from '@/enums/account-status.enum';
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
 import { AccountRemovedEvent } from '@/events/implements/accounts/account-removed.event';
 import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
@@ -35,13 +37,22 @@ export class AccountsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
+        const commands: ICommand[] = [
           new CreateAccountStripeCustomerCommand({
             account: event.account.id,
             app: event.account.app,
             createdBy: event.createdBy
           })
         ];
+        if (event.account.status === AccountStatus.CONFIGURATION_PENDING) {
+          commands.push(
+            new SendAccountConfigurationPendingEmailCommand({
+              toAccount: event.account.id,
+              app: event.account.app,
+              createdBy: event.createdBy
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)

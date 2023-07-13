@@ -18,6 +18,7 @@ export const getAppStokeiDomain = ({ app }: GetAppStokeiDomainData) =>
     }),
     app: app.id,
     parent: app.id,
+    free: true,
     name: getDefaultAppDomain({ appId: app.id }),
     status: DomainStatus.ACTIVE,
     active: true,

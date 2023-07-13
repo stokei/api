@@ -22,6 +22,9 @@ export class Domain {
   @Field(() => Boolean)
   active: boolean;
 
+  @Field(() => Boolean)
+  free: boolean;
+
   @Field(() => DomainStatus)
   status: DomainStatus;
 

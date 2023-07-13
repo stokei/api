@@ -16,6 +16,9 @@ export class Domain {
   @Field(() => String)
   name: string;
 
+  @Field(() => String, { nullable: true })
+  url: string;
+
   @Field(() => Boolean)
   active: boolean;
 

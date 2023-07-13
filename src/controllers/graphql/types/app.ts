@@ -40,6 +40,9 @@ export class App {
   currentSubscriptionContract?: SubscriptionContract;
 
   @Field(() => Domain, { nullable: true })
+  stokeiDomain?: Domain;
+
+  @Field(() => Domain, { nullable: true })
   defaultDomain?: Domain;
 
   @Field(() => Phones, { nullable: true })

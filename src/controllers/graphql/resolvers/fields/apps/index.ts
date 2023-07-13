@@ -8,6 +8,7 @@ import { AppIconResolver } from './icon';
 import { AppLogoResolver } from './logo';
 import { AppPhonesResolver } from './phones';
 import { AppReferenceResolver } from './reference';
+import { AppStokeiDomainResolver } from './stokei-domain';
 import { AppUpdatedByResolver } from './updated-by';
 
 export const AppsFieldsResolvers = [
@@ -21,5 +22,6 @@ export const AppsFieldsResolvers = [
   AppIconResolver,
   AppColorsResolver,
   AppUpdatedByResolver,
-  AppDefaultDomainResolver
+  AppDefaultDomainResolver,
+  AppStokeiDomainResolver
 ];

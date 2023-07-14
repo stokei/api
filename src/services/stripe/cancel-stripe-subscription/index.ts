@@ -16,7 +16,7 @@ export class CancelStripeSubscriptionService
   async execute(
     data: CancelStripeSubscriptionDTO
   ): Promise<Stripe.Response<Stripe.Subscription>> {
-    return stripeClient.subscriptions.del(data.subscription, {
+    return stripeClient.subscriptions.cancel(data.subscription, {
       stripeAccount: data.stripeAccount
     });
   }

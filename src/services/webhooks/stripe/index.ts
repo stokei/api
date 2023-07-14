@@ -1,8 +1,9 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { IBaseService } from '@stokei/nestjs';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { hiddenPrivateDataFromObject, IBaseService } from '@stokei/nestjs';
 import Stripe from 'stripe';
 
 import { stripeClient } from '@/clients/stripe';
+import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { WebhookStripeDTO } from '@/dtos/webhooks/webhook-stripe.dto';
 import { STRIPE_WEBHOOK_SECRET } from '@/environments';
 import { StripeSignatureNotFoundException } from '@/errors';
@@ -31,6 +32,7 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
 
   async execute({ body, signature }: WebhookStripeDTO) {
     let event: Stripe.Event;
+    const logger = new Logger(WebhookStripeService.name);
 
     try {
       event = stripeClient.webhooks.constructEvent(
@@ -47,6 +49,18 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
     const eventObject: any = event?.data.object;
     const eventType = event?.type;
     const connectAccount = event?.account;
+    logger.log(
+      JSON.stringify(
+        hiddenPrivateDataFromObject(
+          {
+            eventObject,
+            eventType,
+            connectAccount
+          },
+          DEFAULT_PRIVATE_DATA
+        )
+      )
+    );
 
     try {
       switch (eventType) {

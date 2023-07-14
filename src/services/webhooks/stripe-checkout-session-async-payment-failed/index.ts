@@ -19,7 +19,8 @@ export class WebhookStripeCheckoutSessionAsyncPaymentFailedService
   async execute(data: WebhookStripeCheckoutSessionDTO) {
     const stripeCheckoutSession =
       await this.findStripeCheckoutSessionByIdService.execute(
-        data.stripeCheckoutSession
+        data.stripeCheckoutSession,
+        data.stripeAccount
       );
     const subscriptionContract =
       await this.findPaymentMethodByStripePaymentMethodService.execute(

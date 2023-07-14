@@ -25,7 +25,8 @@ export class WebhookStripeCheckoutSessionAsyncPaymentSucceededService
   async execute(data: WebhookStripeCheckoutSessionDTO) {
     const stripeCheckoutSession =
       await this.findStripeCheckoutSessionByIdService.execute(
-        data.stripeCheckoutSession
+        data.stripeCheckoutSession,
+        data.stripeAccount
       );
     const stripeSubscription: Stripe.Subscription =
       stripeCheckoutSession?.subscription as Stripe.Subscription;

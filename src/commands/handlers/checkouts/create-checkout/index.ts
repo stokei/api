@@ -64,7 +64,7 @@ export class CreateCheckoutCommandHandler
       throw new AccountNotFoundException();
     }
 
-    const customerApp = await this.findAppByIdService.execute(customer.app);
+    const customerApp = await this.findAppByIdService.execute(data.app);
     if (!customerApp) {
       throw new AppNotFoundException();
     }
@@ -78,7 +78,7 @@ export class CreateCheckoutCommandHandler
       appDomainURL = getAppStokeiDomain({ app: customerApp }).url;
     }
     const price = await this.findPriceByIdService.execute(data?.price);
-    if (!price || !price.active) {
+    if (!price || !price.active || price.app !== data.app) {
       throw new PriceNotFoundException();
     }
 

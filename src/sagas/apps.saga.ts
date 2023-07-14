@@ -5,8 +5,10 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { CreateAppDefaultLandingPageCommand } from '@/commands/implements/apps/create-app-default-landing-page.command';
+import { CreateAppStripeResourcesCommand } from '@/commands/implements/apps/create-app-stripe-resources.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AppCreatedEvent } from '@/events/implements/apps/app-created.event';
+import { AppStripeAccountCreatedEvent } from '@/events/implements/apps/app-stripe-account-created.event';
 import { AppUpdatedEvent } from '@/events/implements/apps/app-updated.event';
 
 @Injectable()
@@ -32,6 +34,32 @@ export class AppsSagas {
         );
         const commands = [
           new CreateAppDefaultLandingPageCommand({
+            app: event.app.id,
+            createdBy: event.createdBy
+          })
+        ];
+        return commands;
+      }),
+      mergeMap((c) => c)
+    );
+  };
+
+  @Saga()
+  appStripeAccountCreated = (
+    events$: Observable<any>
+  ): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(AppStripeAccountCreatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [AppStripeAccountCreatedEvent] Saga event appStripeAccountCreated: ' +
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
+        );
+        const commands = [
+          new CreateAppStripeResourcesCommand({
             app: event.app.id,
             createdBy: event.createdBy
           })

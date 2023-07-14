@@ -90,17 +90,15 @@ export class AccountsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const updateOrCreateStripeCustomerCommand = event.account.stripeCustomer
-          ? new UpdateAccountStripeCustomerCommand({
+        const commands: ICommand[] = [];
+        if (event.account.stripeCustomer) {
+          commands.push(
+            new UpdateAccountStripeCustomerCommand({
               account: event.account.id,
               app: event.account.app
             })
-          : new CreateAccountStripeCustomerCommand({
-              account: event.account.id,
-              app: event.account.app,
-              createdBy: event.updatedBy
-            });
-        const commands = [updateOrCreateStripeCustomerCommand];
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)

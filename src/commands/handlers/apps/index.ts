@@ -8,6 +8,7 @@ import { CreateAppStripeAccountCommandHandler } from './create-app-stripe-accoun
 import { CreateAppStripeAccountDashboardLinkCommandHandler } from './create-app-stripe-account-dashboard-link';
 import { CreateAppStripeAccountOnboardingLinkCommandHandler } from './create-app-stripe-account-onboarding-link';
 import { CreateAppStripeAccountUpdateLinkCommandHandler } from './create-app-stripe-account-update-link';
+import { CreateAppStripeResourcesCommandHandler } from './create-app-stripe-resources';
 import { RemoveAppAdminFromAppSubscriptionContractCommandHandler } from './remove-app-admin-from-app-subscription-contract';
 import { RemoveAppInstructorFromAppSubscriptionContractCommandHandler } from './remove-app-instructor-from-app-subscription-contract';
 import { RemoveItemFromAppSubscriptionContractCommandHandler } from './remove-item-from-app-subscription-contract';
@@ -27,5 +28,6 @@ export const AppCommandHandlers = [
   AddAppAdminToAppSubscriptionContractCommandHandler,
   RemoveAppAdminFromAppSubscriptionContractCommandHandler,
   CreateAppCatalogCommandHandler,
-  CreateAppDefaultLandingPageCommandHandler
+  CreateAppDefaultLandingPageCommandHandler,
+  CreateAppStripeResourcesCommandHandler
 ];

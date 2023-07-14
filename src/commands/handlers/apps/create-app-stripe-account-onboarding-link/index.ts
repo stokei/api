@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateAppStripeAccountOnboardingLinkCommand } from '@/commands/implements/apps/create-app-stripe-account-onboarding-link.command';
@@ -9,6 +9,7 @@ import {
   ParamNotFoundException,
   StripeAccountNotFoundException
 } from '@/errors';
+import { AppStripeAccountCreatedEvent } from '@/events/implements/apps/app-stripe-account-created.event';
 import { LinkMapper } from '@/mappers/links';
 import { CreateAppStripeAccountService } from '@/services/apps/create-app-stripe-account';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
@@ -28,7 +29,8 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
   constructor(
     private readonly findAppByIdService: FindAppByIdService,
     private readonly createAppStripeAccountService: CreateAppStripeAccountService,
-    private readonly createStripeAccountOnboardingLinkService: CreateStripeAccountOnboardingLinkService
+    private readonly createStripeAccountOnboardingLinkService: CreateStripeAccountOnboardingLinkService,
+    private readonly eventBus: EventBus
   ) {}
 
   async execute(command: CreateAppStripeAccountOnboardingLinkCommand) {
@@ -61,6 +63,13 @@ export class CreateAppStripeAccountOnboardingLinkCommandHandler
         throw new StripeAccountNotFoundException();
       }
       stripeAccount = appWithStripeAccount.stripeAccount;
+
+      await this.eventBus.publish(
+        new AppStripeAccountCreatedEvent({
+          app: appWithStripeAccount,
+          createdBy: data.createdBy
+        })
+      );
     }
 
     const link = await this.createStripeAccountOnboardingLinkService.execute({

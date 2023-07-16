@@ -78,7 +78,7 @@ export class WebhookStripeCheckoutSessionService
           ? convertToISODateString(stripeSubscription.current_period_end * 1000)
           : undefined,
         type: price.type,
-        automaticRenew: true
+        automaticRenew: false
       });
     if (!subscriptionContract) {
       throw new SubscriptionContractNotFoundException();

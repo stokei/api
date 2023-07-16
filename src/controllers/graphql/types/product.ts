@@ -34,6 +34,9 @@ export class Product {
   @Field(() => ProductParentUnion, { nullable: true })
   parent?: typeof ProductParentUnion;
 
+  @Field(() => String, { nullable: true })
+  parentId?: string;
+
   @Field(() => String)
   name: string;
 

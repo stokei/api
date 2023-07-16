@@ -4,6 +4,7 @@ import { ProductCreatedByResolver } from './created-by';
 import { ProductDefaultPriceResolver } from './default-price';
 import { ProductFeaturesResolver } from './features';
 import { ProductParentResolver } from './parent';
+import { ProductParentIdResolver } from './parent-id';
 import { ProductPricesResolver } from './prices';
 import { ProductReferenceResolver } from './reference';
 import { ProductUpdatedByResolver } from './updated-by';
@@ -17,5 +18,6 @@ export const ProductsFieldsResolvers = [
   ProductPricesResolver,
   ProductParentResolver,
   ProductDefaultPriceResolver,
-  ProductFeaturesResolver
+  ProductFeaturesResolver,
+  ProductParentIdResolver
 ];

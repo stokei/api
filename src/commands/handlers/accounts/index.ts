@@ -8,6 +8,7 @@ import { RemoveAccountCommandHandler } from './remove-account';
 import { SignUpCommandHandler } from './signup';
 import { UpdateAccountCommandHandler } from './update-account';
 import { UpdateAccountStripeCustomerCommandHandler } from './update-account-stripe-customer';
+import { UpdateOwnPasswordCommandHandler } from './update-own-password';
 
 export const AccountCommandHandlers = [
   CreateAccountCommandHandler,
@@ -19,5 +20,6 @@ export const AccountCommandHandlers = [
   UpdateAccountCommandHandler,
   CreateAccountStripeCustomerCommandHandler,
   UpdateAccountStripeCustomerCommandHandler,
-  CompleteAccountConfigurationCommandHandler
+  CompleteAccountConfigurationCommandHandler,
+  UpdateOwnPasswordCommandHandler
 ];

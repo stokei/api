@@ -5,13 +5,14 @@ import {
   Injectable,
   UnauthorizedException
 } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { extractRequestFromContext } from '@stokei/nestjs';
+import {
+  extractRequestFromContext,
+  IAuthenticatedAccount
+} from '@stokei/nestjs';
 
 import { AppNotFoundException } from '@/errors';
-import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
-import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { AppModel } from '@/models/app.model';
 import { FindAllCourseInstructorsService } from '@/services/course-instructors/find-all-course-instructors';
 import { FindAllCourseStudentsService } from '@/services/course-students/find-all-course-students';
 import { FindAllRolesService } from '@/services/roles/find-all-roles';
@@ -19,12 +20,9 @@ import { FindAllRolesService } from '@/services/roles/find-all-roles';
 @Injectable()
 export class CoursePermissionGuard implements CanActivate {
   constructor(
-    private findAppByIdService: FindAppByIdService,
     private findAllRolesService: FindAllRolesService,
     private findAllCourseStudentsService: FindAllCourseStudentsService,
-    private findAllCourseInstructorsService: FindAllCourseInstructorsService,
-    private findAccountByIdService: FindAccountByIdService,
-    private reflector: Reflector
+    private findAllCourseInstructorsService: FindAllCourseInstructorsService
   ) {}
 
   getRequest(context: ExecutionContext) {
@@ -37,13 +35,11 @@ export class CoursePermissionGuard implements CanActivate {
     const graphqlArgs = graphqlContext.getArgs();
     const courseId =
       graphqlArgs?.id || graphqlArgs?.courseId || graphqlArgs?.course;
-    const account = await this.findAccountByIdService.execute(
-      request?.user?.id || ''
-    );
+    const account: IAuthenticatedAccount = request?.user;
     if (!account) {
       throw new UnauthorizedException();
     }
-    const app = await this.findAppByIdService.execute(request?.app?.id || '');
+    const app: AppModel = request?.app;
     if (!app) {
       throw new AppNotFoundException();
     }
@@ -108,7 +104,6 @@ export class CoursePermissionGuard implements CanActivate {
     if (!isCourseStudent) {
       throw new ForbiddenException();
     }
-
     return isCourseStudent;
   }
 }

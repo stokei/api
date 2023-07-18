@@ -14,6 +14,7 @@ import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindPricesByStripePriceIdsService } from '@/services/prices/find-prices-by-stripe-price-ids';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { FindStripeCheckoutSessionByIdService } from '@/services/stripe/find-checkout-session-by-id';
+import { UpdateStripeSubscriptionService } from '@/services/stripe/update-stripe-subscription';
 import { CreateSubscriptionContractItemService } from '@/services/subscription-contract-items/create-subscription-contract-item';
 import { CreateSubscriptionContractService } from '@/services/subscription-contracts/create-subscription-contract';
 import { UpdateSubscriptionContractService } from '@/services/subscription-contracts/update-subscription-contract';
@@ -28,6 +29,7 @@ export class WebhookStripeCheckoutSessionService
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findProductByIdService: FindProductByIdService,
+    private readonly updateStripeSubscriptionService: UpdateStripeSubscriptionService,
     private readonly findPricesByStripePriceIdsService: FindPricesByStripePriceIdsService,
     private readonly findStripeCheckoutSessionByIdService: FindStripeCheckoutSessionByIdService,
     private readonly updateSubscriptionContractService: UpdateSubscriptionContractService,
@@ -78,7 +80,7 @@ export class WebhookStripeCheckoutSessionService
           ? convertToISODateString(stripeSubscription.current_period_end * 1000)
           : undefined,
         type: price.type,
-        automaticRenew: false
+        automaticRenew: !!price.automaticRenew
       });
     if (!subscriptionContract) {
       throw new SubscriptionContractNotFoundException();
@@ -108,6 +110,15 @@ export class WebhookStripeCheckoutSessionService
       where: {
         app: subscriptionContract.app,
         subscriptionContract: subscriptionContract.id
+      }
+    });
+    await this.updateStripeSubscriptionService.execute({
+      data: {
+        automaticRenew: price.automaticRenew
+      },
+      where: {
+        stripeSubscription: stripeSubscription.id,
+        stripeAccount: data.stripeAccount
       }
     });
 

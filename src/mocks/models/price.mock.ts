@@ -24,6 +24,7 @@ export class PriceModelMock extends PriceModel {
       fromAmount: data?.fromAmount ?? null,
       type: data?.type ?? PriceType.RECURRING,
       recurring: data?.recurring ?? 'recurrings.dsaudhuashd454',
+      automaticRenew: data?.automaticRenew ?? true,
       active: data?.active ?? true,
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,

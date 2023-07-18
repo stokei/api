@@ -29,6 +29,7 @@ export interface IPriceModelData {
   readonly inventoryType: InventoryType;
   readonly recurring?: string;
   readonly quantity: number;
+  readonly automaticRenew: boolean;
   readonly active: boolean;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
@@ -53,6 +54,7 @@ export class PriceModel extends AggregateRoot {
   readonly inventoryType: InventoryType;
   readonly recurring?: string;
   readonly quantity: number;
+  readonly automaticRenew: boolean;
   readonly active: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
@@ -80,6 +82,7 @@ export class PriceModel extends AggregateRoot {
     this.isUsageBilling = data.billingScheme === BillingScheme.TIERED;
     this.inventoryType = data.inventoryType;
     this.recurring = data.recurring;
+    this.automaticRenew = !!data.automaticRenew;
     this.quantity =
       this.inventoryType === InventoryType.INFINITE ? null : data.quantity;
     this.active = data.active;

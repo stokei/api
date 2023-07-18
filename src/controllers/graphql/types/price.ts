@@ -28,6 +28,9 @@ export class Price {
   @Field(() => Boolean)
   default: boolean;
 
+  @Field(() => Boolean)
+  automaticRenew: boolean;
+
   @Field(() => Float, { nullable: true })
   discountPercent?: number;
 

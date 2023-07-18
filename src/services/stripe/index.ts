@@ -23,6 +23,7 @@ import { FindStripePaymentMethodByIdService } from './find-payment-method-by-id'
 import { FindStripeSubscriptionByIdService } from './find-subscription-by-id';
 import { UpdateStripeCustomerService } from './update-stripe-customer';
 import { UpdateStripeProductService } from './update-stripe-product';
+import { UpdateStripeSubscriptionService } from './update-stripe-subscription';
 import { UpdateStripeSubscriptionItemService } from './update-stripe-subscription-item';
 
 export const StripeServices = [
@@ -51,5 +52,6 @@ export const StripeServices = [
   FindStripeSubscriptionByIdService,
   AttachStripePaymentMethodToCustomerService,
   FindStripeCustomerByIdService,
-  DeleteStripeCustomerService
+  DeleteStripeCustomerService,
+  UpdateStripeSubscriptionService
 ];

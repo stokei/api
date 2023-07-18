@@ -38,6 +38,7 @@ export class PriceMapper {
           currency: prismaMapper.toWhereData(operatorData.currency),
           unit: prismaMapper.toWhereData(operatorData.unit),
           active: prismaMapper.toWhereData(operatorData.active),
+          automaticRenew: prismaMapper.toWhereData(operatorData.automaticRenew),
           type: operatorData.type,
           inventoryType: operatorData.inventoryType,
           billingScheme: operatorData.billingScheme,
@@ -72,6 +73,7 @@ export class PriceMapper {
             currency: cleanWhereDataString(operatorData.currency),
             unit: cleanWhereDataString(operatorData.unit),
             active: cleanWhereDataBoolean(operatorData.active),
+            automaticRenew: cleanWhereDataBoolean(operatorData.automaticRenew),
             type: operatorData.type,
             inventoryType: operatorData.inventoryType,
             billingScheme: operatorData.billingScheme,
@@ -95,6 +97,7 @@ export class PriceMapper {
       orderBy: cleanObject({
         amount: cleanSortValue(query.orderBy?.amount),
         currency: cleanSortValue(query.orderBy?.currency),
+        automaticRenew: cleanSortValue(query.orderBy?.automaticRenew),
         unit: cleanSortValue(query.orderBy?.unit),
         fromAmount: cleanSortValue(query.orderBy?.fromAmount),
         type: cleanSortValue(query.orderBy?.type),

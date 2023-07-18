@@ -13,6 +13,7 @@ import { AccountRemovedEvent } from '@/events/implements/accounts/account-remove
 import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
 import { PasswordChangedEvent } from '@/events/implements/accounts/password-changed.event';
 import { PasswordForgottenEvent } from '@/events/implements/accounts/password-forgotten.event';
+import { UpdateOwnPasswordCreatedEvent } from '@/events/implements/accounts/update-own-password-created.event';
 
 export interface IAccountModelData {
   readonly id?: string;
@@ -140,6 +141,16 @@ export class AccountModel extends AggregateRoot {
     if (this.id && this.email) {
       this.apply(
         new PasswordForgottenEvent({
+          account: this
+        })
+      );
+    }
+  }
+
+  updatedOwnPasswordCreated() {
+    if (this.id && this.email) {
+      this.apply(
+        new UpdateOwnPasswordCreatedEvent({
           account: this
         })
       );

@@ -22,6 +22,7 @@ export interface CreatePriceDTO {
   tiersMode: TiersMode;
   recurring?: CreateRecurringDTO;
   quantity?: number;
+  automaticRenew?: boolean;
   app: string;
   createdBy: string;
 }

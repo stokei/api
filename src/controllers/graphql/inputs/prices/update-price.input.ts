@@ -7,6 +7,9 @@ export class UpdateDataPriceInput {
 
   @Field(() => Int, { nullable: true })
   quantity?: number;
+
+  @Field(() => Boolean, { nullable: true })
+  automaticRenew?: boolean;
 }
 
 @InputType()

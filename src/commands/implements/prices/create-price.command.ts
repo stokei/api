@@ -25,6 +25,7 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
   tiersMode: TiersMode;
   recurring?: CreateRecurringDTO;
   quantity?: number;
+  automaticRenew?: boolean;
   app: string;
   createdBy: string;
 
@@ -43,6 +44,7 @@ export class CreatePriceCommand implements ICommand, CreatePriceDTO {
     this.tiersMode = data.tiersMode;
     this.recurring = data.recurring;
     this.quantity = data.quantity;
+    this.automaticRenew = data.automaticRenew;
     this.app = data.app;
     this.createdBy = data.createdBy;
   }

@@ -69,6 +69,7 @@ export class CreatePriceCommandHandler
       throw new ProductNotFoundException();
     }
     data.unit = data.unit || null;
+    data.automaticRenew = !!data.automaticRenew;
 
     let recurring: RecurringModel;
     if (data.type === PriceType.RECURRING) {
@@ -76,6 +77,8 @@ export class CreatePriceCommandHandler
       if (!recurring) {
         throw new RecurringNotFoundException();
       }
+    } else {
+      data.automaticRenew = false;
     }
     const { tiers: tiersPrices, defaultPrice, ...dataCreated } = data;
     let tiers = tiersPrices;
@@ -174,6 +177,7 @@ export class CreatePriceCommandHandler
       parent: cleanValue(command?.parent),
       nickname: cleanValue(command?.nickname),
       defaultPrice: cleanValueBoolean(command?.defaultPrice),
+      automaticRenew: cleanValueBoolean(command?.automaticRenew),
       fromAmount: cleanValueNumber(command?.fromAmount),
       amount: cleanValueNumber(command?.amount),
       currency: cleanValue(command?.currency),

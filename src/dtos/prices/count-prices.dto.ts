@@ -11,6 +11,7 @@ export interface CountPricesWhereDTO {
   parent?: IWhereDataSearch;
   currency?: IWhereData;
   type?: PriceType;
+  automaticRenew?: IWhereData<boolean>;
   active?: IWhereData<boolean>;
   inventoryType?: InventoryType;
   billingScheme?: BillingScheme;

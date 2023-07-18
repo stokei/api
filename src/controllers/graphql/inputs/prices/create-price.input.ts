@@ -24,6 +24,9 @@ export class CreatePriceInput {
   @Field(() => Boolean, { nullable: true })
   defaultPrice?: boolean;
 
+  @Field(() => Boolean, { nullable: true })
+  automaticRenew?: boolean;
+
   @Field(() => String, { nullable: true })
   unit?: string;
 

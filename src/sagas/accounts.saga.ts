@@ -8,6 +8,7 @@ import { CreateAccountStripeCustomerCommand } from '@/commands/implements/accoun
 import { UpdateAccountStripeCustomerCommand } from '@/commands/implements/accounts/update-account-stripe-customer.command';
 import { SendAccountConfigurationPendingEmailCommand } from '@/commands/implements/emails/send-account-configuration-pending-email.command';
 import { SendForgotPasswordEmailCommand } from '@/commands/implements/emails/send-forgot-password-email.command';
+import { SendUpdateOwnPasswordEmailCommand } from '@/commands/implements/emails/send-update-own-password-email.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AccountStatus } from '@/enums/account-status.enum';
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
@@ -15,6 +16,7 @@ import { AccountRemovedEvent } from '@/events/implements/accounts/account-remove
 import { AccountUpdatedEvent } from '@/events/implements/accounts/account-updated.event';
 import { PasswordChangedEvent } from '@/events/implements/accounts/password-changed.event';
 import { PasswordForgottenEvent } from '@/events/implements/accounts/password-forgotten.event';
+import { UpdateOwnPasswordCreatedEvent } from '@/events/implements/accounts/update-own-password-created.event';
 
 @Injectable()
 export class AccountsSagas {
@@ -138,6 +140,33 @@ export class AccountsSagas {
         );
         const commands = [
           new SendForgotPasswordEmailCommand({
+            app: event.account.app,
+            toAccount: event.account.id,
+            createdBy: event.account.createdBy
+          })
+        ];
+        return commands;
+      }),
+      mergeMap((c) => c)
+    );
+  };
+
+  @Saga()
+  updateOwnPasswordCreated = (
+    events$: Observable<any>
+  ): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(UpdateOwnPasswordCreatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [UpdateOwnPasswordCreatedEvent] Saga event updateOwnPasswordCreated:' +
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
+        );
+        const commands = [
+          new SendUpdateOwnPasswordEmailCommand({
             app: event.account.app,
             toAccount: event.account.id,
             createdBy: event.account.createdBy

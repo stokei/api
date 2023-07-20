@@ -16,6 +16,7 @@ import { HeroEventsHandlers } from './heros';
 import { ImageEventsHandlers } from './images';
 import { InvoiceEventsHandlers } from './invoices';
 import { LanguageEventsHandlers } from './languages';
+import { MaterialEventsHandlers } from './materials';
 import { ModuleEventsHandlers } from './modules';
 import { PaymentMethodEventsHandlers } from './payment-methods';
 import { PhoneEventsHandlers } from './phones';
@@ -67,5 +68,6 @@ export const EventsHandlers = [
   ...RoleEventsHandlers,
   ...HeroEventsHandlers,
   ...SortedItemEventsHandlers,
-  ...VideoViewEventsHandlers
+  ...VideoViewEventsHandlers,
+  ...MaterialEventsHandlers
 ];

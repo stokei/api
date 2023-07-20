@@ -21,6 +21,7 @@ import { HeroServices } from './heros';
 import { ImageServices } from './images';
 import { InvoiceServices } from './invoices';
 import { LanguageServices } from './languages';
+import { MaterialServices } from './materials';
 import { ModuleServices } from './modules';
 import { PaymentMethodServices } from './payment-methods';
 import { PhoneServices } from './phones';
@@ -87,5 +88,6 @@ export const Services = [
   ...SendgridServices,
   ...EmailServices,
   ...VercelServices,
+  ...MaterialServices,
   ...VideoViewServices
 ];

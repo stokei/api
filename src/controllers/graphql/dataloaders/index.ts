@@ -16,6 +16,7 @@ import { HerosLoader } from './heros.loader';
 import { ImagesLoader } from './images.loader';
 import { InvoicesLoader } from './invoices.loader';
 import { LanguagesLoader } from './languages.loader';
+import { MaterialsLoader } from './materials.loader';
 import { ModulesLoader } from './modules.loader';
 import { PaymentMethodsLoader } from './payment-methods.loader';
 import { PhonesLoader } from './phones.loader';
@@ -61,5 +62,6 @@ export const Loaders = [
   RolesLoader,
   HerosLoader,
   SortedItemsLoader,
-  SubscriptionContractItemsLoader
+  SubscriptionContractItemsLoader,
+  MaterialsLoader
 ];

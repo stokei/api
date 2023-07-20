@@ -17,6 +17,7 @@ export enum ServerStokeiApiIdPrefix {
   PAYMENT_METHODS = 'pay_method',
   PLANS = 'plan',
   IMAGES = 'img',
+  MATERIALS = 'material',
   VIDEOS = 'video',
   FILES = 'file',
   FEATURES = 'feat',

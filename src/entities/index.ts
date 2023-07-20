@@ -16,6 +16,7 @@ export * from './hero.entity';
 export * from './image.entity';
 export * from './invoice.entity';
 export * from './language.entity';
+export * from './material.entity';
 export * from './module.entity';
 export * from './payment-method.entity';
 export * from './phone.entity';

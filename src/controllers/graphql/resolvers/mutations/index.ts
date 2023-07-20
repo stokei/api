@@ -18,6 +18,7 @@ import { HerosMutations } from './heros';
 import { ImagesMutations } from './images';
 import { InvoicesMutations } from './invoices';
 import { LanguagesMutations } from './languages';
+import { MaterialsMutations } from './materials';
 import { ModulesMutations } from './modules';
 import { PaymentMethodsMutations } from './payment-methods';
 import { PhonesMutations } from './phones';
@@ -61,5 +62,6 @@ export const Mutations = [
   ...CatalogItemsMutations,
   ...HerosMutations,
   ...SortedItemsMutations,
-  ...VideoViewsMutations
+  ...VideoViewsMutations,
+  ...MaterialsMutations
 ];

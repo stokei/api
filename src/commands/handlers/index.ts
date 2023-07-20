@@ -19,6 +19,7 @@ import { HeroCommandHandlers } from './heros';
 import { ImageCommandHandlers } from './images';
 import { InvoiceCommandHandlers } from './invoices';
 import { LanguageCommandHandlers } from './languages';
+import { MaterialCommandHandlers } from './materials';
 import { ModuleCommandHandlers } from './modules';
 import { PaymentMethodCommandHandlers } from './payment-methods';
 import { PhoneCommandHandlers } from './phones';
@@ -73,5 +74,6 @@ export const CommandHandlers = [
   ...HeroCommandHandlers,
   ...SortedItemCommandHandlers,
   ...EmailCommandHandlers,
+  ...MaterialCommandHandlers,
   ...VideoViewCommandHandlers
 ];

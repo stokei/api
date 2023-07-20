@@ -15,6 +15,7 @@ import { HerosQueries } from './heros';
 import { ImagesQueries } from './images';
 import { InvoicesQueries } from './invoices';
 import { LanguagesQueries } from './languages';
+import { MaterialsQueries } from './materials';
 import { ModulesQueries } from './modules';
 import { PaymentMethodsQueries } from './payment-methods';
 import { PhonesQueries } from './phones';
@@ -53,5 +54,6 @@ export const Queries = [
   ...CatalogsQueries,
   ...CatalogItemsQueries,
   ...HerosQueries,
-  ...SortedItemsQueries
+  ...SortedItemsQueries,
+  ...MaterialsQueries
 ];

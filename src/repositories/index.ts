@@ -16,6 +16,7 @@ import { HerosRepositories } from './heros';
 import { ImagesRepositories } from './images';
 import { InvoicesRepositories } from './invoices';
 import { LanguagesRepositories } from './languages';
+import { MaterialsRepositories } from './materials';
 import { ModulesRepositories } from './modules';
 import { PaymentMethodsRepositories } from './payment-methods';
 import { PhonesRepositories } from './phones';
@@ -67,5 +68,6 @@ export const Repositories = [
   ...RolesRepositories,
   ...HerosRepositories,
   ...SortedItemsRepositories,
-  ...VideoViewsRepositories
+  ...VideoViewsRepositories,
+  ...MaterialsRepositories
 ];

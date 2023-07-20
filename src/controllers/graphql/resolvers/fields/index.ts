@@ -15,6 +15,7 @@ import { HerosFieldsResolvers } from './heros';
 import { ImagesFieldsResolvers } from './images';
 import { InvoicesFieldsResolvers } from './invoices';
 import { LanguagesFieldsResolvers } from './languages';
+import { MaterialsFieldsResolvers } from './materials';
 import { ModulesFieldsResolvers } from './modules';
 import { PaymentMethodsFieldsResolvers } from './payment-methods';
 import { PhonesFieldsResolvers } from './phones';
@@ -59,5 +60,6 @@ export const FieldsResolvers = [
   ...HerosFieldsResolvers,
   ...SortedItemsFieldsResolvers,
   ...SubscriptionContractItemsFieldsResolvers,
-  ...VideoViewsFieldsResolvers
+  ...VideoViewsFieldsResolvers,
+  ...MaterialsFieldsResolvers
 ];

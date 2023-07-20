@@ -16,6 +16,7 @@ import { HerosSagas } from './heros.saga';
 import { ImagesSagas } from './images.saga';
 import { InvoicesSagas } from './invoices.saga';
 import { LanguagesSagas } from './languages.saga';
+import { MaterialsSagas } from './materials.saga';
 import { ModulesSagas } from './modules.saga';
 import { PaymentMethodsSagas } from './payment-methods.saga';
 import { PhonesSagas } from './phones.saga';
@@ -67,5 +68,6 @@ export const Sagas = [
   RolesSagas,
   HerosSagas,
   SortedItemsSagas,
-  VideoViewsSagas
+  VideoViewsSagas,
+  MaterialsSagas
 ];

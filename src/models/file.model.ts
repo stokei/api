@@ -10,8 +10,10 @@ import {
   CLOUDFLARE_IMAGE_URL,
   CLOUDFLARE_VIDEO_URL
 } from '@/constants/cloudflare';
+import { DIGITALOCEAN_URL } from '@/constants/digitalocean';
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
+import { PATHNAME_FILES } from '@/constants/upload-file-paths';
 import { FileStatus } from '@/enums/file-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { NODE_ENV, SERVER_URL } from '@/environments';
@@ -46,6 +48,8 @@ export class FileModel extends AggregateRoot {
   readonly filename?: string;
   @ApiProperty({ nullable: true })
   readonly filenameAndExtension?: string;
+  @ApiProperty({ nullable: true })
+  readonly pathAndFilename?: string;
   @ApiProperty({ nullable: true })
   readonly extension?: string;
   @ApiProperty({ nullable: true })
@@ -91,19 +95,38 @@ export class FileModel extends AggregateRoot {
     this.size = data.size;
     this.isImage = FileModel.isImage(this.extension);
     this.isVideo = FileModel.isVideo(this.extension);
-    this.url = FileModel.createFileURL({
-      fileId: this.id,
-      url: data.url,
-      filename: this.filename,
-      extension: this.extension
-    });
     this.duration = data.duration;
     this.active = this.status === FileStatus.ACTIVE || data.active;
+    this.pathAndFilename = this.getPathAndFilename();
+    this.url = this.createFileURL();
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+  }
+
+  private getPathAndFilename() {
+    const createURLFunctions = {
+      [Environment.PRODUCTION]: () => {
+        if (this.isImage) {
+          return this.filenameAndExtension + '/public';
+        }
+        if (this.isVideo) {
+          return this.filenameAndExtension + '/manifest/video.m3u8';
+        }
+        return appendPathnameToURL(PATHNAME_FILES, this.filenameAndExtension);
+      },
+      DEFAULT: () => {
+        const basePathnameURL = REST_VERSIONS.V1_TEXT;
+        const pathnameURL = REST_CONTROLLERS_URL_NAMES.UPLOADS;
+        return appendPathnameToURL(
+          basePathnameURL,
+          `${pathnameURL}/${this.id}`
+        );
+      }
+    };
+    return createURLFunctions[NODE_ENV]?.() || createURLFunctions.DEFAULT();
   }
 
   static initialStatus({
@@ -127,46 +150,31 @@ export class FileModel extends AggregateRoot {
     return FileStatus.ACTIVE === status;
   }
 
-  static createFileURL({
-    fileId,
-    url,
-    filename,
-    extension
-  }: {
-    fileId?: string;
-    extension?: string;
-    filename?: string;
-    url?: string;
-  }) {
-    if (url) {
-      return url;
+  private createFileURL() {
+    if (this.url) {
+      return this.url;
     }
-    const isImage = FileModel.isImage(extension);
-    const isVideo = FileModel.isVideo(extension);
+    const isImage = FileModel.isImage(this.extension);
+    const isVideo = FileModel.isVideo(this.extension);
     const createURLFunctions = {
       [Environment.PRODUCTION]: () => {
         if (isImage) {
           return appendPathnameToURL(
             CLOUDFLARE_IMAGE_URL,
-            filename + '/public'
+            this.pathAndFilename
           );
         }
         if (isVideo) {
           return appendPathnameToURL(
             CLOUDFLARE_VIDEO_URL,
-            filename + '/manifest/video.m3u8'
+            this.pathAndFilename
           );
         }
-        return appendPathnameToURL(CLOUDFLARE_IMAGE_URL, filename);
+        return appendPathnameToURL(DIGITALOCEAN_URL, this.pathAndFilename);
       },
       DEFAULT: () => {
         const baseURL = SERVER_URL;
-        const basePathnameURL = REST_VERSIONS.V1_TEXT;
-        const pathnameURL = REST_CONTROLLERS_URL_NAMES.UPLOADS;
-        return appendPathnameToURL(
-          baseURL,
-          `${basePathnameURL}/${pathnameURL}/${fileId}`
-        );
+        return appendPathnameToURL(baseURL, this.pathAndFilename);
       }
     };
     return createURLFunctions[NODE_ENV]?.() || createURLFunctions.DEFAULT();

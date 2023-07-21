@@ -2,6 +2,7 @@ import { ActivateFileCommandHandler } from './activate-file';
 import { AddFileToAppSubscriptionContractCommandHandler } from './add-file-to-app-subscription-contract';
 import { AddVideoFileToAppSubscriptionContractCommandHandler } from './add-video-file-to-app-subscription-contract';
 import { CreateFileCommandHandler } from './create-file';
+import { CreateFileDownloadURLCommandHandler } from './create-file-download-url';
 import { CreateImageUploadURLCommandHandler } from './create-image-upload-url';
 import { CreateVideoUploadURLCommandHandler } from './create-video-upload-url';
 import { RemoveFileCommandHandler } from './remove-file';
@@ -19,5 +20,6 @@ export const FileCommandHandlers = [
   CreateVideoUploadURLCommandHandler,
   CreateImageUploadURLCommandHandler,
   RemoveFileFromAppSubscriptionContractCommandHandler,
-  RemoveVideoFromAppSubscriptionContractCommandHandler
+  RemoveVideoFromAppSubscriptionContractCommandHandler,
+  CreateFileDownloadURLCommandHandler
 ];

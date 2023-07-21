@@ -6,8 +6,10 @@ import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { Account } from './account';
 import { App } from './app';
 import { Course } from './course';
+import { Material } from './material';
 import { Plan } from './plan';
 import { Price } from './price';
+import { Product } from './product';
 import { Recurring } from './recurring';
 
 export const SubscriptionContractItemProductUnion = createUnionType({
@@ -17,6 +19,8 @@ export const SubscriptionContractItemProductUnion = createUnionType({
     const type = splitServiceId(value?.id)?.service;
     const types = {
       [ServerStokeiApiIdPrefix.COURSES]: Course.name,
+      [ServerStokeiApiIdPrefix.MATERIALS]: Material.name,
+      [ServerStokeiApiIdPrefix.PRODUCTS]: Product.name,
       [ServerStokeiApiIdPrefix.PLANS]: Plan.name
     };
     return types[type];

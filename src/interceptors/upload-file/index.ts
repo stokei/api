@@ -1,4 +1,9 @@
+import { IS_PRODUCTION } from '@/environments';
 import { FileUploadInterceptorModel } from '@/models/file-upload-interceptor.model';
+import {
+  digitalOceanDeleteFile,
+  digitalOceanStorageFiles
+} from '@/storages/digitalocean';
 import { localDeleteFile, localStorageFiles } from '@/storages/local';
 
 import { BaseFilesInterceptor } from './base';
@@ -20,7 +25,9 @@ export const FileUploaderInterceptor = (
 ) =>
   BaseFilesInterceptor({
     fieldName: options.fieldName,
-    storage: localStorageFiles
+    storage: IS_PRODUCTION ? digitalOceanStorageFiles : localStorageFiles,
+    fileFilter: (request, file, callback) =>
+      new FileUploadInterceptorModel(file).filterFile(callback)
   });
 
 export const VideoUploaderInterceptor = (
@@ -43,5 +50,8 @@ export const ImageUploaderInterceptor = (
       new FileUploadInterceptorModel(file).filterImage(callback)
   });
 
+export const deleteFile = IS_PRODUCTION
+  ? digitalOceanDeleteFile
+  : localDeleteFile;
 export const deleteFileImage = localDeleteFile;
 export const deleteFileVideo = localDeleteFile;

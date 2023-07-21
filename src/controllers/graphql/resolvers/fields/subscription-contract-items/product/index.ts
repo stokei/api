@@ -2,7 +2,9 @@ import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 import { splitServiceId } from '@stokei/nestjs';
 
 import { CoursesLoader } from '@/controllers/graphql/dataloaders/courses.loader';
+import { MaterialsLoader } from '@/controllers/graphql/dataloaders/materials.loader';
 import { PlansLoader } from '@/controllers/graphql/dataloaders/plans.loader';
+import { ProductsLoader } from '@/controllers/graphql/dataloaders/products.loader';
 import {
   SubscriptionContractItem,
   SubscriptionContractItemProductUnion
@@ -14,6 +16,8 @@ import { SubscriptionContractItemModel } from '@/models/subscription-contract-it
 export class SubscriptionContractItemProductResolver {
   constructor(
     private readonly coursesLoader: CoursesLoader,
+    private readonly materialsLoader: MaterialsLoader,
+    private readonly productsLoader: ProductsLoader,
     private readonly plansLoader: PlansLoader
   ) {}
 
@@ -23,6 +27,10 @@ export class SubscriptionContractItemProductResolver {
       const handlers = {
         [ServerStokeiApiIdPrefix.COURSES]: () =>
           this.coursesLoader.findByIds.load(sortedItem.product),
+        [ServerStokeiApiIdPrefix.PRODUCTS]: () =>
+          this.productsLoader.findByIds.load(sortedItem.product),
+        [ServerStokeiApiIdPrefix.MATERIALS]: () =>
+          this.materialsLoader.findByIds.load(sortedItem.product),
         [ServerStokeiApiIdPrefix.PLANS]: () =>
           this.plansLoader.findByIds.load(sortedItem.product)
       };

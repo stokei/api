@@ -8,6 +8,7 @@ import { App } from './app';
 import { Course } from './course';
 import { Features } from './features';
 import { Image } from './image';
+import { Material } from './material';
 import { Plan } from './plan';
 import { Price } from './price';
 import { Prices } from './prices';
@@ -20,6 +21,7 @@ export const ProductParentUnion = createUnionType({
     const types = {
       [ServerStokeiApiIdPrefix.APPS]: App.name,
       [ServerStokeiApiIdPrefix.COURSES]: Course.name,
+      [ServerStokeiApiIdPrefix.MATERIALS]: Material.name,
       [ServerStokeiApiIdPrefix.PLANS]: Plan.name
     };
     return types[type];

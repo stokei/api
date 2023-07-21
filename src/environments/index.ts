@@ -47,3 +47,8 @@ export const SENDGRID_KEY: string = process.env.SENDGRID_KEY;
 
 export const VERCEL_PROJECT_ID: string = process.env.VERCEL_PROJECT_ID;
 export const VERCEL_TOKEN: string = process.env.VERCEL_TOKEN;
+
+export const DIGITALOCEAN_BUCKET: string = process.env.DIGITALOCEAN_BUCKET;
+export const DIGITALOCEAN_KEY: string = process.env.DIGITALOCEAN_KEY;
+export const DIGITALOCEAN_SECRET_KEY: string =
+  process.env.DIGITALOCEAN_SECRET_KEY;

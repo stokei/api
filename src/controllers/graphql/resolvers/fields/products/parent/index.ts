@@ -3,6 +3,7 @@ import { splitServiceId } from '@stokei/nestjs';
 
 import { AppsLoader } from '@/controllers/graphql/dataloaders/apps.loader';
 import { CoursesLoader } from '@/controllers/graphql/dataloaders/courses.loader';
+import { MaterialsLoader } from '@/controllers/graphql/dataloaders/materials.loader';
 import { PlansLoader } from '@/controllers/graphql/dataloaders/plans.loader';
 import {
   Product,
@@ -16,6 +17,7 @@ export class ProductParentResolver {
   constructor(
     private readonly appsLoader: AppsLoader,
     private readonly coursesLoader: CoursesLoader,
+    private readonly materialsLoader: MaterialsLoader,
     private readonly plansLoader: PlansLoader
   ) {}
 
@@ -27,6 +29,8 @@ export class ProductParentResolver {
           this.appsLoader.findByIds.load(product.parent),
         [ServerStokeiApiIdPrefix.COURSES]: () =>
           this.coursesLoader.findByIds.load(product.parent),
+        [ServerStokeiApiIdPrefix.MATERIALS]: () =>
+          this.materialsLoader.findByIds.load(product.parent),
         [ServerStokeiApiIdPrefix.PLANS]: () =>
           this.plansLoader.findByIds.load(product.parent)
       };

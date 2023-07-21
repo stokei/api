@@ -93,6 +93,13 @@ export class FileUploadInterceptorModel {
     return `${uuid()}${path.extname(this.file.originalname)}`;
   }
 
+  filterFile(callback: (error: Error, acceptFile: boolean) => void) {
+    if (!!this.isVideo || !!this.isImage) {
+      return callback(new InvalidFileException(), false);
+    }
+    callback(null, true);
+  }
+
   filterVideo(callback: (error: Error, acceptFile: boolean) => void) {
     if (!this.isVideo) {
       return callback(new InvalidFileException(), false);

@@ -6,11 +6,14 @@ import { CreateVideoUploadController } from './create-video-upload';
 import { CreateVideoUploadDevelopmentController } from './create-video-upload-development';
 import { GetFileController } from './get-file';
 
-export const UploadsControllers = !IS_PRODUCTION
-  ? [
-      GetFileController,
-      CreateVideoUploadDevelopmentController,
-      CreateImageUploadDevelopmentController,
-      CreateFileUploadController
-    ]
-  : [CreateVideoUploadController, CreateFileUploadController];
+const productionControllers = [CreateVideoUploadController];
+const developmentControllers = [
+  GetFileController,
+  CreateVideoUploadDevelopmentController,
+  CreateImageUploadDevelopmentController
+];
+
+export const UploadsControllers = [
+  ...(!IS_PRODUCTION ? developmentControllers : productionControllers),
+  CreateFileUploadController
+];

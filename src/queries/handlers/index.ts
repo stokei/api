@@ -16,6 +16,7 @@ import { HeroQueriesHandlers } from './heros';
 import { ImageQueriesHandlers } from './images';
 import { InvoiceQueriesHandlers } from './invoices';
 import { LanguageQueriesHandlers } from './languages';
+import { MaterialQueriesHandlers } from './materials';
 import { ModuleQueriesHandlers } from './modules';
 import { PaymentMethodQueriesHandlers } from './payment-methods';
 import { PhoneQueriesHandlers } from './phones';
@@ -67,5 +68,6 @@ export const QueriesHandlers = [
   ...RoleQueriesHandlers,
   ...HeroQueriesHandlers,
   ...SortedItemQueriesHandlers,
-  ...VideoViewQueriesHandlers
+  ...VideoViewQueriesHandlers,
+  ...MaterialQueriesHandlers
 ];

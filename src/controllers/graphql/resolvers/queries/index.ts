@@ -23,6 +23,7 @@ import { PlansQueries } from './plans';
 import { PricesQueries } from './prices';
 import { ProductsQueries } from './products';
 import { SortedItemsQueries } from './sorted-items';
+import { SubscriptionContractItemsQueries } from './subscription-contract-items';
 import { SubscriptionContractsQueries } from './subscription-contracts';
 import { VideoAuthorsQueries } from './video-authors';
 import { VideosQueries } from './videos';
@@ -55,5 +56,6 @@ export const Queries = [
   ...CatalogItemsQueries,
   ...HerosQueries,
   ...SortedItemsQueries,
-  ...MaterialsQueries
+  ...MaterialsQueries,
+  ...SubscriptionContractItemsQueries
 ];

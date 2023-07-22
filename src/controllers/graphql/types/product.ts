@@ -15,7 +15,7 @@ import { Prices } from './prices';
 
 export const ProductParentUnion = createUnionType({
   name: 'ProductParentUnion',
-  types: () => [Plan, Course] as const,
+  types: () => [Plan, Course, Material, App] as const,
   async resolveType(value) {
     const type = splitServiceId(value?.id)?.service;
     const types = {

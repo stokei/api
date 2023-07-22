@@ -14,7 +14,7 @@ import { Recurring } from './recurring';
 
 export const SubscriptionContractItemProductUnion = createUnionType({
   name: 'SubscriptionContractItemProductUnion',
-  types: () => [Plan, Course] as const,
+  types: () => [Plan, Course, Material, Product] as const,
   async resolveType(value) {
     const type = splitServiceId(value?.id)?.service;
     const types = {

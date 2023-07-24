@@ -16,6 +16,10 @@ import {
   FindAllSubscriptionContractsDTO,
   WhereDataFindAllSubscriptionContractsDTO
 } from '@/dtos/subscription-contracts/find-all-subscription-contracts.dto';
+import {
+  FindAllSubscriptionContractsByItemDTO,
+  WhereDataFindAllSubscriptionContractsByItemDTO
+} from '@/dtos/subscription-contracts/find-all-subscription-contracts-by-item.dto';
 import { SubscriptionContractEntity } from '@/entities';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 import { FindAllSubscriptionContractsQuery } from '@/queries/implements/subscription-contracts/find-all-subscription-contracts.query';
@@ -46,11 +50,30 @@ export class SubscriptionContractMapper {
       }
     });
   }
+  toWhereFindAllByItemPrisma(
+    where: WhereDataFindAllSubscriptionContractsByItemDTO
+  ) {
+    const prismaMapper = new PrismaMapper();
+    return cleanObject({
+      product: prismaMapper.toWhereDataSearch(where.product),
+      parent: prismaMapper.toWhereDataSearch(where.parent),
+      app: prismaMapper.toWhereData(where.app)
+    });
+  }
   toFindAllPrisma(data: FindAllSubscriptionContractsDTO) {
     const prismaMapper = new PrismaMapper();
     const orderBy = prismaMapper.toOrderBy(cleanObject(data?.orderBy));
     return {
       where: this.toWhereFindAllPrisma(data?.where),
+      orderBy,
+      ...prismaMapper.toPagination({ page: data?.page })
+    };
+  }
+  toFindAllByItemPrisma(data: FindAllSubscriptionContractsByItemDTO) {
+    const prismaMapper = new PrismaMapper();
+    const orderBy = prismaMapper.toOrderBy(cleanObject(data?.orderBy));
+    return {
+      where: this.toWhereFindAllByItemPrisma(data?.where),
       orderBy,
       ...prismaMapper.toPagination({ page: data?.page })
     };
@@ -101,6 +124,15 @@ export class SubscriptionContractMapper {
         updatedBy: cleanSortValue(query.orderBy?.updatedBy)
       })
     };
+  }
+  toPrismaDataRaw(key: string, value: any) {
+    if (value?.startsWith) {
+      return `${key} LIKE ${value?.startsWith}%`;
+    }
+    if (value?.endsWith) {
+      return `${key} LIKE %${value?.endsWith}`;
+    }
+    return `${key} = ${value?.equals}`;
   }
   toModel(subscriptionContract: SubscriptionContractEntity) {
     return (

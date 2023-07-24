@@ -64,7 +64,7 @@ export class SubscriptionContractItemMapper {
         operatorMapper(operatorData) {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),
-            product: cleanWhereDataString(operatorData.product),
+            product: cleanWhereDataSearch(operatorData.product),
             price: cleanWhereDataSearch(operatorData.price),
             app: cleanWhereDataString(operatorData.app),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),

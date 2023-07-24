@@ -3,6 +3,7 @@ import { CancelSubscriptionContractService } from './cancel-subscription-contrac
 import { CreateSubscriptionContractService } from './create-subscription-contract';
 import { CreateSubscriptionContractByAdminService } from './create-subscription-contract-by-admin';
 import { FindAllSubscriptionContractsService } from './find-all-subscription-contracts';
+import { FindAllSubscriptionContractsByItemService } from './find-all-subscription-contracts-by-item';
 import { FindSubscriptionContractByIdService } from './find-subscription-contract-by-id';
 import { FindSubscriptionContractByStripeCheckoutSessionService } from './find-subscription-contract-by-stripe-checkout-session';
 import { FindSubscriptionContractByStripeSubscriptionService } from './find-subscription-contract-by-stripe-subscription';
@@ -19,5 +20,6 @@ export const SubscriptionContractServices = [
   ActivateSubscriptionContractService,
   CancelSubscriptionContractService,
   CreateSubscriptionContractByAdminService,
-  FindSubscriptionContractByStripeCheckoutSessionService
+  FindSubscriptionContractByStripeCheckoutSessionService,
+  FindAllSubscriptionContractsByItemService
 ];

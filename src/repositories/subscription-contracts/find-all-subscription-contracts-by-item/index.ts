@@ -34,6 +34,7 @@ export class FindAllSubscriptionContractsByItemRepository
           subscription_contracts.app = ${app} AND
           subscription_contracts.parent = ${parent} AND
           subscription_contract_items.product LIKE ${productStartsWith}
+        ORDER BY subscription_contracts.created_at DESC
         LIMIT ${pageLimit}
         OFFSET ${pageSkip}
       `

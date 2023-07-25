@@ -16,7 +16,7 @@ export class SubscriptionContractsByItemResolver {
   ) {}
 
   @Query(() => SubscriptionContracts)
-  async subscriptionContracts(
+  async subscriptionContractsByItem(
     @Args('page', { type: () => PaginationInput, nullable: true })
     page: PaginationInput,
     @Args('where', {

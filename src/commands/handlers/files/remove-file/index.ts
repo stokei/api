@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
@@ -14,6 +15,8 @@ import { RemoveFileRepository } from '@/repositories/files/remove-file';
 export class RemoveFileCommandHandler
   implements ICommandHandler<RemoveFileCommand>
 {
+  private readonly logger = new Logger(RemoveFileCommandHandler.name);
+
   constructor(
     private readonly findFileByIdRepository: FindFileByIdRepository,
     private readonly removeFileRepository: RemoveFileRepository,
@@ -22,38 +25,43 @@ export class RemoveFileCommandHandler
 
   async execute(command: RemoveFileCommand) {
     const data = this.clearData(command);
-    if (!data) {
-      throw new DataNotFoundException();
-    }
-    if (!data.where?.removedBy) {
-      throw new ParamNotFoundException('removedBy');
-    }
-    const fileId = splitServiceId(data.where?.file)?.id;
-    if (!fileId) {
-      throw new ParamNotFoundException('fileId');
-    }
-
-    const file = await this.findFileByIdRepository.execute(fileId);
-    if (!file) {
-      throw new FileNotFoundException();
-    }
-
-    const removed = await this.removeFileRepository.execute({
-      where: {
-        ...data.where,
-        file: fileId
+    try {
+      if (!data) {
+        throw new DataNotFoundException();
       }
-    });
-    if (!removed) {
-      throw new DataNotFoundException();
-    }
-    const fileModel = this.publisher.mergeObjectContext(file);
-    fileModel.removedFile({
-      removedBy: data.where.removedBy
-    });
-    fileModel.commit();
+      if (!data.where?.removedBy) {
+        throw new ParamNotFoundException('removedBy');
+      }
+      const fileId = splitServiceId(data.where?.file)?.id;
+      if (!fileId) {
+        throw new ParamNotFoundException('fileId');
+      }
 
-    return file;
+      const file = await this.findFileByIdRepository.execute(fileId);
+      if (!file) {
+        throw new FileNotFoundException();
+      }
+
+      const removed = await this.removeFileRepository.execute({
+        where: {
+          ...data.where,
+          file: fileId
+        }
+      });
+      if (!removed) {
+        throw new DataNotFoundException();
+      }
+      const fileModel = this.publisher.mergeObjectContext(file);
+      fileModel.removedFile({
+        removedBy: data.where.removedBy
+      });
+      fileModel.commit();
+
+      return file;
+    } catch (error) {
+      this.logger.error(`File(#${data?.where?.file}): ${error?.message}`);
+      return;
+    }
   }
 
   private clearData(command: RemoveFileCommand): RemoveFileCommand {

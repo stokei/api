@@ -1,4 +1,4 @@
-import { existsSync, unlinkSync } from 'fs';
+import { DeleteObjectCommand } from '@aws-sdk/client-s3';
 import multerS3 from 'multer-s3';
 
 import { s3Client } from '@/clients/s3';
@@ -23,10 +23,15 @@ export const digitalOceanDeleteFile = async (
   filename: string
 ): Promise<boolean> => {
   try {
-    if (!existsSync(filename)) {
+    if (!filename) {
       return false;
     }
-    await unlinkSync(filename);
+    await s3Client.send(
+      new DeleteObjectCommand({
+        Bucket: DIGITALOCEAN_BUCKET,
+        Key: filename
+      })
+    );
     return true;
   } catch (err) {
     return false;

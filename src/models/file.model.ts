@@ -110,10 +110,10 @@ export class FileModel extends AggregateRoot {
     const createURLFunctions = {
       [Environment.PRODUCTION]: () => {
         if (this.isImage) {
-          return this.filenameAndExtension + '/public';
+          return this.filename + '/public';
         }
         if (this.isVideo) {
-          return this.filenameAndExtension + '/manifest/video.m3u8';
+          return this.filename + '/manifest/video.m3u8';
         }
         return appendPathnameToURL(PATHNAME_FILES, this.filenameAndExtension);
       },

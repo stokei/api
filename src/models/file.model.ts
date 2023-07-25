@@ -98,7 +98,7 @@ export class FileModel extends AggregateRoot {
     this.duration = data.duration;
     this.active = this.status === FileStatus.ACTIVE || data.active;
     this.pathAndFilename = this.getPathAndFilename();
-    this.url = this.createFileURL();
+    this.url = data.url || this.createFileURL(data.url);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;
@@ -150,9 +150,9 @@ export class FileModel extends AggregateRoot {
     return FileStatus.ACTIVE === status;
   }
 
-  private createFileURL() {
-    if (this.url) {
-      return this.url;
+  private createFileURL(url?: string) {
+    if (url) {
+      return url;
     }
     const isImage = FileModel.isImage(this.extension);
     const isVideo = FileModel.isVideo(this.extension);

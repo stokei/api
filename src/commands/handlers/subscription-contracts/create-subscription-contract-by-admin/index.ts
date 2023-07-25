@@ -11,6 +11,7 @@ import { SubscriptionContractType } from '@/enums/subscription-contract-type.enu
 import {
   DataNotFoundException,
   ParamNotFoundException,
+  RecurringNotFoundException,
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { AppModel } from '@/models/app.model';
@@ -20,6 +21,7 @@ import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { CreateRecurringService } from '@/services/recurrings/create-recurring';
 import { CreateSubscriptionContractItemService } from '@/services/subscription-contract-items/create-subscription-contract-item';
 import { CreateSubscriptionContractService } from '@/services/subscription-contracts/create-subscription-contract';
+import { isValidRecurringPeriod } from '@/utils/is-valid-recurring-period';
 
 type CreateSubscriptionContractByAdminCommandKeys =
   keyof CreateSubscriptionContractByAdminCommand;
@@ -50,6 +52,16 @@ export class CreateSubscriptionContractByAdminCommandHandler
       throw new ParamNotFoundException<CreateSubscriptionContractByAdminCommandKeys>(
         'app'
       );
+    }
+
+    const recurringsAreValid = data.items.every(({ recurring }) =>
+      isValidRecurringPeriod({
+        interval: recurring.interval,
+        intervalCount: recurring.intervalCount
+      })
+    );
+    if (!recurringsAreValid) {
+      throw new RecurringNotFoundException();
     }
 
     const app = await this.findAppByIdService.execute(data.app);

@@ -2,17 +2,13 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateRecurringCommand } from '@/commands/implements/recurrings/create-recurring.command';
-import { IntervalType } from '@/enums/interval-type.enum';
 import {
   DataNotFoundException,
   ParamNotFoundException,
-  RecurringNotFoundException,
-  RecurringPeriodForDailyPricingCannotBeLongerThan365Exception,
-  RecurringPeriodForMonthlyPricingCannotBeLongerThan12Exception,
-  RecurringPeriodForWeeklyPricingCannotBeLongerThan52Exception,
-  RecurringPeriodForYearlyPricingCannotBeLongerThan1Exception
+  RecurringNotFoundException
 } from '@/errors';
 import { CreateRecurringRepository } from '@/repositories/recurrings/create-recurring';
+import { isValidRecurringPeriod } from '@/utils/is-valid-recurring-period';
 
 type CreateRecurringCommandKeys = keyof CreateRecurringCommand;
 
@@ -41,17 +37,13 @@ export class CreateRecurringCommandHandler
         'intervalCount'
       );
     }
-    if (data.interval === IntervalType.DAY && data.intervalCount > 365) {
-      throw new RecurringPeriodForDailyPricingCannotBeLongerThan365Exception();
-    }
-    if (data.interval === IntervalType.WEEK && data.intervalCount > 52) {
-      throw new RecurringPeriodForWeeklyPricingCannotBeLongerThan52Exception();
-    }
-    if (data.interval === IntervalType.MONTH && data.intervalCount > 12) {
-      throw new RecurringPeriodForMonthlyPricingCannotBeLongerThan12Exception();
-    }
-    if (data.interval === IntervalType.YEAR && data.intervalCount > 1) {
-      throw new RecurringPeriodForYearlyPricingCannotBeLongerThan1Exception();
+
+    const recurringIsValid = isValidRecurringPeriod({
+      interval: data.interval,
+      intervalCount: data.intervalCount
+    });
+    if (!recurringIsValid) {
+      throw new RecurringNotFoundException();
     }
 
     const recurringCreated = await this.createRecurringRepository.execute(data);

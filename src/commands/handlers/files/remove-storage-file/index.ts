@@ -45,7 +45,9 @@ export class RemoveStorageFileCommandHandler
           removed = await digitalOceanDeleteFile(file.pathAndFilename);
         }
       } else {
-        removed = await deleteFile(path.resolve(PATH_FILES, file.filename));
+        removed = await deleteFile(
+          path.resolve(PATH_FILES, file.filenameAndExtension)
+        );
       }
       if (!removed) {
         throw new FileNotFoundException();

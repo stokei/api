@@ -23,7 +23,7 @@ export class CreateStripeCheckoutSessionService
         currency: data.currency,
         client_reference_id: data.customerReference,
         customer: data.customer,
-        mode: 'subscription',
+        mode: data.mode,
         expand: ['subscription'],
         line_items: data.prices.map((currentPrice) => ({
           price: currentPrice.price,
@@ -32,11 +32,18 @@ export class CreateStripeCheckoutSessionService
             enabled: false
           }
         })),
-        ...(data.stripeAccount && {
-          subscription_data: {
-            application_fee_percent: data.applicationFeePercentage
-          }
-        })
+        ...(data.stripeAccount &&
+          data.mode == 'subscription' && {
+            subscription_data: {
+              application_fee_percent: data.applicationFeePercentage
+            }
+          }),
+        ...(data.stripeAccount &&
+          data.mode == 'payment' && {
+            payment_intent_data: {
+              application_fee_amount: data.applicationFeePercentage
+            }
+          })
       },
       { stripeAccount: data.stripeAccount }
     );

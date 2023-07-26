@@ -2,6 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
+import { PriceType } from '@/enums/price-type.enum';
 import { APPLICATION_FEE_PERCENT } from '@/environments';
 import {
   AccountNotFoundException,
@@ -109,6 +110,7 @@ export class CreateCheckoutCommandHandler
 
     const checkoutSession =
       await this.createStripeCheckoutSessionService.execute({
+        mode: price?.type === PriceType.RECURRING ? 'subscription' : 'payment',
         app: customerApp.id,
         currency: customerApp.currency,
         applicationFeePercentage: APPLICATION_FEE_PERCENT,

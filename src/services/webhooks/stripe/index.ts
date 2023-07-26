@@ -49,18 +49,6 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
     const eventObject: any = event?.data.object;
     const eventType = event?.type;
     const connectAccount = event?.account;
-    logger.log(
-      JSON.stringify(
-        hiddenPrivateDataFromObject(
-          {
-            eventObject,
-            eventType,
-            connectAccount
-          },
-          DEFAULT_PRIVATE_DATA
-        )
-      )
-    );
 
     try {
       switch (eventType) {
@@ -125,6 +113,16 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
           return { status: HttpStatus.OK };
       }
     } catch (error) {
+      logger.error(
+        hiddenPrivateDataFromObject(
+          {
+            error: error?.message,
+            eventType,
+            connectAccount
+          },
+          DEFAULT_PRIVATE_DATA
+        )
+      );
       return { status: HttpStatus.INTERNAL_SERVER_ERROR };
     }
   }

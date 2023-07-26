@@ -44,6 +44,7 @@ export class WebhookStripeCheckoutSessionService
         data.stripeCheckoutSession,
         data.stripeAccount
       );
+
     const stripeSubscription: Stripe.Subscription =
       stripeCheckoutSession?.subscription as Stripe.Subscription;
 
@@ -71,13 +72,15 @@ export class WebhookStripeCheckoutSessionService
         stripeCheckoutSession: stripeCheckoutSession?.id,
         stripeSubscription: stripeSubscription?.id,
         createdByAdmin: false,
-        startAt: stripeSubscription.current_period_start
+        startAt: stripeSubscription?.current_period_start
           ? convertToISODateString(
-              stripeSubscription.current_period_start * 1000
+              stripeSubscription?.current_period_start * 1000
             )
           : undefined,
-        endAt: stripeSubscription.current_period_end
-          ? convertToISODateString(stripeSubscription.current_period_end * 1000)
+        endAt: stripeSubscription?.current_period_end
+          ? convertToISODateString(
+              stripeSubscription?.current_period_end * 1000
+            )
           : undefined,
         type: price.type,
         automaticRenew: !!price.automaticRenew
@@ -102,25 +105,17 @@ export class WebhookStripeCheckoutSessionService
       throw new SubscriptionContractItemNotFoundException();
     }
 
-    await this.updateSubscriptionContractService.execute({
-      data: {
-        stripeSubscription: stripeSubscription?.id,
-        updatedBy: subscriptionContract.updatedBy
-      },
-      where: {
-        app: subscriptionContract.app,
-        subscriptionContract: subscriptionContract.id
-      }
-    });
-    await this.updateStripeSubscriptionService.execute({
-      data: {
-        automaticRenew: price.automaticRenew
-      },
-      where: {
-        stripeSubscription: stripeSubscription.id,
-        stripeAccount: data.stripeAccount
-      }
-    });
+    if (stripeSubscription?.id) {
+      await this.updateStripeSubscriptionService.execute({
+        data: {
+          automaticRenew: price.automaticRenew
+        },
+        where: {
+          stripeSubscription: stripeSubscription?.id,
+          stripeAccount: data.stripeAccount
+        }
+      });
+    }
 
     if (stripeCheckoutSession?.payment_status === 'paid') {
       await this.webhookStripeCheckoutSessionAsyncPaymentSucceededService.execute(

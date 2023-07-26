@@ -58,11 +58,11 @@ export class WebhookStripeCheckoutSessionAsyncPaymentSucceededService
       subscriptionContract: subscriptionContract.id,
       app: subscriptionContract.app,
       startAt:
-        stripeSubscription.current_period_start &&
-        stripeSubscription.current_period_start * 1000,
+        stripeSubscription?.current_period_start &&
+        stripeSubscription?.current_period_start * 1000,
       endAt:
-        stripeSubscription.current_period_end &&
-        stripeSubscription.current_period_end * 1000,
+        stripeSubscription?.current_period_end &&
+        stripeSubscription?.current_period_end * 1000,
       updatedBy: subscriptionContract.updatedBy,
       paymentMethod: paymentMethod?.id
     });

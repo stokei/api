@@ -5,6 +5,7 @@ export interface CreateStripeCheckoutSessionPriceDTO {
 
 export interface CreateStripeCheckoutSessionDTO {
   app: string;
+  mode: 'subscription' | 'payment';
   currency: string;
   applicationFeePercentage: number;
   successUrl: string;

@@ -62,6 +62,7 @@ export class MaterialMapper {
         operatorMapper(operatorData) {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),
+            name: cleanWhereDataSearch(operatorData.name),
             description: cleanWhereDataSearch(operatorData.description),
             free: cleanWhereDataBoolean(operatorData.free),
             app: cleanWhereDataString(operatorData.app),

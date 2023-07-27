@@ -42,7 +42,7 @@ export class FindAppCurrentSubscriptionContractQueryHandler
       await this.findAllSubscriptionContractsService.execute({
         where: {
           AND: {
-            app: {
+            parent: {
               equals: app.id
             },
             active: {

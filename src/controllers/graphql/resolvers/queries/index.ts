@@ -2,6 +2,7 @@ import { AccessesQueries } from './accesses';
 import { AccountsQueries } from './accounts';
 import { AddressesQueries } from './addresses';
 import { AppsQueries } from './apps';
+import { BillingQueries } from './billing';
 import { CatalogItemsQueries } from './catalog-items';
 import { CatalogsQueries } from './catalogs';
 import { ColorsQueries } from './colors';
@@ -57,5 +58,6 @@ export const Queries = [
   ...HerosQueries,
   ...SortedItemsQueries,
   ...MaterialsQueries,
-  ...SubscriptionContractItemsQueries
+  ...SubscriptionContractItemsQueries,
+  ...BillingQueries
 ];

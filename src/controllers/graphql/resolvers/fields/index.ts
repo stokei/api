@@ -2,6 +2,8 @@ import { AccessesFieldsResolvers } from './accesses';
 import { AccountsFieldsResolvers } from './accounts';
 import { AddressesFieldsResolvers } from './addresses';
 import { AppsFieldsResolvers } from './apps';
+import { BillingFieldsResolvers } from './billing';
+import { BillingItemsFieldsResolvers } from './billing-items';
 import { CatalogItemsFieldsResolvers } from './catalog-items';
 import { CatalogsFieldsResolvers } from './catalogs';
 import { ColorsFieldsResolvers } from './colors';
@@ -61,5 +63,7 @@ export const FieldsResolvers = [
   ...SortedItemsFieldsResolvers,
   ...SubscriptionContractItemsFieldsResolvers,
   ...VideoViewsFieldsResolvers,
-  ...MaterialsFieldsResolvers
+  ...MaterialsFieldsResolvers,
+  ...BillingItemsFieldsResolvers,
+  ...BillingFieldsResolvers
 ];

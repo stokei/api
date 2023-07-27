@@ -6,6 +6,7 @@ import { CreateAppStripeAccountDashboardLinkService } from './create-app-stripe-
 import { CreateAppStripeAccountOnboardingLinkService } from './create-app-stripe-account-onboarding-link';
 import { CreateAppStripeAccountUpdateLinkService } from './create-app-stripe-account-update-link';
 import { FindAllAppsService } from './find-all-apps';
+import { FindAppBillingService } from './find-app-billing';
 import { FindAppByIdService } from './find-app-by-id';
 import { FindAppCurrentDomainService } from './find-app-current-domain';
 import { FindAppCurrentSubscriptionContractService } from './find-app-current-subscription-contract';
@@ -27,5 +28,6 @@ export const AppServices = [
   RemoveItemFromAppSubscriptionContractService,
   FindAppByIdService,
   FindAllAppsService,
-  FindAppEmailInformationsService
+  FindAppEmailInformationsService,
+  FindAppBillingService
 ];

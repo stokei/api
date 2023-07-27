@@ -1,4 +1,4 @@
-import { createUnionType, Field, ID, Int, ObjectType } from '@nestjs/graphql';
+import { createUnionType, Field, Float, ID, ObjectType } from '@nestjs/graphql';
 import { splitServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
@@ -44,7 +44,7 @@ export class SubscriptionContractItem {
   @Field(() => Price, { nullable: true })
   price: Price;
 
-  @Field(() => Int)
+  @Field(() => Float)
   quantity: number;
 
   @Field(() => String, { nullable: true })

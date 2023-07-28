@@ -5,9 +5,12 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
+import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
+
 export interface WhereDataFindAllSubscriptionContractsByItemDTO {
   app?: IWhereData;
   parent?: IWhereDataSearch;
+  status?: SubscriptionContractStatus;
   product?: IWhereDataSearch;
 }
 export type IKeysWhereDataFindAllSubscriptionContractsByItemDTO =

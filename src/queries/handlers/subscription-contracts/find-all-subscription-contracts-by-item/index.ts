@@ -50,6 +50,7 @@ export class FindAllSubscriptionContractsByItemQueryHandler
       where: cleanObject({
         app: cleanWhereDataString(query?.where?.app),
         parent: cleanWhereDataSearch(query?.where?.parent),
+        status: query?.where?.status,
         product: cleanWhereDataSearch(query?.where?.product)
       }),
       orderBy: cleanObject({

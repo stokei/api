@@ -24,6 +24,7 @@ export class FindAllSubscriptionContractsByItemRepository
     const pageSkip = getPageSkip(data?.page?.number, pageLimit);
     const app = data.where?.app?.equals;
     const parent = data.where?.parent?.equals;
+    const status = data.where?.status;
     const productStartsWith = data.where?.product?.startsWith + '%';
     return subscriptionContractMapper.toModels(
       await this.model.$queryRaw`
@@ -33,6 +34,7 @@ export class FindAllSubscriptionContractsByItemRepository
         WHERE
           subscription_contracts.app = ${app} AND
           subscription_contracts.parent = ${parent} AND
+          subscription_contracts.status = ${status} AND
           subscription_contract_items.product LIKE ${productStartsWith}
         ORDER BY subscription_contracts.created_at DESC
         LIMIT ${pageLimit}

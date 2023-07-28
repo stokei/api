@@ -5,6 +5,7 @@ import {
   WhereDataStringInput
 } from '@stokei/nestjs';
 
+import { SubscriptionContractStatus } from '@/controllers/graphql/enums/subscription-contract-status.enum';
 import {
   OrderByDataFindAllSubscriptionContractsByItemDTO,
   WhereDataFindAllSubscriptionContractsByItemDTO
@@ -22,6 +23,9 @@ export class WhereDataFindAllSubscriptionContractsByItemInput
 
   @Field(() => WhereDataSearchInput, { nullable: true })
   product?: WhereDataSearchInput;
+
+  @Field(() => SubscriptionContractStatus, { nullable: true })
+  status?: SubscriptionContractStatus;
 }
 
 @InputType()

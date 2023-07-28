@@ -4,7 +4,7 @@ import { PaginationInput } from '@stokei/nestjs';
 import {
   OrderByDataFindAllSubscriptionContractsByItemInput,
   WhereDataFindAllSubscriptionContractsByItemInput
-} from '@/controllers/graphql/inputs/subscription-contracts/find-all-subscription-contracts-item.input';
+} from '@/controllers/graphql/inputs/subscription-contracts/find-all-subscription-contracts-by-item.input';
 import { SubscriptionContract } from '@/controllers/graphql/types/subscription-contract';
 import { SubscriptionContracts } from '@/controllers/graphql/types/subscription-contracts';
 import { FindAllSubscriptionContractsByItemService } from '@/services/subscription-contracts/find-all-subscription-contracts-by-item';

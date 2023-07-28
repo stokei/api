@@ -14,6 +14,7 @@ export class CountSubscriptionContractsByItemRepository
   async execute(data: FindAllSubscriptionContractsByItemDTO): Promise<number> {
     const app = data.where?.app?.equals;
     const parent = data.where?.parent?.equals;
+    const status = data.where?.status;
     const productStartsWith = data.where?.product?.startsWith + '%';
     const response = await this.model.$queryRaw`
         SELECT COUNT(subscription_contracts.id) as total FROM subscription_contracts
@@ -22,6 +23,7 @@ export class CountSubscriptionContractsByItemRepository
         WHERE
           subscription_contracts.app = ${app} AND
           subscription_contracts.parent = ${parent} AND
+          subscription_contracts.status = ${status} AND
           subscription_contract_items.product LIKE ${productStartsWith}
       `;
     return Number((response?.[0] as any)?.total) || 0;

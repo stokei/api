@@ -10,10 +10,22 @@ export class SumUsageRecordByParentRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute(parent: string): Promise<number> {
+    const now = new Date(Date.now());
+    const firstDayMonth = new Date(Date.now());
+    firstDayMonth.setDate(1);
+    firstDayMonth.setHours(0);
+    firstDayMonth.setMinutes(0);
+    firstDayMonth.setSeconds(0);
+
     const response = await this.model.usageRecord.groupBy({
       by: ['parent'],
       where: {
-        parent
+        AND: {
+          parent: {
+            equals: parent
+          }
+        },
+        OR: [{ createdAt: { lte: now, gte: firstDayMonth } }]
       },
       _sum: {
         quantity: true

@@ -108,19 +108,26 @@ export class CreateCheckoutCommandHandler
       product: product.id
     });
 
+    const applicationFeeAmount = Math.round(
+      price.amount * (APPLICATION_FEE_PERCENT / 100)
+    );
+
     const checkoutSession =
       await this.createStripeCheckoutSessionService.execute({
         mode: price?.type === PriceType.RECURRING ? 'subscription' : 'payment',
         app: customerApp.id,
         currency: customerApp.currency,
         applicationFeePercentage: APPLICATION_FEE_PERCENT,
+        applicationFeeAmount,
         cancelUrl,
         successUrl,
         customer: customer.stripeCustomer,
         stripeAccount: customerApp.stripeAccount,
         customerEmail: customer.email,
         customerReference: customer.id,
-        prices: [{ price: price.stripePrice, quantity: 1 }]
+        prices: [
+          { price: price.stripePrice, quantity: 1, amount: price.amount }
+        ]
       });
     if (!checkoutSession) {
       throw new SubscriptionContractNotFoundException();

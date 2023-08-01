@@ -1,4 +1,5 @@
 export interface CreateStripeCheckoutSessionPriceDTO {
+  amount: number;
   price: string;
   quantity: number;
 }
@@ -8,6 +9,7 @@ export interface CreateStripeCheckoutSessionDTO {
   mode: 'subscription' | 'payment';
   currency: string;
   applicationFeePercentage: number;
+  applicationFeeAmount: number;
   successUrl: string;
   cancelUrl: string;
   prices: CreateStripeCheckoutSessionPriceDTO[];

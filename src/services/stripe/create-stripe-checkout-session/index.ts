@@ -41,7 +41,7 @@ export class CreateStripeCheckoutSessionService
         ...(data.stripeAccount &&
           data.mode == 'payment' && {
             payment_intent_data: {
-              application_fee_amount: data.applicationFeePercentage
+              application_fee_amount: data.applicationFeeAmount
             }
           })
       },

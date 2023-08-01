@@ -9,6 +9,9 @@ export class CatalogItem {
   @Field(() => ID)
   id: string;
 
+  @Field(() => String)
+  catalog: string;
+
   @Field(() => Product)
   product: Product;
 

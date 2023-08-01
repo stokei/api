@@ -1,8 +1,9 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { IBaseService } from '@stokei/nestjs';
+import { convertToISODateString, IBaseService } from '@stokei/nestjs';
 import Stripe from 'stripe';
 
 import { WebhookStripeCheckoutSessionDTO } from '@/dtos/webhooks/webhook-stripe-checkout-session-completed.dto';
+import { SubscriptionContractNotFoundException } from '@/errors';
 import { PaymentMethodModel } from '@/models/payment-method.model';
 import { CreatePaymentMethodService } from '@/services/payment-methods/create-payment-method';
 import { FindPaymentMethodByStripePaymentMethodService } from '@/services/payment-methods/find-payment-method-by-stripe-payment-method';
@@ -34,6 +35,9 @@ export class WebhookStripeCheckoutSessionAsyncPaymentSucceededService
       await this.findSubscriptionContractByStripeCheckoutSessionService.execute(
         stripeCheckoutSession?.id
       );
+    if (!subscriptionContract) {
+      throw new SubscriptionContractNotFoundException();
+    }
 
     let paymentMethod: PaymentMethodModel;
     if (stripeCheckoutSession?.payment_intent) {
@@ -45,24 +49,28 @@ export class WebhookStripeCheckoutSessionAsyncPaymentSucceededService
             paymentIntent?.payment_method?.toString()
           );
       } catch (error) {
-        paymentMethod = await this.createPaymentMethodService.execute({
-          parent: subscriptionContract?.parent,
-          app: subscriptionContract.app,
-          createdBy: subscriptionContract.updatedBy,
-          stripePaymentMethod: paymentIntent?.payment_method?.toString()
-        });
+        try {
+          paymentMethod = await this.createPaymentMethodService.execute({
+            parent: subscriptionContract?.parent,
+            app: subscriptionContract.app,
+            createdBy: subscriptionContract.updatedBy,
+            stripePaymentMethod: paymentIntent?.payment_method?.toString()
+          });
+        } catch (error) {}
       }
     }
 
     await this.activateSubscriptionContractService.execute({
       subscriptionContract: subscriptionContract.id,
       app: subscriptionContract.app,
-      startAt:
-        stripeSubscription?.current_period_start &&
-        stripeSubscription?.current_period_start * 1000,
-      endAt:
-        stripeSubscription?.current_period_end &&
-        stripeSubscription?.current_period_end * 1000,
+      startAt: stripeSubscription?.current_period_start
+        ? convertToISODateString(
+            stripeSubscription?.current_period_start * 1000
+          )
+        : undefined,
+      endAt: stripeSubscription?.current_period_end
+        ? convertToISODateString(stripeSubscription?.current_period_end * 1000)
+        : undefined,
       updatedBy: subscriptionContract.updatedBy,
       paymentMethod: paymentMethod?.id
     });

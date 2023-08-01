@@ -109,6 +109,13 @@ export class CreatePaymentMethodCommandHandler
       throw new PaymentMethodAlreadyExistsException();
     }
 
+    await this.attachStripePaymentMethodToCustomerService.execute({
+      app: app.id,
+      customer: account?.stripeCustomer,
+      paymentMethod: data.stripePaymentMethod,
+      stripeAccount: app.stripeAccount
+    });
+
     const paymentMethodCreated =
       await this.createPaymentMethodRepository.execute({
         ...data,
@@ -120,13 +127,6 @@ export class CreatePaymentMethodCommandHandler
     if (!paymentMethodCreated) {
       throw new PaymentMethodNotFoundException();
     }
-
-    await this.attachStripePaymentMethodToCustomerService.execute({
-      app: app.id,
-      customer: account?.stripeCustomer,
-      paymentMethod: paymentMethodCreated.stripePaymentMethod,
-      stripeAccount: app.stripeAccount
-    });
 
     const paymentMethodModel =
       this.publisher.mergeObjectContext(paymentMethodCreated);

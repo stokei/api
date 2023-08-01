@@ -1,5 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { IBaseService } from '@stokei/nestjs';
+import { convertToISODateString, IBaseService } from '@stokei/nestjs';
 
 import { WebhookStripeSubscriptionUpdateDTO } from '@/dtos/webhooks/webhook-stripe-subscription-update.dto';
 import { FindSubscriptionContractByStripeSubscriptionService } from '@/services/subscription-contracts/find-subscription-contract-by-stripe-subscription';
@@ -23,8 +23,8 @@ export class WebhookStripeSubscriptionUpdateService
 
     await this.updateSubscriptionContractService.execute({
       data: {
-        startAt: data.startAt,
-        endAt: data.endAt,
+        startAt: convertToISODateString(data.startAt),
+        endAt: convertToISODateString(data.endAt),
         updatedBy: subscriptionContract.updatedBy
       },
       where: {

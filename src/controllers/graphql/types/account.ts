@@ -29,6 +29,9 @@ export class Account {
   @Field(() => String)
   username: string;
 
+  @Field(() => String, { nullable: true })
+  pagarmeCustomer?: string;
+
   @Field(() => Boolean, { nullable: true })
   isAdmin?: boolean;
 

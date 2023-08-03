@@ -4,6 +4,7 @@ import { AddItemToAppSubscriptionContractCommandHandler } from './add-item-to-ap
 import { CreateAppCommandHandler } from './create-app';
 import { CreateAppCatalogCommandHandler } from './create-app-catalog';
 import { CreateAppDefaultLandingPageCommandHandler } from './create-app-default-landing-page';
+import { CreateAppPagarmeAccountCommandHandler } from './create-app-pagarme-account';
 import { CreateAppStripeAccountCommandHandler } from './create-app-stripe-account';
 import { CreateAppStripeAccountDashboardLinkCommandHandler } from './create-app-stripe-account-dashboard-link';
 import { CreateAppStripeAccountOnboardingLinkCommandHandler } from './create-app-stripe-account-onboarding-link';
@@ -29,5 +30,6 @@ export const AppCommandHandlers = [
   RemoveAppAdminFromAppSubscriptionContractCommandHandler,
   CreateAppCatalogCommandHandler,
   CreateAppDefaultLandingPageCommandHandler,
-  CreateAppStripeResourcesCommandHandler
+  CreateAppStripeResourcesCommandHandler,
+  CreateAppPagarmeAccountCommandHandler
 ];

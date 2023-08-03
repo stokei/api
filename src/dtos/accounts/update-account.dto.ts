@@ -4,6 +4,7 @@ export interface UpdateAccountDataDTO {
   lastname?: string;
   avatar?: string;
   stripeCustomer?: string;
+  pagarmeCustomer?: string;
   dateBirthday?: string;
 }
 

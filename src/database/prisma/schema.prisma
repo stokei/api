@@ -145,6 +145,7 @@ model Account {
   avatar             String?       @db.VarChar(255)
   forgotPasswordCode String?       @map("forgot_password_code") @db.VarChar(255)
   stripeCustomer     String?       @map("stripe_customer") @db.VarChar(255)
+  pagarmeCustomer    String?       @map("pagarme_customer") @db.VarChar(255)
   dateBirthday       DateTime?     @map("date_birthday")
   status             AccountStatus
   active             Boolean       @default(true)
@@ -203,6 +204,7 @@ model App {
   defaultDomain     String?   @map("default_domain") @db.VarChar(255)
   stripeBankAccount String?   @map("stripe_bank_account") @db.VarChar(255)
   stripeAccount     String?   @map("stripe_account") @db.VarChar(255)
+  pagarmeAccount    String?   @map("pagarme_account") @db.VarChar(255)
   paymentMethod     String?   @map("payment_method") @db.VarChar(255)
   blockedAt         DateTime? @map("blocked_at")
   activatedAt       DateTime? @default(now()) @map("activated_at")

@@ -24,6 +24,7 @@ export interface IAppModelData {
   readonly active: boolean;
   readonly stripeBankAccount?: string;
   readonly stripeAccount?: string;
+  readonly pagarmeAccount?: string;
   readonly paymentMethod?: string;
   readonly blockedAt?: Date | string;
   readonly activatedAt?: Date | string;
@@ -50,8 +51,10 @@ export class AppModel extends AggregateRoot {
   readonly logo?: string;
   readonly active: boolean;
   readonly isIntegratedWithStripe: boolean;
+  readonly isIntegratedWithPagarme: boolean;
   readonly stripeBankAccount?: string;
   readonly stripeAccount?: string;
+  readonly pagarmeAccount?: string;
   readonly paymentMethod?: string;
   readonly isStokei: boolean;
   readonly isAllowedToSell: boolean;
@@ -93,10 +96,12 @@ export class AppModel extends AggregateRoot {
     this.createdBy = data.createdBy;
     this.isStokei = !!this.id.match(/stokei/i);
     this.stripeBankAccount = data.stripeBankAccount || undefined;
+    this.pagarmeAccount = data.pagarmeAccount || undefined;
     this.stripeAccount = data.stripeAccount || undefined;
     this.isAllowedToSell = this.isStokei || !!this.stripeAccount;
     this.isAllowedToUsePlan = !!this.isAllowedToSell;
     this.isIntegratedWithStripe = !!this.stripeAccount;
+    this.isIntegratedWithPagarme = !!this.pagarmeAccount;
   }
 
   createdApp({ createdBy }: { createdBy: string }) {

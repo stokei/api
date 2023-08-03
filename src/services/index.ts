@@ -23,6 +23,7 @@ import { InvoiceServices } from './invoices';
 import { LanguageServices } from './languages';
 import { MaterialServices } from './materials';
 import { ModuleServices } from './modules';
+import { PagarmeServices } from './pagarme';
 import { PaymentMethodServices } from './payment-methods';
 import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
@@ -89,5 +90,6 @@ export const Services = [
   ...EmailServices,
   ...VercelServices,
   ...MaterialServices,
-  ...VideoViewServices
+  ...VideoViewServices,
+  ...PagarmeServices
 ];

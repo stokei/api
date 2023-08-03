@@ -1,6 +1,7 @@
 import { AddItemToAppSubscriptionContractService } from './add-item-to-app-subscription-contract';
 import { CreateAppService } from './create-app';
 import { CreateAppCatalogService } from './create-app-catalog';
+import { CreateAppPagarmeAccountService } from './create-app-pagarme-account';
 import { CreateAppStripeAccountService } from './create-app-stripe-account';
 import { CreateAppStripeAccountDashboardLinkService } from './create-app-stripe-account-dashboard-link';
 import { CreateAppStripeAccountOnboardingLinkService } from './create-app-stripe-account-onboarding-link';
@@ -29,5 +30,6 @@ export const AppServices = [
   FindAppByIdService,
   FindAllAppsService,
   FindAppEmailInformationsService,
-  FindAppBillingService
+  FindAppBillingService,
+  CreateAppPagarmeAccountService
 ];

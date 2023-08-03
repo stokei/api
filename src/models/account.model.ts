@@ -34,6 +34,7 @@ export interface IAccountModelData {
   readonly createdAt?: Date | string;
   readonly app: string;
   readonly stripeCustomer?: string;
+  readonly pagarmeCustomer?: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
 }
@@ -61,6 +62,7 @@ export class AccountModel extends AggregateRoot {
   readonly createdAt?: string;
   readonly app: string;
   readonly stripeCustomer?: string;
+  readonly pagarmeCustomer?: string;
   readonly updatedBy?: string;
   readonly createdBy?: string;
   readonly isStokei: boolean;
@@ -89,6 +91,7 @@ export class AccountModel extends AggregateRoot {
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;
     this.stripeCustomer = data.stripeCustomer;
+    this.pagarmeCustomer = data.pagarmeCustomer;
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
     this.isStokei = !!this.app.match(/stokei/i);

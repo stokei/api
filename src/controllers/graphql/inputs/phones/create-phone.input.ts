@@ -2,8 +2,8 @@ import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class CreatePhoneInput {
-  @Field()
-  parent: string;
+  @Field(() => String, { nullable: true })
+  parent?: string;
 
   @Field()
   countryCode: string;

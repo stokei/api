@@ -71,6 +71,7 @@ export class UpdateAccountCommandHandler
         avatar: cleanValue(command?.data?.avatar),
         dateBirthday: cleanValue(command?.data?.dateBirthday),
         stripeCustomer: cleanValue(command?.data?.stripeCustomer),
+        pagarmeCustomer: cleanValue(command?.data?.pagarmeCustomer),
         firstname: cleanValue(command?.data?.firstname),
         lastname: cleanValue(command?.data?.lastname),
         updatedBy: cleanValue(command?.data?.updatedBy)

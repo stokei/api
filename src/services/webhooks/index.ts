@@ -1,3 +1,6 @@
+import { WebhookPagarmeService } from './pagarme';
+import { WebhookPagarmeOrderCancelService } from './pagarme-order-cancel';
+import { WebhookPagarmeOrderPaidService } from './pagarme-order-paid';
 import { WebhookStripeService } from './stripe';
 import { WebhookStripeCheckoutSessionAsyncPaymentFailedService } from './stripe-checkout-session-async-payment-failed';
 import { WebhookStripeCheckoutSessionAsyncPaymentSucceededService } from './stripe-checkout-session-async-payment-succeeded';
@@ -19,5 +22,8 @@ export const WebhookServices = [
   WebhookStripeCheckoutSessionService,
   WebhookStripeCheckoutSessionAsyncPaymentSucceededService,
   WebhookStripeCheckoutSessionAsyncPaymentFailedService,
-  WebhookVideosService
+  WebhookVideosService,
+  WebhookPagarmeService,
+  WebhookPagarmeOrderPaidService,
+  WebhookPagarmeOrderCancelService
 ];

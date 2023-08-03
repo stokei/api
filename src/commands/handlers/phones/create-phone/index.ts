@@ -9,7 +9,6 @@ import {
   PhoneNotFoundException
 } from '@/errors';
 import { CreatePhoneRepository } from '@/repositories/phones/create-phone';
-import { generateRandomCode } from '@/utils/generate-random-code';
 
 type CreatePhoneCommandKeys = keyof CreatePhoneCommand;
 
@@ -45,8 +44,10 @@ export class CreatePhoneCommandHandler
     const phoneCreated = await this.createPhoneRepository.execute({
       ...data,
       fullnumber: fullnumberWithOnlyNumbers,
-      status: PhoneStatus.PENDING,
-      validationCode: generateRandomCode(7)
+      status: PhoneStatus.ACTIVE,
+      validationCode: ''
+      // status: PhoneStatus.PENDING,
+      // validationCode: generateRandomCode(7)
     });
     if (!phoneCreated) {
       throw new PhoneNotFoundException();

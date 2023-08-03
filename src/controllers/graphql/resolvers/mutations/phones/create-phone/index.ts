@@ -21,6 +21,7 @@ export class CreatePhoneResolver {
   ) {
     const response = await this.createPhoneService.execute({
       ...data,
+      parent: data.parent || currentAccountId,
       app: appId,
       createdBy: currentAccountId
     });

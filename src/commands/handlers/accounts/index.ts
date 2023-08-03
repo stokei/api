@@ -1,6 +1,7 @@
 import { ChangePasswordCommandHandler } from './change-password';
 import { CompleteAccountConfigurationCommandHandler } from './complete-account-configuration';
 import { CreateAccountCommandHandler } from './create-account';
+import { CreateAccountPagarmeCustomerCommandHandler } from './create-account-pagarme-customer';
 import { CreateAccountStripeCustomerCommandHandler } from './create-account-stripe-customer';
 import { ForgotPasswordCommandHandler } from './forgot-password';
 import { LoginCommandHandler } from './login';
@@ -21,5 +22,6 @@ export const AccountCommandHandlers = [
   CreateAccountStripeCustomerCommandHandler,
   UpdateAccountStripeCustomerCommandHandler,
   CompleteAccountConfigurationCommandHandler,
-  UpdateOwnPasswordCommandHandler
+  UpdateOwnPasswordCommandHandler,
+  CreateAccountPagarmeCustomerCommandHandler
 ];

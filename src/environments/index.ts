@@ -52,3 +52,7 @@ export const DIGITALOCEAN_BUCKET: string = process.env.DIGITALOCEAN_BUCKET;
 export const DIGITALOCEAN_KEY: string = process.env.DIGITALOCEAN_KEY;
 export const DIGITALOCEAN_SECRET_KEY: string =
   process.env.DIGITALOCEAN_SECRET_KEY;
+
+export const PAGARME_RECIPIENT_ID: string = process.env.PAGARME_RECIPIENT_ID;
+export const PAGARME_KEY: string = process.env.PAGARME_KEY;
+export const PAGARME_SECRET_KEY: string = process.env.PAGARME_SECRET_KEY;

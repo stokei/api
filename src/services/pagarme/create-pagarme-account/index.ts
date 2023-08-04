@@ -24,7 +24,7 @@ export class CreatePagarmeAccountService
         name: data?.name,
         email: data?.email,
         document: data?.document,
-        type: data?.type,
+        type: data?.documentType,
         code: data?.app,
         default_bank_account: {
           type: 'savings',

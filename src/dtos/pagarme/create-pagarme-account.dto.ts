@@ -12,7 +12,7 @@ export interface CreatePagarmeAccountBankAccountDTO {
 }
 export interface CreatePagarmeAccountDTO {
   app: string;
-  type: PagarmeAccountType;
+  documentType: PagarmeAccountType;
   name: string;
   email: string;
   document: string;

@@ -40,9 +40,9 @@ export class CreateAppPagarmeAccountCommandHandler
         'document'
       );
     }
-    if (!data?.type) {
+    if (!data?.documentType) {
       throw new ParamNotFoundException<CreateAppPagarmeAccountCommandKeys>(
-        'type'
+        'documentType'
       );
     }
     if (!data?.defaultBankAccount) {
@@ -65,7 +65,7 @@ export class CreateAppPagarmeAccountCommandHandler
       email: app.email,
       defaultBankAccount: data.defaultBankAccount,
       document: data.document,
-      type: data.type
+      documentType: data.documentType
     });
     if (!pagarmeAccount) {
       throw new PagarmeAccountNotFoundException();
@@ -91,7 +91,7 @@ export class CreateAppPagarmeAccountCommandHandler
     return cleanObject({
       app: cleanValue(command?.app),
       document: cleanValue(command?.document),
-      type: cleanValue(command?.type),
+      documentType: cleanValue(command?.documentType),
       createdBy: cleanValue(command?.createdBy),
       defaultBankAccount: command?.defaultBankAccount && {
         holderType: cleanValue(command?.defaultBankAccount?.holderType),

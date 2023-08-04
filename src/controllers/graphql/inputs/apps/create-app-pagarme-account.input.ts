@@ -7,7 +7,7 @@ import { CreateAppPagarmeDefaultBankAccountInput } from './create-app-pagarme-de
 @InputType()
 export class CreateAppPagarmeAccountInput {
   @Field(() => PagarmeAccountType)
-  type: PagarmeAccountType;
+  documentType: PagarmeAccountType;
 
   @Field(() => String)
   document: string;

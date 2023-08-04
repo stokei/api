@@ -6,12 +6,12 @@ import { CurrentApp } from '@/common/decorators/currenty-app.decorator';
 import { AppGuard } from '@/common/guards/app';
 import { CreatePaymentMethodInput } from '@/controllers/graphql/inputs/payment-methods/create-payment-method.input';
 import { PaymentMethod } from '@/controllers/graphql/types/payment-method';
-import { CreatePaymentMethodService } from '@/services/payment-methods/create-payment-method';
+import { CreatePaymentMethodCardService } from '@/services/payment-methods/create-payment-method-card';
 
 @Resolver(() => PaymentMethod)
 export class CreatePaymentMethodResolver {
   constructor(
-    private readonly createPaymentMethodService: CreatePaymentMethodService
+    private readonly createPaymentMethodCardService: CreatePaymentMethodCardService
   ) {}
 
   @UseGuards(AuthenticatedGuard, AppGuard)
@@ -21,7 +21,7 @@ export class CreatePaymentMethodResolver {
     @CurrentApp('id') appId: string,
     @Args('input') data: CreatePaymentMethodInput
   ) {
-    const response = await this.createPaymentMethodService.execute({
+    const response = await this.createPaymentMethodCardService.execute({
       ...data,
       app: appId,
       parent: currentAccountId,

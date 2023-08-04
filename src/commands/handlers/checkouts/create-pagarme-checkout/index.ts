@@ -2,6 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreatePagarmeCheckoutCommand } from '@/commands/implements/checkouts/create-pagarme-checkout.command';
+import { InvoiceStatus } from '@/enums/invoice-status.enum';
 import {
   AccountNotFoundException,
   AppNotFoundException,
@@ -18,7 +19,9 @@ import { ProductModel } from '@/models/product.model';
 import { RecurringModel } from '@/models/recurring.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { CreateInvoiceService } from '@/services/invoices/create-invoice';
 import { CreatePagarmeOrderService } from '@/services/pagarme/create-pagarme-order';
+import { CreatePaymentMethodPixService } from '@/services/payment-methods/create-payment-method-pix';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateRecurringService } from '@/services/recurrings/create-recurring';
@@ -37,6 +40,8 @@ export class CreatePagarmeCheckoutCommandHandler
 {
   constructor(
     private readonly createSubscriptionContractService: CreateSubscriptionContractService,
+    private readonly createPaymentMethodPixService: CreatePaymentMethodPixService,
+    private readonly createInvoiceService: CreateInvoiceService,
     private readonly cancelSubscriptionContractService: CancelSubscriptionContractService,
     private readonly createSubscriptionContractItemService: CreateSubscriptionContractItemService,
     private readonly findAppByIdService: FindAppByIdService,
@@ -100,20 +105,6 @@ export class CreatePagarmeCheckoutCommandHandler
       throw new SubscriptionContractAlreadyActiveException();
     }
 
-    const subscriptionContract =
-      await this.createSubscriptionContractService.execute({
-        parent: customer.id,
-        app: customerApp.id,
-        type: price.type,
-        createdByAdmin: false,
-        automaticRenew: price.automaticRenew,
-        createdBy: data.createdBy
-      });
-
-    if (!subscriptionContract) {
-      throw new SubscriptionContractNotFoundException();
-    }
-
     const priceRecurring = await this.findRecurringByIdService.execute(
       price.recurring
     );
@@ -124,21 +115,51 @@ export class CreatePagarmeCheckoutCommandHandler
         interval: priceRecurring?.interval,
         intervalCount: priceRecurring?.intervalCount,
         usageType: priceRecurring?.usageType,
-        createdBy: subscriptionContract?.createdBy
+        createdBy: data.createdBy
       });
     }
-    const quantity = 1;
-    await this.createSubscriptionContractItemService.execute({
+    const paymentMethod = await this.createPaymentMethodPixService.execute({
       app: customerApp.id,
-      parent: subscriptionContract?.id,
-      product: product.id,
-      quantity,
-      createdByAdmin: true,
-      recurring: recurring?.id,
-      createdBy: subscriptionContract?.createdBy
+      createdBy: data.createdBy
     });
-
+    const subscriptionContract =
+      await this.createSubscriptionContractService.execute({
+        parent: customer.id,
+        app: customerApp.id,
+        type: price.type,
+        createdByAdmin: false,
+        automaticRenew: price.automaticRenew,
+        paymentMethod: paymentMethod?.id,
+        createdBy: data.createdBy
+      });
+    if (!subscriptionContract) {
+      throw new SubscriptionContractNotFoundException();
+    }
     try {
+      const quantity = 1;
+      await this.createSubscriptionContractItemService.execute({
+        app: customerApp.id,
+        parent: subscriptionContract?.id,
+        product: product.id,
+        quantity,
+        createdByAdmin: true,
+        recurring: recurring?.id,
+        createdBy: subscriptionContract?.createdBy
+      });
+
+      await this.createInvoiceService.execute({
+        app: subscriptionContract.app,
+        subscription: subscriptionContract.id,
+        paymentMethod: subscriptionContract.paymentMethod,
+        status: InvoiceStatus.PENDING,
+        url: '',
+        createdBy: subscriptionContract.createdBy,
+        currency: price.currency,
+        customer: subscriptionContract.parent,
+        subtotalAmount: price.amount,
+        totalAmount: price.amount
+      });
+
       const pagarmeOrder = await this.createPagarmeOrderService.execute({
         appRecipient: customerApp.pagarmeAccount,
         currency: price.currency,

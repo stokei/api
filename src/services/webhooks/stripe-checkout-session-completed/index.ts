@@ -3,6 +3,7 @@ import { convertToISODateString, IBaseService } from '@stokei/nestjs';
 import Stripe from 'stripe';
 
 import { WebhookStripeCheckoutSessionDTO } from '@/dtos/webhooks/webhook-stripe-checkout-session-completed.dto';
+import { InvoiceStatus } from '@/enums/invoice-status.enum';
 import {
   PriceNotFoundException,
   ProductNotFoundException,
@@ -11,13 +12,13 @@ import {
 } from '@/errors';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { CreateInvoiceService } from '@/services/invoices/create-invoice';
 import { FindPricesByStripePriceIdsService } from '@/services/prices/find-prices-by-stripe-price-ids';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { FindStripeCheckoutSessionByIdService } from '@/services/stripe/find-checkout-session-by-id';
 import { UpdateStripeSubscriptionService } from '@/services/stripe/update-stripe-subscription';
 import { CreateSubscriptionContractItemService } from '@/services/subscription-contract-items/create-subscription-contract-item';
 import { CreateSubscriptionContractService } from '@/services/subscription-contracts/create-subscription-contract';
-import { UpdateSubscriptionContractService } from '@/services/subscription-contracts/update-subscription-contract';
 
 import { WebhookStripeCheckoutSessionAsyncPaymentSucceededService } from '../stripe-checkout-session-async-payment-succeeded';
 
@@ -29,10 +30,10 @@ export class WebhookStripeCheckoutSessionService
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findProductByIdService: FindProductByIdService,
+    private readonly createInvoiceService: CreateInvoiceService,
     private readonly updateStripeSubscriptionService: UpdateStripeSubscriptionService,
     private readonly findPricesByStripePriceIdsService: FindPricesByStripePriceIdsService,
     private readonly findStripeCheckoutSessionByIdService: FindStripeCheckoutSessionByIdService,
-    private readonly updateSubscriptionContractService: UpdateSubscriptionContractService,
     private readonly webhookStripeCheckoutSessionAsyncPaymentSucceededService: WebhookStripeCheckoutSessionAsyncPaymentSucceededService,
     private readonly createSubscriptionContractItemService: CreateSubscriptionContractItemService,
     private readonly createSubscriptionContractService: CreateSubscriptionContractService
@@ -124,6 +125,28 @@ export class WebhookStripeCheckoutSessionService
           stripeCheckoutSession: stripeCheckoutSession?.id
         }
       );
+
+      const paymentIntent: Stripe.PaymentIntent =
+        stripeCheckoutSession?.payment_intent as Stripe.PaymentIntent;
+      const stripePaymentMethod: Stripe.PaymentMethod =
+        paymentIntent?.payment_method as Stripe.PaymentMethod;
+
+      try {
+        if (stripePaymentMethod?.type === 'boleto') {
+          await this.createInvoiceService.execute({
+            app: subscriptionContract.app,
+            subscription: subscriptionContract.id,
+            paymentMethod: subscriptionContract.paymentMethod,
+            status: InvoiceStatus.PENDING,
+            url: '',
+            createdBy: subscriptionContract.createdBy,
+            currency: price.currency,
+            customer: subscriptionContract.parent,
+            subtotalAmount: price.amount,
+            totalAmount: price.amount
+          });
+        }
+      } catch (error) {}
     }
     return HttpStatus.OK;
   }

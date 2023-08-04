@@ -70,7 +70,7 @@ export class App {
   isIntegratedWithStripe: boolean;
 
   @Field(() => Boolean)
-  isIntegratedWithPagarme: boolean;
+  isIntegratedWithPix: boolean;
 
   @Field(() => String, { nullable: true })
   blockedAt?: string;

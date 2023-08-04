@@ -5,7 +5,8 @@ import Stripe from 'stripe';
 import { WebhookStripeCheckoutSessionDTO } from '@/dtos/webhooks/webhook-stripe-checkout-session-completed.dto';
 import { SubscriptionContractNotFoundException } from '@/errors';
 import { PaymentMethodModel } from '@/models/payment-method.model';
-import { CreatePaymentMethodService } from '@/services/payment-methods/create-payment-method';
+import { CreatePaymentMethodBoletoService } from '@/services/payment-methods/create-payment-method-boleto';
+import { CreatePaymentMethodCardService } from '@/services/payment-methods/create-payment-method-card';
 import { FindPaymentMethodByStripePaymentMethodService } from '@/services/payment-methods/find-payment-method-by-stripe-payment-method';
 import { FindStripeCheckoutSessionByIdService } from '@/services/stripe/find-checkout-session-by-id';
 import { ActivateSubscriptionContractService } from '@/services/subscription-contracts/activate-subscription-contract';
@@ -18,7 +19,8 @@ export class WebhookStripeCheckoutSessionAsyncPaymentSucceededService
   constructor(
     private readonly findStripeCheckoutSessionByIdService: FindStripeCheckoutSessionByIdService,
     private readonly findSubscriptionContractByStripeCheckoutSessionService: FindSubscriptionContractByStripeCheckoutSessionService,
-    private readonly createPaymentMethodService: CreatePaymentMethodService,
+    private readonly createPaymentMethodBoletoService: CreatePaymentMethodBoletoService,
+    private readonly createPaymentMethodCardService: CreatePaymentMethodCardService,
     private readonly findPaymentMethodByStripePaymentMethodService: FindPaymentMethodByStripePaymentMethodService,
     private readonly activateSubscriptionContractService: ActivateSubscriptionContractService
   ) {}
@@ -43,20 +45,34 @@ export class WebhookStripeCheckoutSessionAsyncPaymentSucceededService
     if (stripeCheckoutSession?.payment_intent) {
       const paymentIntent: Stripe.PaymentIntent =
         stripeCheckoutSession?.payment_intent as Stripe.PaymentIntent;
-      try {
-        paymentMethod =
-          await this.findPaymentMethodByStripePaymentMethodService.execute(
-            paymentIntent?.payment_method?.toString()
-          );
-      } catch (error) {
+      const stripePaymentMethod: Stripe.PaymentMethod =
+        paymentIntent?.payment_method as Stripe.PaymentMethod;
+      if (!!stripePaymentMethod) {
         try {
-          paymentMethod = await this.createPaymentMethodService.execute({
-            parent: subscriptionContract?.parent,
-            app: subscriptionContract.app,
-            createdBy: subscriptionContract.updatedBy,
-            stripePaymentMethod: paymentIntent?.payment_method?.toString()
-          });
-        } catch (error) {}
+          paymentMethod =
+            await this.findPaymentMethodByStripePaymentMethodService.execute(
+              stripePaymentMethod?.id
+            );
+        } catch (error) {
+          try {
+            if (stripePaymentMethod.type === 'card') {
+              paymentMethod = await this.createPaymentMethodCardService.execute(
+                {
+                  parent: subscriptionContract?.parent,
+                  app: subscriptionContract.app,
+                  createdBy: subscriptionContract.updatedBy,
+                  stripePaymentMethod: paymentIntent?.payment_method?.toString()
+                }
+              );
+            } else if (stripePaymentMethod.type === 'boleto') {
+              paymentMethod =
+                await this.createPaymentMethodBoletoService.execute({
+                  app: subscriptionContract.app,
+                  createdBy: subscriptionContract.updatedBy
+                });
+            }
+          } catch (error) {}
+        }
       }
     }
 

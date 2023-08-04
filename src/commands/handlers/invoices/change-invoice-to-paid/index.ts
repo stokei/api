@@ -14,16 +14,12 @@ import {
   DataNotFoundException,
   InvoiceNotFoundException,
   ParamNotFoundException,
-  PaymentMethodNotFoundException,
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { InvoiceModel } from '@/models/invoice.model';
-import { PaymentMethodModel } from '@/models/payment-method.model';
 import { ChangeInvoiceToPaidRepository } from '@/repositories/invoices/change-invoice-to-paid';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindInvoiceByIdService } from '@/services/invoices/find-invoice-by-id';
-import { CreatePaymentMethodService } from '@/services/payment-methods/create-payment-method';
-import { FindPaymentMethodByStripePaymentMethodService } from '@/services/payment-methods/find-payment-method-by-stripe-payment-method';
 import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 
 type ChangeInvoiceToPaidCommandKeys = keyof ChangeInvoiceToPaidCommand;
@@ -36,8 +32,6 @@ export class ChangeInvoiceToPaidCommandHandler
     private readonly changeInvoiceToPaidRepository: ChangeInvoiceToPaidRepository,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
-    private readonly createPaymentMethodService: CreatePaymentMethodService,
-    private readonly findPaymentMethodByStripePaymentMethodService: FindPaymentMethodByStripePaymentMethodService,
     private readonly findInvoiceByIdService: FindInvoiceByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -71,33 +65,12 @@ export class ChangeInvoiceToPaidCommandHandler
     if (!subscriptionContract) {
       throw new SubscriptionContractNotFoundException();
     }
-    let paymentMethodId = subscriptionContract.paymentMethod;
-    if (!paymentMethodId && !!data.paymentMethod) {
-      let paymentMethod: PaymentMethodModel;
-      try {
-        paymentMethod =
-          await this.findPaymentMethodByStripePaymentMethodService.execute(
-            data.paymentMethod
-          );
-      } catch (error) {
-        paymentMethod = await this.createPaymentMethodService.execute({
-          app: app.id,
-          parent: invoice.customer,
-          stripePaymentMethod: data.paymentMethod,
-          createdBy: data.updatedBy
-        });
-      }
-      if (!paymentMethod) {
-        throw new PaymentMethodNotFoundException();
-      }
-      paymentMethodId = paymentMethod.id;
-    }
 
     const dataChangeInvoiceToPaid: ChangeInvoiceToPaidRepositoryDataDTO = {
       active: true,
       url: data.invoiceUrl,
       status: InvoiceStatus.PAID,
-      paymentMethod: paymentMethodId,
+      paymentMethod: data.paymentMethod,
       paidAt: convertToISODateString(Date.now()),
       updatedBy: data.updatedBy
     };

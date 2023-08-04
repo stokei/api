@@ -2,22 +2,22 @@ import { Injectable } from '@nestjs/common';
 import { IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
-import { CreatePaymentMethodRepositoryDTO } from '@/dtos/payment-methods/create-payment-method-repository.dto';
+import { CreatePaymentMethodPixRepositoryDTO } from '@/dtos/payment-methods/create-payment-method-pix-repository.dto';
 import { PaymentMethodMapper } from '@/mappers/payment-methods';
 import { PaymentMethodModel } from '@/models/payment-method.model';
 
 @Injectable()
-export class CreatePaymentMethodRepository
+export class CreatePaymentMethodPixRepository
   implements
     IBaseRepository<
-      CreatePaymentMethodRepositoryDTO,
+      CreatePaymentMethodPixRepositoryDTO,
       Promise<PaymentMethodModel>
     >
 {
   constructor(private readonly model: PrismaClient) {}
 
   async execute(
-    data: CreatePaymentMethodRepositoryDTO
+    data: CreatePaymentMethodPixRepositoryDTO
   ): Promise<PaymentMethodModel> {
     return new PaymentMethodMapper().toModel(
       await this.model.paymentMethod.create({ data })

@@ -51,7 +51,7 @@ export class AppModel extends AggregateRoot {
   readonly logo?: string;
   readonly active: boolean;
   readonly isIntegratedWithStripe: boolean;
-  readonly isIntegratedWithPagarme: boolean;
+  readonly isIntegratedWithPix: boolean;
   readonly stripeBankAccount?: string;
   readonly stripeAccount?: string;
   readonly pagarmeAccount?: string;
@@ -101,7 +101,7 @@ export class AppModel extends AggregateRoot {
     this.isAllowedToSell = this.isStokei || !!this.stripeAccount;
     this.isAllowedToUsePlan = !!this.isAllowedToSell;
     this.isIntegratedWithStripe = !!this.stripeAccount;
-    this.isIntegratedWithPagarme = !!this.pagarmeAccount;
+    this.isIntegratedWithPix = !!this.pagarmeAccount;
   }
 
   createdApp({ createdBy }: { createdBy: string }) {

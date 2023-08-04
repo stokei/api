@@ -4,6 +4,7 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhere,
+  cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IWhere,
@@ -31,6 +32,8 @@ export class PaymentMethodMapper {
         return {
           id: prismaMapper.toWhereIds(operatorData.ids),
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
+          active: prismaMapper.toWhereData(operatorData.active),
+          paymentMethodType: operatorData.paymentMethodType,
           app: prismaMapper.toWhereData(operatorData.app),
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
           createdBy: prismaMapper.toWhereData(operatorData.createdBy)
@@ -61,6 +64,8 @@ export class PaymentMethodMapper {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),
             cardBrand: cleanWhereDataString(operatorData.cardBrand),
+            active: cleanWhereDataBoolean(operatorData.active),
+            paymentMethodType: operatorData.paymentMethodType,
             app: cleanWhereDataString(operatorData.app),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),

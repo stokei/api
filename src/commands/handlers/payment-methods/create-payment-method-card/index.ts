@@ -1,7 +1,8 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
-import { CreatePaymentMethodCommand } from '@/commands/implements/payment-methods/create-payment-method.command';
+import { CreatePaymentMethodCardCommand } from '@/commands/implements/payment-methods/create-payment-method-card.command';
+import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import {
   AccountNotFoundException,
   AppNotFoundException,
@@ -10,7 +11,7 @@ import {
   PaymentMethodAlreadyExistsException,
   PaymentMethodNotFoundException
 } from '@/errors';
-import { CreatePaymentMethodRepository } from '@/repositories/payment-methods/create-payment-method';
+import { CreatePaymentMethodCardRepository } from '@/repositories/payment-methods/create-payment-method-card';
 import { ExistsPaymentMethodsRepository } from '@/repositories/payment-methods/exists-payment-methods';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
@@ -18,16 +19,16 @@ import { AttachStripePaymentMethodToCustomerService } from '@/services/stripe/at
 import { FindStripeCustomerByIdService } from '@/services/stripe/find-customer-by-id';
 import { FindStripePaymentMethodByIdService } from '@/services/stripe/find-payment-method-by-id';
 
-type CreatePaymentMethodCommandKeys = keyof CreatePaymentMethodCommand;
+type CreatePaymentMethodCardCommandKeys = keyof CreatePaymentMethodCardCommand;
 
-@CommandHandler(CreatePaymentMethodCommand)
-export class CreatePaymentMethodCommandHandler
-  implements ICommandHandler<CreatePaymentMethodCommand>
+@CommandHandler(CreatePaymentMethodCardCommand)
+export class CreatePaymentMethodCardCommandHandler
+  implements ICommandHandler<CreatePaymentMethodCardCommand>
 {
   constructor(
     private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly createPaymentMethodRepository: CreatePaymentMethodRepository,
+    private readonly createPaymentMethodRepository: CreatePaymentMethodCardRepository,
     private readonly existsPaymentMethodsRepository: ExistsPaymentMethodsRepository,
     private readonly findStripePaymentMethodByIdService: FindStripePaymentMethodByIdService,
     private readonly findStripeCustomerByIdService: FindStripeCustomerByIdService,
@@ -35,18 +36,18 @@ export class CreatePaymentMethodCommandHandler
     private readonly publisher: EventPublisher
   ) {}
 
-  async execute(command: CreatePaymentMethodCommand) {
+  async execute(command: CreatePaymentMethodCardCommand) {
     const data = this.clearData(command);
     if (!data) {
       throw new DataNotFoundException();
     }
     if (!data?.parent) {
-      throw new ParamNotFoundException<CreatePaymentMethodCommandKeys>(
+      throw new ParamNotFoundException<CreatePaymentMethodCardCommandKeys>(
         'parent'
       );
     }
     if (!data?.stripePaymentMethod) {
-      throw new ParamNotFoundException<CreatePaymentMethodCommandKeys>(
+      throw new ParamNotFoundException<CreatePaymentMethodCardCommandKeys>(
         'stripePaymentMethod'
       );
     }
@@ -100,6 +101,7 @@ export class CreatePaymentMethodCommandHandler
           cardBrand,
           cardExpiryMonth,
           cardExpiryYear,
+          paymentMethodType: PaymentMethodType.CARD,
           ...(data.stripePaymentMethod && {
             stripePaymentMethod: data.stripePaymentMethod
           })
@@ -119,6 +121,7 @@ export class CreatePaymentMethodCommandHandler
     const paymentMethodCreated =
       await this.createPaymentMethodRepository.execute({
         ...data,
+        paymentMethodType: PaymentMethodType.PIX,
         lastFourCardNumber,
         cardBrand,
         cardExpiryMonth,
@@ -139,8 +142,8 @@ export class CreatePaymentMethodCommandHandler
   }
 
   private clearData(
-    command: CreatePaymentMethodCommand
-  ): CreatePaymentMethodCommand {
+    command: CreatePaymentMethodCardCommand
+  ): CreatePaymentMethodCardCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),

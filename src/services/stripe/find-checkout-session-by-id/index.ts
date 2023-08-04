@@ -16,7 +16,13 @@ export class FindStripeCheckoutSessionByIdService
     return stripeClient.checkout.sessions.retrieve(
       checkoutSession,
       {
-        expand: ['line_items', 'subscription', 'payment_intent', 'customer']
+        expand: [
+          'line_items',
+          'subscription',
+          'payment_intent',
+          'customer',
+          'payment_intent.payment_method'
+        ]
       },
       {
         stripeAccount

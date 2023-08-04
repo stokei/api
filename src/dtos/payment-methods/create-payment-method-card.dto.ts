@@ -1,4 +1,4 @@
-export interface CreatePaymentMethodDTO {
+export interface CreatePaymentMethodCardDTO {
   parent: string;
   stripePaymentMethod: string;
   app: string;

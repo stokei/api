@@ -4,7 +4,7 @@ autoCloseIssue: true
 copyIssueLabelsToPR: true
 copyIssueAssigneeToPR: true
 commentMessage: 'Branch ${branchName} created for issue: ${issue.title}'
-branchName: '${issue.number}-${issue.title[0,64],}'
+branchName: short
 branches:
   - label: 'TYPE: HOTFIX'
     prefix: hotfix/

@@ -1,5 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
+import { PaymentMethodType } from '@/controllers/graphql/enums/payment-method-type.enum';
+
 import { Account } from './account';
 import { App } from './app';
 
@@ -25,6 +27,9 @@ export class PaymentMethod {
 
   @Field(() => String, { nullable: true })
   cardExpiryYear?: string;
+
+  @Field(() => PaymentMethodType, { nullable: true })
+  type?: PaymentMethodType;
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;

@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PaymentMethodCreatedEvent } from '@/events/implements/payment-methods/payment-method-created.event';
 import { PaymentMethodRemovedEvent } from '@/events/implements/payment-methods/payment-method-removed.event';
@@ -10,6 +11,7 @@ export interface IPaymentMethodModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly stripePaymentMethod: string;
+  readonly paymentMethodType?: PaymentMethodType;
   readonly lastFourCardNumber?: string;
   readonly cardExpiryMonth?: string;
   readonly cardExpiryYear?: string;
@@ -24,6 +26,7 @@ export interface IPaymentMethodModelData {
 export class PaymentMethodModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
+  readonly type?: PaymentMethodType;
   readonly stripePaymentMethod: string;
   readonly lastFourCardNumber?: string;
   readonly cardExpiryMonth?: string;
@@ -42,6 +45,7 @@ export class PaymentMethodModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
+    this.type = data.paymentMethodType;
     this.stripePaymentMethod = data.stripePaymentMethod;
     this.lastFourCardNumber = data.lastFourCardNumber;
     this.cardExpiryMonth = data.cardExpiryMonth;

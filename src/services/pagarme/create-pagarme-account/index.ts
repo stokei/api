@@ -27,7 +27,7 @@ export class CreatePagarmeAccountService
         type: data?.documentType,
         code: data?.app,
         default_bank_account: {
-          type: 'savings',
+          type: data?.defaultBankAccount?.bankAccountType,
           holder_document: data?.defaultBankAccount?.holderDocument,
           holder_type: data?.defaultBankAccount?.holderType,
           account_number: data?.defaultBankAccount?.accountNumber,
@@ -39,7 +39,8 @@ export class CreatePagarmeAccountService
         },
         transfer_settings: {
           transfer_enabled: true,
-          transfer_interval: 'Daily'
+          transfer_interval: 'Daily',
+          transfer_day: 0
         }
       })
     );

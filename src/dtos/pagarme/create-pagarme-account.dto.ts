@@ -1,6 +1,8 @@
 import { PagarmeAccountType } from '@/enums/pagarme-account-type.enum';
+import { PagarmeBankAccountType } from '@/enums/pagarme-bank-account-type.enum';
 
 export interface CreatePagarmeAccountBankAccountDTO {
+  bankAccountType: PagarmeBankAccountType;
   holderType: PagarmeAccountType;
   holderDocument: string;
   accountNumber: string;

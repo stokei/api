@@ -91,10 +91,15 @@ export class CreateAppPagarmeAccountCommandHandler
     return cleanObject({
       app: cleanValue(command?.app),
       document: cleanValue(command?.document),
-      documentType: cleanValue(command?.documentType),
+      documentType: cleanValue(command?.documentType)?.toLowerCase(),
       createdBy: cleanValue(command?.createdBy),
       defaultBankAccount: command?.defaultBankAccount && {
-        holderType: cleanValue(command?.defaultBankAccount?.holderType),
+        bankAccountType: cleanValue(
+          command?.defaultBankAccount?.bankAccountType
+        )?.toLowerCase(),
+        holderType: cleanValue(
+          command?.defaultBankAccount?.holderType
+        )?.toLowerCase(),
         holderDocument: cleanValue(command?.defaultBankAccount?.holderDocument),
         accountNumber: cleanValue(command?.defaultBankAccount?.accountNumber),
         accountCheckDigit: cleanValue(

@@ -105,11 +105,11 @@ export class CreatePagarmeCheckoutCommandHandler
       throw new SubscriptionContractAlreadyActiveException();
     }
 
-    const priceRecurring = await this.findRecurringByIdService.execute(
-      price.recurring
-    );
     let recurring: RecurringModel;
-    if (priceRecurring) {
+    if (price.recurring) {
+      const priceRecurring = await this.findRecurringByIdService.execute(
+        price.recurring
+      );
       recurring = await this.createRecurringService.execute({
         app: customerApp.id,
         interval: priceRecurring?.interval,

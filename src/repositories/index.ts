@@ -18,7 +18,10 @@ import { InvoicesRepositories } from './invoices';
 import { LanguagesRepositories } from './languages';
 import { MaterialsRepositories } from './materials';
 import { ModulesRepositories } from './modules';
+import { OrderItemsRepositories } from './order-items';
+import { OrdersRepositories } from './orders';
 import { PaymentMethodsRepositories } from './payment-methods';
+import { PaymentsRepositories } from './payments';
 import { PhonesRepositories } from './phones';
 import { PlansRepositories } from './plans';
 import { PriceTiersRepositories } from './price-tiers';
@@ -69,5 +72,8 @@ export const Repositories = [
   ...HerosRepositories,
   ...SortedItemsRepositories,
   ...VideoViewsRepositories,
-  ...MaterialsRepositories
+  ...MaterialsRepositories,
+  ...OrdersRepositories,
+  ...OrderItemsRepositories,
+  ...PaymentsRepositories
 ];

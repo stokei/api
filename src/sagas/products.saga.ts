@@ -30,16 +30,18 @@ export class ProductsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
-        if (!!event.catalog) {
-          commands.push(
-            new CreateCatalogItemCommand({
-              product: event.product.id,
-              app: event.product.app,
-              catalog: event.catalog,
-              createdBy: event.createdBy
-            })
+        let commands: ICommand[] = [];
+        if (!!event.catalogs?.length) {
+          const catalogsCommands = event.catalogs?.map(
+            (catalog) =>
+              new CreateCatalogItemCommand({
+                product: event.product.id,
+                app: event.product.app,
+                catalog: catalog,
+                createdBy: event.createdBy
+              })
           );
+          commands = [...commands, ...catalogsCommands];
         }
         return commands;
       }),

@@ -18,7 +18,10 @@ import { InvoiceEventsHandlers } from './invoices';
 import { LanguageEventsHandlers } from './languages';
 import { MaterialEventsHandlers } from './materials';
 import { ModuleEventsHandlers } from './modules';
+import { OrderItemEventsHandlers } from './order-items';
+import { OrderEventsHandlers } from './orders';
 import { PaymentMethodEventsHandlers } from './payment-methods';
+import { PaymentEventsHandlers } from './payments';
 import { PhoneEventsHandlers } from './phones';
 import { PlanEventsHandlers } from './plans';
 import { PriceTierEventsHandlers } from './price-tiers';
@@ -69,5 +72,8 @@ export const EventsHandlers = [
   ...HeroEventsHandlers,
   ...SortedItemEventsHandlers,
   ...VideoViewEventsHandlers,
-  ...MaterialEventsHandlers
+  ...MaterialEventsHandlers,
+  ...PaymentEventsHandlers,
+  ...OrderEventsHandlers,
+  ...OrderItemEventsHandlers
 ];

@@ -21,7 +21,10 @@ import { InvoiceCommandHandlers } from './invoices';
 import { LanguageCommandHandlers } from './languages';
 import { MaterialCommandHandlers } from './materials';
 import { ModuleCommandHandlers } from './modules';
+import { OrderItemCommandHandlers } from './order-items';
+import { OrderCommandHandlers } from './orders';
 import { PaymentMethodCommandHandlers } from './payment-methods';
+import { PaymentCommandHandlers } from './payments';
 import { PhoneCommandHandlers } from './phones';
 import { PlanCommandHandlers } from './plans';
 import { PriceTierCommandHandlers } from './price-tiers';
@@ -75,5 +78,8 @@ export const CommandHandlers = [
   ...SortedItemCommandHandlers,
   ...EmailCommandHandlers,
   ...MaterialCommandHandlers,
-  ...VideoViewCommandHandlers
+  ...VideoViewCommandHandlers,
+  ...OrderCommandHandlers,
+  ...OrderItemCommandHandlers,
+  ...PaymentCommandHandlers
 ];

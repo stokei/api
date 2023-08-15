@@ -20,7 +20,9 @@ import { InvoicesMutations } from './invoices';
 import { LanguagesMutations } from './languages';
 import { MaterialsMutations } from './materials';
 import { ModulesMutations } from './modules';
+import { OrdersMutations } from './orders';
 import { PaymentMethodsMutations } from './payment-methods';
+import { PaymentsMutations } from './payments';
 import { PhonesMutations } from './phones';
 import { PlansMutations } from './plans';
 import { PricesMutations } from './prices';
@@ -63,5 +65,7 @@ export const Mutations = [
   ...HerosMutations,
   ...SortedItemsMutations,
   ...VideoViewsMutations,
-  ...MaterialsMutations
+  ...MaterialsMutations,
+  ...OrdersMutations,
+  ...PaymentsMutations
 ];

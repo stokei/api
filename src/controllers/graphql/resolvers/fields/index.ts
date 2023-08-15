@@ -19,7 +19,10 @@ import { InvoicesFieldsResolvers } from './invoices';
 import { LanguagesFieldsResolvers } from './languages';
 import { MaterialsFieldsResolvers } from './materials';
 import { ModulesFieldsResolvers } from './modules';
+import { OrderItemsFieldsResolvers } from './order-items';
+import { OrdersFieldsResolvers } from './orders';
 import { PaymentMethodsFieldsResolvers } from './payment-methods';
+import { PaymentsFieldsResolvers } from './payments';
 import { PhonesFieldsResolvers } from './phones';
 import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
@@ -65,5 +68,8 @@ export const FieldsResolvers = [
   ...VideoViewsFieldsResolvers,
   ...MaterialsFieldsResolvers,
   ...BillingItemsFieldsResolvers,
-  ...BillingFieldsResolvers
+  ...BillingFieldsResolvers,
+  ...OrderItemsFieldsResolvers,
+  ...OrdersFieldsResolvers,
+  ...PaymentsFieldsResolvers
 ];

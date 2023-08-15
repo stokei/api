@@ -23,8 +23,11 @@ import { InvoiceServices } from './invoices';
 import { LanguageServices } from './languages';
 import { MaterialServices } from './materials';
 import { ModuleServices } from './modules';
+import { OrderItemServices } from './order-items';
+import { OrderServices } from './orders';
 import { PagarmeServices } from './pagarme';
 import { PaymentMethodServices } from './payment-methods';
+import { PaymentServices } from './payments';
 import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
 import { PriceTierServices } from './price-tiers';
@@ -91,5 +94,8 @@ export const Services = [
   ...VercelServices,
   ...MaterialServices,
   ...VideoViewServices,
-  ...PagarmeServices
+  ...PagarmeServices,
+  ...OrderItemServices,
+  ...OrderServices,
+  ...PaymentServices
 ];

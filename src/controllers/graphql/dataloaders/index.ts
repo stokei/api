@@ -18,7 +18,10 @@ import { InvoicesLoader } from './invoices.loader';
 import { LanguagesLoader } from './languages.loader';
 import { MaterialsLoader } from './materials.loader';
 import { ModulesLoader } from './modules.loader';
+import { OrderItemsLoader } from './order-items.loader';
+import { OrdersLoader } from './orders.loader';
 import { PaymentMethodsLoader } from './payment-methods.loader';
+import { PaymentsLoader } from './payments.loader';
 import { PhonesLoader } from './phones.loader';
 import { PlansLoader } from './plans.loader';
 import { PricesLoader } from './prices.loader';
@@ -63,5 +66,8 @@ export const Loaders = [
   HerosLoader,
   SortedItemsLoader,
   SubscriptionContractItemsLoader,
-  MaterialsLoader
+  MaterialsLoader,
+  OrdersLoader,
+  OrderItemsLoader,
+  PaymentsLoader
 ];

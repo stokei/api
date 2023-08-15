@@ -18,7 +18,9 @@ import { InvoiceQueriesHandlers } from './invoices';
 import { LanguageQueriesHandlers } from './languages';
 import { MaterialQueriesHandlers } from './materials';
 import { ModuleQueriesHandlers } from './modules';
+import { OrderQueriesHandlers } from './orders';
 import { PaymentMethodQueriesHandlers } from './payment-methods';
+import { PaymentQueriesHandlers } from './payments';
 import { PhoneQueriesHandlers } from './phones';
 import { PlanQueriesHandlers } from './plans';
 import { PriceTierQueriesHandlers } from './price-tiers';
@@ -69,5 +71,7 @@ export const QueriesHandlers = [
   ...HeroQueriesHandlers,
   ...SortedItemQueriesHandlers,
   ...VideoViewQueriesHandlers,
-  ...MaterialQueriesHandlers
+  ...MaterialQueriesHandlers,
+  ...OrderQueriesHandlers,
+  ...PaymentQueriesHandlers
 ];

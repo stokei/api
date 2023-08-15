@@ -18,7 +18,10 @@ import { InvoicesQueries } from './invoices';
 import { LanguagesQueries } from './languages';
 import { MaterialsQueries } from './materials';
 import { ModulesQueries } from './modules';
+import { OrderItemsQueries } from './order-items';
+import { OrdersQueries } from './orders';
 import { PaymentMethodsQueries } from './payment-methods';
+import { PaymentsQueries } from './payments';
 import { PhonesQueries } from './phones';
 import { PlansQueries } from './plans';
 import { PricesQueries } from './prices';
@@ -59,5 +62,8 @@ export const Queries = [
   ...SortedItemsQueries,
   ...MaterialsQueries,
   ...SubscriptionContractItemsQueries,
-  ...BillingQueries
+  ...BillingQueries,
+  ...OrdersQueries,
+  ...OrderItemsQueries,
+  ...PaymentsQueries
 ];

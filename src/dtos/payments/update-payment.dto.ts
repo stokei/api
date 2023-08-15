@@ -1,7 +1,10 @@
 export interface UpdatePaymentDataDTO {
   updatedBy: string;
-  name?: string;
-  description?: string;
+  paymentMethod?: string;
+  stripeCheckoutSession?: string;
+  feeAmount?: number;
+  totalAmount?: number;
+  subtotalAmount?: number;
 }
 
 export interface UpdatePaymentWhereDTO {

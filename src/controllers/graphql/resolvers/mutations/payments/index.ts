@@ -1,3 +1,1 @@
-import { CreatePaymentResolver } from './create-payment';
-
-export const PaymentsMutations = [CreatePaymentResolver];
+export const PaymentsMutations = [];

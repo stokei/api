@@ -3,17 +3,21 @@ import { ICommand } from '@nestjs/cqrs';
 import { CreateOrderDTO } from '@/dtos/orders/create-order.dto';
 
 export class CreateOrderCommand implements ICommand, CreateOrderDTO {
-  name: string;
   parent: string;
-  description?: string;
   app: string;
+  currency: string;
+  paidAmount: number;
+  totalAmount: number;
+  subtotalAmount: number;
   createdBy: string;
 
   constructor(data: CreateOrderDTO) {
-    this.name = data.name;
     this.parent = data.parent;
-    this.description = data.description;
     this.app = data.app;
+    this.currency = data.currency;
+    this.paidAmount = data.paidAmount;
+    this.totalAmount = data.totalAmount;
+    this.subtotalAmount = data.subtotalAmount;
     this.createdBy = data.createdBy;
   }
 }

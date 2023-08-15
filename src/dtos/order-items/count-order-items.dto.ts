@@ -4,8 +4,10 @@ export interface CountOrderItemsWhereDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
-  name?: IWhereDataSearch;
-  description?: IWhereDataSearch;
+  product?: IWhereDataSearch;
+  quantity?: IWhereData<number>;
+  price?: IWhereData;
+  recurring?: IWhereData;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

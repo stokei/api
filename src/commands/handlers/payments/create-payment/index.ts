@@ -1,13 +1,16 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreatePaymentCommand } from '@/commands/implements/payments/create-payment.command';
+import { PaymentStatus } from '@/enums/payment-status.enum';
+import { APPLICATION_FEE_PERCENT } from '@/environments';
 import {
   DataNotFoundException,
-  PaymentNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PaymentNotFoundException
 } from '@/errors';
 import { CreatePaymentRepository } from '@/repositories/payments/create-payment';
+import { getFeeAmount } from '@/utils/get-fee-amount';
 
 type CreatePaymentCommandKeys = keyof CreatePaymentCommand;
 
@@ -29,7 +32,15 @@ export class CreatePaymentCommandHandler
       throw new ParamNotFoundException<CreatePaymentCommandKeys>('parent');
     }
 
-    const paymentCreated = await this.createPaymentRepository.execute(data);
+    const paymentCreated = await this.createPaymentRepository.execute({
+      ...data,
+      feeAmount: getFeeAmount({
+        amount: data.totalAmount,
+        feePercentage: APPLICATION_FEE_PERCENT
+      }),
+      status: PaymentStatus.PENDING,
+      active: true
+    });
     if (!paymentCreated) {
       throw new PaymentNotFoundException();
     }
@@ -45,10 +56,13 @@ export class CreatePaymentCommandHandler
   private clearData(command: CreatePaymentCommand): CreatePaymentCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
+      parent: cleanValue(command?.parent),
       app: cleanValue(command?.app),
-      name: cleanValue(command?.name),
-      description: cleanValue(command?.description),
-      parent: cleanValue(command?.parent)
+      currency: cleanValue(command?.currency),
+      paymentMethod: cleanValue(command?.paymentMethod),
+      stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),
+      totalAmount: cleanValueNumber(command?.totalAmount),
+      subtotalAmount: cleanValueNumber(command?.subtotalAmount)
     });
   }
 }

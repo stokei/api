@@ -1,7 +1,10 @@
 export interface CreatePaymentDTO {
-  name: string;
-  description?: string;
   parent: string;
+  currency: string;
+  paymentMethod?: string;
+  stripeCheckoutSession?: string;
+  totalAmount: number;
+  subtotalAmount: number;
   app: string;
   createdBy: string;
 }

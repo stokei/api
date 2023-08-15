@@ -5,12 +5,16 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
+import { PaymentStatus } from '@/enums/payment-status.enum';
+
 export interface WhereDataFindAllPaymentsDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
-  name?: IWhereDataSearch;
-  description?: IWhereDataSearch;
+  currency?: IWhereData;
+  status?: PaymentStatus;
+  paymentMethod?: IWhereData;
+  active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -18,7 +22,13 @@ export type IKeysWhereDataFindAllPaymentsDTO =
   keyof WhereDataFindAllPaymentsDTO;
 
 export interface OrderByDataFindAllPaymentsDTO {
-  name?: IOrderBy;
+  currency?: IOrderBy;
+  status?: IOrderBy;
+  paymentMethod?: IOrderBy;
+  totalAmount?: IOrderBy;
+  subtotalAmount?: IOrderBy;
+  feeAmount?: IOrderBy;
+  active?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

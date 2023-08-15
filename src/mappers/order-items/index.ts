@@ -30,8 +30,9 @@ export class OrderItemMapper {
       operatorMapper(operatorData) {
         return {
           id: prismaMapper.toWhereIds(operatorData.ids),
-          name: prismaMapper.toWhereDataSearch(operatorData.name),
-          description: prismaMapper.toWhereDataSearch(operatorData.description),
+          product: prismaMapper.toWhereDataSearch(operatorData.product),
+          price: prismaMapper.toWhereData(operatorData.price),
+          recurring: prismaMapper.toWhereData(operatorData.recurring),
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
           app: prismaMapper.toWhereData(operatorData.app),
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
@@ -60,8 +61,9 @@ export class OrderItemMapper {
         operatorMapper(operatorData) {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),
-            name: cleanWhereDataSearch(operatorData.name),
-            description: cleanWhereDataSearch(operatorData.description),
+            product: cleanWhereDataSearch(operatorData.product),
+            price: cleanWhereDataString(operatorData.price),
+            recurring: cleanWhereDataString(operatorData.recurring),
             app: cleanWhereDataString(operatorData.app),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -79,7 +81,9 @@ export class OrderItemMapper {
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        name: cleanSortValue(query.orderBy?.name),
+        quantity: cleanSortValue(query.orderBy?.quantity),
+        totalAmount: cleanSortValue(query.orderBy?.totalAmount),
+        subtotalAmount: cleanSortValue(query.orderBy?.subtotalAmount),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

@@ -4,6 +4,7 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhere,
+  cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IWhere,
@@ -30,8 +31,10 @@ export class PaymentMapper {
       operatorMapper(operatorData) {
         return {
           id: prismaMapper.toWhereIds(operatorData.ids),
-          name: prismaMapper.toWhereDataSearch(operatorData.name),
-          description: prismaMapper.toWhereDataSearch(operatorData.description),
+          currency: prismaMapper.toWhereData(operatorData.currency),
+          status: operatorData.status,
+          paymentMethod: prismaMapper.toWhereData(operatorData.paymentMethod),
+          active: prismaMapper.toWhereData(operatorData.active),
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
           app: prismaMapper.toWhereData(operatorData.app),
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
@@ -60,8 +63,10 @@ export class PaymentMapper {
         operatorMapper(operatorData) {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),
-            name: cleanWhereDataSearch(operatorData.name),
-            description: cleanWhereDataSearch(operatorData.description),
+            currency: cleanWhereDataString(operatorData.currency),
+            status: operatorData.status,
+            paymentMethod: cleanWhereDataString(operatorData.paymentMethod),
+            active: cleanWhereDataBoolean(operatorData.active),
             app: cleanWhereDataString(operatorData.app),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -79,7 +84,13 @@ export class PaymentMapper {
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
-        name: cleanSortValue(query.orderBy?.name),
+        currency: cleanSortValue(query.orderBy?.currency),
+        status: cleanSortValue(query.orderBy?.status),
+        paymentMethod: cleanSortValue(query.orderBy?.paymentMethod),
+        totalAmount: cleanSortValue(query.orderBy?.totalAmount),
+        subtotalAmount: cleanSortValue(query.orderBy?.subtotalAmount),
+        feeAmount: cleanSortValue(query.orderBy?.feeAmount),
+        active: cleanSortValue(query.orderBy?.active),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

@@ -5,19 +5,28 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
+import { OrderStatus } from '@/enums/order-status.enum';
+
 export interface WhereDataFindAllOrdersDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
-  name?: IWhereDataSearch;
-  description?: IWhereDataSearch;
+  currency?: IWhereData;
+  status?: OrderStatus;
+  active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
 export type IKeysWhereDataFindAllOrdersDTO = keyof WhereDataFindAllOrdersDTO;
 
 export interface OrderByDataFindAllOrdersDTO {
-  name?: IOrderBy;
+  currency?: IOrderBy;
+  status?: IOrderBy;
+  paidAmount?: IOrderBy;
+  totalAmount?: IOrderBy;
+  subtotalAmount?: IOrderBy;
+  feeAmount?: IOrderBy;
+  active?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

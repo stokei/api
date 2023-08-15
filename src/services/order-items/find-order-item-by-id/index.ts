@@ -3,7 +3,7 @@ import { QueryBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
 
 import { OrderItemModel } from '@/models/order-item.model';
-import { FindOrderItemByIdQuery } from '@/queries/implements/order-items/find-orderItem-by-id.query';
+import { FindOrderItemByIdQuery } from '@/queries/implements/order-items/find-order-item-by-id.query';
 
 @Injectable()
 export class FindOrderItemByIdService

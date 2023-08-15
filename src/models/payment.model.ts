@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { PaymentStatus } from '@/enums/payment-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PaymentCreatedEvent } from '@/events/implements/payments/payment-created.event';
 import { PaymentRemovedEvent } from '@/events/implements/payments/payment-removed.event';
@@ -10,8 +11,14 @@ export interface IPaymentModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
-  readonly name: string;
-  readonly description?: string;
+  readonly currency: string;
+  readonly status: PaymentStatus;
+  readonly paymentMethod?: string;
+  readonly stripeCheckoutSession?: string;
+  readonly totalAmount: number;
+  readonly subtotalAmount: number;
+  readonly feeAmount: number;
+  readonly active: boolean;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly app: string;
@@ -22,8 +29,14 @@ export interface IPaymentModelData {
 export class PaymentModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly name: string;
-  readonly description?: string;
+  readonly currency: string;
+  readonly status: PaymentStatus;
+  readonly paymentMethod?: string;
+  readonly stripeCheckoutSession?: string;
+  readonly totalAmount: number;
+  readonly subtotalAmount: number;
+  readonly feeAmount: number;
+  readonly active: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly app: string;
@@ -33,12 +46,18 @@ export class PaymentModel extends AggregateRoot {
     super();
 
     this.id = createServiceId({
-      service: ServerStokeiApiIdPrefix.MODULES,
+      service: ServerStokeiApiIdPrefix.PAYMENTS,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
-    this.name = data.name;
-    this.description = data.description;
+    this.currency = data.currency;
+    this.status = data.status;
+    this.paymentMethod = data.paymentMethod;
+    this.stripeCheckoutSession = data.stripeCheckoutSession;
+    this.totalAmount = data.totalAmount;
+    this.subtotalAmount = data.subtotalAmount;
+    this.feeAmount = data.feeAmount;
+    this.active = data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;

@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { OrderStatus } from '@/enums/order-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { OrderCreatedEvent } from '@/events/implements/orders/order-created.event';
 import { OrderRemovedEvent } from '@/events/implements/orders/order-removed.event';
@@ -10,8 +11,13 @@ export interface IOrderModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
-  readonly name: string;
-  readonly description?: string;
+  readonly currency: string;
+  readonly status: OrderStatus;
+  readonly paidAmount: number;
+  readonly totalAmount: number;
+  readonly subtotalAmount: number;
+  readonly feeAmount: number;
+  readonly active: boolean;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly app: string;
@@ -22,8 +28,13 @@ export interface IOrderModelData {
 export class OrderModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
-  readonly name: string;
-  readonly description?: string;
+  readonly currency: string;
+  readonly status: OrderStatus;
+  readonly paidAmount: number;
+  readonly totalAmount: number;
+  readonly subtotalAmount: number;
+  readonly feeAmount: number;
+  readonly active: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly app: string;
@@ -33,12 +44,17 @@ export class OrderModel extends AggregateRoot {
     super();
 
     this.id = createServiceId({
-      service: ServerStokeiApiIdPrefix.MODULES,
+      service: ServerStokeiApiIdPrefix.ORDERS,
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
-    this.name = data.name;
-    this.description = data.description;
+    this.currency = data.currency;
+    this.status = data.status || OrderStatus.PENDING;
+    this.paidAmount = data.paidAmount;
+    this.totalAmount = data.totalAmount;
+    this.subtotalAmount = data.subtotalAmount;
+    this.feeAmount = data.feeAmount;
+    this.active = data.active;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;

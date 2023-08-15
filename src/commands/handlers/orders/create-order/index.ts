@@ -1,13 +1,16 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateOrderCommand } from '@/commands/implements/orders/create-order.command';
+import { OrderStatus } from '@/enums/order-status.enum';
+import { APPLICATION_FEE_PERCENT } from '@/environments';
 import {
   DataNotFoundException,
   OrderNotFoundException,
   ParamNotFoundException
 } from '@/errors';
 import { CreateOrderRepository } from '@/repositories/orders/create-order';
+import { getFeeAmount } from '@/utils/get-fee-amount';
 
 type CreateOrderCommandKeys = keyof CreateOrderCommand;
 
@@ -29,7 +32,15 @@ export class CreateOrderCommandHandler
       throw new ParamNotFoundException<CreateOrderCommandKeys>('parent');
     }
 
-    const orderCreated = await this.createOrderRepository.execute(data);
+    const orderCreated = await this.createOrderRepository.execute({
+      ...data,
+      feeAmount: getFeeAmount({
+        amount: data.totalAmount,
+        feePercentage: APPLICATION_FEE_PERCENT
+      }),
+      status: OrderStatus.PENDING,
+      active: true
+    });
     if (!orderCreated) {
       throw new OrderNotFoundException();
     }
@@ -46,8 +57,10 @@ export class CreateOrderCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
-      name: cleanValue(command?.name),
-      description: cleanValue(command?.description),
+      currency: cleanValue(command?.currency),
+      paidAmount: cleanValueNumber(command?.paidAmount),
+      totalAmount: cleanValueNumber(command?.totalAmount),
+      subtotalAmount: cleanValueNumber(command?.subtotalAmount),
       parent: cleanValue(command?.parent)
     });
   }

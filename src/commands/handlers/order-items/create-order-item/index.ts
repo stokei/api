@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateOrderItemCommand } from '@/commands/implements/order-items/create-order-item.command';
 import {
@@ -44,11 +44,15 @@ export class CreateOrderItemCommandHandler
 
   private clearData(command: CreateOrderItemCommand): CreateOrderItemCommand {
     return cleanObject({
-      createdBy: cleanValue(command?.createdBy),
+      parent: cleanValue(command?.parent),
       app: cleanValue(command?.app),
-      name: cleanValue(command?.name),
-      description: cleanValue(command?.description),
-      parent: cleanValue(command?.parent)
+      product: cleanValue(command?.product),
+      quantity: cleanValueNumber(command?.quantity),
+      price: cleanValue(command?.price),
+      totalAmount: cleanValueNumber(command?.totalAmount),
+      subtotalAmount: cleanValueNumber(command?.subtotalAmount),
+      recurring: cleanValue(command?.recurring),
+      createdBy: cleanValue(command?.createdBy)
     });
   }
 }

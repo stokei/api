@@ -13,8 +13,9 @@ export interface IOrderItemModelData {
   readonly parent: string;
   readonly product: string;
   readonly quantity: number;
-  readonly price: string;
-  readonly stripeSubscriptionItem?: string;
+  readonly price?: string;
+  readonly totalAmount: number;
+  readonly subtotalAmount: number;
   readonly recurring?: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
@@ -28,8 +29,9 @@ export class OrderItemModel extends AggregateRoot {
   readonly parent: string;
   readonly product: string;
   readonly quantity: number;
-  readonly price: string;
-  readonly stripeSubscriptionItem?: string;
+  readonly price?: string;
+  readonly totalAmount: number;
+  readonly subtotalAmount: number;
   readonly recurring?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
@@ -39,7 +41,7 @@ export class OrderItemModel extends AggregateRoot {
     super();
 
     this.id = createServiceId({
-      service: ServerStokeiApiIdPrefix.SUBSCRIPTION_CONTRACT_ITEMS,
+      service: ServerStokeiApiIdPrefix.ORDER_ITEMS,
       id: data._id?.toString() || data.id
     });
     this.app = data.app;
@@ -47,7 +49,8 @@ export class OrderItemModel extends AggregateRoot {
     this.product = data.product;
     this.quantity = data.quantity;
     this.price = data.price;
-    this.stripeSubscriptionItem = data.stripeSubscriptionItem;
+    this.totalAmount = data.totalAmount;
+    this.subtotalAmount = data.subtotalAmount;
     this.recurring = data.recurring;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);

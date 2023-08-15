@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueNumber,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { UpdateOrderCommand } from '@/commands/implements/orders/update-order.command';
 import {
@@ -66,8 +71,10 @@ export class UpdateOrderCommandHandler
         order: cleanValue(command?.where?.order)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name),
-        description: cleanValue(command?.data?.description),
+        paidAmount: cleanValueNumber(command?.data?.paidAmount),
+        totalAmount: cleanValueNumber(command?.data?.totalAmount),
+        subtotalAmount: cleanValueNumber(command?.data?.subtotalAmount),
+        feeAmount: cleanValueNumber(command?.data?.feeAmount),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

@@ -1,11 +1,16 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueNumber,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { UpdatePaymentCommand } from '@/commands/implements/payments/update-payment.command';
 import {
   DataNotFoundException,
-  PaymentNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PaymentNotFoundException
 } from '@/errors';
 import { FindPaymentByIdRepository } from '@/repositories/payments/find-payment-by-id';
 import { UpdatePaymentRepository } from '@/repositories/payments/update-payment';
@@ -68,8 +73,11 @@ export class UpdatePaymentCommandHandler
         payment: cleanValue(command?.where?.payment)
       }),
       data: cleanObject({
-        name: cleanValue(command?.data?.name),
-        description: cleanValue(command?.data?.description),
+        paymentMethod: cleanValue(command?.data?.paymentMethod),
+        stripeCheckoutSession: cleanValue(command?.data?.stripeCheckoutSession),
+        feeAmount: cleanValueNumber(command?.data?.feeAmount),
+        totalAmount: cleanValueNumber(command?.data?.totalAmount),
+        subtotalAmount: cleanValueNumber(command?.data?.subtotalAmount),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

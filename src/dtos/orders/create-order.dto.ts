@@ -1,7 +1,9 @@
 export interface CreateOrderDTO {
-  name: string;
-  description?: string;
   parent: string;
   app: string;
+  currency: string;
+  paidAmount: number;
+  totalAmount: number;
+  subtotalAmount: number;
   createdBy: string;
 }

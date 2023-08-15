@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { IBaseService } from '@stokei/nestjs';
 
-import { CreateOrderItemCommand } from '@/commands/implements/order-items/create-orderItem.command';
-import { CreateOrderItemDTO } from '@/dtos/order-items/create-orderItem.dto';
+import { CreateOrderItemCommand } from '@/commands/implements/order-items/create-order-item.command';
+import { CreateOrderItemDTO } from '@/dtos/order-items/create-order-item.dto';
 import { OrderItemModel } from '@/models/order-item.model';
 
 @Injectable()

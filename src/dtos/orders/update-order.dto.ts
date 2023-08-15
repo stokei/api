@@ -1,7 +1,9 @@
 export interface UpdateOrderDataDTO {
   updatedBy: string;
-  name?: string;
-  description?: string;
+  paidAmount?: number;
+  totalAmount?: number;
+  subtotalAmount?: number;
+  feeAmount?: number;
 }
 
 export interface UpdateOrderWhereDTO {

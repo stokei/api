@@ -7,7 +7,7 @@ export class ChangeInvoiceToPaymentErrorCommand
 {
   app: string;
   invoice: string;
-  invoiceUrl: string;
+  invoiceUrl?: string;
   paymentMethod: string;
   updatedBy: string;
 

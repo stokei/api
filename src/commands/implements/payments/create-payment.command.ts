@@ -4,6 +4,7 @@ import { CreatePaymentDTO } from '@/dtos/payments/create-payment.dto';
 
 export class CreatePaymentCommand implements ICommand, CreatePaymentDTO {
   parent: string;
+  payer: string;
   currency: string;
   paymentMethod?: string;
   stripeCheckoutSession?: string;
@@ -14,6 +15,7 @@ export class CreatePaymentCommand implements ICommand, CreatePaymentDTO {
 
   constructor(data: CreatePaymentDTO) {
     this.parent = data.parent;
+    this.payer = data.payer;
     this.currency = data.currency;
     this.paymentMethod = data.paymentMethod;
     this.stripeCheckoutSession = data.stripeCheckoutSession;

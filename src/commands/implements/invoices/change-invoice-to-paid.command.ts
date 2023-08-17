@@ -7,7 +7,7 @@ export class ChangeInvoiceToPaidCommand
 {
   app: string;
   invoice: string;
-  invoiceUrl: string;
+  invoiceUrl?: string;
   paymentMethod: string;
   updatedBy: string;
 

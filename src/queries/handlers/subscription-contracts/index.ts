@@ -3,11 +3,13 @@ import { FindAllSubscriptionContractsByItemQueryHandler } from './find-all-subsc
 import { FindSubscriptionContractByIdQueryHandler } from './find-subscription-contract-by-id';
 import { FindSubscriptionContractByStripeCheckoutSessionQueryHandler } from './find-subscription-contract-by-stripe-checkout-session';
 import { FindSubscriptionContractByStripeSubscriptionQueryHandler } from './find-subscription-contract-by-stripe-subscription';
+import { UserHasSubscriptionContractActiveQueryHandler } from './user-has-subscription-contract-active';
 
 export const SubscriptionContractQueriesHandlers = [
   FindSubscriptionContractByIdQueryHandler,
   FindAllSubscriptionContractsQueryHandler,
   FindSubscriptionContractByStripeSubscriptionQueryHandler,
   FindSubscriptionContractByStripeCheckoutSessionQueryHandler,
-  FindAllSubscriptionContractsByItemQueryHandler
+  FindAllSubscriptionContractsByItemQueryHandler,
+  UserHasSubscriptionContractActiveQueryHandler
 ];

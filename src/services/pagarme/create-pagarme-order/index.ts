@@ -56,7 +56,7 @@ export class CreatePagarmeOrderService
             split: [appRecipient, stokeiRecipient]
           }
         ],
-        code: data?.orderId,
+        code: data?.payment,
         customer_id: data?.customer
       })
     );
@@ -70,6 +70,7 @@ export class CreatePagarmeOrderService
       paymentMethod: responseData?.payment_method,
       status: responseData?.status,
       pix: {
+        copyAndPaste: responseData?.charges?.[0]?.last_transaction?.qr_code,
         qrCodeURL: responseData?.charges?.[0]?.last_transaction?.qr_code_url
       }
     };

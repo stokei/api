@@ -15,6 +15,8 @@ export interface CreateStripeCheckoutSessionDTO {
   prices: CreateStripeCheckoutSessionPriceDTO[];
   customer: string;
   customerReference: string;
+  order: string;
+  payment: string;
   customerEmail: string;
   stripeAccount: string;
 }

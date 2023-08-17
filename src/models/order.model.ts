@@ -18,6 +18,9 @@ export interface IOrderModelData {
   readonly subtotalAmount: number;
   readonly feeAmount: number;
   readonly active: boolean;
+  readonly paidAt?: Date | string;
+  readonly canceledAt?: Date | string;
+  readonly paymentErrorAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly app: string;
@@ -35,6 +38,9 @@ export class OrderModel extends AggregateRoot {
   readonly subtotalAmount: number;
   readonly feeAmount: number;
   readonly active: boolean;
+  readonly paidAt?: string;
+  readonly canceledAt?: string;
+  readonly paymentErrorAt?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly app: string;
@@ -55,6 +61,9 @@ export class OrderModel extends AggregateRoot {
     this.subtotalAmount = data.subtotalAmount;
     this.feeAmount = data.feeAmount;
     this.active = data.active;
+    this.paidAt = convertToISODateString(data.paidAt);
+    this.canceledAt = convertToISODateString(data.canceledAt);
+    this.paymentErrorAt = convertToISODateString(data.paymentErrorAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.app = data.app;

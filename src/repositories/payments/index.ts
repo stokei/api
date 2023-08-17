@@ -1,3 +1,5 @@
+import { ChangePaymentToPaidRepository } from './change-payment-to-paid';
+import { ChangePaymentToPaymentErrorRepository } from './change-payment-to-payment-error';
 import { CountPaymentsRepository } from './count-payments';
 import { CreatePaymentRepository } from './create-payment';
 import { FindAllPaymentsRepository } from './find-all-payments';
@@ -11,5 +13,7 @@ export const PaymentsRepositories = [
   FindPaymentByIdRepository,
   FindAllPaymentsRepository,
   RemovePaymentRepository,
-  UpdatePaymentRepository
+  UpdatePaymentRepository,
+  ChangePaymentToPaidRepository,
+  ChangePaymentToPaymentErrorRepository
 ];

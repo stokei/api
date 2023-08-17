@@ -6,7 +6,7 @@ export interface CreatePagarmeOrderPriceDTO {
 }
 
 export interface CreatePagarmeOrderDTO {
-  orderId: string;
+  payment: string;
   appRecipient: string;
   customer: string;
   currency: string;

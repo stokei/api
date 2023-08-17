@@ -23,6 +23,10 @@ export class CreateStripeCheckoutSessionService
         currency: data.currency,
         client_reference_id: data.customerReference,
         customer: data.customer,
+        metadata: {
+          order: data.order,
+          payment: data.payment
+        },
         mode: data.mode,
         expand: ['subscription'],
         line_items: data.prices.map((currentPrice) => ({

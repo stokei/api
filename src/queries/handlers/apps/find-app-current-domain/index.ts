@@ -11,6 +11,7 @@ import { FindAppCurrentDomainQuery } from '@/queries/implements/apps/find-app-cu
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAllDomainsService } from '@/services/domains/find-all-domains';
 import { FindDomainByIdService } from '@/services/domains/find-domain-by-id';
+import { getAppStokeiDomain } from '@/utils/get-app-stokei-domain';
 
 @QueryHandler(FindAppCurrentDomainQuery)
 export class FindAppCurrentDomainQueryHandler
@@ -69,6 +70,6 @@ export class FindAppCurrentDomainQueryHandler
         currentAppDomain = null;
       }
     }
-    return currentAppDomain;
+    return currentAppDomain || getAppStokeiDomain({ app });
   }
 }

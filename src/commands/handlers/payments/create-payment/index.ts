@@ -57,6 +57,7 @@ export class CreatePaymentCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       parent: cleanValue(command?.parent),
+      payer: cleanValue(command?.payer),
       app: cleanValue(command?.app),
       currency: cleanValue(command?.currency),
       paymentMethod: cleanValue(command?.paymentMethod),

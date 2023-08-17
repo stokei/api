@@ -9,6 +9,7 @@ import { FindSubscriptionContractByStripeCheckoutSessionService } from './find-s
 import { FindSubscriptionContractByStripeSubscriptionService } from './find-subscription-contract-by-stripe-subscription';
 import { FindSubscriptionContractLastInvoiceService } from './find-subscription-contract-last-invoice';
 import { UpdateSubscriptionContractService } from './update-subscription-contract';
+import { UserHasSubscriptionContractActiveService } from './user-has-subscription-contract-active';
 
 export const SubscriptionContractServices = [
   CreateSubscriptionContractService,
@@ -21,5 +22,6 @@ export const SubscriptionContractServices = [
   CancelSubscriptionContractService,
   CreateSubscriptionContractByAdminService,
   FindSubscriptionContractByStripeCheckoutSessionService,
-  FindAllSubscriptionContractsByItemService
+  FindAllSubscriptionContractsByItemService,
+  UserHasSubscriptionContractActiveService
 ];

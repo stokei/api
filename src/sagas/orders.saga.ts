@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
+import { OrderChangedToPaidEvent } from '@/events/implements/orders/order-changed-to-paid.event';
+import { OrderChangedToPaymentErrorEvent } from '@/events/implements/orders/order-changed-to-payment-error.event';
 import { OrderCreatedEvent } from '@/events/implements/orders/order-created.event';
 import { OrderRemovedEvent } from '@/events/implements/orders/order-removed.event';
 import { OrderUpdatedEvent } from '@/events/implements/orders/order-updated.event';
@@ -64,6 +66,46 @@ export class OrdersSagas {
       map((event) => {
         this.logger.log(
           'Inside [OrderUpdatedEvent] Saga event orderUpdated:' +
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
+        );
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
+    );
+  };
+
+  @Saga()
+  orderChangedToPaymentError = (
+    events$: Observable<any>
+  ): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(OrderChangedToPaymentErrorEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [OrderChangedToPaymentErrorEvent] Saga event orderChangedToPaymentError: ' +
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
+        );
+        const commands = [];
+        return commands;
+      }),
+      mergeMap((c) => c)
+    );
+  };
+
+  @Saga()
+  orderChangedToPaid = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(OrderChangedToPaidEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [OrderChangedToPaidEvent] Saga event orderChangedToPaid: ' +
             JSON.stringify(
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )

@@ -1,7 +1,7 @@
-import { CreateCheckoutCommandHandler } from './create-checkout';
 import { CreatePagarmeCheckoutCommandHandler } from './create-pagarme-checkout';
+import { CreateStripeCheckoutCommandHandler } from './create-stripe-checkout';
 
 export const CheckoutCommandHandlers = [
-  CreateCheckoutCommandHandler,
+  CreateStripeCheckoutCommandHandler,
   CreatePagarmeCheckoutCommandHandler
 ];

@@ -1,3 +1,5 @@
+import { ChangeOrderToPaidRepository } from './change-order-to-paid';
+import { ChangeOrderToPaymentErrorRepository } from './change-order-to-payment-error';
 import { CountOrdersRepository } from './count-orders';
 import { CreateOrderRepository } from './create-order';
 import { FindAllOrdersRepository } from './find-all-orders';
@@ -11,5 +13,7 @@ export const OrdersRepositories = [
   FindOrderByIdRepository,
   FindAllOrdersRepository,
   RemoveOrderRepository,
-  UpdateOrderRepository
+  UpdateOrderRepository,
+  ChangeOrderToPaidRepository,
+  ChangeOrderToPaymentErrorRepository
 ];

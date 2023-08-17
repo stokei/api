@@ -1,4 +1,5 @@
 export interface PagarmeOrderPIX {
+  copyAndPaste: string;
   qrCodeURL: string;
 }
 

@@ -115,6 +115,7 @@ enum InvoiceStatus {
 
 enum OrderStatus {
   PAID
+  PARTIAL_PAID
   PENDING
   PAYMENT_ERROR
   CANCELED
@@ -125,6 +126,11 @@ enum PaymentStatus {
   PENDING
   PAYMENT_ERROR
   CANCELED
+}
+
+enum PaymentGatewayType {
+  STRIPE
+  PAGARME
 }
 
 enum SubscriptionContractStatus {
@@ -614,24 +620,25 @@ model Invoice {
 }
 
 model Payment {
-  id                    String        @id @default(cuid())
-  app                   String        @db.VarChar(255)
-  parent                String        @db.VarChar(255)
-  payer                 String        @db.VarChar(255)
-  currency              String        @db.VarChar(255)
-  status                PaymentStatus @default(PENDING)
-  paymentMethod         String?       @map("payment_method") @db.VarChar(255)
-  stripeCheckoutSession String?       @map("stripe_checkout_session") @db.VarChar(255)
-  totalAmount           Float         @map("total_amount")
-  subtotalAmount        Float         @map("subtotal_amount")
-  feeAmount             Float         @map("fee_amount")
-  active                Boolean       @default(false)
-  paidAt                DateTime?     @map("paid_at")
-  canceledAt            DateTime?     @map("canceled_at")
-  paymentErrorAt        DateTime?     @map("payment_error_at")
-  updatedAt             DateTime?     @updatedAt @map("updated_at")
-  createdAt             DateTime?     @default(now()) @map("created_at")
-  updatedBy             String?       @map("updated_by") @db.VarChar(255)
+  id                    String             @id @default(cuid())
+  app                   String             @db.VarChar(255)
+  parent                String             @db.VarChar(255)
+  payer                 String             @db.VarChar(255)
+  currency              String             @db.VarChar(255)
+  paymentGatewayType    PaymentGatewayType @default(STRIPE)
+  status                PaymentStatus      @default(PENDING)
+  paymentMethod         String?            @map("payment_method") @db.VarChar(255)
+  stripeCheckoutSession String?            @map("stripe_checkout_session") @db.VarChar(255)
+  totalAmount           Float              @map("total_amount")
+  subtotalAmount        Float              @map("subtotal_amount")
+  feeAmount             Float              @map("fee_amount")
+  active                Boolean            @default(false)
+  paidAt                DateTime?          @map("paid_at")
+  canceledAt            DateTime?          @map("canceled_at")
+  paymentErrorAt        DateTime?          @map("payment_error_at")
+  updatedAt             DateTime?          @updatedAt @map("updated_at")
+  createdAt             DateTime?          @default(now()) @map("created_at")
+  updatedBy             String?            @map("updated_by") @db.VarChar(255)
   createdBy             String?
 
   @@map("payments")
@@ -681,6 +688,7 @@ model SubscriptionContract {
   id                    String                     @id @default(cuid())
   app                   String                     @db.VarChar(255)
   parent                String                     @db.VarChar(255)
+  order                 String?                    @db.VarChar(255)
   paymentMethod         String?                    @map("payment_method") @db.VarChar(255)
   stripeCheckoutSession String?                    @map("stripe_checkout_session") @db.VarChar(255)
   stripeSubscription    String?                    @map("stripe_subscription") @db.VarChar(255)

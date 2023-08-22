@@ -8,6 +8,7 @@ export interface CreatePagarmeOrderPriceDTO {
 export interface CreatePagarmeOrderDTO {
   payment: string;
   appRecipient: string;
+  feeAmount: number;
   customer: string;
   currency: string;
   prices: CreatePagarmeOrderPriceDTO[];

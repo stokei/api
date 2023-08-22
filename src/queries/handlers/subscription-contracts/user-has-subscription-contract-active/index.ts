@@ -37,7 +37,7 @@ export class UserHasSubscriptionContractActiveQueryHandler
     }
 
     const price = await this.findPriceByIdService.execute(data.price);
-    if (!price) {
+    if (!price?.active) {
       throw new PriceNotFoundException();
     }
 

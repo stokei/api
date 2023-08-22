@@ -7,7 +7,6 @@ import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { WebhookStripeDTO } from '@/dtos/webhooks/webhook-stripe.dto';
 import { STRIPE_WEBHOOK_SECRET } from '@/environments';
 import { StripeSignatureNotFoundException } from '@/errors';
-import { WebhookStripeInvoiceCreatedService } from '@/services/webhooks/stripe-invoice-created';
 import { WebhookStripeInvoicePaidService } from '@/services/webhooks/stripe-invoice-paid';
 import { WebhookStripeInvoiceWithPaymentErrorService } from '@/services/webhooks/stripe-invoice-with-payment-error';
 import { WebhookStripeSubscriptionContractCanceledService } from '@/services/webhooks/stripe-subscription-contract-canceled';
@@ -20,7 +19,6 @@ import { WebhookStripeCheckoutSessionService } from '../stripe-checkout-session-
 @Injectable()
 export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
   constructor(
-    private readonly webhookStripeInvoiceCreatedService: WebhookStripeInvoiceCreatedService,
     private readonly webhookStripeInvoiceWithPaymentErrorService: WebhookStripeInvoiceWithPaymentErrorService,
     private readonly webhookStripeInvoicePaidService: WebhookStripeInvoicePaidService,
     private readonly webhookStripeCheckoutSessionService: WebhookStripeCheckoutSessionService,
@@ -65,11 +63,6 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
             stripeSubscription: customerSubscription.id,
             startAt: customerSubscription.current_period_start * 1000,
             endAt: customerSubscription.current_period_end * 1000
-          });
-        case 'invoice.created':
-          return await this.webhookStripeInvoiceCreatedService.execute({
-            invoice: eventObject.id,
-            stripeAccount: connectAccount
           });
         case 'checkout.session.completed':
           const stripeCheckoutSessionCompleted: Stripe.Checkout.Session =

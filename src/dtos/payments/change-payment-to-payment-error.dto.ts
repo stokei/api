@@ -1,6 +1,6 @@
 export interface ChangePaymentToPaymentErrorDTO {
   payment: string;
-  paymentMethod: string;
+  paymentMethod?: string;
   app: string;
   updatedBy: string;
 }

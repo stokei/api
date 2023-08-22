@@ -20,6 +20,7 @@ export class FindPagarmeOrderByIdService
       paymentMethod: responseData?.payment_method,
       status: responseData?.status,
       pix: {
+        copyAndPaste: responseData?.charges?.[0]?.last_transaction?.qr_code,
         qrCodeURL: responseData?.charges?.[0]?.last_transaction?.qr_code_url
       }
     };

@@ -15,9 +15,6 @@ export const SERVER_PORT: number = +process.env.PORT || 4000;
 export const SERVER_URL: string =
   process.env.URL || `http://${SERVER_HOST}:${SERVER_PORT}`;
 
-export const APPLICATION_FEE_PERCENT: number =
-  +process.env.APPLICATION_FEE_PERCENT || 10;
-
 export const TOKEN_SECRET_KEY: string = process.env.TOKEN_SECRET_KEY;
 
 export const PASSWORD_SECRET_KEY: string = process.env.PASSWORD_SECRET_KEY;

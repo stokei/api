@@ -2,10 +2,10 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { IBaseService } from '@stokei/nestjs';
 
 import { WebhookPagarmeOrderCancelDTO } from '@/dtos/webhooks/webhook-pagarme-order-cancel.dto';
-import { SubscriptionContractNotFoundException } from '@/errors';
+import { PaymentNotFoundException } from '@/errors';
 import { FindPagarmeOrderByIdService } from '@/services/pagarme/find-pagarme-order-by-id';
-import { CancelSubscriptionContractService } from '@/services/subscription-contracts/cancel-subscription-contract';
-import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
+import { ChangePaymentToPaymentErrorService } from '@/services/payments/change-payment-to-payment-error';
+import { FindPaymentByIdService } from '@/services/payments/find-payment-by-id';
 
 @Injectable()
 export class WebhookPagarmeOrderCancelService
@@ -13,8 +13,8 @@ export class WebhookPagarmeOrderCancelService
 {
   constructor(
     private readonly findPagarmeOrderByIdService: FindPagarmeOrderByIdService,
-    private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
-    private readonly cancelSubscriptionContractService: CancelSubscriptionContractService
+    private readonly findPaymentByIdService: FindPaymentByIdService,
+    private readonly changePaymentToPaymentErrorService: ChangePaymentToPaymentErrorService
   ) {}
 
   async execute(data: WebhookPagarmeOrderCancelDTO) {
@@ -22,18 +22,19 @@ export class WebhookPagarmeOrderCancelService
       data.order
     );
     if (!pagarmeOrder?.code) {
-      throw new SubscriptionContractNotFoundException();
+      throw new PaymentNotFoundException();
     }
-    const subscriptionContract =
-      await this.findSubscriptionContractByIdService.execute(pagarmeOrder.code);
+    const payment = await this.findPaymentByIdService.execute(
+      pagarmeOrder.code
+    );
     if (!pagarmeOrder?.code) {
-      throw new SubscriptionContractNotFoundException();
+      throw new PaymentNotFoundException();
     }
 
-    await this.cancelSubscriptionContractService.execute({
-      subscriptionContract: subscriptionContract.id,
-      app: subscriptionContract.app,
-      updatedBy: subscriptionContract.updatedBy
+    await this.changePaymentToPaymentErrorService.execute({
+      payment: payment.id,
+      app: payment.app,
+      updatedBy: payment.updatedBy
     });
 
     return HttpStatus.OK;

@@ -8,6 +8,7 @@ export class CreateSubscriptionContractCommand
 {
   app: string;
   parent: string;
+  order?: string;
   stripeSubscription?: string;
   stripeCheckoutSession?: string;
   startAt?: string;
@@ -21,6 +22,7 @@ export class CreateSubscriptionContractCommand
   constructor(data: CreateSubscriptionContractDTO) {
     this.app = data.app;
     this.parent = data.parent;
+    this.order = data.order;
     this.stripeCheckoutSession = data.stripeCheckoutSession;
     this.stripeSubscription = data.stripeSubscription;
     this.type = data.type;

@@ -13,14 +13,12 @@ import {
   AppNotFoundException,
   DataNotFoundException,
   OrderNotFoundException,
-  ParamNotFoundException,
-  SubscriptionContractNotFoundException
+  ParamNotFoundException
 } from '@/errors';
 import { OrderModel } from '@/models/order.model';
 import { ChangeOrderToPaymentErrorRepository } from '@/repositories/orders/change-order-to-payment-error';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
-import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 
 type ChangeOrderToPaymentErrorCommandKeys =
   keyof ChangeOrderToPaymentErrorCommand;
@@ -32,7 +30,6 @@ export class ChangeOrderToPaymentErrorCommandHandler
   constructor(
     private readonly changeOrderToPaymentErrorRepository: ChangeOrderToPaymentErrorRepository,
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
     private readonly findOrderByIdService: FindOrderByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -61,20 +58,11 @@ export class ChangeOrderToPaymentErrorCommandHandler
     if (!order) {
       throw new OrderNotFoundException();
     }
-    const subscriptionContract =
-      await this.findSubscriptionContractByIdService.execute(
-        order.subscription
-      );
-    if (!subscriptionContract) {
-      throw new SubscriptionContractNotFoundException();
-    }
 
     const dataChangeOrderToPaymentError: ChangeOrderToPaymentErrorRepositoryDataDTO =
       {
         active: true,
-        url: data.orderUrl,
         status: OrderStatus.PAID,
-        paymentMethod: data.paymentMethod,
         paymentErrorAt: convertToISODateString(Date.now()),
         updatedBy: data.updatedBy
       };
@@ -107,8 +95,6 @@ export class ChangeOrderToPaymentErrorCommandHandler
     return cleanObject({
       app: cleanValue(command?.app),
       order: cleanValue(command?.order),
-      orderUrl: cleanValue(command?.orderUrl),
-      paymentMethod: cleanValue(command?.paymentMethod),
       updatedBy: cleanValue(command?.updatedBy)
     });
   }

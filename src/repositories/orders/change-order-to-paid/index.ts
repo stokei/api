@@ -18,7 +18,19 @@ export class ChangeOrderToPaidRepository
       where: {
         id: where?.order
       },
-      data
+      data: {
+        ...data,
+        ...(data?.paidAmount && {
+          paidAmount: {
+            increment: data?.paidAmount
+          }
+        }),
+        ...(data?.feeAmount && {
+          feeAmount: {
+            increment: data?.feeAmount
+          }
+        })
+      }
     });
     return !!updated;
   }

@@ -91,6 +91,8 @@ export class CreateAccountPagarmeCustomerCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
+      cpf: cleanValue(command?.cpf),
+      dateBirthday: cleanValue(command?.dateBirthday),
       phone: command?.phone,
       account: cleanValue(command?.account)
     });

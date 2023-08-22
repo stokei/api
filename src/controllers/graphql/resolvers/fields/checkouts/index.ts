@@ -1,3 +1,3 @@
-import { CheckoutOrderResolver } from './order';
+import { CheckoutPaymentResolver } from './payment';
 
-export const CheckoutsFieldsResolvers = [CheckoutOrderResolver];
+export const CheckoutsFieldsResolvers = [CheckoutPaymentResolver];

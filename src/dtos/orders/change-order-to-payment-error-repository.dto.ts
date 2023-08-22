@@ -4,7 +4,6 @@ export interface ChangeOrderToPaymentErrorRepositoryDataDTO {
   status: OrderStatus;
   active: boolean;
   paymentErrorAt: string;
-  paymentMethod: string;
   updatedBy: string;
 }
 

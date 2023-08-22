@@ -1,36 +1,47 @@
 import { Injectable } from '@nestjs/common';
-import { addHours, cleanObject, IBaseService } from '@stokei/nestjs';
+import {
+  addHours,
+  cleanObject,
+  convertToISODateString,
+  IBaseService
+} from '@stokei/nestjs';
 
 import { pagarmeClient } from '@/clients/pagarme';
 import { CreatePagarmeOrderDTO } from '@/dtos/pagarme/create-pagarme-order.dto';
 import { PagarmeOrder } from '@/dtos/pagarme/pagarme-order.dto';
-import { APPLICATION_FEE_PERCENT, PAGARME_RECIPIENT_ID } from '@/environments';
+import { PAGARME_RECIPIENT_ID } from '@/environments';
 
 @Injectable()
 export class CreatePagarmeOrderService
   implements IBaseService<CreatePagarmeOrderDTO, Promise<PagarmeOrder>>
 {
   async execute(data: CreatePagarmeOrderDTO): Promise<PagarmeOrder> {
-    const appPercentage = Math.round(100 - APPLICATION_FEE_PERCENT);
+    const totalAmount = data?.prices?.reduce(
+      (previousPrice, currentPrice) => previousPrice + currentPrice?.amount,
+      0
+    );
+    const appTotalAmountWithoutFeeAmount = Math.round(
+      totalAmount - data.feeAmount
+    );
     const stokeiRecipient = {
       options: {
-        charge_processing_fee: false,
-        charge_remainder_fee: false,
-        liable: false
+        charge_processing_fee: 'true',
+        charge_remainder_fee: 'true',
+        liable: 'true'
       },
-      type: 'percentage',
+      type: 'flat',
       recipient_id: PAGARME_RECIPIENT_ID,
-      amount: APPLICATION_FEE_PERCENT
+      amount: data.feeAmount
     };
     const appRecipient = {
       options: {
-        charge_processing_fee: true,
-        charge_remainder_fee: true,
-        liable: true
+        charge_processing_fee: 'false',
+        charge_remainder_fee: 'false',
+        liable: 'false'
       },
-      type: 'percentage',
+      type: 'flat',
       recipient_id: data?.appRecipient,
-      amount: appPercentage
+      amount: appTotalAmountWithoutFeeAmount
     };
     const items = data?.prices?.map((price) => ({
       code: price?.id,
@@ -38,40 +49,36 @@ export class CreatePagarmeOrderService
       amount: price?.amount,
       description: price?.name
     }));
-    const totalAmount = data?.prices?.reduce(
-      (previousPrice, currentPrice) => previousPrice + currentPrice?.amount,
-      0
-    );
-    const response = await pagarmeClient.post(
-      '/orders',
-      cleanObject({
-        items,
-        payments: [
-          {
-            Pix: {
-              expires_at: addHours(2)
-            },
-            amount: Math.round(totalAmount),
-            payment_method: 'pix',
-            split: [appRecipient, stokeiRecipient]
-          }
-        ],
-        code: data?.payment,
-        customer_id: data?.customer
-      })
-    );
+    const dataRequest = cleanObject({
+      items,
+      code: data?.payment,
+      customer_id: data?.customer,
+      payments: [
+        {
+          pix: {
+            expires_at: convertToISODateString(addHours(2))
+          },
+          amount: Math.round(totalAmount),
+          payment_method: 'pix',
+          split: [appRecipient, stokeiRecipient]
+        }
+      ]
+    });
+    const response = await pagarmeClient.post('/orders', dataRequest);
     const responseData = response?.data;
     if (!responseData) {
       return;
     }
+    const charge = responseData?.charges?.[0];
+    const lastTransaction = charge?.last_transaction;
     return {
       id: responseData?.id,
       code: responseData?.code,
-      paymentMethod: responseData?.payment_method,
       status: responseData?.status,
+      paymentMethod: charge?.payment_method,
       pix: {
-        copyAndPaste: responseData?.charges?.[0]?.last_transaction?.qr_code,
-        qrCodeURL: responseData?.charges?.[0]?.last_transaction?.qr_code_url
+        copyAndPaste: lastTransaction?.qr_code,
+        qrCodeURL: lastTransaction?.qr_code_url
       }
     };
   }

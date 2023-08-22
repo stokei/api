@@ -3,7 +3,6 @@ import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreatePaymentCommand } from '@/commands/implements/payments/create-payment.command';
 import { PaymentStatus } from '@/enums/payment-status.enum';
-import { APPLICATION_FEE_PERCENT } from '@/environments';
 import {
   DataNotFoundException,
   ParamNotFoundException,
@@ -31,12 +30,11 @@ export class CreatePaymentCommandHandler
     if (!data?.parent) {
       throw new ParamNotFoundException<CreatePaymentCommandKeys>('parent');
     }
-
     const paymentCreated = await this.createPaymentRepository.execute({
       ...data,
       feeAmount: getFeeAmount({
         amount: data.totalAmount,
-        feePercentage: APPLICATION_FEE_PERCENT
+        paymentGatewayType: data.paymentGatewayType
       }),
       status: PaymentStatus.PENDING,
       active: true
@@ -61,6 +59,7 @@ export class CreatePaymentCommandHandler
       app: cleanValue(command?.app),
       currency: cleanValue(command?.currency),
       paymentMethod: cleanValue(command?.paymentMethod),
+      paymentGatewayType: cleanValue(command?.paymentGatewayType),
       stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),
       totalAmount: cleanValueNumber(command?.totalAmount),
       subtotalAmount: cleanValueNumber(command?.subtotalAmount)

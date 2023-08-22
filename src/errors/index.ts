@@ -59,6 +59,7 @@ export * from './material-unauthorized-remove';
 export * from './materials-not-found';
 export * from './module-not-found';
 export * from './modules-not-found';
+export * from './order-already-paid';
 export * from './order-item-not-found';
 export * from './order-items-not-found';
 export * from './order-not-found';

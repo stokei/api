@@ -4,6 +4,8 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { ActivateOrderSubscriptionContractsCommand } from '@/commands/implements/orders/activate-order-subscription-contracts.command';
+import { CancelOrderSubscriptionContractsCommand } from '@/commands/implements/orders/cancel-order-subscription-contracts.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { OrderChangedToPaidEvent } from '@/events/implements/orders/order-changed-to-paid.event';
 import { OrderChangedToPaymentErrorEvent } from '@/events/implements/orders/order-changed-to-payment-error.event';
@@ -91,7 +93,13 @@ export class OrdersSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new CancelOrderSubscriptionContractsCommand({
+            app: event.order.app,
+            order: event.order.id,
+            createdBy: event.updatedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)
@@ -110,7 +118,13 @@ export class OrdersSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new ActivateOrderSubscriptionContractsCommand({
+            app: event.order.app,
+            order: event.order.id,
+            createdBy: event.updatedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

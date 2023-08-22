@@ -6,6 +6,7 @@ import { SubscriptionContractType } from '@/enums/subscription-contract-type.enu
 export interface CountSubscriptionContractsWhereDTO {
   ids?: string[];
   app?: IWhereData;
+  order?: IWhereData;
   parent?: IWhereDataSearch;
   paymentMethod?: IWhereData;
   status?: SubscriptionContractStatus;

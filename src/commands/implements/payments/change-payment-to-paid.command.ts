@@ -7,14 +7,12 @@ export class ChangePaymentToPaidCommand
 {
   app: string;
   payment: string;
-  paymentUrl: string;
   paymentMethod: string;
   updatedBy: string;
 
   constructor(data: ChangePaymentToPaidDTO) {
     this.app = data.app;
     this.payment = data.payment;
-    this.paymentUrl = data.paymentUrl;
     this.paymentMethod = data.paymentMethod;
     this.updatedBy = data.updatedBy;
   }

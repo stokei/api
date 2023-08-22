@@ -1,3 +1,5 @@
+import { ActivateOrderSubscriptionContractsCommandHandler } from './activate-order-subscription-contracts';
+import { CancelOrderSubscriptionContractsCommandHandler } from './cancel-order-subscription-contracts';
 import { ChangeOrderToPaidCommandHandler } from './change-order-to-paid';
 import { ChangeOrderToPaymentErrorCommandHandler } from './change-order-to-payment-error';
 import { CreateOrderCommandHandler } from './create-order';
@@ -9,5 +11,7 @@ export const OrderCommandHandlers = [
   RemoveOrderCommandHandler,
   UpdateOrderCommandHandler,
   ChangeOrderToPaidCommandHandler,
-  ChangeOrderToPaymentErrorCommandHandler
+  ChangeOrderToPaymentErrorCommandHandler,
+  ActivateOrderSubscriptionContractsCommandHandler,
+  CancelOrderSubscriptionContractsCommandHandler
 ];

@@ -12,15 +12,13 @@ import { PaymentStatus } from '@/enums/payment-status.enum';
 import {
   AppNotFoundException,
   DataNotFoundException,
-  PaymentNotFoundException,
   ParamNotFoundException,
-  SubscriptionContractNotFoundException
+  PaymentNotFoundException
 } from '@/errors';
 import { PaymentModel } from '@/models/payment.model';
 import { ChangePaymentToPaidRepository } from '@/repositories/payments/change-payment-to-paid';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindPaymentByIdService } from '@/services/payments/find-payment-by-id';
-import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 
 type ChangePaymentToPaidCommandKeys = keyof ChangePaymentToPaidCommand;
 
@@ -31,7 +29,6 @@ export class ChangePaymentToPaidCommandHandler
   constructor(
     private readonly changePaymentToPaidRepository: ChangePaymentToPaidRepository,
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
     private readonly findPaymentByIdService: FindPaymentByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -58,17 +55,9 @@ export class ChangePaymentToPaidCommandHandler
     if (!payment) {
       throw new PaymentNotFoundException();
     }
-    const subscriptionContract =
-      await this.findSubscriptionContractByIdService.execute(
-        payment.subscription
-      );
-    if (!subscriptionContract) {
-      throw new SubscriptionContractNotFoundException();
-    }
 
     const dataChangePaymentToPaid: ChangePaymentToPaidRepositoryDataDTO = {
       active: true,
-      url: data.paymentUrl,
       status: PaymentStatus.PAID,
       paymentMethod: data.paymentMethod,
       paidAt: convertToISODateString(Date.now()),
@@ -101,7 +90,6 @@ export class ChangePaymentToPaidCommandHandler
     return cleanObject({
       app: cleanValue(command?.app),
       payment: cleanValue(command?.payment),
-      paymentUrl: cleanValue(command?.paymentUrl),
       paymentMethod: cleanValue(command?.paymentMethod),
       updatedBy: cleanValue(command?.updatedBy)
     });

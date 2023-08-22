@@ -3,6 +3,7 @@ import { SubscriptionContractType } from '@/enums/subscription-contract-type.enu
 export interface CreateSubscriptionContractDTO {
   app: string;
   parent: string;
+  order?: string;
   stripeCheckoutSession?: string;
   stripeSubscription?: string;
   startAt?: string;

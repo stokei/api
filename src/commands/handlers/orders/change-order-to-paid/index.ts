@@ -2,6 +2,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import {
   cleanObject,
   cleanValue,
+  cleanValueNumber,
   convertToISODateString,
   splitServiceId
 } from '@stokei/nestjs';
@@ -13,14 +14,12 @@ import {
   AppNotFoundException,
   DataNotFoundException,
   OrderNotFoundException,
-  ParamNotFoundException,
-  SubscriptionContractNotFoundException
+  ParamNotFoundException
 } from '@/errors';
 import { OrderModel } from '@/models/order.model';
 import { ChangeOrderToPaidRepository } from '@/repositories/orders/change-order-to-paid';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
-import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 
 type ChangeOrderToPaidCommandKeys = keyof ChangeOrderToPaidCommand;
 
@@ -31,7 +30,6 @@ export class ChangeOrderToPaidCommandHandler
   constructor(
     private readonly changeOrderToPaidRepository: ChangeOrderToPaidRepository,
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
     private readonly findOrderByIdService: FindOrderByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -56,19 +54,16 @@ export class ChangeOrderToPaidCommandHandler
     if (!order) {
       throw new OrderNotFoundException();
     }
-    const subscriptionContract =
-      await this.findSubscriptionContractByIdService.execute(
-        order.subscription
-      );
-    if (!subscriptionContract) {
-      throw new SubscriptionContractNotFoundException();
-    }
-
+    const orderPaymentIsCompleted =
+      order.totalAmount <= order.paidAmount + data.paidAmount;
+    const status = orderPaymentIsCompleted
+      ? OrderStatus.PAID
+      : OrderStatus.PARTIAL_PAID;
     const dataChangeOrderToPaid: ChangeOrderToPaidRepositoryDataDTO = {
       active: true,
-      url: data.orderUrl,
-      status: OrderStatus.PAID,
-      paymentMethod: data.paymentMethod,
+      status,
+      paidAmount: data.paidAmount,
+      feeAmount: data.feeAmount,
       paidAt: convertToISODateString(Date.now()),
       updatedBy: data.updatedBy
     };
@@ -99,8 +94,8 @@ export class ChangeOrderToPaidCommandHandler
     return cleanObject({
       app: cleanValue(command?.app),
       order: cleanValue(command?.order),
-      orderUrl: cleanValue(command?.orderUrl),
-      paymentMethod: cleanValue(command?.paymentMethod),
+      paidAmount: cleanValueNumber(command?.paidAmount),
+      feeAmount: cleanValueNumber(command?.feeAmount),
       updatedBy: cleanValue(command?.updatedBy)
     });
   }

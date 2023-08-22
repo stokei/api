@@ -4,7 +4,7 @@ import { IBaseService } from '@stokei/nestjs';
 
 import { CreatePagarmeCheckoutCommand } from '@/commands/implements/checkouts/create-pagarme-checkout.command';
 import { CreateStripeCheckoutCommand } from '@/commands/implements/checkouts/create-stripe-checkout.command';
-import { CreateCheckoutDTO } from '@/dtos/checkouts/create-checkout.dto';
+import { CreateCheckoutDTO } from '@/dtos/checkouts/create-checkout-order.dto';
 import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import { CheckoutModel } from '@/models/checkout.model';
 

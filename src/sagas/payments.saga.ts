@@ -141,6 +141,8 @@ export class PaymentsSagas {
             new ChangeOrderToPaidCommand({
               app: event.payment.app,
               order: event.payment.parent,
+              paidAmount: event.payment.totalAmount,
+              feeAmount: event.payment.feeAmount,
               updatedBy: event.updatedBy
             })
           );

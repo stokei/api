@@ -6,13 +6,13 @@ export interface CheckoutPixData {
 }
 
 export interface ICheckoutModelData {
-  readonly order: string;
+  readonly payment: string;
   readonly url?: string;
   readonly pix?: CheckoutPixData;
 }
 
 export class CheckoutModel extends AggregateRoot {
-  readonly order: string;
+  readonly payment: string;
   readonly url?: string;
   readonly pix?: CheckoutPixData;
 
@@ -20,7 +20,7 @@ export class CheckoutModel extends AggregateRoot {
     super();
 
     this.url = data.url;
-    this.order = data.order;
+    this.payment = data.payment;
     this.pix = data.pix;
   }
 }

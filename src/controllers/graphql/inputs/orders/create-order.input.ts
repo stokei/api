@@ -1,10 +1,12 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
+export class CreateOrderItemInput {
+  @Field(() => String)
+  price: string;
+}
+@InputType()
 export class CreateOrderInput {
-  @Field()
-  parent: string;
-
-  @Field()
-  name: string;
+  @Field(() => [CreateOrderItemInput])
+  items: CreateOrderItemInput[];
 }

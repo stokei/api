@@ -4,28 +4,20 @@ import { CHECKOUT_RESPONSE_URL } from '@/environments';
 import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 
 export const mountCheckoutCallbackURL = ({
-  product,
   success,
   domain
 }: {
   success: boolean;
-  product: string;
   domain?: string;
 }) => {
   if (!success) {
     const url = new URL(
-      appendPathnameToURL(
-        domain || CHECKOUT_RESPONSE_URL,
-        '/checkout/' + product
-      )
+      appendPathnameToURL(domain || CHECKOUT_RESPONSE_URL, '/checkout')
     );
     return decodeURI(url.toString());
   }
   const url = new URL(
-    appendPathnameToURL(
-      domain || CHECKOUT_RESPONSE_URL,
-      '/checkout/' + product + '/callback'
-    )
+    appendPathnameToURL(domain || CHECKOUT_RESPONSE_URL, '/checkout/callback')
   );
   url.searchParams.set('success', success + '');
   if (success) {

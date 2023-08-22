@@ -3,6 +3,8 @@ import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { PaymentStatus } from '@/enums/payment-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { PaymentChangedToPaidEvent } from '@/events/implements/payments/payment-changed-to-paid.event';
+import { PaymentChangedToPaymentErrorEvent } from '@/events/implements/payments/payment-changed-to-payment-error.event';
 import { PaymentCreatedEvent } from '@/events/implements/payments/payment-created.event';
 import { PaymentRemovedEvent } from '@/events/implements/payments/payment-removed.event';
 import { PaymentUpdatedEvent } from '@/events/implements/payments/payment-updated.event';
@@ -104,6 +106,28 @@ export class PaymentModel extends AggregateRoot {
       this.apply(
         new PaymentRemovedEvent({
           removedBy,
+          payment: this
+        })
+      );
+    }
+  }
+
+  changedPaymentToPaid() {
+    if (this.id) {
+      this.apply(
+        new PaymentChangedToPaidEvent({
+          updatedBy: this.updatedBy,
+          payment: this
+        })
+      );
+    }
+  }
+
+  changedPaymentToPaymentError() {
+    if (this.id) {
+      this.apply(
+        new PaymentChangedToPaymentErrorEvent({
+          updatedBy: this.updatedBy,
           payment: this
         })
       );

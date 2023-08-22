@@ -2,10 +2,10 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { IBaseService } from '@stokei/nestjs';
 
 import { WebhookPagarmeOrderPaidDTO } from '@/dtos/webhooks/webhook-pagarme-order-paid.dto';
-import { SubscriptionContractNotFoundException } from '@/errors';
+import { PaymentNotFoundException } from '@/errors';
 import { FindPagarmeOrderByIdService } from '@/services/pagarme/find-pagarme-order-by-id';
-import { ActivateSubscriptionContractService } from '@/services/subscription-contracts/activate-subscription-contract';
-import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
+import { ChangePaymentToPaidService } from '@/services/payments/change-payment-to-paid';
+import { FindPaymentByIdService } from '@/services/payments/find-payment-by-id';
 
 @Injectable()
 export class WebhookPagarmeOrderPaidService
@@ -13,8 +13,8 @@ export class WebhookPagarmeOrderPaidService
 {
   constructor(
     private readonly findPagarmeOrderByIdService: FindPagarmeOrderByIdService,
-    private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
-    private readonly activateSubscriptionContractService: ActivateSubscriptionContractService
+    private readonly findPaymentByIdService: FindPaymentByIdService,
+    private readonly changePaymentToPaidService: ChangePaymentToPaidService
   ) {}
 
   async execute(data: WebhookPagarmeOrderPaidDTO) {
@@ -22,18 +22,19 @@ export class WebhookPagarmeOrderPaidService
       data.order
     );
     if (!pagarmeOrder?.code) {
-      throw new SubscriptionContractNotFoundException();
+      throw new PaymentNotFoundException();
     }
-    const subscriptionContract =
-      await this.findSubscriptionContractByIdService.execute(pagarmeOrder.code);
+    const payment = await this.findPaymentByIdService.execute(
+      pagarmeOrder.code
+    );
     if (!pagarmeOrder?.code) {
-      throw new SubscriptionContractNotFoundException();
+      throw new PaymentNotFoundException();
     }
 
-    await this.activateSubscriptionContractService.execute({
-      subscriptionContract: subscriptionContract.id,
-      app: subscriptionContract.app,
-      updatedBy: subscriptionContract.updatedBy
+    await this.changePaymentToPaidService.execute({
+      payment: payment.id,
+      app: payment.app,
+      updatedBy: payment.updatedBy
     });
 
     return HttpStatus.OK;

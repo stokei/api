@@ -9,7 +9,6 @@ import { CreateStripeCustomerService } from './create-stripe-customer';
 import { CreateStripeCustomerPortalSessionService } from './create-stripe-customer-portal-session';
 import { CreateStripePriceService } from './create-stripe-price';
 import { CreateStripeProductService } from './create-stripe-product';
-import { CreateStripeSubscriptionService } from './create-stripe-subscription';
 import { CreateStripeSubscriptionItemService } from './create-stripe-subscription-item';
 import { CreateStripeUsageRecordService } from './create-stripe-usage-record';
 import { DeleteStripeCustomerService } from './delete-stripe-customer';
@@ -42,7 +41,6 @@ export const StripeServices = [
   FindStripeInvoiceByIdService,
   UpdateStripeCustomerService,
   DeleteStripeProductService,
-  CreateStripeSubscriptionService,
   UpdateStripeProductService,
   DeleteStripePriceService,
   CreateStripeSubscriptionItemService,

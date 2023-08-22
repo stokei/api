@@ -65,6 +65,7 @@ export class CreateSubscriptionContractCommandHandler
   ): CreateSubscriptionContractCommand {
     return cleanObject({
       app: cleanValue(command?.app),
+      order: cleanValue(command?.order),
       startAt: cleanValue(command?.startAt),
       endAt: cleanValue(command?.endAt),
       parent: cleanValue(command?.parent),

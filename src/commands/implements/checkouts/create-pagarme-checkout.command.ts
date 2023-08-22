@@ -1,6 +1,6 @@
 import { ICommand } from '@nestjs/cqrs';
 
-import { CreateCheckoutDTO } from '@/dtos/checkouts/create-checkout.dto';
+import { CreateCheckoutDTO } from '@/dtos/checkouts/create-checkout-order.dto';
 import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 
 export class CreatePagarmeCheckoutCommand
@@ -9,14 +9,14 @@ export class CreatePagarmeCheckoutCommand
   paymentMethodType: PaymentMethodType;
   app: string;
   customer: string;
-  price: string;
+  order: string;
   createdBy: string;
 
   constructor(data: CreateCheckoutDTO) {
     this.paymentMethodType = data.paymentMethodType;
     this.app = data.app;
     this.customer = data.customer;
-    this.price = data.price;
+    this.order = data.order;
     this.createdBy = data.createdBy;
   }
 }

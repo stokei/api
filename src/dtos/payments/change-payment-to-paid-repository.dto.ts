@@ -4,7 +4,7 @@ export interface ChangePaymentToPaidRepositoryDataDTO {
   status: PaymentStatus;
   active: boolean;
   paidAt: string;
-  paymentMethod: string;
+  paymentMethod?: string;
   updatedBy: string;
 }
 

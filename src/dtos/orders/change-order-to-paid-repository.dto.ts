@@ -3,8 +3,9 @@ import { OrderStatus } from '@/enums/order-status.enum';
 export interface ChangeOrderToPaidRepositoryDataDTO {
   status: OrderStatus;
   active: boolean;
+  paidAmount: number;
+  feeAmount: number;
   paidAt: string;
-  paymentMethod: string;
   updatedBy: string;
 }
 

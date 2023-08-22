@@ -2,27 +2,29 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateStripeCheckoutCommand } from '@/commands/implements/checkouts/create-stripe-checkout.command';
-import { PriceType } from '@/enums/price-type.enum';
-import { APPLICATION_FEE_PERCENT } from '@/environments';
+import { paymentGatewayFees } from '@/constants/payment-gateway-fees';
+import { OrderStatus } from '@/enums/order-status.enum';
+import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 import {
   AccountNotFoundException,
   AppNotFoundException,
   DataNotFoundException,
+  OrderAlreadyPaidException,
+  OrderItemsNotFoundException,
+  OrderNotFoundException,
   ParamNotFoundException,
-  PriceNotFoundException,
-  SubscriptionContractAlreadyActiveException,
+  PricesNotFoundException,
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { CheckoutMapper } from '@/mappers/checkouts';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentDomainService } from '@/services/apps/find-app-current-domain';
-import { CreateOrderItemService } from '@/services/order-items/create-order-item';
-import { CreateOrderService } from '@/services/orders/create-order';
+import { FindAllOrderItemsService } from '@/services/order-items/find-all-order-items';
+import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
 import { CreatePaymentService } from '@/services/payments/create-payment';
-import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
+import { FindAllPricesService } from '@/services/prices/find-all-prices';
 import { CreateStripeCheckoutSessionService } from '@/services/stripe/create-stripe-checkout-session';
-import { UserHasSubscriptionContractActiveService } from '@/services/subscription-contracts/user-has-subscription-contract-active';
 import { getFeeAmount } from '@/utils/get-fee-amount';
 import { mountCheckoutCallbackURL } from '@/utils/mount-checkout-callback-url';
 
@@ -35,11 +37,10 @@ export class CreateStripeCheckoutCommandHandler
   constructor(
     private readonly findAppCurrentDomainService: FindAppCurrentDomainService,
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly userHasSubscriptionContractActiveService: UserHasSubscriptionContractActiveService,
-    private readonly findPriceByIdService: FindPriceByIdService,
     private readonly createStripeCheckoutSessionService: CreateStripeCheckoutSessionService,
-    private readonly createOrderService: CreateOrderService,
-    private readonly createOrderItemService: CreateOrderItemService,
+    private readonly findOrderByIdService: FindOrderByIdService,
+    private readonly findAllOrderItemsService: FindAllOrderItemsService,
+    private readonly findAllPricesService: FindAllPricesService,
     private readonly createPaymentService: CreatePaymentService,
     private readonly findAccountByIdService: FindAccountByIdService
   ) {}
@@ -59,9 +60,9 @@ export class CreateStripeCheckoutCommandHandler
         'createdBy'
       );
     }
-    if (!data?.price) {
+    if (!data?.order) {
       throw new ParamNotFoundException<CreateStripeCheckoutCommandKeys>(
-        'price'
+        'order'
       );
     }
 
@@ -77,75 +78,87 @@ export class CreateStripeCheckoutCommandHandler
     const appDomain = await this.findAppCurrentDomainService.execute(
       customerApp.id
     );
-    const price = await this.findPriceByIdService.execute(data?.price);
-    if (!price?.active || price.app !== customerApp.id) {
-      throw new PriceNotFoundException();
-    }
-    const productId = price.parent;
 
-    const hasActivePrice =
-      await this.userHasSubscriptionContractActiveService.execute({
-        price: price.id,
-        product: productId,
-        app: customerApp.id,
-        customer: customer?.id
-      });
-    if (hasActivePrice) {
-      throw new SubscriptionContractAlreadyActiveException();
+    const order = await this.findOrderByIdService.execute(data.order);
+    if (!order) {
+      throw new OrderNotFoundException();
+    }
+    if (order.status === OrderStatus.PAID) {
+      throw new OrderAlreadyPaidException();
+    }
+    const orderItems = await this.findAllOrderItemsService.execute({
+      where: {
+        AND: {
+          parent: {
+            equals: order.id
+          }
+        }
+      }
+    });
+    if (!orderItems?.totalCount) {
+      throw new OrderItemsNotFoundException();
+    }
+    const pricesIds = orderItems?.items?.map(({ price }) => price);
+    const prices = await this.findAllPricesService.execute({
+      where: {
+        AND: {
+          ids: pricesIds
+        }
+      }
+    });
+    if (!prices?.totalCount) {
+      throw new PricesNotFoundException();
     }
 
     const cancelUrl = mountCheckoutCallbackURL({
       success: false,
-      domain: appDomain.url,
-      product: productId
+      domain: appDomain.url
     });
     const successUrl = mountCheckoutCallbackURL({
       success: true,
-      domain: appDomain.url,
-      product: productId
+      domain: appDomain.url
     });
 
-    const applicationFeeAmount = getFeeAmount({
-      amount: price.amount,
-      feePercentage: APPLICATION_FEE_PERCENT
-    });
-    const order = await this.createOrderService.execute({
-      parent: customer.id,
-      currency: price.currency,
-      paidAmount: price.amount,
-      totalAmount: price.amount,
-      subtotalAmount: price.fromAmount || price.amount,
-      createdBy: data.createdBy,
-      app: customerApp.id
-    });
-    await this.createOrderItemService.execute({
-      parent: order.id,
-      product: productId,
-      quantity: 1,
-      price: price.id,
-      recurring: price.recurring,
-      subtotalAmount: price.fromAmount || price.amount,
-      totalAmount: price.amount,
-      createdBy: data.createdBy,
-      app: customerApp.id
-    });
     const payment = await this.createPaymentService.execute({
       parent: order.id,
       payer: customer.id,
-      currency: price.currency,
-      totalAmount: price.amount,
-      subtotalAmount: price.fromAmount || price.amount,
+      currency: order.currency,
+      totalAmount: order.totalAmount,
+      subtotalAmount: order.subtotalAmount,
+      paymentGatewayType: PaymentGatewayType.STRIPE,
       createdBy: data.createdBy,
       app: customerApp.id
     });
 
+    const stripePrices = orderItems?.items
+      ?.map((orderItem) => {
+        const price = prices?.items?.find(
+          (currentPrice) => currentPrice?.id === orderItem.price
+        );
+        if (!price) {
+          return;
+        }
+        return {
+          price: price.stripePrice,
+          amount: price.amount,
+          quantity: orderItem.quantity
+        };
+      })
+      ?.filter(Boolean);
+    const hasRecurringPrice = prices?.items?.some(
+      (currentPrice) => !!currentPrice.recurring
+    );
     const checkoutSession =
       await this.createStripeCheckoutSessionService.execute({
-        mode: price?.type === PriceType.RECURRING ? 'subscription' : 'payment',
+        mode: hasRecurringPrice ? 'subscription' : 'payment',
         app: customerApp.id,
         currency: customerApp.currency,
-        applicationFeePercentage: APPLICATION_FEE_PERCENT,
-        applicationFeeAmount,
+        applicationFeePercentage:
+          paymentGatewayFees[PaymentGatewayType.STRIPE].percentage,
+        applicationFeeAmount: getFeeAmount({
+          amount: order.totalAmount,
+          paymentGatewayType: PaymentGatewayType.STRIPE
+        }),
         order: order.id,
         payment: payment.id,
         cancelUrl,
@@ -154,20 +167,14 @@ export class CreateStripeCheckoutCommandHandler
         stripeAccount: customerApp.stripeAccount,
         customerEmail: customer.email,
         customerReference: customer.id,
-        prices: [
-          {
-            price: price.stripePrice,
-            quantity: 1,
-            amount: price.amount
-          }
-        ]
+        prices: stripePrices
       });
     if (!checkoutSession) {
       throw new SubscriptionContractNotFoundException();
     }
 
     return new CheckoutMapper().toModel({
-      order: order.id,
+      payment: payment.id,
       url: checkoutSession.url
     });
   }
@@ -180,7 +187,7 @@ export class CreateStripeCheckoutCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       customer: cleanValue(command?.customer),
-      price: cleanValue(command?.price)
+      order: cleanValue(command?.order)
     });
   }
 }

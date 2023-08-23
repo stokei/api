@@ -128,17 +128,6 @@ export class ActivateOrderSubscriptionContractsCommandHandler
               createdBy: data.createdBy
             });
 
-            await this.createSubscriptionContractItemService.execute({
-              parent: subscriptionContract.id,
-              app: subscriptionContract.app,
-              product: product.parent,
-              quantity: orderItem.quantity,
-              createdByAdmin: false,
-              price: price.id,
-              recurring: price.recurring,
-              createdBy: data.createdBy
-            });
-
             await this.activateSubscriptionContractService.execute({
               subscriptionContract: subscriptionContract.id,
               app: subscriptionContract.app,

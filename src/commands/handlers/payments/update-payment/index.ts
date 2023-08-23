@@ -51,9 +51,8 @@ export class UpdatePaymentCommandHandler
       throw new DataNotFoundException();
     }
 
-    const paymentUpdated = await this.findPaymentByIdRepository.execute(
-      paymentId
-    );
+    const paymentUpdated =
+      await this.findPaymentByIdRepository.execute(paymentId);
     if (!paymentUpdated) {
       throw new PaymentNotFoundException();
     }

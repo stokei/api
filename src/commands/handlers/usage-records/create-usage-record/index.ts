@@ -62,9 +62,8 @@ export class CreateUsageRecordCommandHandler
       });
     }
 
-    const usageRecordCreated = await this.createUsageRecordRepository.execute(
-      data
-    );
+    const usageRecordCreated =
+      await this.createUsageRecordRepository.execute(data);
     if (!usageRecordCreated) {
       throw new UsageRecordNotFoundException();
     }

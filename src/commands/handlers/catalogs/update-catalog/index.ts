@@ -46,9 +46,8 @@ export class UpdateCatalogCommandHandler
       throw new DataNotFoundException();
     }
 
-    const catalogUpdated = await this.findCatalogByIdRepository.execute(
-      catalogId
-    );
+    const catalogUpdated =
+      await this.findCatalogByIdRepository.execute(catalogId);
     if (!catalogUpdated) {
       throw new CatalogNotFoundException();
     }

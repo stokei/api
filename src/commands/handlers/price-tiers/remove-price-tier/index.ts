@@ -33,9 +33,8 @@ export class RemovePriceTierCommandHandler
       throw new ParamNotFoundException('priceTierId');
     }
 
-    const priceTier = await this.findPriceTierByIdRepository.execute(
-      priceTierId
-    );
+    const priceTier =
+      await this.findPriceTierByIdRepository.execute(priceTierId);
     if (!priceTier) {
       throw new PriceTierNotFoundException();
     }

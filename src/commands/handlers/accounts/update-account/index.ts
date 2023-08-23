@@ -46,9 +46,8 @@ export class UpdateAccountCommandHandler
       throw new DataNotFoundException();
     }
 
-    const accountUpdated = await this.findAccountByIdRepository.execute(
-      accountId
-    );
+    const accountUpdated =
+      await this.findAccountByIdRepository.execute(accountId);
     if (!accountUpdated) {
       throw new AccountNotFoundException();
     }

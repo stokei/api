@@ -2,6 +2,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateOrderCommand } from '@/commands/implements/orders/create-order.command';
+import { CreateOrderItemDTO } from '@/dtos/orders/create-order.dto';
 import { OrderStatus } from '@/enums/order-status.enum';
 import {
   AccountNotFoundException,
@@ -14,12 +15,15 @@ import {
   SubscriptionContractAlreadyActiveException
 } from '@/errors';
 import { PriceModel } from '@/models/price.model';
+import { RecurringModel } from '@/models/recurring.model';
 import { CreateOrderRepository } from '@/repositories/orders/create-order';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { CreateOrderItemService } from '@/services/order-items/create-order-item';
 import { RemoveOrderService } from '@/services/orders/remove-order';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
+import { CreateRecurringService } from '@/services/recurrings/create-recurring';
+import { FindAllRecurringsService } from '@/services/recurrings/find-all-recurrings';
 import { UserHasSubscriptionContractActiveService } from '@/services/subscription-contracts/user-has-subscription-contract-active';
 
 type CreateOrderCommandKeys = keyof CreateOrderCommand;
@@ -31,6 +35,8 @@ export class CreateOrderCommandHandler
   constructor(
     private readonly userHasSubscriptionContractActiveService: UserHasSubscriptionContractActiveService,
     private readonly findAppByIdService: FindAppByIdService,
+    private readonly createRecurringService: CreateRecurringService,
+    private readonly findAllRecurringsService: FindAllRecurringsService,
     private readonly removeOrderService: RemoveOrderService,
     private readonly findAllPricesService: FindAllPricesService,
     private readonly createOrderItemService: CreateOrderItemService,
@@ -115,6 +121,7 @@ export class CreateOrderCommandHandler
       await this.createItems({
         app: customerApp.id,
         order: orderCreated?.id,
+        orderItems: data.items,
         prices: prices?.items,
         createdBy: data.createdBy
       });
@@ -175,41 +182,70 @@ export class CreateOrderCommandHandler
         async (price) =>
           await this.userHasSubscriptionContractActiveService.execute({
             price: price.id,
-            product: price.parent,
             app,
             customer
           })
       )
     );
+    console.log({ activePrices });
     return activePrices?.some((activePrice) => !!activePrice);
   }
 
   private async createItems({
+    orderItems,
     prices,
     app,
     order,
     createdBy
   }: {
+    orderItems: CreateOrderItemDTO[];
     prices: PriceModel[];
     app: string;
     order: string;
     createdBy: string;
   }) {
-    return await Promise.all(
-      prices?.map(
-        async (price) =>
-          await this.createOrderItemService.execute({
-            parent: order,
-            product: price.parent,
-            quantity: 1,
-            price: price.id,
-            recurring: price.recurring,
-            subtotalAmount: price.fromAmount || price.amount,
-            totalAmount: price.amount,
+    const recurringsIds = prices?.map(({ recurring }) => recurring);
+    const recurrings = await this.findAllRecurringsService.execute({
+      where: {
+        AND: {
+          ids: recurringsIds
+        }
+      }
+    });
+    const orderItemsCreated = await Promise.all(
+      orderItems?.map(async (orderItem) => {
+        const price = prices?.find(
+          (currentPrice) => currentPrice.id === orderItem.price
+        );
+        if (!price) {
+          return;
+        }
+        const recurring = recurrings?.items?.find(
+          (currentRecurring) => currentRecurring.id === price.recurring
+        );
+        let recurringCreated: RecurringModel;
+        if (recurring) {
+          recurringCreated = await this.createRecurringService.execute({
+            app,
             createdBy,
-            app
-          })
-      )
+            interval: recurring.interval,
+            intervalCount: recurring.intervalCount,
+            usageType: recurring.usageType
+          });
+        }
+        return await this.createOrderItemService.execute({
+          parent: order,
+          product: price.parent,
+          quantity: 1,
+          price: price.id,
+          recurring: recurringCreated?.id,
+          subtotalAmount: price.fromAmount || price.amount,
+          totalAmount: price.amount,
+          createdBy,
+          app
+        });
+      })
     );
+    return orderItemsCreated?.filter(Boolean);
   }
 }

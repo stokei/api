@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
-import { WebhookStripeService } from '@/services/webhooks/stripe';
+import { WebhookStripeService } from '@/services/webhooks/stripe/webhook';
 
 @ApiTags(REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE)
 @Controller({

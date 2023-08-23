@@ -82,7 +82,9 @@ export class ChangeOrderToPaidCommandHandler
       ...dataChangeOrderToPaid
     });
     const orderModel = this.publisher.mergeObjectContext(orderChanged);
-    orderModel.changedOrderToPaid();
+    orderModel.changedOrderToPaid({
+      updatedBy: data.updatedBy
+    });
     orderModel.commit();
 
     return orderChanged;

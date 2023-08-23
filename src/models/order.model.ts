@@ -106,22 +106,22 @@ export class OrderModel extends AggregateRoot {
     }
   }
 
-  changedOrderToPaid() {
+  changedOrderToPaid({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new OrderChangedToPaidEvent({
-          updatedBy: this.updatedBy,
+          updatedBy,
           order: this
         })
       );
     }
   }
 
-  changedOrderToPaymentError() {
+  changedOrderToPaymentError({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new OrderChangedToPaymentErrorEvent({
-          updatedBy: this.updatedBy,
+          updatedBy,
           order: this
         })
       );

@@ -44,7 +44,7 @@ export class WebhookStripeCheckoutSessionAsyncPaymentSucceededService
       payment: payment.id,
       app: payment.app,
       paymentMethod: paymentMethod?.id,
-      updatedBy: payment.updatedBy
+      updatedBy: payment.createdBy
     });
 
     return HttpStatus.OK;

@@ -112,22 +112,22 @@ export class PaymentModel extends AggregateRoot {
     }
   }
 
-  changedPaymentToPaid() {
+  changedPaymentToPaid({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new PaymentChangedToPaidEvent({
-          updatedBy: this.updatedBy,
+          updatedBy,
           payment: this
         })
       );
     }
   }
 
-  changedPaymentToPaymentError() {
+  changedPaymentToPaymentError({ updatedBy }: { updatedBy: string }) {
     if (this.id) {
       this.apply(
         new PaymentChangedToPaymentErrorEvent({
-          updatedBy: this.updatedBy,
+          updatedBy,
           payment: this
         })
       );

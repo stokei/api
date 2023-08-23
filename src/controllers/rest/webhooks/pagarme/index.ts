@@ -3,7 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
-import { WebhookPagarmeService } from '@/services/webhooks/pagarme';
+import { WebhookPagarmeService } from '@/services/webhooks/pagarme/webhook';
 
 @ApiTags(REST_CONTROLLERS_URL_NAMES.WEBHOOKS_PAGARME)
 @Controller({

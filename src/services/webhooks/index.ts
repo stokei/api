@@ -1,29 +1,9 @@
-import { WebhookFindStripePaymentMethodService } from './find-stripe-payment-method';
-import { WebhookPagarmeService } from './pagarme';
-import { WebhookPagarmeOrderCancelService } from './pagarme-order-cancel';
-import { WebhookPagarmeOrderPaidService } from './pagarme-order-paid';
-import { WebhookStripeService } from './stripe';
-import { WebhookStripeCheckoutSessionAsyncPaymentFailedService } from './stripe-checkout-session-async-payment-failed';
-import { WebhookStripeCheckoutSessionAsyncPaymentSucceededService } from './stripe-checkout-session-async-payment-succeeded';
-import { WebhookStripeCheckoutSessionService } from './stripe-checkout-session-completed';
-import { WebhookStripeInvoicePaidService } from './stripe-invoice-paid';
-import { WebhookStripeInvoiceWithPaymentErrorService } from './stripe-invoice-with-payment-error';
-import { WebhookStripeSubscriptionContractCanceledService } from './stripe-subscription-contract-canceled';
-import { WebhookStripeSubscriptionUpdateService } from './stripe-subscription-contract-update';
-import { WebhookVideosService } from './videos';
+import { WebhookPagarmeServices } from './pagarme';
+import { WebhookStripeServices } from './stripe';
+import { WebhookVideosServices } from './videos';
 
 export const WebhookServices = [
-  WebhookStripeService,
-  WebhookStripeSubscriptionContractCanceledService,
-  WebhookStripeInvoicePaidService,
-  WebhookStripeInvoiceWithPaymentErrorService,
-  WebhookStripeSubscriptionUpdateService,
-  WebhookStripeCheckoutSessionService,
-  WebhookStripeCheckoutSessionAsyncPaymentSucceededService,
-  WebhookStripeCheckoutSessionAsyncPaymentFailedService,
-  WebhookVideosService,
-  WebhookPagarmeService,
-  WebhookPagarmeOrderPaidService,
-  WebhookPagarmeOrderCancelService,
-  WebhookFindStripePaymentMethodService
+  ...WebhookStripeServices,
+  ...WebhookPagarmeServices,
+  ...WebhookVideosServices
 ];

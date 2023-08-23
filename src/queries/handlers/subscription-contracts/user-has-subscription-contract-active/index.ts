@@ -10,7 +10,7 @@ import { UserHasSubscriptionContractActiveQuery } from '@/queries/implements/sub
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
-import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
+import { FindAllSubscriptionContractsService } from '@/services/subscription-contracts/find-all-subscription-contracts';
 
 @QueryHandler(UserHasSubscriptionContractActiveQuery)
 export class UserHasSubscriptionContractActiveQueryHandler
@@ -19,8 +19,8 @@ export class UserHasSubscriptionContractActiveQueryHandler
   constructor(
     private readonly findPriceByIdService: FindPriceByIdService,
     private readonly findProductByIdService: FindProductByIdService,
-    private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
-    private readonly findAllSubscriptionContractItemsService: FindAllSubscriptionContractItemsService
+    private readonly findAllSubscriptionContractItemsService: FindAllSubscriptionContractItemsService,
+    private readonly findAllSubscriptionContractsService: FindAllSubscriptionContractsService
   ) {}
 
   async execute(
@@ -31,14 +31,14 @@ export class UserHasSubscriptionContractActiveQueryHandler
     }
     const data = this.clearData(query);
 
-    const product = await this.findProductByIdService.execute(data.product);
-    if (!product) {
-      throw new ProductNotFoundException();
-    }
-
     const price = await this.findPriceByIdService.execute(data.price);
     if (!price?.active) {
       throw new PriceNotFoundException();
+    }
+
+    const product = await this.findProductByIdService.execute(price.parent);
+    if (!product) {
+      throw new ProductNotFoundException();
     }
 
     const customerSubscriptionContractItems =
@@ -50,38 +50,29 @@ export class UserHasSubscriptionContractActiveQueryHandler
             },
             product: {
               equals: product.parent
-            },
-            price: {
-              equals: price.id
             }
           }
-        },
-        orderBy: {
-          createdAt: 'desc'
         }
       });
+    if (!customerSubscriptionContractItems?.totalCount) {
+      return false;
+    }
+    const subscriptionContractsIds =
+      customerSubscriptionContractItems?.items?.map(({ parent }) => parent);
 
-    if (customerSubscriptionContractItems?.totalCount > 0) {
-      const subscriptionContracts = await Promise.all(
-        customerSubscriptionContractItems?.items?.map(
-          async (customerSubscriptionContractItem) => {
-            try {
-              const customerSubscriptionContract =
-                await this.findSubscriptionContractByIdService.execute(
-                  customerSubscriptionContractItem?.parent
-                );
-              return customerSubscriptionContract;
-            } catch (error) {
-              return null;
+    const subscriptionContracts =
+      await this.findAllSubscriptionContractsService.execute({
+        where: {
+          AND: {
+            ids: subscriptionContractsIds,
+            active: {
+              equals: true
             }
           }
-        )
-      );
-      return subscriptionContracts
-        ?.filter(Boolean)
-        ?.some((subscriptionContract) => !!subscriptionContract.active);
-    }
-    return false;
+        }
+      });
+    const userHasASubscriptionActive = subscriptionContracts?.totalCount > 0;
+    return userHasASubscriptionActive;
   }
 
   private clearData(
@@ -89,7 +80,6 @@ export class UserHasSubscriptionContractActiveQueryHandler
   ): UserHasSubscriptionContractActiveQuery {
     return cleanObject({
       price: cleanValue(query?.price),
-      product: cleanValue(query?.product),
       app: cleanValue(query?.app),
       customer: cleanValue(query?.customer)
     });

@@ -15,7 +15,7 @@ export class FindStripeInvoiceByIdService
     return stripeClient.invoices.retrieve(
       invoice,
       {
-        expand: ['payment_intent']
+        expand: ['payment_intent', 'subscription']
       },
       {
         stripeAccount

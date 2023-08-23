@@ -83,7 +83,9 @@ export class ChangeOrderToPaymentErrorCommandHandler
       ...dataChangeOrderToPaymentError
     });
     const orderModel = this.publisher.mergeObjectContext(orderChanged);
-    orderModel.changedOrderToPaymentError();
+    orderModel.changedOrderToPaymentError({
+      updatedBy: data.updatedBy
+    });
     orderModel.commit();
 
     return orderChanged;

@@ -34,7 +34,7 @@ export class WebhookPagarmeOrderPaidService
     await this.changePaymentToPaidService.execute({
       payment: payment.id,
       app: payment.app,
-      updatedBy: payment.updatedBy
+      updatedBy: payment.createdBy
     });
 
     return HttpStatus.OK;

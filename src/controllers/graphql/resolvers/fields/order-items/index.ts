@@ -1,6 +1,8 @@
 import { OrderItemAppResolver } from './app';
 import { OrderItemCreatedByResolver } from './created-by';
+import { OrderParentResolver } from './parent';
 import { OrderItemPriceResolver } from './price';
+import { OrderItemProductResolver } from './product';
 import { OrderItemRecurringResolver } from './recurring';
 import { OrderItemReferenceResolver } from './reference';
 import { OrderItemUpdatedByResolver } from './updated-by';
@@ -11,5 +13,7 @@ export const OrderItemsFieldsResolvers = [
   OrderItemCreatedByResolver,
   OrderItemUpdatedByResolver,
   OrderItemRecurringResolver,
-  OrderItemPriceResolver
+  OrderItemPriceResolver,
+  OrderItemProductResolver,
+  OrderParentResolver
 ];

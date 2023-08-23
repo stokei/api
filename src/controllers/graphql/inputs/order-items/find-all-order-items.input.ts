@@ -18,14 +18,20 @@ class WhereDataFindAllOrderItemsDataInput
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  parent?: WhereDataSearchInput;
+
   @Field(() => WhereDataStringInput, { nullable: true })
-  parent?: WhereDataStringInput;
+  app?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  price?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
+  recurring?: WhereDataStringInput;
 
   @Field(() => WhereDataSearchInput, { nullable: true })
-  name?: WhereDataSearchInput;
-
-  @Field(() => WhereDataSearchInput, { nullable: true })
-  description?: WhereDataSearchInput;
+  product?: WhereDataSearchInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
@@ -39,7 +45,13 @@ export class OrderByDataFindAllOrderItemsInput
   implements OrderByDataFindAllOrderItemsDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
+  quantity?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  totalAmount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  subtotalAmount?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

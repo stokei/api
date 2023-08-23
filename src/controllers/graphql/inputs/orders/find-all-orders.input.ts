@@ -1,11 +1,13 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
+  WhereDataBooleanInput,
   WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
 } from '@stokei/nestjs';
 
+import { OrderStatus } from '@/controllers/graphql/enums/order-status.enum';
 import {
   OrderByDataFindAllOrdersDTO,
   WhereDataFindAllOrdersDTO
@@ -16,14 +18,20 @@ class WhereDataFindAllOrdersDataInput implements WhereDataFindAllOrdersDTO {
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  parent?: WhereDataSearchInput;
+
   @Field(() => WhereDataStringInput, { nullable: true })
-  parent?: WhereDataStringInput;
+  app?: WhereDataStringInput;
 
-  @Field(() => WhereDataSearchInput, { nullable: true })
-  name?: WhereDataSearchInput;
+  @Field(() => WhereDataStringInput, { nullable: true })
+  currency?: WhereDataStringInput;
 
-  @Field(() => WhereDataSearchInput, { nullable: true })
-  description?: WhereDataSearchInput;
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  active?: WhereDataBooleanInput;
+
+  @Field(() => OrderStatus, { nullable: true })
+  status?: OrderStatus;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
@@ -37,7 +45,25 @@ export class OrderByDataFindAllOrdersInput
   implements OrderByDataFindAllOrdersDTO
 {
   @Field(() => OrderBy, { nullable: true })
-  name?: OrderBy;
+  currency?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  status?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  paidAmount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  totalAmount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  subtotalAmount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  feeAmount?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  active?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

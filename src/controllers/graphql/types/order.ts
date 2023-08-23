@@ -1,24 +1,43 @@
-import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import { createUnionType, Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import { splitServiceId } from '@stokei/nestjs';
 
 import { OrderStatus } from '@/controllers/graphql/enums/order-status.enum';
+import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 
 import { Account } from './account';
 import { App } from './app';
 import { Currency } from './currency';
+import { OrderItems } from './order-items';
+
+export const OrderParentUnion = createUnionType({
+  name: 'OrderParentUnion',
+  types: () => [Account, App] as const,
+  async resolveType(value) {
+    const type = splitServiceId(value?.id)?.service;
+    const types = {
+      [ServerStokeiApiIdPrefix.ACCOUNTS]: Account.name,
+      [ServerStokeiApiIdPrefix.APPS]: App.name
+    };
+    return types[type];
+  }
+});
 
 @ObjectType()
 export class Order {
   @Field(() => ID)
   id: string;
 
-  @Field(() => String)
-  parent: string;
+  @Field(() => OrderParentUnion)
+  parent: typeof OrderParentUnion;
 
   @Field(() => Currency)
   currency: Currency;
 
   @Field(() => OrderStatus)
   status: OrderStatus;
+
+  @Field(() => OrderItems, { nullable: true })
+  items?: OrderItems;
 
   @Field(() => Float)
   paidAmount: number;

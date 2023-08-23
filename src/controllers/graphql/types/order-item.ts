@@ -3,6 +3,7 @@ import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 import { Account } from './account';
 import { App } from './app';
 import { Price } from './price';
+import { Product } from './product';
 import { Recurring } from './recurring';
 
 @ObjectType()
@@ -13,8 +14,8 @@ export class OrderItem {
   @Field(() => String)
   parent: string;
 
-  @Field(() => String)
-  product: string;
+  @Field(() => Product)
+  product: Product;
 
   @Field(() => Float)
   quantity: number;

@@ -12,8 +12,8 @@ import {
   OrderItemsNotFoundException,
   OrderNotFoundException,
   ParamNotFoundException,
-  PricesNotFoundException,
-  SubscriptionContractNotFoundException
+  PaymentNotFoundException,
+  PricesNotFoundException
 } from '@/errors';
 import { CheckoutMapper } from '@/mappers/checkouts';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
@@ -144,9 +144,10 @@ export class CreatePagarmeCheckoutCommandHandler
       payment: payment.id,
       prices: pagarmePrices
     });
-
+    // ver porque está dando erro no pagamento com PIX
+    console.log({ pagarmeOrder });
     if (!pagarmeOrder?.pix?.qrCodeURL) {
-      throw new SubscriptionContractNotFoundException();
+      throw new PaymentNotFoundException();
     }
     return new CheckoutMapper().toModel({
       payment: payment.id,

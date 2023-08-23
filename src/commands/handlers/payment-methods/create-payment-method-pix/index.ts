@@ -43,7 +43,7 @@ export class CreatePaymentMethodPixCommandHandler
     const paymentMethodCreated =
       await this.createPaymentMethodRepository.execute({
         ...data,
-        paymentMethodType: PaymentMethodType.BOLETO
+        paymentMethodType: PaymentMethodType.PIX
       });
     if (!paymentMethodCreated) {
       throw new PaymentMethodNotFoundException();

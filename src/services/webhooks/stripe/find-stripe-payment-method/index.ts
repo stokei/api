@@ -32,38 +32,40 @@ export class WebhookFindStripePaymentMethodService
       );
     const payment = data.payment;
 
-    const paymentIntent: Stripe.PaymentIntent =
+    const stripePaymentIntent: Stripe.PaymentIntent =
       stripeCheckoutSession?.payment_intent as Stripe.PaymentIntent;
+    const stripeSubscription: Stripe.Subscription =
+      stripeCheckoutSession?.subscription as Stripe.Subscription;
+
     let paymentMethod: PaymentMethodModel;
-    if (paymentIntent) {
-      const stripePaymentMethod: Stripe.PaymentMethod =
-        paymentIntent?.payment_method as Stripe.PaymentMethod;
-      if (!!stripePaymentMethod) {
+    const stripePaymentMethod: Stripe.PaymentMethod =
+      (stripePaymentIntent?.payment_method ||
+        stripeSubscription?.default_payment_method) as Stripe.PaymentMethod;
+
+    if (!!stripePaymentMethod) {
+      try {
+        paymentMethod =
+          await this.findPaymentMethodByStripePaymentMethodService.execute(
+            stripePaymentMethod?.id
+          );
+      } catch (error) {
         try {
-          paymentMethod =
-            await this.findPaymentMethodByStripePaymentMethodService.execute(
-              stripePaymentMethod?.id
+          if (stripePaymentMethod.type === 'card') {
+            paymentMethod = await this.createPaymentMethodCardService.execute({
+              parent: payment?.parent,
+              app: payment.app,
+              createdBy: payment.updatedBy,
+              stripePaymentMethod: stripePaymentMethod?.id
+            });
+          } else if (stripePaymentMethod.type === 'boleto') {
+            paymentMethod = await this.createPaymentMethodBoletoService.execute(
+              {
+                app: payment.app,
+                createdBy: payment.updatedBy
+              }
             );
-        } catch (error) {
-          try {
-            if (stripePaymentMethod.type === 'card') {
-              paymentMethod = await this.createPaymentMethodCardService.execute(
-                {
-                  parent: payment?.parent,
-                  app: payment.app,
-                  createdBy: payment.updatedBy,
-                  stripePaymentMethod: paymentIntent?.payment_method?.toString()
-                }
-              );
-            } else if (stripePaymentMethod.type === 'boleto') {
-              paymentMethod =
-                await this.createPaymentMethodBoletoService.execute({
-                  app: payment.app,
-                  createdBy: payment.updatedBy
-                });
-            }
-          } catch (error) {}
-        }
+          }
+        } catch (error) {}
       }
     }
     return paymentMethod;

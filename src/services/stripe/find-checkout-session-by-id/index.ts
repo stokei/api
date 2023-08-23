@@ -21,6 +21,7 @@ export class FindStripeCheckoutSessionByIdService
           'subscription',
           'payment_intent',
           'customer',
+          'subscription.default_payment_method',
           'payment_intent.payment_method'
         ]
       },

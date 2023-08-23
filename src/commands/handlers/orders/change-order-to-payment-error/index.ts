@@ -62,7 +62,7 @@ export class ChangeOrderToPaymentErrorCommandHandler
     const dataChangeOrderToPaymentError: ChangeOrderToPaymentErrorRepositoryDataDTO =
       {
         active: true,
-        status: OrderStatus.PAID,
+        status: OrderStatus.PAYMENT_ERROR,
         paymentErrorAt: convertToISODateString(Date.now()),
         updatedBy: data.updatedBy
       };

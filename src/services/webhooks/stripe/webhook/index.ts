@@ -84,6 +84,8 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
               stripeAccount: connectAccount
             }
           );
+        case 'payment_intent.succeeded':
+        case 'payment_intent.payment_failed':
         default:
           return { status: HttpStatus.OK };
       }

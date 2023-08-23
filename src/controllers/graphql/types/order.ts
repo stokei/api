@@ -8,6 +8,7 @@ import { Account } from './account';
 import { App } from './app';
 import { Currency } from './currency';
 import { OrderItems } from './order-items';
+import { Payments } from './payments';
 
 export const OrderParentUnion = createUnionType({
   name: 'OrderParentUnion',
@@ -38,6 +39,9 @@ export class Order {
 
   @Field(() => OrderItems, { nullable: true })
   items?: OrderItems;
+
+  @Field(() => Payments, { nullable: true })
+  payments?: Payments;
 
   @Field(() => Float)
   paidAmount: number;

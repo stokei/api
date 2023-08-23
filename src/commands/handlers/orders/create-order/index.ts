@@ -187,7 +187,7 @@ export class CreateOrderCommandHandler
           })
       )
     );
-    console.log({ activePrices });
+
     return activePrices?.some((activePrice) => !!activePrice);
   }
 

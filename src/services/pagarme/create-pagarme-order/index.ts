@@ -71,11 +71,19 @@ export class CreatePagarmeOrderService
     }
     const charge = responseData?.charges?.[0];
     const lastTransaction = charge?.last_transaction;
+    const errorList: string[] =
+      lastTransaction?.gateway_response?.errors?.[0] &&
+      Object.values(lastTransaction?.gateway_response?.errors?.[0]);
+    if (errorList?.length) {
+      throw new Error(errorList?.[0]);
+    }
+
     return {
       id: responseData?.id,
       code: responseData?.code,
       status: responseData?.status,
       paymentMethod: charge?.payment_method,
+      error: errorList?.[0],
       pix: {
         copyAndPaste: lastTransaction?.qr_code,
         qrCodeURL: lastTransaction?.qr_code_url

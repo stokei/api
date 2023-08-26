@@ -62,6 +62,7 @@ export class ChangePaymentToPaymentErrorCommandHandler
     const dataChangePaymentToPaymentError: ChangePaymentToPaymentErrorRepositoryDataDTO =
       {
         active: true,
+        stripeCheckoutSession: data?.stripeCheckoutSession,
         status: PaymentStatus.PAYMENT_ERROR,
         paymentMethod: data.paymentMethod,
         paymentErrorAt: convertToISODateString(Date.now()),
@@ -98,6 +99,7 @@ export class ChangePaymentToPaymentErrorCommandHandler
       app: cleanValue(command?.app),
       payment: cleanValue(command?.payment),
       paymentMethod: cleanValue(command?.paymentMethod),
+      stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),
       updatedBy: cleanValue(command?.updatedBy)
     });
   }

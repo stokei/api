@@ -11,6 +11,7 @@ export interface WhereDataFindAllPaymentsDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
+  payer?: IWhereDataSearch;
   currency?: IWhereData;
   status?: PaymentStatus;
   paymentMethod?: IWhereData;

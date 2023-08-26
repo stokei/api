@@ -19,6 +19,7 @@ import { CheckoutMapper } from '@/mappers/checkouts';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAllOrderItemsService } from '@/services/order-items/find-all-order-items';
+import { ChangeOrderToPendingService } from '@/services/orders/change-order-to-pending';
 import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
 import { CreatePagarmeOrderService } from '@/services/pagarme/create-pagarme-order';
 import { CreatePaymentMethodPixService } from '@/services/payment-methods/create-payment-method-pix';
@@ -33,6 +34,7 @@ export class CreatePagarmeCheckoutCommandHandler
 {
   constructor(
     private readonly createPaymentMethodPixService: CreatePaymentMethodPixService,
+    private readonly changeOrderToPendingService: ChangeOrderToPendingService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findOrderByIdService: FindOrderByIdService,
     private readonly findAllOrderItemsService: FindAllOrderItemsService,
@@ -72,12 +74,19 @@ export class CreatePagarmeCheckoutCommandHandler
       throw new AppNotFoundException();
     }
 
-    const order = await this.findOrderByIdService.execute(data.order);
+    let order = await this.findOrderByIdService.execute(data.order);
     if (!order) {
       throw new OrderNotFoundException();
     }
     if (order.status === OrderStatus.PAID) {
       throw new OrderAlreadyPaidException();
+    }
+    if (order.status !== OrderStatus.PENDING) {
+      order = await this.changeOrderToPendingService.execute({
+        app: data.app,
+        order: order.id,
+        updatedBy: data.createdBy
+      });
     }
 
     const orderItems = await this.findAllOrderItemsService.execute({
@@ -138,14 +147,13 @@ export class CreatePagarmeCheckoutCommandHandler
       ?.filter(Boolean);
     const pagarmeOrder = await this.createPagarmeOrderService.execute({
       appRecipient: customerApp.pagarmeAccount,
+      totalAmount: payment.totalAmount,
       feeAmount: payment.feeAmount,
       currency: order.currency,
       customer: customer.pagarmeCustomer,
       payment: payment.id,
       prices: pagarmePrices
     });
-    // ver porque está dando erro no pagamento com PIX
-    console.log({ pagarmeOrder });
     if (!pagarmeOrder?.pix?.qrCodeURL) {
       throw new PaymentNotFoundException();
     }

@@ -25,7 +25,8 @@ export class CreateStripeCheckoutSessionService
         customer: data.customer,
         metadata: {
           order: data.order,
-          payment: data.payment
+          payment: data.payment,
+          paymentMethodType: data.paymentMethodType
         },
         mode: data.mode,
         expand: ['subscription'],

@@ -15,7 +15,7 @@ export class Payment {
   @Field(() => String)
   parent: string;
 
-  @Field(() => Account)
+  @Field(() => Account, { nullable: true })
   payer: Account;
 
   @Field(() => Currency)

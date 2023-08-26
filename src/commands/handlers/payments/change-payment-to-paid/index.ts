@@ -58,6 +58,7 @@ export class ChangePaymentToPaidCommandHandler
 
     const dataChangePaymentToPaid: ChangePaymentToPaidRepositoryDataDTO = {
       active: true,
+      stripeCheckoutSession: data?.stripeCheckoutSession,
       status: PaymentStatus.PAID,
       paymentMethod: data.paymentMethod,
       paidAt: convertToISODateString(Date.now()),
@@ -93,6 +94,7 @@ export class ChangePaymentToPaidCommandHandler
       app: cleanValue(command?.app),
       payment: cleanValue(command?.payment),
       paymentMethod: cleanValue(command?.paymentMethod),
+      stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),
       updatedBy: cleanValue(command?.updatedBy)
     });
   }

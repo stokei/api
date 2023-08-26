@@ -36,6 +36,7 @@ export class PaymentMapper {
           paymentMethod: prismaMapper.toWhereData(operatorData.paymentMethod),
           active: prismaMapper.toWhereData(operatorData.active),
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
+          payer: prismaMapper.toWhereDataSearch(operatorData.payer),
           app: prismaMapper.toWhereData(operatorData.app),
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
           createdBy: prismaMapper.toWhereData(operatorData.createdBy)
@@ -63,6 +64,7 @@ export class PaymentMapper {
         operatorMapper(operatorData) {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),
+            payer: cleanWhereDataSearch(operatorData.payer),
             currency: cleanWhereDataString(operatorData.currency),
             status: operatorData.status,
             paymentMethod: cleanWhereDataString(operatorData.paymentMethod),

@@ -74,6 +74,7 @@ export class UpdatePaymentMethodCommandHandler
         cardBrand: cleanValue(command?.data?.cardBrand),
         cardExpiryMonth: cleanValue(command?.data?.cardExpiryMonth),
         cardExpiryYear: cleanValue(command?.data?.cardExpiryYear),
+        paymentMethodType: cleanValue(command?.data?.paymentMethodType),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

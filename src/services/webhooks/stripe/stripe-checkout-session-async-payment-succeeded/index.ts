@@ -7,7 +7,7 @@ import { ChangePaymentToPaidService } from '@/services/payments/change-payment-t
 import { FindPaymentByIdService } from '@/services/payments/find-payment-by-id';
 import { FindStripeCheckoutSessionByIdService } from '@/services/stripe/find-checkout-session-by-id';
 
-import { WebhookFindStripePaymentMethodService } from '../find-stripe-payment-method';
+import { WebhookFindOrCreateStripePaymentMethodService } from '../find-or-create-stripe-payment-method';
 
 @Injectable()
 export class WebhookStripeCheckoutSessionAsyncPaymentSucceededService
@@ -16,7 +16,7 @@ export class WebhookStripeCheckoutSessionAsyncPaymentSucceededService
   constructor(
     private readonly findStripeCheckoutSessionByIdService: FindStripeCheckoutSessionByIdService,
     private readonly findPaymentByIdService: FindPaymentByIdService,
-    private readonly webhookFindStripePaymentMethodService: WebhookFindStripePaymentMethodService,
+    private readonly webhookFindOrCreateStripePaymentMethodService: WebhookFindOrCreateStripePaymentMethodService,
     private readonly changePaymentToPaidService: ChangePaymentToPaidService
   ) {}
 
@@ -34,7 +34,7 @@ export class WebhookStripeCheckoutSessionAsyncPaymentSucceededService
       throw new PaymentNotFoundException();
     }
     const paymentMethod =
-      await this.webhookFindStripePaymentMethodService.execute({
+      await this.webhookFindOrCreateStripePaymentMethodService.execute({
         payment,
         stripeCheckoutSession: stripeCheckoutSession?.id,
         stripeAccount: data.stripeAccount

@@ -1,6 +1,6 @@
 import { PaymentModel } from '@/models/payment.model';
 
-export interface WebhookFindStripePaymentMethodDTO {
+export interface WebhookFindOrCreateStripePaymentMethodDTO {
   payment: PaymentModel;
   stripeCheckoutSession: string;
   stripeAccount?: string;

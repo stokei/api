@@ -1,4 +1,4 @@
-import { WebhookFindStripePaymentMethodService } from './find-stripe-payment-method';
+import { WebhookFindOrCreateStripePaymentMethodService } from './find-or-create-stripe-payment-method';
 import { WebhookStripeCheckoutSessionAsyncPaymentFailedService } from './stripe-checkout-session-async-payment-failed';
 import { WebhookStripeCheckoutSessionAsyncPaymentSucceededService } from './stripe-checkout-session-async-payment-succeeded';
 import { WebhookStripeCheckoutSessionService } from './stripe-checkout-session-completed';
@@ -13,5 +13,5 @@ export const WebhookStripeServices = [
   WebhookStripeCheckoutSessionService,
   WebhookStripeCheckoutSessionAsyncPaymentSucceededService,
   WebhookStripeCheckoutSessionAsyncPaymentFailedService,
-  WebhookFindStripePaymentMethodService
+  WebhookFindOrCreateStripePaymentMethodService
 ];

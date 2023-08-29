@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 
 import { stripeClient } from '@/clients/stripe';
 import { CreateStripeCheckoutSessionDTO } from '@/dtos/stripe/create-stripe-checkout-session.dto';
+import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 
 @Injectable()
 export class CreateStripeCheckoutSessionService
@@ -16,6 +17,17 @@ export class CreateStripeCheckoutSessionService
   async execute(
     data: CreateStripeCheckoutSessionDTO
   ): Promise<Stripe.Response<Stripe.Checkout.Session>> {
+    const paymentMethodTypes: Record<
+      PaymentMethodType,
+      Array<Stripe.Checkout.SessionCreateParams.PaymentMethodType>
+    > = {
+      [PaymentMethodType.PIX]: ['pix'],
+      [PaymentMethodType.CARD]: ['card'],
+      [PaymentMethodType.BOLETO]: ['boleto']
+    };
+    const allowedPaymentMethodTypes =
+      paymentMethodTypes[data.paymentMethodType];
+
     return stripeClient.checkout.sessions.create(
       {
         cancel_url: data.cancelUrl,
@@ -23,6 +35,7 @@ export class CreateStripeCheckoutSessionService
         currency: data.currency,
         client_reference_id: data.customerReference,
         customer: data.customer,
+        payment_method_types: allowedPaymentMethodTypes,
         metadata: {
           order: data.order,
           payment: data.payment,

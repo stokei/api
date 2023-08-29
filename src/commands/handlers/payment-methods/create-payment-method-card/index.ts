@@ -4,7 +4,6 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 import { CreatePaymentMethodCardCommand } from '@/commands/implements/payment-methods/create-payment-method-card.command';
 import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import {
-  AccountNotFoundException,
   AppNotFoundException,
   DataNotFoundException,
   PaymentMethodAlreadyExistsException,
@@ -12,24 +11,16 @@ import {
 } from '@/errors';
 import { CreatePaymentMethodCardRepository } from '@/repositories/payment-methods/create-payment-method-card';
 import { ExistsPaymentMethodsRepository } from '@/repositories/payment-methods/exists-payment-methods';
-import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { AttachStripePaymentMethodToCustomerService } from '@/services/stripe/attach-stripe-payment-method-to-customer';
-import { FindStripeCustomerByIdService } from '@/services/stripe/find-customer-by-id';
-import { FindStripePaymentMethodByIdService } from '@/services/stripe/find-payment-method-by-id';
 
 @CommandHandler(CreatePaymentMethodCardCommand)
 export class CreatePaymentMethodCardCommandHandler
   implements ICommandHandler<CreatePaymentMethodCardCommand>
 {
   constructor(
-    private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly createPaymentMethodRepository: CreatePaymentMethodCardRepository,
     private readonly existsPaymentMethodsRepository: ExistsPaymentMethodsRepository,
-    private readonly findStripePaymentMethodByIdService: FindStripePaymentMethodByIdService,
-    private readonly findStripeCustomerByIdService: FindStripeCustomerByIdService,
-    private readonly attachStripePaymentMethodToCustomerService: AttachStripePaymentMethodToCustomerService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -39,73 +30,36 @@ export class CreatePaymentMethodCardCommandHandler
       throw new DataNotFoundException();
     }
 
-    const account = await this.findAccountByIdService.execute(data.parent);
-    if (!account) {
-      throw new AccountNotFoundException();
-    }
     const app = await this.findAppByIdService.execute(data.app);
     if (!app) {
       throw new AppNotFoundException();
     }
 
-    const stripePaymentMethod =
-      await this.findStripePaymentMethodByIdService.execute(
-        data.stripePaymentMethod,
-        app.stripeAccount
-      );
-
-    const stripeCustomer = await this.findStripeCustomerByIdService.execute(
-      account.stripeCustomer,
-      app.stripeAccount
-    );
-    if (!stripeCustomer) {
-      throw new AccountNotFoundException();
-    }
-
-    const lastFourCardNumber =
-      data.lastFourCardNumber || stripePaymentMethod?.card?.last4;
-    const cardBrand = data.cardBrand || stripePaymentMethod?.card?.brand;
-    const cardExpiryMonth =
-      data.cardExpiryMonth || stripePaymentMethod?.card?.exp_month?.toString();
-    const cardExpiryYear =
-      data.cardExpiryYear || stripePaymentMethod?.card?.exp_year?.toString();
-
-    const paymentMethodExists =
-      await this.existsPaymentMethodsRepository.execute({
+    let paymentMethodExists = false;
+    if (data.parent) {
+      paymentMethodExists = await this.existsPaymentMethodsRepository.execute({
         where: {
-          parent: account.id,
+          parent: data.parent,
           app: app.id,
-          lastFourCardNumber,
-          cardBrand,
-          cardExpiryMonth,
-          cardExpiryYear,
+          lastFourCardNumber: data.lastFourCardNumber,
+          cardBrand: data.cardBrand,
+          cardExpiryMonth: data.cardExpiryMonth,
+          cardExpiryYear: data.cardExpiryYear,
           paymentMethodType: PaymentMethodType.CARD,
           ...(data.stripePaymentMethod && {
             stripePaymentMethod: data.stripePaymentMethod
           })
         }
       });
+    }
     if (paymentMethodExists) {
       throw new PaymentMethodAlreadyExistsException();
-    }
-
-    if (data.stripePaymentMethod) {
-      await this.attachStripePaymentMethodToCustomerService.execute({
-        app: app.id,
-        customer: account?.stripeCustomer,
-        paymentMethod: data.stripePaymentMethod,
-        stripeAccount: app.stripeAccount
-      });
     }
 
     const paymentMethodCreated =
       await this.createPaymentMethodRepository.execute({
         ...data,
-        paymentMethodType: PaymentMethodType.CARD,
-        lastFourCardNumber,
-        cardBrand,
-        cardExpiryMonth,
-        cardExpiryYear
+        paymentMethodType: PaymentMethodType.CARD
       });
     if (!paymentMethodCreated) {
       throw new PaymentMethodNotFoundException();

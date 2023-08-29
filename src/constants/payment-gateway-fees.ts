@@ -14,7 +14,7 @@ export const paymentGatewayFees: Record<
     fixAmount: 0
   },
   [PaymentGatewayType.PAGARME]: {
-    percentage: 5,
+    percentage: 4,
     fixAmount: 200
   }
 };

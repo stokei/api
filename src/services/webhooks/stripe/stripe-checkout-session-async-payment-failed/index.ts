@@ -2,12 +2,12 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { IBaseService } from '@stokei/nestjs';
 
 import { WebhookStripeCheckoutSessionDTO } from '@/dtos/webhooks/webhook-stripe-checkout-session-completed.dto';
-import { SubscriptionContractNotFoundException } from '@/errors';
+import { PaymentNotFoundException } from '@/errors';
 import { ChangePaymentToPaymentErrorService } from '@/services/payments/change-payment-to-payment-error';
 import { FindPaymentByIdService } from '@/services/payments/find-payment-by-id';
 import { FindStripeCheckoutSessionByIdService } from '@/services/stripe/find-checkout-session-by-id';
 
-import { WebhookFindStripePaymentMethodService } from '../find-stripe-payment-method';
+import { WebhookFindOrCreateStripePaymentMethodService } from '../find-or-create-stripe-payment-method';
 
 @Injectable()
 export class WebhookStripeCheckoutSessionAsyncPaymentFailedService
@@ -16,7 +16,7 @@ export class WebhookStripeCheckoutSessionAsyncPaymentFailedService
   constructor(
     private readonly findStripeCheckoutSessionByIdService: FindStripeCheckoutSessionByIdService,
     private readonly findPaymentByIdService: FindPaymentByIdService,
-    private readonly webhookFindStripePaymentMethodService: WebhookFindStripePaymentMethodService,
+    private readonly webhookFindOrCreateStripePaymentMethodService: WebhookFindOrCreateStripePaymentMethodService,
     private readonly changePaymentToPaymentErrorService: ChangePaymentToPaymentErrorService
   ) {}
 
@@ -30,10 +30,10 @@ export class WebhookStripeCheckoutSessionAsyncPaymentFailedService
       stripeCheckoutSession?.metadata?.payment
     );
     if (!payment) {
-      throw new SubscriptionContractNotFoundException();
+      throw new PaymentNotFoundException();
     }
     const paymentMethod =
-      await this.webhookFindStripePaymentMethodService.execute({
+      await this.webhookFindOrCreateStripePaymentMethodService.execute({
         payment,
         stripeCheckoutSession: stripeCheckoutSession?.id,
         stripeAccount: data.stripeAccount
@@ -42,6 +42,7 @@ export class WebhookStripeCheckoutSessionAsyncPaymentFailedService
     await this.changePaymentToPaymentErrorService.execute({
       payment: payment.id,
       app: payment.app,
+      stripeCheckoutSession: stripeCheckoutSession?.id,
       paymentMethod: paymentMethod?.id,
       updatedBy: payment.createdBy
     });

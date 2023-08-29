@@ -111,6 +111,7 @@ export class ActivateOrderSubscriptionContractsCommandHandler
               await this.createSubscriptionContractService.execute({
                 parent: order.parent,
                 app: app.id,
+                order: order.id,
                 automaticRenew: price.automaticRenew,
                 createdByAdmin: false,
                 type: price.type,

@@ -1,6 +1,7 @@
 import { PaymentAppResolver } from './app';
 import { PaymentCreatedByResolver } from './created-by';
 import { PaymentCurrencyResolver } from './currency';
+import { PaymentPayerResolver } from './payer';
 import { PaymentPaymentMethodResolver } from './payment-method';
 import { PaymentReferenceResolver } from './reference';
 import { PaymentUpdatedByResolver } from './updated-by';
@@ -11,5 +12,6 @@ export const PaymentsFieldsResolvers = [
   PaymentCreatedByResolver,
   PaymentUpdatedByResolver,
   PaymentCurrencyResolver,
-  PaymentPaymentMethodResolver
+  PaymentPaymentMethodResolver,
+  PaymentPayerResolver
 ];

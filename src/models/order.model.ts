@@ -5,6 +5,7 @@ import { OrderStatus } from '@/enums/order-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { OrderChangedToPaidEvent } from '@/events/implements/orders/order-changed-to-paid.event';
 import { OrderChangedToPaymentErrorEvent } from '@/events/implements/orders/order-changed-to-payment-error.event';
+import { OrderChangedToPendingEvent } from '@/events/implements/orders/order-changed-to-pending.event';
 import { OrderCreatedEvent } from '@/events/implements/orders/order-created.event';
 import { OrderRemovedEvent } from '@/events/implements/orders/order-removed.event';
 import { OrderUpdatedEvent } from '@/events/implements/orders/order-updated.event';
@@ -110,6 +111,17 @@ export class OrderModel extends AggregateRoot {
     if (this.id) {
       this.apply(
         new OrderChangedToPaidEvent({
+          updatedBy,
+          order: this
+        })
+      );
+    }
+  }
+
+  changedOrderToPending({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new OrderChangedToPendingEvent({
           updatedBy,
           order: this
         })

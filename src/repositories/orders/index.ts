@@ -1,5 +1,6 @@
 import { ChangeOrderToPaidRepository } from './change-order-to-paid';
 import { ChangeOrderToPaymentErrorRepository } from './change-order-to-payment-error';
+import { ChangeOrderToPendingRepository } from './change-order-to-pending';
 import { CountOrdersRepository } from './count-orders';
 import { CreateOrderRepository } from './create-order';
 import { FindAllOrdersRepository } from './find-all-orders';
@@ -15,5 +16,6 @@ export const OrdersRepositories = [
   RemoveOrderRepository,
   UpdateOrderRepository,
   ChangeOrderToPaidRepository,
-  ChangeOrderToPaymentErrorRepository
+  ChangeOrderToPaymentErrorRepository,
+  ChangeOrderToPendingRepository
 ];

@@ -5,6 +5,7 @@ import { CreateStripeCheckoutCommand } from '@/commands/implements/checkouts/cre
 import { paymentGatewayFees } from '@/constants/payment-gateway-fees';
 import { OrderStatus } from '@/enums/order-status.enum';
 import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
+import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import {
   AccountNotFoundException,
   AppNotFoundException,
@@ -17,11 +18,15 @@ import {
   SubscriptionContractNotFoundException
 } from '@/errors';
 import { CheckoutMapper } from '@/mappers/checkouts';
+import { PaymentMethodModel } from '@/models/payment-method.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentDomainService } from '@/services/apps/find-app-current-domain';
 import { FindAllOrderItemsService } from '@/services/order-items/find-all-order-items';
+import { ChangeOrderToPendingService } from '@/services/orders/change-order-to-pending';
 import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
+import { CreatePaymentMethodBoletoService } from '@/services/payment-methods/create-payment-method-boleto';
+import { CreatePaymentMethodCardService } from '@/services/payment-methods/create-payment-method-card';
 import { CreatePaymentService } from '@/services/payments/create-payment';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
 import { CreateStripeCheckoutSessionService } from '@/services/stripe/create-stripe-checkout-session';
@@ -35,9 +40,12 @@ export class CreateStripeCheckoutCommandHandler
   implements ICommandHandler<CreateStripeCheckoutCommand>
 {
   constructor(
+    private readonly createPaymentMethodBoletoService: CreatePaymentMethodBoletoService,
+    private readonly createPaymentMethodCardService: CreatePaymentMethodCardService,
     private readonly findAppCurrentDomainService: FindAppCurrentDomainService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly createStripeCheckoutSessionService: CreateStripeCheckoutSessionService,
+    private readonly changeOrderToPendingService: ChangeOrderToPendingService,
     private readonly findOrderByIdService: FindOrderByIdService,
     private readonly findAllOrderItemsService: FindAllOrderItemsService,
     private readonly findAllPricesService: FindAllPricesService,
@@ -79,13 +87,21 @@ export class CreateStripeCheckoutCommandHandler
       customerApp.id
     );
 
-    const order = await this.findOrderByIdService.execute(data.order);
+    let order = await this.findOrderByIdService.execute(data.order);
     if (!order) {
       throw new OrderNotFoundException();
     }
     if (order.status === OrderStatus.PAID) {
       throw new OrderAlreadyPaidException();
     }
+    if (order.status !== OrderStatus.PENDING) {
+      order = await this.changeOrderToPendingService.execute({
+        app: data.app,
+        order: order.id,
+        updatedBy: data.createdBy
+      });
+    }
+
     const orderItems = await this.findAllOrderItemsService.execute({
       where: {
         AND: {
@@ -118,6 +134,19 @@ export class CreateStripeCheckoutCommandHandler
       success: true,
       domain: appDomain.url
     });
+    let paymentMethod: PaymentMethodModel;
+    if (data.paymentMethodType === PaymentMethodType.BOLETO) {
+      paymentMethod = await this.createPaymentMethodBoletoService.execute({
+        app: data.app,
+        createdBy: data.createdBy
+      });
+    }
+    if (data.paymentMethodType === PaymentMethodType.CARD) {
+      paymentMethod = await this.createPaymentMethodCardService.execute({
+        app: data.app,
+        createdBy: data.createdBy
+      });
+    }
 
     const payment = await this.createPaymentService.execute({
       parent: order.id,
@@ -125,6 +154,7 @@ export class CreateStripeCheckoutCommandHandler
       currency: order.currency,
       totalAmount: order.totalAmount,
       subtotalAmount: order.subtotalAmount,
+      paymentMethod: paymentMethod?.id,
       paymentGatewayType: PaymentGatewayType.STRIPE,
       createdBy: data.createdBy,
       app: customerApp.id
@@ -163,6 +193,8 @@ export class CreateStripeCheckoutCommandHandler
         payment: payment.id,
         cancelUrl,
         successUrl,
+        paymentMethod: paymentMethod?.id,
+        paymentMethodType: data.paymentMethodType,
         customer: customer.stripeCustomer,
         stripeAccount: customerApp.stripeAccount,
         customerEmail: customer.email,

@@ -3,6 +3,7 @@ import { PaymentStatus } from '@/enums/payment-status.enum';
 export interface ChangePaymentToPaidRepositoryDataDTO {
   status: PaymentStatus;
   active: boolean;
+  stripeCheckoutSession?: string;
   paidAt: string;
   paymentMethod?: string;
   updatedBy: string;

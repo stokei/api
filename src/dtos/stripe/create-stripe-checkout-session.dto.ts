@@ -1,3 +1,5 @@
+import { PaymentMethodType } from '@/enums/payment-method-type.enum';
+
 export interface CreateStripeCheckoutSessionPriceDTO {
   amount: number;
   price: string;
@@ -14,6 +16,8 @@ export interface CreateStripeCheckoutSessionDTO {
   cancelUrl: string;
   prices: CreateStripeCheckoutSessionPriceDTO[];
   customer: string;
+  paymentMethod?: string;
+  paymentMethodType: PaymentMethodType;
   customerReference: string;
   order: string;
   payment: string;

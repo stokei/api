@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
-  addHours,
+  addDays,
   cleanObject,
   convertToISODateString,
   IBaseService
@@ -16,10 +16,7 @@ export class CreatePagarmeOrderService
   implements IBaseService<CreatePagarmeOrderDTO, Promise<PagarmeOrder>>
 {
   async execute(data: CreatePagarmeOrderDTO): Promise<PagarmeOrder> {
-    const totalAmount = data?.prices?.reduce(
-      (previousPrice, currentPrice) => previousPrice + currentPrice?.amount,
-      0
-    );
+    const totalAmount = Math.round(data.totalAmount);
     const appTotalAmountWithoutFeeAmount = Math.round(
       totalAmount - data.feeAmount
     );
@@ -56,14 +53,17 @@ export class CreatePagarmeOrderService
       payments: [
         {
           pix: {
-            expires_at: convertToISODateString(addHours(2))
+            expires_at: convertToISODateString(addDays(2))
           },
-          amount: Math.round(totalAmount),
+          amount: totalAmount,
           payment_method: 'pix',
           split: [appRecipient, stokeiRecipient]
         }
       ]
     });
+    console.log(dataRequest);
+    console.log(dataRequest.payments[0]);
+    console.log(dataRequest.payments[0].split);
     const response = await pagarmeClient.post('/orders', dataRequest);
     const responseData = response?.data;
     if (!responseData) {

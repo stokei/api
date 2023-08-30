@@ -61,9 +61,6 @@ export class CreatePagarmeOrderService
         }
       ]
     });
-    console.log(dataRequest);
-    console.log(dataRequest.payments[0]);
-    console.log(dataRequest.payments[0].split);
     const response = await pagarmeClient.post('/orders', dataRequest);
     const responseData = response?.data;
     if (!responseData) {

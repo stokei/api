@@ -24,26 +24,33 @@ export class CreatePagarmeCustomerService
       month: '2-digit',
       day: '2-digit'
     });
-    const response = await pagarmeClient.post(
-      '/customers',
-      cleanObject({
-        phones: {
-          mobile_phone: {
-            country_code: data?.phone?.countryCode,
-            area_code: data?.phone?.areaCode,
-            number: data?.phone?.number
-          }
-        },
-        birthdate: dateBirthday,
-        name: data?.name,
-        email: data?.email,
-        code: data?.account,
-        document: data?.cpf,
-        document_type: 'CPF',
-        type: 'individual',
-        gender: 'male'
-      })
-    );
-    return response?.data;
+    const dataRequest = cleanObject({
+      phones: {
+        mobile_phone: {
+          country_code: data?.phone?.countryCode,
+          area_code: data?.phone?.areaCode,
+          number: data?.phone?.number
+        }
+      },
+      birthdate: dateBirthday,
+      name: data?.name,
+      email: data?.email,
+      code: data?.account,
+      document: data?.cpf,
+      document_type: 'CPF',
+      type: 'individual',
+      gender: 'male'
+    });
+    try {
+      const response = await pagarmeClient.post('/customers', dataRequest);
+      return response?.data;
+    } catch (error) {
+      console.log('CreatePagarmeCustomerService:' + error);
+      const errorList: string[] = error?.errors && Object.values(error?.errors);
+      if (errorList?.length) {
+        throw new Error(errorList?.[0]?.[0] || errorList?.[0]);
+      }
+      throw error;
+    }
   }
 }

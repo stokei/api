@@ -18,18 +18,23 @@ export class ProductAvatarResolver {
   async avatar(@Parent() product: ProductModel) {
     let image: ImageModel;
     if (product.avatar) {
-      image = await this.imagesLoader.findByIds.load(product.avatar);
+      try {
+        image = await this.imagesLoader.findByIds.load(product.avatar);
+      } catch (error) {}
     }
-    if (image || product.parent) {
+    if (image || !product.parent) {
       return;
     }
-    const parent = await this.findProductParentByIdParentService.execute(
-      product.parent
-    );
-    const parentAvatar = (parent as any)?.avatar;
-    if (!parentAvatar) {
-      return;
-    }
-    return this.imagesLoader.findByIds.load(parentAvatar);
+
+    try {
+      const parent = await this.findProductParentByIdParentService.execute(
+        product.parent
+      );
+      const parentAvatar = (parent as any)?.avatar;
+      if (!parentAvatar) {
+        return;
+      }
+      return this.imagesLoader.findByIds.load(parentAvatar);
+    } catch (error) {}
   }
 }

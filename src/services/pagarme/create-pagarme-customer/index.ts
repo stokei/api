@@ -45,8 +45,9 @@ export class CreatePagarmeCustomerService
       const response = await pagarmeClient.post('/customers', dataRequest);
       return response?.data;
     } catch (error) {
-      console.log('CreatePagarmeCustomerService:' + error);
-      const errorList: string[] = error?.errors && Object.values(error?.errors);
+      const errorList: string[] =
+        error?.response?.data?.errors &&
+        Object.values(error?.response?.data?.errors);
       if (errorList?.length) {
         throw new Error(errorList?.[0]?.[0] || errorList?.[0]);
       }

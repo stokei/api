@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { cleanObject, convertToISODate, IBaseService } from '@stokei/nestjs';
+import {
+  cleanObject,
+  convertToISODateString,
+  IBaseService
+} from '@stokei/nestjs';
 
 import { pagarmeClient } from '@/clients/pagarme';
 import {
@@ -18,12 +22,7 @@ export class CreatePagarmeCustomerService
   async execute(
     data: CreatePagarmeCustomerDTO
   ): Promise<CreatePagarmeCustomerResponse> {
-    const birthdateToBRDate = convertToISODate(data.dateBirthday);
-    const dateBirthday = birthdateToBRDate?.toLocaleDateString('pt-BR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    });
+    const birthdate = convertToISODateString(data.dateBirthday);
     const dataRequest = cleanObject({
       phones: {
         mobile_phone: {
@@ -32,7 +31,7 @@ export class CreatePagarmeCustomerService
           number: data?.phone?.number
         }
       },
-      birthdate: dateBirthday,
+      birthdate,
       name: data?.name,
       email: data?.email,
       code: data?.account,

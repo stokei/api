@@ -51,9 +51,9 @@ export class CreateProductCommandHandler
       description: data.description,
       stripeAccount: app.stripeAccount
     });
-
+    const { catalogs, ...dataCreate } = data;
     const productCreated = await this.createProductRepository.execute({
-      ...data,
+      ...dataCreate,
       stripeProduct: stripeProduct.id
     });
     if (!productCreated) {
@@ -61,7 +61,7 @@ export class CreateProductCommandHandler
     }
     const productModel = this.publisher.mergeObjectContext(productCreated);
     productModel.createdProduct({
-      catalogs: [],
+      catalogs,
       createdBy: data.createdBy
     });
     productModel.commit();
@@ -70,15 +70,14 @@ export class CreateProductCommandHandler
   }
 
   private clearData(command: CreateProductCommand): CreateProductCommand {
-    return {
-      ...cleanObject({
-        createdBy: cleanValue(command?.createdBy),
-        app: cleanValue(command?.app),
-        name: cleanValue(command?.name),
-        description: cleanValue(command?.description),
-        avatar: cleanValue(command?.avatar),
-        parent: cleanValue(command?.parent)
-      })
-    };
+    return cleanObject({
+      createdBy: cleanValue(command?.createdBy),
+      app: cleanValue(command?.app),
+      name: cleanValue(command?.name),
+      description: cleanValue(command?.description),
+      avatar: cleanValue(command?.avatar),
+      parent: cleanValue(command?.parent),
+      catalogs: command?.catalogs
+    });
   }
 }

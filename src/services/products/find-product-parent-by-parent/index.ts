@@ -14,7 +14,7 @@ import { PlanModel } from '@/models/plan.model';
 export type ProductParent = AppModel | PlanModel | CourseModel | MaterialModel;
 
 @Injectable()
-export class FindProductParentByIdParentService
+export class FindProductParentByParentService
   implements IBaseService<string, Promise<ProductParent>>
 {
   constructor(

@@ -4,5 +4,6 @@ export interface CreateProductDTO {
   description?: string;
   app: string;
   avatar?: string;
+  catalogs?: string[];
   createdBy: string;
 }

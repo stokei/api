@@ -10,4 +10,7 @@ export class CreateProductInput {
 
   @Field(() => String, { nullable: true })
   description?: string;
+
+  @Field(() => [String], { nullable: true })
+  catalogs?: string[];
 }

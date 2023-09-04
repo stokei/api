@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { cleanObject, convertToISODate, IBaseService } from '@stokei/nestjs';
+import {
+  cleanObject,
+  convertToISODateString,
+  IBaseService
+} from '@stokei/nestjs';
 
 import { pagarmeClient } from '@/clients/pagarme';
 import {
@@ -18,32 +22,35 @@ export class CreatePagarmeCustomerService
   async execute(
     data: CreatePagarmeCustomerDTO
   ): Promise<CreatePagarmeCustomerResponse> {
-    const birthdateToBRDate = convertToISODate(data.dateBirthday);
-    const dateBirthday = birthdateToBRDate?.toLocaleDateString('pt-BR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
+    const birthdate = convertToISODateString(data.dateBirthday);
+    const dataRequest = cleanObject({
+      phones: {
+        mobile_phone: {
+          country_code: data?.phone?.countryCode,
+          area_code: data?.phone?.areaCode,
+          number: data?.phone?.number
+        }
+      },
+      birthdate,
+      name: data?.name,
+      email: data?.email,
+      code: data?.account,
+      document: data?.cpf,
+      document_type: 'CPF',
+      type: 'individual',
+      gender: 'male'
     });
-    const response = await pagarmeClient.post(
-      '/customers',
-      cleanObject({
-        phones: {
-          mobile_phone: {
-            country_code: data?.phone?.countryCode,
-            area_code: data?.phone?.areaCode,
-            number: data?.phone?.number
-          }
-        },
-        birthdate: dateBirthday,
-        name: data?.name,
-        email: data?.email,
-        code: data?.account,
-        document: data?.cpf,
-        document_type: 'CPF',
-        type: 'individual',
-        gender: 'male'
-      })
-    );
-    return response?.data;
+    try {
+      const response = await pagarmeClient.post('/customers', dataRequest);
+      return response?.data;
+    } catch (error) {
+      const errorList: string[] =
+        error?.response?.data?.errors &&
+        Object.values(error?.response?.data?.errors);
+      if (errorList?.length) {
+        throw new Error(errorList?.[0]?.[0] || errorList?.[0]);
+      }
+      throw error;
+    }
   }
 }

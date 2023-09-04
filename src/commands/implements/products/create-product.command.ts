@@ -9,6 +9,7 @@ export class CreateProductCommand implements ICommand, CreateProductDTO {
   app: string;
   avatar?: string;
   createdBy: string;
+  catalogs?: string[];
 
   constructor(data: CreateProductDTO) {
     this.parent = data.parent;
@@ -16,7 +17,7 @@ export class CreateProductCommand implements ICommand, CreateProductDTO {
     this.description = data.description;
     this.app = data.app;
     this.avatar = data.avatar;
-    this.app = data.app;
+    this.catalogs = data.catalogs;
     this.createdBy = data.createdBy;
   }
 }

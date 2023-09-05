@@ -7,6 +7,7 @@ import { CreateAppStripeAccountDashboardLinkService } from './create-app-stripe-
 import { CreateAppStripeAccountOnboardingLinkService } from './create-app-stripe-account-onboarding-link';
 import { CreateAppStripeAccountUpdateLinkService } from './create-app-stripe-account-update-link';
 import { FindAllAppsService } from './find-all-apps';
+import { FindAppBalancesService } from './find-app-balances';
 import { FindAppBillingService } from './find-app-billing';
 import { FindAppByIdService } from './find-app-by-id';
 import { FindAppCurrentDomainService } from './find-app-current-domain';
@@ -31,5 +32,6 @@ export const AppServices = [
   FindAllAppsService,
   FindAppEmailInformationsService,
   FindAppBillingService,
-  CreateAppPagarmeAccountService
+  CreateAppPagarmeAccountService,
+  FindAppBalancesService
 ];

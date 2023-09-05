@@ -1,4 +1,5 @@
 import { FindAllAppsQueryHandler } from './find-all-apps';
+import { FindAppBalancesQueryHandler } from './find-app-balances';
 import { FindAppBillingQueryHandler } from './find-app-billing';
 import { FindAppByIdQueryHandler } from './find-app-by-id';
 import { FindAppCurrentDomainQueryHandler } from './find-app-current-domain';
@@ -11,5 +12,6 @@ export const AppQueriesHandlers = [
   FindAppCurrentDomainQueryHandler,
   FindAppCurrentSubscriptionContractQueryHandler,
   FindAppEmailInformationsQueryHandler,
-  FindAppBillingQueryHandler
+  FindAppBillingQueryHandler,
+  FindAppBalancesQueryHandler
 ];

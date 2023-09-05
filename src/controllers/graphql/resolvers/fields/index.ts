@@ -2,6 +2,7 @@ import { AccessesFieldsResolvers } from './accesses';
 import { AccountsFieldsResolvers } from './accounts';
 import { AddressesFieldsResolvers } from './addresses';
 import { AppsFieldsResolvers } from './apps';
+import { BalanceFieldsResolvers } from './balances';
 import { BillingFieldsResolvers } from './billing';
 import { BillingItemsFieldsResolvers } from './billing-items';
 import { CatalogItemsFieldsResolvers } from './catalog-items';
@@ -73,5 +74,6 @@ export const FieldsResolvers = [
   ...OrderItemsFieldsResolvers,
   ...OrdersFieldsResolvers,
   ...PaymentsFieldsResolvers,
-  ...CheckoutsFieldsResolvers
+  ...CheckoutsFieldsResolvers,
+  ...BalanceFieldsResolvers
 ];

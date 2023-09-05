@@ -3,6 +3,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { AppStatus } from '@/controllers/graphql/enums/app-status.enum';
 
 import { Account } from './account';
+import { Balance } from './balance';
 import { Colors } from './colors';
 import { Currency } from './currency';
 import { Domain } from './domain';
@@ -23,6 +24,9 @@ export class App {
 
   @Field(() => String, { nullable: true })
   description?: string;
+
+  @Field(() => [Balance], { nullable: true })
+  balances?: Balance[];
 
   @Field(() => String, { nullable: true })
   email?: string;

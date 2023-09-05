@@ -20,6 +20,7 @@ import { FindStripeCustomerByIdService } from './find-customer-by-id';
 import { FindStripeInvoiceByIdService } from './find-invoice-by-id';
 import { FindStripePaymentIntentByIdService } from './find-payment-intent-by-id';
 import { FindStripePaymentMethodByIdService } from './find-payment-method-by-id';
+import { FindStripeBalanceService } from './find-stripe-balance';
 import { FindStripeSubscriptionByIdService } from './find-subscription-by-id';
 import { UpdateStripeCustomerService } from './update-stripe-customer';
 import { UpdateStripeProductService } from './update-stripe-product';
@@ -53,5 +54,6 @@ export const StripeServices = [
   FindStripeCustomerByIdService,
   DeleteStripeCustomerService,
   UpdateStripeSubscriptionService,
-  FindStripePaymentIntentByIdService
+  FindStripePaymentIntentByIdService,
+  FindStripeBalanceService
 ];

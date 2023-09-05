@@ -1,4 +1,5 @@
 import { AppAvatarResolver } from './avatar';
+import { AppBalancesResolver } from './balances';
 import { AppColorsResolver } from './colors';
 import { AppCreatedByResolver } from './created-by';
 import { AppCurrencyResolver } from './currency';
@@ -23,5 +24,6 @@ export const AppsFieldsResolvers = [
   AppColorsResolver,
   AppUpdatedByResolver,
   AppDefaultDomainResolver,
-  AppStokeiDomainResolver
+  AppStokeiDomainResolver,
+  AppBalancesResolver
 ];

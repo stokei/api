@@ -13,9 +13,13 @@ export class AppCurrentSubscriptionContractResolver {
 
   @ResolveField(() => SubscriptionContract, { nullable: true })
   async currentSubscriptionContract(@Parent() app: AppModel) {
-    const subscriptionContract =
-      app.id &&
-      (await this.findAppCurrentSubscriptionContractService.execute(app.id));
-    return subscriptionContract;
+    try {
+      const subscriptionContract =
+        app.id &&
+        (await this.findAppCurrentSubscriptionContractService.execute(app.id));
+      return subscriptionContract;
+    } catch (error) {
+      return;
+    }
   }
 }

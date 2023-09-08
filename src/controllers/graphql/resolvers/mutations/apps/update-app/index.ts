@@ -7,10 +7,14 @@ import { AppGuard } from '@/common/guards/app';
 import { UpdateAppInput } from '@/controllers/graphql/inputs/apps/update-app.input';
 import { App } from '@/controllers/graphql/types/app';
 import { UpdateAppService } from '@/services/apps/update-app';
+import { DeleteCacheService } from '@/services/cache/delete-cache';
 
 @Resolver(() => App)
 export class UpdateAppResolver {
-  constructor(private readonly updateAppService: UpdateAppService) {}
+  constructor(
+    private readonly updateAppService: UpdateAppService,
+    private readonly deleteCacheService: DeleteCacheService
+  ) {}
 
   @UseGuards(AuthenticatedGuard, AppGuard)
   @Mutation(() => App)
@@ -28,6 +32,9 @@ export class UpdateAppResolver {
         updatedBy: currentAccountId
       }
     });
+    if (!!response) {
+      await this.deleteCacheService.execute(appId);
+    }
     return response;
   }
 }

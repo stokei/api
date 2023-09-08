@@ -3,6 +3,7 @@ import { CreateAppRepository } from './create-app';
 import { ExistsAppsRepository } from './exists-apps';
 import { FindAllAppsRepository } from './find-all-apps';
 import { FindAppByIdRepository } from './find-app-by-id';
+import { FindAppBySlugRepository } from './find-app-by-slug';
 import { UpdateAppRepository } from './update-app';
 
 export const AppsRepositories = [
@@ -11,5 +12,6 @@ export const AppsRepositories = [
   ExistsAppsRepository,
   FindAppByIdRepository,
   FindAllAppsRepository,
-  UpdateAppRepository
+  UpdateAppRepository,
+  FindAppBySlugRepository
 ];

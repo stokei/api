@@ -95,6 +95,7 @@ export * from './recurring-period-for-yearly-pricing-cannot-be-longer-than-1';
 export * from './recurrings-not-found';
 export * from './role-not-found';
 export * from './roles-not-found';
+export * from './slug-already-exists';
 export * from './sorted-item-not-found';
 export * from './sorted-items-not-found';
 export * from './stripe-account-already-exists';

@@ -9,6 +9,9 @@ export class UpdateDataAppInput {
   description?: string;
 
   @Field({ nullable: true })
+  slug?: string;
+
+  @Field({ nullable: true })
   avatar?: string;
 
   @Field({ nullable: true })

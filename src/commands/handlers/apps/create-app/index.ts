@@ -1,6 +1,6 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
-import { v4 as uuid } from 'uuid';
+import { nanoid } from 'nanoid';
 
 import { CreateAppCommand } from '@/commands/implements/apps/create-app.command';
 import { AppStatus } from '@/enums/app-status.enum';
@@ -9,9 +9,11 @@ import {
   CurrencyNotFoundException,
   DataNotFoundException,
   LanguageNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SlugAlreadyExistsException
 } from '@/errors';
 import { CreateAppRepository } from '@/repositories/apps/create-app';
+import { FindAppBySlugService } from '@/services/apps/find-app-by-slug';
 import { FindCurrencyByIdService } from '@/services/currencies/find-currency-by-id';
 import { FindLanguageByIdService } from '@/services/languages/find-language-by-id';
 
@@ -24,6 +26,7 @@ export class CreateAppCommandHandler
   constructor(
     private readonly createAppRepository: CreateAppRepository,
     private readonly findCurrencyByIdService: FindCurrencyByIdService,
+    private readonly findAppBySlugService: FindAppBySlugService,
     private readonly findLanguageByIdService: FindLanguageByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -42,8 +45,17 @@ export class CreateAppCommandHandler
     if (!data?.currency) {
       throw new ParamNotFoundException<CreateAppCommandKeys>('currency');
     }
+    let slug = data.slug;
+    if (!data.slug) {
+      slug = cleanSlug(data.name + nanoid(8));
+    }
 
-    const slug = data.slug || cleanSlug(data.name + uuid());
+    try {
+      const appWithSlug = await this.findAppBySlugService.execute(slug);
+      if (appWithSlug) {
+        throw new SlugAlreadyExistsException();
+      }
+    } catch (error) {}
 
     const currency = await this.findCurrencyByIdService.execute(data?.currency);
     if (!currency) {

@@ -3,6 +3,7 @@ export interface UpdateAppDataDTO {
   description?: string;
   defaultDomain?: string;
   avatar?: string;
+  slug?: string;
   catalog?: string;
   icon?: string;
   stripeBankAccount?: string;

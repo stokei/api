@@ -11,6 +11,7 @@ import {
 } from '@/errors';
 import { CreateAppCatalogService } from '@/services/apps/create-app-catalog';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { CreateCatalogService } from '@/services/catalogs/create-catalog';
 import { CreateHeroService } from '@/services/heros/create-hero';
 import { CreateSortedItemService } from '@/services/sorted-items/create-sorted-item';
 
@@ -28,6 +29,7 @@ export class CreateAppDefaultLandingPageCommandHandler
     private readonly findAppByIdService: FindAppByIdService,
     private readonly createHeroService: CreateHeroService,
     private readonly createAppCatalogService: CreateAppCatalogService,
+    private readonly createCatalogService: CreateCatalogService,
     private readonly createSortedItemService: CreateSortedItemService
   ) {}
 
@@ -62,14 +64,35 @@ export class CreateAppDefaultLandingPageCommandHandler
         item: hero.id,
         createdBy: data.createdBy
       });
-      const catalog = await this.createAppCatalogService.execute({
+
+      await this.createAppCatalogService.execute({
         app: app.id,
         createdBy: data.createdBy
+      });
+
+      const coursesCatalog = await this.createCatalogService.execute({
+        parent: app.id,
+        app: app.id,
+        createdBy: data.createdBy,
+        title: 'Cursos'
       });
       await this.createSortedItemService.execute({
         app: app.id,
         parent: app.id,
-        item: catalog.id,
+        item: coursesCatalog.id,
+        createdBy: data.createdBy
+      });
+
+      const materialsCatalog = await this.createCatalogService.execute({
+        parent: app.id,
+        app: app.id,
+        createdBy: data.createdBy,
+        title: 'Materiais'
+      });
+      await this.createSortedItemService.execute({
+        app: app.id,
+        parent: app.id,
+        item: materialsCatalog.id,
         createdBy: data.createdBy
       });
     } catch (error) {

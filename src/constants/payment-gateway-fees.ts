@@ -1,20 +1,45 @@
 import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
+import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 
-interface PaymentGatewayFeeValue {
-  percentage: number;
-  fixAmount: number;
+export interface PaymentMethodTypeFee {
+  totalPercentage: number; // Total fee percentage user
+  stokeiFeePercentage: number; // Fee percentage from app to user
+  totalFixAmount: number; // Total fee fix amount user
+  stokeiFeeFixAmount: number; // Fee fix amount from app to user
 }
-
-export const paymentGatewayFees: Record<
+export type PaymentGatewayFeeValue = Record<
+  PaymentMethodType,
+  PaymentMethodTypeFee
+>;
+export type PaymentGatewayFees = Record<
   PaymentGatewayType,
   PaymentGatewayFeeValue
-> = {
+>;
+
+export const paymentGatewayFees: PaymentGatewayFees = {
   [PaymentGatewayType.STRIPE]: {
-    percentage: 7,
-    fixAmount: 0
+    [PaymentMethodType.BOLETO]: {
+      totalPercentage: 5,
+      stokeiFeePercentage: 5,
+      totalFixAmount: 345,
+      stokeiFeeFixAmount: 0
+    },
+    [PaymentMethodType.CARD]: {
+      totalPercentage: 9,
+      stokeiFeePercentage: 5.01,
+      totalFixAmount: 39,
+      stokeiFeeFixAmount: 0
+    },
+    [PaymentMethodType.PIX]: undefined
   },
   [PaymentGatewayType.PAGARME]: {
-    percentage: 4,
-    fixAmount: 200
+    [PaymentMethodType.BOLETO]: undefined,
+    [PaymentMethodType.CARD]: undefined,
+    [PaymentMethodType.PIX]: {
+      totalPercentage: 4,
+      stokeiFeePercentage: 4,
+      totalFixAmount: 200,
+      stokeiFeeFixAmount: 200
+    }
   }
 };

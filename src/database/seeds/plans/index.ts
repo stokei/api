@@ -97,7 +97,7 @@ export class PlansSeeds
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
           tiersMode: undefined,
-          unit: 'un',
+          unit: 'admin',
           type: PriceType.RECURRING,
           amount: getPlanPriceAmountByType(PlanType.ADMIN),
           fromAmount: undefined,
@@ -125,7 +125,7 @@ export class PlansSeeds
           parent: undefined,
           app: defaultAppId,
           nickname: 'Domínios',
-          unit: 'un',
+          unit: 'domain',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -157,7 +157,7 @@ export class PlansSeeds
           parent: undefined,
           app: defaultAppId,
           nickname: 'Professores',
-          unit: 'un',
+          unit: 'instructor',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -211,44 +211,6 @@ export class PlansSeeds
       },
       {
         plan: {
-          name: 'Videos - Minutos Vizualizados',
-          icon: 'video',
-          app: defaultAppId,
-          type: PlanType.VIDEO_VIEW,
-          createdBy: defaultAccountId
-        },
-        price: {
-          parent: undefined,
-          app: defaultAppId,
-          nickname: 'Videos - Minutos Vizualizados',
-          unit: 'Min',
-          billingScheme: BillingScheme.TIERED,
-          currency: defaultCurrencyId,
-          inventoryType: InventoryType.INFINITE,
-          tiersMode: TiersMode.VOLUME,
-          type: PriceType.RECURRING,
-          fromAmount: undefined,
-          quantity: undefined,
-          tiers: [
-            {
-              app: defaultAppId,
-              createdBy: defaultAccountId,
-              amount: getPlanPriceAmountByType(PlanType.VIDEO_VIEW),
-              infinite: true
-            }
-          ],
-          createdBy: defaultAccountId,
-          recurring: {
-            app: defaultAppId,
-            interval: IntervalType.MONTH,
-            intervalCount: 1,
-            usageType: UsageType.METERED,
-            createdBy: defaultAccountId
-          }
-        }
-      },
-      {
-        plan: {
           name: 'Storage',
           app: defaultAppId,
           icon: 'storage',
@@ -279,6 +241,44 @@ export class PlansSeeds
           }
         }
       }
+      // {
+      //   plan: {
+      //     name: 'Videos - Minutos Vizualizados',
+      //     icon: 'video',
+      //     app: defaultAppId,
+      //     type: PlanType.VIDEO_VIEW,
+      //     createdBy: defaultAccountId
+      //   },
+      //   price: {
+      //     parent: undefined,
+      //     app: defaultAppId,
+      //     nickname: 'Videos - Minutos Vizualizados',
+      //     unit: 'Min',
+      //     billingScheme: BillingScheme.TIERED,
+      //     currency: defaultCurrencyId,
+      //     inventoryType: InventoryType.INFINITE,
+      //     tiersMode: TiersMode.VOLUME,
+      //     type: PriceType.RECURRING,
+      //     fromAmount: undefined,
+      //     quantity: undefined,
+      //     tiers: [
+      //       {
+      //         app: defaultAppId,
+      //         createdBy: defaultAccountId,
+      //         amount: getPlanPriceAmountByType(PlanType.VIDEO_VIEW),
+      //         infinite: true
+      //       }
+      //     ],
+      //     createdBy: defaultAccountId,
+      //     recurring: {
+      //       app: defaultAppId,
+      //       interval: IntervalType.MONTH,
+      //       intervalCount: 1,
+      //       usageType: UsageType.METERED,
+      //       createdBy: defaultAccountId
+      //     }
+      //   }
+      // },
     ];
   }
 }

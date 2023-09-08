@@ -30,7 +30,7 @@ import { CreatePaymentMethodCardService } from '@/services/payment-methods/creat
 import { CreatePaymentService } from '@/services/payments/create-payment';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
 import { CreateStripeCheckoutSessionService } from '@/services/stripe/create-stripe-checkout-session';
-import { getFeeAmount } from '@/utils/get-fee-amount';
+import { getStokeiFeeAmount } from '@/utils/get-fee-amount';
 import { mountCheckoutCallbackURL } from '@/utils/mount-checkout-callback-url';
 
 type CreateStripeCheckoutCommandKeys = keyof CreateStripeCheckoutCommand;
@@ -154,6 +154,7 @@ export class CreateStripeCheckoutCommandHandler
       currency: order.currency,
       totalAmount: order.totalAmount,
       subtotalAmount: order.subtotalAmount,
+      paymentMethodType: data.paymentMethodType,
       paymentMethod: paymentMethod?.id,
       paymentGatewayType: PaymentGatewayType.STRIPE,
       createdBy: data.createdBy,
@@ -184,9 +185,11 @@ export class CreateStripeCheckoutCommandHandler
         app: customerApp.id,
         currency: customerApp.currency,
         applicationFeePercentage:
-          paymentGatewayFees[PaymentGatewayType.STRIPE].percentage,
-        applicationFeeAmount: getFeeAmount({
+          paymentGatewayFees[PaymentGatewayType.STRIPE][data.paymentMethodType]
+            .stokeiFeePercentage,
+        applicationFeeAmount: getStokeiFeeAmount({
           amount: order.totalAmount,
+          paymentMethodType: data.paymentMethodType,
           paymentGatewayType: PaymentGatewayType.STRIPE
         }),
         order: order.id,

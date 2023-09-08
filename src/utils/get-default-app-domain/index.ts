@@ -1,8 +1,8 @@
 import { IS_DEVELOPMENT } from '@/environments';
 
-export const getDefaultAppDomain = ({ appId }: { appId: string }): string => {
+export const getDefaultAppDomain = ({ slug }: { slug: string }): string => {
   if (IS_DEVELOPMENT) {
-    return `localhost:3001/app/${appId}`;
+    return `localhost:3001/app/${slug}`;
   }
-  return `${appId}.stokei.app`;
+  return `${slug}.stokei.app`;
 };

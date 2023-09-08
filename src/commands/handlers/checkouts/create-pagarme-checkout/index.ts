@@ -25,6 +25,7 @@ import { CreatePagarmeOrderService } from '@/services/pagarme/create-pagarme-ord
 import { CreatePaymentMethodPixService } from '@/services/payment-methods/create-payment-method-pix';
 import { CreatePaymentService } from '@/services/payments/create-payment';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
+import { getStokeiFeeAmount } from '@/utils/get-fee-amount';
 
 type CreatePagarmeCheckoutCommandKeys = keyof CreatePagarmeCheckoutCommand;
 
@@ -124,6 +125,7 @@ export class CreatePagarmeCheckoutCommandHandler
       currency: order.currency,
       totalAmount: order.totalAmount,
       subtotalAmount: order.subtotalAmount,
+      paymentMethodType: data.paymentMethodType,
       paymentGatewayType: PaymentGatewayType.PAGARME,
       createdBy: data.createdBy,
       app: data.app
@@ -148,7 +150,11 @@ export class CreatePagarmeCheckoutCommandHandler
     const pagarmeOrder = await this.createPagarmeOrderService.execute({
       appRecipient: customerApp.pagarmeAccount,
       totalAmount: payment.totalAmount,
-      feeAmount: payment.feeAmount,
+      feeAmount: getStokeiFeeAmount({
+        amount: order.totalAmount,
+        paymentMethodType: data.paymentMethodType,
+        paymentGatewayType: PaymentGatewayType.STRIPE
+      }),
       currency: order.currency,
       customer: customer.pagarmeCustomer,
       payment: payment.id,

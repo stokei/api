@@ -9,6 +9,9 @@ export class CreateAppInput {
   email: string;
 
   @Field()
+  slug: string;
+
+  @Field()
   currency: string;
 
   @Field()

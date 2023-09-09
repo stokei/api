@@ -147,7 +147,7 @@ export class PlansSeeds
       },
       {
         plan: {
-          name: 'Professores',
+          name: 'Instrutores',
           app: defaultAppId,
           icon: 'instructor',
           type: PlanType.INSTRUCTOR,
@@ -156,7 +156,7 @@ export class PlansSeeds
         price: {
           parent: undefined,
           app: defaultAppId,
-          nickname: 'Professores',
+          nickname: 'Instrutores',
           unit: 'instructor',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,

@@ -118,6 +118,7 @@ export class CreatePagarmeCheckoutCommandHandler
       app: data.app,
       createdBy: data.createdBy
     });
+    const paymentGatewayType = PaymentGatewayType.PAGARME;
     const payment = await this.createPaymentService.execute({
       parent: order.id,
       paymentMethod: paymentMethod.id,
@@ -126,7 +127,7 @@ export class CreatePagarmeCheckoutCommandHandler
       totalAmount: order.totalAmount,
       subtotalAmount: order.subtotalAmount,
       paymentMethodType: data.paymentMethodType,
-      paymentGatewayType: PaymentGatewayType.PAGARME,
+      paymentGatewayType,
       createdBy: data.createdBy,
       app: data.app
     });
@@ -147,14 +148,15 @@ export class CreatePagarmeCheckoutCommandHandler
         };
       })
       ?.filter(Boolean);
+    const feeAmount = getStokeiFeeAmount({
+      amount: order.totalAmount,
+      paymentMethodType: data.paymentMethodType,
+      paymentGatewayType
+    });
     const pagarmeOrder = await this.createPagarmeOrderService.execute({
       appRecipient: customerApp.pagarmeAccount,
       totalAmount: payment.totalAmount,
-      feeAmount: getStokeiFeeAmount({
-        amount: order.totalAmount,
-        paymentMethodType: data.paymentMethodType,
-        paymentGatewayType: PaymentGatewayType.STRIPE
-      }),
+      feeAmount,
       currency: order.currency,
       customer: customer.pagarmeCustomer,
       payment: payment.id,

@@ -13,6 +13,9 @@ export class CreatePaymentRepository
   constructor(private readonly model: PrismaClient) {}
 
   async execute(data: CreatePaymentRepositoryDTO): Promise<PaymentModel> {
+    if (data.paymentMethodType) {
+      delete data.paymentMethodType;
+    }
     return new PaymentMapper().toModel(
       await this.model.payment.create({ data })
     );

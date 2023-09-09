@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { StokeiApiServerInfo } from '@/enums/server-info.enum';
 import { SERVER_HOST, SERVER_PORT } from '@/environments';
+import { PrismaClientExceptionFilter } from '@/interceptors/prisma-client-exception';
 import { MainModule } from '@/main.module';
 
 export const createApp = async () => {
@@ -20,6 +21,8 @@ export const createApp = async () => {
   app.enableVersioning({
     type: VersioningType.URI
   });
+
+  app.useGlobalFilters(new PrismaClientExceptionFilter());
 
   const config = new DocumentBuilder()
     .setTitle('Stokei API')

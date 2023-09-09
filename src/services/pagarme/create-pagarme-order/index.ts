@@ -10,6 +10,7 @@ import { pagarmeClient } from '@/clients/pagarme';
 import { CreatePagarmeOrderDTO } from '@/dtos/pagarme/create-pagarme-order.dto';
 import { PagarmeOrder } from '@/dtos/pagarme/pagarme-order.dto';
 import { PAGARME_RECIPIENT_ID } from '@/environments';
+import { getPagarmeError } from '@/utils/get-pagarme-error';
 
 @Injectable()
 export class CreatePagarmeOrderService
@@ -61,30 +62,39 @@ export class CreatePagarmeOrderService
         }
       ]
     });
-    const response = await pagarmeClient.post('/orders', dataRequest);
-    const responseData = response?.data;
-    if (!responseData) {
-      return;
-    }
-    const charge = responseData?.charges?.[0];
-    const lastTransaction = charge?.last_transaction;
-    const errorList: string[] =
-      lastTransaction?.gateway_response?.errors?.[0] &&
-      Object.values(lastTransaction?.gateway_response?.errors?.[0]);
-    if (errorList?.length) {
-      throw new Error(errorList?.[0]);
-    }
-
-    return {
-      id: responseData?.id,
-      code: responseData?.code,
-      status: responseData?.status,
-      paymentMethod: charge?.payment_method,
-      error: errorList?.[0],
-      pix: {
-        copyAndPaste: lastTransaction?.qr_code,
-        qrCodeURL: lastTransaction?.qr_code_url
+    try {
+      const response = await pagarmeClient.post('/orders', dataRequest);
+      const responseData = response?.data;
+      if (!responseData) {
+        return;
       }
-    };
+      const charge = responseData?.charges?.[0];
+      const lastTransaction = charge?.last_transaction;
+      const errorList: any = lastTransaction?.gateway_response?.errors;
+      if (errorList) {
+        const error = getPagarmeError(errorList);
+        if (error) {
+          throw error;
+        }
+      }
+
+      return {
+        id: responseData?.id,
+        code: responseData?.code,
+        status: responseData?.status,
+        paymentMethod: charge?.payment_method,
+        error: errorList?.[0],
+        pix: {
+          copyAndPaste: lastTransaction?.qr_code,
+          qrCodeURL: lastTransaction?.qr_code_url
+        }
+      };
+    } catch (error) {
+      const pagarmeError = getPagarmeError(error?.response?.data?.errors);
+      if (pagarmeError) {
+        throw pagarmeError;
+      }
+      throw error;
+    }
   }
 }

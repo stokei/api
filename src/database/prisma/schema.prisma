@@ -159,6 +159,18 @@ enum HeroType {
   WITH_IMAGE_BACKGROUND
 }
 
+enum ComponentType {
+  HEADER
+  FOOTER
+  CATALOG
+  FEATURE
+  NAVLINK
+  HERO_DEFAULT
+  HERO_WITH_VIDEO
+  HERO_WITH_IMAGE
+  HERO_WITH_IMAGE_BACKGROUND
+}
+
 model Account {
   id                 String        @id @default(cuid())
   app                String        @db.VarChar(255)
@@ -822,4 +834,18 @@ model SortedItem {
   createdBy String?   @map("created_by") @db.VarChar(255)
 
   @@map("sorted_items")
+}
+
+model Component {
+  id        String        @id @default(cuid())
+  app       String        @db.VarChar(255)
+  parent    String        @db.VarChar(255)
+  type      ComponentType
+  data      Json?
+  updatedAt DateTime?     @updatedAt @map("updated_at")
+  createdAt DateTime?     @default(now()) @map("created_at")
+  updatedBy String?       @map("updated_by") @db.VarChar(255)
+  createdBy String?       @map("created_by") @db.VarChar(255)
+
+  @@map("components")
 }

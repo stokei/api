@@ -1,6 +1,7 @@
-export class CreatePageDTO {
+export class CreateSiteDTO {
+  parent: string;
   name: string;
-  slug?: string;
+  slug: string;
   app: string;
   createdBy: string;
 }

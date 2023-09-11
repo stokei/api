@@ -6,6 +6,7 @@ import { CatalogItemCommandHandlers } from './catalog-items';
 import { CatalogCommandHandlers } from './catalogs';
 import { CheckoutCommandHandlers } from './checkouts';
 import { ColorCommandHandlers } from './colors';
+import { ComponentCommandHandlers } from './components';
 import { CourseInstructorCommandHandlers } from './course-instructors';
 import { CourseStudentCommandHandlers } from './course-students';
 import { CourseCommandHandlers } from './courses';
@@ -23,6 +24,7 @@ import { MaterialCommandHandlers } from './materials';
 import { ModuleCommandHandlers } from './modules';
 import { OrderItemCommandHandlers } from './order-items';
 import { OrderCommandHandlers } from './orders';
+import { PageCommandHandlers } from './pages';
 import { PaymentMethodCommandHandlers } from './payment-methods';
 import { PaymentCommandHandlers } from './payments';
 import { PhoneCommandHandlers } from './phones';
@@ -32,10 +34,12 @@ import { PriceCommandHandlers } from './prices';
 import { ProductCommandHandlers } from './products';
 import { RecurringCommandHandlers } from './recurrings';
 import { RoleCommandHandlers } from './roles';
+import { SiteCommandHandlers } from './sites';
 import { SortedItemCommandHandlers } from './sorted-items';
 import { SubscriptionContractItemCommandHandlers } from './subscription-contract-items';
 import { SubscriptionContractCommandHandlers } from './subscription-contracts';
 import { UsageRecordCommandHandlers } from './usage-records';
+import { VersionCommandHandlers } from './versions';
 import { VideoAuthorCommandHandlers } from './video-authors';
 import { VideoViewCommandHandlers } from './video-views';
 import { VideoCommandHandlers } from './videos';
@@ -81,5 +85,9 @@ export const CommandHandlers = [
   ...VideoViewCommandHandlers,
   ...OrderCommandHandlers,
   ...OrderItemCommandHandlers,
-  ...PaymentCommandHandlers
+  ...PaymentCommandHandlers,
+  ...ComponentCommandHandlers,
+  ...PageCommandHandlers,
+  ...SiteCommandHandlers,
+  ...VersionCommandHandlers
 ];

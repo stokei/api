@@ -1,9 +1,9 @@
-export interface RemovePageWhereDTO {
+export interface RemoveSiteWhereDTO {
   removedBy: string;
   app: string;
-  page: string;
+  site: string;
 }
 
-export interface RemovePageDTO {
-  where: RemovePageWhereDTO;
+export interface RemoveSiteDTO {
+  where: RemoveSiteWhereDTO;
 }

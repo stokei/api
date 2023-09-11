@@ -1,6 +1,6 @@
 import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 
-export interface CountPagesWhereDTO {
+export interface CountSitesWhereDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
@@ -9,6 +9,6 @@ export interface CountPagesWhereDTO {
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
-export type IKeysCountPagesWhereDTO = keyof CountPagesWhereDTO;
+export type IKeysCountSitesWhereDTO = keyof CountSitesWhereDTO;
 
-export type CountPagesDTO = IBaseCountDTO<CountPagesWhereDTO>;
+export type CountSitesDTO = IBaseCountDTO<CountSitesWhereDTO>;

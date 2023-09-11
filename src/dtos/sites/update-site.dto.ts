@@ -1,18 +1,18 @@
-export interface UpdatePageDataDTO {
+export interface UpdateSiteDataDTO {
   name?: string;
   slug?: string;
   favicon?: string;
   logo?: string;
-  homePage?: string;
+  homeSite?: string;
   updatedBy: string;
 }
 
-export interface UpdatePageWhereDTO {
+export interface UpdateSiteWhereDTO {
   app: string;
-  page: string;
+  site: string;
 }
 
-export interface UpdatePageDTO {
-  data: UpdatePageDataDTO;
-  where: UpdatePageWhereDTO;
+export interface UpdateSiteDTO {
+  data: UpdateSiteDataDTO;
+  where: UpdateSiteWhereDTO;
 }

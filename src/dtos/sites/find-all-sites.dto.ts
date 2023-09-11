@@ -5,7 +5,7 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
-export interface WhereDataFindAllPagesDTO {
+export interface WhereDataFindAllSitesDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
@@ -14,18 +14,18 @@ export interface WhereDataFindAllPagesDTO {
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
-export type IKeysWhereDataFindAllPagesDTO = keyof WhereDataFindAllPagesDTO;
+export type IKeysWhereDataFindAllSitesDTO = keyof WhereDataFindAllSitesDTO;
 
-export interface OrderByDataFindAllPagesDTO {
+export interface OrderByDataFindAllSitesDTO {
   name?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;
   updatedAt?: IOrderBy;
 }
-export type IKeysOrderByDataFindAllPagesDTO = keyof OrderByDataFindAllPagesDTO;
+export type IKeysOrderByDataFindAllSitesDTO = keyof OrderByDataFindAllSitesDTO;
 
-export type FindAllPagesDTO = IBaseFindManyDTO<
-  WhereDataFindAllPagesDTO,
-  OrderByDataFindAllPagesDTO
+export type FindAllSitesDTO = IBaseFindManyDTO<
+  WhereDataFindAllSitesDTO,
+  OrderByDataFindAllSitesDTO
 >;

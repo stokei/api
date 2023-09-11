@@ -3,7 +3,6 @@ export enum ServerStokeiApiIdPrefix {
   ACCESSES = 'access',
   ROLES = 'role',
   APPS = 'app',
-  SITES = 'site',
   DOMAINS = 'domain',
   CURRENCIES = 'curr',
   LANGUAGES = 'lang',
@@ -37,5 +36,9 @@ export enum ServerStokeiApiIdPrefix {
   PHONES = 'phone',
   PAYMENTS = 'pay',
   ORDERS = 'order',
-  ORDER_ITEMS = 'order_item'
+  ORDER_ITEMS = 'order_item',
+  PAGES = 'page',
+  COMPONENTS = 'component',
+  SITES = 'site',
+  VERSIONS = 'version'
 }

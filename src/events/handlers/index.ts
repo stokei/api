@@ -5,6 +5,7 @@ import { AppEventsHandlers } from './apps';
 import { CatalogItemEventsHandlers } from './catalog-items';
 import { CatalogEventsHandlers } from './catalogs';
 import { ColorEventsHandlers } from './colors';
+import { ComponentEventsHandlers } from './components';
 import { CourseInstructorEventsHandlers } from './course-instructors';
 import { CourseStudentEventsHandlers } from './course-students';
 import { CourseEventsHandlers } from './courses';
@@ -20,6 +21,7 @@ import { MaterialEventsHandlers } from './materials';
 import { ModuleEventsHandlers } from './modules';
 import { OrderItemEventsHandlers } from './order-items';
 import { OrderEventsHandlers } from './orders';
+import { PageEventsHandlers } from './pages';
 import { PaymentMethodEventsHandlers } from './payment-methods';
 import { PaymentEventsHandlers } from './payments';
 import { PhoneEventsHandlers } from './phones';
@@ -29,10 +31,12 @@ import { PriceEventsHandlers } from './prices';
 import { ProductEventsHandlers } from './products';
 import { RecurringEventsHandlers } from './recurrings';
 import { RoleEventsHandlers } from './roles';
+import { SiteEventsHandlers } from './sites';
 import { SortedItemEventsHandlers } from './sorted-items';
 import { SubscriptionContractItemEventsHandlers } from './subscription-contract-items';
 import { SubscriptionContractEventsHandlers } from './subscription-contracts';
 import { UsageRecordEventsHandlers } from './usage-records';
+import { VersionEventsHandlers } from './versions';
 import { VideoAuthorEventsHandlers } from './video-authors';
 import { VideoViewEventsHandlers } from './video-views';
 import { VideoEventsHandlers } from './videos';
@@ -75,5 +79,9 @@ export const EventsHandlers = [
   ...MaterialEventsHandlers,
   ...PaymentEventsHandlers,
   ...OrderEventsHandlers,
-  ...OrderItemEventsHandlers
+  ...OrderItemEventsHandlers,
+  ...ComponentEventsHandlers,
+  ...PageEventsHandlers,
+  ...SiteEventsHandlers,
+  ...VersionEventsHandlers
 ];

@@ -18,6 +18,7 @@ import { REST_CONTROLLERS_URL_NAMES } from './constants/rest-controllers';
 import { Controllers } from './controllers';
 import { Loaders } from './controllers/graphql/dataloaders';
 import { Resolvers } from './controllers/graphql/resolvers';
+import { GraphQLJSONScalar } from './controllers/graphql/scalars/json.scalar';
 import { CronJobs } from './crons';
 import { DatabaseModule } from './database/database.module';
 import { Entities } from './entities';
@@ -42,6 +43,9 @@ import { Services } from './services';
     ...Entities,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      resolvers: {
+        JSON: GraphQLJSONScalar
+      },
       fieldResolverEnhancers: ['guards', 'interceptors'],
       playground: !IS_PRODUCTION,
       introspection: true,

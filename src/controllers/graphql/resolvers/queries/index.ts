@@ -6,6 +6,7 @@ import { BillingQueries } from './billing';
 import { CatalogItemsQueries } from './catalog-items';
 import { CatalogsQueries } from './catalogs';
 import { ColorsQueries } from './colors';
+import { ComponentsQueries } from './components';
 import { CourseInstructorsQueries } from './course-instructors';
 import { CourseStudentsQueries } from './course-students';
 import { CoursesQueries } from './courses';
@@ -20,15 +21,18 @@ import { MaterialsQueries } from './materials';
 import { ModulesQueries } from './modules';
 import { OrderItemsQueries } from './order-items';
 import { OrdersQueries } from './orders';
+import { PagesQueries } from './pages';
 import { PaymentMethodsQueries } from './payment-methods';
 import { PaymentsQueries } from './payments';
 import { PhonesQueries } from './phones';
 import { PlansQueries } from './plans';
 import { PricesQueries } from './prices';
 import { ProductsQueries } from './products';
+import { SitesQueries } from './sites';
 import { SortedItemsQueries } from './sorted-items';
 import { SubscriptionContractItemsQueries } from './subscription-contract-items';
 import { SubscriptionContractsQueries } from './subscription-contracts';
+import { VersionsQueries } from './versions';
 import { VideoAuthorsQueries } from './video-authors';
 import { VideosQueries } from './videos';
 
@@ -65,5 +69,9 @@ export const Queries = [
   ...BillingQueries,
   ...OrdersQueries,
   ...OrderItemsQueries,
-  ...PaymentsQueries
+  ...PaymentsQueries,
+  ...VersionsQueries,
+  ...PagesQueries,
+  ...ComponentsQueries,
+  ...SitesQueries
 ];

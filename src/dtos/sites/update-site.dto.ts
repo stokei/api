@@ -3,7 +3,7 @@ export interface UpdateSiteDataDTO {
   slug?: string;
   favicon?: string;
   logo?: string;
-  homeSite?: string;
+  homePage?: string;
   updatedBy: string;
 }
 

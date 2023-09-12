@@ -851,15 +851,17 @@ model Component {
 }
 
 model Page {
-  id        String    @id @default(cuid())
-  app       String    @db.VarChar(255)
-  parent    String    @db.VarChar(255)
-  title     String    @db.VarChar(255)
-  slug      String    @db.VarChar(255)
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  createdAt DateTime? @default(now()) @map("created_at")
-  updatedBy String?   @map("updated_by") @db.VarChar(255)
-  createdBy String?   @map("created_by") @db.VarChar(255)
+  id           String    @id @default(cuid())
+  app          String    @db.VarChar(255)
+  parent       String    @db.VarChar(255)
+  title        String    @db.VarChar(255)
+  slug         String    @db.VarChar(255)
+  version      String?   @db.VarChar(255)
+  draftVersion String?   @db.VarChar(255)
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+  createdAt    DateTime? @default(now()) @map("created_at")
+  updatedBy    String?   @map("updated_by") @db.VarChar(255)
+  createdBy    String?   @map("created_by") @db.VarChar(255)
 
   @@map("pages")
 }

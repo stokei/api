@@ -869,7 +869,7 @@ model Page {
 model Version {
   id        String    @id @default(cuid())
   app       String    @db.VarChar(255)
-  parent    String    @db.VarChar(255)
+  parent    String?   @db.VarChar(255)
   name      String    @db.VarChar(255)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")

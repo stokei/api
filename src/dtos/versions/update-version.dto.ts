@@ -1,4 +1,5 @@
 export interface UpdateVersionDataDTO {
+  parent?: string;
   name?: string;
   updatedBy: string;
 }

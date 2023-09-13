@@ -1,5 +1,5 @@
 export class CreateVersionDTO {
-  parent: string;
+  parent?: string;
   app: string;
   createdBy: string;
 }

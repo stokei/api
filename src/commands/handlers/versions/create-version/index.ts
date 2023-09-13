@@ -2,15 +2,9 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, OrderBy } from '@stokei/nestjs';
 
 import { CreateVersionCommand } from '@/commands/implements/versions/create-version.command';
-import {
-  DataNotFoundException,
-  ParamNotFoundException,
-  VersionNotFoundException
-} from '@/errors';
+import { DataNotFoundException, VersionNotFoundException } from '@/errors';
 import { CreateVersionRepository } from '@/repositories/versions/create-version';
 import { FindAllVersionsService } from '@/services/versions/find-all-versions';
-
-type CreateVersionCommandKeys = keyof CreateVersionCommand;
 
 @CommandHandler(CreateVersionCommand)
 export class CreateVersionCommandHandler
@@ -27,33 +21,33 @@ export class CreateVersionCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.parent) {
-      throw new ParamNotFoundException<CreateVersionCommandKeys>('parent');
-    }
+
     let versionName = '1';
-    try {
-      const versions = await this.findAllVersionsService.execute({
-        where: {
-          AND: {
-            parent: {
-              equals: data.parent
-            },
-            app: {
-              equals: data.app
+    if (data.parent) {
+      try {
+        const versions = await this.findAllVersionsService.execute({
+          where: {
+            AND: {
+              parent: {
+                equals: data.parent
+              },
+              app: {
+                equals: data.app
+              }
             }
+          },
+          page: {
+            limit: 1
+          },
+          orderBy: {
+            createdAt: OrderBy.DESC
           }
-        },
-        page: {
-          limit: 1
-        },
-        orderBy: {
-          createdAt: OrderBy.DESC
+        });
+        if (!!versions?.totalCount) {
+          versionName = versions?.items?.[0]?.name;
         }
-      });
-      if (!!versions?.totalCount) {
-        versionName = versions?.items?.[0]?.name;
-      }
-    } catch (error) {}
+      } catch (error) {}
+    }
 
     const versionNumber = parseInt(versionName);
     if (isNaN(versionNumber)) {

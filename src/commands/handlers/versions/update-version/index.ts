@@ -46,8 +46,9 @@ export class UpdateVersionCommandHandler
       throw new DataNotFoundException();
     }
 
-    const versionUpdated =
-      await this.findVersionByIdRepository.execute(versionId);
+    const versionUpdated = await this.findVersionByIdRepository.execute(
+      versionId
+    );
     if (!versionUpdated) {
       throw new VersionNotFoundException();
     }
@@ -68,6 +69,7 @@ export class UpdateVersionCommandHandler
       }),
       data: cleanObject({
         name: cleanValue(command?.data?.name),
+        parent: cleanValue(command?.data?.parent),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

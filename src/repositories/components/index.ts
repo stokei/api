@@ -1,5 +1,6 @@
 import { CountComponentsRepository } from './count-components';
 import { CreateComponentRepository } from './create-component';
+import { CreateMultipleComponentsRepository } from './create-multiple-components';
 import { FindAllComponentsRepository } from './find-all-components';
 import { FindAllComponentsByParentIdsRepository } from './find-all-components-by-parent-ids';
 import { FindComponentByIdRepository } from './find-component-by-id';
@@ -13,5 +14,6 @@ export const ComponentsRepositories = [
   FindAllComponentsRepository,
   RemoveComponentRepository,
   UpdateComponentRepository,
-  FindAllComponentsByParentIdsRepository
+  FindAllComponentsByParentIdsRepository,
+  CreateMultipleComponentsRepository
 ];

@@ -10,7 +10,7 @@ export interface IVersionModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly app: string;
-  readonly parent: string;
+  readonly parent?: string;
   readonly name: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
@@ -21,7 +21,7 @@ export interface IVersionModelData {
 export class VersionModel extends AggregateRoot {
   readonly id: string;
   readonly app: string;
-  readonly parent: string;
+  readonly parent?: string;
   readonly name: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;

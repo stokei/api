@@ -9,6 +9,8 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreatePageRepository } from '@/repositories/pages/create-page';
+import { CreateVersionService } from '@/services/versions/create-version';
+import { UpdateVersionService } from '@/services/versions/update-version';
 
 type CreatePageCommandKeys = keyof CreatePageCommand;
 
@@ -18,6 +20,8 @@ export class CreatePageCommandHandler
 {
   constructor(
     private readonly createPageRepository: CreatePageRepository,
+    private readonly createVersionService: CreateVersionService,
+    private readonly updateVersionService: UpdateVersionService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -30,9 +34,16 @@ export class CreatePageCommandHandler
       throw new ParamNotFoundException<CreatePageCommandKeys>('parent');
     }
 
+    const initialVersion = await this.createVersionService.execute({
+      app: data.app,
+      createdBy: data.createdBy
+    });
+
     const slug = cleanSlug(data.title + nanoid(8));
     const pageCreated = await this.createPageRepository.execute({
       ...data,
+      version: initialVersion.id,
+      draftVersion: initialVersion.id,
       slug
     });
     if (!pageCreated) {
@@ -43,6 +54,17 @@ export class CreatePageCommandHandler
       createdBy: data.createdBy
     });
     pageModel.commit();
+
+    await this.updateVersionService.execute({
+      data: {
+        parent: pageCreated.id,
+        updatedBy: data.createdBy
+      },
+      where: {
+        app: data.app,
+        version: initialVersion.id
+      }
+    });
 
     return pageCreated;
   }

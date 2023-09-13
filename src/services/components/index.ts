@@ -1,4 +1,5 @@
 import { CreateComponentService } from './create-component';
+import { CreateMultipleComponentsService } from './create-multiple-components';
 import { FindAllComponentsService } from './find-all-components';
 import { FindAllComponentsByParentIdsService } from './find-all-components-by-parent-ids';
 import { FindComponentByIdService } from './find-component-by-id';
@@ -11,5 +12,6 @@ export const ComponentServices = [
   UpdateComponentService,
   FindComponentByIdService,
   FindAllComponentsService,
-  FindAllComponentsByParentIdsService
+  FindAllComponentsByParentIdsService,
+  CreateMultipleComponentsService
 ];

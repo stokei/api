@@ -1,5 +1,5 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
 
 import { CreateComponentCommand } from '@/commands/implements/components/create-component.command';
 import {
@@ -47,8 +47,9 @@ export class CreateComponentCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       parent: cleanValue(command?.parent),
+      order: cleanValueNumber(command?.order),
       type: cleanValue(command?.type),
-      data: command?.data
+      data: command?.data || {}
     });
   }
 }

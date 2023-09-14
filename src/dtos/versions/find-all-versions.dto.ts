@@ -17,7 +17,7 @@ export type IKeysWhereDataFindAllVersionsDTO =
   keyof WhereDataFindAllVersionsDTO;
 
 export interface OrderByDataFindAllVersionsDTO {
-  title?: IOrderBy;
+  name?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

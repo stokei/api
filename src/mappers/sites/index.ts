@@ -74,9 +74,9 @@ export class SiteMapper {
           };
         }
       }),
-      site: cleanObject({
-        limit: cleanValueNumber(query.site?.limit),
-        number: cleanValueNumber(query.site?.number)
+      page: cleanObject({
+        limit: cleanValueNumber(query.page?.limit),
+        number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
         name: cleanSortValue(query.orderBy?.name),

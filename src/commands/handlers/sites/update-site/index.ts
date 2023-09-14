@@ -70,7 +70,7 @@ export class UpdateSiteCommandHandler
         slug: cleanValue(command?.data?.slug),
         favicon: cleanValue(command?.data?.favicon),
         logo: cleanValue(command?.data?.logo),
-        homeSite: cleanValue(command?.data?.homeSite),
+        homePage: cleanValue(command?.data?.homePage),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

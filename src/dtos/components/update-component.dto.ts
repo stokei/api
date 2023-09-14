@@ -1,4 +1,5 @@
 export interface UpdateComponentDataDTO {
+  order?: number;
   data?: any;
   updatedBy: string;
 }

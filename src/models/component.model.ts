@@ -12,8 +12,10 @@ export interface IComponentModelData {
   readonly _id?: string;
   readonly app: string;
   readonly parent: string;
+  readonly order: number;
   readonly type: ComponentType;
   readonly data?: any;
+  readonly components?: ComponentModel[];
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly updatedBy?: string;
@@ -24,8 +26,10 @@ export class ComponentModel extends AggregateRoot {
   readonly id: string;
   readonly app: string;
   readonly parent: string;
+  readonly order: number;
   readonly type: ComponentType;
   readonly data?: any;
+  readonly components?: ComponentModel[];
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly updatedBy?: string;
@@ -40,8 +44,10 @@ export class ComponentModel extends AggregateRoot {
     });
     this.app = data.app;
     this.parent = data.parent;
+    this.order = data.order;
     this.type = data.type;
     this.data = data.data;
+    this.components = data.components || [];
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;

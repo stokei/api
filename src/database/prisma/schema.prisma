@@ -840,6 +840,7 @@ model Component {
   id        String        @id @default(cuid())
   app       String        @db.VarChar(255)
   parent    String        @db.VarChar(255)
+  order     Float         @default(1)
   type      ComponentType
   data      Json?
   updatedAt DateTime?     @updatedAt @map("updated_at")

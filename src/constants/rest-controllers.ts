@@ -1,5 +1,6 @@
 export const REST_CONTROLLERS_URL_NAMES = {
   UPLOADS: 'uploads',
+  VERSIONS: 'versions',
   UPLOADS_FILES: 'uploads/files',
   UPLOADS_IMAGES: 'uploads/images',
   UPLOADS_VIDEOS: 'uploads/videos',

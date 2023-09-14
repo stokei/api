@@ -6,7 +6,6 @@ import {
   NestModule,
   RequestMethod
 } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -24,7 +23,6 @@ import { DatabaseModule } from './database/database.module';
 import { Entities } from './entities';
 import { IS_PRODUCTION, TOKEN_SECRET_KEY } from './environments';
 import { EventsHandlers } from './events/handlers';
-import { AppExceptionFilter } from './interceptors';
 import { JsonBodyMiddleware } from './middlewares/json-body';
 import { RawBodyMiddleware } from './middlewares/raw-body';
 import { QueriesHandlers } from './queries/handlers';
@@ -54,7 +52,6 @@ import { Services } from './services';
   ],
   controllers: [...Controllers],
   providers: [
-    { provide: APP_FILTER, useClass: AppExceptionFilter },
     ...Resolvers,
     ...Repositories,
     ...EventsHandlers,

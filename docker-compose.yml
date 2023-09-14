@@ -6,10 +6,9 @@ networks:
 
 volumes:
   mysql-data:
-  postgresql-data:
 services:
   mysql:
-    image: bitnami/mysql:5.7
+    image: bitnami/mysql:8.1.0
     container_name: mysql
     environment:
       MYSQL_ROOT_USER: dev

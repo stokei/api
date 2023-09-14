@@ -19,6 +19,7 @@ export type IKeysWhereDataFindAllComponentsDTO =
   keyof WhereDataFindAllComponentsDTO;
 
 export interface OrderByDataFindAllComponentsDTO {
+  order?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

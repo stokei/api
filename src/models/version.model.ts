@@ -6,12 +6,15 @@ import { VersionCreatedEvent } from '@/events/implements/versions/version-create
 import { VersionRemovedEvent } from '@/events/implements/versions/version-removed.event';
 import { VersionUpdatedEvent } from '@/events/implements/versions/version-updated.event';
 
+import { ComponentModel } from './component.model';
+
 export interface IVersionModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly app: string;
   readonly parent?: string;
   readonly name: string;
+  readonly components?: ComponentModel[];
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly updatedBy?: string;
@@ -23,6 +26,7 @@ export class VersionModel extends AggregateRoot {
   readonly app: string;
   readonly parent?: string;
   readonly name: string;
+  readonly components?: ComponentModel[];
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly updatedBy?: string;
@@ -38,6 +42,7 @@ export class VersionModel extends AggregateRoot {
     this.app = data.app;
     this.parent = data.parent;
     this.name = data.name;
+    this.components = data.components;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;

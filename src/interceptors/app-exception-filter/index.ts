@@ -5,14 +5,11 @@ import {
   HttpException,
   HttpStatus
 } from '@nestjs/common';
-import { HttpAdapterHost } from '@nestjs/core';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
 
 @Catch()
 export class AppExceptionFilter implements ExceptionFilter {
-  constructor(private httpAdapterHost: HttpAdapterHost) {}
-
   catch(exception: unknown, host: ArgumentsHost) {
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let msg = 'Internal Server Error';

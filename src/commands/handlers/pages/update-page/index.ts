@@ -67,6 +67,8 @@ export class UpdatePageCommandHandler
       }),
       data: cleanObject({
         title: cleanValue(command?.data?.title),
+        draftVersion: cleanValue(command?.data?.draftVersion),
+        version: cleanValue(command?.data?.version),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

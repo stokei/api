@@ -77,6 +77,7 @@ export class ComponentMapper {
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
+        order: cleanSortValue(query.orderBy?.order),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

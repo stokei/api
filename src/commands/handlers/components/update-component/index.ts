@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueNumber,
+  splitServiceId
+} from '@stokei/nestjs';
 
 import { UpdateComponentCommand } from '@/commands/implements/components/update-component.command';
 import {
@@ -30,8 +35,9 @@ export class UpdateComponentCommandHandler
       throw new ParamNotFoundException('componentId');
     }
 
-    const component =
-      await this.findComponentByIdRepository.execute(componentId);
+    const component = await this.findComponentByIdRepository.execute(
+      componentId
+    );
     if (!component) {
       throw new ComponentNotFoundException();
     }
@@ -47,8 +53,9 @@ export class UpdateComponentCommandHandler
       throw new DataNotFoundException();
     }
 
-    const componentUpdated =
-      await this.findComponentByIdRepository.execute(componentId);
+    const componentUpdated = await this.findComponentByIdRepository.execute(
+      componentId
+    );
     if (!componentUpdated) {
       throw new ComponentNotFoundException();
     }
@@ -69,6 +76,7 @@ export class UpdateComponentCommandHandler
       }),
       data: cleanObject({
         data: command?.data?.data,
+        order: cleanValueNumber(command?.data?.order),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

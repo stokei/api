@@ -6,7 +6,7 @@ import {
   WhereDataFindAllComponentsInput
 } from '@/controllers/graphql/inputs/components/find-all-components.input';
 import { Component } from '@/controllers/graphql/types/component';
-import { Components } from '@/controllers/graphql/types/components';
+import { Components } from '@/controllers/graphql/types/component';
 import { FindAllComponentsService } from '@/services/components/find-all-components';
 
 @Resolver(() => Component)

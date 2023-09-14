@@ -72,9 +72,9 @@ export class VersionMapper {
           };
         }
       }),
-      version: cleanObject({
-        limit: cleanValueNumber(query.version?.limit),
-        number: cleanValueNumber(query.version?.number)
+      page: cleanObject({
+        limit: cleanValueNumber(query.page?.limit),
+        number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
         name: cleanSortValue(query.orderBy?.name),

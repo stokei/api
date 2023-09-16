@@ -35,6 +35,7 @@ export class CreatePageCommandHandler
     }
 
     const initialVersion = await this.createVersionService.execute({
+      name: 'Start version',
       app: data.app,
       createdBy: data.createdBy
     });

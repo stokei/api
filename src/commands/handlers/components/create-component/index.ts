@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, cleanValueNumber } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  cleanValueNumber,
+  OrderBy
+} from '@stokei/nestjs';
 
 import { CreateComponentCommand } from '@/commands/implements/components/create-component.command';
 import {
@@ -8,6 +13,7 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { CreateComponentRepository } from '@/repositories/components/create-component';
+import { FindAllComponentsService } from '@/services/components/find-all-components';
 
 type CreateComponentCommandKeys = keyof CreateComponentCommand;
 
@@ -17,6 +23,7 @@ export class CreateComponentCommandHandler
 {
   constructor(
     private readonly createComponentRepository: CreateComponentRepository,
+    private readonly findAllComponentsService: FindAllComponentsService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -29,7 +36,37 @@ export class CreateComponentCommandHandler
       throw new ParamNotFoundException<CreateComponentCommandKeys>('parent');
     }
 
-    const componentCreated = await this.createComponentRepository.execute(data);
+    let order = data.order >= 0 ? data.order : 1;
+    if (!data.order || data.order < 0) {
+      try {
+        const componentsFromParent =
+          await this.findAllComponentsService.execute({
+            orderBy: {
+              order: OrderBy.DESC
+            },
+            page: {
+              limit: 1
+            },
+            where: {
+              AND: {
+                parent: {
+                  equals: data.parent
+                },
+                app: {
+                  equals: data.app
+                }
+              }
+            }
+          });
+        if (componentsFromParent?.totalCount) {
+          order = componentsFromParent?.totalCount + 1;
+        }
+      } catch (error) {}
+    }
+    const componentCreated = await this.createComponentRepository.execute({
+      ...data,
+      order
+    });
     if (!componentCreated) {
       throw new ComponentNotFoundException();
     }

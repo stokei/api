@@ -27,7 +27,6 @@ export class CreateVersionCommandHandler
       throw new DataNotFoundException();
     }
 
-    let versionName = '1';
     let previousVersion: VersionModel;
     if (data.parent) {
       try {
@@ -50,24 +49,12 @@ export class CreateVersionCommandHandler
           }
         });
         if (!!versions?.totalCount) {
-          const version = versions?.items?.[0];
-          versionName = version?.name;
-          previousVersion = version;
+          previousVersion = versions?.items?.[0];
         }
       } catch (error) {}
     }
 
-    const versionNumber = parseInt(versionName);
-    if (isNaN(versionNumber)) {
-      versionName = '1';
-    } else {
-      versionName = versionNumber + 1 + '';
-    }
-
-    const versionCreated = await this.createVersionRepository.execute({
-      ...data,
-      name: versionName
-    });
+    const versionCreated = await this.createVersionRepository.execute(data);
     if (!versionCreated) {
       throw new VersionNotFoundException();
     }
@@ -103,6 +90,7 @@ export class CreateVersionCommandHandler
   private clearData(command: CreateVersionCommand): CreateVersionCommand {
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
+      name: cleanValue(command?.name),
       app: cleanValue(command?.app),
       parent: cleanValue(command?.parent)
     });

@@ -14,10 +14,6 @@ export class FindAllComponentsTreeQueryHandler
     private readonly findAllComponentsWithComponentsChildrenService: FindAllComponentsWithComponentsChildrenService
   ) {}
 
-  /**
-   *  Criar order do component
-   */
-
   async execute(query: FindAllComponentsTreeQuery): Promise<ComponentModel[]> {
     if (!query) {
       throw new DataNotFoundException();

@@ -1,6 +1,8 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { Paginated } from '@stokei/nestjs';
 
+import { ComponentType } from '@/controllers/graphql/enums/component-type.enum';
+
 import { GraphQLJSONScalar } from '../scalars/json.scalar';
 import { Account } from './account';
 import { App } from './app';
@@ -15,6 +17,9 @@ export class Component {
 
   @Field(() => GraphQLJSONScalar)
   data?: JSON;
+
+  @Field(() => ComponentType)
+  type: ComponentType;
 
   @Field(() => [Component], { nullable: true })
   components?: Component;

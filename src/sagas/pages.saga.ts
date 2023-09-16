@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { RemovePageDependenciesCommand } from '@/commands/implements/pages/remove-page-dependencies.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { PageCreatedEvent } from '@/events/implements/pages/page-created.event';
 import { PageRemovedEvent } from '@/events/implements/pages/page-removed.event';
@@ -49,7 +50,13 @@ export class PagesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands: ICommand[] = [];
+        const commands: ICommand[] = [
+          new RemovePageDependenciesCommand({
+            page: event.page,
+            app: event.page.app,
+            removedBy: event.removedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

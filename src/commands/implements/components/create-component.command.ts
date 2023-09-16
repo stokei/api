@@ -5,7 +5,7 @@ import { ComponentType } from '@/enums/component-type.enum';
 
 export class CreateComponentCommand implements ICommand, CreateComponentDTO {
   parent: string;
-  order: number;
+  order?: number;
   type: ComponentType;
   data?: any;
   app: string;

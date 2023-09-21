@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { RemoveSiteDependenciesCommand } from '@/commands/implements/sites/remove-site-dependencies.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { SiteCreatedEvent } from '@/events/implements/sites/site-created.event';
 import { SiteRemovedEvent } from '@/events/implements/sites/site-removed.event';
@@ -49,7 +50,13 @@ export class SitesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands: ICommand[] = [];
+        const commands: ICommand[] = [
+          new RemoveSiteDependenciesCommand({
+            site: event.site,
+            app: event.site.app,
+            removedBy: event.removedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

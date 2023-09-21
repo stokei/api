@@ -15,6 +15,7 @@ export interface IVersionModelData {
   readonly parent?: string;
   readonly name: string;
   readonly components?: ComponentModel[];
+  readonly published: boolean;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly updatedBy?: string;
@@ -27,6 +28,7 @@ export class VersionModel extends AggregateRoot {
   readonly parent?: string;
   readonly name: string;
   readonly components?: ComponentModel[];
+  readonly published: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly updatedBy?: string;
@@ -43,6 +45,7 @@ export class VersionModel extends AggregateRoot {
     this.parent = data.parent;
     this.name = data.name;
     this.components = data.components;
+    this.published = !!data.published;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;

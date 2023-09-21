@@ -8,6 +8,7 @@ import {
 export interface WhereDataFindAllVersionsDTO {
   ids?: string[];
   app?: IWhereData;
+  published?: IWhereData<boolean>;
   parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
   updatedBy?: IWhereData;
@@ -18,6 +19,7 @@ export type IKeysWhereDataFindAllVersionsDTO =
 
 export interface OrderByDataFindAllVersionsDTO {
   name?: IOrderBy;
+  published?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

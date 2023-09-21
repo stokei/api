@@ -1,13 +1,12 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue, OrderBy } from '@stokei/nestjs';
+import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateVersionCommand } from '@/commands/implements/versions/create-version.command';
 import { DataNotFoundException, VersionNotFoundException } from '@/errors';
-import { VersionModel } from '@/models/version.model';
 import { CreateVersionRepository } from '@/repositories/versions/create-version';
 import { CloneComponentsTreeService } from '@/services/components/clone-components-tree';
+import { FindPageByIdService } from '@/services/pages/find-page-by-id';
 import { UpdatePageService } from '@/services/pages/update-page';
-import { FindAllVersionsService } from '@/services/versions/find-all-versions';
 
 @CommandHandler(CreateVersionCommand)
 export class CreateVersionCommandHandler
@@ -15,9 +14,9 @@ export class CreateVersionCommandHandler
 {
   constructor(
     private readonly createVersionRepository: CreateVersionRepository,
+    private readonly findPageByIdService: FindPageByIdService,
     private readonly cloneComponentsTreeService: CloneComponentsTreeService,
     private readonly updatePageService: UpdatePageService,
-    private readonly findAllVersionsService: FindAllVersionsService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -27,29 +26,12 @@ export class CreateVersionCommandHandler
       throw new DataNotFoundException();
     }
 
-    let previousVersion: VersionModel;
+    let previousVersionId: string;
     if (data.parent) {
       try {
-        const versions = await this.findAllVersionsService.execute({
-          where: {
-            AND: {
-              parent: {
-                equals: data.parent
-              },
-              app: {
-                equals: data.app
-              }
-            }
-          },
-          page: {
-            limit: 1
-          },
-          orderBy: {
-            createdAt: OrderBy.DESC
-          }
-        });
-        if (!!versions?.totalCount) {
-          previousVersion = versions?.items?.[0];
+        const page = await this.findPageByIdService.execute(data.parent);
+        if (!!page?.version) {
+          previousVersionId = page.version;
         }
       } catch (error) {}
     }
@@ -65,10 +47,10 @@ export class CreateVersionCommandHandler
     });
     versionModel.commit();
 
-    if (previousVersion) {
+    if (previousVersionId) {
       await this.cloneComponentsTreeService.execute({
         app: data.app,
-        currentParent: previousVersion.id,
+        currentParent: previousVersionId,
         newParent: versionCreated.id,
         createdBy: data.createdBy
       });

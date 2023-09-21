@@ -162,6 +162,15 @@ enum HeroType {
 enum ComponentType {
   HEADER
   FOOTER
+  IMAGE
+  VIDEO
+  GRID
+  TEXT
+  TITLE
+  CARD
+  BUTTON
+  MENU
+  MENU_ITEM
   CATALOG
   FEATURE
   NAVLINK
@@ -872,6 +881,7 @@ model Version {
   app       String    @db.VarChar(255)
   parent    String?   @db.VarChar(255)
   name      String    @db.VarChar(255)
+  published Boolean   @default(false)
   updatedAt DateTime? @updatedAt @map("updated_at")
   createdAt DateTime? @default(now()) @map("created_at")
   updatedBy String?   @map("updated_by") @db.VarChar(255)

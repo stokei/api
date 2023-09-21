@@ -1,8 +1,11 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
 import { PublishVersionCommand } from '@/commands/implements/versions/publish-version.command';
+import { PublishVersionRepositoryDTO } from '@/dtos/versions/publish-version-repository.dto';
 import { DataNotFoundException, VersionNotFoundException } from '@/errors';
+import { VersionModel } from '@/models/version.model';
+import { PublishVersionRepository } from '@/repositories/versions/publish-version';
 import { UpdatePageService } from '@/services/pages/update-page';
 import { FindVersionByIdService } from '@/services/versions/find-version-by-id';
 
@@ -12,6 +15,7 @@ export class PublishVersionCommandHandler
 {
   constructor(
     private readonly findVersionByIdService: FindVersionByIdService,
+    private readonly publishVersionRepository: PublishVersionRepository,
     private readonly updatePageService: UpdatePageService,
     private readonly publisher: EventPublisher
   ) {}
@@ -22,25 +26,35 @@ export class PublishVersionCommandHandler
       throw new DataNotFoundException();
     }
 
-    const versionPublished = await this.findVersionByIdService.execute(
-      data.version
-    );
-    if (!versionPublished) {
+    const version = await this.findVersionByIdService.execute(data.version);
+    if (!version) {
       throw new VersionNotFoundException();
     }
 
     await this.updatePageService.execute({
       data: {
-        version: versionPublished.id,
-        draftVersion: versionPublished.id,
+        version: version.id,
+        draftVersion: version.id,
         updatedBy: data.createdBy
       },
       where: {
         app: data.app,
-        page: versionPublished.parent
+        page: version.parent
       }
     });
 
+    const dataPublished: PublishVersionRepositoryDTO = {
+      app: data.app,
+      published: true,
+      version: splitServiceId(version?.id)?.id,
+      createdBy: data.createdBy
+    };
+    await this.publishVersionRepository.execute(dataPublished);
+
+    const versionPublished = new VersionModel({
+      ...version,
+      ...dataPublished
+    });
     const versionModel = this.publisher.mergeObjectContext(versionPublished);
     versionModel.createdVersion({
       createdBy: data.createdBy

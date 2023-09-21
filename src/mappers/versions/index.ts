@@ -4,6 +4,7 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhere,
+  cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IWhere,
@@ -33,6 +34,7 @@ export class VersionMapper {
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
           name: prismaMapper.toWhereDataSearch(operatorData.name),
           app: prismaMapper.toWhereData(operatorData.app),
+          published: prismaMapper.toWhereData(operatorData.published),
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
           createdBy: prismaMapper.toWhereData(operatorData.createdBy)
         };
@@ -61,6 +63,7 @@ export class VersionMapper {
             parent: cleanWhereDataSearch(operatorData.parent),
             name: cleanWhereDataSearch(operatorData.name),
             app: cleanWhereDataString(operatorData.app),
+            published: cleanWhereDataBoolean(operatorData.published),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),
             ids:
@@ -78,6 +81,7 @@ export class VersionMapper {
       }),
       orderBy: cleanObject({
         name: cleanSortValue(query.orderBy?.name),
+        published: cleanSortValue(query.orderBy?.published),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

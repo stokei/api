@@ -4,6 +4,7 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { RemovePageDependenciesCommand } from '@/commands/implements/pages/remove-page-dependencies.command';
 import { DataNotFoundException, ParamNotFoundException } from '@/errors';
+import { FindAllVersionsService } from '@/services/versions/find-all-versions';
 import { RemoveVersionService } from '@/services/versions/remove-version';
 
 type RemovePageDependenciesCommandKeys = keyof RemovePageDependenciesCommand;
@@ -15,7 +16,10 @@ export class RemovePageDependenciesCommandHandler
   private readonly logger = new Logger(
     RemovePageDependenciesCommandHandler.name
   );
-  constructor(private readonly removeVersionService: RemoveVersionService) {}
+  constructor(
+    private readonly removeVersionService: RemoveVersionService,
+    private readonly findAllVersionsService: FindAllVersionsService
+  ) {}
 
   async execute(command: RemovePageDependenciesCommand) {
     const data = this.clearData(command);
@@ -46,6 +50,32 @@ export class RemovePageDependenciesCommandHandler
           }
         });
       }
+      const versions = await this.findAllVersionsService.execute({
+        where: {
+          AND: {
+            parent: {
+              equals: page.id
+            },
+            app: {
+              equals: data.app
+            }
+          }
+        }
+      });
+      if (!versions?.totalCount) {
+        return true;
+      }
+      await Promise.all(
+        versions?.items?.map((version) =>
+          this.removeVersionService.execute({
+            where: {
+              version: version.id,
+              app: data.app,
+              removedBy: data.removedBy
+            }
+          })
+        )
+      );
       return true;
     } catch (error) {
       this.logger.error(

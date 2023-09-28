@@ -40,7 +40,7 @@ export class SiteModel extends AggregateRoot {
     super();
 
     this.id = createServiceId({
-      service: ServerStokeiApiIdPrefix.PAGES,
+      service: ServerStokeiApiIdPrefix.SITES,
       id: data._id?.toString() || data.id
     });
     this.app = data.app;

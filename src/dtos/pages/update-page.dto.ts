@@ -1,6 +1,7 @@
 export interface UpdatePageDataDTO {
   title?: string;
   version?: string;
+  slug?: string;
   draftVersion?: string;
   updatedBy: string;
 }

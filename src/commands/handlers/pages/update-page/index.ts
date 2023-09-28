@@ -5,10 +5,12 @@ import { UpdatePageCommand } from '@/commands/implements/pages/update-page.comma
 import {
   DataNotFoundException,
   PageNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SlugAlreadyExistsException
 } from '@/errors';
 import { FindPageByIdRepository } from '@/repositories/pages/find-page-by-id';
 import { UpdatePageRepository } from '@/repositories/pages/update-page';
+import { FindPageBySlugAndParentService } from '@/services/pages/find-page-by-slug-and-parent';
 
 @CommandHandler(UpdatePageCommand)
 export class UpdatePageCommandHandler
@@ -17,6 +19,7 @@ export class UpdatePageCommandHandler
   constructor(
     private readonly findPageByIdRepository: FindPageByIdRepository,
     private readonly updatePageRepository: UpdatePageRepository,
+    private readonly findPageBySlugAndParentService: FindPageBySlugAndParentService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -35,6 +38,21 @@ export class UpdatePageCommandHandler
       throw new PageNotFoundException();
     }
 
+    if (data?.data?.slug && page?.slug !== data?.data?.slug) {
+      try {
+        const pageWithSlug = await this.findPageBySlugAndParentService.execute({
+          slug: data?.data?.slug,
+          parent: page.parent
+        });
+        if (pageWithSlug) {
+          throw new SlugAlreadyExistsException();
+        }
+      } catch (error) {
+        if (error instanceof SlugAlreadyExistsException) {
+          throw error;
+        }
+      }
+    }
     const updated = await this.updatePageRepository.execute({
       ...data,
       where: {
@@ -67,6 +85,7 @@ export class UpdatePageCommandHandler
       }),
       data: cleanObject({
         title: cleanValue(command?.data?.title),
+        slug: cleanValue(command?.data?.slug),
         draftVersion: cleanValue(command?.data?.draftVersion),
         version: cleanValue(command?.data?.version),
         updatedBy: cleanValue(command?.data?.updatedBy)

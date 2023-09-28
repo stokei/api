@@ -4,8 +4,8 @@ import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 import { RemovePaymentCommand } from '@/commands/implements/payments/remove-payment.command';
 import {
   DataNotFoundException,
-  PaymentNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  PaymentNotFoundException
 } from '@/errors';
 import { FindPaymentByIdRepository } from '@/repositories/payments/find-payment-by-id';
 import { RemovePaymentRepository } from '@/repositories/payments/remove-payment';

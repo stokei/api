@@ -28,8 +28,9 @@ export class FindInvoiceByStripeInvoiceQueryHandler
       throw new ParamNotFoundException('stripeInvoice');
     }
 
-    const invoice =
-      await this.findInvoiceByStripeInvoiceRepository.execute(stripeInvoice);
+    const invoice = await this.findInvoiceByStripeInvoiceRepository.execute(
+      stripeInvoice
+    );
     if (!invoice) {
       throw new InvoiceNotFoundException();
     }

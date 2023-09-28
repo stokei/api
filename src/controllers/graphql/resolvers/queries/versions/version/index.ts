@@ -2,7 +2,7 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 
 import { VersionsLoader } from '@/controllers/graphql/dataloaders/versions.loader';
 import { Version } from '@/controllers/graphql/types/version';
-import { VersionNotFoundException, ParamNotFoundException } from '@/errors';
+import { ParamNotFoundException, VersionNotFoundException } from '@/errors';
 
 @Resolver(() => Version)
 export class VersionResolver {

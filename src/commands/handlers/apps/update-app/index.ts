@@ -43,7 +43,7 @@ export class UpdateAppCommandHandler
       throw new AppNotFoundException();
     }
 
-    if (data?.data?.slug) {
+    if (data?.data?.slug && app?.slug !== data?.data?.slug) {
       try {
         const appWithSlug = await this.findAppBySlugService.execute(
           data?.data?.slug

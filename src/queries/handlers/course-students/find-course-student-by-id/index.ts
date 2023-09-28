@@ -30,8 +30,9 @@ export class FindCourseStudentByIdQueryHandler
       throw new ParamNotFoundException('id');
     }
 
-    const courseStudent =
-      await this.findCourseStudentByIdRepository.execute(id);
+    const courseStudent = await this.findCourseStudentByIdRepository.execute(
+      id
+    );
     if (!courseStudent) {
       throw new CourseStudentNotFoundException();
     }

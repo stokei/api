@@ -6,9 +6,11 @@ import { CreateSiteCommand } from '@/commands/implements/sites/create-site.comma
 import {
   DataNotFoundException,
   ParamNotFoundException,
-  SiteNotFoundException
+  SiteNotFoundException,
+  SlugAlreadyExistsException
 } from '@/errors';
 import { CreateSiteRepository } from '@/repositories/sites/create-site';
+import { FindSiteBySlugService } from '@/services/sites/find-site-by-slug';
 
 type CreateSiteCommandKeys = keyof CreateSiteCommand;
 
@@ -18,6 +20,7 @@ export class CreateSiteCommandHandler
 {
   constructor(
     private readonly createSiteRepository: CreateSiteRepository,
+    private readonly findSiteBySlugService: FindSiteBySlugService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -34,6 +37,16 @@ export class CreateSiteCommandHandler
     }
 
     const slug = cleanSlug(data.name + nanoid(8));
+    try {
+      const siteWithSlug = await this.findSiteBySlugService.execute(slug);
+      if (siteWithSlug) {
+        throw new SlugAlreadyExistsException();
+      }
+    } catch (error) {
+      if (error instanceof SlugAlreadyExistsException) {
+        throw error;
+      }
+    }
     const siteCreated = await this.createSiteRepository.execute({
       ...data,
       slug

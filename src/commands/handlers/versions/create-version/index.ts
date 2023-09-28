@@ -55,17 +55,18 @@ export class CreateVersionCommandHandler
         createdBy: data.createdBy
       });
     }
-    await this.updatePageService.execute({
-      data: {
-        draftVersion: versionCreated.id,
-        updatedBy: data.createdBy
-      },
-      where: {
-        app: data.app,
-        page: data.parent
-      }
-    });
-
+    if (data.parent) {
+      await this.updatePageService.execute({
+        data: {
+          draftVersion: versionCreated.id,
+          updatedBy: data.createdBy
+        },
+        where: {
+          app: data.app,
+          page: data.parent
+        }
+      });
+    }
     return versionCreated;
   }
 

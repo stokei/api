@@ -6,9 +6,11 @@ import { CreatePageCommand } from '@/commands/implements/pages/create-page.comma
 import {
   DataNotFoundException,
   PageNotFoundException,
-  ParamNotFoundException
+  ParamNotFoundException,
+  SlugAlreadyExistsException
 } from '@/errors';
 import { CreatePageRepository } from '@/repositories/pages/create-page';
+import { FindPageBySlugAndParentService } from '@/services/pages/find-page-by-slug-and-parent';
 import { CreateVersionService } from '@/services/versions/create-version';
 import { UpdateVersionService } from '@/services/versions/update-version';
 
@@ -22,6 +24,7 @@ export class CreatePageCommandHandler
     private readonly createPageRepository: CreatePageRepository,
     private readonly createVersionService: CreateVersionService,
     private readonly updateVersionService: UpdateVersionService,
+    private readonly findPageBySlugAndParentService: FindPageBySlugAndParentService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -41,6 +44,19 @@ export class CreatePageCommandHandler
     });
 
     const slug = cleanSlug(data.title + nanoid(8));
+    try {
+      const siteWithSlug = await this.findPageBySlugAndParentService.execute({
+        slug,
+        parent: data.parent
+      });
+      if (siteWithSlug) {
+        throw new SlugAlreadyExistsException();
+      }
+    } catch (error) {
+      if (error instanceof SlugAlreadyExistsException) {
+        throw error;
+      }
+    }
     const pageCreated = await this.createPageRepository.execute({
       ...data,
       version: initialVersion.id,

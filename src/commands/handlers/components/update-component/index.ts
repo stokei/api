@@ -7,11 +7,13 @@ import {
 } from '@stokei/nestjs';
 
 import { UpdateComponentCommand } from '@/commands/implements/components/update-component.command';
+import { UpdateComponentDataDTO } from '@/dtos/components/update-component.dto';
 import {
   ComponentNotFoundException,
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
+import { ComponentModel } from '@/models/component.model';
 import { FindComponentByIdRepository } from '@/repositories/components/find-component-by-id';
 import { UpdateComponentRepository } from '@/repositories/components/update-component';
 
@@ -35,14 +37,22 @@ export class UpdateComponentCommandHandler
       throw new ParamNotFoundException('componentId');
     }
 
-    const component =
-      await this.findComponentByIdRepository.execute(componentId);
+    const component = await this.findComponentByIdRepository.execute(
+      componentId
+    );
     if (!component) {
       throw new ComponentNotFoundException();
     }
 
+    const dataUpdated: UpdateComponentDataDTO = {
+      ...data?.data,
+      data: {
+        ...component?.data,
+        ...data?.data?.data
+      }
+    };
     const updated = await this.updateComponentRepository.execute({
-      ...data,
+      data: dataUpdated,
       where: {
         ...data.where,
         component: componentId
@@ -52,11 +62,10 @@ export class UpdateComponentCommandHandler
       throw new DataNotFoundException();
     }
 
-    const componentUpdated =
-      await this.findComponentByIdRepository.execute(componentId);
-    if (!componentUpdated) {
-      throw new ComponentNotFoundException();
-    }
+    const componentUpdated = new ComponentModel({
+      ...component,
+      ...dataUpdated
+    });
     const componentModel = this.publisher.mergeObjectContext(componentUpdated);
     componentModel.updatedComponent({
       updatedBy: data.data.updatedBy

@@ -37,9 +37,8 @@ export class UpdateComponentCommandHandler
       throw new ParamNotFoundException('componentId');
     }
 
-    const component = await this.findComponentByIdRepository.execute(
-      componentId
-    );
+    const component =
+      await this.findComponentByIdRepository.execute(componentId);
     if (!component) {
       throw new ComponentNotFoundException();
     }

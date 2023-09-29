@@ -30,9 +30,8 @@ export class FindPaymentMethodByIdQueryHandler
       throw new ParamNotFoundException('id');
     }
 
-    const paymentMethod = await this.findPaymentMethodByIdRepository.execute(
-      id
-    );
+    const paymentMethod =
+      await this.findPaymentMethodByIdRepository.execute(id);
     if (!paymentMethod) {
       throw new PaymentMethodNotFoundException();
     }

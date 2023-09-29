@@ -84,6 +84,7 @@ export class UpdateComponentCommandHandler
       data: cleanObject({
         data: command?.data?.data,
         order: cleanValueNumber(command?.data?.order),
+        parent: cleanValue(command?.data?.parent),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

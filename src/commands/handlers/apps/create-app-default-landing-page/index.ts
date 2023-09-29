@@ -114,16 +114,10 @@ export class CreateAppDefaultLandingPageCommandHandler
         app: app.id,
         createdBy
       });
-      await this.createComponentService.execute({
-        type: ComponentType.HERO_DEFAULT,
-        parent: versionId,
+      await this.createHero({
+        versionId,
         app: app.id,
-        createdBy,
-        data: {
-          title: 'VAMOS APRENDER JUNTOS',
-          subtitle:
-            'Torne-se um membro e venha conhecer o melhor do meu conteúdo.'
-        }
+        createdBy
       });
       await this.createComponentService.execute({
         type: ComponentType.CATALOG,
@@ -161,6 +155,69 @@ export class CreateAppDefaultLandingPageCommandHandler
     return cleanObject({
       app: cleanValue(command?.app),
       createdBy: cleanValue(command?.createdBy)
+    });
+  }
+
+  private async createHero({
+    app,
+    versionId,
+    createdBy
+  }: {
+    versionId: string;
+    app: string;
+    createdBy: string;
+  }) {
+    const heroContainer = await this.createComponentService.execute({
+      type: ComponentType.STACK,
+      parent: versionId,
+      app,
+      createdBy,
+      data: {
+        mobile: {
+          direction: 'row'
+        },
+        desktop: {
+          direction: 'column'
+        }
+      }
+    });
+    const heroTextContainer = await this.createComponentService.execute({
+      type: ComponentType.STACK,
+      parent: heroContainer.id,
+      app,
+      createdBy,
+      data: {
+        mobile: {
+          direction: 'column'
+        }
+      }
+    });
+    await this.createComponentService.execute({
+      type: ComponentType.TITLE,
+      parent: heroTextContainer.id,
+      app,
+      createdBy,
+      data: {
+        value: 'VAMOS APRENDER JUNTOS'
+      }
+    });
+    await this.createComponentService.execute({
+      type: ComponentType.TEXT,
+      parent: heroTextContainer.id,
+      app,
+      createdBy,
+      data: {
+        value: 'Torne-se um membro e venha conhecer o melhor do meu conteúdo.'
+      }
+    });
+    await this.createComponentService.execute({
+      type: ComponentType.BUTTON,
+      parent: heroTextContainer.id,
+      app,
+      createdBy,
+      data: {
+        text: 'Cadastre-se'
+      }
     });
   }
 }

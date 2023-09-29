@@ -165,6 +165,9 @@ enum ComponentType {
   IMAGE
   VIDEO
   GRID
+  GRID_ITEM
+  SPACE
+  STACK
   TEXT
   TITLE
   CARD
@@ -172,12 +175,7 @@ enum ComponentType {
   MENU
   MENU_ITEM
   CATALOG
-  FEATURE
   NAVLINK
-  HERO_DEFAULT
-  HERO_WITH_VIDEO
-  HERO_WITH_IMAGE
-  HERO_WITH_IMAGE_BACKGROUND
 }
 
 model Account {

@@ -168,29 +168,18 @@ export class CreateAppDefaultLandingPageCommandHandler
     createdBy: string;
   }) {
     const heroContainer = await this.createComponentService.execute({
-      type: ComponentType.STACK,
+      type: ComponentType.HERO,
       parent: versionId,
       app,
       createdBy,
-      data: {
-        mobile: {
-          direction: 'row'
-        },
-        desktop: {
-          direction: 'column'
-        }
-      }
+      data: {}
     });
     const heroTextContainer = await this.createComponentService.execute({
-      type: ComponentType.STACK,
+      type: ComponentType.HERO_CONTENT,
       parent: heroContainer.id,
       app,
       createdBy,
-      data: {
-        mobile: {
-          direction: 'column'
-        }
-      }
+      data: {}
     });
     await this.createComponentService.execute({
       type: ComponentType.TITLE,

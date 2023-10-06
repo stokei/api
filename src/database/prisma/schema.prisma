@@ -176,6 +176,9 @@ enum ComponentType {
   MENU_ITEM
   CATALOG
   NAVLINK
+  HERO
+  HERO_CONTENT
+  HERO_MEDIA
 }
 
 model Account {

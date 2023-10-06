@@ -71,12 +71,14 @@ export class UpdatePriceCommandHandler
         app: cleanValue(command?.where?.app),
         price: cleanValue(command?.where?.price)
       }),
-      data: cleanObject({
+      data: {
         fromPrice: cleanValueNumber(command?.data?.fromPrice),
-        quantity: cleanValueNumber(command?.data?.quantity),
-        automaticRenew: cleanValueBoolean(command?.data?.automaticRenew),
-        updatedBy: cleanValue(command?.data?.updatedBy)
-      })
+        ...cleanObject({
+          quantity: cleanValueNumber(command?.data?.quantity),
+          automaticRenew: cleanValueBoolean(command?.data?.automaticRenew),
+          updatedBy: cleanValue(command?.data?.updatedBy)
+        })
+      }
     });
   }
 }

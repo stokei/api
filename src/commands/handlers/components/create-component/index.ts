@@ -65,6 +65,7 @@ export class CreateComponentCommandHandler
     }
     const componentCreated = await this.createComponentRepository.execute({
       ...data,
+      data: data?.data || {},
       order
     });
     if (!componentCreated) {

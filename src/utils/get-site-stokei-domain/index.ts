@@ -2,25 +2,25 @@ import { createServiceId } from '@stokei/nestjs';
 
 import { DomainStatus } from '@/controllers/graphql/enums/domain-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
-import { AppModel } from '@/models/app.model';
 import { DomainModel } from '@/models/domain.model';
-import { getDefaultAppDomain } from '@/utils/get-default-app-domain';
+import { SiteModel } from '@/models/site.model';
+import { getDefaultSiteDomain } from '@/utils/get-default-site-domain';
 
-interface GetAppStokeiDomainData {
-  readonly app: AppModel;
+interface GetSiteStokeiDomainData {
+  readonly site: SiteModel;
 }
 
-export const getAppStokeiDomain = ({ app }: GetAppStokeiDomainData) =>
+export const getSiteStokeiDomain = ({ site }: GetSiteStokeiDomainData) =>
   new DomainModel({
     id: createServiceId({
-      id: 'app-domain-stokei',
+      id: 'site-domain-stokei',
       service: ServerStokeiApiIdPrefix.DOMAINS
     }),
-    app: app.id,
-    parent: app.id,
+    app: site.app,
+    parent: site.id,
     free: true,
-    name: getDefaultAppDomain({ slug: app.slug }),
+    name: getDefaultSiteDomain({ slug: site.slug }),
     status: DomainStatus.ACTIVE,
     active: true,
-    createdBy: app.parent
+    createdBy: site.parent
   });

@@ -11,6 +11,8 @@ export class PriceDiscountPercentResolver {
     if (!price.fromAmount) {
       return null;
     }
-    return Math.round((price.amount * 100) / price.fromAmount);
+    const fromAmountPercentage = (price.amount * 100) / price.fromAmount;
+    const discountPercentage = 100 - fromAmountPercentage;
+    return Math.round(discountPercentage);
   }
 }

@@ -3,20 +3,20 @@ import { IBaseService } from '@stokei/nestjs';
 
 import { WebhookVideosDTO } from '@/dtos/webhooks/webhook-videos.dto';
 import { ActivateFileService } from '@/services/files/activate-file';
-import { FindFileByFilenameService } from '@/services/files/find-file-by-filename';
+import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { UpdateFileService } from '@/services/files/update-file';
 
 @Injectable()
 export class WebhookVideosService implements IBaseService<WebhookVideosDTO> {
   constructor(
-    private readonly findFileByFilenameService: FindFileByFilenameService,
+    private readonly findFileByIdService: FindFileByIdService,
     private readonly updateFileService: UpdateFileService,
     private readonly activateFileService: ActivateFileService
   ) {}
 
   async execute({ body }: WebhookVideosDTO) {
     try {
-      const file = await this.findFileByFilenameService.execute(body?.uid);
+      const file = await this.findFileByIdService.execute(body?.creator);
       const status = body?.status?.state;
       switch (status) {
         case 'ready':

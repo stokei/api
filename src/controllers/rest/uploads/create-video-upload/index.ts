@@ -31,23 +31,13 @@ export class CreateVideoUploadController {
       const file = await this.findFileByIdService.execute(fileId + '');
       const cloudflareVideoUploadURL =
         await this.createCloudflareVideoUploadURLService.execute({
-          createdBy: file.createdBy,
+          file: file.id,
           tusResumable: request.headers['tus-resumable'] as string,
           uploadLength: request.headers['upload-length'] as string,
           uploadMetadata: request.headers['upload-metadata'] as string
         });
       const destination = cloudflareVideoUploadURL.uploadURL;
       const filename = cloudflareVideoUploadURL.filename;
-      await this.updateFileService.execute({
-        data: {
-          filename,
-          updatedBy: file.createdBy
-        },
-        where: {
-          file: file.id,
-          app: file.app
-        }
-      });
       return response
         .set({
           'Access-Control-Allow-Headers': '*',

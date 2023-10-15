@@ -22,6 +22,8 @@ export class WebhookVideosService implements IBaseService<WebhookVideosDTO> {
         case 'ready':
           await this.updateFileService.execute({
             data: {
+              extension: body?.meta?.type?.split('/')?.pop(),
+              mimetype: body?.meta?.type,
               duration: parseFloat(body?.duration),
               size: parseInt(body?.size, 10),
               updatedBy: file.createdBy

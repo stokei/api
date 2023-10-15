@@ -12,6 +12,7 @@ import { UpdatePaymentMethodService } from '@/services/payment-methods/update-pa
 import { AttachStripePaymentMethodToCustomerService } from '@/services/stripe/attach-stripe-payment-method-to-customer';
 import { FindStripeCheckoutSessionByIdService } from '@/services/stripe/find-checkout-session-by-id';
 import { FindStripePaymentMethodByIdService } from '@/services/stripe/find-payment-method-by-id';
+import { getValueFromObjectOrString } from '@/utils/get-value-from-object-or-string';
 
 @Injectable()
 export class WebhookFindOrCreateStripePaymentMethodService
@@ -111,7 +112,7 @@ export class WebhookFindOrCreateStripePaymentMethodService
           if (paymentMethodCreated) {
             await this.attachStripePaymentMethodToCustomerService.execute({
               app: payment.app,
-              customer: this.getIdFromObjectOrString(
+              customer: getValueFromObjectOrString(
                 stripeCheckoutSession?.customer,
                 'id'
               ),
@@ -125,32 +126,22 @@ export class WebhookFindOrCreateStripePaymentMethodService
     return;
   }
 
-  getIdFromObjectOrString(objOrString: any, key: string) {
-    if (!objOrString) {
-      return;
-    }
-    if (typeof objOrString === 'object' && objOrString?.[key]) {
-      return objOrString?.[key];
-    }
-    return objOrString + '';
-  }
-
   getStripePaymentMethodId(checkoutSession: Stripe.Checkout.Session) {
     const stripePaymentIntent = checkoutSession?.payment_intent;
     const stripeSubscription = checkoutSession?.subscription;
-    const paymentIntentPaymentMethod = this.getIdFromObjectOrString(
+    const paymentIntentPaymentMethod = getValueFromObjectOrString(
       stripePaymentIntent,
       'payment_method'
     );
     if (paymentIntentPaymentMethod) {
-      return this.getIdFromObjectOrString(paymentIntentPaymentMethod, 'id');
+      return getValueFromObjectOrString(paymentIntentPaymentMethod, 'id');
     }
-    const subscriptionPaymentMethod = this.getIdFromObjectOrString(
+    const subscriptionPaymentMethod = getValueFromObjectOrString(
       stripeSubscription,
       'default_payment_method'
     );
     if (subscriptionPaymentMethod) {
-      return this.getIdFromObjectOrString(subscriptionPaymentMethod, 'id');
+      return getValueFromObjectOrString(subscriptionPaymentMethod, 'id');
     }
     return;
   }

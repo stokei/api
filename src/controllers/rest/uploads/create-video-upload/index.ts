@@ -7,6 +7,7 @@ import { REST_VERSIONS } from '@/constants/rest-versions';
 import { ErrorUploadingFileException, FileNotFoundException } from '@/errors';
 import { CreateCloudflareVideoUploadURLService } from '@/services/cloudflare/create-video-upload-url';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
+import { UpdateFileService } from '@/services/files/update-file';
 
 @ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS_VIDEOS)
 @Controller({
@@ -16,6 +17,7 @@ import { FindFileByIdService } from '@/services/files/find-file-by-id';
 export class CreateVideoUploadController {
   constructor(
     private readonly findFileByIdService: FindFileByIdService,
+    private readonly updateFileService: UpdateFileService,
     private readonly createCloudflareVideoUploadURLService: CreateCloudflareVideoUploadURLService
   ) {}
 
@@ -35,6 +37,17 @@ export class CreateVideoUploadController {
           uploadMetadata: request.headers['upload-metadata'] as string
         });
       const destination = cloudflareVideoUploadURL.uploadURL;
+      const filename = cloudflareVideoUploadURL.filename;
+      await this.updateFileService.execute({
+        data: {
+          filename,
+          updatedBy: file.createdBy
+        },
+        where: {
+          file: file.id,
+          app: file.app
+        }
+      });
       return response
         .set({
           'Access-Control-Allow-Headers': '*',
@@ -43,7 +56,7 @@ export class CreateVideoUploadController {
           'Access-Control-Allow-Origin': '*',
           Location: destination
         })
-        .json({ filename: cloudflareVideoUploadURL.filename });
+        .json({ filename });
     } catch (error) {
       throw new ErrorUploadingFileException();
     }

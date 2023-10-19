@@ -1,3 +1,4 @@
+import { ActivateVideoRepository } from './activate-video';
 import { CountVideosRepository } from './count-videos';
 import { CreateVideoRepository } from './create-video';
 import { ExistsVideosRepository } from './exists-videos';
@@ -13,5 +14,6 @@ export const VideosRepositories = [
   FindVideoByIdRepository,
   FindAllVideosRepository,
   RemoveVideoRepository,
-  UpdateVideoRepository
+  UpdateVideoRepository,
+  ActivateVideoRepository
 ];

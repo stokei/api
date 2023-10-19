@@ -1,4 +1,4 @@
-import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql';
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
 import { FileStatus } from '@/controllers/graphql/enums/file-status.enum';
 
@@ -16,7 +16,7 @@ export class File {
   @Field(() => String, { nullable: true })
   mimetype?: string;
 
-  @Field(() => Int, { nullable: true })
+  @Field(() => Float, { nullable: true })
   size?: number;
 
   @Field(() => String)

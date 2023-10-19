@@ -34,6 +34,7 @@ export class VideoMapper {
           name: prismaMapper.toWhereDataSearch(operatorData.name),
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
           app: prismaMapper.toWhereData(operatorData.app),
+          file: prismaMapper.toWhereData(operatorData.file),
           slug: prismaMapper.toWhereData(operatorData.slug),
           description: prismaMapper.toWhereDataSearch(operatorData.description),
           active: prismaMapper.toWhereData(operatorData.active),
@@ -65,6 +66,7 @@ export class VideoMapper {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),
             slug: cleanWhereDataString(operatorData.slug),
+            file: cleanWhereDataString(operatorData.file),
             description: cleanWhereDataSearch(operatorData.description),
             active: cleanWhereDataBoolean(operatorData.active),
             private: cleanWhereDataBoolean(operatorData.private),

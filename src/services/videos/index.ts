@@ -1,3 +1,4 @@
+import { ActivateVideoService } from './activate-video';
 import { CreateVideoService } from './create-video';
 import { FindAllVideosService } from './find-all-videos';
 import { FindVideoByIdService } from './find-video-by-id';
@@ -9,5 +10,6 @@ export const VideoServices = [
   RemoveVideoService,
   UpdateVideoService,
   FindVideoByIdService,
-  FindAllVideosService
+  FindAllVideosService,
+  ActivateVideoService
 ];

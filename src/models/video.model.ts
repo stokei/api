@@ -2,6 +2,7 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { VideoActivatedEvent } from '@/events/implements/videos/video-activated.event';
 import { VideoCreatedEvent } from '@/events/implements/videos/video-created.event';
 import { VideoRemovedEvent } from '@/events/implements/videos/video-removed.event';
 import { VideoUpdatedEvent } from '@/events/implements/videos/video-updated.event';
@@ -91,6 +92,17 @@ export class VideoModel extends AggregateRoot {
       this.apply(
         new VideoRemovedEvent({
           removedBy,
+          video: this
+        })
+      );
+    }
+  }
+
+  videoActivated({ updatedBy }: { updatedBy: string }) {
+    if (this.id) {
+      this.apply(
+        new VideoActivatedEvent({
+          updatedBy,
           video: this
         })
       );

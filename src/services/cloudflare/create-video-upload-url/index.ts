@@ -28,7 +28,7 @@ export class CreateCloudflareVideoUploadURLService
             Authorization: `Bearer ${CLOUDFLARE_TOKEN}`,
             'Tus-Resumable': data.tusResumable,
             'Content-Type': 'application/json',
-            'Upload-Creator': data.createdBy,
+            'Upload-Creator': data.file,
             'Upload-Length': parseInt(data.uploadLength),
             'Upload-Metadata': data.uploadMetadata
           }

@@ -9,6 +9,7 @@ import { CreateSortedItemCommand } from '@/commands/implements/sorted-items/crea
 import { CreateVideoAuthorCommand } from '@/commands/implements/video-authors/create-video-author.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
+import { VideoActivatedEvent } from '@/events/implements/videos/video-activated.event';
 import { VideoCreatedEvent } from '@/events/implements/videos/video-created.event';
 import { VideoRemovedEvent } from '@/events/implements/videos/video-removed.event';
 import { VideoUpdatedEvent } from '@/events/implements/videos/video-updated.event';
@@ -121,6 +122,25 @@ export class VideosSagas {
             })
           );
         }
+        return commands;
+      }),
+      mergeMap((c) => c)
+    );
+  };
+
+  @Saga()
+  videoActivated = (events$: Observable<any>): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(VideoActivatedEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [VideoActivatedEvent] Saga event videoActivated:' +
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
+        );
+        const commands = [];
         return commands;
       }),
       mergeMap((c) => c)

@@ -470,7 +470,7 @@ model File {
   filename  String?    @db.VarChar(255)
   extension String?    @db.VarChar(255)
   mimetype  String?    @db.VarChar(255)
-  size      Int?
+  size      Float?
   url       String?    @db.VarChar(255)
   duration  Float?
   status    FileStatus

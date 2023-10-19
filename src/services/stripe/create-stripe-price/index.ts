@@ -31,7 +31,7 @@ export class CreateStripePriceService
           unit_amount_decimal: tier.amount + ''
         })) || undefined,
       recurring:
-        data.type === PriceType.RECURRING
+        data.type === PriceType.RECURRING && !!data.recurring
           ? {
               usage_type:
                 data.recurring?.usageType?.toLowerCase() as Stripe.PriceCreateParams.Recurring.UsageType,

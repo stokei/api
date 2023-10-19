@@ -10,6 +10,7 @@ export interface WhereDataFindAllVideosDTO {
   app?: IWhereData;
   parent?: IWhereDataSearch;
   name?: IWhereDataSearch;
+  file?: IWhereData<string>;
   slug?: IWhereData<string>;
   description?: IWhereDataSearch;
   active?: IWhereData<boolean>;

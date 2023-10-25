@@ -1,68 +1,23 @@
-import { Args, Parent, ResolveField, Resolver } from '@nestjs/graphql';
-import { PaginationInput } from '@stokei/nestjs';
+import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
-import { OrderByDataFindAllAccountsInput } from '@/controllers/graphql/inputs/accounts/find-all-accounts.input';
+import { CourseInstructorsLoader } from '@/controllers/graphql/dataloaders/course-instructors.loader';
 import { Course } from '@/controllers/graphql/types/course';
 import { CourseInstructors } from '@/controllers/graphql/types/course-instructors';
 import { CourseModel } from '@/models/course.model';
-import { FindAllAccountsService } from '@/services/accounts/find-all-accounts';
-import { FindAllCourseInstructorsService } from '@/services/course-instructors/find-all-course-instructors';
+import { GetOrSetCacheService } from '@/services/cache/get-or-set-cache';
 
 @Resolver(() => Course)
 export class CourseCourseInstructorsResolver {
   constructor(
-    private readonly findAllCourseInstructorsService: FindAllCourseInstructorsService,
-    private readonly findAllAccountsService: FindAllAccountsService
+    private readonly courseInstructorsLoader: CourseInstructorsLoader,
+    private readonly getOrSetCacheService: GetOrSetCacheService
   ) {}
 
   @ResolveField(() => CourseInstructors, { nullable: true })
-  async instructors(
-    @Args('page', { type: () => PaginationInput, nullable: true })
-    page: PaginationInput,
-    @Args('orderBy', {
-      type: () => OrderByDataFindAllAccountsInput,
-      nullable: true
-    })
-    orderBy: OrderByDataFindAllAccountsInput,
-    @Parent() course: CourseModel
-  ) {
-    const instructors = await this.findAllCourseInstructorsService.execute({
-      page,
-      orderBy,
-      where: {
-        AND: {
-          course: {
-            equals: course.id
-          }
-        }
-      }
-    });
-
-    if (!instructors?.totalCount) {
-      return instructors;
-    }
-
-    const accountIds = instructors?.items
-      ?.map((intructor) => intructor.instructor)
-      .filter(Boolean);
-
-    const accounts = await this.findAllAccountsService.execute({
-      where: {
-        AND: {
-          ids: accountIds
-        }
-      }
-    });
-
-    const instructorsItems = accounts?.items?.map((account) => {
-      const instructor = instructors?.items.find(
-        (currentInstructor) => currentInstructor.instructor === account.id
-      );
-      return instructor;
-    });
-    return {
-      ...instructors,
-      items: instructorsItems
-    };
+  async instructors(@Parent() course: CourseModel) {
+    return await this.getOrSetCacheService.execute(
+      CourseCourseInstructorsResolver.name + course.id,
+      () => this.courseInstructorsLoader.findByCourseIds.load(course.id)
+    );
   }
 }

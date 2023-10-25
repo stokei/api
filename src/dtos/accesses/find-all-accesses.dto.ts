@@ -8,7 +8,7 @@ import {
 export interface WhereDataFindAllAccessesDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereDataSearch;
+  parent?: IWhereDataSearch<string | string[]>;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

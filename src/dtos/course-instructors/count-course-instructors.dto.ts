@@ -3,8 +3,8 @@ import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 export interface CountCourseInstructorsWhereDTO {
   ids?: string[];
   app?: IWhereData;
-  course?: IWhereData;
-  instructor?: IWhereData;
+  course?: IWhereData<string | string[]>;
+  instructor?: IWhereData<string | string[]>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

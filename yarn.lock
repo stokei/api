@@ -2678,10 +2678,10 @@
     "@smithy/types" "^1.1.1"
     tslib "^2.5.0"
 
-"@stokei/nestjs@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@stokei/nestjs/-/nestjs-1.4.0.tgz#7b13262a3a1112ed1e29d76ef2328855bc7d7139"
-  integrity sha512-USd4dLft0KGAECp+UjCv8fw08GFVthA8WWTDA55ZB8luO0LC/dxfekMzcgc1VaqrTnV1C/gWhfbH7tho80XCtg==
+"@stokei/nestjs@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@stokei/nestjs/-/nestjs-1.5.1.tgz#64ceacc5a83dfb63c20f2cfb40c4b0a1eaf1d692"
+  integrity sha512-IMZ0pqSQfK2iOmEgMdA1agjpotPdnEkKZY1xAiwcj6Qo4zPWr1jV4VIzFeUR1gfKyHaKwOUjEQWXdXHbaE1X2Q==
   dependencies:
     "@apollo/gateway" "^2.4.8"
     "@nestjs/common" "^10.0.3"

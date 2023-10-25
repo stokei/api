@@ -8,7 +8,7 @@ import { TiersMode } from '@/enums/tiers-mode.enum';
 export interface CountPricesWhereDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereDataSearch;
+  parent?: IWhereDataSearch<string | string[]>;
   currency?: IWhereData;
   type?: PriceType;
   automaticRenew?: IWhereData<boolean>;

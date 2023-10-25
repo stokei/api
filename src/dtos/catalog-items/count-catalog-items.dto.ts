@@ -3,7 +3,7 @@ import { IBaseCountDTO, IWhereData } from '@stokei/nestjs';
 export interface CountCatalogItemsWhereDTO {
   ids?: string[];
   app?: IWhereData;
-  catalog?: IWhereData;
+  catalog?: IWhereData<string | string[]>;
   product?: IWhereData;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;

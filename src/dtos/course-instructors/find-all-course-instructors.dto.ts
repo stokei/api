@@ -3,8 +3,8 @@ import { IBaseFindManyDTO, IOrderBy, IWhereData } from '@stokei/nestjs';
 export interface WhereDataFindAllCourseInstructorsDTO {
   ids?: string[];
   app?: IWhereData;
-  course?: IWhereData;
-  instructor?: IWhereData;
+  course?: IWhereData<string | string[]>;
+  instructor?: IWhereData<string | string[]>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

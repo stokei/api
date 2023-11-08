@@ -170,18 +170,15 @@ export class CreateStripeCheckoutCommandHandler
           return;
         }
         return {
-          price: price.stripePrice,
+          name: price.nickname,
           amount: price.amount,
           quantity: orderItem.quantity
         };
       })
       ?.filter(Boolean);
-    const hasRecurringPrice = prices?.items?.some(
-      (currentPrice) => !!currentPrice.recurring
-    );
+
     const checkoutSession =
       await this.createStripeCheckoutSessionService.execute({
-        mode: hasRecurringPrice ? 'subscription' : 'payment',
         app: customerApp.id,
         currency: customerApp.currency,
         applicationFeePercentage:

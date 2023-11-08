@@ -34,34 +34,33 @@ export class CreateStripeCheckoutSessionService
         success_url: data.successUrl,
         currency: data.currency,
         client_reference_id: data.customerReference,
-        customer: data.customer,
+        customer_email: data.customerEmail,
+        customer_creation: 'if_required',
         payment_method_types: allowedPaymentMethodTypes,
         metadata: {
           order: data.order,
           payment: data.payment,
           paymentMethodType: data.paymentMethodType
         },
-        mode: data.mode,
+        mode: 'payment',
         expand: ['subscription'],
+        payment_intent_data: {
+          application_fee_amount: data.applicationFeeAmount
+        },
         line_items: data.prices.map((currentPrice) => ({
-          price: currentPrice.price,
           quantity: currentPrice.quantity,
           adjustable_quantity: {
             enabled: false
+          },
+          price_data: {
+            currency: data.currency,
+            unit_amount_decimal: currentPrice?.amount + '',
+            product_data: {
+              name: currentPrice?.name,
+              description: currentPrice?.description
+            }
           }
-        })),
-        ...(data.stripeAccount &&
-          data.mode == 'subscription' && {
-            subscription_data: {
-              application_fee_percent: data.applicationFeePercentage
-            }
-          }),
-        ...(data.stripeAccount &&
-          data.mode == 'payment' && {
-            payment_intent_data: {
-              application_fee_amount: data.applicationFeeAmount
-            }
-          })
+        }))
       },
       { stripeAccount: data.stripeAccount }
     );

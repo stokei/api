@@ -1,14 +1,14 @@
 import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 
 export interface CreateStripeCheckoutSessionPriceDTO {
+  name: string;
+  description?: string;
   amount: number;
-  price: string;
   quantity: number;
 }
 
 export interface CreateStripeCheckoutSessionDTO {
   app: string;
-  mode: 'subscription' | 'payment';
   currency: string;
   applicationFeePercentage: number;
   applicationFeeAmount: number;

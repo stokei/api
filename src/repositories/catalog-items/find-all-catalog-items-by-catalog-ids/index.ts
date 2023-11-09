@@ -27,14 +27,17 @@ export class FindAllCatalogItemsByCatalogIdsRepository
       await this.model.$queryRaw`
         WITH catalogItemsRecursive AS 
           (SELECT *, row_number() OVER (PARTITION BY catalog) rowCount FROM catalog_items)
-        SELECT * FROM catalogItemsRecursive
+        SELECT catalogItemsRecursive.* FROM catalogItemsRecursive
           JOIN (SELECT DISTINCT catalog FROM catalog_items LIMIT ${
             pageLimit || MAX_LIMIT
           }) currentCatalogItems
           ON catalogItemsRecursive.catalog = currentCatalogItems.catalog
+          JOIN products catalogProducts
+          ON CONCAT('prod_', catalogProducts.id) = catalogItemsRecursive.product
           WHERE 
             rowCount <= ${pageLimit || MAX_LIMIT} AND
-            catalogItemsRecursive.catalog IN (${Prisma.join(catalogs)});
+            catalogItemsRecursive.catalog IN (${Prisma.join(catalogs)})
+          ORDER BY catalogProducts.created_at DESC;
       `
     );
   }

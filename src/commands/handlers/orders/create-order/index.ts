@@ -92,12 +92,13 @@ export class CreateOrderCommandHandler
       prices: prices?.items
     });
 
-    const hasActivePrice = await this.hasActivePrices({
-      prices: prices?.items,
-      app: customerApp.id,
-      customer: customer?.id
-    });
-    if (hasActivePrice) {
+    const userHasSubscriptionPriceActive =
+      await this.userHasSubscriptionPriceActives({
+        prices: prices?.items,
+        app: customerApp.id,
+        customer: customer?.id
+      });
+    if (userHasSubscriptionPriceActive) {
       throw new SubscriptionContractAlreadyActiveException();
     }
     const currency = prices?.items?.[0].currency;
@@ -168,7 +169,7 @@ export class CreateOrderCommandHandler
     );
   }
 
-  private async hasActivePrices({
+  private async userHasSubscriptionPriceActives({
     prices,
     app,
     customer
@@ -220,9 +221,11 @@ export class CreateOrderCommandHandler
         if (!price) {
           return;
         }
-        const recurring = recurrings?.items?.find(
-          (currentRecurring) => currentRecurring.id === price.recurring
-        );
+        const recurring =
+          price.recurring &&
+          recurrings?.items?.find(
+            (currentRecurring) => currentRecurring.id === price.recurring
+          );
         let recurringCreated: RecurringModel;
         if (recurring) {
           recurringCreated = await this.createRecurringService.execute({

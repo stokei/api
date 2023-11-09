@@ -11,6 +11,7 @@
     "start:dev": "npm run start -- --watch",
     "start:debug": "npm run start -- --debug --watch",
     "start:prod": "node dist/main",
+    "stripe:login": "stripe login",
     "stripe:webhooks:start": "stripe listen --forward-to localhost:4000/v1/webhooks/stripe",
     "docker-compose:up": "docker-compose up -d",
     "docker-compose:dev-utils": "docker-compose up -d postgresql",

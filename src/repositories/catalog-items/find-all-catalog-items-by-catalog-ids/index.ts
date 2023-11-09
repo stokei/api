@@ -25,19 +25,15 @@ export class FindAllCatalogItemsByCatalogIdsRepository
     const MAX_LIMIT = 5;
     return catalogItemMapper.toModels(
       await this.model.$queryRaw`
-        WITH catalogItemsRecursive AS 
-          (SELECT *, row_number() OVER (PARTITION BY catalog) rowCount FROM catalog_items)
-        SELECT catalogItemsRecursive.* FROM catalogItemsRecursive
-          JOIN (SELECT DISTINCT catalog FROM catalog_items LIMIT ${
-            pageLimit || MAX_LIMIT
-          }) currentCatalogItems
-          ON catalogItemsRecursive.catalog = currentCatalogItems.catalog
-          JOIN products catalogProducts
-          ON CONCAT('prod_', catalogProducts.id) = catalogItemsRecursive.product
-          WHERE 
-            rowCount <= ${pageLimit || MAX_LIMIT} AND
-            catalogItemsRecursive.catalog IN (${Prisma.join(catalogs)})
-          ORDER BY catalogProducts.created_at DESC;
+        WITH grouped_catalog_items AS (
+          SELECT
+            catalog_items.*,
+            ROW_NUMBER() OVER (PARTITION BY catalog ORDER BY created_at DESC) AS row_num
+          FROM catalog_items
+          WHERE catalog_items.catalog IN (${Prisma.join(catalogs)})
+          ORDER BY catalog_items.created_at DESC
+        ) SELECT grouped_catalog_items.* FROM grouped_catalog_items 
+            WHERE row_num <= ${pageLimit || MAX_LIMIT};
       `
     );
   }

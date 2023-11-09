@@ -13,11 +13,11 @@ export class FindStripeBalanceService {
     const response = await stripeClient.balance.retrieve({
       stripeAccount
     });
-    const balanceAvailable = response?.available?.find((available) =>
-      available.currency?.match(new RegExp(currency, 'i'))
+    const balanceAvailable = response?.available?.find(
+      (available) => available.currency?.match(new RegExp(currency, 'i'))
     )?.amount;
-    const balancePending = response?.pending?.find((pending) =>
-      pending.currency?.match(new RegExp(currency, 'i'))
+    const balancePending = response?.pending?.find(
+      (pending) => pending.currency?.match(new RegExp(currency, 'i'))
     )?.amount;
     return new BalanceModel({
       paymentGatewayType: PaymentGatewayType.STRIPE,

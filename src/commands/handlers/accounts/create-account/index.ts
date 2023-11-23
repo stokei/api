@@ -55,6 +55,7 @@ export class CreateAccountCommandHandler
       throw new ParamNotFoundException<CreateAccountCommandKeys>('password');
     }
 
+    const plainTextPassword = data.password;
     data.password = encryptPassword({
       password: data.password,
       secretKey: PASSWORD_SECRET_KEY
@@ -96,7 +97,8 @@ export class CreateAccountCommandHandler
 
     const accountModel = this.publisher.mergeObjectContext(accountCreated);
     accountModel.createdAccount({
-      createdBy: data.createdBy
+      createdBy: data.createdBy,
+      plainTextPassword
     });
     accountModel.commit();
 

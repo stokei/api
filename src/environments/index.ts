@@ -40,8 +40,6 @@ export const CLOUDFLARE_TOKEN: string = process.env.CLOUDFLARE_TOKEN;
 export const CLOUDFLARE_STREAM_CUSTOMER_CODE: string =
   process.env.CLOUDFLARE_STREAM_CUSTOMER_CODE;
 
-export const SENDGRID_KEY: string = process.env.SENDGRID_KEY;
-
 export const VERCEL_PROJECT_ID: string = process.env.VERCEL_PROJECT_ID;
 export const VERCEL_TOKEN: string = process.env.VERCEL_TOKEN;
 
@@ -53,3 +51,5 @@ export const DIGITALOCEAN_SECRET_KEY: string =
 export const PAGARME_RECIPIENT_ID: string = process.env.PAGARME_RECIPIENT_ID;
 export const PAGARME_KEY: string = process.env.PAGARME_KEY;
 export const PAGARME_SECRET_KEY: string = process.env.PAGARME_SECRET_KEY;
+
+export const EMAILS_API_BASE_URL: string = process.env.EMAILS_API_BASE_URL;

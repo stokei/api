@@ -7,6 +7,8 @@ import {
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { SendSubscriptionActivatedEmailCommand } from '@/commands/implements/emails/send-subscription-activated-email.command';
+import { SendSubscriptionCanceledEmailCommand } from '@/commands/implements/emails/send-subscription-canceled-email.command';
 import { ActivateSubscriptionContractItemsCommand } from '@/commands/implements/subscription-contract-items/activate-subscription-contract-items.command';
 import { CancelSubscriptionContractItemsCommand } from '@/commands/implements/subscription-contract-items/cancel-subscription-contract-items.command';
 import { ActivateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/activate-subscription-contract.command';
@@ -156,6 +158,12 @@ export class SubscriptionContractsSagas {
           new ActivateSubscriptionContractItemsCommand({
             subscriptionContract: event.subscriptionContract.id,
             updatedBy: event.updatedBy
+          }),
+          new SendSubscriptionActivatedEmailCommand({
+            subscriptionContract: event.subscriptionContract,
+            app: event.subscriptionContract.app,
+            toAccount: event.subscriptionContract.parent,
+            createdBy: event.updatedBy
           })
         ];
         return commands;
@@ -182,6 +190,12 @@ export class SubscriptionContractsSagas {
           new CancelSubscriptionContractItemsCommand({
             subscriptionContract: event.subscriptionContract.id,
             updatedBy: event.updatedBy
+          }),
+          new SendSubscriptionCanceledEmailCommand({
+            subscriptionContract: event.subscriptionContract,
+            app: event.subscriptionContract.app,
+            toAccount: event.subscriptionContract.parent,
+            createdBy: event.updatedBy
           })
         ];
         return commands;

@@ -52,30 +52,22 @@ export class SendUpdateOwnPasswordEmailCommandHandler
       if (!toAccount) {
         throw new AppNotFoundException();
       }
-      const { app, baseAppURL, colors, logoURL } =
-        await this.findAppEmailInformationsService.execute({
+      const { baseAppURL } = await this.findAppEmailInformationsService.execute(
+        {
           app: data.app
-        });
+        }
+      );
 
       const buttonUpdateOwnPasswordLink = appendPathnameToURL(
         baseAppURL,
         `auth/password/change?code=${toAccount.forgotPasswordCode}`
       );
       return await this.sendEmailService.execute({
+        route: '/emails/update-own-password',
         to: toAccount.email,
-        from: {
-          name: app.name,
-          email: app.email
-        },
-        app: app.id,
-        subject: 'Alteração de senha',
-        templateId: 'd-76f499075858455780e7d90c35798f0c',
+        app: data.app,
         createdBy: data.createdBy,
         data: {
-          logoURL,
-          appName: app.name,
-          appEmail: app.email,
-          primaryColor: colors.PRIMARY,
           buttonUpdateOwnPasswordLink
         }
       });

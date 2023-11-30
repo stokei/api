@@ -25,8 +25,9 @@ export class FindAllPaymentMethodsQueryHandler
     }
 
     const data = new PaymentMethodMapper().toFindAllQueryClean(query);
-    const paymentMethods =
-      await this.findAllPaymentMethodRepository.execute(data);
+    const paymentMethods = await this.findAllPaymentMethodRepository.execute(
+      data
+    );
     const totalCount = await this.countPaymentMethodsRepository.execute({
       where: data.where
     });

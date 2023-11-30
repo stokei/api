@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { SendOrderCreatedEmailCommand } from '@/commands/implements/emails/send-order-created-email.command';
 import { ActivateOrderSubscriptionContractsCommand } from '@/commands/implements/orders/activate-order-subscription-contracts.command';
 import { CancelOrderSubscriptionContractsCommand } from '@/commands/implements/orders/cancel-order-subscription-contracts.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
@@ -34,7 +35,14 @@ export class OrdersSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new SendOrderCreatedEmailCommand({
+            order: event.order,
+            app: event.order.app,
+            toAccount: event.order.parent,
+            createdBy: event.createdBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

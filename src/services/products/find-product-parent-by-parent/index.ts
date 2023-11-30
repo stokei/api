@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { IBaseService, splitServiceId } from '@stokei/nestjs';
 
-import { AppsLoader } from '@/controllers/graphql/dataloaders/apps.loader';
-import { CoursesLoader } from '@/controllers/graphql/dataloaders/courses.loader';
-import { MaterialsLoader } from '@/controllers/graphql/dataloaders/materials.loader';
-import { PlansLoader } from '@/controllers/graphql/dataloaders/plans.loader';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { AppModel } from '@/models/app.model';
 import { CourseModel } from '@/models/course.model';
 import { MaterialModel } from '@/models/material.model';
 import { PlanModel } from '@/models/plan.model';
+import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { FindCourseByIdService } from '@/services/courses/find-course-by-id';
+import { FindMaterialByIdService } from '@/services/materials/find-material-by-id';
+import { FindPlanByIdService } from '@/services/plans/find-plan-by-id';
 
 export type ProductParent = AppModel | PlanModel | CourseModel | MaterialModel;
 
@@ -18,23 +18,23 @@ export class FindProductParentByParentService
   implements IBaseService<string, Promise<ProductParent>>
 {
   constructor(
-    private readonly appsLoader: AppsLoader,
-    private readonly coursesLoader: CoursesLoader,
-    private readonly materialsLoader: MaterialsLoader,
-    private readonly plansLoader: PlansLoader
+    private readonly findAppByIdService: FindAppByIdService,
+    private readonly findCourseByIdService: FindCourseByIdService,
+    private readonly findMaterialByIdService: FindMaterialByIdService,
+    private readonly findPlanByIdService: FindPlanByIdService
   ) {}
 
   async execute(parent: string): Promise<ProductParent> {
     const getItem = () => {
       const handlers = {
         [ServerStokeiApiIdPrefix.APPS]: () =>
-          this.appsLoader.findByIds.load(parent),
+          this.findAppByIdService.execute(parent),
         [ServerStokeiApiIdPrefix.COURSES]: () =>
-          this.coursesLoader.findByIds.load(parent),
+          this.findCourseByIdService.execute(parent),
         [ServerStokeiApiIdPrefix.MATERIALS]: () =>
-          this.materialsLoader.findByIds.load(parent),
+          this.findMaterialByIdService.execute(parent),
         [ServerStokeiApiIdPrefix.PLANS]: () =>
-          this.plansLoader.findByIds.load(parent)
+          this.findPlanByIdService.execute(parent)
       };
       const serviceName = splitServiceId(parent)?.service;
       return handlers?.[serviceName];

@@ -51,8 +51,9 @@ export class UpdateMaterialCommandHandler
       throw new DataNotFoundException();
     }
 
-    const materialUpdated =
-      await this.findMaterialByIdRepository.execute(materialId);
+    const materialUpdated = await this.findMaterialByIdRepository.execute(
+      materialId
+    );
     if (!materialUpdated) {
       throw new MaterialNotFoundException();
     }

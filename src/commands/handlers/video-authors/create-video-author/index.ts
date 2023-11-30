@@ -32,8 +32,9 @@ export class CreateVideoAuthorCommandHandler
       throw new ParamNotFoundException<CreateVideoAuthorCommandKeys>('video');
     }
 
-    const videoAuthorCreated =
-      await this.createVideoAuthorRepository.execute(data);
+    const videoAuthorCreated = await this.createVideoAuthorRepository.execute(
+      data
+    );
     if (!videoAuthorCreated) {
       throw new VideoAuthorNotFoundException();
     }

@@ -50,6 +50,7 @@ export class AccountsSagas {
           commands.push(
             new SendAccountConfigurationPendingEmailCommand({
               toAccount: event.account.id,
+              plainTextPassword: event.plainTextPassword,
               app: event.account.app,
               createdBy: event.createdBy
             })

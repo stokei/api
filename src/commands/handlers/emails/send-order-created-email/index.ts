@@ -4,7 +4,7 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { SendOrderCreatedEmailCommand } from '@/commands/implements/emails/send-order-created-email.command';
 import {
-  AppNotFoundException,
+  AccountNotFoundException,
   CurrencyNotFoundException,
   DataNotFoundException,
   OrderItemsNotFoundException,
@@ -18,7 +18,7 @@ import { SendEmailService } from '@/services/emails/send-email';
 import { FindAllOrderItemsService } from '@/services/order-items/find-all-order-items';
 import { FindAllProductsService } from '@/services/products/find-all-products';
 import { FindProductAvatarService } from '@/services/products/find-product-avatar';
-import { convertCurrencyToString } from '@/utils/convertCurrencyToString';
+import { convertAmountToCurrencyString } from '@/utils/convert-amount-to-currency-string';
 
 type SendOrderCreatedEmailCommandKeys = keyof SendOrderCreatedEmailCommand;
 
@@ -31,11 +31,11 @@ export class SendOrderCreatedEmailCommandHandler
   );
   constructor(
     private readonly sendEmailService: SendEmailService,
+    private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findCurrencyByIdService: FindCurrencyByIdService,
     private readonly findAllOrderItemsService: FindAllOrderItemsService,
     private readonly findAllProductsService: FindAllProductsService,
-    private readonly findProductAvatarService: FindProductAvatarService,
-    private readonly findAccountByIdService: FindAccountByIdService
+    private readonly findProductAvatarService: FindProductAvatarService
   ) {}
 
   async execute(command: SendOrderCreatedEmailCommand) {
@@ -62,7 +62,7 @@ export class SendOrderCreatedEmailCommandHandler
         data.toAccount
       );
       if (!toAccount) {
-        throw new AppNotFoundException();
+        throw new AccountNotFoundException();
       }
 
       const currency = await this.findCurrencyByIdService.execute(
@@ -81,12 +81,14 @@ export class SendOrderCreatedEmailCommandHandler
           }
         }
       });
+
       if (!orderItems?.totalCount) {
         throw new OrderItemsNotFoundException();
       }
       const productIds = orderItems?.items.map(
         (orderItem) => orderItem.product
       );
+
       const products = await this.findAllProductsService.execute({
         where: {
           AND: {
@@ -112,13 +114,13 @@ export class SendOrderCreatedEmailCommandHandler
               productId: product.id,
               productName: product.name,
               image: avatar?.file?.url,
-              price: convertCurrencyToString({
+              price: convertAmountToCurrencyString({
                 amount: orderItem.totalAmount,
                 currency: currency.id,
                 minorUnit: currency.minorUnit
               }),
               ...(orderItem.subtotalAmount && {
-                fromPrice: convertCurrencyToString({
+                fromPrice: convertAmountToCurrencyString({
                   amount: orderItem.subtotalAmount,
                   currency: currency.id,
                   minorUnit: currency.minorUnit
@@ -135,8 +137,16 @@ export class SendOrderCreatedEmailCommandHandler
         app: data.app,
         createdBy: data.createdBy,
         data: {
-          subtotalAmount: data.order.subtotalAmount,
-          totalAmount: data.order.totalAmount,
+          subtotalAmount: convertAmountToCurrencyString({
+            amount: data.order.subtotalAmount,
+            currency: currency.id,
+            minorUnit: currency.minorUnit
+          }),
+          totalAmount: convertAmountToCurrencyString({
+            amount: data.order.totalAmount,
+            currency: currency.id,
+            minorUnit: currency.minorUnit
+          }),
           items
         }
       });

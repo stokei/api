@@ -23,7 +23,7 @@ export class FindAccountByIdQueryHandler
       throw new DataNotFoundException();
     }
 
-    const id = cleanValue(splitServiceId(query.id)?.id);
+    const id = cleanValue(splitServiceId(query?.id)?.id);
     if (!id) {
       throw new ParamNotFoundException('id');
     }

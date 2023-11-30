@@ -13,6 +13,7 @@ import {
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindCurrencyByIdService } from '@/services/currencies/find-currency-by-id';
 import { SendEmailService } from '@/services/emails/send-email';
+import { convertAmountToCurrencyString } from '@/utils/convert-amount-to-currency-string';
 
 type SendPaymentSuccessfullyEmailCommandKeys =
   keyof SendPaymentSuccessfullyEmailCommand;
@@ -70,8 +71,16 @@ export class SendPaymentSuccessfullyEmailCommandHandler
         app: data.app,
         createdBy: data.createdBy,
         data: {
-          subtotalAmount: data.payment.subtotalAmount,
-          totalAmount: data.payment.totalAmount
+          subtotalAmount: convertAmountToCurrencyString({
+            amount: data.payment.subtotalAmount,
+            currency: currency.id,
+            minorUnit: currency.minorUnit
+          }),
+          totalAmount: convertAmountToCurrencyString({
+            amount: data.payment.totalAmount,
+            currency: currency.id,
+            minorUnit: currency.minorUnit
+          })
         }
       });
     } catch (error) {

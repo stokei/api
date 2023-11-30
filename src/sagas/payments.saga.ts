@@ -4,6 +4,8 @@ import { hiddenPrivateDataFromObject, splitServiceId } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { SendPaymentErrorEmailCommand } from '@/commands/implements/emails/send-payment-error-email.command';
+import { SendPaymentSuccessfullyEmailCommand } from '@/commands/implements/emails/send-payment-successfully-email.command';
 import { ChangeInvoiceToPaidCommand } from '@/commands/implements/invoices/change-invoice-to-paid.command';
 import { ChangeInvoiceToPaymentErrorCommand } from '@/commands/implements/invoices/change-invoice-to-payment-error.command';
 import { ChangeOrderToPaidCommand } from '@/commands/implements/orders/change-order-to-paid.command';
@@ -96,7 +98,14 @@ export class PaymentsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands: ICommand[] = [
+          new SendPaymentErrorEmailCommand({
+            payment: event.payment,
+            app: event.payment.app,
+            toAccount: event.payment.parent,
+            createdBy: event.updatedBy
+          })
+        ];
         const paymentParentType = splitServiceId(event.payment.parent)?.service;
         if (paymentParentType === ServerStokeiApiIdPrefix.ORDERS) {
           commands.push(
@@ -134,7 +143,14 @@ export class PaymentsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands: ICommand[] = [
+          new SendPaymentSuccessfullyEmailCommand({
+            payment: event.payment,
+            app: event.payment.app,
+            toAccount: event.payment.parent,
+            createdBy: event.updatedBy
+          })
+        ];
         const paymentParentType = splitServiceId(event.payment.parent)?.service;
         if (paymentParentType === ServerStokeiApiIdPrefix.ORDERS) {
           commands.push(

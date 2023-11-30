@@ -12,6 +12,7 @@ export interface IPlanModelData {
   readonly app: string;
   readonly name: string;
   readonly description?: string;
+  readonly avatar?: string;
   readonly icon?: string;
   readonly type: PlanType;
   readonly active: boolean;
@@ -26,6 +27,7 @@ export class PlanModel extends AggregateRoot {
   readonly app: string;
   readonly name: string;
   readonly description?: string;
+  readonly avatar?: string;
   readonly icon?: string;
   readonly type: PlanType;
   readonly active: boolean;
@@ -42,6 +44,7 @@ export class PlanModel extends AggregateRoot {
     });
     this.name = data.name;
     this.app = data.app;
+    this.avatar = data.avatar;
     this.description = data.description;
     this.icon = data.icon;
     this.type = data.type;

@@ -22,22 +22,26 @@ export class SubscriptionContractItemProductResolver {
   ) {}
 
   @ResolveField(() => SubscriptionContractItemProductUnion, { nullable: true })
-  async product(@Parent() sortedItem: SubscriptionContractItemModel) {
+  async product(
+    @Parent() subscriptionContractItem: SubscriptionContractItemModel
+  ) {
     const getItem = () => {
       const handlers = {
         [ServerStokeiApiIdPrefix.COURSES]: () =>
-          this.coursesLoader.findByIds.load(sortedItem.product),
+          this.coursesLoader.findByIds.load(subscriptionContractItem.product),
         [ServerStokeiApiIdPrefix.PRODUCTS]: () =>
-          this.productsLoader.findByIds.load(sortedItem.product),
+          this.productsLoader.findByIds.load(subscriptionContractItem.product),
         [ServerStokeiApiIdPrefix.MATERIALS]: () =>
-          this.materialsLoader.findByIds.load(sortedItem.product),
+          this.materialsLoader.findByIds.load(subscriptionContractItem.product),
         [ServerStokeiApiIdPrefix.PLANS]: () =>
-          this.plansLoader.findByIds.load(sortedItem.product)
+          this.plansLoader.findByIds.load(subscriptionContractItem.product)
       };
-      const serviceName = splitServiceId(sortedItem.product)?.service;
+      const serviceName = splitServiceId(
+        subscriptionContractItem.product
+      )?.service;
       return handlers?.[serviceName];
     };
     const getItemHandler = await getItem();
-    return sortedItem.product && getItemHandler?.();
+    return subscriptionContractItem.product && getItemHandler?.();
   }
 }

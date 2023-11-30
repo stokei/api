@@ -53,9 +53,8 @@ export class RemoveAccountCommandHandler
     if (!removed) {
       throw new DataNotFoundException();
     }
-    const accountRemoved = await this.findAccountByIdRepository.execute(
-      accountId
-    );
+    const accountRemoved =
+      await this.findAccountByIdRepository.execute(accountId);
     const accountModel = this.publisher.mergeObjectContext(accountRemoved);
     accountModel.removedAccount({
       removedBy: data.where.removedBy

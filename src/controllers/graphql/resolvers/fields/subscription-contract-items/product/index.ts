@@ -36,9 +36,8 @@ export class SubscriptionContractItemProductResolver {
         [ServerStokeiApiIdPrefix.PLANS]: () =>
           this.plansLoader.findByIds.load(subscriptionContractItem.product)
       };
-      const serviceName = splitServiceId(
-        subscriptionContractItem.product
-      )?.service;
+      const serviceName = splitServiceId(subscriptionContractItem.product)
+        ?.service;
       return handlers?.[serviceName];
     };
     const getItemHandler = await getItem();

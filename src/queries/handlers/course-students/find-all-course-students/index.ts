@@ -25,9 +25,8 @@ export class FindAllCourseStudentsQueryHandler
     }
 
     const data = new CourseStudentMapper().toFindAllQueryClean(query);
-    const courseStudents = await this.findAllCourseStudentRepository.execute(
-      data
-    );
+    const courseStudents =
+      await this.findAllCourseStudentRepository.execute(data);
     const totalCount = await this.countCourseStudentsRepository.execute({
       where: data.where
     });

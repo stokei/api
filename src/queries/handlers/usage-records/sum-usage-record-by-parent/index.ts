@@ -23,9 +23,8 @@ export class SumUsageRecordByParentQueryHandler
       throw new ParamNotFoundException('parent');
     }
 
-    const usageRecord = await this.sumUsageRecordByParentRepository.execute(
-      parent
-    );
+    const usageRecord =
+      await this.sumUsageRecordByParentRepository.execute(parent);
     return usageRecord || 0;
   }
 }

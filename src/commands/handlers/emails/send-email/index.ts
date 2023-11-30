@@ -65,7 +65,8 @@ export class SendEmailCommandHandler
       );
       return response?.data;
     } catch (error) {
-      this.logger.error(`From(#${data?.app} - ${data?.to}): ${error?.message}`);
+      const to = typeof data?.to !== 'string' ? data?.to?.email : data?.to;
+      this.logger.error(`From(#${data?.app} -> ${to}): ${error?.message}`);
       return;
     }
   }

@@ -18,8 +18,9 @@ export class CourseInstructorResolver {
     if (!id) {
       throw new ParamNotFoundException('id');
     }
-    const courseInstructor =
-      await this.courseInstructorsLoader.findByIds.load(id);
+    const courseInstructor = await this.courseInstructorsLoader.findByIds.load(
+      id
+    );
     if (!courseInstructor) {
       throw new CourseInstructorNotFoundException();
     }

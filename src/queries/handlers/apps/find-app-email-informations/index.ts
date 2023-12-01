@@ -78,7 +78,7 @@ export class FindAppEmailInformationsQueryHandler
     try {
       const image = await this.findImageByIdService.execute(appLogoId);
       const file =
-        image?.id && (await this.findFileByIdService.execute(image?.id));
+        image?.file && (await this.findFileByIdService.execute(image?.file));
       return file?.url;
     } catch (error) {}
     return;

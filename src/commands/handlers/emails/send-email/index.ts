@@ -5,6 +5,7 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 import { axiosClient } from '@/clients/axios';
 import { SendEmailCommand } from '@/commands/implements/emails/send-email.command';
 import { EmailData } from '@/dtos/emails/send-email.dto';
+import { ColorType } from '@/enums/color-type.enum';
 import { EMAILS_API_BASE_URL } from '@/environments';
 import { DataNotFoundException, ParamNotFoundException } from '@/errors';
 import { FindAppEmailInformationsService } from '@/services/apps/find-app-email-informations';
@@ -49,7 +50,7 @@ export class SendEmailCommandHandler
           url: baseAppURL,
           logoURL: logoURL,
           colors: {
-            primary: colors?.PRIMARY
+            primary: colors?.[ColorType.PRIMARY]
           }
         }
       };

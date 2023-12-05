@@ -1,5 +1,6 @@
 export interface UpdatePriceDataDTO {
-  fromPrice?: number;
+  fromAmount?: number;
+  amount?: number;
   quantity?: number;
   automaticRenew?: boolean;
   updatedBy: string;

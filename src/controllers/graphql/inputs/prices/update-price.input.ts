@@ -6,6 +6,9 @@ export class UpdateDataPriceInput {
   fromAmount?: number;
 
   @Field(() => Int, { nullable: true })
+  amount?: number;
+
+  @Field(() => Int, { nullable: true })
   quantity?: number;
 
   @Field(() => Boolean, { nullable: true })

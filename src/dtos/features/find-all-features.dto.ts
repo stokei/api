@@ -8,7 +8,7 @@ import {
 export interface WhereDataFindAllFeaturesDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereDataSearch;
+  parent?: IWhereDataSearch<string | string[]>;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
   updatedBy?: IWhereData;

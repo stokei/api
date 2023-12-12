@@ -9,7 +9,6 @@ import {
   ParamNotFoundException
 } from '@/errors';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
-import { FindAppEmailInformationsService } from '@/services/apps/find-app-email-informations';
 import { SendEmailService } from '@/services/emails/send-email';
 
 type SendAccountConfigurationPendingEmailCommandKeys =
@@ -24,7 +23,6 @@ export class SendAccountConfigurationPendingEmailCommandHandler
   );
   constructor(
     private readonly sendEmailService: SendEmailService,
-    private readonly findAppEmailInformationsService: FindAppEmailInformationsService,
     private readonly findAccountByIdService: FindAccountByIdService
   ) {}
 
@@ -51,28 +49,17 @@ export class SendAccountConfigurationPendingEmailCommandHandler
       if (!toAccount) {
         throw new AppNotFoundException();
       }
-      const { app, baseAppURL, colors, logoURL } =
-        await this.findAppEmailInformationsService.execute({
-          app: data.app
-        });
 
       return await this.sendEmailService.execute({
+        route: '/emails/user-created-with-configuration-pending',
         to: toAccount.email,
-        from: {
-          name: app.name,
-          email: app.email
-        },
-        app: app.id,
-        subject: 'Conta criada',
-        templateId: 'd-df7d516342be4a17b6243b5d3982b42f',
+        app: data.app,
         createdBy: data.createdBy,
         data: {
-          logoURL,
-          appName: app.name,
-          appEmail: app.email,
-          appURL: baseAppURL,
-          userEmail: toAccount.email,
-          primaryColor: colors.PRIMARY
+          user: {
+            email: toAccount.email,
+            password: data.plainTextPassword
+          }
         }
       });
     } catch (error) {
@@ -89,6 +76,7 @@ export class SendAccountConfigurationPendingEmailCommandHandler
     return cleanObject({
       toAccount: cleanValue(command?.toAccount),
       app: cleanValue(command?.app),
+      plainTextPassword: cleanValue(command?.plainTextPassword),
       createdBy: cleanValue(command?.createdBy)
     });
   }

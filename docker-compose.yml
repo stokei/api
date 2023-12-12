@@ -8,7 +8,7 @@ volumes:
   mysql-data:
 services:
   mysql:
-    image: bitnami/mysql:8.1.0
+    image: bitnami/mysql:8.2.0
     container_name: mysql
     environment:
       MYSQL_ROOT_USER: dev

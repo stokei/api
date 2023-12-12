@@ -6,7 +6,6 @@ import {
   FindAppEmailInformationsColors,
   FindAppEmailInformationsResponse
 } from '@/dtos/apps/find-app-email-informations.dto';
-import { ColorType } from '@/enums/color-type.enum';
 import {
   AppNotFoundException,
   DataNotFoundException,
@@ -67,7 +66,7 @@ export class FindAppEmailInformationsQueryHandler
     try {
       const image = await this.findImageByIdService.execute(appLogoId);
       const file =
-        image?.id && (await this.findFileByIdService.execute(image?.id));
+        image?.file && (await this.findFileByIdService.execute(image?.file));
       return file?.url;
     } catch (error) {}
     return;
@@ -78,18 +77,16 @@ export class FindAppEmailInformationsQueryHandler
   }: {
     appId: string;
   }): Promise<FindAppEmailInformationsColors> {
-    let appColors: FindAppEmailInformationsColors = {};
+    let appColors: FindAppEmailInformationsColors = {
+      ...stokeiDefaultColors
+    };
     try {
       const colors = await this.findAllColorsService.execute({
-        page: {
-          limit: 1
-        },
         where: {
           AND: {
             parent: {
               equals: appId
-            },
-            type: ColorType.PRIMARY
+            }
           }
         }
       });
@@ -103,6 +100,6 @@ export class FindAppEmailInformationsQueryHandler
         );
       }
     } catch (e) {}
-    return { ...stokeiDefaultColors, ...appColors };
+    return appColors;
   }
 }

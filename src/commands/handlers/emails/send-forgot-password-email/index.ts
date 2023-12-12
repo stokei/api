@@ -51,30 +51,22 @@ export class SendForgotPasswordEmailCommandHandler
       if (!toAccount) {
         throw new AppNotFoundException();
       }
-      const { app, baseAppURL, colors, logoURL } =
-        await this.findAppEmailInformationsService.execute({
+      const { baseAppURL } = await this.findAppEmailInformationsService.execute(
+        {
           app: data.app
-        });
+        }
+      );
 
       const buttonForgotPasswordLink = appendPathnameToURL(
         baseAppURL,
         `auth/password/change?code=${toAccount.forgotPasswordCode}`
       );
       return await this.sendEmailService.execute({
+        route: '/emails/forgot-password',
         to: toAccount.email,
-        from: {
-          name: app.name,
-          email: app.email
-        },
-        app: app.id,
-        subject: 'Esqueceu sua senha?',
-        templateId: 'd-8af9bfeb5cb34e4a8d3f0bf76a0326cf',
+        app: data.app,
         createdBy: data.createdBy,
         data: {
-          logoURL,
-          appName: app.name,
-          appEmail: app.email,
-          primaryColor: colors.PRIMARY,
           buttonForgotPasswordLink
         }
       });

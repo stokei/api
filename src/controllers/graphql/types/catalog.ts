@@ -2,7 +2,7 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 import { Account } from './account';
 import { App } from './app';
-import { CatalogItems } from './catalog-items';
+import { CatalogItem } from './catalog-item';
 
 @ObjectType()
 export class Catalog {
@@ -18,8 +18,8 @@ export class Catalog {
   @Field(() => String, { nullable: true })
   subtitle?: string;
 
-  @Field(() => CatalogItems, { nullable: true })
-  items?: CatalogItems;
+  @Field(() => [CatalogItem], { nullable: true })
+  items?: CatalogItem[];
 
   @Field(() => String, { nullable: true })
   updatedAt?: string;

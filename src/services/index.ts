@@ -37,7 +37,6 @@ import { PriceServices } from './prices';
 import { ProductServices } from './products';
 import { RecurringServices } from './recurrings';
 import { RoleServices } from './roles';
-import { SendgridServices } from './sendgrid';
 import { SiteServices } from './sites';
 import { SortedItemServices } from './sorted-items';
 import { StripeServices } from './stripe';
@@ -93,7 +92,6 @@ export const Services = [
   ...RoleServices,
   ...HeroServices,
   ...SortedItemServices,
-  ...SendgridServices,
   ...EmailServices,
   ...VercelServices,
   ...MaterialServices,

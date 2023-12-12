@@ -17,7 +17,7 @@ export interface WhereDataFindAllPricesDTO {
   unit?: IWhereData;
   active?: IWhereData<boolean>;
   automaticRenew?: IWhereData<boolean>;
-  parent?: IWhereDataSearch;
+  parent?: IWhereDataSearch<string | string[]>;
   type?: PriceType;
   inventoryType?: InventoryType;
   billingScheme?: BillingScheme;

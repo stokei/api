@@ -97,11 +97,18 @@ export class AccountModel extends AggregateRoot {
     this.isStokei = !!this.app.match(/stokei/i);
   }
 
-  createdAccount({ createdBy }: { createdBy: string }) {
+  createdAccount({
+    createdBy,
+    plainTextPassword
+  }: {
+    createdBy: string;
+    plainTextPassword?: string;
+  }) {
     if (this.id) {
       this.apply(
         new AccountCreatedEvent({
           createdBy,
+          plainTextPassword,
           account: this
         })
       );

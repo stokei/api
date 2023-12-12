@@ -44,10 +44,7 @@ export class CreateOrUpdateColorCommandHandler
             equals: data.parent
           },
           themeMode: data.themeMode,
-          type: data.type,
-          color: {
-            equals: data.color
-          }
+          type: data.type
         }
       },
       page: {

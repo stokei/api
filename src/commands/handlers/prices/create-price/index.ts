@@ -18,7 +18,6 @@ import {
   ProductNotFoundException,
   RecurringNotFoundException
 } from '@/errors';
-import { PriceMapper } from '@/mappers/prices';
 import { RecurringModel } from '@/models/recurring.model';
 import { CreatePriceRepository } from '@/repositories/prices/create-price';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
@@ -26,7 +25,6 @@ import { CreatePriceTierService } from '@/services/price-tiers/create-price-tier
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
 import { FindProductByIdService } from '@/services/products/find-product-by-id';
 import { CreateRecurringService } from '@/services/recurrings/create-recurring';
-import { CreateStripePriceService } from '@/services/stripe/create-stripe-price';
 
 type CreatePriceCommandKeys = keyof CreatePriceCommand;
 
@@ -36,7 +34,6 @@ export class CreatePriceCommandHandler
 {
   constructor(
     private readonly createPriceRepository: CreatePriceRepository,
-    private readonly createStripePriceService: CreateStripePriceService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findProductByIdService: FindProductByIdService,
     private readonly createRecurringService: CreateRecurringService,
@@ -90,23 +87,6 @@ export class CreatePriceCommandHandler
       tiers = undefined;
       dataCreated.tiersMode = undefined;
     }
-    const priceMapper = new PriceMapper();
-    const stripePrice = await this.createStripePriceService.execute({
-      amount: dataCreated.amount,
-      currency: dataCreated.currency,
-      billingScheme: priceMapper.billingSchemeToStripeBillingScheme(
-        dataCreated.billingScheme
-      ),
-      tiers,
-      tiersMode: dataCreated.tiersMode
-        ? priceMapper.tiersModeToStripeTiersMode(dataCreated.tiersMode)
-        : undefined,
-      app: app.id,
-      recurring,
-      type: dataCreated.type,
-      stripeProduct: product.stripeProduct,
-      stripeAccount: app.stripeAccount
-    });
 
     const priceIsDefault = await this.isDefaultPrice({
       defaultPrice,
@@ -115,8 +95,7 @@ export class CreatePriceCommandHandler
     const priceCreated = await this.createPriceRepository.execute({
       ...dataCreated,
       unit: data.unit,
-      recurring: recurring?.id,
-      stripePrice: stripePrice.id
+      recurring: recurring?.id
     });
     if (!priceCreated) {
       throw new PriceNotFoundException();

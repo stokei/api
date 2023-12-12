@@ -3,7 +3,7 @@ import { IBaseCountDTO, IWhereData, IWhereDataSearch } from '@stokei/nestjs';
 export interface CountFeaturesWhereDTO {
   ids?: string[];
   app?: IWhereData;
-  parent?: IWhereDataSearch;
+  parent?: IWhereDataSearch<string | string[]>;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
   updatedBy?: IWhereData;

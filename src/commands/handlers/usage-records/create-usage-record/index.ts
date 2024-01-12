@@ -51,9 +51,8 @@ export class CreateUsageRecordCommandHandler
       throw new SubscriptionContractItemNotFoundException();
     }
 
-    const usageRecordCreated = await this.createUsageRecordRepository.execute(
-      data
-    );
+    const usageRecordCreated =
+      await this.createUsageRecordRepository.execute(data);
     if (!usageRecordCreated) {
       throw new UsageRecordNotFoundException();
     }

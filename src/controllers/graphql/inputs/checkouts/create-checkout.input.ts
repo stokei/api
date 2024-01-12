@@ -12,4 +12,7 @@ export class CreateCheckoutInput {
 
   @Field(() => PaymentMethodType)
   paymentMethodType: PaymentMethodType;
+
+  @Field(() => String, { nullable: true })
+  paymentMethod?: string;
 }

@@ -2,7 +2,6 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreatePagarmeCheckoutCommand } from '@/commands/implements/checkouts/create-pagarme-checkout.command';
-import { PagarmeOrderCard } from '@/dtos/pagarme/pagarme-order.dto';
 import { OrderStatus } from '@/enums/order-status.enum';
 import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 import { PaymentMethodType } from '@/enums/payment-method-type.enum';
@@ -81,7 +80,7 @@ export class CreatePagarmeCheckoutCommandHandler
       throw new AccountNotFoundException();
     }
     const customerApp = await this.findAppByIdService.execute(data.app);
-    if (!customerApp) {
+    if (!customerApp?.pagarmeAccount) {
       throw new AppNotFoundException();
     }
 
@@ -167,9 +166,14 @@ export class CreatePagarmeCheckoutCommandHandler
     }
 
     try {
-      paymentMethod = await this.findPaymentMethodByIdService.execute(
-        data.paymentMethod
-      );
+      if (data.paymentMethodType === PaymentMethodType.CARD) {
+        paymentMethod = await this.findPaymentMethodByIdService.execute(
+          data.paymentMethod
+        );
+        if (!paymentMethod) {
+          throw new PaymentMethodNotFoundException();
+        }
+      }
     } catch (error) {}
 
     const pagarmeOrder = await this.createPagarmeOrderService.execute({
@@ -189,10 +193,10 @@ export class CreatePagarmeCheckoutCommandHandler
       throw new PaymentNotFoundException();
     }
     try {
-      const paymentMethod = await this.createPaymentMethod({
-        card: pagarmeOrder?.card,
+      const paymentMethod = await this.findOrCreatePaymentMethod({
         app: data.app,
         createdBy: data.createdBy,
+        paymentMethodId: data.paymentMethod,
         paymentMethodType: data.paymentMethodType
       });
       await this.updatePaymentService.execute({
@@ -225,17 +229,17 @@ export class CreatePagarmeCheckoutCommandHandler
     command: CreatePagarmeCheckoutCommand
   ): CreatePagarmeCheckoutCommand {
     return cleanObject({
+      paymentMethod: cleanValue(command?.paymentMethod),
       paymentMethodType: command?.paymentMethodType,
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       customer: cleanValue(command?.customer),
-      paymentMethod: cleanValue(command?.paymentMethod),
       order: cleanValue(command?.order)
     });
   }
 
-  private async createPaymentMethod(data: {
-    card: PagarmeOrderCard;
+  private async findOrCreatePaymentMethod(data: {
+    paymentMethodId?: string;
     paymentMethodType: PaymentMethodType;
     app: string;
     createdBy: string;
@@ -249,7 +253,14 @@ export class CreatePagarmeCheckoutCommandHandler
           app: data.app,
           createdBy: data.createdBy
         }),
-      [PaymentMethodType.CARD]: undefined,
+      [PaymentMethodType.CARD]: async () => {
+        if (!data?.paymentMethodId) {
+          return;
+        }
+        return await this.findPaymentMethodByIdService.execute(
+          data?.paymentMethodId
+        );
+      },
       [PaymentMethodType.PIX]: async () =>
         await this.createPaymentMethodPixService.execute({
           app: data.app,

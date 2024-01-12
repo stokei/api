@@ -61,7 +61,7 @@ export class CreatePagarmeOrderService
         }
       },
       [PaymentMethodType.CARD]: {
-        payment_method: 'card',
+        payment_method: 'credit_card',
         credit_card: {
           installments,
           statement_descriptor: data?.app?.name?.slice(0, 13),
@@ -117,7 +117,7 @@ export class CreatePagarmeOrderService
             expiryYear: lastTransaction?.card?.exp_year
           }
         }),
-        ...(lastTransaction?.qr_code_url && {
+        ...(lastTransaction?.pdf && {
           boleto: {
             line: lastTransaction?.line,
             pdf: lastTransaction?.pdf,

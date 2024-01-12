@@ -9,6 +9,7 @@ import {
 import { pagarmeClient } from '@/clients/pagarme';
 import { CreatePagarmeOrderDTO } from '@/dtos/pagarme/create-pagarme-order.dto';
 import { PagarmeOrder } from '@/dtos/pagarme/pagarme-order.dto';
+import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import { PAGARME_RECIPIENT_ID } from '@/environments';
 import { getPagarmeError } from '@/utils/get-pagarme-error';
 
@@ -47,17 +48,41 @@ export class CreatePagarmeOrderService
       amount: price?.amount,
       description: price?.name
     }));
+    const expiresAt = convertToISODateString(addDays(2));
+    const installments =
+      data?.installments > 1 && data?.installments <= 12
+        ? data?.installments
+        : 1;
+    const paymentMethodValues: Record<PaymentMethodType, any> = {
+      [PaymentMethodType.BOLETO]: {
+        payment_method: 'boleto',
+        boleto: {
+          due_at: expiresAt
+        }
+      },
+      [PaymentMethodType.CARD]: {
+        payment_method: 'card',
+        credit_card: {
+          installments,
+          statement_descriptor: data?.app?.name?.slice(0, 13),
+          card_id: data?.card
+        }
+      },
+      [PaymentMethodType.PIX]: {
+        payment_method: 'pix',
+        pix: {
+          expires_at: expiresAt
+        }
+      }
+    };
     const dataRequest = cleanObject({
       items,
       code: data?.payment,
       customer_id: data?.customer,
       payments: [
         {
-          pix: {
-            expires_at: convertToISODateString(addDays(2))
-          },
+          ...paymentMethodValues?.[data.paymentMethodType],
           amount: totalAmount,
-          payment_method: 'pix',
           split: [appRecipient, stokeiRecipient]
         }
       ]
@@ -84,10 +109,27 @@ export class CreatePagarmeOrderService
         status: responseData?.status,
         paymentMethod: charge?.payment_method,
         error: errorList?.[0],
-        pix: {
-          copyAndPaste: lastTransaction?.qr_code,
-          qrCodeURL: lastTransaction?.qr_code_url
-        }
+        ...(lastTransaction?.card && {
+          card: {
+            brand: lastTransaction?.card?.brand,
+            lastFourNumber: lastTransaction?.card?.last_four_digits,
+            expiryMonth: lastTransaction?.card?.exp_month,
+            expiryYear: lastTransaction?.card?.exp_year
+          }
+        }),
+        ...(lastTransaction?.qr_code_url && {
+          boleto: {
+            line: lastTransaction?.line,
+            pdf: lastTransaction?.pdf,
+            barcode: lastTransaction?.barcode
+          }
+        }),
+        ...(lastTransaction?.qr_code_url && {
+          pix: {
+            copyAndPaste: lastTransaction?.qr_code,
+            qrCodeURL: lastTransaction?.qr_code_url
+          }
+        })
       };
     } catch (error) {
       const pagarmeError = getPagarmeError(error?.response?.data?.errors);

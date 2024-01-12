@@ -2,7 +2,6 @@ import { ChangePasswordService } from './change-password';
 import { CompleteAccountConfigurationService } from './complete-account-configuration';
 import { CreateAccountService } from './create-account';
 import { CreateAccountPagarmeCustomerService } from './create-account-pagarme-customer';
-import { CreateAccountStripeCustomerService } from './create-account-stripe-customer';
 import { FindAccountByEmailAndAppService } from './find-account-by-email-and-app';
 import { FindAccountByIdService } from './find-account-by-id';
 import { FindAllAccountsService } from './find-all-accounts';
@@ -25,7 +24,6 @@ export const AccountServices = [
   FindAllAccountsService,
   FindAccountByEmailAndAppService,
   CompleteAccountConfigurationService,
-  CreateAccountStripeCustomerService,
   UpdateOwnPasswordService,
   CreateAccountPagarmeCustomerService
 ];

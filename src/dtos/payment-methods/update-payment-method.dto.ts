@@ -1,6 +1,7 @@
 import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 
 export interface UpdatePaymentMethodDataDTO {
+  referenceId?: string;
   lastFourCardNumber?: string;
   cardBrand?: string;
   cardExpiryMonth?: string;

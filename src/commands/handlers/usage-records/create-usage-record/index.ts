@@ -9,10 +9,8 @@ import {
   SubscriptionContractItemNotFoundException,
   UsageRecordNotFoundException
 } from '@/errors';
-import { UsageRecordMapper } from '@/mappers/usage-records';
 import { CreateUsageRecordRepository } from '@/repositories/usage-records/create-usage-record';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { CreateStripeUsageRecordService } from '@/services/stripe/create-stripe-usage-record';
 import { FindSubscriptionContractItemByIdService } from '@/services/subscription-contract-items/find-subscription-contract-item-by-id';
 
 type CreateUsageRecordCommandKeys = keyof CreateUsageRecordCommand;
@@ -23,7 +21,6 @@ export class CreateUsageRecordCommandHandler
 {
   constructor(
     private readonly createUsageRecordRepository: CreateUsageRecordRepository,
-    private readonly createStripeUsageRecordService: CreateStripeUsageRecordService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findSubscriptionContractItemByIdService: FindSubscriptionContractItemByIdService,
     private readonly publisher: EventPublisher
@@ -53,17 +50,10 @@ export class CreateUsageRecordCommandHandler
     if (!subscriptionContractItem) {
       throw new SubscriptionContractItemNotFoundException();
     }
-    if (subscriptionContractItem.stripeSubscriptionItem) {
-      await this.createStripeUsageRecordService.execute({
-        quantity: data.quantity,
-        action: new UsageRecordMapper().actionToStripeAction(data.action),
-        subscriptionItem: subscriptionContractItem.stripeSubscriptionItem,
-        stripeAccount: app.stripeAccount
-      });
-    }
 
-    const usageRecordCreated =
-      await this.createUsageRecordRepository.execute(data);
+    const usageRecordCreated = await this.createUsageRecordRepository.execute(
+      data
+    );
     if (!usageRecordCreated) {
       throw new UsageRecordNotFoundException();
     }

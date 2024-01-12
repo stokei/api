@@ -5,7 +5,6 @@ import { CreatePaymentMethodPixRepository } from './create-payment-method-pix';
 import { ExistsPaymentMethodsRepository } from './exists-payment-methods';
 import { FindAllPaymentMethodsRepository } from './find-all-payment-methods';
 import { FindPaymentMethodByIdRepository } from './find-payment-method-by-id';
-import { FindPaymentMethodByStripePaymentMethodRepository } from './find-payment-method-by-stripe-payment-method';
 import { RemovePaymentMethodRepository } from './remove-payment-method';
 import { UpdatePaymentMethodRepository } from './update-payment-method';
 
@@ -18,6 +17,5 @@ export const PaymentMethodsRepositories = [
   FindPaymentMethodByIdRepository,
   FindAllPaymentMethodsRepository,
   RemovePaymentMethodRepository,
-  FindPaymentMethodByStripePaymentMethodRepository,
   UpdatePaymentMethodRepository
 ];

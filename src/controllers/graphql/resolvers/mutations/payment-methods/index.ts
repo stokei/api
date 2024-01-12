@@ -1,7 +1,7 @@
-import { CreatePaymentMethodResolver } from './create-payment-method';
+import { CreatePaymentMethodCardResolver } from './create-payment-method-card';
 import { RemovePaymentMethodResolver } from './remove-payment-method';
 
 export const PaymentMethodsMutations = [
-  CreatePaymentMethodResolver,
+  CreatePaymentMethodCardResolver,
   RemovePaymentMethodResolver
 ];

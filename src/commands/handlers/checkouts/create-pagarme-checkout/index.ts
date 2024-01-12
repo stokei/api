@@ -2,8 +2,10 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreatePagarmeCheckoutCommand } from '@/commands/implements/checkouts/create-pagarme-checkout.command';
+import { PagarmeOrderCard } from '@/dtos/pagarme/pagarme-order.dto';
 import { OrderStatus } from '@/enums/order-status.enum';
 import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
+import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import {
   AccountNotFoundException,
   AppNotFoundException,
@@ -12,18 +14,23 @@ import {
   OrderItemsNotFoundException,
   OrderNotFoundException,
   ParamNotFoundException,
+  PaymentMethodNotFoundException,
   PaymentNotFoundException,
   PricesNotFoundException
 } from '@/errors';
 import { CheckoutMapper } from '@/mappers/checkouts';
+import { PaymentMethodModel } from '@/models/payment-method.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAllOrderItemsService } from '@/services/order-items/find-all-order-items';
 import { ChangeOrderToPendingService } from '@/services/orders/change-order-to-pending';
 import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
 import { CreatePagarmeOrderService } from '@/services/pagarme/create-pagarme-order';
+import { CreatePaymentMethodBoletoService } from '@/services/payment-methods/create-payment-method-boleto';
 import { CreatePaymentMethodPixService } from '@/services/payment-methods/create-payment-method-pix';
+import { FindPaymentMethodByIdService } from '@/services/payment-methods/find-payment-method-by-id';
 import { CreatePaymentService } from '@/services/payments/create-payment';
+import { UpdatePaymentService } from '@/services/payments/update-payment';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
 import { getStokeiFeeAmount } from '@/utils/get-fee-amount';
 
@@ -35,12 +42,15 @@ export class CreatePagarmeCheckoutCommandHandler
 {
   constructor(
     private readonly createPaymentMethodPixService: CreatePaymentMethodPixService,
+    private readonly createPaymentMethodBoletoService: CreatePaymentMethodBoletoService,
+    private readonly findPaymentMethodByIdService: FindPaymentMethodByIdService,
     private readonly changeOrderToPendingService: ChangeOrderToPendingService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findOrderByIdService: FindOrderByIdService,
     private readonly findAllOrderItemsService: FindAllOrderItemsService,
     private readonly findAllPricesService: FindAllPricesService,
     private readonly createPagarmeOrderService: CreatePagarmeOrderService,
+    private readonly updatePaymentService: UpdatePaymentService,
     private readonly findAccountByIdService: FindAccountByIdService,
     private readonly createPaymentService: CreatePaymentService
   ) {}
@@ -114,14 +124,9 @@ export class CreatePagarmeCheckoutCommandHandler
       throw new PricesNotFoundException();
     }
 
-    const paymentMethod = await this.createPaymentMethodPixService.execute({
-      app: data.app,
-      createdBy: data.createdBy
-    });
     const paymentGatewayType = PaymentGatewayType.PAGARME;
     const payment = await this.createPaymentService.execute({
       parent: order.id,
-      paymentMethod: paymentMethod.id,
       payer: customer.id,
       currency: order.currency,
       totalAmount: order.totalAmount,
@@ -153,24 +158,66 @@ export class CreatePagarmeCheckoutCommandHandler
       paymentMethodType: data.paymentMethodType,
       paymentGatewayType
     });
+    let paymentMethod: PaymentMethodModel;
+    if (
+      data.paymentMethodType === PaymentMethodType.CARD &&
+      !data.paymentMethod
+    ) {
+      throw new PaymentMethodNotFoundException();
+    }
+
+    try {
+      paymentMethod = await this.findPaymentMethodByIdService.execute(
+        data.paymentMethod
+      );
+    } catch (error) {}
+
     const pagarmeOrder = await this.createPagarmeOrderService.execute({
+      paymentMethodType: data.paymentMethodType,
+      installments: 1,
+      app: customerApp,
       appRecipient: customerApp.pagarmeAccount,
       totalAmount: payment.totalAmount,
       feeAmount,
+      card: paymentMethod?.referenceId,
       currency: order.currency,
       customer: customer.pagarmeCustomer,
       payment: payment.id,
       prices: pagarmePrices
     });
-    if (!pagarmeOrder?.pix?.qrCodeURL) {
+    if (!pagarmeOrder) {
       throw new PaymentNotFoundException();
     }
+    try {
+      const paymentMethod = await this.createPaymentMethod({
+        card: pagarmeOrder?.card,
+        app: data.app,
+        createdBy: data.createdBy,
+        paymentMethodType: data.paymentMethodType
+      });
+      await this.updatePaymentService.execute({
+        where: {
+          payment: payment.id,
+          app: data.app
+        },
+        data: {
+          paymentMethod: paymentMethod?.id,
+          updatedBy: data.createdBy
+        }
+      });
+    } catch (error) {}
+
     return new CheckoutMapper().toModel({
       payment: payment.id,
-      pix: {
-        copyAndPaste: pagarmeOrder?.pix?.copyAndPaste,
-        qrCodeURL: pagarmeOrder?.pix?.qrCodeURL
-      }
+      ...(pagarmeOrder?.boleto && {
+        boleto: pagarmeOrder?.boleto
+      }),
+      ...(pagarmeOrder?.card && {
+        card: pagarmeOrder?.card
+      }),
+      ...(pagarmeOrder?.pix && {
+        pix: pagarmeOrder?.pix
+      })
     });
   }
 
@@ -182,7 +229,36 @@ export class CreatePagarmeCheckoutCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       customer: cleanValue(command?.customer),
+      paymentMethod: cleanValue(command?.paymentMethod),
       order: cleanValue(command?.order)
     });
+  }
+
+  private async createPaymentMethod(data: {
+    card: PagarmeOrderCard;
+    paymentMethodType: PaymentMethodType;
+    app: string;
+    createdBy: string;
+  }) {
+    const createPaymentMethodHandlers: Record<
+      PaymentMethodType,
+      () => Promise<PaymentMethodModel>
+    > = {
+      [PaymentMethodType.BOLETO]: async () =>
+        await this.createPaymentMethodBoletoService.execute({
+          app: data.app,
+          createdBy: data.createdBy
+        }),
+      [PaymentMethodType.CARD]: undefined,
+      [PaymentMethodType.PIX]: async () =>
+        await this.createPaymentMethodPixService.execute({
+          app: data.app,
+          createdBy: data.createdBy
+        })
+    };
+    const createPaymentMethod =
+      createPaymentMethodHandlers[data.paymentMethodType];
+    const paymentMethod = await createPaymentMethod?.();
+    return paymentMethod;
   }
 }

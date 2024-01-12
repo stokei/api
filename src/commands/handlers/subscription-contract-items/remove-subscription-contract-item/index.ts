@@ -8,7 +8,6 @@ import {
   SubscriptionContractItemNotFoundException
 } from '@/errors';
 import { RemoveSubscriptionContractItemRepository } from '@/repositories/subscription-contract-items/remove-subscription-contract-item';
-import { DeleteStripeSubscriptionItemService } from '@/services/stripe/delete-stripe-subscription-item';
 import { FindSubscriptionContractItemByIdService } from '@/services/subscription-contract-items/find-subscription-contract-item-by-id';
 
 @CommandHandler(RemoveSubscriptionContractItemCommand)
@@ -17,7 +16,6 @@ export class RemoveSubscriptionContractItemCommandHandler
 {
   constructor(
     private readonly findSubscriptionContractItemByIdService: FindSubscriptionContractItemByIdService,
-    private readonly deleteStripeSubscriptionItemService: DeleteStripeSubscriptionItemService,
     private readonly removeSubscriptionContractItemRepository: RemoveSubscriptionContractItemRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -57,11 +55,6 @@ export class RemoveSubscriptionContractItemCommandHandler
       throw new DataNotFoundException();
     }
 
-    if (subscriptionContractItem.stripeSubscriptionItem) {
-      await this.deleteStripeSubscriptionItemService.execute(
-        subscriptionContractItem.stripeSubscriptionItem
-      );
-    }
     const subscriptionContractItemModel = this.publisher.mergeObjectContext(
       subscriptionContractItem
     );

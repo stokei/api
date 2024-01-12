@@ -82,6 +82,7 @@ export class CreatePaymentMethodCardCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       stripePaymentMethod: cleanValue(command?.stripePaymentMethod),
+      referenceId: cleanValue(command?.referenceId),
       lastFourCardNumber: cleanValue(command?.lastFourCardNumber),
       cardBrand: cleanValue(command?.cardBrand),
       cardExpiryMonth: cleanValue(command?.cardExpiryMonth),

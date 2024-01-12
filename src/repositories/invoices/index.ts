@@ -4,7 +4,6 @@ import { CountInvoicesRepository } from './count-invoices';
 import { CreateInvoiceRepository } from './create-invoice';
 import { FindAllInvoicesRepository } from './find-all-invoices';
 import { FindInvoiceByIdRepository } from './find-invoice-by-id';
-import { FindInvoiceByStripeInvoiceRepository } from './find-invoice-by-stripe-invoice';
 
 export const InvoicesRepositories = [
   ChangeInvoiceToPaidRepository,
@@ -12,6 +11,5 @@ export const InvoicesRepositories = [
   CountInvoicesRepository,
   CreateInvoiceRepository,
   FindInvoiceByIdRepository,
-  FindAllInvoicesRepository,
-  FindInvoiceByStripeInvoiceRepository
+  FindAllInvoicesRepository
 ];

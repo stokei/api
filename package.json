@@ -11,8 +11,6 @@
     "start:dev": "npm run start -- --watch",
     "start:debug": "npm run start -- --debug --watch",
     "start:prod": "node dist/main",
-    "stripe:login": "stripe login",
-    "stripe:webhooks:start": "stripe listen --forward-to localhost:4000/v1/webhooks/stripe",
     "docker-compose:up": "docker-compose up -d",
     "db:studio": "prisma studio --schema=./src/database/prisma/schema.prisma",
     "db:generate": "prisma generate --schema=./src/database/prisma/schema.prisma",

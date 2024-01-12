@@ -12,7 +12,6 @@ import { CourseInstructorServices } from './course-instructors';
 import { CourseStudentServices } from './course-students';
 import { CourseServices } from './courses';
 import { CurrencyServices } from './currencies';
-import { CustomerPortalSessionServices } from './customer-portal-sessions';
 import { DomainServices } from './domains';
 import { EmailServices } from './emails';
 import { FeatureServices } from './features';
@@ -36,7 +35,6 @@ import { ProductServices } from './products';
 import { RecurringServices } from './recurrings';
 import { RoleServices } from './roles';
 import { SortedItemServices } from './sorted-items';
-import { StripeServices } from './stripe';
 import { SubscriptionContractItemServices } from './subscription-contract-items';
 import { SubscriptionContractServices } from './subscription-contracts';
 import { TusServices } from './tus';
@@ -70,9 +68,7 @@ export const Services = [
   ...SubscriptionContractServices,
   ...AddressServices,
   ...PhoneServices,
-  ...StripeServices,
   ...CheckoutServices,
-  ...CustomerPortalSessionServices,
   ...WebhookServices,
   ...InvoiceServices,
   ...FileServices,

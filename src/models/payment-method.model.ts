@@ -12,6 +12,7 @@ export interface IPaymentMethodModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly stripePaymentMethod: string;
+  readonly referenceId?: string;
   readonly paymentMethodType?: PaymentMethodType;
   readonly lastFourCardNumber?: string;
   readonly cardExpiryMonth?: string;
@@ -27,6 +28,7 @@ export interface IPaymentMethodModelData {
 export class PaymentMethodModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
+  readonly referenceId?: string;
   readonly type?: PaymentMethodType;
   readonly stripePaymentMethod: string;
   readonly lastFourCardNumber?: string;
@@ -47,6 +49,7 @@ export class PaymentMethodModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.type = data.paymentMethodType;
+    this.referenceId = data.referenceId;
     this.stripePaymentMethod = data.stripePaymentMethod;
     this.lastFourCardNumber = data.lastFourCardNumber;
     this.cardExpiryMonth = data.cardExpiryMonth;

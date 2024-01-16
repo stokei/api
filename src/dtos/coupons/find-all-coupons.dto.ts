@@ -8,6 +8,7 @@ import {
 export interface WhereDataFindAllCouponsDTO {
   ids?: string[];
   app?: IWhereData;
+  code?: IWhereDataSearch;
   parent?: IWhereDataSearch;
   recipient?: IWhereData;
   updatedBy?: IWhereData;

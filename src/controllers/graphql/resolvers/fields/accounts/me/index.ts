@@ -2,6 +2,7 @@ import { MeAccountAccessesResolver } from './accesses';
 import { MeAccountAppResolver } from './app';
 import { MeAccountAvatarResolver } from './avatar';
 import { MeAccountCreatedByResolver } from './created-by';
+import { MeAccountDocumentResolver } from './document';
 import { MeAccountIsOwnerResolver } from './is-owner';
 import { MeAccountPhonesResolver } from './phones';
 import { MeAccountReferenceResolver } from './reference';
@@ -15,5 +16,6 @@ export const MeAccountsFieldsResolvers = [
   MeAccountAvatarResolver,
   MeAccountCreatedByResolver,
   MeAccountUpdatedByResolver,
-  MeAccountIsOwnerResolver
+  MeAccountIsOwnerResolver,
+  MeAccountDocumentResolver
 ];

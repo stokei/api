@@ -10,6 +10,7 @@ import { LoginService } from './login';
 import { RemoveAccountService } from './remove-account';
 import { SignUpService } from './signup';
 import { UpdateAccountService } from './update-account';
+import { UpdateAccountPagarmeCustomerService } from './update-account-pagarme-customer';
 import { UpdateOwnPasswordService } from './update-own-password';
 
 export const AccountServices = [
@@ -25,5 +26,6 @@ export const AccountServices = [
   FindAccountByEmailAndAppService,
   CompleteAccountConfigurationService,
   UpdateOwnPasswordService,
-  CreateAccountPagarmeCustomerService
+  CreateAccountPagarmeCustomerService,
+  UpdateAccountPagarmeCustomerService
 ];

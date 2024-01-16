@@ -7,6 +7,7 @@ import { LoginCommandHandler } from './login';
 import { RemoveAccountCommandHandler } from './remove-account';
 import { SignUpCommandHandler } from './signup';
 import { UpdateAccountCommandHandler } from './update-account';
+import { UpdateAccountPagarmeCustomerCommandHandler } from './update-account-pagarme-customer';
 import { UpdateOwnPasswordCommandHandler } from './update-own-password';
 
 export const AccountCommandHandlers = [
@@ -19,5 +20,6 @@ export const AccountCommandHandlers = [
   UpdateAccountCommandHandler,
   CompleteAccountConfigurationCommandHandler,
   UpdateOwnPasswordCommandHandler,
-  CreateAccountPagarmeCustomerCommandHandler
+  CreateAccountPagarmeCustomerCommandHandler,
+  UpdateAccountPagarmeCustomerCommandHandler
 ];

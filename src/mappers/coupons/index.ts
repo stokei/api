@@ -30,6 +30,7 @@ export class CouponMapper {
       operatorMapper(operatorData) {
         return {
           id: prismaMapper.toWhereIds(operatorData.ids),
+          code: prismaMapper.toWhereDataSearch(operatorData.code),
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
           recipient: prismaMapper.toWhereData(operatorData.recipient),
           app: prismaMapper.toWhereData(operatorData.app),
@@ -58,6 +59,7 @@ export class CouponMapper {
         data: query?.where,
         operatorMapper(operatorData) {
           return {
+            code: cleanWhereDataSearch(operatorData.code),
             parent: cleanWhereDataSearch(operatorData.parent),
             recipient: cleanWhereDataString(operatorData.recipient),
             app: cleanWhereDataString(operatorData.app),

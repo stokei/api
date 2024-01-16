@@ -7,21 +7,21 @@ import {
 
 import { pagarmeClient } from '@/clients/pagarme';
 import {
-  CreatePagarmeCustomerDTO,
-  CreatePagarmeCustomerResponse
-} from '@/dtos/pagarme/create-pagarme-customer.dto';
+  CreateOrUpdatePagarmeCustomerDTO,
+  CreateOrUpdatePagarmeCustomerResponse
+} from '@/dtos/pagarme/create-or-update-pagarme-customer.dto';
 
 @Injectable()
-export class CreatePagarmeCustomerService
+export class CreateOrUpdatePagarmeCustomerService
   implements
     IBaseService<
-      CreatePagarmeCustomerDTO,
-      Promise<CreatePagarmeCustomerResponse>
+      CreateOrUpdatePagarmeCustomerDTO,
+      Promise<CreateOrUpdatePagarmeCustomerResponse>
     >
 {
   async execute(
-    data: CreatePagarmeCustomerDTO
-  ): Promise<CreatePagarmeCustomerResponse> {
+    data: CreateOrUpdatePagarmeCustomerDTO
+  ): Promise<CreateOrUpdatePagarmeCustomerResponse> {
     const birthdate = convertToISODateString(data.dateBirthday);
     const dataRequest = cleanObject({
       phones: {
@@ -35,8 +35,8 @@ export class CreatePagarmeCustomerService
       name: data?.name,
       email: data?.email,
       code: data?.account,
-      document: data?.cpf,
-      document_type: 'CPF',
+      document: data?.document?.document,
+      document_type: data?.document?.type,
       type: 'individual',
       gender: 'male'
     });

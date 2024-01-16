@@ -17,6 +17,9 @@ class WhereDataFindAllCouponsDataInput implements WhereDataFindAllCouponsDTO {
   ids?: string[];
 
   @Field(() => WhereDataSearchInput, { nullable: true })
+  code?: WhereDataSearchInput;
+
+  @Field(() => WhereDataSearchInput, { nullable: true })
   parent?: WhereDataSearchInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })

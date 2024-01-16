@@ -1,15 +1,17 @@
+import { CreateOrUpdatePagarmeCustomerService } from './create-or-update-pagarme-customer';
 import { CreatePagarmeAccountService } from './create-pagarme-account';
 import { CreatePagarmeCardService } from './create-pagarme-card';
-import { CreatePagarmeCustomerService } from './create-pagarme-customer';
 import { CreatePagarmeOrderService } from './create-pagarme-order';
 import { FindPagarmeBalanceService } from './find-pagarme-balance';
+import { FindPagarmeCustomerByIdService } from './find-pagarme-customer-by-id';
 import { FindPagarmeOrderByIdService } from './find-pagarme-order-by-id';
 
 export const PagarmeServices = [
   CreatePagarmeAccountService,
-  CreatePagarmeCustomerService,
+  CreateOrUpdatePagarmeCustomerService,
   CreatePagarmeOrderService,
   FindPagarmeOrderByIdService,
   FindPagarmeBalanceService,
-  CreatePagarmeCardService
+  CreatePagarmeCardService,
+  FindPagarmeCustomerByIdService
 ];

@@ -2,6 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 
 import { Accesses } from './accesses';
 import { Account } from './account';
+import { Document } from './document';
 import { PaymentMethods } from './payment-methods';
 import { Phones } from './phones';
 
@@ -18,4 +19,7 @@ export class MeAccount extends Account {
 
   @Field(() => PaymentMethods, { nullable: true })
   paymentMethods?: PaymentMethods;
+
+  @Field(() => Document, { nullable: true })
+  document?: Document;
 }

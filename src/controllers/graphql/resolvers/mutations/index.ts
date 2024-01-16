@@ -6,6 +6,7 @@ import { CatalogItemsMutations } from './catalog-items';
 import { CatalogsMutations } from './catalogs';
 import { CheckoutsMutations } from './checkouts';
 import { ColorsMutations } from './colors';
+import { CouponsMutations } from './coupons';
 import { CourseInstructorsMutations } from './course-instructors';
 import { CourseStudentsMutations } from './course-students';
 import { CoursesMutations } from './courses';
@@ -65,5 +66,6 @@ export const Mutations = [
   ...VideoViewsMutations,
   ...MaterialsMutations,
   ...OrdersMutations,
-  ...PaymentsMutations
+  ...PaymentsMutations,
+  ...CouponsMutations
 ];

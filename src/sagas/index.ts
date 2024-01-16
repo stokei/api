@@ -5,6 +5,7 @@ import { AppsSagas } from './apps.saga';
 import { CatalogItemsSagas } from './catalog-items.saga';
 import { CatalogsSagas } from './catalogs.saga';
 import { ColorsSagas } from './colors.saga';
+import { CouponsSagas } from './coupons.saga';
 import { CourseInstructorsSagas } from './course-instructors.saga';
 import { CourseStudentsSagas } from './course-students.saga';
 import { CoursesSagas } from './courses.saga';
@@ -75,5 +76,6 @@ export const Sagas = [
   MaterialsSagas,
   OrdersSagas,
   OrderItemsSagas,
-  PaymentsSagas
+  PaymentsSagas,
+  CouponsSagas
 ];

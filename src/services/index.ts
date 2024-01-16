@@ -8,6 +8,7 @@ import { CatalogServices } from './catalogs';
 import { CheckoutServices } from './checkouts';
 import { CloudflareServices } from './cloudflare';
 import { ColorServices } from './colors';
+import { CouponServices } from './coupons';
 import { CourseInstructorServices } from './course-instructors';
 import { CourseStudentServices } from './course-students';
 import { CourseServices } from './courses';
@@ -91,5 +92,6 @@ export const Services = [
   ...PagarmeServices,
   ...OrderItemServices,
   ...OrderServices,
-  ...PaymentServices
+  ...PaymentServices,
+  ...CouponServices
 ];

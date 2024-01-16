@@ -6,6 +6,7 @@ import { CatalogItemCommandHandlers } from './catalog-items';
 import { CatalogCommandHandlers } from './catalogs';
 import { CheckoutCommandHandlers } from './checkouts';
 import { ColorCommandHandlers } from './colors';
+import { CouponCommandHandlers } from './coupons';
 import { CourseInstructorCommandHandlers } from './course-instructors';
 import { CourseStudentCommandHandlers } from './course-students';
 import { CourseCommandHandlers } from './courses';
@@ -79,5 +80,6 @@ export const CommandHandlers = [
   ...VideoViewCommandHandlers,
   ...OrderCommandHandlers,
   ...OrderItemCommandHandlers,
-  ...PaymentCommandHandlers
+  ...PaymentCommandHandlers,
+  ...CouponCommandHandlers
 ];

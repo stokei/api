@@ -5,6 +5,7 @@ import { AppEventsHandlers } from './apps';
 import { CatalogItemEventsHandlers } from './catalog-items';
 import { CatalogEventsHandlers } from './catalogs';
 import { ColorEventsHandlers } from './colors';
+import { CouponEventsHandlers } from './coupons';
 import { CourseInstructorEventsHandlers } from './course-instructors';
 import { CourseStudentEventsHandlers } from './course-students';
 import { CourseEventsHandlers } from './courses';
@@ -75,5 +76,6 @@ export const EventsHandlers = [
   ...MaterialEventsHandlers,
   ...PaymentEventsHandlers,
   ...OrderEventsHandlers,
-  ...OrderItemEventsHandlers
+  ...OrderItemEventsHandlers,
+  ...CouponEventsHandlers
 ];

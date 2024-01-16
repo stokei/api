@@ -5,6 +5,7 @@ import { AppsRepositories } from './apps';
 import { CatalogItemsRepositories } from './catalog-items';
 import { CatalogsRepositories } from './catalogs';
 import { ColorsRepositories } from './colors';
+import { CouponsRepositories } from './coupons';
 import { CourseInstructorsRepositories } from './course-instructors';
 import { CourseStudentsRepositories } from './course-students';
 import { CoursesRepositories } from './courses';
@@ -75,5 +76,6 @@ export const Repositories = [
   ...MaterialsRepositories,
   ...OrdersRepositories,
   ...OrderItemsRepositories,
-  ...PaymentsRepositories
+  ...PaymentsRepositories,
+  ...CouponsRepositories
 ];

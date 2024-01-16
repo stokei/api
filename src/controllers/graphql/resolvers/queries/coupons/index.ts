@@ -1,0 +1,4 @@
+import { CouponResolver } from './coupon';
+import { CouponsResolver } from './coupons';
+
+export const CouponsQueries = [CouponResolver, CouponsResolver];

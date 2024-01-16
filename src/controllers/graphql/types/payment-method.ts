@@ -14,7 +14,7 @@ export class PaymentMethod {
   parent: string;
 
   @Field(() => String, { nullable: true })
-  stripePaymentMethod?: string;
+  referenceId?: string;
 
   @Field(() => String, { nullable: true })
   lastFourCardNumber?: string;

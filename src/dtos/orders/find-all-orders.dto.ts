@@ -12,6 +12,7 @@ export interface WhereDataFindAllOrdersDTO {
   app?: IWhereData;
   parent?: IWhereDataSearch;
   currency?: IWhereData;
+  coupon?: IWhereData;
   status?: OrderStatus;
   active?: IWhereData<boolean>;
   updatedBy?: IWhereData;

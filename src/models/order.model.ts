@@ -14,6 +14,7 @@ export interface IOrderModelData {
   readonly id?: string;
   readonly _id?: string;
   readonly parent: string;
+  readonly coupon?: string;
   readonly currency: string;
   readonly status: OrderStatus;
   readonly paidAmount: number;
@@ -34,6 +35,7 @@ export interface IOrderModelData {
 export class OrderModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
+  readonly coupon?: string;
   readonly currency: string;
   readonly status: OrderStatus;
   readonly paidAmount: number;
@@ -57,6 +59,7 @@ export class OrderModel extends AggregateRoot {
       id: data._id?.toString() || data.id
     });
     this.parent = data.parent;
+    this.coupon = data.coupon;
     this.currency = data.currency;
     this.status = data.status || OrderStatus.PENDING;
     this.paidAmount = data.paidAmount;

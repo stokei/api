@@ -54,6 +54,16 @@ export class CouponModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
+  getAmountWithDiscount(amount: number) {
+    let value = 0;
+    if (this.percentOff) {
+      value = Math.round(amount * (this.percentOff / 100));
+    } else if (this.amountOff) {
+      value = Math.round(amount - this.amountOff);
+    }
+    return value >= 0 ? value : 0;
+  }
+
   createdCoupon({ createdBy }: { createdBy: string }) {
     if (this.id) {
       this.apply(

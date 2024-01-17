@@ -1,4 +1,5 @@
 import { OrderAppResolver } from './app';
+import { OrderCouponResolver } from './coupon';
 import { OrderCreatedByResolver } from './created-by';
 import { OrderCurrencyResolver } from './currency';
 import { OrderItemsResolver } from './items';
@@ -13,5 +14,6 @@ export const OrdersFieldsResolvers = [
   OrderUpdatedByResolver,
   OrderCurrencyResolver,
   OrderItemsResolver,
-  OrderPaymentsResolver
+  OrderPaymentsResolver,
+  OrderCouponResolver
 ];

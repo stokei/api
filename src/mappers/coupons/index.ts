@@ -4,6 +4,7 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhere,
+  cleanWhereDataBoolean,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IWhere,
@@ -33,6 +34,7 @@ export class CouponMapper {
           code: prismaMapper.toWhereDataSearch(operatorData.code),
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
           recipient: prismaMapper.toWhereData(operatorData.recipient),
+          active: prismaMapper.toWhereData(operatorData.active),
           app: prismaMapper.toWhereData(operatorData.app),
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
           createdBy: prismaMapper.toWhereData(operatorData.createdBy)
@@ -62,6 +64,7 @@ export class CouponMapper {
             code: cleanWhereDataSearch(operatorData.code),
             parent: cleanWhereDataSearch(operatorData.parent),
             recipient: cleanWhereDataString(operatorData.recipient),
+            active: cleanWhereDataBoolean(operatorData.active),
             app: cleanWhereDataString(operatorData.app),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -80,6 +83,7 @@ export class CouponMapper {
       }),
       orderBy: cleanObject({
         code: cleanSortValue(query.orderBy?.code),
+        active: cleanSortValue(query.orderBy?.active),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),
         createdBy: cleanSortValue(query.orderBy?.createdBy),

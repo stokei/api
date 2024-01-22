@@ -11,6 +11,7 @@ export interface WhereDataFindAllCouponsDTO {
   code?: IWhereDataSearch;
   parent?: IWhereDataSearch;
   recipient?: IWhereData;
+  active?: IWhereData<boolean>;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
@@ -18,6 +19,7 @@ export type IKeysWhereDataFindAllCouponsDTO = keyof WhereDataFindAllCouponsDTO;
 
 export interface OrderByDataFindAllCouponsDTO {
   code?: IOrderBy;
+  active?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;
   createdAt?: IOrderBy;

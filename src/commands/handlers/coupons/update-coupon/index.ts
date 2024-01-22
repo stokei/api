@@ -2,6 +2,7 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import {
   cleanObject,
   cleanValue,
+  cleanValueBoolean,
   cleanValueNumber,
   splitServiceId
 } from '@stokei/nestjs';
@@ -76,16 +77,17 @@ export class UpdateCouponCommandHandler
 
   private clearData(command: UpdateCouponCommand): UpdateCouponCommand {
     return cleanObject({
-      where: cleanObject({
+      where: {
         app: cleanValue(command?.where?.app),
         coupon: cleanValue(command?.where?.coupon)
-      }),
-      data: cleanObject({
+      },
+      data: {
         code: cleanValue(command?.data?.code),
+        active: cleanValueBoolean(command?.data?.active),
         amountOff: cleanValueNumber(command?.data?.amountOff),
         percentOff: cleanValueNumber(command?.data?.percentOff),
         updatedBy: cleanValue(command?.data?.updatedBy)
-      })
+      }
     });
   }
 }

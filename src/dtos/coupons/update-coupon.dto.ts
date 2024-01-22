@@ -1,6 +1,7 @@
 export interface UpdateCouponDataDTO {
   updatedBy: string;
   code?: string;
+  active?: boolean;
   amountOff?: number;
   percentOff?: number;
 }

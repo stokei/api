@@ -10,6 +10,9 @@ export class UpdateDataCouponInput {
 
   @Field(() => Float, { nullable: true })
   percentOff?: number;
+
+  @Field(() => Boolean, { nullable: true })
+  active?: boolean;
 }
 
 @InputType()

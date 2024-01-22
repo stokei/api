@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import {
   OrderBy,
+  WhereDataBooleanInput,
   WhereDataSearchInput,
   WhereDataStringInput,
   WherePaginated
@@ -25,6 +26,9 @@ class WhereDataFindAllCouponsDataInput implements WhereDataFindAllCouponsDTO {
   @Field(() => WhereDataStringInput, { nullable: true })
   recipient?: WhereDataStringInput;
 
+  @Field(() => WhereDataBooleanInput, { nullable: true })
+  active?: WhereDataBooleanInput;
+
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;
 
@@ -38,6 +42,9 @@ export class OrderByDataFindAllCouponsInput
 {
   @Field(() => OrderBy, { nullable: true })
   code?: OrderBy;
+
+  @Field(() => OrderBy, { nullable: true })
+  active?: OrderBy;
 
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

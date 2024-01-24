@@ -5,6 +5,7 @@ import { CreatePagarmeOrderService } from './create-pagarme-order';
 import { FindPagarmeBalanceService } from './find-pagarme-balance';
 import { FindPagarmeCustomerByIdService } from './find-pagarme-customer-by-id';
 import { FindPagarmeOrderByIdService } from './find-pagarme-order-by-id';
+import { UpdatePagarmeAccountBankService } from './update-pagarme-account-bank';
 
 export const PagarmeServices = [
   CreatePagarmeAccountService,
@@ -13,5 +14,6 @@ export const PagarmeServices = [
   FindPagarmeOrderByIdService,
   FindPagarmeBalanceService,
   CreatePagarmeCardService,
-  FindPagarmeCustomerByIdService
+  FindPagarmeCustomerByIdService,
+  UpdatePagarmeAccountBankService
 ];

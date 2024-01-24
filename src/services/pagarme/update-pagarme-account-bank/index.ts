@@ -20,7 +20,7 @@ export class UpdatePagarmeAccountBankService
     data: UpdatePagarmeAccountBankDTO
   ): Promise<UpdatePagarmeAccountBankResponse> {
     const dataRequest = cleanObject({
-      default_bank_account: {
+      bank_account: {
         type: data?.defaultBankAccount?.bankAccountType,
         holder_document: data?.defaultBankAccount?.holderDocument,
         holder_type: data?.defaultBankAccount?.holderType,

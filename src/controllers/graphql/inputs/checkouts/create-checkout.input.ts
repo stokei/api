@@ -7,9 +7,6 @@ export class CreateCheckoutInput {
   @Field(() => String)
   order: string;
 
-  @Field(() => String)
-  address: string;
-
   @Field(() => PaymentMethodType)
   paymentMethodType: PaymentMethodType;
 

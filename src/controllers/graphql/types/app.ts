@@ -71,10 +71,7 @@ export class App {
   isStokei: boolean;
 
   @Field(() => Boolean)
-  isIntegratedWithStripe: boolean;
-
-  @Field(() => Boolean)
-  isIntegratedWithPix: boolean;
+  isIntegratedWithPagarme: boolean;
 
   @Field(() => String, { nullable: true })
   blockedAt?: string;

@@ -77,29 +77,28 @@ export class CreatePaymentMethodCardByCardHashCommandHandler
     if (!cardPagarme) {
       throw new PaymentMethodNotFoundException();
     }
-    if (data.parent) {
-      let paymentMethod: PaymentMethodModel;
-      const paymentMethods = await this.findAllPaymentMethodsService.execute({
-        where: {
-          AND: {
-            paymentMethodType: PaymentMethodType.CARD,
-            parent: {
-              equals: data.parent
-            },
-            app: {
-              equals: data.app
-            },
-            referenceId: {
-              equals: cardPagarme.id
-            }
+
+    let paymentMethod: PaymentMethodModel;
+    const paymentMethods = await this.findAllPaymentMethodsService.execute({
+      where: {
+        AND: {
+          paymentMethodType: PaymentMethodType.CARD,
+          parent: {
+            equals: data.parent
+          },
+          app: {
+            equals: data.app
+          },
+          referenceId: {
+            equals: cardPagarme.id
           }
         }
-      });
-      if (paymentMethods?.items?.length) {
-        paymentMethod = paymentMethods?.items?.[0];
-        if (paymentMethod) {
-          return paymentMethod;
-        }
+      }
+    });
+    if (paymentMethods?.items?.length) {
+      paymentMethod = paymentMethods?.items?.[0];
+      if (paymentMethod) {
+        return paymentMethod;
       }
     }
 

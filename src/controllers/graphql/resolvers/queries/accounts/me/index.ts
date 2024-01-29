@@ -25,7 +25,8 @@ export class MeAccountResolver {
 
     const account = await this.getOrSetCacheService.execute<AccountModel>(
       currentAccountId,
-      () => this.accountsLoader.findByIds.load(currentAccountId)
+      () => this.accountsLoader.findByIds.load(currentAccountId),
+      5000 // 5 seconds
     );
     if (!account) {
       throw new AccountNotFoundException();

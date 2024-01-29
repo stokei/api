@@ -38,7 +38,7 @@ export class CouponModel extends AggregateRoot {
     super();
 
     this.id = createServiceId({
-      service: ServerStokeiApiIdPrefix.COURSES,
+      service: ServerStokeiApiIdPrefix.COUPONS,
       id: data._id?.toString() || data.id
     });
     this.code = data.code;

@@ -1,3 +1,4 @@
+import { ApplyCouponToValueService } from './apply-coupon-to-value';
 import { CreateCouponService } from './create-coupon';
 import { FindAllCouponsService } from './find-all-coupons';
 import { FindCouponByCodeService } from './find-coupon-by-code';
@@ -9,5 +10,6 @@ export const CouponServices = [
   UpdateCouponService,
   FindCouponByIdService,
   FindAllCouponsService,
-  FindCouponByCodeService
+  FindCouponByCodeService,
+  ApplyCouponToValueService
 ];

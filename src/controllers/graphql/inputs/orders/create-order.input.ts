@@ -7,6 +7,9 @@ export class CreateOrderItemInput {
 }
 @InputType()
 export class CreateOrderInput {
+  @Field(() => String, { nullable: true })
+  coupon?: string;
+
   @Field(() => [CreateOrderItemInput])
   items: CreateOrderItemInput[];
 }

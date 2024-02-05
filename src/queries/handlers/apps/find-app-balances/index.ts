@@ -7,7 +7,6 @@ import { BalanceModel } from '@/models/balance.model';
 import { FindAppBalancesQuery } from '@/queries/implements/apps/find-app-balances.query';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindPagarmeBalanceService } from '@/services/pagarme/find-pagarme-balance';
-import { FindStripeBalanceService } from '@/services/stripe/find-stripe-balance';
 
 @QueryHandler(FindAppBalancesQuery)
 export class FindAppBalancesQueryHandler
@@ -15,8 +14,7 @@ export class FindAppBalancesQueryHandler
 {
   constructor(
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findPagarmeBalanceService: FindPagarmeBalanceService,
-    private readonly findStripeBalanceService: FindStripeBalanceService
+    private readonly findPagarmeBalanceService: FindPagarmeBalanceService
   ) {}
 
   async execute(query: FindAppBalancesQuery): Promise<BalanceModel[]> {
@@ -33,12 +31,6 @@ export class FindAppBalancesQueryHandler
       throw new AppNotFoundException();
     }
 
-    const emptyStripeBalance = new BalanceModel({
-      currency: app.currency,
-      paymentGatewayType: PaymentGatewayType.STRIPE,
-      availableAmount: 0,
-      pendingAmount: 0
-    });
     const emptyPagarmeBalance = new BalanceModel({
       currency: app.currency,
       paymentGatewayType: PaymentGatewayType.PAGARME,
@@ -50,12 +42,7 @@ export class FindAppBalancesQueryHandler
         this.findPagarmeBalanceService.execute(app.pagarmeAccount),
       emptyBalance: emptyPagarmeBalance
     });
-    const stripeBalance = await this.getPaymentGatewayBalance({
-      handleFunction: () =>
-        this.findStripeBalanceService.execute(app.currency, app.stripeAccount),
-      emptyBalance: emptyStripeBalance
-    });
-    return [stripeBalance, pagarmeBalance];
+    return [pagarmeBalance];
   }
 
   async getPaymentGatewayBalance({

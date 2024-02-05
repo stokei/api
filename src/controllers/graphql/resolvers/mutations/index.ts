@@ -6,11 +6,11 @@ import { CatalogItemsMutations } from './catalog-items';
 import { CatalogsMutations } from './catalogs';
 import { CheckoutsMutations } from './checkouts';
 import { ColorsMutations } from './colors';
+import { CouponsMutations } from './coupons';
 import { CourseInstructorsMutations } from './course-instructors';
 import { CourseStudentsMutations } from './course-students';
 import { CoursesMutations } from './courses';
 import { CurrenciesMutations } from './currencies';
-import { CustomerPortalSessionsMutations } from './customer-portal-sessions';
 import { DomainsMutations } from './domains';
 import { FeaturesMutations } from './features';
 import { FilesMutations } from './files';
@@ -56,7 +56,6 @@ export const Mutations = [
   ...AddressesMutations,
   ...PhonesMutations,
   ...CheckoutsMutations,
-  ...CustomerPortalSessionsMutations,
   ...InvoicesMutations,
   ...FilesMutations,
   ...FeaturesMutations,
@@ -67,5 +66,6 @@ export const Mutations = [
   ...VideoViewsMutations,
   ...MaterialsMutations,
   ...OrdersMutations,
-  ...PaymentsMutations
+  ...PaymentsMutations,
+  ...CouponsMutations
 ];

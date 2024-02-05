@@ -33,6 +33,15 @@ export class PaymentMethodMapper {
           id: prismaMapper.toWhereIds(operatorData.ids),
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
           active: prismaMapper.toWhereData(operatorData.active),
+          referenceId: prismaMapper.toWhereData(operatorData.referenceId),
+          cardBrand: prismaMapper.toWhereData(operatorData.cardBrand),
+          cardExpiryMonth: prismaMapper.toWhereData(
+            operatorData.cardExpiryMonth
+          ),
+          cardExpiryYear: prismaMapper.toWhereData(operatorData.cardExpiryYear),
+          lastFourCardNumber: prismaMapper.toWhereData(
+            operatorData.lastFourCardNumber
+          ),
           paymentMethodType: operatorData.paymentMethodType,
           app: prismaMapper.toWhereData(operatorData.app),
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
@@ -64,6 +73,12 @@ export class PaymentMethodMapper {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),
             cardBrand: cleanWhereDataString(operatorData.cardBrand),
+            referenceId: cleanWhereDataString(operatorData.referenceId),
+            cardExpiryMonth: cleanWhereDataString(operatorData.cardExpiryMonth),
+            cardExpiryYear: cleanWhereDataString(operatorData.cardExpiryYear),
+            lastFourCardNumber: cleanWhereDataString(
+              operatorData.lastFourCardNumber
+            ),
             active: cleanWhereDataBoolean(operatorData.active),
             paymentMethodType: operatorData.paymentMethodType,
             app: cleanWhereDataString(operatorData.app),

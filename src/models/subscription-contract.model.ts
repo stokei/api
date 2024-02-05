@@ -6,6 +6,7 @@ import {
   addYears,
   convertToISODate,
   convertToISODateString,
+  convertToISOTimestamp,
   createServiceId
 } from '@stokei/nestjs';
 
@@ -76,10 +77,8 @@ export class SubscriptionContractModel extends AggregateRoot {
     this.paymentMethod = data.paymentMethod;
     this.stripeSubscription = data.stripeSubscription;
     this.stripeCheckoutSession = data.stripeCheckoutSession;
-    this.status = data.status;
     this.type = data.type;
     this.automaticRenew = data.automaticRenew;
-    this.active = data.active;
     this.startAt = convertToISODateString(data.startAt);
     this.endAt = convertToISODateString(data.endAt);
     this.updatedAt = convertToISODateString(data.updatedAt);
@@ -87,6 +86,11 @@ export class SubscriptionContractModel extends AggregateRoot {
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
     this.createdByAdmin = data.createdByAdmin;
+
+    const isStarted =
+      convertToISOTimestamp(data.startAt) < convertToISOTimestamp(Date.now());
+    this.status = isStarted ? data.status : SubscriptionContractStatus.PENDING;
+    this.active = isStarted ? false : data.active;
   }
 
   get isRecurring() {

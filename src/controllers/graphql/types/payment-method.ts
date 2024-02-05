@@ -14,7 +14,16 @@ export class PaymentMethod {
   parent: string;
 
   @Field(() => String, { nullable: true })
-  stripePaymentMethod?: string;
+  referenceId?: string;
+
+  @Field(() => String, { nullable: true })
+  boletoBarcode?: string;
+
+  @Field(() => String, { nullable: true })
+  boletoLine?: string;
+
+  @Field(() => String, { nullable: true })
+  boletoURL?: string;
 
   @Field(() => String, { nullable: true })
   lastFourCardNumber?: string;

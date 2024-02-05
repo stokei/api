@@ -3,6 +3,7 @@ export interface CreateOrderItemDTO {
 }
 export interface CreateOrderDTO {
   parent: string;
+  coupon?: string;
   app: string;
   items: CreateOrderItemDTO[];
   createdBy: string;

@@ -64,6 +64,9 @@ export class CreatePaymentMethodBoletoCommandHandler
     command: CreatePaymentMethodBoletoCommand
   ): CreatePaymentMethodBoletoCommand {
     return cleanObject({
+      boletoLine: cleanValue(command?.boletoLine),
+      boletoBarcode: cleanValue(command?.boletoBarcode),
+      boletoURL: cleanValue(command?.boletoURL),
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app)
     });

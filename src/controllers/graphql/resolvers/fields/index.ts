@@ -9,6 +9,7 @@ import { CatalogItemsFieldsResolvers } from './catalog-items';
 import { CatalogsFieldsResolvers } from './catalogs';
 import { CheckoutsFieldsResolvers } from './checkouts';
 import { ColorsFieldsResolvers } from './colors';
+import { CouponsFieldsResolvers } from './coupons';
 import { CourseInstructorsFieldsResolvers } from './course-instructors';
 import { CourseStudentsFieldsResolvers } from './course-students';
 import { CoursesFieldsResolvers } from './courses';
@@ -75,5 +76,6 @@ export const FieldsResolvers = [
   ...OrdersFieldsResolvers,
   ...PaymentsFieldsResolvers,
   ...CheckoutsFieldsResolvers,
-  ...BalanceFieldsResolvers
+  ...BalanceFieldsResolvers,
+  ...CouponsFieldsResolvers
 ];

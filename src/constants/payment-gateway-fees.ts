@@ -17,24 +17,20 @@ export type PaymentGatewayFees = Record<
 >;
 
 export const paymentGatewayFees: PaymentGatewayFees = {
-  [PaymentGatewayType.STRIPE]: {
+  [PaymentGatewayType.STRIPE]: undefined,
+  [PaymentGatewayType.PAGARME]: {
     [PaymentMethodType.BOLETO]: {
       totalPercentage: 5,
       stokeiFeePercentage: 5,
-      totalFixAmount: 345,
-      stokeiFeeFixAmount: 0
+      totalFixAmount: 200,
+      stokeiFeeFixAmount: 200
     },
     [PaymentMethodType.CARD]: {
       totalPercentage: 9,
-      stokeiFeePercentage: 5.01,
-      totalFixAmount: 39,
-      stokeiFeeFixAmount: 0
+      stokeiFeePercentage: 9,
+      totalFixAmount: 200,
+      stokeiFeeFixAmount: 200
     },
-    [PaymentMethodType.PIX]: undefined
-  },
-  [PaymentGatewayType.PAGARME]: {
-    [PaymentMethodType.BOLETO]: undefined,
-    [PaymentMethodType.CARD]: undefined,
     [PaymentMethodType.PIX]: {
       totalPercentage: 4,
       stokeiFeePercentage: 4,

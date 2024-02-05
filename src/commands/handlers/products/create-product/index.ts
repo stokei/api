@@ -10,7 +10,6 @@ import {
 } from '@/errors';
 import { CreateProductRepository } from '@/repositories/products/create-product';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { CreateStripeProductService } from '@/services/stripe/create-stripe-product';
 
 type CreateProductCommandKeys = keyof CreateProductCommand;
 
@@ -20,7 +19,6 @@ export class CreateProductCommandHandler
 {
   constructor(
     private readonly createProductRepository: CreateProductRepository,
-    private readonly createStripeProductService: CreateStripeProductService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -45,17 +43,9 @@ export class CreateProductCommandHandler
       throw new AppNotFoundException();
     }
 
-    const stripeProduct = await this.createStripeProductService.execute({
-      app: app.id,
-      name: data.name,
-      description: data.description,
-      stripeAccount: app.stripeAccount
-    });
     const { catalogs, ...dataCreate } = data;
-    const productCreated = await this.createProductRepository.execute({
-      ...dataCreate,
-      stripeProduct: stripeProduct.id
-    });
+    const productCreated =
+      await this.createProductRepository.execute(dataCreate);
     if (!productCreated) {
       throw new ProductNotFoundException();
     }

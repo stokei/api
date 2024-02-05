@@ -70,6 +70,7 @@ export class UpdatePaymentMethodCommandHandler
         paymentMethod: cleanValue(command?.where?.paymentMethod)
       }),
       data: cleanObject({
+        referenceId: cleanValue(command?.data?.referenceId),
         lastFourCardNumber: cleanValue(command?.data?.lastFourCardNumber),
         cardBrand: cleanValue(command?.data?.cardBrand),
         cardExpiryMonth: cleanValue(command?.data?.cardExpiryMonth),

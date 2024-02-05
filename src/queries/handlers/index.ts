@@ -5,6 +5,7 @@ import { AppQueriesHandlers } from './apps';
 import { CatalogItemQueriesHandlers } from './catalog-items';
 import { CatalogQueriesHandlers } from './catalogs';
 import { ColorQueriesHandlers } from './colors';
+import { CouponQueriesHandlers } from './coupons';
 import { CourseInstructorQueriesHandlers } from './course-instructors';
 import { CourseStudentQueriesHandlers } from './course-students';
 import { CourseQueriesHandlers } from './courses';
@@ -75,5 +76,6 @@ export const QueriesHandlers = [
   ...MaterialQueriesHandlers,
   ...OrderQueriesHandlers,
   ...OrderItemQueriesHandlers,
-  ...PaymentQueriesHandlers
+  ...PaymentQueriesHandlers,
+  ...CouponQueriesHandlers
 ];

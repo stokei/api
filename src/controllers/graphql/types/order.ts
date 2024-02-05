@@ -6,6 +6,7 @@ import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 
 import { Account } from './account';
 import { App } from './app';
+import { Coupon } from './coupon';
 import { Currency } from './currency';
 import { OrderItems } from './order-items';
 import { Payments } from './payments';
@@ -81,4 +82,7 @@ export class Order {
 
   @Field(() => App, { nullable: true })
   app?: App;
+
+  @Field(() => Coupon, { nullable: true })
+  coupon?: Coupon;
 }

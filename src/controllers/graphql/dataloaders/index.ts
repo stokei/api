@@ -5,6 +5,7 @@ import { AppsLoader } from './apps.loader';
 import { CatalogItemsLoader } from './catalog-items.loader';
 import { CatalogsLoader } from './catalogs.loader';
 import { ColorsLoader } from './colors.loader';
+import { CouponsLoader } from './coupons.loader';
 import { CourseInstructorsLoader } from './course-instructors.loader';
 import { CourseStudentsLoader } from './course-students.loader';
 import { CoursesLoader } from './courses.loader';
@@ -69,5 +70,6 @@ export const Loaders = [
   MaterialsLoader,
   OrdersLoader,
   OrderItemsLoader,
-  PaymentsLoader
+  PaymentsLoader,
+  CouponsLoader
 ];

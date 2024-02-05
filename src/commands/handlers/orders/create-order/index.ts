@@ -7,6 +7,7 @@ import { OrderStatus } from '@/enums/order-status.enum';
 import {
   AccountNotFoundException,
   AppNotFoundException,
+  CouponNotFoundException,
   DataNotFoundException,
   OrderNotFoundException,
   ParamNotFoundException,
@@ -14,11 +15,13 @@ import {
   PricesNotFoundException,
   SubscriptionContractAlreadyActiveException
 } from '@/errors';
+import { CouponModel } from '@/models/coupon.model';
 import { PriceModel } from '@/models/price.model';
 import { RecurringModel } from '@/models/recurring.model';
 import { CreateOrderRepository } from '@/repositories/orders/create-order';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { FindCouponByIdService } from '@/services/coupons/find-coupon-by-id';
 import { CreateOrderItemService } from '@/services/order-items/create-order-item';
 import { RemoveOrderService } from '@/services/orders/remove-order';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
@@ -35,6 +38,7 @@ export class CreateOrderCommandHandler
   constructor(
     private readonly userHasSubscriptionContractActiveService: UserHasSubscriptionContractActiveService,
     private readonly findAppByIdService: FindAppByIdService,
+    private readonly findCouponByIdService: FindCouponByIdService,
     private readonly createRecurringService: CreateRecurringService,
     private readonly findAllRecurringsService: FindAllRecurringsService,
     private readonly removeOrderService: RemoveOrderService,
@@ -63,6 +67,13 @@ export class CreateOrderCommandHandler
     const customer = await this.findAccountByIdService.execute(data.parent);
     if (!customer) {
       throw new AccountNotFoundException();
+    }
+    let coupon: CouponModel;
+    if (data.coupon) {
+      coupon = await this.findCouponByIdService.execute(data.coupon);
+      if (!coupon) {
+        throw new CouponNotFoundException();
+      }
     }
 
     const customerApp = await this.findAppByIdService.execute(data.app);
@@ -102,15 +113,18 @@ export class CreateOrderCommandHandler
       throw new SubscriptionContractAlreadyActiveException();
     }
     const currency = prices?.items?.[0].currency;
-
+    const totalAmountWithDiscount = !!coupon
+      ? coupon.getAmountWithDiscount(totalAmount)
+      : totalAmount;
     const orderCreated = await this.createOrderRepository.execute({
       parent: customer.id,
+      coupon: data.coupon,
       createdBy: data.createdBy,
       app: customerApp.id,
       currency,
       paidAmount: 0,
       feeAmount: 0,
-      totalAmount,
+      totalAmount: totalAmountWithDiscount,
       subtotalAmount,
       status: OrderStatus.PENDING,
       active: true
@@ -150,6 +164,7 @@ export class CreateOrderCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       parent: cleanValue(command?.parent),
+      coupon: cleanValue(command?.coupon),
       items: command?.items
     });
   }

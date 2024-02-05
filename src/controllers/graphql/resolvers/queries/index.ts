@@ -6,6 +6,7 @@ import { BillingQueries } from './billing';
 import { CatalogItemsQueries } from './catalog-items';
 import { CatalogsQueries } from './catalogs';
 import { ColorsQueries } from './colors';
+import { CouponsQueries } from './coupons';
 import { CourseInstructorsQueries } from './course-instructors';
 import { CourseStudentsQueries } from './course-students';
 import { CoursesQueries } from './courses';
@@ -65,5 +66,6 @@ export const Queries = [
   ...BillingQueries,
   ...OrdersQueries,
   ...OrderItemsQueries,
-  ...PaymentsQueries
+  ...PaymentsQueries,
+  ...CouponsQueries
 ];

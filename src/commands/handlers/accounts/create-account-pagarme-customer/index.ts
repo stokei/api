@@ -12,7 +12,7 @@ import {
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { UpdateAccountService } from '@/services/accounts/update-account';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { CreatePagarmeCustomerService } from '@/services/pagarme/create-pagarme-customer';
+import { CreateOrUpdatePagarmeCustomerService } from '@/services/pagarme/create-or-update-pagarme-customer';
 import { CreatePhoneService } from '@/services/phones/create-phone';
 
 type CreateAccountPagarmeCustomerCommandKeys =
@@ -25,7 +25,7 @@ export class CreateAccountPagarmeCustomerCommandHandler
   constructor(
     private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly createPagarmeCustomerService: CreatePagarmeCustomerService,
+    private readonly createOrUpdatePagarmeCustomerService: CreateOrUpdatePagarmeCustomerService,
     private readonly createPhoneService: CreatePhoneService,
     private readonly updateAccountService: UpdateAccountService
   ) {}
@@ -60,12 +60,12 @@ export class CreateAccountPagarmeCustomerCommandHandler
       throw new PhoneNotFoundException();
     }
 
-    const customer = await this.createPagarmeCustomerService.execute({
+    const customer = await this.createOrUpdatePagarmeCustomerService.execute({
       account: account.id,
       name: account.fullname,
       email: account.email,
       dateBirthday: data.dateBirthday,
-      cpf: data.cpf,
+      document: data.document,
       phone
     });
     if (!customer) {
@@ -91,7 +91,10 @@ export class CreateAccountPagarmeCustomerCommandHandler
     return cleanObject({
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
-      cpf: cleanValue(command?.cpf),
+      document: {
+        document: cleanValue(command?.document?.document),
+        type: cleanValue(command?.document?.type)
+      },
       dateBirthday: cleanValue(command?.dateBirthday),
       phone: command?.phone,
       account: cleanValue(command?.account)

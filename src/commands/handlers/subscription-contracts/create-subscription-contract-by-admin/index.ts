@@ -54,12 +54,16 @@ export class CreateSubscriptionContractByAdminCommandHandler
       );
     }
 
-    const recurringsAreValid = data.items.every(({ recurring }) =>
-      isValidRecurringPeriod({
-        interval: recurring.interval,
-        intervalCount: recurring.intervalCount
-      })
-    );
+    const isRecurringSubscriptionContract =
+      data?.type === SubscriptionContractType.RECURRING;
+    const recurringsAreValid =
+      !isRecurringSubscriptionContract ||
+      data.items.every(({ recurring }) =>
+        isValidRecurringPeriod({
+          interval: recurring.interval,
+          intervalCount: recurring.intervalCount
+        })
+      );
     if (!recurringsAreValid) {
       throw new RecurringNotFoundException();
     }
@@ -69,7 +73,7 @@ export class CreateSubscriptionContractByAdminCommandHandler
       throw new SubscriptionContractNotFoundException();
     }
     const endAt =
-      data.type === SubscriptionContractType.RECURRING &&
+      isRecurringSubscriptionContract &&
       data.endAt &&
       convertToISODateString(data.endAt);
     const subscriptionContract =

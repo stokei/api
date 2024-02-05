@@ -17,6 +17,15 @@ export class PaymentMethod {
   referenceId?: string;
 
   @Field(() => String, { nullable: true })
+  boletoBarcode?: string;
+
+  @Field(() => String, { nullable: true })
+  boletoLine?: string;
+
+  @Field(() => String, { nullable: true })
+  boletoURL?: string;
+
+  @Field(() => String, { nullable: true })
   lastFourCardNumber?: string;
 
   @Field(() => String, { nullable: true })

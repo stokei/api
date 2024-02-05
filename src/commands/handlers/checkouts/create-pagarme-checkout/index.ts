@@ -153,7 +153,7 @@ export class CreatePagarmeCheckoutCommandHandler
       })
       ?.filter(Boolean);
     const feeAmount = getStokeiFeeAmount({
-      amount: order.totalAmount,
+      amount: payment.totalAmount,
       paymentMethodType: data.paymentMethodType,
       paymentGatewayType
     });
@@ -196,6 +196,9 @@ export class CreatePagarmeCheckoutCommandHandler
       const paymentMethod = await this.findOrCreatePaymentMethod({
         app: data.app,
         createdBy: data.createdBy,
+        boletoBarcode: pagarmeOrder?.boleto?.barcode,
+        boletoLine: pagarmeOrder?.boleto?.line,
+        boletoURL: pagarmeOrder?.boleto?.pdf,
         paymentMethodId: data.paymentMethod,
         paymentMethodType: data.paymentMethodType
       });
@@ -239,8 +242,11 @@ export class CreatePagarmeCheckoutCommandHandler
   }
 
   private async findOrCreatePaymentMethod(data: {
-    paymentMethodId?: string;
     paymentMethodType: PaymentMethodType;
+    paymentMethodId?: string;
+    boletoLine?: string;
+    boletoBarcode?: string;
+    boletoURL?: string;
     app: string;
     createdBy: string;
   }) {
@@ -250,6 +256,9 @@ export class CreatePagarmeCheckoutCommandHandler
     > = {
       [PaymentMethodType.BOLETO]: async () =>
         await this.createPaymentMethodBoletoService.execute({
+          boletoLine: data?.boletoLine,
+          boletoBarcode: data?.boletoBarcode,
+          boletoURL: data?.boletoURL,
           app: data.app,
           createdBy: data.createdBy
         }),

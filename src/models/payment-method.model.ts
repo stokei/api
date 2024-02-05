@@ -12,11 +12,15 @@ export interface IPaymentMethodModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly stripePaymentMethod: string;
+  readonly referenceId?: string;
   readonly paymentMethodType?: PaymentMethodType;
   readonly lastFourCardNumber?: string;
   readonly cardExpiryMonth?: string;
   readonly cardExpiryYear?: string;
   readonly cardBrand?: string;
+  readonly boletoLine?: string;
+  readonly boletoBarcode?: string;
+  readonly boletoURL?: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly app: string;
@@ -27,12 +31,16 @@ export interface IPaymentMethodModelData {
 export class PaymentMethodModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
+  readonly referenceId?: string;
   readonly type?: PaymentMethodType;
   readonly stripePaymentMethod: string;
   readonly lastFourCardNumber?: string;
   readonly cardExpiryMonth?: string;
   readonly cardExpiryYear?: string;
   readonly cardBrand?: string;
+  readonly boletoLine?: string;
+  readonly boletoBarcode?: string;
+  readonly boletoURL?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly app: string;
@@ -47,6 +55,10 @@ export class PaymentMethodModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.type = data.paymentMethodType;
+    this.referenceId = data.referenceId;
+    this.boletoLine = data.boletoLine;
+    this.boletoBarcode = data.boletoBarcode;
+    this.boletoURL = data.boletoURL;
     this.stripePaymentMethod = data.stripePaymentMethod;
     this.lastFourCardNumber = data.lastFourCardNumber;
     this.cardExpiryMonth = data.cardExpiryMonth;

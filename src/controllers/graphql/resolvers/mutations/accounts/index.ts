@@ -7,6 +7,7 @@ import { LoginResolver } from './login';
 import { RemoveAccountResolver } from './remove-account';
 import { SignUpResolver } from './signup';
 import { UpdateAccountResolver } from './update-account';
+import { UpdateAccountPagarmeCustomerResolver } from './update-account-pagarme-customer';
 import { UpdateOwnPasswordResolver } from './update-own-password';
 
 export const AccountsMutations = [
@@ -19,5 +20,6 @@ export const AccountsMutations = [
   CreateAccountResolver,
   CompleteAccountConfigurationResolver,
   UpdateOwnPasswordResolver,
-  CreateAccountPagarmeCustomerResolver
+  CreateAccountPagarmeCustomerResolver,
+  UpdateAccountPagarmeCustomerResolver
 ];

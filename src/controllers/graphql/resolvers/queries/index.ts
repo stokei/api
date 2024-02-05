@@ -7,6 +7,7 @@ import { CatalogItemsQueries } from './catalog-items';
 import { CatalogsQueries } from './catalogs';
 import { ColorsQueries } from './colors';
 import { ComponentsQueries } from './components';
+import { CouponsQueries } from './coupons';
 import { CourseInstructorsQueries } from './course-instructors';
 import { CourseStudentsQueries } from './course-students';
 import { CoursesQueries } from './courses';
@@ -73,5 +74,6 @@ export const Queries = [
   ...VersionsQueries,
   ...PagesQueries,
   ...ComponentsQueries,
-  ...SitesQueries
+  ...SitesQueries,
+  ...CouponsQueries
 ];

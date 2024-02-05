@@ -25,6 +25,9 @@ class WhereDataFindAllOrdersDataInput implements WhereDataFindAllOrdersDTO {
   app?: WhereDataStringInput;
 
   @Field(() => WhereDataStringInput, { nullable: true })
+  coupon?: WhereDataStringInput;
+
+  @Field(() => WhereDataStringInput, { nullable: true })
   currency?: WhereDataStringInput;
 
   @Field(() => WhereDataBooleanInput, { nullable: true })

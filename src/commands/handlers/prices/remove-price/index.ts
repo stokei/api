@@ -9,7 +9,6 @@ import {
 } from '@/errors';
 import { RemovePriceRepository } from '@/repositories/prices/remove-price';
 import { FindPriceByIdService } from '@/services/prices/find-price-by-id';
-import { DeleteStripePriceService } from '@/services/stripe/delete-stripe-price';
 
 @CommandHandler(RemovePriceCommand)
 export class RemovePriceCommandHandler
@@ -17,7 +16,6 @@ export class RemovePriceCommandHandler
 {
   constructor(
     private readonly findPriceByIdService: FindPriceByIdService,
-    private readonly deleteStripePriceService: DeleteStripePriceService,
     private readonly removePriceRepository: RemovePriceRepository,
     private readonly publisher: EventPublisher
   ) {}
@@ -49,8 +47,6 @@ export class RemovePriceCommandHandler
     if (!removed) {
       throw new DataNotFoundException();
     }
-
-    await this.deleteStripePriceService.execute(price.stripePrice);
 
     const priceModel = this.publisher.mergeObjectContext(price);
     priceModel.removedPrice({

@@ -6,8 +6,6 @@ import { CreateSubscriptionContractRepository } from './create-subscription-cont
 import { FindAllSubscriptionContractsRepository } from './find-all-subscription-contracts';
 import { FindAllSubscriptionContractsByItemRepository } from './find-all-subscription-contracts-by-item';
 import { FindSubscriptionContractByIdRepository } from './find-subscription-contract-by-id';
-import { FindSubscriptionContractByStripeCheckoutSessionRepository } from './find-subscription-contract-by-stripe-checkout-session';
-import { FindSubscriptionContractByStripeSubscriptionRepository } from './find-subscription-contract-by-stripe-subscription';
 import { UpdateSubscriptionContractRepository } from './update-subscription-contract';
 
 export const SubscriptionContractsRepositories = [
@@ -16,10 +14,8 @@ export const SubscriptionContractsRepositories = [
   FindSubscriptionContractByIdRepository,
   FindAllSubscriptionContractsRepository,
   UpdateSubscriptionContractRepository,
-  FindSubscriptionContractByStripeSubscriptionRepository,
   ActivateSubscriptionContractRepository,
   CancelSubscriptionContractRepository,
-  FindSubscriptionContractByStripeCheckoutSessionRepository,
   FindAllSubscriptionContractsByItemRepository,
   CountSubscriptionContractsByItemRepository
 ];

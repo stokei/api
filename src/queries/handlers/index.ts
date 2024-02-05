@@ -6,6 +6,7 @@ import { CatalogItemQueriesHandlers } from './catalog-items';
 import { CatalogQueriesHandlers } from './catalogs';
 import { ColorQueriesHandlers } from './colors';
 import { ComponentQueriesHandlers } from './components';
+import { CouponQueriesHandlers } from './coupons';
 import { CourseInstructorQueriesHandlers } from './course-instructors';
 import { CourseStudentQueriesHandlers } from './course-students';
 import { CourseQueriesHandlers } from './courses';
@@ -83,5 +84,6 @@ export const QueriesHandlers = [
   ...ComponentQueriesHandlers,
   ...PageQueriesHandlers,
   ...SiteQueriesHandlers,
-  ...VersionQueriesHandlers
+  ...VersionQueriesHandlers,
+  ...CouponQueriesHandlers
 ];

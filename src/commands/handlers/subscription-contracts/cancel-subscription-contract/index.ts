@@ -20,7 +20,6 @@ import {
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 import { CancelSubscriptionContractRepository } from '@/repositories/subscription-contracts/cancel-subscription-contract';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { CancelStripeSubscriptionService } from '@/services/stripe/cancel-stripe-subscription';
 import { FindSubscriptionContractByIdService } from '@/services/subscription-contracts/find-subscription-contract-by-id';
 
 type CancelSubscriptionContractCommandKeys =
@@ -37,7 +36,6 @@ export class CancelSubscriptionContractCommandHandler
     private readonly cancelSubscriptionContractRepository: CancelSubscriptionContractRepository,
     private readonly findSubscriptionContractByIdService: FindSubscriptionContractByIdService,
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly cancelStripeSubscriptionService: CancelStripeSubscriptionService,
     private readonly publisher: EventPublisher
   ) {}
 
@@ -68,16 +66,6 @@ export class CancelSubscriptionContractCommandHandler
         throw new SubscriptionContractAlreadyCanceledException();
       }
 
-      if (!!subscriptionContract.stripeSubscription) {
-        const stripeSubscriptionCanceled =
-          await this.cancelStripeSubscriptionService.execute({
-            subscription: subscriptionContract?.stripeSubscription,
-            stripeAccount: app?.stripeAccount
-          });
-        if (!stripeSubscriptionCanceled) {
-          throw new SubscriptionContractNotFoundException();
-        }
-      }
       const startAt =
         subscriptionContract.startAt || subscriptionContract.createdAt;
       const endAt = convertToISODateString(Date.now());

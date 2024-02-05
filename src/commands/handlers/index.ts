@@ -7,11 +7,11 @@ import { CatalogCommandHandlers } from './catalogs';
 import { CheckoutCommandHandlers } from './checkouts';
 import { ColorCommandHandlers } from './colors';
 import { ComponentCommandHandlers } from './components';
+import { CouponCommandHandlers } from './coupons';
 import { CourseInstructorCommandHandlers } from './course-instructors';
 import { CourseStudentCommandHandlers } from './course-students';
 import { CourseCommandHandlers } from './courses';
 import { CurrencyCommandHandlers } from './currencies';
-import { CustomerPortalSessionCommandHandlers } from './customer-portal-sessions';
 import { DomainCommandHandlers } from './domains';
 import { EmailCommandHandlers } from './emails';
 import { FeatureCommandHandlers } from './features';
@@ -67,7 +67,6 @@ export const CommandHandlers = [
   ...AddressCommandHandlers,
   ...PhoneCommandHandlers,
   ...CheckoutCommandHandlers,
-  ...CustomerPortalSessionCommandHandlers,
   ...InvoiceCommandHandlers,
   ...FileCommandHandlers,
   ...RecurringCommandHandlers,
@@ -89,5 +88,6 @@ export const CommandHandlers = [
   ...ComponentCommandHandlers,
   ...PageCommandHandlers,
   ...SiteCommandHandlers,
-  ...VersionCommandHandlers
+  ...VersionCommandHandlers,
+  ...CouponCommandHandlers
 ];

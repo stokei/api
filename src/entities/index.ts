@@ -6,6 +6,7 @@ export * from './catalog.entity';
 export * from './catalog-item.entity';
 export * from './color.entity';
 export * from './component.entity';
+export * from './coupon.entity';
 export * from './course.entity';
 export * from './course-instructor.entity';
 export * from './course-student.entity';

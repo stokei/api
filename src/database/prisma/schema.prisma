@@ -333,7 +333,7 @@ model Product {
   parent        String    @db.VarChar(255)
   name          String    @db.VarChar(255)
   description   String?   @db.MediumText
-  stripeProduct String    @map("stripe_product") @db.VarChar(255)
+  stripeProduct String?   @map("stripe_product") @db.VarChar(255)
   defaultPrice  String?   @map("default_price") @db.VarChar(255)
   avatar        String?   @db.VarChar(255)
   active        Boolean   @default(true)
@@ -422,10 +422,14 @@ model PaymentMethod {
   parent              String?            @db.VarChar(255)
   paymentMethodType   PaymentMethodType? @default(CARD) @map("payment_method_type")
   stripePaymentMethod String?            @map("stripe_payment_method") @db.VarChar(255)
+  referenceId         String?            @map("reference_id") @db.VarChar(255)
   lastFourCardNumber  String?            @map("last_four_card_number") @db.VarChar(4)
   cardExpiryMonth     String?            @map("card_expiry_month") @db.VarChar(4)
   cardExpiryYear      String?            @map("card_expiry_year") @db.VarChar(4)
   cardBrand           String?            @map("card_brand") @db.VarChar(50)
+  boletoLine          String?            @map("boleto_line") @db.VarChar(255)
+  boletoBarcode       String?            @map("boleto_barcode") @db.VarChar(255)
+  boletoURL           String?            @map("boleto_url") @db.VarChar(255)
   updatedAt           DateTime?          @updatedAt @map("updated_at")
   createdAt           DateTime?          @default(now()) @map("created_at")
   updatedBy           String?            @map("updated_by") @db.VarChar(255)
@@ -671,6 +675,7 @@ model Order {
   app            String      @db.VarChar(255)
   parent         String      @db.VarChar(255)
   currency       String      @db.VarChar(255)
+  coupon         String?     @db.VarChar(255)
   status         OrderStatus @default(PENDING)
   paidAmount     Float       @map("paid_amount")
   totalAmount    Float       @map("total_amount")
@@ -907,4 +912,21 @@ model Site {
   createdBy     String?   @map("created_by") @db.VarChar(255)
 
   @@map("sites")
+}
+
+model Coupon {
+  id         String    @id @default(cuid())
+  app        String    @db.VarChar(255)
+  parent     String    @db.VarChar(255)
+  code       String    @db.VarChar(255)
+  recipient  String?   @db.VarChar(255)
+  amountOff  Float?    @map("amount_off")
+  percentOff Float?    @map("percent_off")
+  active     Boolean   @default(true)
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+  createdAt  DateTime? @default(now()) @map("created_at")
+  updatedBy  String?   @map("updated_by") @db.VarChar(255)
+  createdBy  String?   @map("created_by") @db.VarChar(255)
+
+  @@map("coupons")
 }

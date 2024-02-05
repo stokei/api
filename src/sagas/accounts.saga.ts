@@ -4,8 +4,6 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { CreateAccountStripeCustomerCommand } from '@/commands/implements/accounts/create-account-stripe-customer.command';
-import { UpdateAccountStripeCustomerCommand } from '@/commands/implements/accounts/update-account-stripe-customer.command';
 import { SendAccountConfigurationPendingEmailCommand } from '@/commands/implements/emails/send-account-configuration-pending-email.command';
 import { SendForgotPasswordEmailCommand } from '@/commands/implements/emails/send-forgot-password-email.command';
 import { SendUpdateOwnPasswordEmailCommand } from '@/commands/implements/emails/send-update-own-password-email.command';
@@ -39,13 +37,7 @@ export class AccountsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands: ICommand[] = [
-          new CreateAccountStripeCustomerCommand({
-            account: event.account.id,
-            app: event.account.app,
-            createdBy: event.createdBy
-          })
-        ];
+        const commands: ICommand[] = [];
         if (event.account.status === AccountStatus.CONFIGURATION_PENDING) {
           commands.push(
             new SendAccountConfigurationPendingEmailCommand({
@@ -94,14 +86,6 @@ export class AccountsSagas {
             )
         );
         const commands: ICommand[] = [];
-        if (event.account.stripeCustomer) {
-          commands.push(
-            new UpdateAccountStripeCustomerCommand({
-              account: event.account.id,
-              app: event.account.app
-            })
-          );
-        }
         return commands;
       }),
       mergeMap((c) => c)

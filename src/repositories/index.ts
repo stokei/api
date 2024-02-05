@@ -6,6 +6,7 @@ import { CatalogItemsRepositories } from './catalog-items';
 import { CatalogsRepositories } from './catalogs';
 import { ColorsRepositories } from './colors';
 import { ComponentsRepositories } from './components';
+import { CouponsRepositories } from './coupons';
 import { CourseInstructorsRepositories } from './course-instructors';
 import { CourseStudentsRepositories } from './course-students';
 import { CoursesRepositories } from './courses';
@@ -83,5 +84,6 @@ export const Repositories = [
   ...ComponentsRepositories,
   ...PagesRepositories,
   ...SitesRepositories,
-  ...VersionsRepositories
+  ...VersionsRepositories,
+  ...CouponsRepositories
 ];

@@ -10,14 +10,12 @@ import {
   PrismaMapper,
   splitServiceId
 } from '@stokei/nestjs';
-import Stripe from 'stripe';
 
 import {
   FindAllUsageRecordsDTO,
   WhereDataFindAllUsageRecordsDTO
 } from '@/dtos/usage-records/find-all-usage-records.dto';
 import { UsageRecordEntity } from '@/entities';
-import { UsageRecordAction } from '@/enums/usage-record-action.enum';
 import { UsageRecordModel } from '@/models/usage-record.model';
 import { FindAllUsageRecordsQuery } from '@/queries/implements/usage-records/find-all-usage-records.query';
 
@@ -97,17 +95,5 @@ export class UsageRecordMapper {
     return usageRecords?.length > 0
       ? usageRecords.map(this.toModel).filter(Boolean)
       : [];
-  }
-  actionToStripeAction(
-    action: UsageRecordAction
-  ): Stripe.UsageRecordCreateParams.Action {
-    const actions: Record<
-      UsageRecordAction,
-      Stripe.UsageRecordCreateParams.Action
-    > = {
-      [UsageRecordAction.SET]: 'set',
-      [UsageRecordAction.INCREMENT]: 'increment'
-    };
-    return actions[action] || actions[UsageRecordAction.INCREMENT];
   }
 }

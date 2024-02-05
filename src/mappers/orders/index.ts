@@ -32,6 +32,7 @@ export class OrderMapper {
         return {
           id: prismaMapper.toWhereIds(operatorData.ids),
           currency: prismaMapper.toWhereData(operatorData.currency),
+          coupon: prismaMapper.toWhereData(operatorData.coupon),
           status: operatorData.status,
           active: prismaMapper.toWhereData(operatorData.active),
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
@@ -63,6 +64,7 @@ export class OrderMapper {
           return {
             parent: cleanWhereDataSearch(operatorData.parent),
             currency: cleanWhereDataString(operatorData.currency),
+            coupon: cleanWhereDataString(operatorData.coupon),
             status: operatorData.status,
             active: cleanWhereDataBoolean(operatorData.active),
             app: cleanWhereDataString(operatorData.app),

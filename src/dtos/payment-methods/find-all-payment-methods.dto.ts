@@ -12,6 +12,10 @@ export interface WhereDataFindAllPaymentMethodsDTO {
   app?: IWhereData;
   parent?: IWhereDataSearch;
   cardBrand?: IWhereData<string>;
+  cardExpiryMonth?: IWhereData<string>;
+  cardExpiryYear?: IWhereData<string>;
+  lastFourCardNumber?: IWhereData<string>;
+  referenceId?: IWhereData<string>;
   active?: IWhereData<boolean>;
   paymentMethodType?: PaymentMethodType;
   updatedBy?: IWhereData;

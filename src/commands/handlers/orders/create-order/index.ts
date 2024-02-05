@@ -71,7 +71,7 @@ export class CreateOrderCommandHandler
     let coupon: CouponModel;
     if (data.coupon) {
       coupon = await this.findCouponByIdService.execute(data.coupon);
-      if (!coupon) {
+      if (!coupon?.active) {
         throw new CouponNotFoundException();
       }
     }

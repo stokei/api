@@ -57,7 +57,8 @@ export class CouponModel extends AggregateRoot {
   getAmountWithDiscount(amount: number) {
     let value = 0;
     if (this.percentOff) {
-      value = Math.round(amount * (this.percentOff / 100));
+      const discountAmount = amount * (this.percentOff / 100);
+      value = Math.round(amount - discountAmount);
     } else if (this.amountOff) {
       value = Math.round(amount - this.amountOff);
     }

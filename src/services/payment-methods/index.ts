@@ -2,6 +2,7 @@ import { CreatePaymentMethodBoletoService } from './create-payment-method-boleto
 import { CreatePaymentMethodCardService } from './create-payment-method-card';
 import { CreatePaymentMethodCardByCardHashService } from './create-payment-method-card-by-card-hash';
 import { CreatePaymentMethodPixService } from './create-payment-method-pix';
+import { CreatePaymentMethodStripeService } from './create-payment-method-stripe';
 import { FindAllPaymentMethodsService } from './find-all-payment-methods';
 import { FindPaymentMethodByIdService } from './find-payment-method-by-id';
 import { RemovePaymentMethodService } from './remove-payment-method';
@@ -15,5 +16,6 @@ export const PaymentMethodServices = [
   FindPaymentMethodByIdService,
   FindAllPaymentMethodsService,
   UpdatePaymentMethodService,
-  CreatePaymentMethodCardByCardHashService
+  CreatePaymentMethodCardByCardHashService,
+  CreatePaymentMethodStripeService
 ];

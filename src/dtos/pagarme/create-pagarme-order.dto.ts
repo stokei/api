@@ -1,5 +1,7 @@
 import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import { AppModel } from '@/models/app.model';
+import { OrderItemModel } from '@/models/order-item.model';
+import { PriceModel } from '@/models/price.model';
 export interface CreatePagarmeOrderPriceDTO {
   id: string;
   name: string;
@@ -18,5 +20,6 @@ export interface CreatePagarmeOrderDTO {
   card?: string;
   paymentMethodType: PaymentMethodType;
   currency: string;
-  prices: CreatePagarmeOrderPriceDTO[];
+  orderItems: OrderItemModel[];
+  prices: PriceModel[];
 }

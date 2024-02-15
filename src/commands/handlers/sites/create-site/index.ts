@@ -36,7 +36,7 @@ export class CreateSiteCommandHandler
       throw new ParamNotFoundException<CreateSiteCommandKeys>('name');
     }
 
-    const slug = cleanSlug(data.name + nanoid(8));
+    const slug = cleanSlug(data.slug || data.name + nanoid(8));
     try {
       const siteWithSlug = await this.findSiteBySlugService.execute(slug);
       if (siteWithSlug) {

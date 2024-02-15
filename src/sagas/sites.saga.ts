@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { CreatePageCommand } from '@/commands/implements/pages/create-page.command';
 import { RemoveSiteDependenciesCommand } from '@/commands/implements/sites/remove-site-dependencies.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { SiteCreatedEvent } from '@/events/implements/sites/site-created.event';
@@ -31,7 +32,14 @@ export class SitesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands: ICommand[] = [];
+        const commands: ICommand[] = [
+          new CreatePageCommand({
+            title: 'Página inicial',
+            parent: event.site.id,
+            app: event.site.app,
+            createdBy: event.createdBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

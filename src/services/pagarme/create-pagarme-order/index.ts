@@ -39,7 +39,7 @@ export class CreatePagarmeOrderService
         liable: 'false'
       },
       type: 'flat',
-      recipient_id: data?.appRecipient,
+      recipient_id: data?.app?.pagarmeAccount,
       amount: appTotalAmountWithoutFeeAmount
     };
     const items = data?.orderItems

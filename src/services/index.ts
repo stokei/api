@@ -36,6 +36,7 @@ import { ProductServices } from './products';
 import { RecurringServices } from './recurrings';
 import { RoleServices } from './roles';
 import { SortedItemServices } from './sorted-items';
+import { StripeServices } from './stripe';
 import { SubscriptionContractItemServices } from './subscription-contract-items';
 import { SubscriptionContractServices } from './subscription-contracts';
 import { TusServices } from './tus';
@@ -93,5 +94,6 @@ export const Services = [
   ...OrderItemServices,
   ...OrderServices,
   ...PaymentServices,
-  ...CouponServices
+  ...CouponServices,
+  ...StripeServices
 ];

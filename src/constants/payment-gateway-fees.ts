@@ -20,9 +20,9 @@ export const paymentGatewayFees: PaymentGatewayFees = {
   [PaymentGatewayType.STRIPE]: {
     [PaymentMethodType.STRIPE]: {
       totalPercentage: 9,
-      stokeiFeePercentage: 9,
-      totalFixAmount: 200,
-      stokeiFeeFixAmount: 200
+      stokeiFeePercentage: 5.01,
+      totalFixAmount: 39,
+      stokeiFeeFixAmount: 0
     },
     [PaymentMethodType.BOLETO]: undefined,
     [PaymentMethodType.CARD]: undefined,

@@ -13,7 +13,6 @@ export interface CreatePagarmeOrderDTO {
   payment: string;
   installments: number;
   app: AppModel;
-  appRecipient: string;
   totalAmount: number;
   feeAmount: number;
   customer: string;

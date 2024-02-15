@@ -1,7 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
-import { CreatePagarmeCheckoutCommand } from '@/commands/implements/checkouts/create-pagarme-checkout.command';
+import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
 import { OrderStatus } from '@/enums/order-status.enum';
 import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 import { PaymentMethodType } from '@/enums/payment-method-type.enum';
@@ -38,15 +38,17 @@ import { FindPaymentMethodByIdService } from '@/services/payment-methods/find-pa
 import { CreatePaymentService } from '@/services/payments/create-payment';
 import { UpdatePaymentService } from '@/services/payments/update-payment';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
+import { CreateStripePaymentIntentService } from '@/services/stripe/create-stripe-payment-intent';
 import { getStokeiFeeAmount } from '@/utils/get-fee-amount';
 
-type CreatePagarmeCheckoutCommandKeys = keyof CreatePagarmeCheckoutCommand;
+type CreateCheckoutCommandKeys = keyof CreateCheckoutCommand;
 
-@CommandHandler(CreatePagarmeCheckoutCommand)
-export class CreatePagarmeCheckoutCommandHandler
-  implements ICommandHandler<CreatePagarmeCheckoutCommand>
+@CommandHandler(CreateCheckoutCommand)
+export class CreateCheckoutCommandHandler
+  implements ICommandHandler<CreateCheckoutCommand>
 {
   constructor(
+    private readonly createStripePaymentIntentService: CreateStripePaymentIntentService,
     private readonly createPaymentMethodPixService: CreatePaymentMethodPixService,
     private readonly createPaymentMethodStripeService: CreatePaymentMethodStripeService,
     private readonly createPaymentMethodBoletoService: CreatePaymentMethodBoletoService,
@@ -62,25 +64,19 @@ export class CreatePagarmeCheckoutCommandHandler
     private readonly createPaymentService: CreatePaymentService
   ) {}
 
-  async execute(command: CreatePagarmeCheckoutCommand) {
+  async execute(command: CreateCheckoutCommand) {
     const data = this.clearData(command);
     if (!data) {
       throw new DataNotFoundException();
     }
     if (!data?.customer) {
-      throw new ParamNotFoundException<CreatePagarmeCheckoutCommandKeys>(
-        'customer'
-      );
+      throw new ParamNotFoundException<CreateCheckoutCommandKeys>('customer');
     }
     if (!data?.createdBy) {
-      throw new ParamNotFoundException<CreatePagarmeCheckoutCommandKeys>(
-        'createdBy'
-      );
+      throw new ParamNotFoundException<CreateCheckoutCommandKeys>('createdBy');
     }
     if (!data?.order) {
-      throw new ParamNotFoundException<CreatePagarmeCheckoutCommandKeys>(
-        'order'
-      );
+      throw new ParamNotFoundException<CreateCheckoutCommandKeys>('order');
     }
 
     const customer = await this.findAccountByIdService.execute(data.customer);
@@ -201,9 +197,15 @@ export class CreatePagarmeCheckoutCommandHandler
         }
       });
     } catch (error) {}
+    console.log(paymentGatewayResponse);
 
     return new CheckoutMapper().toModel({
       payment: payment.id,
+      ...(paymentGatewayResponse?.client_secret && {
+        stripe: {
+          clientSecret: paymentGatewayResponse?.client_secret
+        }
+      }),
       ...(paymentGatewayResponse?.boleto && {
         boleto: paymentGatewayResponse?.boleto
       }),
@@ -216,9 +218,7 @@ export class CreatePagarmeCheckoutCommandHandler
     });
   }
 
-  private clearData(
-    command: CreatePagarmeCheckoutCommand
-  ): CreatePagarmeCheckoutCommand {
+  private clearData(command: CreateCheckoutCommand): CreateCheckoutCommand {
     return cleanObject({
       paymentMethod: cleanValue(command?.paymentMethod),
       paymentMethodType: command?.paymentMethodType,
@@ -303,14 +303,20 @@ export class CreatePagarmeCheckoutCommandHandler
     });
     const gatewaysHandlers: Record<PaymentGatewayType, any> = {
       [PaymentGatewayType.STRIPE]: () => {
-        return;
+        return this.createStripePaymentIntentService.execute({
+          app: customerApp,
+          feeAmount,
+          currency: order.currency,
+          customer,
+          order,
+          payment
+        });
       },
       [PaymentGatewayType.PAGARME]: () => {
         return this.createPagarmeOrderService.execute({
           paymentMethodType,
           installments: 1,
           app: customerApp,
-          appRecipient: customerApp.pagarmeAccount,
           totalAmount: payment.totalAmount,
           feeAmount,
           card: paymentMethod?.referenceId,
@@ -327,6 +333,6 @@ export class CreatePagarmeCheckoutCommandHandler
     if (createPayment) {
       return await createPayment?.();
     }
-    return createPayment[PaymentGatewayType.PAGARME]?.();
+    return await createPayment[PaymentGatewayType.PAGARME]?.();
   }
 }

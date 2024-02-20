@@ -197,7 +197,6 @@ export class CreateCheckoutCommandHandler
         }
       });
     } catch (error) {}
-    console.log(paymentGatewayResponse);
 
     return new CheckoutMapper().toModel({
       payment: payment.id,

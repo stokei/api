@@ -7,16 +7,14 @@ import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { WebhookStripeDTO } from '@/dtos/webhooks/webhook-stripe.dto';
 import { STRIPE_WEBHOOK_SECRET } from '@/environments';
 import { StripeSignatureNotFoundException } from '@/errors';
-import { WebhookStripeCheckoutSessionAsyncPaymentFailedService } from '@/services/webhooks/stripe/stripe-checkout-session-async-payment-failed';
-import { WebhookStripeCheckoutSessionAsyncPaymentSucceededService } from '@/services/webhooks/stripe/stripe-checkout-session-async-payment-succeeded';
-import { WebhookStripeCheckoutSessionService } from '@/services/webhooks/stripe/stripe-checkout-session-completed';
+import { WebhookStripePaymentFailedService } from '@/services/webhooks/stripe/stripe-payment-failed';
+import { WebhookStripePaymentSucceededService } from '@/services/webhooks/stripe/stripe-payment-succeeded';
 
 @Injectable()
 export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
   constructor(
-    private readonly webhookStripeCheckoutSessionService: WebhookStripeCheckoutSessionService,
-    private readonly webhookStripeCheckoutSessionAsyncPaymentSucceededService: WebhookStripeCheckoutSessionAsyncPaymentSucceededService,
-    private readonly webhookStripeCheckoutSessionAsyncPaymentFailedService: WebhookStripeCheckoutSessionAsyncPaymentFailedService
+    private readonly webhookStripePaymentSucceededService: WebhookStripePaymentSucceededService,
+    private readonly webhookStripePaymentFailedService: WebhookStripePaymentFailedService
   ) {}
 
   async execute({ body, signature }: WebhookStripeDTO) {
@@ -41,27 +39,17 @@ export class WebhookStripeService implements IBaseService<WebhookStripeDTO> {
 
     try {
       switch (eventType) {
-        case 'checkout.session.completed':
-          return await this.webhookStripeCheckoutSessionService.execute({
-            stripeCheckoutSession: eventObject as Stripe.Checkout.Session,
+        case 'payment_intent.succeeded':
+          return await this.webhookStripePaymentSucceededService.execute({
+            stripePaymentIntent: eventObject as Stripe.PaymentIntent,
             stripeAccount: connectAccount
           });
-        case 'checkout.session.async_payment_succeeded':
-          return await this.webhookStripeCheckoutSessionAsyncPaymentSucceededService.execute(
-            {
-              stripeCheckoutSession: eventObject as Stripe.Checkout.Session,
-              stripeAccount: connectAccount
-            }
-          );
-        case 'checkout.session.async_payment_failed':
-          return await this.webhookStripeCheckoutSessionAsyncPaymentFailedService.execute(
-            {
-              stripeCheckoutSession: eventObject as Stripe.Checkout.Session,
-              stripeAccount: connectAccount
-            }
-          );
-        case 'payment_intent.succeeded':
+        case 'payment_intent.canceled':
         case 'payment_intent.payment_failed':
+          return await this.webhookStripePaymentFailedService.execute({
+            stripePaymentIntent: eventObject as Stripe.PaymentIntent,
+            stripeAccount: connectAccount
+          });
         default:
           return { status: HttpStatus.OK };
       }

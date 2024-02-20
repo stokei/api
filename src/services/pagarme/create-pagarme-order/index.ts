@@ -39,15 +39,26 @@ export class CreatePagarmeOrderService
         liable: 'false'
       },
       type: 'flat',
-      recipient_id: data?.appRecipient,
+      recipient_id: data?.app?.pagarmeAccount,
       amount: appTotalAmountWithoutFeeAmount
     };
-    const items = data?.prices?.map((price) => ({
-      code: price?.id,
-      quantity: price?.quantity,
-      amount: price?.amount,
-      description: price?.name
-    }));
+    const items = data?.orderItems
+      ?.map((orderItem) => {
+        const price = data?.prices?.find(
+          (currentPrice) => currentPrice?.id === orderItem.price
+        );
+        if (!price) {
+          return;
+        }
+        return {
+          code: orderItem.id,
+          amount: price.amount,
+          description: price.nickname,
+          quantity: orderItem.quantity
+        };
+      })
+      ?.filter(Boolean);
+
     const expiresAt = convertToISODateString(addDays(2));
     const installments =
       data?.installments > 1 && data?.installments <= 12
@@ -73,7 +84,8 @@ export class CreatePagarmeOrderService
         pix: {
           expires_at: expiresAt
         }
-      }
+      },
+      [PaymentMethodType.STRIPE]: undefined
     };
     const dataRequest = cleanObject({
       items,

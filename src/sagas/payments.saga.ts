@@ -102,7 +102,7 @@ export class PaymentsSagas {
           new SendPaymentErrorEmailCommand({
             payment: event.payment,
             app: event.payment.app,
-            toAccount: event.payment.parent,
+            toAccount: event.payment.createdBy,
             createdBy: event.updatedBy
           })
         ];
@@ -147,7 +147,7 @@ export class PaymentsSagas {
           new SendPaymentSuccessfullyEmailCommand({
             payment: event.payment,
             app: event.payment.app,
-            toAccount: event.payment.parent,
+            toAccount: event.payment.createdBy,
             createdBy: event.updatedBy
           })
         ];

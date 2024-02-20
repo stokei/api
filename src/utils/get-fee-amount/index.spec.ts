@@ -30,6 +30,15 @@ describe('FeeAmount', () => {
         });
         expect(request).toBeUndefined();
       });
+      it('should return correct fee amount to STRIPE payment method', () => {
+        const request = getTotalFeeAmount({
+          amount: 10000,
+          paymentGatewayType: PaymentGatewayType.STRIPE,
+          paymentMethodType: PaymentMethodType.STRIPE
+        });
+        const response = 900 + 39; // R$ 9,00 + R$ 0,39
+        expect(request).toBe(response);
+      });
     });
     describe('Pagarme', () => {
       it('should return correct fee amount to CARD payment method', () => {
@@ -58,6 +67,14 @@ describe('FeeAmount', () => {
         });
         const response = 600; // R$ 4,00 + R$ 2,00 = R$ 6,00
         expect(request).toBe(response);
+      });
+      it('should return undefined to STRIPE payment method', () => {
+        const request = getTotalFeeAmount({
+          amount: 10000,
+          paymentGatewayType: PaymentGatewayType.PAGARME,
+          paymentMethodType: PaymentMethodType.STRIPE
+        });
+        expect(request).toBeUndefined();
       });
     });
   });
@@ -87,6 +104,15 @@ describe('FeeAmount', () => {
         });
         expect(request).toBeUndefined();
       });
+      it('should return correct fee amount to STRIPE payment method', () => {
+        const request = getStokeiFeeAmount({
+          amount: 10000,
+          paymentGatewayType: PaymentGatewayType.STRIPE,
+          paymentMethodType: PaymentMethodType.STRIPE
+        });
+        const response = 501; // R$ 5,01
+        expect(request).toBe(response);
+      });
     });
     describe('Pagarme', () => {
       it('should return correct fee amount to CARD payment method', () => {
@@ -115,6 +141,14 @@ describe('FeeAmount', () => {
         });
         const response = 600; // R$ 4,00 + R$ 2,00 = R$ 6,00
         expect(request).toBe(response);
+      });
+      it('should return undefined to STRIPE payment method', () => {
+        const request = getStokeiFeeAmount({
+          amount: 10000,
+          paymentGatewayType: PaymentGatewayType.PAGARME,
+          paymentMethodType: PaymentMethodType.STRIPE
+        });
+        expect(request).toBeUndefined();
       });
     });
   });

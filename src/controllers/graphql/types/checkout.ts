@@ -39,9 +39,18 @@ export class CheckoutPix {
 }
 
 @ObjectType()
+export class CheckoutStripe {
+  @Field(() => String)
+  clientSecret: string;
+}
+
+@ObjectType()
 export class Checkout {
   @Field(() => String, { nullable: true })
   url?: string;
+
+  @Field(() => CheckoutStripe, { nullable: true })
+  stripe?: CheckoutStripe;
 
   @Field(() => CheckoutBoleto, { nullable: true })
   boleto?: CheckoutBoleto;

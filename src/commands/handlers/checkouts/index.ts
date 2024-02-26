@@ -1,3 +1,3 @@
-import { CreatePagarmeCheckoutCommandHandler } from './create-pagarme-checkout';
+import { CreateCheckoutCommandHandler } from './create-checkout';
 
-export const CheckoutCommandHandlers = [CreatePagarmeCheckoutCommandHandler];
+export const CheckoutCommandHandlers = [CreateCheckoutCommandHandler];

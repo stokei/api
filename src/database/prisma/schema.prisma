@@ -30,6 +30,7 @@ enum PaymentMethodType {
   CARD
   BOLETO
   PIX
+  STRIPE
 }
 
 enum ThemeMode {

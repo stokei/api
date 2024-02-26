@@ -66,6 +66,9 @@ export class App {
   @Field(() => Boolean)
   isIntegratedWithPagarme: boolean;
 
+  @Field(() => Boolean)
+  isIntegratedWithStripe: boolean;
+
   @Field(() => String, { nullable: true })
   blockedAt?: string;
 

@@ -18,9 +18,14 @@ export interface CheckoutCardData {
   readonly expiryYear: string;
 }
 
+export interface CheckoutStripeData {
+  readonly clientSecret: string;
+}
+
 export interface ICheckoutModelData {
   readonly payment: string;
   readonly url?: string;
+  readonly stripe?: CheckoutStripeData;
   readonly boleto?: CheckoutBoletoData;
   readonly card?: CheckoutCardData;
   readonly pix?: CheckoutPixData;
@@ -29,6 +34,7 @@ export interface ICheckoutModelData {
 export class CheckoutModel extends AggregateRoot {
   readonly payment: string;
   readonly url?: string;
+  readonly stripe?: CheckoutStripeData;
   readonly boleto?: CheckoutBoletoData;
   readonly card?: CheckoutCardData;
   readonly pix?: CheckoutPixData;
@@ -38,6 +44,7 @@ export class CheckoutModel extends AggregateRoot {
 
     this.url = data.url;
     this.payment = data.payment;
+    this.stripe = data.stripe;
     this.boleto = data.boleto;
     this.card = data.card;
     this.pix = data.pix;

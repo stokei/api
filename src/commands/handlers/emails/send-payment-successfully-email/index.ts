@@ -4,7 +4,7 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { SendPaymentSuccessfullyEmailCommand } from '@/commands/implements/emails/send-payment-successfully-email.command';
 import {
-  AppNotFoundException,
+  AccountNotFoundException,
   CurrencyNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
@@ -55,7 +55,7 @@ export class SendPaymentSuccessfullyEmailCommandHandler
         data.toAccount
       );
       if (!toAccount) {
-        throw new AppNotFoundException();
+        throw new AccountNotFoundException();
       }
 
       const currency = await this.findCurrencyByIdService.execute(

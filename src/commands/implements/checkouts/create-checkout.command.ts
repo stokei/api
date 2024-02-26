@@ -3,9 +3,7 @@ import { ICommand } from '@nestjs/cqrs';
 import { CreateCheckoutDTO } from '@/dtos/checkouts/create-checkout.dto';
 import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 
-export class CreatePagarmeCheckoutCommand
-  implements ICommand, CreateCheckoutDTO
-{
+export class CreateCheckoutCommand implements ICommand, CreateCheckoutDTO {
   paymentMethod?: string;
   paymentMethodType: PaymentMethodType;
   app: string;

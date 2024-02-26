@@ -14,6 +14,7 @@ import { AuthModule } from '@stokei/nestjs';
 
 import { CommandHandlers } from './commands/handlers';
 import { REST_CONTROLLERS_URL_NAMES } from './constants/rest-controllers';
+import { REST_VERSIONS } from './constants/rest-versions';
 import { Controllers } from './controllers';
 import { Loaders } from './controllers/graphql/dataloaders';
 import { Resolvers } from './controllers/graphql/resolvers';
@@ -69,7 +70,11 @@ export class MainModule implements NestModule {
     consumer
       .apply(RawBodyMiddleware)
       .forRoutes({
-        path: '/v1/' + REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
+        path:
+          '/' +
+          REST_VERSIONS.V1_TEXT +
+          '/' +
+          REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
         method: RequestMethod.POST
       })
       .apply(JsonBodyMiddleware)

@@ -2,7 +2,7 @@ import { Args, Query, Resolver } from '@nestjs/graphql';
 
 import { PagesLoader } from '@/controllers/graphql/dataloaders/pages.loader';
 import { Page } from '@/controllers/graphql/types/page';
-import { PageNotFoundException } from '@/errors';
+import { PageNotFoundException, SiteNotFoundException } from '@/errors';
 import { PageModel } from '@/models/page.model';
 import { GetOrSetCacheService } from '@/services/cache/get-or-set-cache';
 import { FindPageBySlugAndParentService } from '@/services/pages/find-page-by-slug-and-parent';
@@ -29,10 +29,10 @@ export class PageResolver {
       );
     } else if (slug) {
       if (!site) {
-        throw new PageNotFoundException();
+        throw new SiteNotFoundException();
       }
       pageModel = await this.getOrSetCacheService.execute<PageModel>(
-        PageResolver.name + slug,
+        PageResolver.name + site + slug,
         () =>
           this.findPageBySlugAndParentService.execute({
             slug,

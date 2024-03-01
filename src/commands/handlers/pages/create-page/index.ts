@@ -10,7 +10,9 @@ import {
   SlugAlreadyExistsException
 } from '@/errors';
 import { CreatePageRepository } from '@/repositories/pages/create-page';
+import { FindAllPagesService } from '@/services/pages/find-all-pages';
 import { FindPageBySlugAndParentService } from '@/services/pages/find-page-by-slug-and-parent';
+import { UpdateSiteService } from '@/services/sites/update-site';
 import { CreateVersionService } from '@/services/versions/create-version';
 import { UpdateVersionService } from '@/services/versions/update-version';
 
@@ -23,7 +25,9 @@ export class CreatePageCommandHandler
   constructor(
     private readonly createPageRepository: CreatePageRepository,
     private readonly createVersionService: CreateVersionService,
+    private readonly findAllPagesService: FindAllPagesService,
     private readonly updateVersionService: UpdateVersionService,
+    private readonly updateSiteService: UpdateSiteService,
     private readonly findPageBySlugAndParentService: FindPageBySlugAndParentService,
     private readonly publisher: EventPublisher
   ) {}
@@ -83,6 +87,22 @@ export class CreatePageCommandHandler
       }
     });
 
+    try {
+      const isFirstPage = await this.isFirstPage(pageCreated.parent);
+      if (isFirstPage) {
+        await this.updateSiteService.execute({
+          data: {
+            homePage: pageCreated.id,
+            updatedBy: data.createdBy
+          },
+          where: {
+            app: pageCreated.app,
+            site: pageCreated.parent
+          }
+        });
+      }
+    } catch (error) {}
+
     return pageCreated;
   }
 
@@ -93,5 +113,21 @@ export class CreatePageCommandHandler
       title: cleanValue(command?.title),
       parent: cleanValue(command?.parent)
     });
+  }
+
+  private async isFirstPage(parent: string) {
+    const pages = await this.findAllPagesService.execute({
+      page: {
+        limit: 1
+      },
+      where: {
+        AND: {
+          parent: {
+            equals: parent
+          }
+        }
+      }
+    });
+    return !pages?.totalCount;
   }
 }

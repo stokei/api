@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { cleanSlug } from '@stokei/nestjs';
+import { cleanSlug, cleanValue } from '@stokei/nestjs';
 
 import { DataNotFoundException, ParamNotFoundException } from '@/errors';
 import { PageModel } from '@/models/page.model';
@@ -19,7 +19,7 @@ export class FindPageBySlugAndParentQueryHandler
       throw new DataNotFoundException();
     }
 
-    const parent = cleanSlug(query.parent);
+    const parent = cleanValue(query.parent);
     if (!parent) {
       throw new ParamNotFoundException('parent');
     }

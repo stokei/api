@@ -21,6 +21,9 @@ export class Component {
   @Field(() => ComponentType)
   type: ComponentType;
 
+  @Field(() => ComponentType)
+  acceptTypes?: ComponentType;
+
   @Field(() => [Component], { nullable: true })
   components?: Component;
 

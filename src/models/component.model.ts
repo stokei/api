@@ -28,6 +28,7 @@ export class ComponentModel extends AggregateRoot {
   readonly parent: string;
   readonly order: number;
   readonly type: ComponentType;
+  readonly acceptTypes?: ComponentType[];
   readonly data?: any;
   readonly components?: ComponentModel[];
   readonly updatedAt?: string;
@@ -52,6 +53,40 @@ export class ComponentModel extends AggregateRoot {
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+    this.acceptTypes = this.getAcceptTypes();
+  }
+
+  private getAcceptTypes(): ComponentType[] {
+    const getAllTypes = (withoutTypes?: ComponentType[]): ComponentType[] => {
+      const valuesList = Object.values(ComponentType);
+      if (!withoutTypes?.length) {
+        return valuesList;
+      }
+      return valuesList.filter((value) => !withoutTypes.includes(value));
+    };
+    const allTypes = getAllTypes();
+    const types: Record<ComponentType, ComponentType[]> = {
+      HEADER: [],
+      FOOTER: [],
+      IMAGE: [],
+      VIDEO: [],
+      GRID: [ComponentType.GRID_ITEM],
+      GRID_ITEM: getAllTypes([ComponentType.GRID_ITEM]),
+      SPACE: [],
+      STACK: allTypes,
+      TEXT: [],
+      TITLE: [],
+      CARD: allTypes,
+      BUTTON: [],
+      MENU: [ComponentType.MENU_ITEM],
+      MENU_ITEM: [],
+      CATALOG: [],
+      NAVLINK: [ComponentType.TITLE, ComponentType.TEXT],
+      HERO: [ComponentType.HERO_CONTENT, ComponentType.HERO_MEDIA],
+      HERO_CONTENT: allTypes,
+      HERO_MEDIA: [ComponentType.VIDEO, ComponentType.IMAGE]
+    };
+    return types[this.type];
   }
 
   createdComponent({ createdBy }: { createdBy: string }) {

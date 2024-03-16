@@ -6,5 +6,5 @@ export class CreateVersionInput {
   parent: string;
 
   @Field(() => String)
-  name: string;
+  name?: string;
 }

@@ -4,7 +4,7 @@ import { CreateVersionDTO } from '@/dtos/versions/create-version.dto';
 
 export class CreateVersionCommand implements ICommand, CreateVersionDTO {
   parent?: string;
-  name: string;
+  name?: string;
   app: string;
   createdBy: string;
 

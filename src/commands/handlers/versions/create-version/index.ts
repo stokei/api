@@ -1,5 +1,9 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanValue } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanValue,
+  convertToISODateString
+} from '@stokei/nestjs';
 
 import { CreateVersionCommand } from '@/commands/implements/versions/create-version.command';
 import { DataNotFoundException, VersionNotFoundException } from '@/errors';
@@ -36,7 +40,14 @@ export class CreateVersionCommandHandler
       } catch (error) {}
     }
 
-    const versionCreated = await this.createVersionRepository.execute(data);
+    const versionName = data?.name
+      ? data?.name
+      : convertToISODateString(Date.now());
+
+    const versionCreated = await this.createVersionRepository.execute({
+      ...data,
+      name: versionName
+    });
     if (!versionCreated) {
       throw new VersionNotFoundException();
     }

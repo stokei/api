@@ -176,6 +176,7 @@ enum ComponentType {
   MENU
   MENU_ITEM
   CATALOG
+  NAVBAR
   NAVLINK
   HERO
   HERO_CONTENT

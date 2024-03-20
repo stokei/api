@@ -82,6 +82,15 @@ export class ComponentModel extends AggregateRoot {
       MENU_ITEM: [],
       CATALOG: [],
       NAVLINK: [ComponentType.TITLE, ComponentType.TEXT],
+      NAVBAR: [
+        ComponentType.IMAGE,
+        ComponentType.SPACE,
+        ComponentType.TEXT,
+        ComponentType.TITLE,
+        ComponentType.BUTTON,
+        ComponentType.MENU,
+        ComponentType.NAVLINK
+      ],
       HERO: [ComponentType.HERO_CONTENT, ComponentType.HERO_MEDIA],
       HERO_CONTENT: allTypes,
       HERO_MEDIA: [ComponentType.VIDEO, ComponentType.IMAGE]

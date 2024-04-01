@@ -5,6 +5,6 @@ export class CreateVersionInput {
   @Field(() => String)
   parent: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   name?: string;
 }

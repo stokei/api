@@ -57,26 +57,36 @@ export class ComponentModel extends AggregateRoot {
   }
 
   private getAcceptTypes(): ComponentType[] {
-    const getAllTypes = (withoutTypes?: ComponentType[]): ComponentType[] => {
+    const getAllTypesExcept = (
+      exceptTypes?: ComponentType[]
+    ): ComponentType[] => {
       const valuesList = Object.values(ComponentType);
-      if (!withoutTypes?.length) {
+      if (!exceptTypes?.length) {
         return valuesList;
       }
-      return valuesList.filter((value) => !withoutTypes.includes(value));
+      return valuesList.filter((value) => !exceptTypes.includes(value));
     };
-    const allTypes = getAllTypes();
+    const allTypes = getAllTypesExcept();
     const types: Record<ComponentType, ComponentType[]> = {
       HEADER: [],
       FOOTER: [],
+      BLOCK: allTypes,
       IMAGE: [],
       VIDEO: [],
       GRID: [ComponentType.GRID_ITEM],
-      GRID_ITEM: getAllTypes([ComponentType.GRID_ITEM]),
+      GRID_ITEM: getAllTypesExcept([ComponentType.GRID_ITEM]),
       SPACE: [],
       STACK: allTypes,
       TEXT: [],
       TITLE: [],
-      CARD: allTypes,
+      CARD: [
+        ComponentType.CARD_BODY,
+        ComponentType.CARD_HEADER,
+        ComponentType.CARD_FOOTER
+      ],
+      CARD_BODY: allTypes,
+      CARD_HEADER: allTypes,
+      CARD_FOOTER: allTypes,
       BUTTON: [],
       MENU: [ComponentType.MENU_ITEM],
       MENU_ITEM: [],
@@ -92,7 +102,11 @@ export class ComponentModel extends AggregateRoot {
         ComponentType.NAVLINK
       ],
       HERO: [ComponentType.HERO_CONTENT, ComponentType.HERO_MEDIA],
-      HERO_CONTENT: allTypes,
+      HERO_CONTENT: getAllTypesExcept([
+        ComponentType.HERO,
+        ComponentType.HERO_CONTENT,
+        ComponentType.HERO_MEDIA
+      ]),
       HERO_MEDIA: [ComponentType.VIDEO, ComponentType.IMAGE]
     };
     return types[this.type];

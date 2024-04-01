@@ -163,6 +163,7 @@ enum HeroType {
 enum ComponentType {
   HEADER
   FOOTER
+  BLOCK
   IMAGE
   VIDEO
   GRID
@@ -172,6 +173,9 @@ enum ComponentType {
   TEXT
   TITLE
   CARD
+  CARD_BODY
+  CARD_HEADER
+  CARD_FOOTER
   BUTTON
   MENU
   MENU_ITEM

@@ -1,5 +1,6 @@
 import { CloneComponentsTreeService } from './clone-components-tree';
 import { CreateComponentService } from './create-component';
+import { CreateComponentsTreeService } from './create-components-tree';
 import { CreateOrUpdateComponentService } from './create-or-update-component';
 import { FindAllComponentsService } from './find-all-components';
 import { FindAllComponentsByParentIdsService } from './find-all-components-by-parent-ids';
@@ -9,6 +10,7 @@ import { FindComponentByIdService } from './find-component-by-id';
 import { RemoveComponentService } from './remove-component';
 import { RemoveComponentsService } from './remove-components';
 import { UpdateComponentService } from './update-component';
+import { UpdateComponentsOrderService } from './update-components-order';
 
 export const ComponentServices = [
   CreateComponentService,
@@ -21,5 +23,7 @@ export const ComponentServices = [
   FindAllComponentsWithComponentsChildrenService,
   FindAllComponentsTreeService,
   CloneComponentsTreeService,
-  CreateOrUpdateComponentService
+  CreateOrUpdateComponentService,
+  CreateComponentsTreeService,
+  UpdateComponentsOrderService
 ];

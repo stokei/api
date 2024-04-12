@@ -36,7 +36,7 @@ export class CreateComponentCommandHandler
       throw new ParamNotFoundException<CreateComponentCommandKeys>('parent');
     }
 
-    let order = data.order >= 0 ? data.order : 1;
+    let order = data.order >= 0 ? data.order : 0;
     if (!data.order || data.order < 0) {
       try {
         const componentsFromParent =

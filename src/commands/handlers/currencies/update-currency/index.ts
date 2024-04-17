@@ -51,9 +51,8 @@ export class UpdateCurrencyCommandHandler
       throw new DataNotFoundException();
     }
 
-    const currencyUpdated = await this.findCurrencyByIdRepository.execute(
-      currencyId
-    );
+    const currencyUpdated =
+      await this.findCurrencyByIdRepository.execute(currencyId);
     if (!currencyUpdated) {
       throw new CurrencyNotFoundException();
     }

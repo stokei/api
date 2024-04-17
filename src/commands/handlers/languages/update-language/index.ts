@@ -46,9 +46,8 @@ export class UpdateLanguageCommandHandler
       throw new DataNotFoundException();
     }
 
-    const languageUpdated = await this.findLanguageByIdRepository.execute(
-      languageId
-    );
+    const languageUpdated =
+      await this.findLanguageByIdRepository.execute(languageId);
     if (!languageUpdated) {
       throw new LanguageNotFoundException();
     }

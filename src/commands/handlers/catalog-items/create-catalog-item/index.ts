@@ -45,9 +45,8 @@ export class CreateCatalogItemCommandHandler
       throw new CatalogItemAlreadyExistsException();
     }
 
-    const catalogItemCreated = await this.createCatalogItemRepository.execute(
-      data
-    );
+    const catalogItemCreated =
+      await this.createCatalogItemRepository.execute(data);
     if (!catalogItemCreated) {
       throw new CatalogItemNotFoundException();
     }

@@ -46,9 +46,8 @@ export class UpdateAddressCommandHandler
       throw new DataNotFoundException();
     }
 
-    const addressUpdated = await this.findAddressByIdRepository.execute(
-      addressId
-    );
+    const addressUpdated =
+      await this.findAddressByIdRepository.execute(addressId);
     if (!addressUpdated) {
       throw new AddressNotFoundException();
     }

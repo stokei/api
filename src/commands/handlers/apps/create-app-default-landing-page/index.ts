@@ -10,12 +10,14 @@ import {
   DataNotFoundException,
   PageNotFoundException,
   ParamNotFoundException,
-  SiteNotFoundException
+  SiteNotFoundException,
+  VersionNotFoundException
 } from '@/errors';
 import { CreateAppCatalogService } from '@/services/apps/create-app-catalog';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { CreateCatalogService } from '@/services/catalogs/create-catalog';
 import { CreateComponentService } from '@/services/components/create-component';
+import { CreateComponentsTreeService } from '@/services/components/create-components-tree';
 import { CreatePageService } from '@/services/pages/create-page';
 import { CreateSiteService } from '@/services/sites/create-site';
 import { UpdateSiteService } from '@/services/sites/update-site';
@@ -36,6 +38,7 @@ export class CreateAppDefaultLandingPageCommandHandler
     private readonly updateSiteService: UpdateSiteService,
     private readonly createPageService: CreatePageService,
     private readonly createComponentService: CreateComponentService,
+    private readonly createComponentsTreeService: CreateComponentsTreeService,
     private readonly createAppCatalogService: CreateAppCatalogService,
     private readonly createCatalogService: CreateCatalogService
   ) {}
@@ -90,6 +93,9 @@ export class CreateAppDefaultLandingPageCommandHandler
       });
 
       const versionId = homePage.version;
+      if (!versionId) {
+        throw new VersionNotFoundException();
+      }
 
       await this.createAppCatalogService.execute({
         app: app.id,
@@ -108,40 +114,141 @@ export class CreateAppDefaultLandingPageCommandHandler
         title: 'Materiais'
       });
 
-      await this.createComponentService.execute({
-        type: ComponentType.HEADER,
-        parent: versionId,
-        app: app.id,
-        createdBy
-      });
-      await this.createHero({
-        versionId,
-        app: app.id,
-        createdBy
-      });
-      await this.createComponentService.execute({
-        type: ComponentType.CATALOG,
-        parent: versionId,
+      await this.createComponentsTreeService.execute({
         app: app.id,
         createdBy,
-        data: {
-          catalog: coursesCatalog.id
-        }
-      });
-      await this.createComponentService.execute({
-        type: ComponentType.CATALOG,
-        parent: versionId,
-        app: app.id,
-        createdBy,
-        data: {
-          catalog: materialsCatalog.id
-        }
-      });
-      await this.createComponentService.execute({
-        type: ComponentType.FOOTER,
-        parent: versionId,
-        app: app.id,
-        createdBy
+        tree: [
+          {
+            type: ComponentType.BLOCK,
+            parent: versionId,
+            app: app.id,
+            createdBy,
+            data: {},
+            components: [
+              {
+                type: ComponentType.NAVBAR,
+                parent: versionId,
+                app: app.id,
+                createdBy,
+                data: {},
+                components: []
+              }
+            ]
+          },
+          {
+            type: ComponentType.BLOCK,
+            parent: versionId,
+            app: app.id,
+            createdBy,
+            data: {},
+            components: [
+              {
+                type: ComponentType.CATALOG,
+                parent: versionId,
+                app: app.id,
+                createdBy,
+                data: {
+                  catalog: coursesCatalog.id
+                },
+                components: []
+              }
+            ]
+          },
+          {
+            type: ComponentType.BLOCK,
+            parent: versionId,
+            app: app.id,
+            createdBy,
+            data: {},
+            components: [
+              {
+                type: ComponentType.CATALOG,
+                parent: versionId,
+                app: app.id,
+                createdBy,
+                data: {
+                  catalog: materialsCatalog.id
+                },
+                components: []
+              }
+            ]
+          },
+          {
+            type: ComponentType.BLOCK,
+            parent: versionId,
+            app: app.id,
+            createdBy,
+            data: {},
+            components: [
+              {
+                type: ComponentType.HERO,
+                parent: '',
+                app: app.id,
+                createdBy,
+                data: {},
+                components: [
+                  {
+                    type: ComponentType.HERO_CONTENT,
+                    parent: '',
+                    app: app.id,
+                    createdBy,
+                    data: {},
+                    components: [
+                      {
+                        type: ComponentType.TITLE,
+                        parent: '',
+                        app: app.id,
+                        createdBy,
+                        data: {
+                          value: 'VAMOS APRENDER JUNTOS'
+                        },
+                        components: []
+                      },
+                      {
+                        type: ComponentType.TEXT,
+                        parent: '',
+                        app: app.id,
+                        createdBy,
+                        data: {
+                          value:
+                            'Torne-se um membro e venha conhecer o melhor do meu conteúdo.'
+                        },
+                        components: []
+                      },
+                      {
+                        type: ComponentType.BUTTON,
+                        parent: '',
+                        app: app.id,
+                        createdBy,
+                        data: {
+                          text: 'Cadastre-se'
+                        },
+                        components: []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            type: ComponentType.BLOCK,
+            parent: versionId,
+            app: app.id,
+            createdBy,
+            data: {},
+            components: [
+              {
+                type: ComponentType.FOOTER,
+                parent: versionId,
+                app: app.id,
+                createdBy,
+                data: {},
+                components: []
+              }
+            ]
+          }
+        ]
       });
     } catch (error) {
       this.logger.error(`App(#${data?.app}): ${error?.message}`);
@@ -155,58 +262,6 @@ export class CreateAppDefaultLandingPageCommandHandler
     return cleanObject({
       app: cleanValue(command?.app),
       createdBy: cleanValue(command?.createdBy)
-    });
-  }
-
-  private async createHero({
-    app,
-    versionId,
-    createdBy
-  }: {
-    versionId: string;
-    app: string;
-    createdBy: string;
-  }) {
-    const heroContainer = await this.createComponentService.execute({
-      type: ComponentType.HERO,
-      parent: versionId,
-      app,
-      createdBy,
-      data: {}
-    });
-    const heroTextContainer = await this.createComponentService.execute({
-      type: ComponentType.HERO_CONTENT,
-      parent: heroContainer.id,
-      app,
-      createdBy,
-      data: {}
-    });
-    await this.createComponentService.execute({
-      type: ComponentType.TITLE,
-      parent: heroTextContainer.id,
-      app,
-      createdBy,
-      data: {
-        value: 'VAMOS APRENDER JUNTOS'
-      }
-    });
-    await this.createComponentService.execute({
-      type: ComponentType.TEXT,
-      parent: heroTextContainer.id,
-      app,
-      createdBy,
-      data: {
-        value: 'Torne-se um membro e venha conhecer o melhor do meu conteúdo.'
-      }
-    });
-    await this.createComponentService.execute({
-      type: ComponentType.BUTTON,
-      parent: heroTextContainer.id,
-      app,
-      createdBy,
-      data: {
-        text: 'Cadastre-se'
-      }
     });
   }
 }

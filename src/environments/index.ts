@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 // ---------- ENVIRONMENT ----------
-export const NODE_ENV: string = process.env.NODE_ENV;
+export const NODE_ENV: string = process.env.NODE_ENV || Environment.DEVELOPMENT;
 export const IS_PRODUCTION: boolean = NODE_ENV === Environment.PRODUCTION;
 export const IS_DEVELOPMENT: boolean = NODE_ENV === Environment.DEVELOPMENT;
 

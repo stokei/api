@@ -49,11 +49,11 @@ export class CreatePageCommandHandler
 
     const slug = cleanSlug(data.title + nanoid(8));
     try {
-      const siteWithSlug = await this.findPageBySlugAndParentService.execute({
+      const pageWithSlug = await this.findPageBySlugAndParentService.execute({
         slug,
         parent: data.parent
       });
-      if (siteWithSlug) {
+      if (pageWithSlug) {
         throw new SlugAlreadyExistsException();
       }
     } catch (error) {
@@ -128,6 +128,6 @@ export class CreatePageCommandHandler
         }
       }
     });
-    return !pages?.totalCount;
+    return pages?.totalCount === 1;
   }
 }

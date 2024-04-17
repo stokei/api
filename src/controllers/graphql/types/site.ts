@@ -30,6 +30,12 @@ export class Site {
   @Field(() => Page, { nullable: true })
   homePage?: Page;
 
+  @Field(() => Page, { nullable: true })
+  loginPage?: Page;
+
+  @Field(() => Page, { nullable: true })
+  signUpPage?: Page;
+
   @Field(() => Domain, { nullable: true })
   stokeiDomain?: Domain;
 

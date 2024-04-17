@@ -160,9 +160,16 @@ enum HeroType {
   WITH_IMAGE_BACKGROUND
 }
 
+enum PageType {
+  DEFAULT
+  EXTERNAL
+}
+
 enum ComponentType {
   HEADER
   FOOTER
+  FORM_LOGIN
+  FORM_SIGNUP
   BLOCK
   IMAGE
   VIDEO
@@ -876,8 +883,10 @@ model Page {
   id           String    @id @default(cuid())
   app          String    @db.VarChar(255)
   parent       String    @db.VarChar(255)
+  type         PageType  @default(DEFAULT)
   title        String    @db.VarChar(255)
   slug         String    @db.VarChar(255)
+  url          String?   @db.VarChar(255)
   version      String?   @db.VarChar(255)
   draftVersion String?   @db.VarChar(255)
   updatedAt    DateTime? @updatedAt @map("updated_at")
@@ -911,6 +920,8 @@ model Site {
   favicon       String?   @db.VarChar(255)
   logo          String?   @db.VarChar(255)
   homePage      String?   @map("home_page") @db.VarChar(255)
+  loginPage     String?   @map("login_page") @db.VarChar(255)
+  signUpPage    String?   @map("signup_page") @db.VarChar(255)
   defaultDomain String?   @map("default_domain") @db.VarChar(255)
   updatedAt     DateTime? @updatedAt @map("updated_at")
   createdAt     DateTime? @default(now()) @map("created_at")

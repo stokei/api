@@ -5,18 +5,21 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
+import { PageType } from '@/enums/page-type.enum';
 export interface WhereDataFindAllPagesDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
   title?: IWhereDataSearch;
   slug?: IWhereDataSearch;
+  type?: PageType;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }
 export type IKeysWhereDataFindAllPagesDTO = keyof WhereDataFindAllPagesDTO;
 
 export interface OrderByDataFindAllPagesDTO {
+  type?: IOrderBy;
   title?: IOrderBy;
   updatedBy?: IOrderBy;
   createdBy?: IOrderBy;

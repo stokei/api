@@ -33,8 +33,9 @@ export class RemoveRecurringCommandHandler
       throw new ParamNotFoundException('recurringId');
     }
 
-    const recurring =
-      await this.findRecurringByIdRepository.execute(recurringId);
+    const recurring = await this.findRecurringByIdRepository.execute(
+      recurringId
+    );
     if (!recurring) {
       throw new RecurringNotFoundException();
     }

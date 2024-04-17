@@ -33,7 +33,7 @@ export class PageMapper {
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
           title: prismaMapper.toWhereDataSearch(operatorData.title),
           slug: prismaMapper.toWhereDataSearch(operatorData.slug),
-          app: prismaMapper.toWhereData(operatorData.app),
+          type: operatorData.type,
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
           createdBy: prismaMapper.toWhereData(operatorData.createdBy)
         };
@@ -63,6 +63,7 @@ export class PageMapper {
             title: cleanWhereDataSearch(operatorData.title),
             slug: cleanWhereDataSearch(operatorData.slug),
             app: cleanWhereDataString(operatorData.app),
+            type: operatorData.type,
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),
             ids:
@@ -79,6 +80,7 @@ export class PageMapper {
         number: cleanValueNumber(query.page?.number)
       }),
       orderBy: cleanObject({
+        type: cleanSortValue(query.orderBy?.type),
         title: cleanSortValue(query.orderBy?.title),
         createdAt: cleanSortValue(query.orderBy?.createdAt),
         updatedAt: cleanSortValue(query.orderBy?.updatedAt),

@@ -44,8 +44,9 @@ export class CreateProductCommandHandler
     }
 
     const { catalogs, ...dataCreate } = data;
-    const productCreated =
-      await this.createProductRepository.execute(dataCreate);
+    const productCreated = await this.createProductRepository.execute(
+      dataCreate
+    );
     if (!productCreated) {
       throw new ProductNotFoundException();
     }

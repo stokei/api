@@ -49,8 +49,9 @@ export class PublishVersionCommandHandler
       version: splitServiceId(version?.id)?.id,
       createdBy: data.createdBy
     };
-    const versionWasPublished =
-      await this.publishVersionRepository.execute(dataPublished);
+    const versionWasPublished = await this.publishVersionRepository.execute(
+      dataPublished
+    );
     if (!versionWasPublished) {
       throw new VersionNotFoundException();
     }

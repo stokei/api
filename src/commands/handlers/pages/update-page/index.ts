@@ -85,6 +85,8 @@ export class UpdatePageCommandHandler
       }),
       data: cleanObject({
         title: cleanValue(command?.data?.title),
+        type: cleanValue(command?.data?.type),
+        url: cleanValue(command?.data?.url),
         slug: cleanValue(command?.data?.slug),
         draftVersion: cleanValue(command?.data?.draftVersion),
         version: cleanValue(command?.data?.version),

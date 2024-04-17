@@ -1,7 +1,11 @@
+import { PageType } from '@/enums/page-type.enum';
+
 export interface UpdatePageDataDTO {
   title?: string;
   version?: string;
   slug?: string;
+  url?: string;
+  type?: PageType;
   draftVersion?: string;
   updatedBy: string;
 }

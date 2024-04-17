@@ -52,8 +52,9 @@ export class ActivateDomainCommandHandler
         activatedAt: convertToISODateString(Date.now())
       };
 
-      const domainActivated =
-        await this.activateDomainRepository.execute(dataActive);
+      const domainActivated = await this.activateDomainRepository.execute(
+        dataActive
+      );
       if (!domainActivated) {
         throw new DomainNotFoundException();
       }

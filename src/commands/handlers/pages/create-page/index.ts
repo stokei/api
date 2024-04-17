@@ -3,6 +3,7 @@ import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
 import { CreatePageCommand } from '@/commands/implements/pages/create-page.command';
+import { PageType } from '@/enums/page-type.enum';
 import {
   DataNotFoundException,
   PageNotFoundException,
@@ -40,6 +41,9 @@ export class CreatePageCommandHandler
     if (!data?.parent) {
       throw new ParamNotFoundException<CreatePageCommandKeys>('parent');
     }
+    if (data?.type && data?.type === PageType.EXTERNAL && !data?.url) {
+      throw new ParamNotFoundException<CreatePageCommandKeys>('url');
+    }
 
     const initialVersion = await this.createVersionService.execute({
       name: 'Start version',
@@ -63,6 +67,7 @@ export class CreatePageCommandHandler
     }
     const pageCreated = await this.createPageRepository.execute({
       ...data,
+      type: data?.type || PageType.DEFAULT,
       version: initialVersion.id,
       draftVersion: initialVersion.id,
       slug
@@ -111,6 +116,8 @@ export class CreatePageCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       title: cleanValue(command?.title),
+      url: cleanValue(command?.url),
+      type: cleanValue(command?.type),
       parent: cleanValue(command?.parent)
     });
   }

@@ -27,10 +27,9 @@ export class ComponentsLoader {
 
   readonly findByParentIds = new DataLoader(
     async (componentParentIds: string[]) => {
-      const components =
-        await this.findAllComponentsByParentIdsService.execute(
-          componentParentIds
-        );
+      const components = await this.findAllComponentsByParentIdsService.execute(
+        componentParentIds
+      );
       return componentParentIds.map((parentId) =>
         components.filter((component) => component.parent === parentId)
       );

@@ -6,7 +6,7 @@ import { Site } from '@/controllers/graphql/types/site';
 import { SiteModel } from '@/models/site.model';
 
 @Resolver(() => Site)
-export class SitePageResolver {
+export class SiteHomePageResolver {
   constructor(private readonly pagesLoader: PagesLoader) {}
 
   @ResolveField(() => Page, { nullable: true })

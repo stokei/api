@@ -89,6 +89,8 @@ export class UpdateSiteCommandHandler
         favicon: cleanValue(command?.data?.favicon),
         logo: cleanValue(command?.data?.logo),
         homePage: cleanValue(command?.data?.homePage),
+        loginPage: cleanValue(command?.data?.loginPage),
+        signUpPage: cleanValue(command?.data?.signUpPage),
         updatedBy: cleanValue(command?.data?.updatedBy)
       })
     });

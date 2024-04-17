@@ -107,7 +107,15 @@ export class ComponentModel extends AggregateRoot {
         ComponentType.HERO_CONTENT,
         ComponentType.HERO_MEDIA
       ]),
-      HERO_MEDIA: [ComponentType.VIDEO, ComponentType.IMAGE]
+      HERO_MEDIA: [
+        ComponentType.VIDEO,
+        ComponentType.IMAGE,
+        ComponentType.CARD,
+        ComponentType.FORM_LOGIN,
+        ComponentType.FORM_SIGNUP
+      ],
+      FORM_LOGIN: [],
+      FORM_SIGNUP: []
     };
     return types[this.type];
   }

@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { PageType } from '@/enums/page-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PageCreatedEvent } from '@/events/implements/pages/page-created.event';
 import { PageRemovedEvent } from '@/events/implements/pages/page-removed.event';
@@ -11,6 +12,7 @@ export interface IPageModelData {
   readonly _id?: string;
   readonly app: string;
   readonly parent: string;
+  readonly type: PageType;
   readonly title: string;
   readonly slug: string;
   readonly version?: string;
@@ -25,6 +27,7 @@ export class PageModel extends AggregateRoot {
   readonly id: string;
   readonly app: string;
   readonly parent: string;
+  readonly type: PageType;
   readonly title: string;
   readonly slug: string;
   readonly version?: string;
@@ -43,6 +46,7 @@ export class PageModel extends AggregateRoot {
     });
     this.app = data.app;
     this.parent = data.parent;
+    this.type = data.type;
     this.title = data.title;
     this.slug = data.slug;
     this.version = data.version;

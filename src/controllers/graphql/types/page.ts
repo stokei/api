@@ -1,5 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
+import { PageType } from '@/controllers/graphql/enums/page-type.enum';
+
 import { Account } from './account';
 import { App } from './app';
 import { Version } from './version';
@@ -15,8 +17,14 @@ export class Page {
   @Field(() => String)
   title: string;
 
+  @Field(() => PageType)
+  type: PageType;
+
   @Field(() => String)
   slug: string;
+
+  @Field(() => String, { nullable: true })
+  url?: string;
 
   @Field(() => Version, { nullable: true })
   version?: Version;

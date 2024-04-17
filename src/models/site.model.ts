@@ -17,6 +17,8 @@ export interface ISiteModelData {
   readonly logo?: string;
   readonly defaultDomain?: string;
   readonly homePage?: string;
+  readonly loginPage?: string;
+  readonly signUpPage?: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
   readonly updatedBy?: string;
@@ -33,6 +35,8 @@ export class SiteModel extends AggregateRoot {
   readonly logo?: string;
   readonly defaultDomain?: string;
   readonly homePage?: string;
+  readonly loginPage?: string;
+  readonly signUpPage?: string;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly updatedBy?: string;
@@ -53,6 +57,8 @@ export class SiteModel extends AggregateRoot {
     this.logo = data.logo;
     this.defaultDomain = data.defaultDomain;
     this.homePage = data.homePage;
+    this.loginPage = data.loginPage;
+    this.signUpPage = data.signUpPage;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;

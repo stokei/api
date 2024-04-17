@@ -127,7 +127,7 @@ export class CreateAppDefaultLandingPageCommandHandler
             components: [
               {
                 type: ComponentType.NAVBAR,
-                parent: versionId,
+                parent: '',
                 app: app.id,
                 createdBy,
                 data: {},
@@ -144,7 +144,7 @@ export class CreateAppDefaultLandingPageCommandHandler
             components: [
               {
                 type: ComponentType.CATALOG,
-                parent: versionId,
+                parent: '',
                 app: app.id,
                 createdBy,
                 data: {
@@ -163,7 +163,7 @@ export class CreateAppDefaultLandingPageCommandHandler
             components: [
               {
                 type: ComponentType.CATALOG,
-                parent: versionId,
+                parent: '',
                 app: app.id,
                 createdBy,
                 data: {
@@ -240,7 +240,7 @@ export class CreateAppDefaultLandingPageCommandHandler
             components: [
               {
                 type: ComponentType.FOOTER,
-                parent: versionId,
+                parent: '',
                 app: app.id,
                 createdBy,
                 data: {},

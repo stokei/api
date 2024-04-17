@@ -4,6 +4,8 @@ export interface UpdateSiteDataDTO {
   favicon?: string;
   logo?: string;
   homePage?: string;
+  loginPage?: string;
+  signUpPage?: string;
   updatedBy: string;
 }
 

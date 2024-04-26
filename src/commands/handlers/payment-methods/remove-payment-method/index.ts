@@ -39,9 +39,8 @@ export class RemovePaymentMethodCommandHandler
       throw new ParamNotFoundException('paymentMethodId');
     }
 
-    const paymentMethod = await this.findPaymentMethodByIdRepository.execute(
-      paymentMethodId
-    );
+    const paymentMethod =
+      await this.findPaymentMethodByIdRepository.execute(paymentMethodId);
     if (!paymentMethod) {
       throw new PaymentMethodNotFoundException();
     }

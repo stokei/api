@@ -1,5 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
-import { cleanObject, cleanSlug, cleanValue } from '@stokei/nestjs';
+import {
+  cleanObject,
+  cleanSlug,
+  cleanValue,
+  cleanValueBoolean
+} from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
 import { CreatePageCommand } from '@/commands/implements/pages/create-page.command';
@@ -68,6 +73,7 @@ export class CreatePageCommandHandler
     const pageCreated = await this.createPageRepository.execute({
       ...data,
       type: data?.type || PageType.DEFAULT,
+      canRemove: !!data?.canRemove,
       version: initialVersion.id,
       draftVersion: initialVersion.id,
       slug
@@ -118,6 +124,7 @@ export class CreatePageCommandHandler
       title: cleanValue(command?.title),
       url: cleanValue(command?.url),
       type: cleanValue(command?.type),
+      canRemove: cleanValueBoolean(command?.canRemove),
       parent: cleanValue(command?.parent)
     });
   }

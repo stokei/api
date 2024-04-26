@@ -72,6 +72,7 @@ export * from './orders-not-found';
 export * from './pagarme-account-already-exists';
 export * from './pagarme-account-not-found';
 export * from './page-not-found';
+export * from './page-unauthorized-remove';
 export * from './pages-not-found';
 export * from './param-not-found';
 export * from './payment-method-already-exists';

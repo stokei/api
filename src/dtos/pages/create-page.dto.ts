@@ -4,6 +4,7 @@ export class CreatePageDTO {
   title: string;
   url?: string;
   type?: PageType;
+  canRemove?: boolean;
   app: string;
   createdBy: string;
 }

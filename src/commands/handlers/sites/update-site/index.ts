@@ -54,7 +54,9 @@ export class UpdateSiteCommandHandler
     }
 
     const updated = await this.updateSiteRepository.execute({
-      ...data,
+      data: {
+        ...data?.data
+      },
       where: {
         ...data.where,
         site: siteId

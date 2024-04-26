@@ -26,6 +26,9 @@ export class Page {
   @Field(() => String, { nullable: true })
   url?: string;
 
+  @Field(() => Boolean, { nullable: true })
+  canRemove: boolean;
+
   @Field(() => Version, { nullable: true })
   version?: Version;
 

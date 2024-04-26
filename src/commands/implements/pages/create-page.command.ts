@@ -8,6 +8,7 @@ export class CreatePageCommand implements ICommand, CreatePageDTO {
   title: string;
   url?: string;
   type?: PageType;
+  canRemove?: boolean;
   app: string;
   createdBy: string;
 
@@ -16,6 +17,7 @@ export class CreatePageCommand implements ICommand, CreatePageDTO {
     this.title = data.title;
     this.url = data.url;
     this.type = data.type;
+    this.canRemove = data.canRemove;
     this.app = data.app;
     this.createdBy = data.createdBy;
   }

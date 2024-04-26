@@ -16,6 +16,12 @@ export class UpdateDataSiteInput {
 
   @Field(() => String, { nullable: true })
   homePage?: string;
+
+  @Field(() => String, { nullable: true })
+  loginPage?: string;
+
+  @Field(() => String, { nullable: true })
+  signUpPage?: string;
 }
 
 @InputType()

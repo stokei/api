@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { splitServiceId } from '@stokei/nestjs';
 
@@ -28,6 +29,8 @@ export class RemoveComponentsCommandHandler
     if (!removed) {
       throw new ComponentsNotFoundException();
     }
+    const logger = new Logger(RemoveComponentsCommandHandler.name);
+    logger.log(`Components removed: [${command.ids.join(', ')}]`);
     return true;
   }
 }

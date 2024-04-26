@@ -16,6 +16,7 @@ export interface IPageModelData {
   readonly title: string;
   readonly slug: string;
   readonly version?: string;
+  readonly canRemove: boolean;
   readonly draftVersion?: string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
@@ -32,6 +33,7 @@ export class PageModel extends AggregateRoot {
   readonly slug: string;
   readonly version?: string;
   readonly draftVersion?: string;
+  readonly canRemove: boolean;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly updatedBy?: string;
@@ -51,6 +53,7 @@ export class PageModel extends AggregateRoot {
     this.slug = data.slug;
     this.version = data.version;
     this.draftVersion = data.draftVersion;
+    this.canRemove = !!data.canRemove;
     this.updatedAt = convertToISODateString(data.updatedAt);
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;

@@ -5,6 +5,7 @@ import { RemovePageCommand } from '@/commands/implements/pages/remove-page.comma
 import {
   DataNotFoundException,
   PageNotFoundException,
+  PageUnauthorizedRemoveException,
   ParamNotFoundException
 } from '@/errors';
 import { FindPageByIdRepository } from '@/repositories/pages/find-page-by-id';
@@ -36,6 +37,9 @@ export class RemovePageCommandHandler
     const page = await this.findPageByIdRepository.execute(pageId);
     if (!page) {
       throw new PageNotFoundException();
+    }
+    if (!page?.canRemove) {
+      throw new PageUnauthorizedRemoveException();
     }
 
     const removed = await this.removePageRepository.execute({

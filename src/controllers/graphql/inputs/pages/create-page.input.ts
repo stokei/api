@@ -1,5 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 
+import { PageType } from '@/controllers/graphql/enums/page-type.enum';
+
 @InputType()
 export class CreatePageInput {
   @Field(() => String)
@@ -7,4 +9,10 @@ export class CreatePageInput {
 
   @Field(() => String)
   title: string;
+
+  @Field(() => String, { nullable: true })
+  url?: string;
+
+  @Field(() => PageType, { nullable: true })
+  type?: PageType;
 }

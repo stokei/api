@@ -4,6 +4,9 @@ import { Field, InputType } from '@nestjs/graphql';
 export class UpdateDataPageInput {
   @Field(() => String, { nullable: true })
   title?: string;
+
+  @Field(() => String, { nullable: true })
+  url?: string;
 }
 
 @InputType()

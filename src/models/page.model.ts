@@ -15,6 +15,7 @@ export interface IPageModelData {
   readonly type: PageType;
   readonly title: string;
   readonly slug: string;
+  readonly url: string;
   readonly version?: string;
   readonly canRemove: boolean;
   readonly draftVersion?: string;
@@ -31,6 +32,7 @@ export class PageModel extends AggregateRoot {
   readonly type: PageType;
   readonly title: string;
   readonly slug: string;
+  readonly url: string;
   readonly version?: string;
   readonly draftVersion?: string;
   readonly canRemove: boolean;
@@ -51,6 +53,7 @@ export class PageModel extends AggregateRoot {
     this.type = data.type;
     this.title = data.title;
     this.slug = data.slug;
+    this.url = data.url;
     this.version = data.version;
     this.draftVersion = data.draftVersion;
     this.canRemove = !!data.canRemove;

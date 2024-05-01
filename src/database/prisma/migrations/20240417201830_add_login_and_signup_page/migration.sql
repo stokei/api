@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE `pages` ADD COLUMN `type` ENUM('DEFAULT', 'EXTERNAL') NOT NULL DEFAULT 'DEFAULT';
+
+-- AlterTable
+ALTER TABLE `sites` ADD COLUMN `login_page` VARCHAR(255) NULL,
+    ADD COLUMN `signup_page` VARCHAR(255) NULL;

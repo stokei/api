@@ -5,6 +5,7 @@ import { AppsRepositories } from './apps';
 import { CatalogItemsRepositories } from './catalog-items';
 import { CatalogsRepositories } from './catalogs';
 import { ColorsRepositories } from './colors';
+import { ComponentsRepositories } from './components';
 import { CouponsRepositories } from './coupons';
 import { CourseInstructorsRepositories } from './course-instructors';
 import { CourseStudentsRepositories } from './course-students';
@@ -21,6 +22,7 @@ import { MaterialsRepositories } from './materials';
 import { ModulesRepositories } from './modules';
 import { OrderItemsRepositories } from './order-items';
 import { OrdersRepositories } from './orders';
+import { PagesRepositories } from './pages';
 import { PaymentMethodsRepositories } from './payment-methods';
 import { PaymentsRepositories } from './payments';
 import { PhonesRepositories } from './phones';
@@ -30,10 +32,12 @@ import { PricesRepositories } from './prices';
 import { ProductsRepositories } from './products';
 import { RecurringsRepositories } from './recurrings';
 import { RolesRepositories } from './roles';
+import { SitesRepositories } from './sites';
 import { SortedItemsRepositories } from './sorted-items';
 import { SubscriptionContractItemsRepositories } from './subscription-contract-items';
 import { SubscriptionContractsRepositories } from './subscription-contracts';
 import { UsageRecordsRepositories } from './usage-records';
+import { VersionsRepositories } from './versions';
 import { VideoAuthorsRepositories } from './video-authors';
 import { VideoViewsRepositories } from './video-views';
 import { VideosRepositories } from './videos';
@@ -77,5 +81,9 @@ export const Repositories = [
   ...OrdersRepositories,
   ...OrderItemsRepositories,
   ...PaymentsRepositories,
+  ...ComponentsRepositories,
+  ...PagesRepositories,
+  ...SitesRepositories,
+  ...VersionsRepositories,
   ...CouponsRepositories
 ];

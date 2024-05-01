@@ -10,10 +10,10 @@ import { FindAppEmailInformationsQueryHandler } from './find-app-email-informati
 export const AppQueriesHandlers = [
   FindAppByIdQueryHandler,
   FindAllAppsQueryHandler,
-  FindAppCurrentDomainQueryHandler,
   FindAppCurrentSubscriptionContractQueryHandler,
   FindAppEmailInformationsQueryHandler,
   FindAppBillingQueryHandler,
   FindAppBalancesQueryHandler,
-  FindAppBySlugQueryHandler
+  FindAppBySlugQueryHandler,
+  FindAppCurrentDomainQueryHandler
 ];

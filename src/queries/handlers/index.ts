@@ -5,6 +5,7 @@ import { AppQueriesHandlers } from './apps';
 import { CatalogItemQueriesHandlers } from './catalog-items';
 import { CatalogQueriesHandlers } from './catalogs';
 import { ColorQueriesHandlers } from './colors';
+import { ComponentQueriesHandlers } from './components';
 import { CouponQueriesHandlers } from './coupons';
 import { CourseInstructorQueriesHandlers } from './course-instructors';
 import { CourseStudentQueriesHandlers } from './course-students';
@@ -21,6 +22,7 @@ import { MaterialQueriesHandlers } from './materials';
 import { ModuleQueriesHandlers } from './modules';
 import { OrderItemQueriesHandlers } from './order-items';
 import { OrderQueriesHandlers } from './orders';
+import { PageQueriesHandlers } from './pages';
 import { PaymentMethodQueriesHandlers } from './payment-methods';
 import { PaymentQueriesHandlers } from './payments';
 import { PhoneQueriesHandlers } from './phones';
@@ -30,10 +32,12 @@ import { PriceQueriesHandlers } from './prices';
 import { ProductQueriesHandlers } from './products';
 import { RecurringQueriesHandlers } from './recurrings';
 import { RoleQueriesHandlers } from './roles';
+import { SiteQueriesHandlers } from './sites';
 import { SortedItemQueriesHandlers } from './sorted-items';
 import { SubscriptionContractItemQueriesHandlers } from './subscription-contract-items';
 import { SubscriptionContractQueriesHandlers } from './subscription-contracts';
 import { UsageRecordQueriesHandlers } from './usage-records';
+import { VersionQueriesHandlers } from './versions';
 import { VideoAuthorQueriesHandlers } from './video-authors';
 import { VideoViewQueriesHandlers } from './video-views';
 import { VideoQueriesHandlers } from './videos';
@@ -77,5 +81,9 @@ export const QueriesHandlers = [
   ...OrderQueriesHandlers,
   ...OrderItemQueriesHandlers,
   ...PaymentQueriesHandlers,
+  ...ComponentQueriesHandlers,
+  ...PageQueriesHandlers,
+  ...SiteQueriesHandlers,
+  ...VersionQueriesHandlers,
   ...CouponQueriesHandlers
 ];

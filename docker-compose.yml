@@ -6,7 +6,6 @@ networks:
 
 volumes:
   mysql-data:
-  postgresql-data:
 services:
   mysql:
     image: bitnami/mysql:8.2.0

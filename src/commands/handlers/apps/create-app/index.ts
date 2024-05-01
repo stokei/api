@@ -55,7 +55,11 @@ export class CreateAppCommandHandler
       if (appWithSlug) {
         throw new SlugAlreadyExistsException();
       }
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof SlugAlreadyExistsException) {
+        throw error;
+      }
+    }
 
     const currency = await this.findCurrencyByIdService.execute(data?.currency);
     if (!currency) {

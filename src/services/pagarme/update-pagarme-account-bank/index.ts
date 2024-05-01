@@ -6,7 +6,7 @@ import {
   UpdatePagarmeAccountBankDTO,
   UpdatePagarmeAccountBankResponse
 } from '@/dtos/pagarme/update-pagarme-account-bank.dto';
-import { PagarmeAccountNotFoundException } from '@/errors';
+import { getPagarmeError } from '@/utils/get-pagarme-error';
 
 @Injectable()
 export class UpdatePagarmeAccountBankService
@@ -39,13 +39,11 @@ export class UpdatePagarmeAccountBankService
       );
       return response?.data;
     } catch (error) {
-      const errorList: string[] =
-        error?.response?.data?.errors &&
-        Object.values(error?.response?.data?.errors);
-      if (errorList?.length) {
-        throw new Error(errorList?.[0]?.[0] || errorList?.[0]);
+      const pagarmeError = getPagarmeError(error?.response?.data?.errors);
+      if (pagarmeError) {
+        throw pagarmeError;
       }
-      throw new PagarmeAccountNotFoundException();
+      throw error;
     }
   }
 }

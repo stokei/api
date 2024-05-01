@@ -64,7 +64,7 @@ export class CreateAccountPagarmeCustomerCommandHandler
       account: account.id,
       name: account.fullname,
       email: account.email,
-      dateBirthday: data.dateBirthday,
+      dateBirthday: data.dateBirthday || account.dateBirthday,
       document: data.document,
       phone
     });

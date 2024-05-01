@@ -9,6 +9,7 @@ import { CatalogItemsFieldsResolvers } from './catalog-items';
 import { CatalogsFieldsResolvers } from './catalogs';
 import { CheckoutsFieldsResolvers } from './checkouts';
 import { ColorsFieldsResolvers } from './colors';
+import { ComponentsFieldsResolvers } from './components';
 import { CouponsFieldsResolvers } from './coupons';
 import { CourseInstructorsFieldsResolvers } from './course-instructors';
 import { CourseStudentsFieldsResolvers } from './course-students';
@@ -24,6 +25,7 @@ import { MaterialsFieldsResolvers } from './materials';
 import { ModulesFieldsResolvers } from './modules';
 import { OrderItemsFieldsResolvers } from './order-items';
 import { OrdersFieldsResolvers } from './orders';
+import { PagesFieldsResolvers } from './pages';
 import { PaymentMethodsFieldsResolvers } from './payment-methods';
 import { PaymentsFieldsResolvers } from './payments';
 import { PhonesFieldsResolvers } from './phones';
@@ -31,9 +33,11 @@ import { PlansFieldsResolvers } from './plans';
 import { PricesFieldsResolvers } from './prices';
 import { ProductsFieldsResolvers } from './products';
 import { RolesFieldsResolvers } from './roles';
+import { SitesFieldsResolvers } from './sites';
 import { SortedItemsFieldsResolvers } from './sorted-items';
 import { SubscriptionContractItemsFieldsResolvers } from './subscription-contract-items';
 import { SubscriptionContractsFieldsResolvers } from './subscription-contracts';
+import { VersionsFieldsResolvers } from './versions';
 import { VideoAuthorsFieldsResolvers } from './video-authors';
 import { VideoViewsFieldsResolvers } from './video-views';
 import { VideosFieldsResolvers } from './videos';
@@ -77,5 +81,9 @@ export const FieldsResolvers = [
   ...PaymentsFieldsResolvers,
   ...CheckoutsFieldsResolvers,
   ...BalanceFieldsResolvers,
+  ...ComponentsFieldsResolvers,
+  ...PagesFieldsResolvers,
+  ...SitesFieldsResolvers,
+  ...VersionsFieldsResolvers,
   ...CouponsFieldsResolvers
 ];

@@ -11,14 +11,12 @@ import {
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
-import { AppModel } from '@/models/app.model';
 import { FindAppEmailInformationsQuery } from '@/queries/implements/apps/find-app-email-informations.query';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAppCurrentDomainService } from '@/services/apps/find-app-current-domain';
 import { FindAllColorsService } from '@/services/colors/find-all-colors';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { FindImageByIdService } from '@/services/images/find-image-by-id';
-import { getAppStokeiDomain } from '@/utils/get-app-stokei-domain';
 
 @QueryHandler(FindAppEmailInformationsQuery)
 export class FindAppEmailInformationsQueryHandler
@@ -43,13 +41,12 @@ export class FindAppEmailInformationsQueryHandler
     if (!appId) {
       throw new ParamNotFoundException('appId');
     }
-
     const app = await this.findAppByIdService.execute(appId);
     if (!app) {
       throw new AppNotFoundException();
     }
-
-    const baseAppURL = await this.getDomain({ app });
+    const baseAppURL = (await this.findAppCurrentDomainService.execute(appId))
+      ?.url;
     const logoURL = await this.getLogoURL({ appLogoId: app.logo });
     const colors = await this.getColors({ appId: app.id });
 
@@ -59,14 +56,6 @@ export class FindAppEmailInformationsQueryHandler
       logoURL,
       colors
     };
-  }
-
-  private async getDomain({ app }: { app: AppModel }): Promise<string> {
-    try {
-      const appDomain = await this.findAppCurrentDomainService.execute(app.id);
-      return appDomain.url;
-    } catch (error) {}
-    return getAppStokeiDomain({ app }).url;
   }
 
   private async getLogoURL({

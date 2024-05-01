@@ -6,7 +6,6 @@ import {
   NestModule,
   RequestMethod
 } from '@nestjs/common';
-import { APP_FILTER } from '@nestjs/core';
 import { CqrsModule } from '@nestjs/cqrs';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -15,15 +14,16 @@ import { AuthModule } from '@stokei/nestjs';
 
 import { CommandHandlers } from './commands/handlers';
 import { REST_CONTROLLERS_URL_NAMES } from './constants/rest-controllers';
+import { REST_VERSIONS } from './constants/rest-versions';
 import { Controllers } from './controllers';
 import { Loaders } from './controllers/graphql/dataloaders';
 import { Resolvers } from './controllers/graphql/resolvers';
+import { GraphQLJSONScalar } from './controllers/graphql/scalars/json.scalar';
 import { CronJobs } from './crons';
 import { DatabaseModule } from './database/database.module';
 import { Entities } from './entities';
 import { IS_PRODUCTION, TOKEN_SECRET_KEY } from './environments';
 import { EventsHandlers } from './events/handlers';
-import { AppExceptionFilter } from './interceptors';
 import { JsonBodyMiddleware } from './middlewares/json-body';
 import { RawBodyMiddleware } from './middlewares/raw-body';
 import { QueriesHandlers } from './queries/handlers';
@@ -42,6 +42,9 @@ import { Services } from './services';
     ...Entities,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      resolvers: {
+        JSON: GraphQLJSONScalar
+      },
       fieldResolverEnhancers: ['guards', 'interceptors'],
       playground: !IS_PRODUCTION,
       introspection: true,
@@ -50,7 +53,6 @@ import { Services } from './services';
   ],
   controllers: [...Controllers],
   providers: [
-    { provide: APP_FILTER, useClass: AppExceptionFilter },
     ...Resolvers,
     ...Repositories,
     ...EventsHandlers,
@@ -68,7 +70,11 @@ export class MainModule implements NestModule {
     consumer
       .apply(RawBodyMiddleware)
       .forRoutes({
-        path: '/v1/' + REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
+        path:
+          '/' +
+          REST_VERSIONS.V1_TEXT +
+          '/' +
+          REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
         method: RequestMethod.POST
       })
       .apply(JsonBodyMiddleware)

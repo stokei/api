@@ -10,6 +10,7 @@ import {
   CreateOrUpdatePagarmeCustomerDTO,
   CreateOrUpdatePagarmeCustomerResponse
 } from '@/dtos/pagarme/create-or-update-pagarme-customer.dto';
+import { getPagarmeError } from '@/utils/get-pagarme-error';
 
 @Injectable()
 export class CreateOrUpdatePagarmeCustomerService
@@ -44,11 +45,9 @@ export class CreateOrUpdatePagarmeCustomerService
       const response = await pagarmeClient.post('/customers', dataRequest);
       return response?.data;
     } catch (error) {
-      const errorList: string[] =
-        error?.response?.data?.errors &&
-        Object.values(error?.response?.data?.errors);
-      if (errorList?.length) {
-        throw new Error(errorList?.[0]?.[0] || errorList?.[0]);
+      const pagarmeError = getPagarmeError(error?.response?.data?.errors);
+      if (pagarmeError) {
+        throw pagarmeError;
       }
       throw error;
     }

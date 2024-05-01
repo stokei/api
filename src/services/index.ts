@@ -8,6 +8,7 @@ import { CatalogServices } from './catalogs';
 import { CheckoutServices } from './checkouts';
 import { CloudflareServices } from './cloudflare';
 import { ColorServices } from './colors';
+import { ComponentServices } from './components';
 import { CouponServices } from './coupons';
 import { CourseInstructorServices } from './course-instructors';
 import { CourseStudentServices } from './course-students';
@@ -26,6 +27,7 @@ import { ModuleServices } from './modules';
 import { OrderItemServices } from './order-items';
 import { OrderServices } from './orders';
 import { PagarmeServices } from './pagarme';
+import { PageServices } from './pages';
 import { PaymentMethodServices } from './payment-methods';
 import { PaymentServices } from './payments';
 import { PhoneServices } from './phones';
@@ -35,6 +37,7 @@ import { PriceServices } from './prices';
 import { ProductServices } from './products';
 import { RecurringServices } from './recurrings';
 import { RoleServices } from './roles';
+import { SiteServices } from './sites';
 import { SortedItemServices } from './sorted-items';
 import { StripeServices } from './stripe';
 import { SubscriptionContractItemServices } from './subscription-contract-items';
@@ -42,6 +45,7 @@ import { SubscriptionContractServices } from './subscription-contracts';
 import { TusServices } from './tus';
 import { UsageRecordServices } from './usage-records';
 import { VercelServices } from './vercel';
+import { VersionServices } from './versions';
 import { VideoAuthorServices } from './video-authors';
 import { VideoViewServices } from './video-views';
 import { VideoServices } from './videos';
@@ -94,6 +98,10 @@ export const Services = [
   ...OrderItemServices,
   ...OrderServices,
   ...PaymentServices,
+  ...ComponentServices,
+  ...PageServices,
+  ...SiteServices,
+  ...VersionServices,
   ...CouponServices,
   ...StripeServices
 ];

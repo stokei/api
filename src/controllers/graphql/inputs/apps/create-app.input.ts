@@ -8,8 +8,8 @@ export class CreateAppInput {
   @Field()
   email: string;
 
-  @Field()
-  slug: string;
+  @Field({ nullable: true })
+  slug?: string;
 
   @Field()
   currency: string;

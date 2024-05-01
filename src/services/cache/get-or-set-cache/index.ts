@@ -11,12 +11,13 @@ export class GetOrSetCacheService {
     setter: () => Promise<TResponse>,
     expiresIn?: number
   ): Promise<TResponse> {
-    let value: TResponse = await this.cacheManager.get(key);
-    if (!value && setter) {
-      const time = expiresIn >= 0 ? expiresIn : 60 * 1000;
-      value = await setter?.();
-      await this.cacheManager.set(key, value, time);
-    }
-    return value;
+    // let value: TResponse = await this.cacheManager.get(key);
+    // if (!value && setter) {
+    //   const time = expiresIn >= 0 ? expiresIn : 60 * 1000;
+    //   value = await setter?.();
+    //   await this.cacheManager.set(key, value, time);
+    // }
+    // return value;
+    return await setter?.();
   }
 }

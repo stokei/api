@@ -6,8 +6,6 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { UpdateAppCommand } from '@/commands/implements/apps/update-app.command';
 import { ActivateDomainCommand } from '@/commands/implements/domains/activate-domain.command';
-import { AddDomainToAppSubscriptionContractCommand } from '@/commands/implements/domains/add-domain-to-app-subscription-contract.command';
-import { RemoveDomainFromAppSubscriptionContractCommand } from '@/commands/implements/domains/remove-domain-from-app-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { IS_PRODUCTION } from '@/environments';
 import { DomainActivatedEvent } from '@/events/implements/domains/domain-activated.event';
@@ -76,12 +74,7 @@ export class DomainsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
-          new RemoveDomainFromAppSubscriptionContractCommand({
-            domain: event.domain,
-            removedBy: event.removedBy
-          })
-        ];
+        const commands = [];
         return commands;
       }),
       mergeMap((c) => c)
@@ -100,12 +93,7 @@ export class DomainsSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
-          new AddDomainToAppSubscriptionContractCommand({
-            createdBy: event.updatedBy,
-            domain: event.domain.id
-          })
-        ];
+        const commands = [];
         return commands;
       }),
       mergeMap((c) => c)

@@ -125,7 +125,7 @@ export class PlansSeeds
           parent: undefined,
           app: defaultAppId,
           nickname: 'Storage',
-          unit: 'Gb',
+          unit: 'Mb',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,

@@ -5,6 +5,9 @@ export class UpdateDataPriceInput {
   @Field(() => Int, { nullable: true })
   fromAmount?: number;
 
+  @Field(() => String, { nullable: true })
+  nickname?: string;
+
   @Field(() => Int, { nullable: true })
   amount?: number;
 

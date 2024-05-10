@@ -14,7 +14,7 @@ import { SubscriptionContractItemModel } from '@/models/subscription-contract-it
 import { AddItemToAppSubscriptionContractService } from '@/services/apps/add-item-to-app-subscription-contract';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
-import { convertBytesToKilobytes } from '@/utils/convert-bytes-to-kilobytes';
+import { convertBytesToMegabytes } from '@/utils/convert-bytes-to-megabytes';
 
 type AddFileToAppSubscriptionContractCommandKeys =
   keyof AddFileToAppSubscriptionContractCommand;
@@ -57,13 +57,13 @@ export class AddFileToAppSubscriptionContractCommandHandler
       if (!filePrice) {
         throw new PriceNotFoundException();
       }
-
+      const mbytes = convertBytesToMegabytes(file.size);
       const subscriptionContractItem =
         await this.addItemToAppSubscriptionContractService.execute({
           app: file.app,
           price: filePrice.id,
           createdBy: data.createdBy,
-          quantity: convertBytesToKilobytes(file.size)
+          quantity: mbytes >= 1 ? mbytes : 1
         });
       return subscriptionContractItem;
     } catch (error) {

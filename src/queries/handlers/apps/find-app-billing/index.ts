@@ -1,5 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue } from '@stokei/nestjs';
+import dayjs from 'dayjs';
 
 import { DataNotFoundException } from '@/errors';
 import { BillingModel } from '@/models/billing.model';
@@ -122,6 +123,13 @@ export class FindAppBillingQueryHandler
         )
       )?.filter(Boolean);
 
+      // const now = dayjs(Date.now());
+      // const monthDays = now.daysInMonth();
+      // const percentageMonthComplete = now.date() / monthDays;
+      // billingTotal =
+      //   billingTotal > 0
+      //     ? Math.round(billingTotal * percentageMonthComplete)
+      //     : 0;
       return new BillingModel({
         currency,
         total: billingTotal,

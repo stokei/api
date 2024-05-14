@@ -1,6 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { cleanValue } from '@stokei/nestjs';
-import dayjs from 'dayjs';
 
 import { DataNotFoundException } from '@/errors';
 import { BillingModel } from '@/models/billing.model';
@@ -76,17 +75,6 @@ export class FindAppBillingQueryHandler
       if (!prices?.totalCount) {
         return emptyBilling;
       }
-
-      const now = dayjs(Date.now());
-      const daysInMonth = now.daysInMonth();
-      const todayDay = now.date();
-      const calculateBillingToday = (amount: number) => {
-        const percentageMonthComplete = todayDay / daysInMonth;
-        if (!amount) {
-          return 0;
-        }
-        return Math.round(amount * percentageMonthComplete);
-      };
       let billingTotal = 0;
       const currency = prices?.items?.[0]?.currency;
       const items: BillingItemModel[] = (
@@ -120,14 +108,13 @@ export class FindAppBillingQueryHandler
                 });
                 amount = priceTiers?.items?.[0]?.amount || 0;
               }
-              const total = calculateBillingToday(quantity * amount);
-              billingTotal += total;
-              return new BillingItemModel({
+              const billingItem = new BillingItemModel({
                 price: price?.id,
                 quantity,
-                total,
                 unitAmount: amount
               });
+              billingTotal += billingItem.total;
+              return billingItem;
             }
           )
         )

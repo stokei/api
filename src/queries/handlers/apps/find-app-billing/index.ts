@@ -77,6 +77,16 @@ export class FindAppBillingQueryHandler
         return emptyBilling;
       }
 
+      const now = dayjs(Date.now());
+      const daysInMonth = now.daysInMonth();
+      const todayDay = now.date();
+      const calculateBillingToday = (amount: number) => {
+        const percentageMonthComplete = todayDay / daysInMonth;
+        if (!amount) {
+          return 0;
+        }
+        return Math.round(amount * percentageMonthComplete);
+      };
       let billingTotal = 0;
       const currency = prices?.items?.[0]?.currency;
       const items: BillingItemModel[] = (
@@ -110,7 +120,7 @@ export class FindAppBillingQueryHandler
                 });
                 amount = priceTiers?.items?.[0]?.amount || 0;
               }
-              const total = Math.round(quantity * amount);
+              const total = calculateBillingToday(quantity * amount);
               billingTotal += total;
               return new BillingItemModel({
                 price: price?.id,
@@ -122,14 +132,6 @@ export class FindAppBillingQueryHandler
           )
         )
       )?.filter(Boolean);
-
-      // const now = dayjs(Date.now());
-      // const monthDays = now.daysInMonth();
-      // const percentageMonthComplete = now.date() / monthDays;
-      // billingTotal =
-      //   billingTotal > 0
-      //     ? Math.round(billingTotal * percentageMonthComplete)
-      //     : 0;
       return new BillingModel({
         currency,
         total: billingTotal,

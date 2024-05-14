@@ -83,102 +83,6 @@ export class PlansSeeds
     return [
       {
         plan: {
-          name: 'Administradores',
-          app: defaultAppId,
-          icon: 'admin',
-          type: PlanType.ADMIN,
-          createdBy: defaultAccountId
-        },
-        price: {
-          parent: undefined,
-          app: defaultAppId,
-          nickname: 'Administradores',
-          billingScheme: BillingScheme.PER_UNIT,
-          currency: defaultCurrencyId,
-          inventoryType: InventoryType.INFINITE,
-          tiersMode: undefined,
-          unit: 'admin',
-          type: PriceType.RECURRING,
-          amount: getPlanPriceAmountByType(PlanType.ADMIN),
-          fromAmount: undefined,
-          quantity: undefined,
-          tiers: undefined,
-          createdBy: defaultAccountId,
-          recurring: {
-            app: defaultAppId,
-            interval: IntervalType.MONTH,
-            intervalCount: 1,
-            usageType: UsageType.LICENSED,
-            createdBy: defaultAccountId
-          }
-        }
-      },
-      {
-        plan: {
-          name: 'Domínios',
-          app: defaultAppId,
-          icon: 'domain',
-          type: PlanType.DOMAIN,
-          createdBy: defaultAccountId
-        },
-        price: {
-          parent: undefined,
-          app: defaultAppId,
-          nickname: 'Domínios',
-          unit: 'domain',
-          billingScheme: BillingScheme.PER_UNIT,
-          currency: defaultCurrencyId,
-          inventoryType: InventoryType.INFINITE,
-          tiersMode: undefined,
-          type: PriceType.RECURRING,
-          amount: getPlanPriceAmountByType(PlanType.DOMAIN),
-          fromAmount: undefined,
-          quantity: undefined,
-          tiers: undefined,
-          createdBy: defaultAccountId,
-          recurring: {
-            app: defaultAppId,
-            interval: IntervalType.MONTH,
-            intervalCount: 1,
-            usageType: UsageType.LICENSED,
-            createdBy: defaultAccountId
-          }
-        }
-      },
-      {
-        plan: {
-          name: 'Instrutores',
-          app: defaultAppId,
-          icon: 'instructor',
-          type: PlanType.INSTRUCTOR,
-          createdBy: defaultAccountId
-        },
-        price: {
-          parent: undefined,
-          app: defaultAppId,
-          nickname: 'Instrutores',
-          unit: 'instructor',
-          billingScheme: BillingScheme.PER_UNIT,
-          currency: defaultCurrencyId,
-          inventoryType: InventoryType.INFINITE,
-          tiersMode: undefined,
-          type: PriceType.RECURRING,
-          amount: getPlanPriceAmountByType(PlanType.INSTRUCTOR),
-          fromAmount: undefined,
-          quantity: undefined,
-          tiers: undefined,
-          createdBy: defaultAccountId,
-          recurring: {
-            app: defaultAppId,
-            interval: IntervalType.MONTH,
-            intervalCount: 1,
-            usageType: UsageType.LICENSED,
-            createdBy: defaultAccountId
-          }
-        }
-      },
-      {
-        plan: {
           name: 'Videos - Minutos Armazenados',
           icon: 'video',
           app: defaultAppId,
@@ -221,7 +125,7 @@ export class PlansSeeds
           parent: undefined,
           app: defaultAppId,
           nickname: 'Storage',
-          unit: 'Gb',
+          unit: 'Mb',
           billingScheme: BillingScheme.PER_UNIT,
           currency: defaultCurrencyId,
           inventoryType: InventoryType.INFINITE,
@@ -241,44 +145,6 @@ export class PlansSeeds
           }
         }
       }
-      // {
-      //   plan: {
-      //     name: 'Videos - Minutos Vizualizados',
-      //     icon: 'video',
-      //     app: defaultAppId,
-      //     type: PlanType.VIDEO_VIEW,
-      //     createdBy: defaultAccountId
-      //   },
-      //   price: {
-      //     parent: undefined,
-      //     app: defaultAppId,
-      //     nickname: 'Videos - Minutos Vizualizados',
-      //     unit: 'Min',
-      //     billingScheme: BillingScheme.TIERED,
-      //     currency: defaultCurrencyId,
-      //     inventoryType: InventoryType.INFINITE,
-      //     tiersMode: TiersMode.VOLUME,
-      //     type: PriceType.RECURRING,
-      //     fromAmount: undefined,
-      //     quantity: undefined,
-      //     tiers: [
-      //       {
-      //         app: defaultAppId,
-      //         createdBy: defaultAccountId,
-      //         amount: getPlanPriceAmountByType(PlanType.VIDEO_VIEW),
-      //         infinite: true
-      //       }
-      //     ],
-      //     createdBy: defaultAccountId,
-      //     recurring: {
-      //       app: defaultAppId,
-      //       interval: IntervalType.MONTH,
-      //       intervalCount: 1,
-      //       usageType: UsageType.METERED,
-      //       createdBy: defaultAccountId
-      //     }
-      //   }
-      // },
     ];
   }
 }

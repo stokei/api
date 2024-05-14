@@ -75,7 +75,6 @@ export class FindAppBillingQueryHandler
       if (!prices?.totalCount) {
         return emptyBilling;
       }
-
       let billingTotal = 0;
       const currency = prices?.items?.[0]?.currency;
       const items: BillingItemModel[] = (
@@ -109,19 +108,17 @@ export class FindAppBillingQueryHandler
                 });
                 amount = priceTiers?.items?.[0]?.amount || 0;
               }
-              const total = Math.round(quantity * amount);
-              billingTotal += total;
-              return new BillingItemModel({
+              const billingItem = new BillingItemModel({
                 price: price?.id,
                 quantity,
-                total,
                 unitAmount: amount
               });
+              billingTotal += billingItem.total;
+              return billingItem;
             }
           )
         )
       )?.filter(Boolean);
-
       return new BillingModel({
         currency,
         total: billingTotal,

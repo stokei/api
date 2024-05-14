@@ -1,4 +1,5 @@
 export interface UpdatePriceDataDTO {
+  nickname?: string;
   fromAmount?: number;
   amount?: number;
   quantity?: number;

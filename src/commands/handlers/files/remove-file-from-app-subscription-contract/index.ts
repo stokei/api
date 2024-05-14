@@ -12,7 +12,7 @@ import {
 import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
 import { RemoveItemFromAppSubscriptionContractService } from '@/services/apps/remove-item-from-app-subscription-contract';
 import { FindPlanPriceByTypeService } from '@/services/plans/find-plan-price-by-type';
-import { convertBytesToKilobytes } from '@/utils/convert-bytes-to-kilobytes';
+import { convertBytesToMegabytes } from '@/utils/convert-bytes-to-megabytes';
 
 type RemoveFileFromAppSubscriptionContractCommandKeys =
   keyof RemoveFileFromAppSubscriptionContractCommand;
@@ -51,9 +51,10 @@ export class RemoveFileFromAppSubscriptionContractCommandHandler
         throw new PriceNotFoundException();
       }
 
+      const mbytes = convertBytesToMegabytes(data.file.size);
       const subscriptionContractItem =
         await this.removeItemFromAppSubscriptionContractService.execute({
-          quantity: convertBytesToKilobytes(data.file.size),
+          quantity: mbytes >= 1 ? mbytes : 1,
           app: data.file.app,
           price: filePrice.id,
           removedBy: data.removedBy

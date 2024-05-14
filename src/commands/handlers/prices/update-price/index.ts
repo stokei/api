@@ -72,6 +72,7 @@ export class UpdatePriceCommandHandler
         price: cleanValue(command?.where?.price)
       }),
       data: cleanObject({
+        nickname: cleanValue(command?.data?.nickname),
         amount: cleanValueNumber(command?.data?.amount),
         fromAmount: cleanValueNumber(command?.data?.fromAmount),
         quantity: cleanValueNumber(command?.data?.quantity),

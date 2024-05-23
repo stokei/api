@@ -5,6 +5,7 @@ import { CreatePaymentMethodPixService } from './create-payment-method-pix';
 import { CreatePaymentMethodStripeService } from './create-payment-method-stripe';
 import { FindAllPaymentMethodsService } from './find-all-payment-methods';
 import { FindPaymentMethodByIdService } from './find-payment-method-by-id';
+import { FindPaymentMethodsMostUsedByPeriodService } from './find-payment-methods-most-used-by-period';
 import { RemovePaymentMethodService } from './remove-payment-method';
 import { UpdatePaymentMethodService } from './update-payment-method';
 
@@ -17,5 +18,6 @@ export const PaymentMethodServices = [
   FindAllPaymentMethodsService,
   UpdatePaymentMethodService,
   CreatePaymentMethodCardByCardHashService,
-  CreatePaymentMethodStripeService
+  CreatePaymentMethodStripeService,
+  FindPaymentMethodsMostUsedByPeriodService
 ];

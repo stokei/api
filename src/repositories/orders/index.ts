@@ -5,6 +5,7 @@ import { CountOrdersRepository } from './count-orders';
 import { CreateOrderRepository } from './create-order';
 import { FindAllOrdersRepository } from './find-all-orders';
 import { FindOrderByIdRepository } from './find-order-by-id';
+import { FindOrdersFrequencyByPeriodRepository } from './find-orders-frequency-by-period';
 import { RemoveOrderRepository } from './remove-order';
 import { UpdateOrderRepository } from './update-order';
 
@@ -17,5 +18,6 @@ export const OrdersRepositories = [
   UpdateOrderRepository,
   ChangeOrderToPaidRepository,
   ChangeOrderToPaymentErrorRepository,
-  ChangeOrderToPendingRepository
+  ChangeOrderToPendingRepository,
+  FindOrdersFrequencyByPeriodRepository
 ];

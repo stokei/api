@@ -1,7 +1,7 @@
-const baseURL = "/me";
+const baseURL = '/me';
 
 export const routesMe = {
-  home: baseURL + "/account",
-  account: baseURL + "/account",
-  password: baseURL + "/password",
+  home: baseURL + '/account',
+  account: baseURL + '/account',
+  password: baseURL + '/password'
 };

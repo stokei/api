@@ -2,11 +2,5 @@
   "version": 2,
   "buildCommand": "yarn db:generate && nest build && yarn db:migration:run && yarn db:seeds:run",
   "installCommand": "yarn install",
-  "builds": [
-    {
-      "src": "dist/main.js",
-      "use": "@vercel/node"
-    }
-  ],
   "rewrites": [{ "source": "/(.*)", "destination": "dist/main.js" }]
 }

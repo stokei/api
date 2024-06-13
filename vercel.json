@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "yarn db:generate && nest build && yarn db:migration:run",
+  "buildCommand": "yarn db:generate && nest build",
   "installCommand": "yarn install",
   "outputDirectory": "dist",
   "rewrites": [{ "source": "/(.*)", "destination": "dist/main.js" }]

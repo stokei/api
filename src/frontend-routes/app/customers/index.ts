@@ -1,40 +1,40 @@
-const baseURL = "/customers";
+const baseURL = '/customers';
 
 export const routesCustomers = {
-  home: baseURL + "/courses",
-  products: baseURL + "/products",
-  courses: baseURL + "/courses",
-  materials: baseURL + "/materials",
+  home: baseURL + '/courses',
+  products: baseURL + '/products',
+  courses: baseURL + '/courses',
+  materials: baseURL + '/materials',
   material: ({ material }: { material: string }) =>
-    baseURL + "/materials/" + material,
+    baseURL + '/materials/' + material,
   course: ({ course }: { course?: string }) => {
-    const baseCourseURL = baseURL + "/courses/" + course;
+    const baseCourseURL = baseURL + '/courses/' + course;
 
     return {
       home: baseCourseURL,
-      modules: baseCourseURL + "/modules",
-      videos: baseCourseURL + "/videos",
+      modules: baseCourseURL + '/modules',
+      videos: baseCourseURL + '/videos',
       video: ({ video }: { video: string }) =>
-        baseCourseURL + "/videos/" + video,
+        baseCourseURL + '/videos/' + video,
       materials: {
-        home: baseCourseURL + "/materials",
+        home: baseCourseURL + '/materials',
         view: ({ material }: { material: string }) => {
-          const baseMaterialURL = baseCourseURL + "/materials/" + material;
+          const baseMaterialURL = baseCourseURL + '/materials/' + material;
           return {
-            home: baseMaterialURL,
+            home: baseMaterialURL
           };
-        },
-      },
+        }
+      }
     };
   },
   subscriptions: {
-    home: baseURL + "/subscriptions",
+    home: baseURL + '/subscriptions',
     subscription: ({ subscription }: { subscription?: string }) =>
-      baseURL + "/subscriptions/" + subscription,
+      baseURL + '/subscriptions/' + subscription
   },
   orders: {
-    home: baseURL + "/orders",
-    order: ({ order }: { order?: string }) => baseURL + "/orders/" + order,
+    home: baseURL + '/orders',
+    order: ({ order }: { order?: string }) => baseURL + '/orders/' + order
   },
-  invoices: baseURL + "/invoices",
+  invoices: baseURL + '/invoices'
 };

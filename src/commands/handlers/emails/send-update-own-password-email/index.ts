@@ -8,6 +8,7 @@ import {
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
+import { frontendRoutes } from '@/frontend-routes';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppEmailInformationsService } from '@/services/apps/find-app-email-informations';
 import { SendEmailService } from '@/services/emails/send-email';
@@ -60,7 +61,7 @@ export class SendUpdateOwnPasswordEmailCommandHandler
 
       const buttonUpdateOwnPasswordLink = appendPathnameToURL(
         baseAppURL,
-        `auth/password/change?code=${toAccount.forgotPasswordCode}`
+        `${frontendRoutes.appRoutes.auth.changePassword}?code=${toAccount.forgotPasswordCode}`
       );
       return await this.sendEmailService.execute({
         route: '/emails/update-own-password',

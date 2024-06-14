@@ -5,6 +5,7 @@ import { CreateAccessCommand } from '@/commands/implements/accesses/create-acces
 import { LoginCommand } from '@/commands/implements/accounts/login.command';
 import { defaultAppId } from '@/constants/default-app-id';
 import { roleName } from '@/constants/role-name';
+import { AccountStatus } from '@/enums/account-status.enum';
 import { PASSWORD_SECRET_KEY } from '@/environments';
 import {
   AccessNotFoundException,
@@ -86,11 +87,13 @@ export class LoginCommandHandler implements ICommandHandler<LoginCommand> {
     if (!account || !account?.active) {
       throw new InvalidEmailOrPasswordException();
     }
-    const isValidPassword = comparePassword({
-      textPassword: data.password,
-      encryptedPassword: account.password,
-      secretKey: PASSWORD_SECRET_KEY
-    });
+    const isValidPassword =
+      account.status === AccountStatus.CONFIGURATION_PENDING ||
+      comparePassword({
+        textPassword: data.password,
+        encryptedPassword: account.password,
+        secretKey: PASSWORD_SECRET_KEY
+      });
     if (!isValidPassword) {
       throw new InvalidEmailOrPasswordException();
     }

@@ -7,8 +7,8 @@ import {
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { SendSubscriptionActivatedEmailCommand } from '@/commands/implements/emails/send-subscription-activated-email.command';
-import { SendSubscriptionCanceledEmailCommand } from '@/commands/implements/emails/send-subscription-canceled-email.command';
+import { SendSubscriptionsCustomersSubscriptionActivatedEmailCommand } from '@/commands/implements/emails/subscriptions/customers/send-subscription-activated-email.command';
+import { SendSubscriptionsCustomersSubscriptionCanceledEmailCommand } from '@/commands/implements/emails/subscriptions/customers/send-subscription-canceled-email.command';
 import { ActivateSubscriptionContractItemsCommand } from '@/commands/implements/subscription-contract-items/activate-subscription-contract-items.command';
 import { CancelSubscriptionContractItemsCommand } from '@/commands/implements/subscription-contract-items/cancel-subscription-contract-items.command';
 import { ActivateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/activate-subscription-contract.command';
@@ -159,7 +159,7 @@ export class SubscriptionContractsSagas {
             subscriptionContract: event.subscriptionContract.id,
             updatedBy: event.updatedBy
           }),
-          new SendSubscriptionActivatedEmailCommand({
+          new SendSubscriptionsCustomersSubscriptionActivatedEmailCommand({
             subscriptionContract: event.subscriptionContract,
             app: event.subscriptionContract.app,
             toAccount: event.subscriptionContract.parent,
@@ -191,7 +191,7 @@ export class SubscriptionContractsSagas {
             subscriptionContract: event.subscriptionContract.id,
             updatedBy: event.updatedBy
           }),
-          new SendSubscriptionCanceledEmailCommand({
+          new SendSubscriptionsCustomersSubscriptionCanceledEmailCommand({
             subscriptionContract: event.subscriptionContract,
             app: event.subscriptionContract.app,
             toAccount: event.subscriptionContract.parent,

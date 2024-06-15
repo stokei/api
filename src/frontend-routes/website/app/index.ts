@@ -3,130 +3,130 @@ export const routesApp = (data: { appId?: string }) => {
   return {
     home: baseURL,
     financial: {
-      home: baseURL + "/financial",
+      home: baseURL + '/financial'
     },
     coupons: {
-      home: baseURL + "/coupons",
+      home: baseURL + '/coupons'
     },
     subscriptions: {
-      home: baseURL + "/subscriptions",
-      add: baseURL + "/subscriptions/add",
+      home: baseURL + '/subscriptions',
+      add: baseURL + '/subscriptions/add',
       subscription: ({ subscription }: { subscription?: string }) =>
-        baseURL + "/subscriptions/view/" + subscription,
+        baseURL + '/subscriptions/view/' + subscription
     },
     catalog: ({ catalog }: { catalog?: string }) => {
-      const baseCatalogURL = baseURL + "/catalogs/" + catalog;
+      const baseCatalogURL = baseURL + '/catalogs/' + catalog;
       return {
         home: baseCatalogURL,
-        products: baseCatalogURL + "/products",
+        products: baseCatalogURL + '/products'
       };
     },
     catalogs: {
-      home: baseURL + "/catalogs",
-      add: baseURL + "/catalogs/add",
+      home: baseURL + '/catalogs',
+      add: baseURL + '/catalogs/add'
     },
     onboardings: {
-      home: baseURL + "/onboardings",
+      home: baseURL + '/onboardings',
       pagarme: {
-        home: baseURL + "/onboardings/pagarme",
-        callback: baseURL + "/onboardings/pagarme/callback",
-      },
+        home: baseURL + '/onboardings/pagarme',
+        callback: baseURL + '/onboardings/pagarme/callback'
+      }
     },
-    courses: baseURL + "/courses",
+    courses: baseURL + '/courses',
     course: ({ course }: { course?: string }) => {
-      const baseCourseURL = baseURL + "/course/" + (course || "");
+      const baseCourseURL = baseURL + '/course/' + (course || '');
       return {
         home: baseCourseURL,
-        instructors: baseCourseURL + "/instructors",
+        instructors: baseCourseURL + '/instructors',
         modules: {
-          home: baseCourseURL + "/modules",
+          home: baseCourseURL + '/modules',
           addVideo: ({ module }: { module: string }) =>
-            baseCourseURL + "/modules/" + module + "/videos/add",
+            baseCourseURL + '/modules/' + module + '/videos/add',
           editVideo: ({ module, video }: { module: string; video: string }) =>
-            baseCourseURL + "/modules/" + module + "/videos/" + video + "/edit",
+            baseCourseURL + '/modules/' + module + '/videos/' + video + '/edit'
         },
-        students: baseCourseURL + "/students",
+        students: baseCourseURL + '/students',
         settings: {
-          home: baseCourseURL + "/settings",
+          home: baseCourseURL + '/settings'
         },
         material: ({ material }: { material: string }) => {
-          const baseMaterialURL = baseCourseURL + "/materials/view/" + material;
+          const baseMaterialURL = baseCourseURL + '/materials/view/' + material;
           return {
-            home: baseMaterialURL,
+            home: baseMaterialURL
           };
         },
         materials: {
-          home: baseCourseURL + "/materials",
-          add: baseCourseURL + "/materials/add",
-        },
+          home: baseCourseURL + '/materials',
+          add: baseCourseURL + '/materials/add'
+        }
       };
     },
-    invoices: baseURL + "/invoices",
+    invoices: baseURL + '/invoices',
     member: ({ member }: { member?: string }) => {
-      const baseMemberURL = baseURL + "/members/" + (member || "");
+      const baseMemberURL = baseURL + '/members/' + (member || '');
       return {
-        home: baseMemberURL,
+        home: baseMemberURL
       };
     },
-    members: baseURL + "/members",
+    members: baseURL + '/members',
     product: ({ product }: { product: string }) => {
-      const baseProductURL = baseURL + "/products/" + product;
+      const baseProductURL = baseURL + '/products/' + product;
       return {
         home: baseProductURL,
-        prices: baseProductURL + "/prices",
-        features: baseProductURL + "/features",
+        prices: baseProductURL + '/prices',
+        features: baseProductURL + '/features'
       };
     },
     products: {
-      home: baseURL + "/products",
-      add: baseURL + "/products/add",
+      home: baseURL + '/products',
+      add: baseURL + '/products/add'
     },
     sites: {
-      home: baseURL + "/sites",
-      add: baseURL + "/sites/add",
+      home: baseURL + '/sites',
+      add: baseURL + '/sites/add'
     },
     site: ({ site }: { site: string }) => {
-      const baseSiteURL = baseURL + "/sites/" + site;
+      const baseSiteURL = baseURL + '/sites/' + site;
       return {
-        home: baseSiteURL + "/pages",
-        pages: baseSiteURL + "/pages",
-        domains: baseSiteURL + "/domains",
-        metadata: baseSiteURL + "/metadata",
+        home: baseSiteURL + '/pages',
+        pages: baseSiteURL + '/pages',
+        domains: baseSiteURL + '/domains',
+        metadata: baseSiteURL + '/metadata',
         page: ({ page, version }: { page: string; version?: string }) => {
           const basePageURL =
             baseSiteURL +
-            "/pages/" +
+            '/pages/' +
             page +
-            (version ? "?versionId=" + version : "");
+            (version ? '?versionId=' + version : '');
           return {
-            home: basePageURL,
+            home: basePageURL
           };
-        },
+        }
       };
     },
     orders: {
-      home: baseURL + "/orders",
-      order: ({ order }: { order?: string }) => baseURL + "/orders/" + order,
+      home: baseURL + '/orders',
+      order: ({ order }: { order?: string }) => baseURL + '/orders/' + order
     },
     payments: {
-      home: baseURL + "/payments",
+      home: baseURL + '/payments',
       payment: ({ payment }: { payment?: string }) =>
-        baseURL + "/payments/" + payment,
+        baseURL + '/payments/' + payment
     },
     material: ({ material }: { material: string }) => {
-      const baseMaterialURL = baseURL + "/materials/view/" + material;
+      const baseMaterialURL = baseURL + '/materials/view/' + material;
       return {
-        home: baseMaterialURL,
+        home: baseMaterialURL
       };
     },
     materials: {
-      home: baseURL + "/materials",
-      add: baseURL + "/materials/add",
+      home: baseURL + '/materials',
+      add: baseURL + '/materials/add'
     },
     settings: {
-      home: baseURL + "/settings",
-      billing: baseURL + "/settings/billing",
-      colors: baseURL + "/settings/colors",
-    },
+      home: baseURL + '/settings',
+      billing: baseURL + '/settings/billing',
+      colors: baseURL + '/settings/colors'
+    }
   };
 };

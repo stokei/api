@@ -1,6 +1,6 @@
 import { ICommand } from '@nestjs/cqrs';
 
-import { SendPaymentsCustomersPaymentErrorEmailDTO } from '@/dtos/emails/send-payment-error-email.dto';
+import { SendPaymentsCustomersPaymentErrorEmailDTO } from '@/dtos/emails/payments/customers/send-payment-error-email.dto';
 import { PaymentModel } from '@/models/payment.model';
 
 export class SendPaymentsCustomersPaymentErrorEmailCommand

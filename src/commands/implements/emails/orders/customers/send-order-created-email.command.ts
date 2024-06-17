@@ -1,6 +1,6 @@
 import { ICommand } from '@nestjs/cqrs';
 
-import { SendOrdersCustomersOrderCreatedEmailDTO } from '@/dtos/emails/send-order-created-email.dto';
+import { SendOrdersCustomersOrderCreatedEmailDTO } from '@/dtos/emails/orders/customers/send-order-created-email.dto';
 import { OrderModel } from '@/models/order.model';
 
 export class SendOrdersCustomersOrderCreatedEmailCommand

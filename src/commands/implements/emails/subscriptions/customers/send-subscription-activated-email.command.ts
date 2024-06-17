@@ -1,6 +1,6 @@
 import { ICommand } from '@nestjs/cqrs';
 
-import { SendSubscriptionsCustomersSubscriptionActivatedEmailDTO } from '@/dtos/emails/send-subscription-activated-email.dto';
+import { SendSubscriptionsCustomersSubscriptionActivatedEmailDTO } from '@/dtos/emails/subscriptions/customers/send-subscription-activated-email.dto';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 
 export class SendSubscriptionsCustomersSubscriptionActivatedEmailCommand

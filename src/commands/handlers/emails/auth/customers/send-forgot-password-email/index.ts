@@ -8,11 +8,8 @@ import {
   DataNotFoundException,
   ParamNotFoundException
 } from '@/errors';
-import { frontendRoutes } from '@/frontend-routes';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
-import { FindAppEmailInformationsService } from '@/services/apps/find-app-email-informations';
 import { SendEmailService } from '@/services/emails/send-email';
-import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 
 type SendAuthCustomersForgotPasswordEmailCommandKeys =
   keyof SendAuthCustomersForgotPasswordEmailCommand;
@@ -26,7 +23,6 @@ export class SendAuthCustomersForgotPasswordEmailCommandHandler
   );
   constructor(
     private readonly sendEmailService: SendEmailService,
-    private readonly findAppEmailInformationsService: FindAppEmailInformationsService,
     private readonly findAccountByIdService: FindAccountByIdService
   ) {}
 
@@ -53,23 +49,14 @@ export class SendAuthCustomersForgotPasswordEmailCommandHandler
       if (!toAccount) {
         throw new AppNotFoundException();
       }
-      const { baseAppURL } = await this.findAppEmailInformationsService.execute(
-        {
-          app: data.app
-        }
-      );
 
-      const buttonForgotPasswordLink = appendPathnameToURL(
-        baseAppURL,
-        `${frontendRoutes.appRoutes.auth.changePassword}?code=${toAccount.forgotPasswordCode}`
-      );
       return await this.sendEmailService.execute({
         route: '/auth/customers/forgot-password',
         to: toAccount.email,
         app: data.app,
         createdBy: data.createdBy,
         data: {
-          buttonForgotPasswordLink
+          forgotPasswordCode: toAccount.forgotPasswordCode
         }
       });
     } catch (error) {

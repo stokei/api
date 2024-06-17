@@ -138,6 +138,7 @@ export class SendOrdersCustomersOrderCreatedEmailCommandHandler
         app: data.app,
         createdBy: data.createdBy,
         data: {
+          orderId: data.order.id,
           subtotalAmount: convertAmountToCurrencyString({
             amount: data.order.subtotalAmount,
             currency: currency.id,

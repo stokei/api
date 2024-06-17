@@ -1,6 +1,6 @@
-const baseURL = "/checkout";
+const baseURL = '/checkout';
 
 export const routesCheckout = {
-  callback: baseURL + "/callback",
-  home: baseURL,
+  callback: baseURL + '/callback',
+  home: baseURL
 };

@@ -1,5 +1,5 @@
-const baseURL = "/store";
+const baseURL = '/store';
 
 export const routesStore = {
-  home: baseURL,
+  home: baseURL
 };

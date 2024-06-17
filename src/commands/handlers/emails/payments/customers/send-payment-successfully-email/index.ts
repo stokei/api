@@ -72,6 +72,7 @@ export class SendPaymentsCustomersPaymentSuccessfullyEmailCommandHandler
         app: data.app,
         createdBy: data.createdBy,
         data: {
+          paymentId: data.payment.id,
           subtotalAmount: convertAmountToCurrencyString({
             amount: data.payment.subtotalAmount,
             currency: currency.id,

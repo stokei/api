@@ -160,6 +160,7 @@ export class SendSubscriptionsCustomersSubscriptionCanceledEmailCommandHandler
         app: data.app,
         createdBy: data.createdBy,
         data: {
+          subscriptionId: data.subscriptionContract.id,
           items
         }
       });

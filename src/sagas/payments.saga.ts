@@ -4,8 +4,8 @@ import { hiddenPrivateDataFromObject, splitServiceId } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { SendPaymentErrorEmailCommand } from '@/commands/implements/emails/send-payment-error-email.command';
-import { SendPaymentSuccessfullyEmailCommand } from '@/commands/implements/emails/send-payment-successfully-email.command';
+import { SendPaymentsCustomersPaymentErrorEmailCommand } from '@/commands/implements/emails/payments/customers/send-payment-error-email.command';
+import { SendPaymentsCustomersPaymentSuccessfullyEmailCommand } from '@/commands/implements/emails/payments/customers/send-payment-successfully-email.command';
 import { ChangeInvoiceToPaidCommand } from '@/commands/implements/invoices/change-invoice-to-paid.command';
 import { ChangeInvoiceToPaymentErrorCommand } from '@/commands/implements/invoices/change-invoice-to-payment-error.command';
 import { ChangeOrderToPaidCommand } from '@/commands/implements/orders/change-order-to-paid.command';
@@ -99,7 +99,7 @@ export class PaymentsSagas {
             )
         );
         const commands: ICommand[] = [
-          new SendPaymentErrorEmailCommand({
+          new SendPaymentsCustomersPaymentErrorEmailCommand({
             payment: event.payment,
             app: event.payment.app,
             toAccount: event.payment.createdBy,
@@ -144,7 +144,7 @@ export class PaymentsSagas {
             )
         );
         const commands: ICommand[] = [
-          new SendPaymentSuccessfullyEmailCommand({
+          new SendPaymentsCustomersPaymentSuccessfullyEmailCommand({
             payment: event.payment,
             app: event.payment.app,
             toAccount: event.payment.createdBy,

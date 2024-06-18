@@ -1,21 +1,21 @@
-import { SendAccountConfigurationPendingEmailCommandHandler } from './send-account-configuration-pending-email';
+import { AuthCustomersEmailCommandHandlers } from './auth/customers';
+import { AuthSellersEmailCommandHandlers } from './auth/sellers';
+import { OrdersCustomersEmailCommandHandlers } from './orders/customers';
+import { OrdersSellersEmailCommandHandlers } from './orders/sellers';
+import { PaymentsCustomersEmailCommandHandlers } from './payments/customers';
+import { PaymentsSellersEmailCommandHandlers } from './payments/sellers';
 import { SendEmailCommandHandler } from './send-email';
-import { SendForgotPasswordEmailCommandHandler } from './send-forgot-password-email';
-import { SendOrderCreatedEmailCommandHandler } from './send-order-created-email';
-import { SendPaymentErrorEmailCommandHandler } from './send-payment-error-email';
-import { SendPaymentSuccessfullyEmailCommandHandler } from './send-payment-successfully-email';
-import { SendSubscriptionActivatedEmailCommandHandler } from './send-subscription-activated-email';
-import { SendSubscriptionCanceledEmailCommandHandler } from './send-subscription-canceled-email';
-import { SendUpdateOwnPasswordEmailCommandHandler } from './send-update-own-password-email';
+import { SubscriptionsCustomersEmailCommandHandlers } from './subscriptions/customers';
+import { SubscriptionsSellersEmailCommandHandlers } from './subscriptions/sellers';
 
 export const EmailCommandHandlers = [
-  SendAccountConfigurationPendingEmailCommandHandler,
   SendEmailCommandHandler,
-  SendForgotPasswordEmailCommandHandler,
-  SendOrderCreatedEmailCommandHandler,
-  SendPaymentErrorEmailCommandHandler,
-  SendPaymentSuccessfullyEmailCommandHandler,
-  SendSubscriptionActivatedEmailCommandHandler,
-  SendSubscriptionCanceledEmailCommandHandler,
-  SendUpdateOwnPasswordEmailCommandHandler
+  ...AuthCustomersEmailCommandHandlers,
+  ...AuthSellersEmailCommandHandlers,
+  ...OrdersCustomersEmailCommandHandlers,
+  ...OrdersSellersEmailCommandHandlers,
+  ...PaymentsCustomersEmailCommandHandlers,
+  ...PaymentsSellersEmailCommandHandlers,
+  ...SubscriptionsCustomersEmailCommandHandlers,
+  ...SubscriptionsSellersEmailCommandHandlers
 ];

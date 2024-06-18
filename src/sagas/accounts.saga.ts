@@ -4,9 +4,10 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
-import { SendAccountConfigurationPendingEmailCommand } from '@/commands/implements/emails/send-account-configuration-pending-email.command';
-import { SendForgotPasswordEmailCommand } from '@/commands/implements/emails/send-forgot-password-email.command';
-import { SendUpdateOwnPasswordEmailCommand } from '@/commands/implements/emails/send-update-own-password-email.command';
+import { SendAuthCustomersAccountConfigurationPendingEmailCommand } from '@/commands/implements/emails/auth/customers/send-account-configuration-pending-email.command';
+import { SendAuthCustomersForgotPasswordEmailCommand } from '@/commands/implements/emails/auth/customers/send-forgot-password-email.command';
+import { SendAuthCustomersUpdateOwnPasswordEmailCommand } from '@/commands/implements/emails/auth/customers/send-update-own-password-email.command';
+import { SendAuthSellersNewMemberEmailCommand } from '@/commands/implements/emails/auth/sellers/send-new-member-email.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AccountStatus } from '@/enums/account-status.enum';
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
@@ -40,9 +41,17 @@ export class AccountsSagas {
         const commands: ICommand[] = [];
         if (event.account.status === AccountStatus.CONFIGURATION_PENDING) {
           commands.push(
-            new SendAccountConfigurationPendingEmailCommand({
-              toAccount: event.account.id,
+            new SendAuthCustomersAccountConfigurationPendingEmailCommand({
+              toAccount: event.account,
               plainTextPassword: event.plainTextPassword,
+              app: event.account.app,
+              createdBy: event.createdBy
+            })
+          );
+        } else {
+          commands.push(
+            new SendAuthSellersNewMemberEmailCommand({
+              account: event.account,
               app: event.account.app,
               createdBy: event.createdBy
             })
@@ -124,9 +133,9 @@ export class AccountsSagas {
             )
         );
         const commands = [
-          new SendForgotPasswordEmailCommand({
+          new SendAuthCustomersForgotPasswordEmailCommand({
             app: event.account.app,
-            toAccount: event.account.id,
+            toAccount: event.account,
             createdBy: event.account.createdBy
           })
         ];
@@ -151,9 +160,9 @@ export class AccountsSagas {
             )
         );
         const commands = [
-          new SendUpdateOwnPasswordEmailCommand({
+          new SendAuthCustomersUpdateOwnPasswordEmailCommand({
             app: event.account.app,
-            toAccount: event.account.id,
+            toAccount: event.account,
             createdBy: event.account.createdBy
           })
         ];

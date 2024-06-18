@@ -21,6 +21,10 @@ export const PASSWORD_SECRET_KEY: string = process.env.PASSWORD_SECRET_KEY;
 
 export const CHECKOUT_RESPONSE_URL: string = process.env.CHECKOUT_RESPONSE_URL;
 
+export const APPLICATION_FEE_PERCENTAGE = process.env.APPLICATION_FEE_PERCENTAGE
+  ? parseFloat(process.env.APPLICATION_FEE_PERCENTAGE)
+  : 0;
+
 export const STRIPE_ONBOARDING_RETURN_URL: string =
   process.env.STRIPE_ONBOARDING_RETURN_URL;
 export const STRIPE_ONBOARDING_REFRESH_URL: string =

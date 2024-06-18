@@ -6,6 +6,9 @@ export class UpdateDataAppInput {
   name?: string;
 
   @Field({ nullable: true })
+  email?: string;
+
+  @Field({ nullable: true })
   description?: string;
 
   @Field({ nullable: true })

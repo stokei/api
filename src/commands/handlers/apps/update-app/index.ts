@@ -85,6 +85,7 @@ export class UpdateAppCommandHandler
       }),
       data: cleanObject({
         name: cleanValue(command?.data?.name),
+        email: cleanValue(command?.data?.email),
         description: cleanValue(command?.data?.description),
         defaultDomain: cleanValue(command?.data?.defaultDomain),
         avatar: cleanValue(command?.data?.avatar),

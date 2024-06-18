@@ -7,6 +7,7 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 import { SendAuthCustomersAccountConfigurationPendingEmailCommand } from '@/commands/implements/emails/auth/customers/send-account-configuration-pending-email.command';
 import { SendAuthCustomersForgotPasswordEmailCommand } from '@/commands/implements/emails/auth/customers/send-forgot-password-email.command';
 import { SendAuthCustomersUpdateOwnPasswordEmailCommand } from '@/commands/implements/emails/auth/customers/send-update-own-password-email.command';
+import { SendAuthSellersNewMemberEmailCommand } from '@/commands/implements/emails/auth/sellers/send-new-member-email.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { AccountStatus } from '@/enums/account-status.enum';
 import { AccountCreatedEvent } from '@/events/implements/accounts/account-created.event';
@@ -41,8 +42,16 @@ export class AccountsSagas {
         if (event.account.status === AccountStatus.CONFIGURATION_PENDING) {
           commands.push(
             new SendAuthCustomersAccountConfigurationPendingEmailCommand({
-              toAccount: event.account.id,
+              toAccount: event.account,
               plainTextPassword: event.plainTextPassword,
+              app: event.account.app,
+              createdBy: event.createdBy
+            })
+          );
+        } else {
+          commands.push(
+            new SendAuthSellersNewMemberEmailCommand({
+              account: event.account,
               app: event.account.app,
               createdBy: event.createdBy
             })
@@ -126,7 +135,7 @@ export class AccountsSagas {
         const commands = [
           new SendAuthCustomersForgotPasswordEmailCommand({
             app: event.account.app,
-            toAccount: event.account.id,
+            toAccount: event.account,
             createdBy: event.account.createdBy
           })
         ];
@@ -153,7 +162,7 @@ export class AccountsSagas {
         const commands = [
           new SendAuthCustomersUpdateOwnPasswordEmailCommand({
             app: event.account.app,
-            toAccount: event.account.id,
+            toAccount: event.account,
             createdBy: event.account.createdBy
           })
         ];

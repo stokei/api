@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { SendOrdersCustomersOrderCreatedEmailCommand } from '@/commands/implements/emails/orders/customers/send-order-created-email.command';
+import { SendOrdersSellersOrderCreatedEmailCommand } from '@/commands/implements/emails/orders/sellers/send-order-created-email.command';
 import { ActivateOrderSubscriptionContractsCommand } from '@/commands/implements/orders/activate-order-subscription-contracts.command';
 import { CancelOrderSubscriptionContractsCommand } from '@/commands/implements/orders/cancel-order-subscription-contracts.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
@@ -35,7 +36,7 @@ export class OrdersSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
+        const commands: ICommand[] = [
           new SendOrdersCustomersOrderCreatedEmailCommand({
             order: event.order,
             app: event.order.app,
@@ -126,10 +127,15 @@ export class OrdersSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [
+        const commands: ICommand[] = [
           new ActivateOrderSubscriptionContractsCommand({
             app: event.order.app,
             order: event.order.id,
+            createdBy: event.updatedBy
+          }),
+          new SendOrdersSellersOrderCreatedEmailCommand({
+            app: event.order.app,
+            order: event.order,
             createdBy: event.updatedBy
           })
         ];

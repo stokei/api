@@ -1,5 +1,7 @@
+import { AccountModel } from '@/models/account.model';
+
 export interface SendAuthCustomersUpdateOwnPasswordEmailDTO {
-  toAccount: string;
+  toAccount: AccountModel;
   app: string;
   createdBy: string;
 }

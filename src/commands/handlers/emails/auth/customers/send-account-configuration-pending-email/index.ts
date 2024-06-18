@@ -3,12 +3,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { SendAuthCustomersAccountConfigurationPendingEmailCommand } from '@/commands/implements/emails/auth/customers/send-account-configuration-pending-email.command';
-import {
-  AppNotFoundException,
-  DataNotFoundException,
-  ParamNotFoundException
-} from '@/errors';
-import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
+import { DataNotFoundException, ParamNotFoundException } from '@/errors';
 import { SendEmailService } from '@/services/emails/send-email';
 
 type SendAuthCustomersAccountConfigurationPendingEmailCommandKeys =
@@ -22,10 +17,7 @@ export class SendAuthCustomersAccountConfigurationPendingEmailCommandHandler
   private readonly logger = new Logger(
     SendAuthCustomersAccountConfigurationPendingEmailCommandHandler.name
   );
-  constructor(
-    private readonly sendEmailService: SendEmailService,
-    private readonly findAccountByIdService: FindAccountByIdService
-  ) {}
+  constructor(private readonly sendEmailService: SendEmailService) {}
 
   async execute(
     command: SendAuthCustomersAccountConfigurationPendingEmailCommand
@@ -46,28 +38,21 @@ export class SendAuthCustomersAccountConfigurationPendingEmailCommandHandler
         );
       }
 
-      const toAccount = await this.findAccountByIdService.execute(
-        data.toAccount
-      );
-      if (!toAccount) {
-        throw new AppNotFoundException();
-      }
-
       return await this.sendEmailService.execute({
         route: '/auth/customers/user-created-with-configuration-pending',
-        to: toAccount.email,
+        to: data.toAccount.email,
         app: data.app,
         createdBy: data.createdBy,
         data: {
           user: {
-            email: toAccount.email,
+            email: data.toAccount.email,
             password: data.plainTextPassword
           }
         }
       });
     } catch (error) {
       this.logger.error(
-        `From ${data?.app} to ${data?.toAccount}: ${error?.message}`
+        `From ${data?.app} to ${data?.toAccount?.id}: ${error?.message}`
       );
       return;
     }
@@ -77,7 +62,7 @@ export class SendAuthCustomersAccountConfigurationPendingEmailCommandHandler
     command: SendAuthCustomersAccountConfigurationPendingEmailCommand
   ): SendAuthCustomersAccountConfigurationPendingEmailCommand {
     return cleanObject({
-      toAccount: cleanValue(command?.toAccount),
+      toAccount: command?.toAccount,
       app: cleanValue(command?.app),
       plainTextPassword: cleanValue(command?.plainTextPassword),
       createdBy: cleanValue(command?.createdBy)

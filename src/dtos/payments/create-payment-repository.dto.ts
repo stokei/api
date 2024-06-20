@@ -5,5 +5,4 @@ import { CreatePaymentDTO } from './create-payment.dto';
 export interface CreatePaymentRepositoryDTO extends CreatePaymentDTO {
   status: PaymentStatus;
   active: boolean;
-  feeAmount: number;
 }

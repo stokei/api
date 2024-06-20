@@ -1,41 +1,14 @@
-import { paymentGatewayFees } from '@/constants/payment-gateway-fees';
-import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
-import { PaymentMethodType } from '@/enums/payment-method-type.enum';
-
 interface GetFeeAmountData {
   readonly amount: number;
-  readonly paymentGatewayType: PaymentGatewayType;
-  readonly paymentMethodType: PaymentMethodType;
+  readonly feePercentage: number;
 }
 
-export const getTotalFeeAmount = ({
-  paymentGatewayType,
-  paymentMethodType,
-  amount
-}: GetFeeAmountData) => {
-  const paymentGatewayFee =
-    paymentGatewayFees[paymentGatewayType]?.[paymentMethodType];
-  if (!paymentGatewayFee) {
+export const getFeeAmount = ({ feePercentage, amount }: GetFeeAmountData) => {
+  if (!amount || !feePercentage) {
     return;
   }
-  const amountPercentage = paymentGatewayFee.totalPercentage
-    ? Math.round(amount * (paymentGatewayFee.totalPercentage / 100))
+  const amountPercentage = feePercentage
+    ? Math.round(amount * (feePercentage / 100))
     : amount;
-  return Math.round(amountPercentage + paymentGatewayFee.totalFixAmount);
-};
-
-export const getStokeiFeeAmount = ({
-  paymentGatewayType,
-  paymentMethodType,
-  amount
-}: GetFeeAmountData) => {
-  const paymentGatewayFee =
-    paymentGatewayFees[paymentGatewayType]?.[paymentMethodType];
-  if (!paymentGatewayFee) {
-    return;
-  }
-  const amountPercentage = paymentGatewayFee.stokeiFeePercentage
-    ? Math.round(amount * (paymentGatewayFee.stokeiFeePercentage / 100))
-    : amount;
-  return Math.round(amountPercentage + paymentGatewayFee.stokeiFeeFixAmount);
+  return Math.round(amountPercentage);
 };

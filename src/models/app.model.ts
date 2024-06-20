@@ -50,6 +50,7 @@ export class AppModel extends AggregateRoot {
   readonly icon?: string;
   readonly logo?: string;
   readonly active: boolean;
+  readonly feePercentage: number;
   readonly isIntegratedWithPagarme: boolean;
   readonly isIntegratedWithStripe: boolean;
   readonly stripeBankAccount?: string;
@@ -94,6 +95,7 @@ export class AppModel extends AggregateRoot {
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
+    this.feePercentage = 5;
     this.isStokei = !!this.id.match(/stokei/i);
     this.stripeBankAccount = data.stripeBankAccount || undefined;
     this.pagarmeAccount = data.pagarmeAccount || undefined;

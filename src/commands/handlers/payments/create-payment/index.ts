@@ -9,7 +9,6 @@ import {
   PaymentNotFoundException
 } from '@/errors';
 import { CreatePaymentRepository } from '@/repositories/payments/create-payment';
-import { getTotalFeeAmount } from '@/utils/get-fee-amount';
 
 type CreatePaymentCommandKeys = keyof CreatePaymentCommand;
 
@@ -32,11 +31,6 @@ export class CreatePaymentCommandHandler
     }
     const paymentCreated = await this.createPaymentRepository.execute({
       ...data,
-      feeAmount: getTotalFeeAmount({
-        amount: data.totalAmount,
-        paymentGatewayType: data.paymentGatewayType,
-        paymentMethodType: data.paymentMethodType
-      }),
       status: PaymentStatus.PENDING,
       active: true
     });
@@ -59,8 +53,7 @@ export class CreatePaymentCommandHandler
       payer: cleanValue(command?.payer),
       app: cleanValue(command?.app),
       currency: cleanValue(command?.currency),
-      paymentMethod: cleanValue(command?.paymentMethod),
-      paymentMethodType: cleanValue(command?.paymentMethodType),
+      feeAmount: cleanValueNumber(command?.feeAmount),
       paymentGatewayType: cleanValue(command?.paymentGatewayType),
       stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),
       totalAmount: cleanValueNumber(command?.totalAmount),

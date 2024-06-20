@@ -1,10 +1,10 @@
-import { PaymentMethodType } from '@/enums/payment-method-type.enum';
-
+import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 export interface CreateCheckoutDTO {
-  paymentMethodType: PaymentMethodType;
+  successURL: string;
+  cancelURL: string;
+  paymentGatewayType: PaymentGatewayType;
   app: string;
   customer: string;
   order: string;
-  paymentMethod?: string;
   createdBy: string;
 }

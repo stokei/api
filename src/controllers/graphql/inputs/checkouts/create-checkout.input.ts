@@ -1,15 +1,18 @@
 import { Field, InputType } from '@nestjs/graphql';
 
-import { PaymentMethodType } from '@/controllers/graphql/enums/payment-method-type.enum';
+import { PaymentGatewayType } from '@/controllers/graphql/enums/payment-gateway-type.enum';
 
 @InputType()
 export class CreateCheckoutInput {
   @Field(() => String)
   order: string;
 
-  @Field(() => PaymentMethodType)
-  paymentMethodType: PaymentMethodType;
+  @Field(() => String)
+  successURL: string;
 
-  @Field(() => String, { nullable: true })
-  paymentMethod?: string;
+  @Field(() => String)
+  cancelURL: string;
+
+  @Field(() => PaymentGatewayType)
+  paymentGatewayType: PaymentGatewayType;
 }

@@ -10,6 +10,8 @@ export interface UpdateAppDataDTO {
   stripeBankAccount?: string;
   stripeAccount?: string;
   pagarmeAccount?: string;
+  mercadopagoAccount?: string;
+  pagseguroAccount?: string;
   stripeCustomer?: string;
   paymentMethod?: string;
   logo?: string;

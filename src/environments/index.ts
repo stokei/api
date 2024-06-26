@@ -57,3 +57,8 @@ export const PAGARME_KEY: string = process.env.PAGARME_KEY;
 export const PAGARME_SECRET_KEY: string = process.env.PAGARME_SECRET_KEY;
 
 export const EMAILS_API_BASE_URL: string = process.env.EMAILS_API_BASE_URL;
+
+export const MERCADOPAGO_CLIENT_ID: string = process.env.MERCADOPAGO_CLIENT_ID;
+export const MERCADOPAGO_CLIENT_SECRET: string =
+  process.env.MERCADOPAGO_CLIENT_SECRET;
+export const MERCADOPAGO_TOKEN: string = process.env.MERCADOPAGO_TOKEN;

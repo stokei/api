@@ -5,15 +5,27 @@ import {
   CreatePaymentByPaymentProcessorDTO,
   IBaseServiceCreatePaymentByPaymentProcessor
 } from '@/dtos/payments-gateway/create-payment-by-gateway-processor.dto';
+import { PluginType } from '@/enums/plugin-type.enum';
 import { CheckoutModel } from '@/models/checkout.model';
+import { FindPluginByTypeService } from '@/services/plugins/find-plugin-by-type';
 
 @Injectable()
 export class StripeCreatePaymentProcessorService
   implements IBaseServiceCreatePaymentByPaymentProcessor
 {
+  constructor(
+    private readonly findPluginByTypeService: FindPluginByTypeService
+  ) {}
+
   async execute(
     data: CreatePaymentByPaymentProcessorDTO
   ): Promise<CheckoutModel> {
+    const credentials = await this.findPluginByTypeService.execute({
+      app: data?.app?.id,
+      parent: data?.app?.id,
+      type: PluginType.STRIPE
+    });
+
     const stripeResponse = await stripeClient.checkout.sessions.create(
       {
         mode: 'payment',
@@ -33,7 +45,7 @@ export class StripeCreatePaymentProcessorService
         })),
         payment_intent_data: {
           capture_method: 'automatic',
-          ...(data?.app?.stripeAccount && {
+          ...(credentials?.publicKey && {
             application_fee_amount: data?.payment.feeAmount
           })
         },
@@ -41,7 +53,7 @@ export class StripeCreatePaymentProcessorService
           payment: data?.payment?.id
         }
       },
-      { stripeAccount: data?.app?.stripeAccount }
+      { stripeAccount: credentials?.publicKey }
     );
     return new CheckoutModel({
       payment: data?.payment.id,

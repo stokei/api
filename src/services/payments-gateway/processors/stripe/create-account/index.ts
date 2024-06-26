@@ -5,12 +5,16 @@ import {
   CreateAccountByPaymentProcessorDTO,
   IBaseServiceCreateAccountByPaymentProcessor
 } from '@/dtos/payments-gateway/create-account-by-gateway-processor.dto';
+import { PluginType } from '@/enums/plugin-type.enum';
 import { LinkModel } from '@/models/link.model';
+import { CreatePluginService } from '@/services/plugins/create-plugin';
 
 @Injectable()
 export class StripeCreateAccountProcessorService
   implements IBaseServiceCreateAccountByPaymentProcessor
 {
+  constructor(private readonly createPluginService: CreatePluginService) {}
+
   async execute(data: CreateAccountByPaymentProcessorDTO): Promise<LinkModel> {
     const stripeResponse = await stripeClient.accounts.create({
       type: 'standard',
@@ -30,6 +34,15 @@ export class StripeCreateAccountProcessorService
       return_url: data.successURL,
       account: stripeResponse?.id
     });
+    await this.createPluginService.execute({
+      app: data?.app?.id,
+      parent: data?.app?.id,
+      publicKey: stripeResponse?.id,
+      privateKey: stripeResponse?.id,
+      type: PluginType.STRIPE,
+      createdBy: data?.app?.createdBy
+    });
+
     return new LinkModel({
       id: stripeResponse?.id,
       url: link.url

@@ -132,6 +132,15 @@ enum PaymentStatus {
 enum PaymentGatewayType {
   STRIPE
   PAGARME
+  MERCADOPAGO
+  PAGSEGURO
+}
+
+enum PluginType {
+  STRIPE
+  PAGARME
+  MERCADOPAGO
+  PAGSEGURO
 }
 
 enum SubscriptionContractStatus {
@@ -947,4 +956,19 @@ model Coupon {
   createdBy  String?   @map("created_by") @db.VarChar(255)
 
   @@map("coupons")
+}
+
+model Plugin {
+  id         String     @id @default(cuid())
+  app        String     @db.VarChar(255)
+  parent     String     @db.VarChar(255)
+  type       PluginType
+  publicKey  String     @map("public_key") @db.VarChar(255)
+  privateKey String     @map("private_key") @db.VarChar(255)
+  updatedAt  DateTime?  @updatedAt @map("updated_at")
+  createdAt  DateTime?  @default(now()) @map("created_at")
+  updatedBy  String?    @map("updated_by") @db.VarChar(255)
+  createdBy  String?    @map("created_by") @db.VarChar(255)
+
+  @@map("plugins")
 }

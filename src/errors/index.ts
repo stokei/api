@@ -88,6 +88,8 @@ export * from './plan-already-exists';
 export * from './plan-not-found';
 export * from './plan-unauthorized';
 export * from './plans-not-found';
+export * from './plugin-not-found';
+export * from './plugins-not-found';
 export * from './price-cannot-be-disabled-because-it-is-the-default';
 export * from './price-not-found';
 export * from './price-tier-not-found';

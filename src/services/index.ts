@@ -33,6 +33,7 @@ import { PaymentServices } from './payments';
 import { PaymentsGatewayServices } from './payments-gateway';
 import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
+import { PluginServices } from './plugins';
 import { PriceTierServices } from './price-tiers';
 import { PriceServices } from './prices';
 import { ProductServices } from './products';
@@ -105,5 +106,6 @@ export const Services = [
   ...VersionServices,
   ...CouponServices,
   ...StripeServices,
-  ...PaymentsGatewayServices
+  ...PaymentsGatewayServices,
+  ...PluginServices
 ];

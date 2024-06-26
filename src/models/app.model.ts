@@ -35,6 +35,12 @@ export interface IAppModelData {
   readonly createdBy?: string;
 }
 
+export type AppModelPaymentGatewatKeys =
+  | 'stripeAccount'
+  | 'pagarmeAccount'
+  | 'mercadopagoAccount'
+  | 'pagseguroAccount';
+
 export class AppModel extends AggregateRoot {
   readonly id: string;
   readonly parent: string;
@@ -53,6 +59,8 @@ export class AppModel extends AggregateRoot {
   readonly feePercentage: number;
   readonly isIntegratedWithPagarme: boolean;
   readonly isIntegratedWithStripe: boolean;
+  readonly isIntegratedWithPagSeguro?: boolean;
+  readonly isIntegratedWithMercadoPago?: boolean;
   readonly stripeBankAccount?: string;
   readonly stripeAccount?: string;
   readonly pagarmeAccount?: string;
@@ -100,10 +108,16 @@ export class AppModel extends AggregateRoot {
     this.stripeBankAccount = data.stripeBankAccount || undefined;
     this.pagarmeAccount = data.pagarmeAccount || undefined;
     this.stripeAccount = data.stripeAccount || undefined;
-    this.isAllowedToSell = this.isStokei || !!this.stripeAccount;
-    this.isAllowedToUsePlan = !!this.isAllowedToSell;
+    this.isAllowedToSell = this.getIsAllowedToSell();
+    this.isAllowedToUsePlan = this.isAllowedToSell;
     this.isIntegratedWithPagarme = !!this.pagarmeAccount;
     this.isIntegratedWithStripe = !!this.stripeAccount;
+    this.isIntegratedWithPagSeguro = !!this.stripeAccount;
+    this.isIntegratedWithMercadoPago = !!this.stripeAccount;
+  }
+
+  private getIsAllowedToSell() {
+    return !!(this.isStokei || this.pagarmeAccount || this.stripeAccount);
   }
 
   createdApp({ createdBy }: { createdBy: string }) {

@@ -35,9 +35,6 @@ export class AppGuard implements CanActivate {
     config.isRequired = isBoolean(config?.isRequired)
       ? config?.isRequired === true
       : true;
-    config.isAllowedToUsePlan = isBoolean(config?.isAllowedToUsePlan)
-      ? config?.isAllowedToUsePlan === true
-      : null;
 
     if (config && !config?.isRequired) {
       return true;
@@ -48,12 +45,6 @@ export class AppGuard implements CanActivate {
     }
     const app = await this.findAppByIdService.execute(appId);
     if (!app) {
-      throw new AppUnauthorizedException();
-    }
-    if (
-      isBoolean(config.isAllowedToUsePlan) &&
-      config.isAllowedToUsePlan !== app.isAllowedToUsePlan
-    ) {
       throw new AppUnauthorizedException();
     }
     request.app = app;

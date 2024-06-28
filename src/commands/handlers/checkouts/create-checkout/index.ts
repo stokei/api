@@ -23,7 +23,7 @@ import { ChangeOrderToPendingService } from '@/services/orders/change-order-to-p
 import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
 import { ChangePaymentToPaymentErrorService } from '@/services/payments/change-payment-to-payment-error';
 import { CreatePaymentService } from '@/services/payments/create-payment';
-import { CreatePaymentByPaymentProcessorService } from '@/services/payments-gateway/create-payment';
+import { CreatePaymentByPaymentProcessorService } from '@/services/payments-gateway/factories/create-payment';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
 import { getFeeAmount } from '@/utils/get-fee-amount';
 
@@ -161,7 +161,6 @@ export class CreateCheckoutCommandHandler
       return paymentGatewayResponse;
     } catch (error) {
       this.changePaymentToPaymentErrorService.execute({
-        app: customerApp.id,
         payment: payment.id,
         updatedBy: data.createdBy
       });

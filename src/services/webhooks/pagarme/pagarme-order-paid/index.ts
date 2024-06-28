@@ -33,7 +33,6 @@ export class WebhookPagarmeOrderPaidService
 
     await this.changePaymentToPaidService.execute({
       payment: payment.id,
-      app: payment.app,
       updatedBy: payment.createdBy
     });
 

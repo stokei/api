@@ -8,7 +8,7 @@ import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 import { AppNotFoundException, ParamNotFoundException } from '@/errors';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { UpdateAppService } from '@/services/apps/update-app';
-import { CompleteAccountByPaymentProcessorService } from '@/services/payments-gateway/complete-account';
+import { CompleteAccountByPaymentProcessorService } from '@/services/payments-gateway/factories/complete-account';
 import { MercadoPagoCreateAccountProcessorServiceState } from '@/services/payments-gateway/processors/mercadopago/create-account';
 
 @ApiTags(REST_CONTROLLERS_URL_NAMES.PAYMENT_GATEWAYS.MERCADOPAGO.BASE)

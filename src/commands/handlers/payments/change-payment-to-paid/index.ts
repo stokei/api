@@ -10,14 +10,12 @@ import { ChangePaymentToPaidCommand } from '@/commands/implements/payments/chang
 import { ChangePaymentToPaidRepositoryDataDTO } from '@/dtos/payments/change-payment-to-paid-repository.dto';
 import { PaymentStatus } from '@/enums/payment-status.enum';
 import {
-  AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
   PaymentNotFoundException
 } from '@/errors';
 import { PaymentModel } from '@/models/payment.model';
 import { ChangePaymentToPaidRepository } from '@/repositories/payments/change-payment-to-paid';
-import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindPaymentByIdService } from '@/services/payments/find-payment-by-id';
 
 type ChangePaymentToPaidCommandKeys = keyof ChangePaymentToPaidCommand;
@@ -28,7 +26,6 @@ export class ChangePaymentToPaidCommandHandler
 {
   constructor(
     private readonly changePaymentToPaidRepository: ChangePaymentToPaidRepository,
-    private readonly findAppByIdService: FindAppByIdService,
     private readonly findPaymentByIdService: FindPaymentByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -38,19 +35,12 @@ export class ChangePaymentToPaidCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.app) {
-      throw new ParamNotFoundException<ChangePaymentToPaidCommandKeys>('app');
-    }
     if (!data?.payment) {
       throw new ParamNotFoundException<ChangePaymentToPaidCommandKeys>(
         'payment'
       );
     }
 
-    const app = await this.findAppByIdService.execute(data.app);
-    if (!app) {
-      throw new AppNotFoundException();
-    }
     const payment = await this.findPaymentByIdService.execute(data.payment);
     if (!payment) {
       throw new PaymentNotFoundException();
@@ -67,7 +57,6 @@ export class ChangePaymentToPaidCommandHandler
     const paymentUpdated = await this.changePaymentToPaidRepository.execute({
       data: dataChangePaymentToPaid,
       where: {
-        app: app.id,
         payment: splitServiceId(payment.id)?.id
       }
     });
@@ -91,7 +80,6 @@ export class ChangePaymentToPaidCommandHandler
     command: ChangePaymentToPaidCommand
   ): ChangePaymentToPaidCommand {
     return cleanObject({
-      app: cleanValue(command?.app),
       payment: cleanValue(command?.payment),
       paymentMethod: cleanValue(command?.paymentMethod),
       stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),

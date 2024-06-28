@@ -10,7 +10,6 @@ export interface ChangePaymentToPaidRepositoryDataDTO {
 }
 
 export interface ChangePaymentToPaidRepositoryWhereDTO {
-  app: string;
   payment: string;
 }
 

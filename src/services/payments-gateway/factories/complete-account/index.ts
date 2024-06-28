@@ -8,7 +8,7 @@ import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 import { PaymentMethodNotFoundException } from '@/errors';
 import { LinkModel } from '@/models/link.model';
 
-import { MercadoPagoCompleteAccountProcessorService } from '../processors/mercadopago/complete-account';
+import { MercadoPagoCompleteAccountProcessorService } from '../../processors/mercadopago/complete-account';
 
 @Injectable()
 export class CompleteAccountByPaymentProcessorService

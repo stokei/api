@@ -8,8 +8,8 @@ import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 import { PaymentMethodNotFoundException } from '@/errors';
 import { CheckoutModel } from '@/models/checkout.model';
 
-import { MercadoPagoCreatePaymentProcessorService } from '../processors/mercadopago/create-payment';
-import { StripeCreatePaymentProcessorService } from '../processors/stripe/create-payment';
+import { MercadoPagoCreatePaymentProcessorService } from '../../processors/mercadopago/create-payment';
+import { StripeCreatePaymentProcessorService } from '../../processors/stripe/create-payment';
 
 @Injectable()
 export class CreatePaymentByPaymentProcessorService

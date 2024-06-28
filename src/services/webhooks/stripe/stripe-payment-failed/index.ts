@@ -26,7 +26,6 @@ export class WebhookStripePaymentFailedService
 
     await this.changePaymentToPaymentErrorService.execute({
       payment: payment.id,
-      app: payment.app,
       updatedBy: payment.createdBy
     });
 

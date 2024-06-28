@@ -1,11 +1,7 @@
-import { CompleteAccountByPaymentProcessorService } from './complete-account';
-import { CreateAccountByPaymentProcessorService } from './create-account';
-import { CreatePaymentByPaymentProcessorService } from './create-payment';
+import { PaymentsGatewayFactoriesServices } from './factories';
 import { PaymentsGatewayProcessorsServices } from './processors';
 
 export const PaymentsGatewayServices = [
   ...PaymentsGatewayProcessorsServices,
-  CreatePaymentByPaymentProcessorService,
-  CreateAccountByPaymentProcessorService,
-  CompleteAccountByPaymentProcessorService
+  ...PaymentsGatewayFactoriesServices
 ];

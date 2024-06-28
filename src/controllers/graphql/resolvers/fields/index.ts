@@ -30,6 +30,7 @@ import { PaymentMethodsFieldsResolvers } from './payment-methods';
 import { PaymentsFieldsResolvers } from './payments';
 import { PhonesFieldsResolvers } from './phones';
 import { PlansFieldsResolvers } from './plans';
+import { PluginsFieldsResolvers } from './plugins';
 import { PricesFieldsResolvers } from './prices';
 import { ProductsFieldsResolvers } from './products';
 import { RolesFieldsResolvers } from './roles';
@@ -85,5 +86,6 @@ export const FieldsResolvers = [
   ...PagesFieldsResolvers,
   ...SitesFieldsResolvers,
   ...VersionsFieldsResolvers,
-  ...CouponsFieldsResolvers
+  ...CouponsFieldsResolvers,
+  ...PluginsFieldsResolvers
 ];

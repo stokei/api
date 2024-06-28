@@ -64,7 +64,7 @@ export class CreatePagarmeOrderService
       data?.installments > 1 && data?.installments <= 12
         ? data?.installments
         : 1;
-    const paymentMethodValues: Record<PaymentMethodType, any> = {
+    const paymentMethodValues = {
       [PaymentMethodType.BOLETO]: {
         payment_method: 'boleto',
         boleto: {
@@ -84,8 +84,7 @@ export class CreatePagarmeOrderService
         pix: {
           expires_at: expiresAt
         }
-      },
-      [PaymentMethodType.STRIPE]: undefined
+      }
     };
     const dataRequest = cleanObject({
       items,

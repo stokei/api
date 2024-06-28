@@ -27,6 +27,7 @@ import { PaymentMethodsQueries } from './payment-methods';
 import { PaymentsQueries } from './payments';
 import { PhonesQueries } from './phones';
 import { PlansQueries } from './plans';
+import { PluginsQueries } from './plugins';
 import { PricesQueries } from './prices';
 import { ProductsQueries } from './products';
 import { SitesQueries } from './sites';
@@ -75,5 +76,6 @@ export const Queries = [
   ...PagesQueries,
   ...ComponentsQueries,
   ...SitesQueries,
-  ...CouponsQueries
+  ...CouponsQueries,
+  ...PluginsQueries
 ];

@@ -27,6 +27,7 @@ import { PaymentMethodsLoader } from './payment-methods.loader';
 import { PaymentsLoader } from './payments.loader';
 import { PhonesLoader } from './phones.loader';
 import { PlansLoader } from './plans.loader';
+import { PluginsLoader } from './plugins.loader';
 import { PricesLoader } from './prices.loader';
 import { ProductsLoader } from './products.loader';
 import { RecurringsLoader } from './recurrings.loader';
@@ -79,5 +80,6 @@ export const Loaders = [
   PagesLoader,
   SitesLoader,
   VersionsLoader,
-  CouponsLoader
+  CouponsLoader,
+  PluginsLoader
 ];

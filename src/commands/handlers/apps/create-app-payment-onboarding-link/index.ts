@@ -10,7 +10,7 @@ import {
 } from '@/errors';
 import { LinkModel } from '@/models/link.model';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { CreateAccountByPaymentProcessorService } from '@/services/payments-gateway/create-account';
+import { CreateAccountByPaymentProcessorService } from '@/services/payments-gateway/factories/create-account';
 
 type CreateAppPaymentOnboardingLinkCommandKeys =
   keyof CreateAppPaymentOnboardingLinkCommand;

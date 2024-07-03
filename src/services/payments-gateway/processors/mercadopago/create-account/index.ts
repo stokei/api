@@ -21,29 +21,26 @@ export class MercadoPagoCreateAccountProcessorService
   implements IBaseServiceCreateAccountByPaymentProcessor
 {
   async execute(data: CreateAccountByPaymentProcessorDTO): Promise<LinkModel> {
-    const state: MercadoPagoCreateAccountProcessorServiceState = {
-      appId: data.app.id,
-      cancelURL: data.cancelURL,
-      successURL: data.successURL
-    };
     const url = new URL('https://auth.mercadopago.com/authorization');
     url.searchParams.set('client_id', MERCADOPAGO_CLIENT_ID);
     url.searchParams.set('response_type', 'code');
     url.searchParams.set('platform_id', 'mp');
-    url.searchParams.set('state', JSON.stringify(state));
+    url.searchParams.set('state', data.app.id);
     url.searchParams.set(
       'redirect_uri',
-      appendPathnameToURL(
-        SERVER_URL,
+      decodeURIComponent(
         appendPathnameToURL(
-          REST_VERSIONS.V1_TEXT,
-          REST_CONTROLLERS_URL_NAMES.PAYMENT_GATEWAYS.MERCADOPAGO
-            .COMPLETE_ACCOUNT
+          SERVER_URL,
+          appendPathnameToURL(
+            REST_VERSIONS.V1_TEXT,
+            REST_CONTROLLERS_URL_NAMES.PAYMENT_GATEWAYS.MERCADOPAGO
+              .COMPLETE_ACCOUNT
+          )
         )
       )
     );
     return new LinkModel({
-      url: url.toString()
+      url: decodeURIComponent(url.toString())
     });
   }
 }

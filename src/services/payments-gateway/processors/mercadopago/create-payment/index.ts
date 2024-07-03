@@ -61,9 +61,7 @@ export class MercadoPagoCreatePaymentProcessorService
         },
         ...(credentials?.publicKey && {
           marketplace: credentials?.publicKey,
-          marketplace_fee: convertCentsToFloat(
-            data?.payment.totalAmount - data?.payment.feeAmount
-          )
+          marketplace_fee: convertCentsToFloat(data?.payment.feeAmount)
         })
       }
     });

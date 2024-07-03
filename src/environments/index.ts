@@ -62,3 +62,6 @@ export const MERCADOPAGO_CLIENT_ID: string = process.env.MERCADOPAGO_CLIENT_ID;
 export const MERCADOPAGO_CLIENT_SECRET: string =
   process.env.MERCADOPAGO_CLIENT_SECRET;
 export const MERCADOPAGO_TOKEN: string = process.env.MERCADOPAGO_TOKEN;
+
+export const STOKEI_WEBSITE_BASE_URL: string =
+  process.env.STOKEI_WEBSITE_BASE_URL || 'http://localhost:3000';

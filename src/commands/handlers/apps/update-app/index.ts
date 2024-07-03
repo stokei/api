@@ -96,8 +96,6 @@ export class UpdateAppCommandHandler
         stripeBankAccount: cleanValue(command?.data?.stripeBankAccount),
         stripeCustomer: cleanValue(command?.data?.stripeCustomer),
         stripeAccount: cleanValue(command?.data?.stripeAccount),
-        mercadopagoAccount: cleanValue(command?.data?.mercadopagoAccount),
-        pagseguroAccount: cleanValue(command?.data?.pagseguroAccount),
         pagarmeAccount: cleanValue(command?.data?.pagarmeAccount),
         paymentMethod: cleanValue(command?.data?.paymentMethod),
         updatedBy: cleanValue(command?.data?.updatedBy)

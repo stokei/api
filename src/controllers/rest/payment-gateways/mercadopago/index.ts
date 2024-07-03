@@ -5,11 +5,11 @@ import { Request, Response } from 'express';
 import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
 import { REST_VERSIONS } from '@/constants/rest-versions';
 import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
+import { STOKEI_WEBSITE_BASE_URL } from '@/environments';
 import { AppNotFoundException, ParamNotFoundException } from '@/errors';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { UpdateAppService } from '@/services/apps/update-app';
 import { CompleteAccountByPaymentProcessorService } from '@/services/payments-gateway/factories/complete-account';
-import { MercadoPagoCreateAccountProcessorServiceState } from '@/services/payments-gateway/processors/mercadopago/create-account';
+import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 
 @ApiTags(REST_CONTROLLERS_URL_NAMES.PAYMENT_GATEWAYS.MERCADOPAGO.BASE)
 @Controller({
@@ -20,45 +20,49 @@ import { MercadoPagoCreateAccountProcessorServiceState } from '@/services/paymen
 export class PaymentGatewaysMercadoPagoCompleteAccountController {
   constructor(
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly completeAccountByPaymentProcessorService: CompleteAccountByPaymentProcessorService,
-    private readonly updateAppService: UpdateAppService
+    private readonly completeAccountByPaymentProcessorService: CompleteAccountByPaymentProcessorService
   ) {}
 
   @Get()
   async completeAccount(@Req() request: Request, @Res() response: Response) {
     const code = request?.query?.code as string;
-    const state = request?.query?.state as string;
+    const appId = request?.query?.state as string;
     if (!code) {
       throw new ParamNotFoundException('code');
     }
-    if (!state) {
-      throw new ParamNotFoundException('state');
+    if (!appId) {
+      throw new ParamNotFoundException('appId');
     }
-    const stateValue = JSON.parse(
-      state
-    ) as MercadoPagoCreateAccountProcessorServiceState;
-    const app = await this.findAppByIdService.execute(stateValue?.appId);
+    const app = await this.findAppByIdService.execute(appId);
     if (!app) {
       throw new AppNotFoundException();
     }
-    const mercadopagoAccount =
-      await this.completeAccountByPaymentProcessorService.execute({
-        app,
-        code,
-        paymentGatewayType: PaymentGatewayType.MERCADOPAGO,
-        cancelURL: stateValue?.cancelURL,
-        successURL: stateValue?.successURL,
-        createdBy: app.createdBy
-      });
-    await this.updateAppService.execute({
-      data: {
-        mercadopagoAccount: mercadopagoAccount?.id,
-        updatedBy: app.createdBy
-      },
-      where: {
-        app: app.id
-      }
-    });
-    return response.location(mercadopagoAccount?.url);
+    const cancelURL = appendPathnameToURL(
+      STOKEI_WEBSITE_BASE_URL,
+      `/apps/${app?.id}/onboardings`
+    );
+    const successURL = appendPathnameToURL(
+      STOKEI_WEBSITE_BASE_URL,
+      `/apps/${app?.id}/onboardings/mercadopago/callback`
+    );
+    let url = successURL;
+    try {
+      const mercadopagoAccount =
+        await this.completeAccountByPaymentProcessorService.execute({
+          app,
+          code,
+          paymentGatewayType: PaymentGatewayType.MERCADOPAGO,
+          cancelURL,
+          successURL,
+          createdBy: app.createdBy
+        });
+      url = mercadopagoAccount?.url;
+    } catch (error) {
+      url = appendPathnameToURL(
+        cancelURL,
+        '?error=' + error?.error_description
+      );
+    }
+    response.redirect(302, url);
   }
 }

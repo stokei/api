@@ -22,9 +22,7 @@ export class FindPaymentMethodsMostUsedByPeriodRepository
     endAt
   }: FindPaymentMethodsMostUsedByPeriodDTO): Promise<ChartDataModel[]> {
     const response: ChartDataModel[] = await this.model.$queryRaw`
-      SELECT payments_methods.payment_method_type as label, COUNT(*) as value FROM payments 
-        JOIN payments_methods
-        ON CONCAT('pay_method_', payments_methods.id) = payments.payment_method
+      SELECT payments.paymentGatewayType as label, COUNT(*) as value FROM payments 
         WHERE payments.app = ${app} AND
   	      payments.status = 'PAID' AND
           DATE(payments.created_at) >= DATE(${startAt}) AND

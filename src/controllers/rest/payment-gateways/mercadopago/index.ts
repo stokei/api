@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import { Controller, Get, Logger, Req, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 
@@ -8,16 +8,19 @@ import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 import { STOKEI_WEBSITE_BASE_URL } from '@/environments';
 import { AppNotFoundException, ParamNotFoundException } from '@/errors';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
-import { CompleteAccountByPaymentProcessorService } from '@/services/payments-gateway/factories/complete-account';
+import { CompleteAccountByPaymentProcessorService } from '@/services/payments-gateways/factories/complete-account';
 import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
 
-@ApiTags(REST_CONTROLLERS_URL_NAMES.PAYMENT_GATEWAYS.MERCADOPAGO.BASE)
+@ApiTags(REST_CONTROLLERS_URL_NAMES.PAYMENT_GATEWAYS.BASE)
 @Controller({
   path: REST_CONTROLLERS_URL_NAMES.PAYMENT_GATEWAYS.MERCADOPAGO
     .COMPLETE_ACCOUNT,
   version: REST_VERSIONS.V1
 })
 export class PaymentGatewaysMercadoPagoCompleteAccountController {
+  private readonly logger = new Logger(
+    PaymentGatewaysMercadoPagoCompleteAccountController.name
+  );
   constructor(
     private readonly findAppByIdService: FindAppByIdService,
     private readonly completeAccountByPaymentProcessorService: CompleteAccountByPaymentProcessorService
@@ -58,10 +61,13 @@ export class PaymentGatewaysMercadoPagoCompleteAccountController {
         });
       url = mercadopagoAccount?.url;
     } catch (error) {
-      url = appendPathnameToURL(
-        cancelURL,
-        '?error=' + error?.error_description
-      );
+      this.logger.log(error);
+      const errorMessage =
+        error?.error_description ||
+        error?.error ||
+        error?.message ||
+        JSON.stringify(error);
+      url = appendPathnameToURL(cancelURL, '?error=' + errorMessage);
     }
     response.redirect(302, url);
   }

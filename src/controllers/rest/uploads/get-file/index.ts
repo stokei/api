@@ -18,9 +18,9 @@ import { PATH_FILES } from '@/constants/upload-file-paths';
 import { FileNotFoundException } from '@/errors';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 
-@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS)
+@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS.BASE)
 @Controller({
-  path: REST_CONTROLLERS_URL_NAMES.UPLOADS,
+  path: REST_CONTROLLERS_URL_NAMES.UPLOADS.BASE,
   version: REST_VERSIONS.V1
 })
 export class GetFileController {

@@ -6,7 +6,7 @@ import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 import { PaymentNotFoundException } from '@/errors';
 import { ChangePaymentToPaidService } from '@/services/payments/change-payment-to-paid';
 import { FindPaymentByIdService } from '@/services/payments/find-payment-by-id';
-import { FindPaymentByPaymentProcessorService } from '@/services/payments-gateway/factories/find-payment';
+import { FindPaymentByPaymentProcessorService } from '@/services/payments-gateways/factories/find-payment';
 
 @Injectable()
 export class WebhookMercadopagoOrderPaidService

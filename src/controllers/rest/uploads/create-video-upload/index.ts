@@ -9,9 +9,9 @@ import { CreateCloudflareVideoUploadURLService } from '@/services/cloudflare/cre
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { UpdateFileService } from '@/services/files/update-file';
 
-@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS_VIDEOS)
+@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS.BASE)
 @Controller({
-  path: REST_CONTROLLERS_URL_NAMES.UPLOADS_VIDEOS,
+  path: REST_CONTROLLERS_URL_NAMES.UPLOADS.VIDEOS,
   version: REST_VERSIONS.V1
 })
 export class CreateVideoUploadController {

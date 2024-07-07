@@ -30,7 +30,7 @@ import { PagarmeServices } from './pagarme';
 import { PageServices } from './pages';
 import { PaymentMethodServices } from './payment-methods';
 import { PaymentServices } from './payments';
-import { PaymentsGatewayServices } from './payments-gateway';
+import { PaymentsGatewayServices } from './payments-gateways';
 import { PhoneServices } from './phones';
 import { PlanServices } from './plans';
 import { PluginServices } from './plugins';

@@ -5,9 +5,10 @@ import { defaultAccountId } from '@/constants/default-account-id';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { WebhookMercadopagoDTO } from '@/dtos/webhooks/webhook-mercadopago.dto';
 import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
+import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { ChangePaymentToPaidService } from '@/services/payments/change-payment-to-paid';
 import { ChangePaymentToPaymentErrorService } from '@/services/payments/change-payment-to-payment-error';
-import { FindPaymentByPaymentProcessorService } from '@/services/payments-gateway/factories/find-payment';
+import { FindPaymentByPaymentProcessorService } from '@/services/payments-gateways/factories/find-payment';
 
 @Injectable()
 export class WebhookMercadopagoService
@@ -16,28 +17,30 @@ export class WebhookMercadopagoService
   constructor(
     private readonly findPaymentByPaymentProcessorService: FindPaymentByPaymentProcessorService,
     private readonly changePaymentToPaymentErrorService: ChangePaymentToPaymentErrorService,
-    private readonly changePaymentToPaidService: ChangePaymentToPaidService
+    private readonly changePaymentToPaidService: ChangePaymentToPaidService,
+    private readonly findAppByIdService: FindAppByIdService
   ) {}
 
-  async execute({ body }: WebhookMercadopagoDTO) {
+  async execute({ body, queryParams }: WebhookMercadopagoDTO) {
     const logger = new Logger(WebhookMercadopagoService.name);
 
     const eventObject: any = body?.data;
-    const eventType = body?.action;
+    const eventType = body?.type;
 
     try {
       switch (eventType) {
-        case 'payment.update':
+        case 'payment':
+          const app = await this.findAppByIdService.execute(queryParams?.appId);
           const payment =
             await this.findPaymentByPaymentProcessorService.execute({
-              id: eventObject.id,
-              app: null,
+              id: eventObject?.id,
+              app,
               paymentGatewayType: PaymentGatewayType.MERCADOPAGO
             });
 
           if (payment.status === 'approved') {
             await this.changePaymentToPaidService.execute({
-              payment: payment.id,
+              payment: payment.referenceId,
               updatedBy: defaultAccountId
             });
           } else if (
@@ -46,7 +49,7 @@ export class WebhookMercadopagoService
             )
           ) {
             await this.changePaymentToPaymentErrorService.execute({
-              payment: payment.id,
+              payment: payment.referenceId,
               updatedBy: defaultAccountId
             });
           }

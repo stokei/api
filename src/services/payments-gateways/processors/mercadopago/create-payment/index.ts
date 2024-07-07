@@ -9,7 +9,7 @@ import {
   IBaseServiceCreatePaymentByPaymentProcessor
 } from '@/dtos/payments-gateway/create-payment-by-gateway-processor.dto';
 import { PluginType } from '@/enums/plugin-type.enum';
-import { IS_PRODUCTION, SERVER_URL } from '@/environments';
+import { MERCADOPAGO_TOKEN, SERVER_URL } from '@/environments';
 import { CheckoutModel } from '@/models/checkout.model';
 import { FindPluginByTypeService } from '@/services/plugins/find-plugin-by-type';
 import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
@@ -30,16 +30,23 @@ export class MercadoPagoCreatePaymentProcessorService
       parent: data?.app?.id,
       type: PluginType.MERCADOPAGO
     });
-
     const convertCentsToFloat = (amount: number) => (amount ? amount / 100 : 0);
-    const response = await new Preference(mercadopagoClient).create({
+    const notificationUrl = new URL(
+      appendPathnameToURL(
+        appendPathnameToURL(SERVER_URL, REST_VERSIONS.V1_TEXT),
+        REST_CONTROLLERS_URL_NAMES.WEBHOOKS.MERCADOPAGO
+      )
+    );
+    notificationUrl.searchParams.set('appId', data?.app?.id);
+    notificationUrl.searchParams.set('paymentId', data?.payment?.id);
+
+    const response = await new Preference(
+      mercadopagoClient(credentials.publicKey)
+    ).create({
       body: {
         auto_return: 'approved',
         external_reference: data?.payment?.id,
-        notification_url: appendPathnameToURL(
-          appendPathnameToURL(SERVER_URL, REST_VERSIONS.V1_TEXT),
-          REST_CONTROLLERS_URL_NAMES.WEBHOOKS_MERCADOPAGO
-        ),
+        notification_url: decodeURIComponent(notificationUrl.toString()),
         back_urls: {
           success: data?.successURL,
           failure: data?.cancelURL,
@@ -60,14 +67,14 @@ export class MercadoPagoCreatePaymentProcessorService
           payment: data?.payment?.id
         },
         ...(credentials?.publicKey && {
-          marketplace: credentials?.publicKey,
+          marketplace: MERCADOPAGO_TOKEN,
           marketplace_fee: convertCentsToFloat(data?.payment.feeAmount)
         })
       }
     });
     return new CheckoutModel({
       payment: data?.payment.id,
-      url: !IS_PRODUCTION ? response.sandbox_init_point : response.init_point
+      url: response.init_point
     });
   }
 }

@@ -47,7 +47,10 @@ export class StripeCreatePaymentProcessorService
           capture_method: 'automatic',
           ...(credentials?.publicKey && {
             application_fee_amount: data?.payment.feeAmount
-          })
+          }),
+          metadata: {
+            payment: data?.payment?.id
+          }
         },
         metadata: {
           payment: data?.payment?.id

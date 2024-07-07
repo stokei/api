@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
-import { REST_CONTROLLERS_URL_NAMES } from '@/constants/rest-controllers';
-import { REST_VERSIONS } from '@/constants/rest-versions';
 import {
   CreateAccountByPaymentProcessorDTO,
   IBaseServiceCreateAccountByPaymentProcessor
 } from '@/dtos/payments-gateway/create-account-by-gateway-processor.dto';
-import { MERCADOPAGO_CLIENT_ID, SERVER_URL } from '@/environments';
+import { MERCADOPAGO_CLIENT_ID } from '@/environments';
 import { LinkModel } from '@/models/link.model';
-import { appendPathnameToURL } from '@/utils/append-pathname-to-url';
+
+import { mercadopagoAccountRedirectURL } from '../constants/mercadopago-account-redirect-url';
 
 export interface MercadoPagoCreateAccountProcessorServiceState {
   appId: string;
@@ -28,16 +27,7 @@ export class MercadoPagoCreateAccountProcessorService
     url.searchParams.set('state', data.app.id);
     url.searchParams.set(
       'redirect_uri',
-      decodeURIComponent(
-        appendPathnameToURL(
-          SERVER_URL,
-          appendPathnameToURL(
-            REST_VERSIONS.V1_TEXT,
-            REST_CONTROLLERS_URL_NAMES.PAYMENT_GATEWAYS.MERCADOPAGO
-              .COMPLETE_ACCOUNT
-          )
-        )
-      )
+      decodeURIComponent(mercadopagoAccountRedirectURL)
     );
     return new LinkModel({
       url: decodeURIComponent(url.toString())

@@ -1,5 +1,6 @@
 import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
 
+import { PaymentGatewayType } from '@/controllers/graphql/enums/payment-gateway-type.enum';
 import { PaymentStatus } from '@/controllers/graphql/enums/payment-status.enum';
 
 import { Account } from './account';
@@ -26,6 +27,9 @@ export class Payment {
 
   @Field(() => PaymentStatus)
   status: PaymentStatus;
+
+  @Field(() => PaymentGatewayType)
+  paymentGatewayType: PaymentGatewayType;
 
   @Field(() => Float)
   paidAmount: number;

@@ -15,6 +15,8 @@ import { PaymentMethodNotFoundException } from '@/errors';
 import { LinkModel } from '@/models/link.model';
 import { CreatePluginService } from '@/services/plugins/create-plugin';
 
+import { mercadopagoAccountRedirectURL } from '../constants/mercadopago-account-redirect-url';
+
 @Injectable()
 export class MercadoPagoCompleteAccountProcessorService
   implements IBaseServiceCompleteAccountByPaymentProcessor
@@ -24,13 +26,13 @@ export class MercadoPagoCompleteAccountProcessorService
   async execute(
     data: CompleteAccountByPaymentProcessorDTO
   ): Promise<LinkModel> {
-    const oauth = new OAuth(mercadopagoClient);
+    const oauth = new OAuth(mercadopagoClient());
     const response = await oauth.create({
       body: {
         client_id: MERCADOPAGO_CLIENT_ID,
         client_secret: MERCADOPAGO_CLIENT_SECRET,
         code: data?.code,
-        redirect_uri: data.successURL
+        redirect_uri: decodeURIComponent(mercadopagoAccountRedirectURL)
       }
     });
     if (!response) {

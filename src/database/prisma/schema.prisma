@@ -274,6 +274,7 @@ model App {
   icon              String?   @db.VarChar(255)
   logo              String?   @db.VarChar(255)
   active            Boolean   @default(true)
+  feePercentage     Float?    @map("fee_percentage")
   defaultDomain     String?   @map("default_domain") @db.VarChar(255)
   stripeBankAccount String?   @map("stripe_bank_account") @db.VarChar(255)
   stripeAccount     String?   @map("stripe_account") @db.VarChar(255)

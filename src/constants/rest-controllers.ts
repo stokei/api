@@ -1,20 +1,28 @@
 export const REST_CONTROLLERS_URL_NAMES = {
-  UPLOADS: 'uploads',
   VERSIONS: 'versions',
   COMPONENTS: 'components',
+  HEALTH_CHECKS: {
+    BASE: 'status',
+    STATUS: 'status'
+  },
   PAYMENT_GATEWAYS: {
+    BASE: 'payment-gateways',
     MERCADOPAGO: {
-      BASE: '/payment-gateways/mercadopago',
-      COMPLETE_ACCOUNT: '/payment-gateways/mercadopago/complete-account'
+      COMPLETE_ACCOUNT: 'payment-gateways/mercadopago/complete-account'
     }
   },
-  UPLOADS_FILES: 'uploads/files',
-  UPLOADS_IMAGES: 'uploads/images',
-  UPLOADS_VIDEOS: 'uploads/videos',
-  WEBHOOKS: 'webhooks',
-  WEBHOOKS_STRIPE: 'webhooks/stripe',
-  WEBHOOKS_PAGSEGURO: 'webhooks/pagseguro',
-  WEBHOOKS_MERCADOPAGO: 'webhooks/mercadopago',
-  WEBHOOKS_PAGARME: 'webhooks/pagarme',
-  WEBHOOKS_VIDEOS: 'webhooks/videos'
+  UPLOADS: {
+    BASE: 'uploads',
+    FILES: 'uploads/files',
+    IMAGES: 'uploads/images',
+    VIDEOS: 'uploads/videos'
+  },
+  WEBHOOKS: {
+    BASE: 'webhooks',
+    STRIPE: 'webhooks/stripe',
+    PAGSEGURO: 'webhooks/pagseguro',
+    MERCADOPAGO: 'webhooks/mercadopago',
+    PAGARME: 'webhooks/pagarme',
+    VIDEOS: 'webhooks/videos'
+  }
 };

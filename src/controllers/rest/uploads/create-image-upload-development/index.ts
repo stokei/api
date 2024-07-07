@@ -16,9 +16,9 @@ import { ActivateFileService } from '@/services/files/activate-file';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { UpdateFileService } from '@/services/files/update-file';
 
-@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS_IMAGES)
+@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS.BASE)
 @Controller({
-  path: REST_CONTROLLERS_URL_NAMES.UPLOADS_IMAGES,
+  path: REST_CONTROLLERS_URL_NAMES.UPLOADS.IMAGES,
   version: REST_VERSIONS.V1
 })
 export class CreateImageUploadDevelopmentController {

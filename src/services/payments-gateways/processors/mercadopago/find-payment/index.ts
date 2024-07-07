@@ -15,7 +15,7 @@ export class MercadoPagoFindPaymentProcessorService
   async execute(
     data: FindPaymentByPaymentProcessorDTO
   ): Promise<FindPaymentByPaymentProcessorResponse> {
-    const response = await new Payment(mercadopagoClient).get({
+    const response = await new Payment(mercadopagoClient()).get({
       id: data?.id
     });
     return {

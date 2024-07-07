@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { defaultAppFeePercentage } from '@/constants/default-app-fee-percentage';
 import { AppStatus } from '@/enums/app-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { AppCreatedEvent } from '@/events/implements/apps/app-created.event';
@@ -20,6 +21,7 @@ export interface IAppModelData {
   readonly avatar?: string;
   readonly currency: string;
   readonly icon?: string;
+  readonly feePercentage?: number;
   readonly logo?: string;
   readonly active: boolean;
   readonly stripeBankAccount?: string;
@@ -91,7 +93,7 @@ export class AppModel extends AggregateRoot {
     this.createdAt = convertToISODateString(data.createdAt);
     this.updatedBy = data.updatedBy;
     this.createdBy = data.createdBy;
-    this.feePercentage = 5;
+    this.feePercentage = data.feePercentage || defaultAppFeePercentage;
     this.isStokei = !!this.id.match(/stokei/i);
     this.stripeBankAccount = data.stripeBankAccount || undefined;
     this.pagarmeAccount = data.pagarmeAccount || undefined;

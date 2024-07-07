@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 import { PaymentStatus } from '@/enums/payment-status.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { PaymentChangedToPaidEvent } from '@/events/implements/payments/payment-changed-to-paid.event';
@@ -24,6 +25,7 @@ export interface IPaymentModelData {
   readonly active: boolean;
   readonly paidAt?: Date | string;
   readonly canceledAt?: Date | string;
+  readonly paymentGatewayType: PaymentGatewayType;
   readonly paymentErrorAt?: Date | string;
   readonly updatedAt?: Date | string;
   readonly createdAt?: Date | string;
@@ -47,6 +49,7 @@ export class PaymentModel extends AggregateRoot {
   readonly paidAt?: string;
   readonly canceledAt?: string;
   readonly paymentErrorAt?: string;
+  readonly paymentGatewayType: PaymentGatewayType;
   readonly updatedAt?: string;
   readonly createdAt?: string;
   readonly app: string;
@@ -69,6 +72,8 @@ export class PaymentModel extends AggregateRoot {
     this.subtotalAmount = data.subtotalAmount;
     this.feeAmount = data.feeAmount;
     this.active = data.active;
+    this.paymentGatewayType =
+      data.paymentGatewayType || PaymentGatewayType.PAGARME;
     this.paidAt = convertToISODateString(data.paidAt);
     this.canceledAt = convertToISODateString(data.canceledAt);
     this.paymentErrorAt = convertToISODateString(data.paymentErrorAt);

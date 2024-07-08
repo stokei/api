@@ -23,6 +23,7 @@ import { ModulesQueries } from './modules';
 import { OrderItemsQueries } from './order-items';
 import { OrdersQueries } from './orders';
 import { PagesQueries } from './pages';
+import { PaymentGatewaysQueries } from './payment-gateways';
 import { PaymentMethodsQueries } from './payment-methods';
 import { PaymentsQueries } from './payments';
 import { PhonesQueries } from './phones';
@@ -77,5 +78,6 @@ export const Queries = [
   ...ComponentsQueries,
   ...SitesQueries,
   ...CouponsQueries,
-  ...PluginsQueries
+  ...PluginsQueries,
+  ...PaymentGatewaysQueries
 ];

@@ -18,8 +18,8 @@ class WhereDataFindAllAppsDataInput implements WhereDataFindAllAppsDTO {
   @Field(() => [String], { nullable: true })
   ids?: string[];
 
-  @Field(() => WhereDataStringInput, { nullable: true })
-  parent?: WhereDataStringInput;
+  @Field(() => WhereDataSearchInput, { nullable: true })
+  parent?: WhereDataSearchInput;
 
   @Field(() => WhereDataSearchInput, { nullable: true })
   name?: WhereDataSearchInput;

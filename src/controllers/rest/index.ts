@@ -1,5 +1,6 @@
 import { ComponentsControllers } from './components';
 import { HealthControllers } from './health';
+import { PaymentGatewaysControllers } from './payment-gateways';
 import { UploadsControllers } from './uploads';
 import { VersionsControllers } from './versions';
 import { WebhooksControllers } from './webhooks';
@@ -9,5 +10,6 @@ export const RestControllers = [
   ...UploadsControllers,
   ...WebhooksControllers,
   ...HealthControllers,
-  ...VersionsControllers
+  ...VersionsControllers,
+  ...PaymentGatewaysControllers
 ];

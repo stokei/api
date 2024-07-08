@@ -14,7 +14,7 @@ export class FindPaymentMethodsMostUsedByPeriodQueryHandler
   implements IQueryHandler<FindPaymentMethodsMostUsedByPeriodQuery>
 {
   constructor(
-    private readonly findAccessesChartDataRepository: FindPaymentMethodsMostUsedByPeriodRepository
+    private readonly findPaymentMethodsMostUsedByPeriodRepository: FindPaymentMethodsMostUsedByPeriodRepository
   ) {}
 
   async execute(
@@ -39,7 +39,9 @@ export class FindPaymentMethodsMostUsedByPeriodQueryHandler
         'endAt'
       );
     }
-    return await this.findAccessesChartDataRepository.execute(data);
+    return await this.findPaymentMethodsMostUsedByPeriodRepository.execute(
+      data
+    );
   }
 
   private clearData(

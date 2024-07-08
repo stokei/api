@@ -13,7 +13,6 @@ import { SubscriptionContractStatus } from '@/enums/subscription-contract-status
 import { UsageRecordAction } from '@/enums/usage-record-action.enum';
 import {
   AppNotFoundException,
-  AppUnauthorizedException,
   DataNotFoundException,
   ParamNotFoundException,
   PriceNotFoundException,
@@ -86,9 +85,6 @@ export class AddItemToAppSubscriptionContractCommandHandler
       const app = await this.findAppByIdService.execute(data.app);
       if (!app) {
         throw new AppNotFoundException();
-      }
-      if (!app.isAllowedToUsePlan) {
-        throw new AppUnauthorizedException();
       }
       if (app.isStokei) {
         return;

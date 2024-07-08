@@ -74,7 +74,7 @@ export class MainModule implements NestModule {
           '/' +
           REST_VERSIONS.V1_TEXT +
           '/' +
-          REST_CONTROLLERS_URL_NAMES.WEBHOOKS_STRIPE,
+          REST_CONTROLLERS_URL_NAMES.WEBHOOKS.STRIPE,
         method: RequestMethod.POST
       })
       .apply(JsonBodyMiddleware)

@@ -27,6 +27,7 @@ import { PaymentMethodQueriesHandlers } from './payment-methods';
 import { PaymentQueriesHandlers } from './payments';
 import { PhoneQueriesHandlers } from './phones';
 import { PlanQueriesHandlers } from './plans';
+import { PluginQueriesHandlers } from './plugins';
 import { PriceTierQueriesHandlers } from './price-tiers';
 import { PriceQueriesHandlers } from './prices';
 import { ProductQueriesHandlers } from './products';
@@ -85,5 +86,6 @@ export const QueriesHandlers = [
   ...PageQueriesHandlers,
   ...SiteQueriesHandlers,
   ...VersionQueriesHandlers,
-  ...CouponQueriesHandlers
+  ...CouponQueriesHandlers,
+  ...PluginQueriesHandlers
 ];

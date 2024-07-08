@@ -10,14 +10,12 @@ import { ChangePaymentToPaymentErrorCommand } from '@/commands/implements/paymen
 import { ChangePaymentToPaymentErrorRepositoryDataDTO } from '@/dtos/payments/change-payment-to-payment-error-repository.dto';
 import { PaymentStatus } from '@/enums/payment-status.enum';
 import {
-  AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
   PaymentNotFoundException
 } from '@/errors';
 import { PaymentModel } from '@/models/payment.model';
 import { ChangePaymentToPaymentErrorRepository } from '@/repositories/payments/change-payment-to-payment-error';
-import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindPaymentByIdService } from '@/services/payments/find-payment-by-id';
 
 type ChangePaymentToPaymentErrorCommandKeys =
@@ -29,7 +27,6 @@ export class ChangePaymentToPaymentErrorCommandHandler
 {
   constructor(
     private readonly changePaymentToPaymentErrorRepository: ChangePaymentToPaymentErrorRepository,
-    private readonly findAppByIdService: FindAppByIdService,
     private readonly findPaymentByIdService: FindPaymentByIdService,
     private readonly publisher: EventPublisher
   ) {}
@@ -39,21 +36,12 @@ export class ChangePaymentToPaymentErrorCommandHandler
     if (!data) {
       throw new DataNotFoundException();
     }
-    if (!data?.app) {
-      throw new ParamNotFoundException<ChangePaymentToPaymentErrorCommandKeys>(
-        'app'
-      );
-    }
     if (!data?.payment) {
       throw new ParamNotFoundException<ChangePaymentToPaymentErrorCommandKeys>(
         'payment'
       );
     }
 
-    const app = await this.findAppByIdService.execute(data.app);
-    if (!app) {
-      throw new AppNotFoundException();
-    }
     const payment = await this.findPaymentByIdService.execute(data.payment);
     if (!payment) {
       throw new PaymentNotFoundException();
@@ -72,7 +60,6 @@ export class ChangePaymentToPaymentErrorCommandHandler
       await this.changePaymentToPaymentErrorRepository.execute({
         data: dataChangePaymentToPaymentError,
         where: {
-          app: app.id,
           payment: splitServiceId(payment.id)?.id
         }
       });
@@ -96,7 +83,6 @@ export class ChangePaymentToPaymentErrorCommandHandler
     command: ChangePaymentToPaymentErrorCommand
   ): ChangePaymentToPaymentErrorCommand {
     return cleanObject({
-      app: cleanValue(command?.app),
       payment: cleanValue(command?.payment),
       paymentMethod: cleanValue(command?.paymentMethod),
       stripeCheckoutSession: cleanValue(command?.stripeCheckoutSession),

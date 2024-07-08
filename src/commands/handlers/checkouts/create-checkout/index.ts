@@ -3,43 +3,29 @@ import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
 import { OrderStatus } from '@/enums/order-status.enum';
-import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
-import { PaymentMethodType } from '@/enums/payment-method-type.enum';
 import {
   AccountNotFoundException,
   AppNotFoundException,
+  CurrencyNotFoundException,
   DataNotFoundException,
   OrderAlreadyPaidException,
   OrderItemsNotFoundException,
   OrderNotFoundException,
   ParamNotFoundException,
-  PaymentMethodNotFoundException,
   PaymentNotFoundException,
   PricesNotFoundException
 } from '@/errors';
-import { CheckoutMapper } from '@/mappers/checkouts';
-import { AccountModel } from '@/models/account.model';
-import { AppModel } from '@/models/app.model';
-import { OrderModel } from '@/models/order.model';
-import { OrderItemModel } from '@/models/order-item.model';
-import { PaymentModel } from '@/models/payment.model';
-import { PaymentMethodModel } from '@/models/payment-method.model';
-import { PriceModel } from '@/models/price.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { FindCurrencyByIdService } from '@/services/currencies/find-currency-by-id';
 import { FindAllOrderItemsService } from '@/services/order-items/find-all-order-items';
 import { ChangeOrderToPendingService } from '@/services/orders/change-order-to-pending';
 import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
-import { CreatePagarmeOrderService } from '@/services/pagarme/create-pagarme-order';
-import { CreatePaymentMethodBoletoService } from '@/services/payment-methods/create-payment-method-boleto';
-import { CreatePaymentMethodPixService } from '@/services/payment-methods/create-payment-method-pix';
-import { CreatePaymentMethodStripeService } from '@/services/payment-methods/create-payment-method-stripe';
-import { FindPaymentMethodByIdService } from '@/services/payment-methods/find-payment-method-by-id';
+import { ChangePaymentToPaymentErrorService } from '@/services/payments/change-payment-to-payment-error';
 import { CreatePaymentService } from '@/services/payments/create-payment';
-import { UpdatePaymentService } from '@/services/payments/update-payment';
+import { CreatePaymentByPaymentProcessorService } from '@/services/payments-gateways/factories/create-payment';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
-import { CreateStripePaymentIntentService } from '@/services/stripe/create-stripe-payment-intent';
-import { getStokeiFeeAmount } from '@/utils/get-fee-amount';
+import { getFeeAmount } from '@/utils/get-fee-amount';
 
 type CreateCheckoutCommandKeys = keyof CreateCheckoutCommand;
 
@@ -48,19 +34,15 @@ export class CreateCheckoutCommandHandler
   implements ICommandHandler<CreateCheckoutCommand>
 {
   constructor(
-    private readonly createStripePaymentIntentService: CreateStripePaymentIntentService,
-    private readonly createPaymentMethodPixService: CreatePaymentMethodPixService,
-    private readonly createPaymentMethodStripeService: CreatePaymentMethodStripeService,
-    private readonly createPaymentMethodBoletoService: CreatePaymentMethodBoletoService,
-    private readonly findPaymentMethodByIdService: FindPaymentMethodByIdService,
     private readonly changeOrderToPendingService: ChangeOrderToPendingService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findOrderByIdService: FindOrderByIdService,
     private readonly findAllOrderItemsService: FindAllOrderItemsService,
     private readonly findAllPricesService: FindAllPricesService,
-    private readonly createPagarmeOrderService: CreatePagarmeOrderService,
-    private readonly updatePaymentService: UpdatePaymentService,
     private readonly findAccountByIdService: FindAccountByIdService,
+    private readonly findCurrencyByIdService: FindCurrencyByIdService,
+    private readonly changePaymentToPaymentErrorService: ChangePaymentToPaymentErrorService,
+    private readonly createPaymentByPaymentProcessorService: CreatePaymentByPaymentProcessorService,
     private readonly createPaymentService: CreatePaymentService
   ) {}
 
@@ -84,8 +66,14 @@ export class CreateCheckoutCommandHandler
       throw new AccountNotFoundException();
     }
     const customerApp = await this.findAppByIdService.execute(data.app);
-    if (!customerApp?.pagarmeAccount) {
+    if (!customerApp) {
       throw new AppNotFoundException();
+    }
+    const currency = await this.findCurrencyByIdService.execute(
+      customerApp.currency
+    );
+    if (!currency) {
+      throw new CurrencyNotFoundException();
     }
 
     let order = await this.findOrderByIdService.execute(data.order);
@@ -127,211 +115,68 @@ export class CreateCheckoutCommandHandler
       throw new PricesNotFoundException();
     }
 
-    const paymentGatewayType =
-      data.paymentMethodType === PaymentMethodType.STRIPE
-        ? PaymentGatewayType.STRIPE
-        : PaymentGatewayType.PAGARME;
+    const paymentGatewayType = data.paymentGatewayType;
     const payment = await this.createPaymentService.execute({
       parent: order.id,
       payer: customer.id,
       currency: order.currency,
       totalAmount: order.totalAmount,
       subtotalAmount: order.subtotalAmount,
-      paymentMethodType: data.paymentMethodType,
+      feeAmount: getFeeAmount({
+        amount: order.totalAmount,
+        feePercentage: customerApp.feePercentage
+      }),
       paymentGatewayType,
       createdBy: data.createdBy,
       app: data.app
     });
 
-    let paymentMethod: PaymentMethodModel;
-    if (
-      data.paymentMethodType === PaymentMethodType.CARD &&
-      !data.paymentMethod
-    ) {
-      throw new PaymentMethodNotFoundException();
-    }
-
     try {
-      if (data.paymentMethodType === PaymentMethodType.CARD) {
-        paymentMethod = await this.findPaymentMethodByIdService.execute(
-          data.paymentMethod
-        );
-        if (!paymentMethod) {
-          throw new PaymentMethodNotFoundException();
-        }
+      const paymentGatewayResponse =
+        await this.createPaymentByPaymentProcessorService.execute({
+          app: customerApp,
+          currency,
+          payer: customer,
+          payment,
+          paymentGatewayType,
+          installments: 1,
+          items: orderItems.items?.map((item) => {
+            const price = prices.items.find(
+              (priceItem) => priceItem.id === item.price
+            );
+            return {
+              quantity: item.quantity,
+              name: price.nickname,
+              amount: price.amount
+            };
+          }),
+          successURL: data.successURL,
+          cancelURL: data.cancelURL,
+          createdBy: data.createdBy
+        });
+      if (!paymentGatewayResponse) {
+        throw new PaymentNotFoundException();
       }
-    } catch (error) {}
 
-    const paymentGatewayResponse = await this.createGatewayPayment({
-      customer,
-      customerApp,
-      order,
-      orderItems: orderItems?.items,
-      payment,
-      paymentGatewayType,
-      paymentMethod,
-      prices: prices?.items,
-      paymentMethodType: data.paymentMethodType
-    });
-    if (!paymentGatewayResponse) {
-      throw new PaymentNotFoundException();
+      return paymentGatewayResponse;
+    } catch (error) {
+      this.changePaymentToPaymentErrorService.execute({
+        payment: payment.id,
+        updatedBy: data.createdBy
+      });
+      throw error;
     }
-    try {
-      const paymentMethod = await this.findOrCreatePaymentMethod({
-        app: data.app,
-        createdBy: data.createdBy,
-        boletoBarcode: paymentGatewayResponse?.boleto?.barcode,
-        boletoLine: paymentGatewayResponse?.boleto?.line,
-        boletoURL: paymentGatewayResponse?.boleto?.pdf,
-        paymentMethodId: data.paymentMethod,
-        paymentMethodType: data.paymentMethodType
-      });
-      await this.updatePaymentService.execute({
-        where: {
-          payment: payment.id,
-          app: data.app
-        },
-        data: {
-          paymentMethod: paymentMethod?.id,
-          updatedBy: data.createdBy
-        }
-      });
-    } catch (error) {}
-
-    return new CheckoutMapper().toModel({
-      payment: payment.id,
-      ...(paymentGatewayResponse?.client_secret && {
-        stripe: {
-          clientSecret: paymentGatewayResponse?.client_secret
-        }
-      }),
-      ...(paymentGatewayResponse?.boleto && {
-        boleto: paymentGatewayResponse?.boleto
-      }),
-      ...(paymentGatewayResponse?.card && {
-        card: paymentGatewayResponse?.card
-      }),
-      ...(paymentGatewayResponse?.pix && {
-        pix: paymentGatewayResponse?.pix
-      })
-    });
   }
 
   private clearData(command: CreateCheckoutCommand): CreateCheckoutCommand {
     return cleanObject({
-      paymentMethod: cleanValue(command?.paymentMethod),
-      paymentMethodType: command?.paymentMethodType,
+      paymentGatewayType: command?.paymentGatewayType,
+      successURL: cleanValue(command?.successURL),
+      cancelURL: cleanValue(command?.cancelURL),
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       customer: cleanValue(command?.customer),
       order: cleanValue(command?.order)
     });
-  }
-
-  private async findOrCreatePaymentMethod(data: {
-    paymentMethodType: PaymentMethodType;
-    paymentMethodId?: string;
-    boletoLine?: string;
-    boletoBarcode?: string;
-    boletoURL?: string;
-    app: string;
-    createdBy: string;
-  }) {
-    const createPaymentMethodHandlers: Record<
-      PaymentMethodType,
-      () => Promise<PaymentMethodModel>
-    > = {
-      [PaymentMethodType.BOLETO]: async () =>
-        await this.createPaymentMethodBoletoService.execute({
-          boletoLine: data?.boletoLine,
-          boletoBarcode: data?.boletoBarcode,
-          boletoURL: data?.boletoURL,
-          app: data.app,
-          createdBy: data.createdBy
-        }),
-      [PaymentMethodType.CARD]: async () => {
-        if (!data?.paymentMethodId) {
-          return;
-        }
-        return await this.findPaymentMethodByIdService.execute(
-          data?.paymentMethodId
-        );
-      },
-      [PaymentMethodType.PIX]: async () =>
-        await this.createPaymentMethodPixService.execute({
-          app: data.app,
-          createdBy: data.createdBy
-        }),
-      [PaymentMethodType.STRIPE]: async () =>
-        await this.createPaymentMethodStripeService.execute({
-          app: data.app,
-          createdBy: data.createdBy
-        })
-    };
-    const createPaymentMethod =
-      createPaymentMethodHandlers[data.paymentMethodType];
-    const paymentMethod = await createPaymentMethod?.();
-    return paymentMethod;
-  }
-
-  private async createGatewayPayment({
-    order,
-    customer,
-    payment,
-    prices,
-    orderItems,
-    customerApp,
-    paymentMethod,
-    paymentMethodType,
-    paymentGatewayType
-  }: {
-    order: OrderModel;
-    customer: AccountModel;
-    payment: PaymentModel;
-    paymentMethodType: PaymentMethodType;
-    paymentGatewayType: PaymentGatewayType;
-    customerApp: AppModel;
-    paymentMethod?: PaymentMethodModel;
-    prices: PriceModel[];
-    orderItems: OrderItemModel[];
-  }) {
-    const feeAmount = getStokeiFeeAmount({
-      amount: payment.totalAmount,
-      paymentMethodType,
-      paymentGatewayType
-    });
-    const gatewaysHandlers: Record<PaymentGatewayType, any> = {
-      [PaymentGatewayType.STRIPE]: () => {
-        return this.createStripePaymentIntentService.execute({
-          app: customerApp,
-          feeAmount,
-          currency: order.currency,
-          customer,
-          order,
-          payment
-        });
-      },
-      [PaymentGatewayType.PAGARME]: () => {
-        return this.createPagarmeOrderService.execute({
-          paymentMethodType,
-          installments: 1,
-          app: customerApp,
-          totalAmount: payment.totalAmount,
-          feeAmount,
-          card: paymentMethod?.referenceId,
-          currency: order.currency,
-          customer: customer.pagarmeCustomer,
-          payment: payment.id,
-          prices,
-          orderItems
-        });
-      }
-    };
-
-    const createPayment = gatewaysHandlers[paymentGatewayType];
-    if (createPayment) {
-      return await createPayment?.();
-    }
-    return await createPayment[PaymentGatewayType.PAGARME]?.();
   }
 }

@@ -27,6 +27,7 @@ export * from './payment.entity';
 export * from './payment-method.entity';
 export * from './phone.entity';
 export * from './plan.entity';
+export * from './plugin.entity';
 export * from './price.entity';
 export * from './price-tier.entity';
 export * from './product.entity';

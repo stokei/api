@@ -29,6 +29,7 @@ import { PaymentMethodCommandHandlers } from './payment-methods';
 import { PaymentCommandHandlers } from './payments';
 import { PhoneCommandHandlers } from './phones';
 import { PlanCommandHandlers } from './plans';
+import { PluginCommandHandlers } from './plugins';
 import { PriceTierCommandHandlers } from './price-tiers';
 import { PriceCommandHandlers } from './prices';
 import { ProductCommandHandlers } from './products';
@@ -89,5 +90,6 @@ export const CommandHandlers = [
   ...PageCommandHandlers,
   ...SiteCommandHandlers,
   ...VersionCommandHandlers,
-  ...CouponCommandHandlers
+  ...CouponCommandHandlers,
+  ...PluginCommandHandlers
 ];

@@ -1,22 +1,24 @@
 import { ICommand } from '@nestjs/cqrs';
 
 import { CreateCheckoutDTO } from '@/dtos/checkouts/create-checkout.dto';
-import { PaymentMethodType } from '@/enums/payment-method-type.enum';
+import { PaymentGatewayType } from '@/enums/payment-gateway-type.enum';
 
 export class CreateCheckoutCommand implements ICommand, CreateCheckoutDTO {
-  paymentMethod?: string;
-  paymentMethodType: PaymentMethodType;
+  successURL: string;
+  cancelURL: string;
+  paymentGatewayType: PaymentGatewayType;
   app: string;
   customer: string;
   order: string;
   createdBy: string;
 
   constructor(data: CreateCheckoutDTO) {
-    this.paymentMethodType = data.paymentMethodType;
+    this.successURL = data.successURL;
+    this.cancelURL = data.cancelURL;
+    this.paymentGatewayType = data.paymentGatewayType;
     this.app = data.app;
     this.customer = data.customer;
     this.order = data.order;
-    this.paymentMethod = data.paymentMethod;
     this.createdBy = data.createdBy;
   }
 }

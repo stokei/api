@@ -27,6 +27,7 @@ import { PaymentMethodsRepositories } from './payment-methods';
 import { PaymentsRepositories } from './payments';
 import { PhonesRepositories } from './phones';
 import { PlansRepositories } from './plans';
+import { PluginsRepositories } from './plugins';
 import { PriceTiersRepositories } from './price-tiers';
 import { PricesRepositories } from './prices';
 import { ProductsRepositories } from './products';
@@ -85,5 +86,6 @@ export const Repositories = [
   ...PagesRepositories,
   ...SitesRepositories,
   ...VersionsRepositories,
-  ...CouponsRepositories
+  ...CouponsRepositories,
+  ...PluginsRepositories
 ];

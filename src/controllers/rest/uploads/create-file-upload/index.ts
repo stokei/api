@@ -18,9 +18,9 @@ import { FileUploadInterceptorModel } from '@/models/file-upload-interceptor.mod
 import { ActivateFileService } from '@/services/files/activate-file';
 import { CreateFileService } from '@/services/files/create-file';
 
-@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS_FILES)
+@ApiTags(REST_CONTROLLERS_URL_NAMES.UPLOADS.BASE)
 @Controller({
-  path: REST_CONTROLLERS_URL_NAMES.UPLOADS_FILES,
+  path: REST_CONTROLLERS_URL_NAMES.UPLOADS.FILES,
   version: REST_VERSIONS.V1
 })
 export class CreateFileUploadController {

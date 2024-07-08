@@ -2,6 +2,7 @@ import {
   IBaseFindManyDTO,
   IOrderBy,
   IWhereData,
+  IWhereDataInterval,
   IWhereDataSearch
 } from '@stokei/nestjs';
 
@@ -18,6 +19,8 @@ export interface WhereDataFindAllSubscriptionContractsDTO {
   type?: SubscriptionContractType;
   active?: IWhereData<boolean>;
   automaticRenew?: IWhereData<boolean>;
+  startAt?: IWhereDataInterval;
+  endAt?: IWhereDataInterval;
   updatedBy?: IWhereData;
   createdBy?: IWhereData;
 }

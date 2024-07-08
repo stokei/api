@@ -5,6 +5,7 @@ import {
   cleanValueNumber,
   cleanWhere,
   cleanWhereDataBoolean,
+  cleanWhereDataIntervalString,
   cleanWhereDataSearch,
   cleanWhereDataString,
   IWhere,
@@ -31,9 +32,6 @@ export class SubscriptionContractMapper {
     const prismaMapper = new PrismaMapper();
     return prismaMapper.toWhere({
       data: where,
-      allowIsEmptyValues: {
-        NOT: true
-      },
       operatorMapper(operatorData) {
         return {
           id: prismaMapper.toWhereIds(operatorData.ids),
@@ -45,6 +43,8 @@ export class SubscriptionContractMapper {
           type: operatorData.type,
           active: prismaMapper.toWhereData(operatorData.active),
           automaticRenew: prismaMapper.toWhereData(operatorData.automaticRenew),
+          startAt: prismaMapper.toWhereDataInterval(operatorData.startAt),
+          endAt: prismaMapper.toWhereDataInterval(operatorData.endAt),
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
           createdBy: prismaMapper.toWhereData(operatorData.createdBy)
         };
@@ -98,6 +98,8 @@ export class SubscriptionContractMapper {
             automaticRenew: cleanWhereDataBoolean(operatorData.automaticRenew),
             order: cleanWhereDataString(operatorData.order),
             app: cleanWhereDataString(operatorData.app),
+            startAt: cleanWhereDataIntervalString(operatorData.startAt),
+            endAt: cleanWhereDataIntervalString(operatorData.endAt),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),
             ids:

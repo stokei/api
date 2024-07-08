@@ -6,6 +6,7 @@ import { OrderStatus } from '@/enums/order-status.enum';
 import {
   AccountNotFoundException,
   AppNotFoundException,
+  CouponNotFoundException,
   CurrencyNotFoundException,
   DataNotFoundException,
   OrderAlreadyPaidException,
@@ -15,8 +16,10 @@ import {
   PaymentNotFoundException,
   PricesNotFoundException
 } from '@/errors';
+import { CouponModel } from '@/models/coupon.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { FindCouponByIdService } from '@/services/coupons/find-coupon-by-id';
 import { FindCurrencyByIdService } from '@/services/currencies/find-currency-by-id';
 import { FindAllOrderItemsService } from '@/services/order-items/find-all-order-items';
 import { ChangeOrderToPendingService } from '@/services/orders/change-order-to-pending';
@@ -37,6 +40,7 @@ export class CreateCheckoutCommandHandler
     private readonly changeOrderToPendingService: ChangeOrderToPendingService,
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findOrderByIdService: FindOrderByIdService,
+    private readonly findCouponByIdService: FindCouponByIdService,
     private readonly findAllOrderItemsService: FindAllOrderItemsService,
     private readonly findAllPricesService: FindAllPricesService,
     private readonly findAccountByIdService: FindAccountByIdService,
@@ -114,6 +118,13 @@ export class CreateCheckoutCommandHandler
     if (!prices?.totalCount) {
       throw new PricesNotFoundException();
     }
+    let coupon: CouponModel;
+    try {
+      coupon = await this.findCouponByIdService.execute(order.coupon);
+      if (!coupon?.active) {
+        throw new CouponNotFoundException();
+      }
+    } catch (error) {}
 
     const paymentGatewayType = data.paymentGatewayType;
     const payment = await this.createPaymentService.execute({
@@ -137,6 +148,7 @@ export class CreateCheckoutCommandHandler
           app: customerApp,
           currency,
           payer: customer,
+          coupon,
           payment,
           paymentGatewayType,
           installments: 1,

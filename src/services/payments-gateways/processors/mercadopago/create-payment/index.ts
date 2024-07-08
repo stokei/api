@@ -56,7 +56,11 @@ export class MercadoPagoCreatePaymentProcessorService
           id: item.name,
           quantity: item.quantity,
           title: item.name,
-          unit_price: convertCentsToFloat(item.amount),
+          unit_price: convertCentsToFloat(
+            data?.coupon
+              ? data?.coupon?.getAmountWithDiscount(item.amount)
+              : item.amount
+          ),
           currency_id: data?.currency?.id
         })),
         payer: {

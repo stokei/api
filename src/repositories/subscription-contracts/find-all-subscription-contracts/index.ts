@@ -20,7 +20,6 @@ export class FindAllSubscriptionContractsRepository
     data: FindAllSubscriptionContractsDTO
   ): Promise<SubscriptionContractModel[]> {
     const subscriptionContractMapper = new SubscriptionContractMapper();
-    console.log(subscriptionContractMapper.toFindAllPrisma(data));
     return subscriptionContractMapper.toModels(
       await this.model.subscriptionContract.findMany(
         subscriptionContractMapper.toFindAllPrisma(data)

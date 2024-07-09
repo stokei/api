@@ -119,7 +119,7 @@ export class FileModel extends AggregateRoot {
       },
       DEFAULT: () => {
         const basePathnameURL = REST_VERSIONS.V1_TEXT;
-        const pathnameURL = REST_CONTROLLERS_URL_NAMES.UPLOADS;
+        const pathnameURL = REST_CONTROLLERS_URL_NAMES.UPLOADS.BASE;
         return appendPathnameToURL(
           basePathnameURL,
           `${pathnameURL}/${this.id}`

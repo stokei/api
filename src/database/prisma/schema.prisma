@@ -288,6 +288,7 @@ model App {
   updatedBy         String?   @map("updated_by") @db.VarChar(255)
   createdBy         String?   @map("created_by") @db.VarChar(255)
 
+  @@index([slug])
   @@map("apps")
 }
 
@@ -304,6 +305,7 @@ model Domain {
   updatedBy   String?      @map("updated_by") @db.VarChar(255)
   createdBy   String?      @map("created_by") @db.VarChar(255)
 
+  @@index([name])
   @@map("domains")
 }
 
@@ -889,6 +891,7 @@ model Component {
   updatedBy String?       @map("updated_by") @db.VarChar(255)
   createdBy String?       @map("created_by") @db.VarChar(255)
 
+  @@index([parent])
   @@map("components")
 }
 
@@ -908,6 +911,7 @@ model Page {
   updatedBy    String?   @map("updated_by") @db.VarChar(255)
   createdBy    String?   @map("created_by") @db.VarChar(255)
 
+  @@index([slug])
   @@map("pages")
 }
 
@@ -942,6 +946,7 @@ model Site {
   updatedBy     String?   @map("updated_by") @db.VarChar(255)
   createdBy     String?   @map("created_by") @db.VarChar(255)
 
+  @@index([slug])
   @@map("sites")
 }
 
@@ -959,6 +964,7 @@ model Coupon {
   updatedBy  String?   @map("updated_by") @db.VarChar(255)
   createdBy  String?   @map("created_by") @db.VarChar(255)
 
+  @@index([code])
   @@map("coupons")
 }
 
@@ -974,5 +980,6 @@ model Plugin {
   updatedBy  String?    @map("updated_by") @db.VarChar(255)
   createdBy  String?    @map("created_by") @db.VarChar(255)
 
+  @@index([type])
   @@map("plugins")
 }

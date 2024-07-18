@@ -4,7 +4,9 @@ import { hiddenPrivateDataFromObject, splitServiceId } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { RemoveFileCommand } from '@/commands/implements/files/remove-file.command';
 import { UpdateFileCommand } from '@/commands/implements/files/update-file.command';
+import { RemoveImageCommand } from '@/commands/implements/images/remove-image.command';
 import { CreateSortedItemCommand } from '@/commands/implements/sorted-items/create-sorted-item.command';
 import { CreateVideoAuthorCommand } from '@/commands/implements/video-authors/create-video-author.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
@@ -88,7 +90,29 @@ export class VideosSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands: ICommand[] = [];
+        if (event.video.file) {
+          commands.push(
+            new RemoveFileCommand({
+              where: {
+                file: event.video.file,
+                app: event.video.app,
+                removedBy: event.removedBy
+              }
+            })
+          );
+        }
+        if (event.video.poster) {
+          commands.push(
+            new RemoveImageCommand({
+              where: {
+                image: event.video.poster,
+                app: event.video.app,
+                removedBy: event.removedBy
+              }
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)

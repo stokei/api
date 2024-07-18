@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { RemoveFileCommand } from '@/commands/implements/files/remove-file.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { ImageCreatedEvent } from '@/events/implements/images/image-created.event';
 import { ImageRemovedEvent } from '@/events/implements/images/image-removed.event';
@@ -48,7 +49,18 @@ export class ImagesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands: ICommand[] = [];
+        if (event.image.file) {
+          commands.push(
+            new RemoveFileCommand({
+              where: {
+                file: event.image.file,
+                app: event.image.app,
+                removedBy: event.removedBy
+              }
+            })
+          );
+        }
         return commands;
       }),
       mergeMap((c) => c)

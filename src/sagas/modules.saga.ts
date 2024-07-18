@@ -4,6 +4,7 @@ import { hiddenPrivateDataFromObject } from '@stokei/nestjs';
 import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
+import { RemoveModuleResourcesCommand } from '@/commands/implements/modules/remove-module-resources.command';
 import { CreateSortedItemCommand } from '@/commands/implements/sorted-items/create-sorted-item.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { ModuleCreatedEvent } from '@/events/implements/modules/module-created.event';
@@ -57,7 +58,12 @@ export class ModulesSagas {
               hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
             )
         );
-        const commands = [];
+        const commands = [
+          new RemoveModuleResourcesCommand({
+            module: event.module,
+            removedBy: event.removedBy
+          })
+        ];
         return commands;
       }),
       mergeMap((c) => c)

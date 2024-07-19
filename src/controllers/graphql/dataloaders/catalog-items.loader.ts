@@ -32,7 +32,7 @@ export class CatalogItemsLoader {
       const catalogItems =
         await this.findAllCatalogItemsByCatalogIdsService.execute({
           catalogs: catalogItemCatalogIds,
-          pageLimit: 4
+          pageLimit: 8
         });
       return catalogItemCatalogIds.map((catalogId) => {
         return catalogItems?.filter(

@@ -2,7 +2,7 @@ import { Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue, splitServiceId } from '@stokei/nestjs';
 
-import { SendSubscriptionsCustomersSubscriptionCanceledEmailCommand } from '@/commands/implements/emails/subscriptions/customers/send-subscription-canceled-email.command';
+import { SendSubscriptionsCustomersSubscriptionExpiredEmailCommand } from '@/commands/implements/emails/subscriptions/customers/send-subscription-expired-email.command';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import {
   AccountNotFoundException,
@@ -16,16 +16,16 @@ import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindSubscriptionContractItemsDataToEmailService } from '@/services/emails/find-subscription-contract-items-data-to-email';
 import { SendEmailService } from '@/services/emails/send-email';
 
-type SendSubscriptionsCustomersSubscriptionCanceledEmailCommandKeys =
-  keyof SendSubscriptionsCustomersSubscriptionCanceledEmailCommand;
+type SendSubscriptionsCustomersSubscriptionExpiredEmailCommandKeys =
+  keyof SendSubscriptionsCustomersSubscriptionExpiredEmailCommand;
 
-@CommandHandler(SendSubscriptionsCustomersSubscriptionCanceledEmailCommand)
-export class SendSubscriptionsCustomersSubscriptionCanceledEmailCommandHandler
+@CommandHandler(SendSubscriptionsCustomersSubscriptionExpiredEmailCommand)
+export class SendSubscriptionsCustomersSubscriptionExpiredEmailCommandHandler
   implements
-    ICommandHandler<SendSubscriptionsCustomersSubscriptionCanceledEmailCommand>
+    ICommandHandler<SendSubscriptionsCustomersSubscriptionExpiredEmailCommand>
 {
   private readonly logger = new Logger(
-    SendSubscriptionsCustomersSubscriptionCanceledEmailCommandHandler.name
+    SendSubscriptionsCustomersSubscriptionExpiredEmailCommandHandler.name
   );
   constructor(
     private readonly sendEmailService: SendEmailService,
@@ -35,7 +35,7 @@ export class SendSubscriptionsCustomersSubscriptionCanceledEmailCommandHandler
   ) {}
 
   async execute(
-    command: SendSubscriptionsCustomersSubscriptionCanceledEmailCommand
+    command: SendSubscriptionsCustomersSubscriptionExpiredEmailCommand
   ) {
     const data = this.clearData(command);
     try {
@@ -43,12 +43,12 @@ export class SendSubscriptionsCustomersSubscriptionCanceledEmailCommandHandler
         throw new DataNotFoundException();
       }
       if (!data?.app) {
-        throw new ParamNotFoundException<SendSubscriptionsCustomersSubscriptionCanceledEmailCommandKeys>(
+        throw new ParamNotFoundException<SendSubscriptionsCustomersSubscriptionExpiredEmailCommandKeys>(
           'app'
         );
       }
       if (!data?.toAccount) {
-        throw new ParamNotFoundException<SendSubscriptionsCustomersSubscriptionCanceledEmailCommandKeys>(
+        throw new ParamNotFoundException<SendSubscriptionsCustomersSubscriptionExpiredEmailCommandKeys>(
           'toAccount'
         );
       }
@@ -60,6 +60,7 @@ export class SendSubscriptionsCustomersSubscriptionCanceledEmailCommandHandler
       if (!toAccount) {
         throw new AccountNotFoundException();
       }
+
       const subscriptionContractItems =
         await this.findSubscriptionContractItemsDataToEmailService.execute({
           subscriptionContract: data.subscriptionContract
@@ -73,9 +74,8 @@ export class SendSubscriptionsCustomersSubscriptionCanceledEmailCommandHandler
         productName: item.productReference.name,
         image: item.imageURL
       }));
-
       return await this.sendEmailService.execute({
-        route: '/subscriptions/customers/subscription-canceled',
+        route: '/subscriptions/customers/subscription-expired',
         to: toAccount.email,
         app: data.app,
         createdBy: data.createdBy,
@@ -93,8 +93,8 @@ export class SendSubscriptionsCustomersSubscriptionCanceledEmailCommandHandler
   }
 
   private clearData(
-    command: SendSubscriptionsCustomersSubscriptionCanceledEmailCommand
-  ): SendSubscriptionsCustomersSubscriptionCanceledEmailCommand {
+    command: SendSubscriptionsCustomersSubscriptionExpiredEmailCommand
+  ): SendSubscriptionsCustomersSubscriptionExpiredEmailCommand {
     return cleanObject({
       subscriptionContract: command?.subscriptionContract,
       toAccount: cleanValue(command?.toAccount),

@@ -115,6 +115,7 @@ export * from './stripe-account-not-found';
 export * from './stripe-signature-not-found';
 export * from './subscription-contract-already-active';
 export * from './subscription-contract-already-canceled';
+export * from './subscription-contract-already-expired';
 export * from './subscription-contract-already-finished';
 export * from './subscription-contract-item-not-found';
 export * from './subscription-contract-item-price-unauthorized-remove';

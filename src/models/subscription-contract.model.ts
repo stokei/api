@@ -18,6 +18,7 @@ import { SubscriptionContractActivatedEvent } from '@/events/implements/subscrip
 import { SubscriptionContractCanceledEvent } from '@/events/implements/subscription-contracts/subscription-contract-canceled.event';
 import { SubscriptionContractCreatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-created.event';
 import { SubscriptionContractCreatedByAdminEvent } from '@/events/implements/subscription-contracts/subscription-contract-created-by-admin.event';
+import { SubscriptionContractExpiredEvent } from '@/events/implements/subscription-contracts/subscription-contract-expired.event';
 import { SubscriptionContractUpdatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-updated.event';
 
 import { RecurringModel } from './recurring.model';
@@ -101,6 +102,10 @@ export class SubscriptionContractModel extends AggregateRoot {
     return SubscriptionContractStatus.CANCELED === this.status;
   }
 
+  get isExpired() {
+    return SubscriptionContractStatus.EXPIRED === this.status;
+  }
+
   static generateEndDate(startDate: string, recurring: RecurringModel) {
     const startAt = convertToISODate(startDate);
     const getDateHandler = {
@@ -163,6 +168,17 @@ export class SubscriptionContractModel extends AggregateRoot {
     if (this.id) {
       this.apply(
         new SubscriptionContractCanceledEvent({
+          updatedBy: this.updatedBy,
+          subscriptionContract: this
+        })
+      );
+    }
+  }
+
+  expiredSubscriptionContract() {
+    if (this.id) {
+      this.apply(
+        new SubscriptionContractExpiredEvent({
           updatedBy: this.updatedBy,
           subscriptionContract: this
         })

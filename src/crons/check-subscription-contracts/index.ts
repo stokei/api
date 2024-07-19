@@ -4,14 +4,15 @@ import { convertToISODateString } from '@stokei/nestjs';
 
 import { BaseCronJob } from '@/common/base-cron-job';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
-import { CancelSubscriptionContractService } from '@/services/subscription-contracts/cancel-subscription-contract';
+import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
+import { ExpiresSubscriptionContractService } from '@/services/subscription-contracts/expires-subscription-contract';
 import { FindAllSubscriptionContractsService } from '@/services/subscription-contracts/find-all-subscription-contracts';
 
 @Injectable()
 export class CheckSubscriptionContractsCronJob implements BaseCronJob {
   private readonly logger = new Logger(CheckSubscriptionContractsCronJob.name);
   constructor(
-    private readonly cancelSubscriptionContractService: CancelSubscriptionContractService,
+    private readonly expiresSubscriptionContractService: ExpiresSubscriptionContractService,
     private readonly findAllSubscriptionContractsService: FindAllSubscriptionContractsService
   ) {}
 
@@ -22,12 +23,11 @@ export class CheckSubscriptionContractsCronJob implements BaseCronJob {
         await this.findAllSubscriptionContractsService.execute({
           where: {
             AND: {
+              type: SubscriptionContractType.RECURRING,
+              status: SubscriptionContractStatus.ACTIVE,
               endAt: {
                 lessEquals: convertToISODateString(Date.now())
               }
-            },
-            NOT: {
-              status: SubscriptionContractStatus.CANCELED
             }
           }
         });
@@ -37,9 +37,10 @@ export class CheckSubscriptionContractsCronJob implements BaseCronJob {
             try {
               if (
                 !subscriptionContract.isCanceled &&
+                !subscriptionContract.isExpired &&
                 !!subscriptionContract.isRecurring
               ) {
-                await this.cancelSubscriptionContractService.execute({
+                await this.expiresSubscriptionContractService.execute({
                   app: subscriptionContract.app,
                   subscriptionContract: subscriptionContract.id,
                   updatedBy: subscriptionContract.createdBy

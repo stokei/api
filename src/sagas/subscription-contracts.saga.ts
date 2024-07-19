@@ -85,7 +85,7 @@ export class SubscriptionContractsSagas {
             );
             const isExpired = now > endAt;
             if (isExpired) {
-              actionStatus = SubscriptionContractStatus.CANCELED;
+              actionStatus = SubscriptionContractStatus.EXPIRED;
             } else {
               actionStatus = SubscriptionContractStatus.ACTIVE;
             }

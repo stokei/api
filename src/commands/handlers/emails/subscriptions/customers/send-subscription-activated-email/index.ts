@@ -8,19 +8,13 @@ import {
   AccountNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
-  ProductsNotFoundException,
   SubscriptionContractItemsNotFoundException,
   SubscriptionContractNotFoundException
 } from '@/errors';
-import { FileModel } from '@/models/file.model';
-import { ImageModel } from '@/models/image.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
+import { FindSubscriptionContractItemsDataToEmailService } from '@/services/emails/find-subscription-contract-items-data-to-email';
 import { SendEmailService } from '@/services/emails/send-email';
-import { FindAllFilesService } from '@/services/files/find-all-files';
-import { FindAllImagesService } from '@/services/images/find-all-images';
-import { FindAllSubscriptionContractItemsService } from '@/services/subscription-contract-items/find-all-subscription-contract-items';
-import { FindSubscriptionContractItemProductService } from '@/services/subscription-contract-items/find-subscription-contract-item-product';
 
 type SendSubscriptionsCustomersSubscriptionActivatedEmailCommandKeys =
   keyof SendSubscriptionsCustomersSubscriptionActivatedEmailCommand;
@@ -36,11 +30,8 @@ export class SendSubscriptionsCustomersSubscriptionActivatedEmailCommandHandler
   constructor(
     private readonly sendEmailService: SendEmailService,
     private readonly findAppByIdService: FindAppByIdService,
-    private readonly findAllImagesService: FindAllImagesService,
-    private readonly findAllFilesService: FindAllFilesService,
-    private readonly findAllSubscriptionContractItemsService: FindAllSubscriptionContractItemsService,
-    private readonly findSubscriptionContractItemProductService: FindSubscriptionContractItemProductService,
-    private readonly findAccountByIdService: FindAccountByIdService
+    private readonly findAccountByIdService: FindAccountByIdService,
+    private readonly findSubscriptionContractItemsDataToEmailService: FindSubscriptionContractItemsDataToEmailService
   ) {}
 
   async execute(
@@ -69,90 +60,19 @@ export class SendSubscriptionsCustomersSubscriptionActivatedEmailCommandHandler
       if (!toAccount) {
         throw new AccountNotFoundException();
       }
-
       const subscriptionContractItems =
-        await this.findAllSubscriptionContractItemsService.execute({
-          where: {
-            AND: {
-              parent: {
-                equals: data.subscriptionContract.id
-              }
-            }
-          }
+        await this.findSubscriptionContractItemsDataToEmailService.execute({
+          subscriptionContract: data.subscriptionContract
         });
-      if (!subscriptionContractItems?.totalCount) {
+      if (!subscriptionContractItems?.length) {
         throw new SubscriptionContractItemsNotFoundException();
       }
-      const productIds = subscriptionContractItems?.items.map(
-        (subscriptionContractItem) => subscriptionContractItem.product
-      );
-      const products = await Promise.all(
-        productIds?.map(
-          async (productId) =>
-            await this.findSubscriptionContractItemProductService.execute(
-              productId
-            )
-        )
-      );
-      if (!products?.length) {
-        throw new ProductsNotFoundException();
-      }
-      const imageIds = products.map((product) => product?.avatar);
-      let images: ImageModel[];
-      if (!!imageIds?.length) {
-        images = (
-          await this.findAllImagesService.execute({
-            where: {
-              AND: {
-                ids: imageIds
-              }
-            }
-          })
-        )?.items;
-      }
-      const fileIds = images?.map((image) => image?.file);
-      let files: FileModel[];
-      if (!!fileIds?.length) {
-        files = (
-          await this.findAllFilesService.execute({
-            where: {
-              AND: {
-                ids: fileIds
-              }
-            }
-          })
-        )?.items;
-      }
 
-      const items = (
-        await Promise.all(
-          subscriptionContractItems?.items.map(
-            async (subscriptionContractItem) => {
-              const product = products.find(
-                (currentProduct) =>
-                  currentProduct.id === subscriptionContractItem.product
-              );
-              if (!product) {
-                return;
-              }
-              const image = images?.find(
-                (currentImage) => currentImage.id === product.avatar
-              );
-              let avatar: FileModel;
-              if (image) {
-                avatar = files?.find(
-                  (currentFile) => currentFile.id === image?.file
-                );
-              }
-              return {
-                productId: product.id,
-                productName: product.name,
-                image: avatar?.url
-              };
-            }
-          )
-        )
-      ).filter(Boolean);
+      const items = subscriptionContractItems.map((item) => ({
+        productId: item.productReference.id,
+        productName: item.productReference.name,
+        image: item.imageURL
+      }));
 
       return await this.sendEmailService.execute({
         route: '/subscriptions/customers/subscription-activated',

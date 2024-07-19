@@ -2,6 +2,7 @@ import { SubscriptionContractActivatedHandler } from './subscription-contract-ac
 import { SubscriptionContractCanceledHandler } from './subscription-contract-canceled.handler';
 import { SubscriptionContractCreatedHandler } from './subscription-contract-created.handler';
 import { SubscriptionContractCreatedByAdminHandler } from './subscription-contract-created-by-admin.handler';
+import { SubscriptionContractExpiredHandler } from './subscription-contract-expired.handler';
 import { SubscriptionContractUpdatedHandler } from './subscription-contract-updated.handler';
 
 export const SubscriptionContractEventsHandlers = [
@@ -9,5 +10,6 @@ export const SubscriptionContractEventsHandlers = [
   SubscriptionContractUpdatedHandler,
   SubscriptionContractActivatedHandler,
   SubscriptionContractCanceledHandler,
-  SubscriptionContractCreatedByAdminHandler
+  SubscriptionContractCreatedByAdminHandler,
+  SubscriptionContractExpiredHandler
 ];

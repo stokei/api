@@ -150,6 +150,7 @@ enum SubscriptionContractStatus {
   ACTIVE
   PENDING
   CANCELED
+  EXPIRED
 }
 
 enum PhoneStatus {

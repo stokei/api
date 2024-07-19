@@ -9,10 +9,12 @@ import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { SendSubscriptionsCustomersSubscriptionActivatedEmailCommand } from '@/commands/implements/emails/subscriptions/customers/send-subscription-activated-email.command';
 import { SendSubscriptionsCustomersSubscriptionCanceledEmailCommand } from '@/commands/implements/emails/subscriptions/customers/send-subscription-canceled-email.command';
+import { SendSubscriptionsCustomersSubscriptionExpiredEmailCommand } from '@/commands/implements/emails/subscriptions/customers/send-subscription-expired-email.command';
 import { ActivateSubscriptionContractItemsCommand } from '@/commands/implements/subscription-contract-items/activate-subscription-contract-items.command';
 import { CancelSubscriptionContractItemsCommand } from '@/commands/implements/subscription-contract-items/cancel-subscription-contract-items.command';
 import { ActivateSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/activate-subscription-contract.command';
 import { CancelSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/cancel-subscription-contract.command';
+import { ExpiresSubscriptionContractCommand } from '@/commands/implements/subscription-contracts/expires-subscription-contract.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { SubscriptionContractStatus } from '@/enums/subscription-contract-status.enum';
 import { SubscriptionContractType } from '@/enums/subscription-contract-type.enum';
@@ -20,6 +22,7 @@ import { SubscriptionContractActivatedEvent } from '@/events/implements/subscrip
 import { SubscriptionContractCanceledEvent } from '@/events/implements/subscription-contracts/subscription-contract-canceled.event';
 import { SubscriptionContractCreatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-created.event';
 import { SubscriptionContractCreatedByAdminEvent } from '@/events/implements/subscription-contracts/subscription-contract-created-by-admin.event';
+import { SubscriptionContractExpiredEvent } from '@/events/implements/subscription-contracts/subscription-contract-expired.event';
 import { SubscriptionContractUpdatedEvent } from '@/events/implements/subscription-contracts/subscription-contract-updated.event';
 
 @Injectable()
@@ -93,6 +96,12 @@ export class SubscriptionContractsSagas {
 
         const actionCommands: Record<SubscriptionContractStatus, ICommand> = {
           [SubscriptionContractStatus.PENDING]: undefined,
+          [SubscriptionContractStatus.EXPIRED]:
+            new ExpiresSubscriptionContractCommand({
+              subscriptionContract: event.subscriptionContract.id,
+              app: event.subscriptionContract.app,
+              updatedBy: event.createdBy
+            }),
           [SubscriptionContractStatus.CANCELED]:
             new CancelSubscriptionContractCommand({
               subscriptionContract: event.subscriptionContract.id,
@@ -192,6 +201,38 @@ export class SubscriptionContractsSagas {
             updatedBy: event.updatedBy
           }),
           new SendSubscriptionsCustomersSubscriptionCanceledEmailCommand({
+            subscriptionContract: event.subscriptionContract,
+            app: event.subscriptionContract.app,
+            toAccount: event.subscriptionContract.parent,
+            createdBy: event.updatedBy
+          })
+        ];
+        return commands;
+      }),
+      mergeMap((c) => c)
+    );
+  };
+
+  @Saga()
+  subscriptionContractExpired = (
+    events$: Observable<any>
+  ): Observable<ICommand> => {
+    return events$.pipe(
+      ofType(SubscriptionContractExpiredEvent),
+      delay(500),
+      map((event) => {
+        this.logger.log(
+          'Inside [SubscriptionContractExpiredEvent] Saga event subscriptionContractExpired:' +
+            JSON.stringify(
+              hiddenPrivateDataFromObject(event, DEFAULT_PRIVATE_DATA)
+            )
+        );
+        const commands = [
+          new CancelSubscriptionContractItemsCommand({
+            subscriptionContract: event.subscriptionContract.id,
+            updatedBy: event.updatedBy
+          }),
+          new SendSubscriptionsCustomersSubscriptionExpiredEmailCommand({
             subscriptionContract: event.subscriptionContract,
             app: event.subscriptionContract.app,
             toAccount: event.subscriptionContract.parent,

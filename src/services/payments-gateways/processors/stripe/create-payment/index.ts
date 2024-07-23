@@ -38,7 +38,8 @@ export class StripeCreatePaymentProcessorService
           price_data: {
             currency: data?.currency.id,
             product_data: {
-              name: item.name
+              name: item.name,
+              ...(item.imageURL && { images: [item.imageURL] })
             },
             unit_amount_decimal: item.amount + ''
           }

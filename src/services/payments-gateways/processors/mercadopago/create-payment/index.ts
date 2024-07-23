@@ -55,6 +55,7 @@ export class MercadoPagoCreatePaymentProcessorService
         items: data?.items?.map((item) => ({
           id: item.name,
           quantity: item.quantity,
+          picture_url: item.imageURL || '',
           title: item.name,
           unit_price: convertCentsToFloat(
             data?.coupon

@@ -2,6 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateCheckoutCommand } from '@/commands/implements/checkouts/create-checkout.command';
+import { CreatePaymentByPaymentProcessorItem } from '@/dtos/payments-gateway/create-payment-by-gateway-processor.dto';
 import { OrderStatus } from '@/enums/order-status.enum';
 import {
   AccountNotFoundException,
@@ -14,7 +15,8 @@ import {
   OrderNotFoundException,
   ParamNotFoundException,
   PaymentNotFoundException,
-  PricesNotFoundException
+  PricesNotFoundException,
+  ProductsNotFoundException
 } from '@/errors';
 import { CouponModel } from '@/models/coupon.model';
 import { FindAccountByIdService } from '@/services/accounts/find-account-by-id';
@@ -28,6 +30,8 @@ import { ChangePaymentToPaymentErrorService } from '@/services/payments/change-p
 import { CreatePaymentService } from '@/services/payments/create-payment';
 import { CreatePaymentByPaymentProcessorService } from '@/services/payments-gateways/factories/create-payment';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
+import { FindAllProductsService } from '@/services/products/find-all-products';
+import { FindProductAvatarService } from '@/services/products/find-product-avatar';
 import { getFeeAmount } from '@/utils/get-fee-amount';
 
 type CreateCheckoutCommandKeys = keyof CreateCheckoutCommand;
@@ -43,8 +47,10 @@ export class CreateCheckoutCommandHandler
     private readonly findCouponByIdService: FindCouponByIdService,
     private readonly findAllOrderItemsService: FindAllOrderItemsService,
     private readonly findAllPricesService: FindAllPricesService,
+    private readonly findAllProductsService: FindAllProductsService,
     private readonly findAccountByIdService: FindAccountByIdService,
     private readonly findCurrencyByIdService: FindCurrencyByIdService,
+    private readonly findProductAvatarService: FindProductAvatarService,
     private readonly changePaymentToPaymentErrorService: ChangePaymentToPaymentErrorService,
     private readonly createPaymentByPaymentProcessorService: CreatePaymentByPaymentProcessorService,
     private readonly createPaymentService: CreatePaymentService
@@ -118,6 +124,17 @@ export class CreateCheckoutCommandHandler
     if (!prices?.totalCount) {
       throw new PricesNotFoundException();
     }
+    const productsIds = orderItems?.items?.map(({ product }) => product);
+    const products = await this.findAllProductsService.execute({
+      where: {
+        AND: {
+          ids: productsIds
+        }
+      }
+    });
+    if (!products?.totalCount) {
+      throw new ProductsNotFoundException();
+    }
     let coupon: CouponModel;
     try {
       coupon = await this.findCouponByIdService.execute(order.coupon);
@@ -143,6 +160,40 @@ export class CreateCheckoutCommandHandler
     });
 
     try {
+      const paymentGatewayItems: CreatePaymentByPaymentProcessorItem[] =
+        await Promise.all(
+          orderItems.items?.map(async (item) => {
+            const price = prices.items.find(
+              (priceItem) => priceItem.id === item.price
+            );
+            const product = products.items.find(
+              (productItem) => productItem.id === item.product
+            );
+            if (!product) {
+              return;
+            }
+
+            const name =
+              price.nickname && product.name !== price.nickname
+                ? `${product.name}(${price.nickname})`
+                : product.name;
+
+            let imageURL: string;
+            try {
+              const avatar = await this.findProductAvatarService.execute(
+                product
+              );
+              imageURL = avatar?.file?.url;
+            } catch (error) {}
+
+            return {
+              quantity: item.quantity,
+              name,
+              imageURL,
+              amount: price.amount
+            };
+          })
+        );
       const paymentGatewayResponse =
         await this.createPaymentByPaymentProcessorService.execute({
           app: customerApp,
@@ -152,16 +203,7 @@ export class CreateCheckoutCommandHandler
           payment,
           paymentGatewayType,
           installments: 1,
-          items: orderItems.items?.map((item) => {
-            const price = prices.items.find(
-              (priceItem) => priceItem.id === item.price
-            );
-            return {
-              quantity: item.quantity,
-              name: price.nickname,
-              amount: price.amount
-            };
-          }),
+          items: paymentGatewayItems,
           successURL: data.successURL,
           cancelURL: data.cancelURL,
           createdBy: data.createdBy

@@ -10,6 +10,7 @@ import { PaymentModel } from '@/models/payment.model';
 
 export interface CreatePaymentByPaymentProcessorItem {
   name: string;
+  imageURL?: string;
   amount: number;
   quantity: number;
 }

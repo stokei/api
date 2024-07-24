@@ -3,6 +3,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { ActivateOrderSubscriptionContractsCommand } from '@/commands/implements/orders/activate-order-subscription-contracts.command';
+import { ProductType } from '@/enums/product-type.enum';
 import {
   AppNotFoundException,
   DataNotFoundException,
@@ -11,10 +12,15 @@ import {
   ParamNotFoundException,
   ProductsNotFoundException
 } from '@/errors';
+import { OrderItemModel } from '@/models/order-item.model';
+import { PriceModel } from '@/models/price.model';
+import { ProductModel } from '@/models/product.model';
+import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 import { FindAppByIdService } from '@/services/apps/find-app-by-id';
 import { FindAllOrderItemsService } from '@/services/order-items/find-all-order-items';
 import { FindOrderByIdService } from '@/services/orders/find-order-by-id';
 import { FindAllPricesService } from '@/services/prices/find-all-prices';
+import { FindAllProductComboItemsService } from '@/services/product-combo-items/find-all-product-combo-items';
 import { FindAllProductsService } from '@/services/products/find-all-products';
 import { CreateSubscriptionContractItemService } from '@/services/subscription-contract-items/create-subscription-contract-item';
 import { ActivateSubscriptionContractService } from '@/services/subscription-contracts/activate-subscription-contract';
@@ -37,6 +43,7 @@ export class ActivateOrderSubscriptionContractsCommandHandler
     private readonly findAppByIdService: FindAppByIdService,
     private readonly findOrderByIdService: FindOrderByIdService,
     private readonly findAllOrderItemsService: FindAllOrderItemsService,
+    private readonly findAllProductComboItemsService: FindAllProductComboItemsService,
     private readonly findAllPricesService: FindAllPricesService,
     private readonly findAllProductsService: FindAllProductsService
   ) {}
@@ -118,16 +125,23 @@ export class ActivateOrderSubscriptionContractsCommandHandler
                 createdBy: data.createdBy
               });
 
-            await this.createSubscriptionContractItemService.execute({
-              parent: subscriptionContract.id,
-              app: subscriptionContract.app,
-              product: product.externalReference,
-              quantity: orderItem.quantity,
-              createdByAdmin: false,
-              price: price.id,
-              recurring: price.recurring,
-              createdBy: data.createdBy
-            });
+            if (product.type === ProductType.COMBO) {
+              await this.createSubscriptionContractItemsFromProductCombo({
+                price,
+                orderItem,
+                subscriptionContract,
+                product,
+                createdBy: data.createdBy
+              });
+            } else {
+              await this.createSubscriptionContractItem({
+                price,
+                orderItem,
+                subscriptionContract,
+                product,
+                createdBy: data.createdBy
+              });
+            }
 
             await this.activateSubscriptionContractService.execute({
               subscriptionContract: subscriptionContract.id,
@@ -152,6 +166,72 @@ export class ActivateOrderSubscriptionContractsCommandHandler
       app: cleanValue(command?.app),
       order: cleanValue(command?.order),
       createdBy: cleanValue(command?.createdBy)
+    });
+  }
+
+  private async createSubscriptionContractItemsFromProductCombo(data: {
+    product: ProductModel;
+    subscriptionContract: SubscriptionContractModel;
+    orderItem: OrderItemModel;
+    price: PriceModel;
+    createdBy: string;
+  }) {
+    const productComboItems =
+      await this.findAllProductComboItemsService.execute({
+        where: {
+          AND: {
+            parent: {
+              equals: data.product.id
+            }
+          }
+        }
+      });
+    if (!productComboItems?.totalCount) {
+      return;
+    }
+    const productsIds = productComboItems?.items?.map(({ product }) => product);
+    const products = await this.findAllProductsService.execute({
+      where: {
+        AND: {
+          ids: productsIds
+        }
+      }
+    });
+    if (!products?.totalCount) {
+      return;
+    }
+    return await Promise.all(
+      products?.items?.map(async (productComboItem) => {
+        await this.createSubscriptionContractItem({
+          ...data,
+          product: productComboItem
+        });
+      })
+    );
+  }
+
+  private async createSubscriptionContractItem({
+    product,
+    subscriptionContract,
+    orderItem,
+    price,
+    createdBy
+  }: {
+    product: ProductModel;
+    subscriptionContract: SubscriptionContractModel;
+    orderItem: OrderItemModel;
+    price: PriceModel;
+    createdBy: string;
+  }) {
+    return this.createSubscriptionContractItemService.execute({
+      parent: subscriptionContract.id,
+      app: subscriptionContract.app,
+      product: product.externalReference,
+      quantity: orderItem.quantity,
+      createdByAdmin: false,
+      price: price.id,
+      recurring: price.recurring,
+      createdBy
     });
   }
 }

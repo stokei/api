@@ -30,6 +30,7 @@ import { PlansRepositories } from './plans';
 import { PluginsRepositories } from './plugins';
 import { PriceTiersRepositories } from './price-tiers';
 import { PricesRepositories } from './prices';
+import { ProductComboItemsRepositories } from './product-combo-items';
 import { ProductsRepositories } from './products';
 import { RecurringsRepositories } from './recurrings';
 import { RolesRepositories } from './roles';
@@ -87,5 +88,6 @@ export const Repositories = [
   ...SitesRepositories,
   ...VersionsRepositories,
   ...CouponsRepositories,
-  ...PluginsRepositories
+  ...PluginsRepositories,
+  ...ProductComboItemsRepositories
 ];

@@ -36,6 +36,7 @@ import { PlanServices } from './plans';
 import { PluginServices } from './plugins';
 import { PriceTierServices } from './price-tiers';
 import { PriceServices } from './prices';
+import { ProductComboItemServices } from './product-combo-items';
 import { ProductServices } from './products';
 import { RecurringServices } from './recurrings';
 import { RoleServices } from './roles';
@@ -107,5 +108,6 @@ export const Services = [
   ...CouponServices,
   ...StripeServices,
   ...PaymentsGatewayServices,
-  ...PluginServices
+  ...PluginServices,
+  ...ProductComboItemServices
 ];

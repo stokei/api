@@ -29,6 +29,7 @@ import { PhoneEventsHandlers } from './phones';
 import { PlanEventsHandlers } from './plans';
 import { PriceTierEventsHandlers } from './price-tiers';
 import { PriceEventsHandlers } from './prices';
+import { ProductComboItemEventsHandlers } from './product-combo-items';
 import { ProductEventsHandlers } from './products';
 import { RecurringEventsHandlers } from './recurrings';
 import { RoleEventsHandlers } from './roles';
@@ -85,5 +86,6 @@ export const EventsHandlers = [
   ...PageEventsHandlers,
   ...SiteEventsHandlers,
   ...VersionEventsHandlers,
-  ...CouponEventsHandlers
+  ...CouponEventsHandlers,
+  ...ProductComboItemEventsHandlers
 ];

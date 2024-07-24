@@ -49,7 +49,7 @@ export class UserHasSubscriptionContractActiveQueryHandler
               equals: data.customer
             },
             product: {
-              equals: product.parent
+              equals: product.externalReference
             }
           }
         }

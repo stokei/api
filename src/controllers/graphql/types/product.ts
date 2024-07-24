@@ -1,6 +1,7 @@
 import { createUnionType, Field, ID, ObjectType } from '@nestjs/graphql';
 import { splitServiceId } from '@stokei/nestjs';
 
+import { ProductType } from '@/controllers/graphql/enums/product-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 
 import { Account } from './account';
@@ -13,13 +14,14 @@ import { Plan } from './plan';
 import { Price } from './price';
 import { Prices } from './prices';
 
-export const ProductParentUnion = createUnionType({
-  name: 'ProductParentUnion',
-  types: () => [Plan, Course, Material, App] as const,
+export const ProductExternalReferenceUnion = createUnionType({
+  name: 'ProductExternalReferenceUnion',
+  types: () => [Plan, Course, Material, App, Product] as const,
   async resolveType(value) {
     const type = splitServiceId(value?.id)?.service;
     const types = {
       [ServerStokeiApiIdPrefix.APPS]: App.name,
+      [ServerStokeiApiIdPrefix.PRODUCTS]: Product.name,
       [ServerStokeiApiIdPrefix.COURSES]: Course.name,
       [ServerStokeiApiIdPrefix.MATERIALS]: Material.name,
       [ServerStokeiApiIdPrefix.PLANS]: Plan.name
@@ -33,14 +35,17 @@ export class Product {
   @Field(() => ID)
   id: string;
 
-  @Field(() => ProductParentUnion, { nullable: true })
-  parent?: typeof ProductParentUnion;
+  @Field(() => ProductExternalReferenceUnion, { nullable: true })
+  externalReference?: typeof ProductExternalReferenceUnion;
 
   @Field(() => String, { nullable: true })
-  parentId?: string;
+  parent?: string;
 
   @Field(() => String)
   name: string;
+
+  @Field(() => ProductType)
+  type: ProductType;
 
   @Field(() => String, { nullable: true })
   description?: string;
@@ -77,6 +82,9 @@ export class Product {
 
   @Field(() => Features, { nullable: true })
   features?: Features;
+
+  @Field(() => [Product], { nullable: true })
+  combo?: Product[];
 
   @Field(() => App, { nullable: true })
   app?: App;

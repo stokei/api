@@ -6,6 +6,7 @@ import { CoursesLoader } from '@/controllers/graphql/dataloaders/courses.loader'
 import { ImagesLoader } from '@/controllers/graphql/dataloaders/images.loader';
 import { MaterialsLoader } from '@/controllers/graphql/dataloaders/materials.loader';
 import { PlansLoader } from '@/controllers/graphql/dataloaders/plans.loader';
+import { ProductsLoader } from '@/controllers/graphql/dataloaders/products.loader';
 import { Image } from '@/controllers/graphql/types/image';
 import { Product } from '@/controllers/graphql/types/product';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
@@ -17,6 +18,7 @@ export class ProductAvatarResolver {
   constructor(
     private readonly imagesLoader: ImagesLoader,
     private readonly appsLoader: AppsLoader,
+    private readonly productsLoader: ProductsLoader,
     private readonly coursesLoader: CoursesLoader,
     private readonly materialsLoader: MaterialsLoader,
     private readonly plansLoader: PlansLoader
@@ -33,40 +35,46 @@ export class ProductAvatarResolver {
         }
       } catch (error) {}
     }
-    if (!product.parent) {
+    if (!product.externalReference) {
       return;
     }
     try {
-      const parent = await this.findProductParentByParentService(
-        product.parent
-      );
-      const parentAvatar = (parent as any)?.avatar;
-      if (!parentAvatar) {
+      const externalReference =
+        await this.findProductExternalReferenceByExternalReferenceService(
+          product.externalReference
+        );
+      const externalReferenceAvatar = (externalReference as any)?.avatar;
+      if (!externalReferenceAvatar) {
         return;
       }
-      return await this.imagesLoader.findByIds.load(parentAvatar);
+      return await this.imagesLoader.findByIds.load(externalReferenceAvatar);
     } catch (error) {
       return;
     }
   }
 
-  private async findProductParentByParentService(parent: string) {
+  private async findProductExternalReferenceByExternalReferenceService(
+    externalReference: string
+  ) {
     const getItem = () => {
       const handlers = {
         [ServerStokeiApiIdPrefix.APPS]: () =>
-          this.appsLoader.findByIds.load(parent),
+          this.appsLoader.findByIds.load(externalReference),
+        [ServerStokeiApiIdPrefix.PRODUCTS]: () =>
+          this.productsLoader.findByIds.load(externalReference),
         [ServerStokeiApiIdPrefix.COURSES]: () =>
-          this.coursesLoader.findByIds.load(parent),
+          this.coursesLoader.findByIds.load(externalReference),
         [ServerStokeiApiIdPrefix.MATERIALS]: () =>
-          this.materialsLoader.findByIds.load(parent),
+          this.materialsLoader.findByIds.load(externalReference),
         [ServerStokeiApiIdPrefix.PLANS]: () =>
-          this.plansLoader.findByIds.load(parent)
+          this.plansLoader.findByIds.load(externalReference)
       };
-      const serviceName = splitServiceId(parent)?.service;
+      const serviceName = splitServiceId(externalReference)?.service;
       return handlers?.[serviceName];
     };
     const getItemHandler = await getItem();
-    const parentModel = parent && (await getItemHandler?.());
-    return parentModel;
+    const externalReferenceModel =
+      externalReference && (await getItemHandler?.());
+    return externalReferenceModel;
   }
 }

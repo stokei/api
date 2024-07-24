@@ -4,6 +4,7 @@ export interface CountProductsWhereDTO {
   ids?: string[];
   app?: IWhereData;
   parent?: IWhereDataSearch;
+  externalReference?: IWhereDataSearch;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
   updatedBy?: IWhereData;

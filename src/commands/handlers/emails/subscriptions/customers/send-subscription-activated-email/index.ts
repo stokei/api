@@ -69,8 +69,8 @@ export class SendSubscriptionsCustomersSubscriptionActivatedEmailCommandHandler
       }
 
       const items = subscriptionContractItems.map((item) => ({
-        productId: item.productReference.id,
-        productName: item.productReference.name,
+        productId: item.product.id,
+        productName: item.product.name,
         image: item.imageURL
       }));
 

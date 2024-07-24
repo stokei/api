@@ -121,7 +121,7 @@ export class ActivateOrderSubscriptionContractsCommandHandler
             await this.createSubscriptionContractItemService.execute({
               parent: subscriptionContract.id,
               app: subscriptionContract.app,
-              product: product.parent,
+              product: product.externalReference,
               quantity: orderItem.quantity,
               createdByAdmin: false,
               price: price.id,

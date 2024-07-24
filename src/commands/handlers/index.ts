@@ -32,6 +32,7 @@ import { PlanCommandHandlers } from './plans';
 import { PluginCommandHandlers } from './plugins';
 import { PriceTierCommandHandlers } from './price-tiers';
 import { PriceCommandHandlers } from './prices';
+import { ProductComboItemCommandHandlers } from './product-combo-items';
 import { ProductCommandHandlers } from './products';
 import { RecurringCommandHandlers } from './recurrings';
 import { RoleCommandHandlers } from './roles';
@@ -91,5 +92,6 @@ export const CommandHandlers = [
   ...SiteCommandHandlers,
   ...VersionCommandHandlers,
   ...CouponCommandHandlers,
-  ...PluginCommandHandlers
+  ...PluginCommandHandlers,
+  ...ProductComboItemCommandHandlers
 ];

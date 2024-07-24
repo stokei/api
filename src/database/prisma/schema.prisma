@@ -26,6 +26,11 @@ enum PlanType {
   VIDEO_VIEW
 }
 
+enum ProductType {
+  UNIQUE
+  COMBO
+}
+
 enum PaymentMethodType {
   CARD
   BOLETO
@@ -357,23 +362,38 @@ model Color {
 }
 
 model Product {
-  id            String    @id @default(cuid())
-  app           String    @db.VarChar(255)
-  parent        String    @db.VarChar(255)
-  name          String    @db.VarChar(255)
-  description   String?   @db.MediumText
-  stripeProduct String?   @map("stripe_product") @db.VarChar(255)
-  defaultPrice  String?   @map("default_price") @db.VarChar(255)
-  avatar        String?   @db.VarChar(255)
-  active        Boolean   @default(true)
-  activatedAt   DateTime? @default(now()) @map("activated_at")
-  deactivatedAt DateTime? @map("deactivated_at")
-  updatedAt     DateTime? @updatedAt @map("updated_at")
-  createdAt     DateTime? @default(now()) @map("created_at")
-  updatedBy     String?   @map("updated_by") @db.VarChar(255)
-  createdBy     String?   @map("created_by") @db.VarChar(255)
+  id                String      @id @default(cuid())
+  app               String      @db.VarChar(255)
+  parent            String      @db.VarChar(255)
+  name              String      @db.VarChar(255)
+  type              ProductType @default(UNIQUE)
+  externalReference String?     @map("external_reference") @db.VarChar(255)
+  description       String?     @db.MediumText
+  stripeProduct     String?     @map("stripe_product") @db.VarChar(255)
+  defaultPrice      String?     @map("default_price") @db.VarChar(255)
+  avatar            String?     @db.VarChar(255)
+  active            Boolean     @default(true)
+  activatedAt       DateTime?   @default(now()) @map("activated_at")
+  deactivatedAt     DateTime?   @map("deactivated_at")
+  updatedAt         DateTime?   @updatedAt @map("updated_at")
+  createdAt         DateTime?   @default(now()) @map("created_at")
+  updatedBy         String?     @map("updated_by") @db.VarChar(255)
+  createdBy         String?     @map("created_by") @db.VarChar(255)
 
   @@map("products")
+}
+
+model ProductComboItem {
+  id        String    @id @default(cuid())
+  app       String    @db.VarChar(255)
+  parent    String    @db.VarChar(255)
+  product   String    @db.VarChar(255)
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  createdAt DateTime? @default(now()) @map("created_at")
+  updatedBy String?   @map("updated_by") @db.VarChar(255)
+  createdBy String?   @map("created_by") @db.VarChar(255)
+
+  @@map("product_combo_items")
 }
 
 model UsageRecord {

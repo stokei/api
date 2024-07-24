@@ -58,7 +58,7 @@ export class CourseInstructorsLoader {
       const courseInstructors = await this.courseInstructorsService.execute({
         where: {
           AND: {
-            course: {
+            instructor: {
               equals: courseInstructorInstructorIds
             }
           }

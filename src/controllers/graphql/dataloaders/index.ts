@@ -29,6 +29,7 @@ import { PhonesLoader } from './phones.loader';
 import { PlansLoader } from './plans.loader';
 import { PluginsLoader } from './plugins.loader';
 import { PricesLoader } from './prices.loader';
+import { ProductComboItemsLoader } from './product-combo-items.loader';
 import { ProductsLoader } from './products.loader';
 import { RecurringsLoader } from './recurrings.loader';
 import { RolesLoader } from './roles.loader';
@@ -81,5 +82,6 @@ export const Loaders = [
   SitesLoader,
   VersionsLoader,
   CouponsLoader,
-  PluginsLoader
+  PluginsLoader,
+  ProductComboItemsLoader
 ];

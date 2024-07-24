@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `products` ADD COLUMN `type` ENUM('UNIQUE', 'COMBO') NOT NULL DEFAULT 'UNIQUE';

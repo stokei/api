@@ -32,6 +32,7 @@ export class ProductMapper {
           id: prismaMapper.toWhereIds(operatorData.ids),
           parent: prismaMapper.toWhereDataSearch(operatorData.parent),
           name: prismaMapper.toWhereDataSearch(operatorData.name),
+          type: operatorData.type,
           description: prismaMapper.toWhereDataSearch(operatorData.description),
           app: prismaMapper.toWhereData(operatorData.app),
           updatedBy: prismaMapper.toWhereData(operatorData.updatedBy),
@@ -62,6 +63,7 @@ export class ProductMapper {
             parent: cleanWhereDataSearch(operatorData.parent),
             name: cleanWhereDataSearch(operatorData.name),
             description: cleanWhereDataSearch(operatorData.description),
+            type: operatorData.type,
             app: cleanWhereDataString(operatorData.app),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),
@@ -80,6 +82,7 @@ export class ProductMapper {
       }),
       orderBy: cleanObject({
         name: cleanSortValue(query.orderBy?.name),
+        type: cleanSortValue(query.orderBy?.type),
         description: cleanSortValue(query.orderBy?.description),
         app: cleanSortValue(query.orderBy?.app),
         stripeProduct: cleanSortValue(query.orderBy?.stripeProduct),

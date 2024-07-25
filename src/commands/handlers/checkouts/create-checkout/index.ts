@@ -186,12 +186,16 @@ export class CreateCheckoutCommandHandler
               imageURL = avatar?.file?.url;
             } catch (error) {}
 
-            return {
+            const response: CreatePaymentByPaymentProcessorItem = {
+              id: item.id,
               quantity: item.quantity,
               name,
               imageURL,
-              amount: price.amount
+              amount: coupon
+                ? coupon?.getAmountWithDiscount(price.amount)
+                : price.amount
             };
+            return response;
           })
         );
       const paymentGatewayResponse =

@@ -86,8 +86,8 @@ export class PagarmeCreatePaymentProcessorService
           amount: totalAmount,
           split: [appRecipient, stokeiRecipient],
           checkout: {
-            billing_address_editable: false,
-            customer_editable: false,
+            billing_address_editable: true,
+            customer_editable: true,
             skip_checkout_success_page: true,
             credit_card: {
               capture: true,

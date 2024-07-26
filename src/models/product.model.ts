@@ -71,6 +71,10 @@ export class ProductModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
+  get isCombo() {
+    return this.type === ProductType.COMBO;
+  }
+
   createdProduct({
     createdBy,
     catalogs,

@@ -35,9 +35,9 @@ export class PagarmeCreatePaymentProcessorService
     );
     const stokeiRecipient = {
       options: {
-        charge_processing_fee: 'true',
-        charge_remainder_fee: 'true',
-        liable: 'true'
+        charge_processing_fee: 'false',
+        charge_remainder_fee: 'false',
+        liable: 'false'
       },
       type: 'flat',
       recipient_id: PAGARME_RECIPIENT_ID,
@@ -45,9 +45,9 @@ export class PagarmeCreatePaymentProcessorService
     };
     const appRecipient = {
       options: {
-        charge_processing_fee: 'false',
-        charge_remainder_fee: 'false',
-        liable: 'false'
+        charge_processing_fee: 'true',
+        charge_remainder_fee: 'true',
+        liable: 'true'
       },
       type: 'flat',
       recipient_id: credentials?.publicKey,

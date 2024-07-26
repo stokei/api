@@ -57,6 +57,7 @@ export class MercadoPagoCreatePaymentProcessorService
           quantity: item.quantity,
           picture_url: item.imageURL || '',
           title: item.name,
+          description: item.description,
           unit_price: convertCentsToFloat(item.amount),
           currency_id: data?.currency?.id
         })),

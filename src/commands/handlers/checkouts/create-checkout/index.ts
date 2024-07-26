@@ -190,6 +190,7 @@ export class CreateCheckoutCommandHandler
               id: item.id,
               quantity: item.quantity,
               name,
+              description: product?.description,
               imageURL,
               amount: coupon
                 ? coupon?.getAmountWithDiscount(price.amount)

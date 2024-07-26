@@ -64,10 +64,18 @@ export class PagarmeCreatePaymentProcessorService
       })
       ?.filter(Boolean);
 
+    const installments = Array.from({ length: 12 })?.map((_, index) => {
+      const installment = index + 1;
+      return {
+        number: installment,
+        total: totalAmount
+      };
+    });
+
     const expiresAt = convertToISODateString(addDays(2));
     const dataRequest = cleanObject({
       items,
-      code: data?.payment,
+      code: data?.payment?.id,
       customer: {
         name: data?.payer?.fullname,
         email: data?.payer?.email
@@ -78,10 +86,20 @@ export class PagarmeCreatePaymentProcessorService
           amount: totalAmount,
           split: [appRecipient, stokeiRecipient],
           checkout: {
-            expires_in: expiresAt,
             billing_address_editable: false,
             customer_editable: false,
             skip_checkout_success_page: true,
+            credit_card: {
+              capture: true,
+              statement_descriptor: data?.app?.name?.slice(0, 13),
+              installments
+            },
+            boleto: {
+              due_at: expiresAt
+            },
+            pix: {
+              expires_at: expiresAt
+            },
             accepted_payment_methods: ['credit_card', 'boleto', 'pix'],
             accepted_multi_payment_methods: [
               ['credit_card', 'credit_card'],
@@ -90,16 +108,6 @@ export class PagarmeCreatePaymentProcessorService
             success_url: data?.successURL,
             metadata: {
               payment: data?.payment?.id
-            },
-            credit_card: {
-              capture: true,
-              statement_descriptor: data?.app?.name?.slice(0, 13)
-            },
-            boleto: {
-              due_at: expiresAt
-            },
-            pix: {
-              expires_in: expiresAt
             }
           }
         }
@@ -125,6 +133,7 @@ export class PagarmeCreatePaymentProcessorService
         url: responseData?.checkouts?.[0]?.payment_url
       });
     } catch (error) {
+      console.log(error?.response?.data);
       const pagarmeError = getPagarmeError(error?.response?.data?.errors);
       if (pagarmeError) {
         throw pagarmeError;

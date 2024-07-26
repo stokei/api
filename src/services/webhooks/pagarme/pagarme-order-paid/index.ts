@@ -18,6 +18,7 @@ export class WebhookPagarmeOrderPaidService
   ) {}
 
   async execute(data: WebhookPagarmeOrderPaidDTO) {
+    // isso aqui não precisa, pois no data ja vem o code
     const pagarmeOrder = await this.findPagarmeOrderByIdService.execute(
       data.order
     );

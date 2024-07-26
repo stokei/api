@@ -11,6 +11,7 @@ import { PaymentModel } from '@/models/payment.model';
 export interface CreatePaymentByPaymentProcessorItem {
   id: string;
   name: string;
+  description?: string;
   imageURL?: string;
   amount: number;
   quantity: number;

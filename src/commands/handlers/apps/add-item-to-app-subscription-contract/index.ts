@@ -243,7 +243,7 @@ export class AddItemToAppSubscriptionContractCommandHandler
       app: app.id,
       parent: appCurrentSubscriptionContract.id,
       price: price.id,
-      product: product.parent,
+      product: product.externalReference,
       quantity,
       recurring: null,
       createdBy,

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { delay, map, mergeMap } from 'rxjs/operators';
 
 import { CreateCatalogItemCommand } from '@/commands/implements/catalog-items/create-catalog-item.command';
+import { CreateProductComboItemCommand } from '@/commands/implements/product-combo-items/create-product-combo-item.command';
 import { DEFAULT_PRIVATE_DATA } from '@/constants/default-private-data';
 import { ProductCreatedEvent } from '@/events/implements/products/product-created.event';
 import { ProductUpdatedEvent } from '@/events/implements/products/product-updated.event';
@@ -32,12 +33,26 @@ export class ProductsSagas {
         );
         let commands: ICommand[] = [];
         if (!!event.catalogs?.length) {
-          const catalogsCommands = event.catalogs?.map(
+          const catalogs = [...new Set(event.catalogs)];
+          const catalogsCommands = catalogs?.map(
             (catalog) =>
               new CreateCatalogItemCommand({
                 product: event.product.id,
                 app: event.product.app,
                 catalog: catalog,
+                createdBy: event.createdBy
+              })
+          );
+          commands = [...commands, ...catalogsCommands];
+        }
+        if (!!event.comboProducts?.length) {
+          const comboProducts = [...new Set(event?.comboProducts)];
+          const catalogsCommands = comboProducts?.map(
+            (comboProd) =>
+              new CreateProductComboItemCommand({
+                parent: event.product.id,
+                app: event.product.app,
+                product: comboProd,
                 createdBy: event.createdBy
               })
           );

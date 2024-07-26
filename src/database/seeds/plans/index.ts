@@ -12,6 +12,7 @@ import { IntervalType } from '@/enums/interval-type.enum';
 import { InventoryType } from '@/enums/inventory-type.enum';
 import { PlanType } from '@/enums/plan-type.enum';
 import { PriceType } from '@/enums/price-type.enum';
+import { ProductType } from '@/enums/product-type.enum';
 import { TiersMode } from '@/enums/tiers-mode.enum';
 import { UsageType } from '@/enums/usage-type.enum';
 import { CreatePlanService } from '@/services/plans/create-plan';
@@ -65,6 +66,7 @@ export class PlansSeeds
         app: plan.app,
         parent: plan.id,
         name: plan.name,
+        type: ProductType.UNIQUE,
         description: plan.description,
         createdBy: plan.createdBy
       });

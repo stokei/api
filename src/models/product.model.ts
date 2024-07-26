@@ -1,6 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { convertToISODateString, createServiceId } from '@stokei/nestjs';
 
+import { ProductType } from '@/enums/product-type.enum';
 import { ServerStokeiApiIdPrefix } from '@/enums/server-id-prefix.enum';
 import { ProductCreatedEvent } from '@/events/implements/products/product-created.event';
 import { ProductUpdatedEvent } from '@/events/implements/products/product-updated.event';
@@ -10,6 +11,8 @@ export interface IProductModelData {
   readonly _id?: string;
   readonly parent: string;
   readonly name: string;
+  readonly type: ProductType;
+  readonly externalReference?: string;
   readonly description?: string;
   readonly defaultPrice?: string;
   readonly app: string;
@@ -29,6 +32,8 @@ export class ProductModel extends AggregateRoot {
   readonly app: string;
   readonly parent: string;
   readonly name: string;
+  readonly type: ProductType;
+  readonly externalReference?: string;
   readonly description?: string;
   readonly defaultPrice?: string;
   readonly stripeProduct: string;
@@ -49,6 +54,8 @@ export class ProductModel extends AggregateRoot {
     });
     this.parent = data.parent;
     this.name = data.name;
+    this.type = data.type || ProductType.UNIQUE;
+    this.externalReference = data.externalReference || this.id;
     this.description = data.description;
     this.app = data.app;
     this.stripeProduct = data.stripeProduct;
@@ -64,18 +71,25 @@ export class ProductModel extends AggregateRoot {
     this.createdBy = data.createdBy;
   }
 
+  get isCombo() {
+    return this.type === ProductType.COMBO;
+  }
+
   createdProduct({
     createdBy,
-    catalogs
+    catalogs,
+    comboProducts
   }: {
     createdBy: string;
     catalogs?: string[];
+    comboProducts?: string[];
   }) {
     if (this.id) {
       this.apply(
         new ProductCreatedEvent({
           createdBy,
           catalogs,
+          comboProducts,
           product: this
         })
       );

@@ -30,6 +30,7 @@ import { PlanQueriesHandlers } from './plans';
 import { PluginQueriesHandlers } from './plugins';
 import { PriceTierQueriesHandlers } from './price-tiers';
 import { PriceQueriesHandlers } from './prices';
+import { ProductComboItemQueriesHandlers } from './product-combo-items';
 import { ProductQueriesHandlers } from './products';
 import { RecurringQueriesHandlers } from './recurrings';
 import { RoleQueriesHandlers } from './roles';
@@ -87,5 +88,6 @@ export const QueriesHandlers = [
   ...SiteQueriesHandlers,
   ...VersionQueriesHandlers,
   ...CouponQueriesHandlers,
-  ...PluginQueriesHandlers
+  ...PluginQueriesHandlers,
+  ...ProductComboItemQueriesHandlers
 ];

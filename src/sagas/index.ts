@@ -29,6 +29,7 @@ import { PhonesSagas } from './phones.saga';
 import { PlansSagas } from './plans.saga';
 import { PriceTiersSagas } from './price-tiers.saga';
 import { PricesSagas } from './prices.saga';
+import { ProductComboItemsSagas } from './product-combo-items.saga';
 import { ProductsSagas } from './products.saga';
 import { RecurringsSagas } from './recurrings.saga';
 import { RolesSagas } from './roles.saga';
@@ -85,5 +86,6 @@ export const Sagas = [
   PagesSagas,
   SitesSagas,
   VersionsSagas,
-  CouponsSagas
+  CouponsSagas,
+  ProductComboItemsSagas
 ];

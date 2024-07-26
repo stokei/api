@@ -4,7 +4,6 @@ import {
   cleanValue,
   cleanValueNumber,
   cleanWhere,
-  cleanWhereDataSearch,
   cleanWhereDataString,
   IWhere,
   PrismaMapper,
@@ -61,7 +60,7 @@ export class CourseInstructorMapper {
         operatorMapper(operatorData) {
           return {
             course: cleanWhereDataString(operatorData.course),
-            instructor: cleanWhereDataSearch(operatorData.instructor),
+            instructor: cleanWhereDataString(operatorData.instructor),
             app: cleanWhereDataString(operatorData.app),
             updatedBy: cleanWhereDataString(operatorData.updatedBy),
             createdBy: cleanWhereDataString(operatorData.createdBy),

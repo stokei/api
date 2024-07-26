@@ -71,7 +71,7 @@ export class SendSubscriptionsCustomersSubscriptionExpiredEmailCommandHandler
 
       const items = subscriptionContractItems.map((item) => ({
         productId: item.product.id,
-        productName: item.productReference.name,
+        productName: item.product.name,
         image: item.imageURL
       }));
       return await this.sendEmailService.execute({

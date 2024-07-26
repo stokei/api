@@ -5,10 +5,14 @@ import {
   IWhereDataSearch
 } from '@stokei/nestjs';
 
+import { ProductType } from '@/enums/product-type.enum';
+
 export interface WhereDataFindAllProductsDTO {
   ids?: string[];
   app?: IWhereData;
+  type?: ProductType;
   parent?: IWhereDataSearch;
+  externalReference?: IWhereDataSearch;
   name?: IWhereDataSearch;
   description?: IWhereDataSearch;
   updatedBy?: IWhereData;
@@ -19,6 +23,7 @@ export type IKeysWhereDataFindAllProductsDTO =
 
 export interface OrderByDataFindAllProductsDTO {
   name?: IOrderBy;
+  type?: IOrderBy;
   description?: IOrderBy;
   app?: IOrderBy;
   stripeProduct?: IOrderBy;

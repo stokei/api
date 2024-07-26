@@ -6,7 +6,7 @@ import { ImageModel } from '@/models/image.model';
 import { ProductModel } from '@/models/product.model';
 import { FindFileByIdService } from '@/services/files/find-file-by-id';
 import { FindImageByIdService } from '@/services/images/find-image-by-id';
-import { FindProductParentByParentService } from '@/services/products/find-product-parent-by-parent';
+import { FindProductExternalReferenceByExternalReferenceService } from '@/services/products/find-product-external-reference-by-external-reference';
 
 interface Response {
   image: ImageModel;
@@ -20,7 +20,7 @@ export class FindProductAvatarService
   constructor(
     private readonly findFileByIdService: FindFileByIdService,
     private readonly findImageByIdService: FindImageByIdService,
-    private readonly findProductParentByParentService: FindProductParentByParentService
+    private readonly findProductExternalReferenceByExternalReferenceService: FindProductExternalReferenceByExternalReferenceService
   ) {}
 
   async execute(product: ProductModel): Promise<Response> {
@@ -32,18 +32,19 @@ export class FindProductAvatarService
         }
       } catch (error) {}
     }
-    if (!product.parent) {
+    if (!product.externalReference) {
       return;
     }
     try {
-      const parent = await this.findProductParentByParentService.execute(
-        product.parent
-      );
-      const parentAvatar = (parent as any)?.avatar;
-      if (!parentAvatar) {
+      const externalReference =
+        await this.findProductExternalReferenceByExternalReferenceService.execute(
+          product.externalReference
+        );
+      const externalReferenceAvatar = (externalReference as any)?.avatar;
+      if (!externalReferenceAvatar) {
         return;
       }
-      return await this.getImageAndFileByImageId(parentAvatar);
+      return await this.getImageAndFileByImageId(externalReferenceAvatar);
     } catch (error) {
       return;
     }

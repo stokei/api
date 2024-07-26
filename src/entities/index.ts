@@ -31,6 +31,7 @@ export * from './plugin.entity';
 export * from './price.entity';
 export * from './price-tier.entity';
 export * from './product.entity';
+export * from './product-combo-item.entity';
 export * from './recurring.entity';
 export * from './role.entity';
 export * from './site.entity';

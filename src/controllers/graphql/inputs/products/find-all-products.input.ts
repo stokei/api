@@ -6,6 +6,7 @@ import {
   WherePaginated
 } from '@stokei/nestjs';
 
+import { ProductType } from '@/controllers/graphql/enums/product-type.enum';
 import {
   OrderByDataFindAllProductsDTO,
   WhereDataFindAllProductsDTO
@@ -27,6 +28,9 @@ class WhereDataFindAllProductsDataInput implements WhereDataFindAllProductsDTO {
 
   @Field(() => WhereDataStringInput, { nullable: true })
   app?: WhereDataStringInput;
+
+  @Field(() => ProductType, { nullable: true })
+  type?: ProductType;
 
   @Field(() => WhereDataStringInput, { nullable: true })
   updatedBy?: WhereDataStringInput;

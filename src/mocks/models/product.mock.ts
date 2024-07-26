@@ -1,6 +1,7 @@
 import { convertToISODateString } from '@stokei/nestjs';
 import { nanoid } from 'nanoid';
 
+import { ProductType } from '@/enums/product-type.enum';
 import { IProductModelData, ProductModel } from '@/models/product.model';
 
 export class ProductModelMock extends ProductModel {
@@ -19,7 +20,8 @@ export class ProductModelMock extends ProductModel {
       createdAt: data?.createdAt ?? convertToISODateString(Date.now()),
       updatedAt: data?.updatedAt ?? null,
       createdBy: data?.createdBy ?? 'accounts.anyAccount',
-      updatedBy: data?.updatedBy ?? 'accounts.anyAccount'
+      updatedBy: data?.updatedBy ?? 'accounts.anyAccount',
+      type: ProductType.UNIQUE
     });
   }
 }

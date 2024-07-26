@@ -180,9 +180,8 @@ export class CreateCheckoutCommandHandler
 
             let imageURL: string;
             try {
-              const avatar = await this.findProductAvatarService.execute(
-                product
-              );
+              const avatar =
+                await this.findProductAvatarService.execute(product);
               imageURL = avatar?.file?.url;
             } catch (error) {}
 

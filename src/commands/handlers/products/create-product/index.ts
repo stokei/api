@@ -2,10 +2,12 @@ import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { cleanObject, cleanValue } from '@stokei/nestjs';
 
 import { CreateProductCommand } from '@/commands/implements/products/create-product.command';
+import { ProductType } from '@/enums/product-type.enum';
 import {
   AppNotFoundException,
   DataNotFoundException,
   ParamNotFoundException,
+  ProductComboItemsNotFoundException,
   ProductNotFoundException
 } from '@/errors';
 import { CreateProductRepository } from '@/repositories/products/create-product';
@@ -37,13 +39,17 @@ export class CreateProductCommandHandler
     if (!data?.app) {
       throw new ParamNotFoundException<CreateProductCommandKeys>('app');
     }
+    const isComboProduct = data.type === ProductType.COMBO;
+    if (isComboProduct && !data?.comboProducts?.length) {
+      throw new ProductComboItemsNotFoundException();
+    }
 
     const app = await this.findAppByIdService.execute(data.app);
     if (!app) {
       throw new AppNotFoundException();
     }
 
-    const { catalogs, ...dataCreate } = data;
+    const { catalogs, comboProducts, ...dataCreate } = data;
     const productCreated =
       await this.createProductRepository.execute(dataCreate);
     if (!productCreated) {
@@ -52,6 +58,7 @@ export class CreateProductCommandHandler
     const productModel = this.publisher.mergeObjectContext(productCreated);
     productModel.createdProduct({
       catalogs,
+      comboProducts: isComboProduct ? comboProducts : [],
       createdBy: data.createdBy
     });
     productModel.commit();
@@ -64,10 +71,13 @@ export class CreateProductCommandHandler
       createdBy: cleanValue(command?.createdBy),
       app: cleanValue(command?.app),
       name: cleanValue(command?.name),
+      type: cleanValue(command?.type),
+      externalReference: cleanValue(command?.externalReference),
       description: cleanValue(command?.description),
       avatar: cleanValue(command?.avatar),
       parent: cleanValue(command?.parent),
-      catalogs: command?.catalogs
+      catalogs: command?.catalogs,
+      comboProducts: command?.comboProducts
     });
   }
 }

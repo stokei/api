@@ -9,6 +9,7 @@ import { PaymentMethodNotFoundException } from '@/errors';
 import { CheckoutModel } from '@/models/checkout.model';
 
 import { MercadoPagoCreatePaymentProcessorService } from '../../processors/mercadopago/create-payment';
+import { PagarmeCreatePaymentProcessorService } from '../../processors/pagarme/create-payment';
 import { StripeCreatePaymentProcessorService } from '../../processors/stripe/create-payment';
 
 @Injectable()
@@ -17,6 +18,7 @@ export class CreatePaymentByPaymentProcessorService
 {
   constructor(
     private readonly stripeCreatePaymentProcessorService: StripeCreatePaymentProcessorService,
+    private readonly pagarmeCreatePaymentProcessorService: PagarmeCreatePaymentProcessorService,
     private readonly mercadoPagoCreatePaymentProcessorService: MercadoPagoCreatePaymentProcessorService
   ) {}
 
@@ -28,7 +30,7 @@ export class CreatePaymentByPaymentProcessorService
       IBaseServiceCreatePaymentByPaymentProcessor
     > = {
       [PaymentGatewayType.STRIPE]: this.stripeCreatePaymentProcessorService,
-      [PaymentGatewayType.PAGARME]: undefined,
+      [PaymentGatewayType.PAGARME]: this.pagarmeCreatePaymentProcessorService,
       [PaymentGatewayType.MERCADOPAGO]:
         this.mercadoPagoCreatePaymentProcessorService,
       [PaymentGatewayType.PAGSEGURO]: undefined

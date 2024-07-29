@@ -35,6 +35,9 @@ export class SubscriptionContractItem {
   @Field(() => String)
   parent: string;
 
+  @Field(() => String, { nullable: true })
+  orderProductId?: string;
+
   @Field(() => SubscriptionContractItemProductUnion, { nullable: true })
   product?: typeof SubscriptionContractItemProductUnion;
 

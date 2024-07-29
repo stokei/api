@@ -22,6 +22,7 @@ export interface FindSubscriptionContractItemsDataToEmailDTO {
   subscriptionContract: SubscriptionContractModel;
 }
 export interface FindSubscriptionContractItemsDataToEmailResponse {
+  orderProductId?: string;
   product: SubscriptionContractItemProduct;
   subscriptionContractItem: SubscriptionContractItemModel;
   imageURL?: string;
@@ -97,11 +98,13 @@ export class FindSubscriptionContractItemsDataToEmailService
         if (image) {
           avatar = files?.find((currentFile) => currentFile.id === image?.file);
         }
-        return {
+        const response: FindSubscriptionContractItemsDataToEmailResponse = {
+          orderProductId: subscriptionContractItem.orderProduct,
           product: subscriptionContractItemProduct,
           subscriptionContractItem,
           imageURL: avatar?.url
-        } as FindSubscriptionContractItemsDataToEmailResponse;
+        };
+        return response;
       })
     );
     return items?.filter(Boolean);

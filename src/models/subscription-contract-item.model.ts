@@ -12,6 +12,7 @@ export interface ISubscriptionContractItemModelData {
   readonly app: string;
   readonly parent: string;
   readonly product: string;
+  readonly orderProduct?: string;
   readonly quantity: number;
   readonly price: string;
   readonly stripeSubscriptionItem?: string;
@@ -27,6 +28,7 @@ export class SubscriptionContractItemModel extends AggregateRoot {
   readonly app: string;
   readonly parent: string;
   readonly product: string;
+  readonly orderProduct?: string;
   readonly quantity: number;
   readonly price: string;
   readonly stripeSubscriptionItem?: string;
@@ -47,6 +49,7 @@ export class SubscriptionContractItemModel extends AggregateRoot {
     this.product = data.product;
     this.quantity = data.quantity;
     this.price = data.price;
+    this.orderProduct = data.orderProduct;
     this.stripeSubscriptionItem = data.stripeSubscriptionItem;
     this.recurring = data.recurring;
     this.updatedAt = convertToISODateString(data.updatedAt);

@@ -70,6 +70,7 @@ export class SendSubscriptionsCustomersSubscriptionExpiredEmailCommandHandler
       }
 
       const items = subscriptionContractItems.map((item) => ({
+        orderProductId: item.orderProductId,
         productId: item.product.id,
         productName: item.product.name,
         image: item.imageURL

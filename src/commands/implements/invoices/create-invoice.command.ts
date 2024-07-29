@@ -5,7 +5,7 @@ import { InvoiceStatus } from '@/enums/invoice-status.enum';
 
 export class CreateInvoiceCommand implements ICommand, CreateInvoiceDTO {
   app: string;
-  url: string;
+  url?: string;
   customer: string;
   subscription: string;
   currency: string;

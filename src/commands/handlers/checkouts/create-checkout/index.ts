@@ -180,8 +180,9 @@ export class CreateCheckoutCommandHandler
 
             let imageURL: string;
             try {
-              const avatar =
-                await this.findProductAvatarService.execute(product);
+              const avatar = await this.findProductAvatarService.execute(
+                product
+              );
               imageURL = avatar?.file?.url;
             } catch (error) {}
 
@@ -218,7 +219,7 @@ export class CreateCheckoutCommandHandler
 
       return paymentGatewayResponse;
     } catch (error) {
-      this.changePaymentToPaymentErrorService.execute({
+      await this.changePaymentToPaymentErrorService.execute({
         payment: payment.id,
         updatedBy: data.createdBy
       });

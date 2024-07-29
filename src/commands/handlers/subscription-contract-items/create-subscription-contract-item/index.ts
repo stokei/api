@@ -108,6 +108,7 @@ export class CreateSubscriptionContractItemCommandHandler
       app: cleanValue(command?.app),
       parent: cleanValue(command?.parent),
       product: cleanValue(command?.product),
+      orderProduct: cleanValue(command?.orderProduct),
       quantity: cleanValueNumber(command?.quantity),
       price: cleanValue(command?.price),
       createdByAdmin: cleanValueBoolean(command?.createdByAdmin),

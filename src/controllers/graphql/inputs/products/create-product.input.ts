@@ -7,6 +7,9 @@ export class CreateProductInput {
   @Field(() => String)
   parent: string;
 
+  @Field(() => String, { nullable: true })
+  externalReference?: string;
+
   @Field(() => String)
   name: string;
 

@@ -10,6 +10,7 @@ export class CreateSubscriptionContractItemCommand
   product: string;
   quantity: number;
   price: string;
+  orderProduct?: string;
   stripeSubscriptionItem?: string;
   recurring?: string;
   createdByAdmin: boolean;
@@ -21,6 +22,7 @@ export class CreateSubscriptionContractItemCommand
     this.product = data.product;
     this.quantity = data.quantity;
     this.price = data.price;
+    this.orderProduct = data.orderProduct;
     this.stripeSubscriptionItem = data.stripeSubscriptionItem;
     this.createdByAdmin = data.createdByAdmin;
     this.recurring = data.recurring;

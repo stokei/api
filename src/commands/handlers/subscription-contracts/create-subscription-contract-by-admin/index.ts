@@ -133,6 +133,7 @@ export class CreateSubscriptionContractByAdminCommandHandler
           app: app.id,
           parent: subscriptionContract?.id,
           product: item.product,
+          orderProduct: item.orderProduct,
           quantity: item.quantity,
           createdByAdmin: true,
           recurring: recurring?.id,

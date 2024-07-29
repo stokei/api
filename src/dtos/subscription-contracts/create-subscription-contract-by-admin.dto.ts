@@ -11,6 +11,7 @@ export class CreateSubscriptionContractByAdminItemRecurringDTO {
 export interface CreateSubscriptionContractByAdminItemDTO {
   quantity: number;
   product: string;
+  orderProduct?: string;
   recurring?: CreateSubscriptionContractByAdminItemRecurringDTO;
 }
 

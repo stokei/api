@@ -10,6 +10,9 @@ export class CreateSubscriptionContractItemInput {
   @Field(() => String)
   product: string;
 
+  @Field(() => String, { nullable: true })
+  orderProduct?: string;
+
   @Field(() => CreateRecurringInput, { nullable: true })
   recurring?: CreateRecurringInput;
 }

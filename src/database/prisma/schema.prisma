@@ -788,6 +788,7 @@ model SubscriptionContractItem {
   app                    String    @db.VarChar(255)
   parent                 String    @db.VarChar(255)
   product                String    @db.VarChar(255)
+  orderProduct           String?   @map("order_product") @db.VarChar(255)
   quantity               Int
   price                  String?   @db.VarChar(255)
   stripeSubscriptionItem String?   @map("stripe_subscription_item") @db.VarChar(255)

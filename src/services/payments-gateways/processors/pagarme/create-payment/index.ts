@@ -88,7 +88,7 @@ export class PagarmeCreatePaymentProcessorService
           checkout: {
             billing_address_editable: true,
             customer_editable: true,
-            skip_checkout_success_page: true,
+            skip_checkout_success_page: false,
             credit_card: {
               capture: true,
               statement_descriptor: data?.app?.name?.slice(0, 13),

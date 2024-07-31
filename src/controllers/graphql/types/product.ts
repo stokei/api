@@ -35,6 +35,9 @@ export class Product {
   @Field(() => ID)
   id: string;
 
+  @Field(() => String, { nullable: true })
+  externalReferenceId?: string;
+
   @Field(() => ProductExternalReferenceUnion, { nullable: true })
   externalReference?: typeof ProductExternalReferenceUnion;
 

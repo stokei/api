@@ -4,6 +4,7 @@ import { ProductComboResolver } from './combo';
 import { ProductCreatedByResolver } from './created-by';
 import { ProductDefaultPriceResolver } from './default-price';
 import { ProductExternalReferenceResolver } from './external-reference';
+import { ProductExternalReferenceIdResolver } from './external-reference-id';
 import { ProductFeaturesResolver } from './features';
 import { ProductPricesResolver } from './prices';
 import { ProductReferenceResolver } from './reference';
@@ -17,6 +18,7 @@ export const ProductsFieldsResolvers = [
   ProductUpdatedByResolver,
   ProductPricesResolver,
   ProductExternalReferenceResolver,
+  ProductExternalReferenceIdResolver,
   ProductDefaultPriceResolver,
   ProductFeaturesResolver,
   ProductComboResolver

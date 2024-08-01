@@ -227,7 +227,7 @@ export class ActivateOrderSubscriptionContractsCommandHandler
       parent: subscriptionContract.id,
       app: subscriptionContract.app,
       product: product.externalReference,
-      orderProduct: product.id,
+      orderProduct: orderItem.product,
       quantity: orderItem.quantity,
       createdByAdmin: false,
       price: price.id,

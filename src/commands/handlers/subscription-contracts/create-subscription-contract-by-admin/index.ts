@@ -117,8 +117,12 @@ export class CreateSubscriptionContractByAdminCommandHandler
     subscriptionContract: SubscriptionContractModel;
     items: CreateSubscriptionContractByAdminItemDTO[];
   }) {
+    const uniqueItems = items?.filter(
+      (item, index, self) =>
+        index === self.findIndex((i) => i?.product === item?.product)
+    );
     return await Promise.all(
-      items?.map(async (item) => {
+      uniqueItems?.map(async (item) => {
         let recurring: RecurringModel;
         if (item?.recurring) {
           recurring = await this.createRecurringService.execute({

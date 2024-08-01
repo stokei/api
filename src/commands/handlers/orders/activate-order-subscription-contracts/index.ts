@@ -105,8 +105,12 @@ export class ActivateOrderSubscriptionContractsCommandHandler
         throw new ProductsNotFoundException();
       }
 
+      const uniqueOrderItems = orderItems?.items?.filter(
+        (item, index, self) =>
+          index === self.findIndex((i) => i?.product === item?.product)
+      );
       await Promise.all(
-        orderItems?.items?.map(async (orderItem) => {
+        uniqueOrderItems?.map(async (orderItem) => {
           try {
             const price = prices?.items?.find(
               (currentPrice) => currentPrice?.id === orderItem.price
@@ -200,8 +204,11 @@ export class ActivateOrderSubscriptionContractsCommandHandler
     if (!products?.totalCount) {
       return;
     }
+    const uniqueProducts = products?.items?.filter(
+      (item, index, self) => index === self.findIndex((i) => i?.id === item?.id)
+    );
     return await Promise.all(
-      products?.items?.map(async (productComboItem) => {
+      uniqueProducts?.map(async (productComboItem) => {
         await this.createSubscriptionContractItem({
           ...data,
           product: productComboItem

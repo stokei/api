@@ -2,33 +2,33 @@ import { Injectable } from '@nestjs/common';
 import { getPageLimit, getPageSkip, IBaseRepository } from '@stokei/nestjs';
 
 import { PrismaClient } from '@/database/prisma/client';
-import { FindAllSubscriptionContractsByItemDTO } from '@/dtos/subscription-contracts/find-all-subscription-contracts-by-item.dto';
-import { SubscriptionContractMapper } from '@/mappers/subscription-contracts';
-import { SubscriptionContractModel } from '@/models/subscription-contract.model';
+import { FindAllSubscriptionContractItemsBySubscriptionDTO } from '@/dtos/subscription-contract-items/find-all-subscription-contract-items-by-subscription.dto';
+import { SubscriptionContractItemMapper } from '@/mappers/subscription-contract-items';
+import { SubscriptionContractItemModel } from '@/models/subscription-contract-item.model';
 
 @Injectable()
-export class FindAllSubscriptionContractsByItemRepository
+export class FindAllSubscriptionContractItemsBySubscriptionRepository
   implements
     IBaseRepository<
-      FindAllSubscriptionContractsByItemDTO,
-      Promise<SubscriptionContractModel[]>
+      FindAllSubscriptionContractItemsBySubscriptionDTO,
+      Promise<SubscriptionContractItemModel[]>
     >
 {
   constructor(private readonly model: PrismaClient) {}
 
   async execute(
-    data: FindAllSubscriptionContractsByItemDTO
-  ): Promise<SubscriptionContractModel[]> {
-    const subscriptionContractMapper = new SubscriptionContractMapper();
+    data: FindAllSubscriptionContractItemsBySubscriptionDTO
+  ): Promise<SubscriptionContractItemModel[]> {
+    const subscriptionContractItemMapper = new SubscriptionContractItemMapper();
     const pageLimit = getPageLimit(data?.page?.limit);
     const pageSkip = getPageSkip(data?.page?.number, pageLimit);
     const app = data.where?.app?.equals;
     const parent = data.where?.parent?.equals;
     const status = data.where?.status;
     const productStartsWith = data.where?.product?.startsWith + '%';
-    return subscriptionContractMapper.toModels(
+    return subscriptionContractItemMapper.toModels(
       await this.model.$queryRaw`
-        SELECT subscription_contracts.* FROM subscription_contracts 
+        SELECT subscription_contract_items.* FROM subscription_contracts 
         JOIN subscription_contract_items
         ON CONCAT('sub_', subscription_contracts.id) = subscription_contract_items.parent
         WHERE

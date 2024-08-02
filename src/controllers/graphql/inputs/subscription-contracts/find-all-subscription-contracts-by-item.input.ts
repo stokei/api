@@ -7,13 +7,13 @@ import {
 
 import { SubscriptionContractStatus } from '@/controllers/graphql/enums/subscription-contract-status.enum';
 import {
-  OrderByDataFindAllSubscriptionContractsByItemDTO,
-  WhereDataFindAllSubscriptionContractsByItemDTO
-} from '@/dtos/subscription-contracts/find-all-subscription-contracts-by-item.dto';
+  OrderByDataFindAllSubscriptionContractItemsBySubscriptionDTO,
+  WhereDataFindAllSubscriptionContractItemsBySubscriptionDTO
+} from '@/dtos/subscription-contract-items/find-all-subscription-contract-items-by-subscription.dto';
 
 @InputType()
-export class WhereDataFindAllSubscriptionContractsByItemInput
-  implements WhereDataFindAllSubscriptionContractsByItemDTO
+export class WhereDataFindAllSubscriptionContractItemsBySubscriptionInput
+  implements WhereDataFindAllSubscriptionContractItemsBySubscriptionDTO
 {
   @Field(() => WhereDataSearchInput, { nullable: true })
   parent?: WhereDataSearchInput;
@@ -29,8 +29,8 @@ export class WhereDataFindAllSubscriptionContractsByItemInput
 }
 
 @InputType()
-export class OrderByDataFindAllSubscriptionContractsByItemInput
-  implements OrderByDataFindAllSubscriptionContractsByItemDTO
+export class OrderByDataFindAllSubscriptionContractItemsBySubscriptionInput
+  implements OrderByDataFindAllSubscriptionContractItemsBySubscriptionDTO
 {
   @Field(() => OrderBy, { nullable: true })
   createdAt?: OrderBy;

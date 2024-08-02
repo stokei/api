@@ -18,9 +18,9 @@ import {
   WhereDataFindAllSubscriptionContractsDTO
 } from '@/dtos/subscription-contracts/find-all-subscription-contracts.dto';
 import {
-  FindAllSubscriptionContractsByItemDTO,
-  WhereDataFindAllSubscriptionContractsByItemDTO
-} from '@/dtos/subscription-contracts/find-all-subscription-contracts-by-item.dto';
+  FindAllSubscriptionContractItemsBySubscriptionDTO,
+  WhereDataFindAllSubscriptionContractItemsBySubscriptionDTO
+} from '@/dtos/subscription-contract-items/find-all-subscription-contract-items-by-subscription.dto';
 import { SubscriptionContractEntity } from '@/entities';
 import { SubscriptionContractModel } from '@/models/subscription-contract.model';
 import { FindAllSubscriptionContractsQuery } from '@/queries/implements/subscription-contracts/find-all-subscription-contracts.query';
@@ -52,7 +52,7 @@ export class SubscriptionContractMapper {
     });
   }
   toWhereFindAllByItemPrisma(
-    where: WhereDataFindAllSubscriptionContractsByItemDTO
+    where: WhereDataFindAllSubscriptionContractItemsBySubscriptionDTO
   ) {
     const prismaMapper = new PrismaMapper();
     return cleanObject({
@@ -70,7 +70,9 @@ export class SubscriptionContractMapper {
       ...prismaMapper.toPagination({ page: data?.page })
     };
   }
-  toFindAllByItemPrisma(data: FindAllSubscriptionContractsByItemDTO) {
+  toFindAllByItemPrisma(
+    data: FindAllSubscriptionContractItemsBySubscriptionDTO
+  ) {
     const prismaMapper = new PrismaMapper();
     const orderBy = prismaMapper.toOrderBy(cleanObject(data?.orderBy));
     return {

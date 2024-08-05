@@ -5,12 +5,46 @@
     }
   ],
   "settings": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
+    //EDITOR - BY USER
+    "editor.fontSize": 14, //You can change if doesn't like 14 in fontSize.
+    "terminal.integrated.fontSize": 14, //You can change if doesn't like 14 in fontSize.
+    "editor.formatOnSave": true, //You can change if doesn't like format on save.
+    "editor.lineHeight": 18,
+
+    //EDITOR - BY PROJECT
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": false,
+    "editor.detectIndentation": false,
+    "editor.rulers": [80, 180],
     "javascript.updateImportsOnFileMove.enabled": "always",
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "[prisma]": {
-      "editor.defaultFormatter": "Prisma.prisma"
+
+    //ESLINT
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+    ],
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.fixAll.stylelint": "explicit"
+    },
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "eslint.alwaysShowStatus": true,
+    "eslint.format.enable": true,
+    "eslint.enable": true,
+    "prettier.enable": false,
+
+    //SPELL CHECKER
+    "[javascript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     }
   }
 }

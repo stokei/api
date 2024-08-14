@@ -53,7 +53,7 @@ export class FindPlanPriceByTypeQueryHandler
           app: {
             equals: plan.app
           },
-          parent: {
+          externalReference: {
             equals: plan.id
           }
         }

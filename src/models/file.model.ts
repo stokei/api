@@ -186,7 +186,7 @@ export class FileModel extends AggregateRoot {
   }
 
   static isVideo(extension: string): boolean {
-    const videoExtensions = ['mp4', 'mpg', 'avi', 'm4v', 'mov'];
+    const videoExtensions = ['mp4', 'mpg', 'avi', 'm4v', 'mov', 'm3u8'];
     return !!videoExtensions?.includes(extension);
   }
 
